@@ -108,4 +108,5 @@ export class ContractManagerController {
   public staking(@Body() dto: StakingDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.staking(dto, userEntity);
   }
+
 }

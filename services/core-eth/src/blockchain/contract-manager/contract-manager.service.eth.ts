@@ -50,6 +50,7 @@ import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
 
+
 @Injectable()
 export class ContractManagerServiceEth {
   private chainId: number;

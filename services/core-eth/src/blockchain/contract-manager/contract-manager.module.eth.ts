@@ -23,6 +23,7 @@ import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 
+
 @Module({
   imports: [
     ConfigModule,
