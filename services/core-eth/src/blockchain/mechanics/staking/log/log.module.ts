@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractEventType, ContractType, StakingEventType } from "@framework/types";
+import { ContractEventType, ContractType, ModuleType, StakingEventType } from "@framework/types";
 
 // system contract
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -21,12 +21,14 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const stakingAddr = configService.get<string>("STAKING_ADDR", "");
+        const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
+
         const fromBlock =
           (await contractService.getLastBlock(stakingAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.STAKING,
-            contractAddress: [stakingAddr],
+            contractAddress: stakingContracts.address || [],
             contractInterface: StakingSol.abi,
             // prettier-ignore
             eventNames: [

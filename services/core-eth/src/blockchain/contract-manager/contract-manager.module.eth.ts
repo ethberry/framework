@@ -21,6 +21,8 @@ import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
 import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
+import { StakingLogModule } from "../mechanics/staking/log/log.module";
+
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { BalanceModule } from "../hierarchy/balance/balance.module";
     Erc1155TokenLogModule,
     MysteryLogModule,
     VestingLogModule,
+    StakingLogModule,
     PyramidLogModule,
     ContractManagerLogModule,
     ContractManagerHistoryModule,

@@ -12,12 +12,14 @@ import {
   ContractManagerSearchDto,
   ContractManagerUpdateDto,
   Erc1155ContractDeployDto,
-  Erc20ContractDeployDto, Erc721CollectionDeployDto,
+  Erc20ContractDeployDto,
+  Erc721CollectionDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
   MysteryContractDeployDto,
   PyramidContractDeployDto,
-  VestingDeployDto
+  VestingDeployDto,
+  StakingDeployDto,
 } from "./dto";
 import { UserEntity } from "../../user/user.entity";
 
@@ -100,4 +102,11 @@ export class ContractManagerController {
   public collection(@Body() dto: Erc721CollectionDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Collection(dto, userEntity);
   }
+
+  // MODULE:STAKING
+  @Post("/staking")
+  public staking(@Body() dto: StakingDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.staking(dto, userEntity);
+  }
+
 }

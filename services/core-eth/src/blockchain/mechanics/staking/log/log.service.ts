@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ICreateListenerPayload } from "../../../../common/interfaces";
 
 @Injectable()
 export class StakingLogService {
@@ -25,5 +26,9 @@ export class StakingLogService {
     const lastBlock = this.ethersContractService.getLastBlockOption();
     const stakingAddr = this.configService.get<string>("STAKING_ADDR", "");
     return await this.contractService.updateLastBlockByAddr(stakingAddr, lastBlock);
+  }
+
+  public addListener(dto: ICreateListenerPayload): void {
+    this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 }

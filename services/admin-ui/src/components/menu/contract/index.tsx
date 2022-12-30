@@ -60,7 +60,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {contract.contractType !== TokenType.NATIVE ? <MintMenuItem contract={contract} /> : null}
+        {contract.contractType !== TokenType.NATIVE && contract.contractModule === ModuleType.HIERARCHY ? (
+          <MintMenuItem contract={contract} />
+        ) : null}
         {contract.contractType !== TokenType.NATIVE ? <EthListenerAddMenuItem contract={contract} /> : null}
         {contract.contractType !== TokenType.NATIVE ? <EthListenerRemoveMenuItem contract={contract} /> : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem contract={contract} /> : null}

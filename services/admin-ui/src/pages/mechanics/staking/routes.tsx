@@ -6,6 +6,7 @@ import { StakingReport } from "./report";
 import { StakingChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
 import { Staking } from "../../dashboard/mechanics/staking";
+import { StakingContracts } from "./contract";
 
 export const stakingRoutes: Array<RouteObject> = [
   {
@@ -18,6 +19,14 @@ export const stakingRoutes: Array<RouteObject> = [
             <Staking />
           </IndexWrapper>
         ),
+      },
+      {
+        path: "/staking/contracts",
+        element: <Protected />,
+        children: [
+          { index: true, element: <StakingContracts /> },
+          { path: "/staking/contracts/:id", element: <StakingContracts /> },
+        ],
       },
       {
         path: "/staking/rules",

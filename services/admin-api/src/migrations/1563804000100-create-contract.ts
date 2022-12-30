@@ -59,6 +59,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:GRADE
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'UPGRADEABLE';`);
 
+    // // MODULE:STAKING
+    // await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'REFERRAL';`);
+
     // MODULE:RARITY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'RANDOM';`);
 
