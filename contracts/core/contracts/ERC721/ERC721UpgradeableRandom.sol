@@ -16,7 +16,6 @@ import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
 contract ERC721UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC721Upgradeable, Rarity {
-  event RandomRequest(bytes32 requestId);
   using Counters for Counters.Counter;
 
   struct Request {
