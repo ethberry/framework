@@ -344,7 +344,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
-      await stakingInstance.setMaxStake(0);
+      await stakingInstance.setMaxStake(1);
 
       const stakeRule: IRule = {
         externalId: 1,
@@ -370,8 +370,11 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, 1, { value: 100 });
-      await expect(tx1).to.be.revertedWith("Staking: stake limit exceeded");
+      const tx1 = stakingInstance.deposit(1, 1, { value: amount });
+      await expect(tx1).to.not.be.reverted;
+
+      const tx2 = stakingInstance.deposit(1, 1, { value: amount });
+      await expect(tx2).to.be.revertedWith("Staking: stake limit exceeded");
     });
   });
 
