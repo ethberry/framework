@@ -8,13 +8,14 @@ pragma solidity ^0.8.9;
 //import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "../../MOCKS/ChainLink/ChainLinkGemunionTest.sol";
+
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGemunion.sol";
 
 import "../ERC721Simple.sol";
 import "../interfaces/IERC721Random.sol";
 import "../../Mechanics/Breed/Breed.sol";
 
-contract ERC721GenesGemunion is IERC721Random, ChainLinkGemunionTest, ERC721Simple, Breed {
+contract ERC721GenesGemunion is IERC721Random, ChainLinkGemunion, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
   struct Request {
