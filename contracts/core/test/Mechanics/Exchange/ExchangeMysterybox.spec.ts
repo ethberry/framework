@@ -8,12 +8,10 @@ import { params, tokenId } from "../../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeMysterybox", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-
   describe("mysterybox", function () {
     describe("NATIVE > MYSTERYBOX (ERC721)", function () {
       it("should mysterybox", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
         const mysteryboxInstance = await deployErc721Base("ERC721MysteryboxSimple", exchangeInstance);
@@ -69,7 +67,6 @@ describe("ExchangeMysterybox", function () {
               amount,
             },
           ],
-          owner.address,
           signature,
           {
             value: amount,
@@ -91,7 +88,7 @@ describe("ExchangeMysterybox", function () {
 
     describe("NATIVE > MYSTERYBOX (ERC1155)", function () {
       it("should mysterybox", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
         const mysteryboxInstance = await deployErc721Base("ERC721MysteryboxSimple", exchangeInstance);
@@ -147,7 +144,6 @@ describe("ExchangeMysterybox", function () {
               amount,
             },
           ],
-          owner.address,
           signature,
           {
             value: amount,

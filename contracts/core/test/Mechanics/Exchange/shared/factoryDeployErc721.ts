@@ -23,16 +23,7 @@ export async function factoryDeployErc721(
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
   const erc721 = await ethers.getContractFactory("ERC721Simple");
-  // "Erc721(bytes bytecode,string name,string symbol,string baseTokenURI,uint8[] featureIds,uint96 royalty,bytes32 nonce)";
-  const c = {
-    bytecode: erc721.bytecode,
-    name: tokenName,
-    symbol: tokenSymbol,
-    baseTokenURI,
-    featureIds,
-    royalty,
-    nonce,
-  };
+
   const signature = await owner._signTypedData(
     // Domain
     {
@@ -43,40 +34,51 @@ export async function factoryDeployErc721(
     },
     // Types
     {
-      EIP712: [{ name: "c", type: "Erc721" }],
-      Erc721: [
+      EIP712: [
+        { name: "params", type: "Params" },
+        { name: "args", type: "Erc721Args" },
+      ],
+      Params: [
+        { name: "nonce", type: "bytes32" },
         { name: "bytecode", type: "bytes" },
+      ],
+      Erc721Args: [
         { name: "name", type: "string" },
         { name: "symbol", type: "string" },
+        { name: "royalty", type: "uint96" },
         { name: "baseTokenURI", type: "string" },
         { name: "featureIds", type: "uint8[]" },
-        { name: "royalty", type: "uint96" },
-        { name: "nonce", type: "bytes32" },
       ],
     },
     // Values
-    { c },
+    {
+      params: {
+        nonce,
+        bytecode: erc721.bytecode,
+      },
+      args: {
+        name: tokenName,
+        symbol: tokenSymbol,
+        royalty,
+        baseTokenURI,
+        featureIds,
+      },
+    },
   );
 
-  if (network.chainId === testChainId) {
-    await blockAwait();
-  }
-  const signer = owner.address;
-  const bytecode = erc721.bytecode;
   const tx = await factoryInstance.deployERC721Token(
     {
-      signer,
-      signature,
+      nonce,
+      bytecode: erc721.bytecode,
     },
     {
-      bytecode,
       name: tokenName,
       symbol: tokenSymbol,
+      royalty,
       baseTokenURI,
       featureIds,
-      royalty,
-      nonce,
     },
+    signature,
   );
 
   if (network.chainId === testChainId) {

@@ -47,7 +47,6 @@ export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
-      process.env.ACCOUNT,
       sign.signature,
       {
         value: getEthPrice(mysterybox.template?.price),

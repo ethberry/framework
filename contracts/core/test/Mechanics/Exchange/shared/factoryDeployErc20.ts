@@ -17,16 +17,7 @@ export async function factoryDeployErc20(
   const [owner] = await ethers.getSigners();
   const erc20 = await ethers.getContractFactory("ERC20Simple");
   const nonce = utils.formatBytes32String("nonce1");
-  // "Erc20(bytes bytecode,string name,string symbol,uint256 cap,uint8[] featureIds,bytes32 nonce)";
 
-  const c = {
-    bytecode: erc20.bytecode,
-    name: tokenName,
-    symbol: tokenSymbol,
-    cap,
-    featureIds,
-    nonce,
-  };
   const signature = await owner._signTypedData(
     // Domain
     {
@@ -37,38 +28,48 @@ export async function factoryDeployErc20(
     },
     // Types
     {
-      EIP712: [{ name: "c", type: "Erc20" }],
-      Erc20: [
+      EIP712: [
+        { name: "params", type: "Params" },
+        { name: "args", type: "Erc20Args" },
+      ],
+      Params: [
+        { name: "nonce", type: "bytes32" },
         { name: "bytecode", type: "bytes" },
+      ],
+      Erc20Args: [
         { name: "name", type: "string" },
         { name: "symbol", type: "string" },
         { name: "cap", type: "uint256" },
         { name: "featureIds", type: "uint8[]" },
-        { name: "nonce", type: "bytes32" },
       ],
     },
     // Values
-    { c },
+    {
+      params: {
+        nonce,
+        bytecode: erc20.bytecode,
+      },
+      args: {
+        name: tokenName,
+        symbol: tokenSymbol,
+        cap,
+        featureIds,
+      },
+    },
   );
 
-  if (network.chainId === testChainId) {
-    await blockAwait();
-  }
-  const signer = owner.address;
-  const bytecode = erc20.bytecode;
   const tx = await factoryInstance.deployERC20Token(
     {
-      signer,
-      signature,
+      nonce,
+      bytecode: erc20.bytecode,
     },
     {
-      bytecode,
       name: tokenName,
       symbol: tokenSymbol,
       cap,
       featureIds,
-      nonce,
     },
+    signature,
   );
 
   if (network.chainId === testChainId) {

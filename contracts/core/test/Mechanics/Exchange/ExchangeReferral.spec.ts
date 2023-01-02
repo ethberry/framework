@@ -14,8 +14,6 @@ describe("ExchangeReferral", function () {
     refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
   };
 
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-
   describe("exchange purchase", function () {
     it("referrer rewards", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
@@ -74,7 +72,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature1,
       );
 
@@ -125,7 +122,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature2,
       );
 
@@ -188,7 +184,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature3,
       );
 
@@ -285,7 +280,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 

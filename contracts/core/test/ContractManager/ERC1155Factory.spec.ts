@@ -2,7 +2,6 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
 
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
 import { featureIds, tokenId } from "../constants";
@@ -12,8 +11,6 @@ import { deployContractManager } from "./fixture";
 describe("ERC1155Factory", function () {
   const factory = () => deployContractManager(this.title);
 
-  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
-
   describe("deployERC1155Token", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
@@ -21,15 +18,6 @@ describe("ERC1155Factory", function () {
       const erc1155 = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
-      // "Erc1155(bytes bytecode,uint96 royalty,string baseTokenURI,uint8[] featureIds,bytes32 nonce)";
-
-      const c = {
-        bytecode: erc1155.bytecode,
-        royalty,
-        baseTokenURI,
-        featureIds,
-        nonce,
-      };
 
       const signature = await owner._signTypedData(
         // Domain
@@ -41,32 +29,45 @@ describe("ERC1155Factory", function () {
         },
         // Types
         {
-          EIP712: [{ name: "c", type: "Erc1155" }],
-          Erc1155: [
+          EIP712: [
+            { name: "params", type: "Params" },
+            { name: "args", type: "Erc1155Args" },
+          ],
+          Params: [
+            { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+          ],
+          Erc1155Args: [
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
             { name: "featureIds", type: "uint8[]" },
-            { name: "nonce", type: "bytes32" },
           ],
         },
         // Values
-        { c },
+        {
+          params: {
+            bytecode: erc1155.bytecode,
+            nonce,
+          },
+          args: {
+            royalty,
+            baseTokenURI,
+            featureIds,
+          },
+        },
       );
-      const signer = owner.address;
-      const bytecode = erc1155.bytecode;
+
       const tx = await contractInstance.deployERC1155Token(
         {
-          signer,
-          signature,
+          bytecode: erc1155.bytecode,
+          nonce,
         },
         {
-          bytecode,
           royalty,
           baseTokenURI,
           featureIds,
-          nonce,
         },
+        signature,
       );
 
       const [address] = await contractInstance.allERC1155Tokens();

@@ -3,17 +3,16 @@ import { ethers } from "hardhat";
 
 import { nonce } from "@gemunion/contracts-constants";
 
-import { maxStake } from "../constants";
 import { deployContractManager } from "./fixture";
 
-describe("StakingFactory", function () {
+describe("PyramidFactory", function () {
   const factory = () => deployContractManager(this.title);
 
-  describe("deployStaking", function () {
+  describe("deployPyramid", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const staking = await ethers.getContractFactory("Staking");
+      const pyramid = await ethers.getContractFactory("Pyramid");
 
       const contractInstance = await factory();
 
@@ -29,45 +28,40 @@ describe("StakingFactory", function () {
         {
           EIP712: [
             { name: "params", type: "Params" },
-            { name: "args", type: "StakingArgs" },
+            { name: "args", type: "PyramidArgs" },
           ],
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
           ],
-          StakingArgs: [
-            { name: "maxStake", type: "uint256" },
-            { name: "featureIds", type: "uint8[]" },
-          ],
+          PyramidArgs: [{ name: "featureIds", type: "uint8[]" }],
         },
         // Values
         {
           params: {
             nonce,
-            bytecode: staking.bytecode,
+            bytecode: pyramid.bytecode,
           },
           args: {
-            maxStake,
             featureIds: [],
           },
         },
       );
 
-      const tx = await contractInstance.deployStaking(
+      const tx = await contractInstance.deployPyramid(
         {
           nonce,
-          bytecode: staking.bytecode,
+          bytecode: pyramid.bytecode,
         },
         {
-          maxStake,
           featureIds: [],
         },
         signature,
       );
 
-      const [address] = await contractInstance.allStaking();
+      const [address] = await contractInstance.allPyramids();
 
-      await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, maxStake, []);
+      await expect(tx).to.emit(contractInstance, "PyramidDeployed").withArgs(address, []);
     });
   });
 });

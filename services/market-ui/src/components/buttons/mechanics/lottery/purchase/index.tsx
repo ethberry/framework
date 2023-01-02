@@ -33,7 +33,6 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         },
         ticketNumbers,
         constants.WeiPerEther,
-        process.env.ACCOUNT,
         sign.signature,
       )
       .then(clearForm) as Promise<void>;

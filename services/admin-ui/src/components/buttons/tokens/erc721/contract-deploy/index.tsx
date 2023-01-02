@@ -28,31 +28,20 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
         ContractManagerSol.abi,
         web3Context.provider?.getSigner(),
       );
-      // return contract.deployERC721Token(
-      //   nonce,
-      //   sign.bytecode,
-      //   name,
-      //   symbol,
-      //   royalty,
-      //   baseTokenURI,
-      //   contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
-      //   process.env.ACCOUNT,
-      //   sign.signature,
-      // ) as Promise<void>;
+
       return contract.deployERC721Token(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           name,
           symbol,
+          royalty,
           baseTokenURI,
           featureIds: contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
-          royalty,
-          nonce,
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

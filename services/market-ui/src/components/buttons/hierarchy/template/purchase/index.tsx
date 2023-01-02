@@ -45,7 +45,6 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
             : component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
-      process.env.ACCOUNT,
       sign.signature,
       {
         value: getEthPrice(template.price),

@@ -29,30 +29,18 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
         web3Context.provider?.getSigner(),
       );
 
-      // return contract.deployERC20Token(
-      //   nonce,
-      //   sign.bytecode,
-      //   name,
-      //   symbol,
-      //   cap,
-      //   contractFeatures.map(feature => Object.keys(Erc20ContractFeatures).indexOf(feature)),
-      //   process.env.ACCOUNT,
-      //   sign.signature,
-      // ) as Promise<void>;
-
       return contract.deployERC20Token(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           name,
           symbol,
           cap,
           featureIds: contractFeatures.map(feature => Object.keys(Erc20ContractFeatures).indexOf(feature)),
-          nonce,
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

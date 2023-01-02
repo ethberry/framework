@@ -28,29 +28,19 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
         ContractManagerSol.abi,
         web3Context.provider?.getSigner(),
       );
-      // return contract.deployVesting(
-      //   nonce,
-      //   sign.bytecode,
-      //   account,
-      //   Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
-      //   duration * 60 * 60 * 24, // days in seconds
-      //   Object.keys(VestingContractTemplate).indexOf(contractTemplate),
-      //   process.env.ACCOUNT,
-      //   sign.signature,
-      // ) as Promise<void>;
+
       return contract.deployVesting(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           account,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
           duration: duration * 60 * 60 * 24, // days in seconds
           templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
-          nonce,
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

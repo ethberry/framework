@@ -34,7 +34,6 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         tokenId: component.templateId,
         amount: component.amount,
       })),
-      process.env.ACCOUNT,
       claim.signature,
     ) as Promise<void>;
   });

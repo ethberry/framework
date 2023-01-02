@@ -20,11 +20,10 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
-    address signer,
     bytes calldata signature
   ) external payable whenNotPaused {
+    address signer = _recoverManyToManySignature(params, items, price, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(params, items, price, signer, signature);
 
     address account = _msgSender();
 
