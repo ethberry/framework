@@ -11,7 +11,7 @@ import { vestingRoutes } from "./vesting/routes";
 import { pyramidRoutes } from "./pyramid/routes";
 import { waitlistRoutes } from "./waitlist/routes";
 import { breedRoutes } from "./breed/routes";
-import { erc721CollectionRoutes } from "./erc721-collection/routes";
+import { erc721CollectionRoutes } from "./collection/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
