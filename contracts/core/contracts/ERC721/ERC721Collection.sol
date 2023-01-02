@@ -8,13 +8,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721/contracts/preset/ERC721ABRK.sol";
+import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 
 error MethodNotSupported();
 
 contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
-
   constructor(
     string memory name,
     string memory symbol,

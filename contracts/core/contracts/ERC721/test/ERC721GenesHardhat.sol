@@ -9,7 +9,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../../MOCKS/ChainLink/ChainLinkHardhat.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
 
 import "../ERC721Simple.sol";
 import "../interfaces/IERC721Random.sol";

@@ -10,11 +10,10 @@ import "./AbstractFactory.sol";
 
 contract VestingFactory is AbstractFactory {
   bytes private constant VESTING_PARAMS =
-  "Vesting(bytes bytecode,address account,uint64 startTimestamp,uint64 duration,uint256 templateId,bytes32 nonce)";
+    "Vesting(bytes bytecode,address account,uint64 startTimestamp,uint64 duration,uint256 templateId,bytes32 nonce)";
   bytes32 private constant VESTING_PARAMS_TYPEHASH = keccak256(abi.encodePacked(VESTING_PARAMS));
 
-  bytes32 private immutable VESTING_PERMIT_SIGNATURE =
-  keccak256(bytes.concat("EIP712(Vesting v)", VESTING_PARAMS));
+  bytes32 private immutable VESTING_PERMIT_SIGNATURE = keccak256(bytes.concat("EIP712(Vesting v)", VESTING_PARAMS));
 
   address[] private _vesting;
 
@@ -58,17 +57,17 @@ contract VestingFactory is AbstractFactory {
 
   function _hashVestingStruct(Vesting calldata v) private pure returns (bytes32) {
     return
-    keccak256(
-      abi.encode(
-        VESTING_PARAMS_TYPEHASH,
-        keccak256(abi.encodePacked(v.bytecode)),
-        v.account,
-        v.startTimestamp,
-        v.duration,
-        v.templateId,
-        v.nonce
-      )
-    );
+      keccak256(
+        abi.encode(
+          VESTING_PARAMS_TYPEHASH,
+          keccak256(abi.encodePacked(v.bytecode)),
+          v.account,
+          v.startTimestamp,
+          v.duration,
+          v.templateId,
+          v.nonce
+        )
+      );
   }
 
   function allVesting() external view returns (address[] memory) {

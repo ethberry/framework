@@ -8,7 +8,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkBinance.sol";
+// import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBinance.sol";
 import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
 
 import "./ERC998Simple.sol";

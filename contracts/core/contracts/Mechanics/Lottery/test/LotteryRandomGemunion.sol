@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.9;
 
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGemunion.sol";
+
 import "../LotteryBase.sol";
-import "../../../MOCKS/ChainLink/ChainLinkGemunionTest.sol";
 
-contract LotteryRandomGemunion is LotteryBase, ChainLinkGemunionTest {
-
+contract LotteryRandomGemunion is LotteryBase, ChainLinkGemunion {
   constructor(
     string memory name,
     address ticketFactory,

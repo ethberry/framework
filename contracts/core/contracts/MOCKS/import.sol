@@ -11,3 +11,5 @@ import "@gemunion/contracts-mocks/contracts/ERC721NonReceiver.sol";
 import "@gemunion/contracts-mocks/contracts/ERC721Receiver.sol";
 import "@gemunion/contracts-mocks/contracts/ERC1155NonReceiver.sol";
 import "@gemunion/contracts-mocks/contracts/ERC1155Receiver.sol";
+
+import "@gemunion/contracts-chain-link/contracts/mocks/VrfCoordinator.sol";

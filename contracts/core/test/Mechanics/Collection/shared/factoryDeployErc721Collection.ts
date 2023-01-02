@@ -2,17 +2,16 @@ import { ethers } from "hardhat";
 import { expect } from "chai";
 
 import { testChainId } from "@framework/constants";
-
 import {
   baseTokenURI,
-  batchSize,
   DEFAULT_ADMIN_ROLE,
-  featureIds,
   nonce,
   royalty,
   tokenName,
   tokenSymbol,
-} from "../../../constants";
+} from "@gemunion/contracts-constants";
+
+import { batchSize, featureIds } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, ERC721Collection } from "../../../../typechain-types";
 

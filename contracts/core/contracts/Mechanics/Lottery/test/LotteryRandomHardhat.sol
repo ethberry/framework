@@ -6,8 +6,9 @@
 
 pragma solidity ^0.8.9;
 
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
+
 import "../LotteryBase.sol";
-import "../../../MOCKS/ChainLink/ChainLinkHardhat.sol";
 
 contract LotteryRandomHardhat is LotteryBase, ChainLinkHardhat {
   constructor(

@@ -1,5 +1,6 @@
 import { ContractTransaction, ethers, utils, Wallet, BigNumber } from "ethers";
-import VrfSol from "@framework/core-contracts/artifacts/contracts/MOCKS/ChainLink/VrfCoordinator.test.sol/VRFCoordinatorMock.json";
+
+import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link/contracts/mocks/VrfCoordinator.sol/VRFCoordinatorMock.json";
 
 export const callRandom = async function (
   vrfAddr: string,

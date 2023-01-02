@@ -8,9 +8,10 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
+
 import "../ERC998Upgradeable.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ChainLinkHardhat.sol";
 import "../../Mechanics/Rarity/Rarity.sol";
 
 contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeable, Rarity {

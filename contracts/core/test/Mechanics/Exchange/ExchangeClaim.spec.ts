@@ -3,16 +3,17 @@ import { ethers, network } from "hardhat";
 import { constants, BigNumber } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, decimals, LINK_ADDR, params, tokenId, VRF_ADDR } from "../../constants";
+import { amount, decimals } from "@gemunion/contracts-constants";
+import { LINK_ADDR, params, tokenId, VRF_ADDR } from "../../constants";
 
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../../shared/link";
-import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 
 describe("ExchangeClaim", function () {
   // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
