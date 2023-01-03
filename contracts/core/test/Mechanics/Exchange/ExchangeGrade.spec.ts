@@ -8,8 +8,6 @@ import { params, templateId, tokenId } from "../../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeGrade", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-
   describe("upgrade", function () {
     it("should update metadata", async function () {
       const [owner, receiver] = await ethers.getSigners();

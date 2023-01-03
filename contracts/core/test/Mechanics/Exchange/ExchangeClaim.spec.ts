@@ -11,8 +11,6 @@ import { deployLinkVrfFixture } from "../../shared/link";
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 
 describe("ExchangeClaim", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-
   let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 

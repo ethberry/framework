@@ -8,8 +8,6 @@ import { params, tokenId } from "../../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeMysterybox", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-
   describe("mysterybox", function () {
     describe("NATIVE > MYSTERYBOX (ERC721)", function () {
       it("should mysterybox", async function () {

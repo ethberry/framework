@@ -8,8 +8,6 @@ import { params, tokenId } from "../../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeCore", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-
   describe("craft", function () {
     describe("NULL > NULL", function () {
       it("NULL > NULL", async function () {

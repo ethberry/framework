@@ -6,7 +6,7 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
 import { defaultNumbers, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -47,6 +47,10 @@ describe("Lottery", function () {
     const { lotteryInstance } = await factory();
     return lotteryInstance;
   })(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  shouldBehaveLikePausable(async () => {
+    const { lotteryInstance } = await factory();
+    return lotteryInstance;
+  });
 
   describe("setTicketFactory", function () {
     it("should set factory", async function () {

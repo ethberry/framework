@@ -5,7 +5,7 @@ import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
@@ -37,6 +37,7 @@ describe("Staking", function () {
   const erc1155Factory = () => deployERC1155();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  shouldBehaveLikePausable(factory);
 
   before(async function () {
     await network.provider.send("hardhat_reset");
