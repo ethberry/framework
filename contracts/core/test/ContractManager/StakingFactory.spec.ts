@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { BigNumber } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
-import { maxStake } from "../constants";
+import { featureIds, maxStake } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("StakingFactory", function () {
@@ -48,7 +49,7 @@ describe("StakingFactory", function () {
           },
           args: {
             maxStake,
-            featureIds: [],
+            featureIds,
           },
         },
       );
@@ -60,14 +61,23 @@ describe("StakingFactory", function () {
         },
         {
           maxStake,
-          featureIds: [],
+          featureIds,
         },
         signature,
       );
 
       const [address] = await contractInstance.allStaking();
 
-      await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, maxStake, []);
+      // await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, maxStake, []);
+      await expect(tx)
+        .to.emit(contractInstance, "StakingDeployed")
+        .withNamedArgs({
+          addr: address,
+          args: {
+            maxStake: BigNumber.from(maxStake),
+            featureIds,
+          },
+        });
     });
   });
 });

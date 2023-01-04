@@ -28,12 +28,7 @@ contract CollectionFactory is AbstractFactory {
 
   event CollectionDeployed(
     address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds,
-    uint96 batchSize,
+    CollectionArgs args,
     address owner
   );
 
@@ -58,12 +53,12 @@ contract CollectionFactory is AbstractFactory {
 
     emit CollectionDeployed(
       addr,
-      args.name,
-      args.symbol,
-      args.royalty,
-      args.baseTokenURI,
-      args.featureIds,
-      args.batchSize,
+      args,
+//      args.symbol,
+//      args.royalty,
+//      args.baseTokenURI,
+//      args.featureIds,
+//      args.batchSize,
       _msgSender()
     );
 

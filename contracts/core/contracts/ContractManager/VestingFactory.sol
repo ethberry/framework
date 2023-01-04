@@ -20,17 +20,14 @@ contract VestingFactory is AbstractFactory {
 
   struct VestingArgs {
     address account;
-    uint64 startTimestamp;
-    uint64 duration;
+    uint64 startTimestamp; // in sec
+    uint64 duration; // in sec
     uint256 templateId;
   }
 
   event VestingDeployed(
     address addr,
-    address account,
-    uint64 startTimestamp, // in seconds
-    uint64 duration, // in seconds
-    uint256 templateId
+    VestingArgs args
   );
 
   function deployVesting(
@@ -48,7 +45,7 @@ contract VestingFactory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.account, args.startTimestamp, args.duration), params.nonce);
     _vesting.push(addr);
 
-    emit VestingDeployed(addr, args.account, args.startTimestamp, args.duration, args.templateId);
+    emit VestingDeployed(addr, args);
   }
 
   function _hashVesting(Params calldata params, VestingArgs calldata args) internal view returns (bytes32) {

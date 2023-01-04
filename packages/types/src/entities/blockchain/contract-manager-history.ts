@@ -8,24 +8,30 @@ export enum ContractManagerEventType {
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
   MysteryboxDeployed = "MysteryboxDeployed",
   PyramidDeployed = "PyramidDeployed",
-  ERC721CollectionDeployed = "ERC721CollectionDeployed",
+  CollectionDeployed = "CollectionDeployed",
   StakingDeployed = "StakingDeployed",
 }
 
+export type IStakingDeployedEventArgs = [string, Array<string>];
+
 export interface IContractManagerStakingDeployedEvent {
   addr: string;
-  maxStake: string;
-  featureIds: Array<number>;
+  args: IStakingDeployedEventArgs;
+  // maxStake: string;
+  // featureIds: Array<number>;
 }
 
-export interface IContractManagerErc721CollectionDeployedEvent {
+export type ICollectionDeployedEventArgs = [string, string, string, string, Array<string>, string];
+
+export interface IContractManagerCollectionDeployedEvent {
   addr: string;
-  name: string;
-  symbol: string;
-  baseTokenURI: string;
-  royalty: string;
-  featureIds: Array<number>;
-  batchSize: number;
+  args: ICollectionDeployedEventArgs;
+  // name: string;
+  // symbol: string;
+  // baseTokenURI: string;
+  // royalty: string;
+  // featureIds: Array<number>;
+  // batchSize: number;
   owner: string;
 }
 
@@ -34,53 +40,71 @@ export interface IContractManagerPyramidDeployedEvent {
   featureIds: Array<number>;
 }
 
+export type IVestingDeployedEventArgs = [string, string, string, string, string];
+
 export interface IContractManagerVestingDeployedEvent {
   addr: string;
-  account: string;
-  startTimestamp: string; // in seconds
-  duration: string; // in seconds
-  templateId: string;
+  args: IVestingDeployedEventArgs;
+  // account: string;
+  // startTimestamp: string; // in seconds
+  // duration: string; // in seconds
+  // templateId: string;
 }
 
-export interface IContractManagerERC20TokenDeployedEvent {
-  addr: string;
-  name: string;
-  symbol: string;
-  cap: string;
-  featureIds: Array<number>;
-}
-
-export interface IContractManagerERC721TokenDeployedEvent {
-  addr: string;
-  name: string;
-  symbol: string;
-  baseTokenURI: string;
-  royalty: string;
-  featureIds: Array<number>;
-}
-
-export interface IContractManagerERC998TokenDeployedEvent {
-  addr: string;
-  name: string;
-  symbol: string;
-  baseTokenURI: string;
-  royalty: string;
-  featureIds: Array<number>;
-}
+export type IMysteryTokenDeployedEventArgs = [string, string, string, string, Array<string>];
 
 export interface IContractManagerMysteryTokenDeployedEvent {
   addr: string;
-  name: string;
-  symbol: string;
-  baseTokenURI: string;
-  royalty: string;
-  featureIds: Array<number>;
+  args: IMysteryTokenDeployedEventArgs;
+  // name: string;
+  // symbol: string;
+  // baseTokenURI: string;
+  // royalty: string;
+  // featureIds: Array<number>;
 }
+
+export type IERC20TokenDeployedEventArgs = [string, string, string, Array<string>];
+
+export interface IContractManagerERC20TokenDeployedEvent {
+  addr: string;
+  args: IERC20TokenDeployedEventArgs;
+  // name: string;
+  // symbol: string;
+  // cap: string;
+  // featureIds: Array<number>;
+}
+
+export type IERC721TokenDeployedEventArgs = [string, string, string, string, Array<string>];
+
+export interface IContractManagerERC721TokenDeployedEvent {
+  addr: string;
+  args: IERC721TokenDeployedEventArgs;
+  // name: string;
+  // symbol: string;
+  // baseTokenURI: string;
+  // royalty: string;
+  // featureIds: Array<number>;
+}
+
+export type IERC998TokenDeployedEventArgs = [string, string, string, string, Array<string>];
+
+export interface IContractManagerERC998TokenDeployedEvent {
+  addr: string;
+  args: IERC998TokenDeployedEventArgs;
+  // name: string;
+  // symbol: string;
+  // baseTokenURI: string;
+  // royalty: string;
+  // featureIds: Array<number>;
+}
+
+export type IERC1155TokenDeployedEventArgs = [string, Array<string>];
 
 export interface IContractManagerERC1155TokenDeployedEvent {
   addr: string;
-  baseTokenURI: string;
-  featureIds: Array<number>;
+  args: IERC1155TokenDeployedEventArgs;
+  // baseTokenURI: string;
+  // featureIds: Array<number>;
 }
 
 export type TContractManagerEventData =
@@ -91,7 +115,7 @@ export type TContractManagerEventData =
   | IContractManagerERC1155TokenDeployedEvent
   | IContractManagerMysteryTokenDeployedEvent
   | IContractManagerPyramidDeployedEvent
-  | IContractManagerErc721CollectionDeployedEvent
+  | IContractManagerCollectionDeployedEvent
   | IContractManagerStakingDeployedEvent;
 
 export interface IContractManagerHistory extends IIdDateBase {

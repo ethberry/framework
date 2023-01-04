@@ -28,11 +28,7 @@ contract ERC998Factory is AbstractFactory {
 
   event ERC998TokenDeployed(
     address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds
+    Erc998Args args
   );
 
   function deployERC998Token(
@@ -50,7 +46,7 @@ contract ERC998Factory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
     _erc998_tokens.push(addr);
 
-    emit ERC998TokenDeployed(addr, args.name, args.symbol, args.royalty, args.baseTokenURI, args.featureIds);
+    emit ERC998TokenDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;

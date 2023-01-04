@@ -24,7 +24,7 @@ contract ERC1155Factory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event ERC1155TokenDeployed(address addr, uint96 royalty, string baseTokenURI, uint8[] featureIds);
+  event ERC1155TokenDeployed(address addr, Erc1155Args args);
 
   function deployERC1155Token(
     Params calldata params,
@@ -41,7 +41,7 @@ contract ERC1155Factory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
     _erc1155_tokens.push(addr);
 
-    emit ERC1155TokenDeployed(addr, args.royalty, args.baseTokenURI, args.featureIds);
+    emit ERC1155TokenDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;

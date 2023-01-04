@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { constants, BigNumber } from "ethers";
 
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
@@ -72,9 +72,20 @@ describe("ERC1155Factory", function () {
 
       const [address] = await contractInstance.allERC1155Tokens();
 
+      // await expect(tx)
+      //   .to.emit(contractInstance, "ERC1155TokenDeployed")
+      //   .withArgs(address, royalty, baseTokenURI, featureIds);
+
       await expect(tx)
         .to.emit(contractInstance, "ERC1155TokenDeployed")
-        .withArgs(address, royalty, baseTokenURI, featureIds);
+        .withNamedArgs({
+          addr: address,
+          args: {
+            royalty: BigNumber.from(royalty),
+            baseTokenURI,
+            featureIds,
+          },
+        });
 
       const erc1155Instance = erc1155.attach(address);
 

@@ -15,7 +15,7 @@ import {
   Erc998ContractFeatures,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
-  IContractManagerErc721CollectionDeployedEvent,
+  IContractManagerCollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -30,6 +30,7 @@ import {
   TemplateStatus,
   TokenType,
   VestingContractTemplate,
+  Erc721CollectionFeatures,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";
@@ -79,13 +80,15 @@ export class ContractManagerServiceEth {
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, cap, featureIds },
+      args: { addr, args },
     } = event;
+
+    const [name, symbol, cap, featureIds] = args;
 
     await this.updateHistory(event, ctx);
 
     const availableFeatures = Object.values(Erc20ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -124,13 +127,16 @@ export class ContractManagerServiceEth {
 
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, royalty, baseTokenURI, featureIds },
+      args: { addr, args },
     } = event;
+
+    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
+    console.log("erc721Token-args", args);
 
     await this.updateHistory(event, ctx);
 
     const availableFeatures = Object.values(Erc721ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -168,18 +174,17 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async erc721Collection(
-    event: ILogEvent<IContractManagerErc721CollectionDeployedEvent>,
-    ctx: Log,
-  ): Promise<void> {
+  public async erc721Collection(event: ILogEvent<IContractManagerCollectionDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, royalty, baseTokenURI, featureIds, batchSize, owner },
+      args: { addr, args, owner },
     } = event;
+
+    const [name, symbol, royalty, baseTokenURI, featureIds, batchSize] = args;
 
     await this.updateHistory(event, ctx);
 
-    const availableFeatures = Object.values(Erc721ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const availableFeatures = Object.values(Erc721CollectionFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -234,13 +239,15 @@ export class ContractManagerServiceEth {
 
   public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, royalty, baseTokenURI, featureIds },
+      args: { addr, args },
     } = event;
+
+    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
 
     await this.updateHistory(event, ctx);
 
     const availableFeatures = Object.values(Erc998ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -280,13 +287,15 @@ export class ContractManagerServiceEth {
 
   public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, baseTokenURI, featureIds },
+      args: { addr, args },
     } = event;
+
+    const [baseTokenURI, featureIds] = args;
 
     await this.updateHistory(event, ctx);
 
     const availableFeatures = Object.values(Erc1155ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -308,13 +317,15 @@ export class ContractManagerServiceEth {
 
   public async mysterybox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, baseTokenURI, royalty, featureIds },
+      args: { addr, args },
     } = event;
+
+    const [name, symbol, baseTokenURI, royalty, featureIds] = args;
 
     await this.updateHistory(event, ctx);
 
     const availableFeatures = Object.values(MysteryContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -367,8 +378,10 @@ export class ContractManagerServiceEth {
 
   public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, account, startTimestamp, duration, templateId },
+      args: { addr, args },
     } = event;
+
+    const [account, startTimestamp, duration, templateId] = args;
 
     await this.updateHistory(event, ctx);
 
@@ -399,11 +412,13 @@ export class ContractManagerServiceEth {
 
   public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, maxStake, featureIds },
+      args: { addr, args },
     } = event;
 
+    const [maxStake, featureIds] = args;
+
     const availableFeatures = Object.values(StakingContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.updateHistory(event, ctx);
 

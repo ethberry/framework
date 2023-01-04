@@ -22,7 +22,7 @@ contract StakingFactory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event StakingDeployed(address addr, uint256 maxStake, uint8[] featureIds);
+  event StakingDeployed(address addr, StakingArgs args);
 
   function deployStaking(
     Params calldata params,
@@ -39,7 +39,7 @@ contract StakingFactory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.maxStake), params.nonce);
     _staking.push(addr);
 
-    emit StakingDeployed(addr, args.maxStake, args.featureIds);
+    emit StakingDeployed(addr, args);
   }
 
   function _hashStaking(Params calldata params, StakingArgs calldata args) internal view returns (bytes32) {

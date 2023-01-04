@@ -25,7 +25,7 @@ contract ERC20Factory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event ERC20TokenDeployed(address addr, string name, string symbol, uint256 cap, uint8[] featureIds);
+  event ERC20TokenDeployed(address addr, Erc20Args args);
 
   function deployERC20Token(
     Params calldata params,
@@ -42,7 +42,7 @@ contract ERC20Factory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.cap), params.nonce);
     _erc20_tokens.push(addr);
 
-    emit ERC20TokenDeployed(addr, args.name, args.symbol, args.cap, args.featureIds);
+    emit ERC20TokenDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](3);
     roles[0] = MINTER_ROLE;

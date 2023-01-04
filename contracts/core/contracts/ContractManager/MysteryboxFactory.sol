@@ -28,11 +28,7 @@ contract MysteryboxFactory is AbstractFactory {
 
   event MysteryboxDeployed(
     address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds
+    MysteryArgs args
   );
 
   function deployMysterybox(
@@ -50,7 +46,7 @@ contract MysteryboxFactory is AbstractFactory {
     addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
     _mysterybox_tokens.push(addr);
 
-    emit MysteryboxDeployed(addr, args.name, args.symbol, args.royalty, args.baseTokenURI, args.featureIds);
+    emit MysteryboxDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;

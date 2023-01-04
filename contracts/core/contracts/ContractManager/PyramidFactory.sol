@@ -23,6 +23,7 @@ contract PyramidFactory is AbstractFactory {
     uint8[] featureIds;
   }
 
+  // todo emit struct PyramidArgs
   event PyramidDeployed(address addr, uint8[] featureIds);
 
   function deployPyramid(

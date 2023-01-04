@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
 import { nonce } from "@gemunion/contracts-constants";
@@ -76,9 +77,21 @@ describe("VestingFactory", function () {
 
       const [address] = await contractInstance.allVesting();
 
+      // await expect(tx)
+      //   .to.emit(contractInstance, "VestingDeployed")
+      //   .withArgs(address, receiver.address, timestamp, span, templateId);
+
       await expect(tx)
         .to.emit(contractInstance, "VestingDeployed")
-        .withArgs(address, receiver.address, timestamp, span, templateId);
+        .withNamedArgs({
+          addr: address,
+          args: {
+            account: receiver.address,
+            startTimestamp: BigNumber.from(timestamp),
+            duration: BigNumber.from(span),
+            templateId: BigNumber.from(templateId),
+          },
+        });
     });
   });
 });

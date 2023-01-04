@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { constants, BigNumber } from "ethers";
 
 import {
   amount,
@@ -85,9 +85,22 @@ describe("MysteryboxFactory", function () {
 
       const [address] = await contractInstance.allMysteryboxes();
 
+      // await expect(tx)
+      //   .to.emit(contractInstance, "MysteryboxDeployed")
+      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+
       await expect(tx)
         .to.emit(contractInstance, "MysteryboxDeployed")
-        .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+        .withNamedArgs({
+          addr: address,
+          args: {
+            name: tokenName,
+            symbol: tokenSymbol,
+            royalty: BigNumber.from(royalty),
+            baseTokenURI,
+            featureIds,
+          },
+        });
 
       const erc721Instance = erc721.attach(address);
 
