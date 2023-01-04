@@ -3,14 +3,21 @@ import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { amount, nonce } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
 import { externalId, params, tokenId } from "../../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeCore", function () {
-  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  const factory = async () => {
+    const { contractInstance } = await deployExchangeFixture();
+    return contractInstance;
+  };
+
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  shouldBehaveLikePausable(factory);
 
   describe("purchase", function () {
     it("should purchase, spend ERC20", async function () {
