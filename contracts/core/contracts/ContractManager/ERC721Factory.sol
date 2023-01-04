@@ -26,10 +26,7 @@ contract ERC721Factory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event ERC721TokenDeployed(
-    address addr,
-    Erc721Args args
-  );
+  event ERC721TokenDeployed(address addr, Erc721Args args);
 
   function deployERC721Token(
     Params calldata params,
@@ -38,10 +35,8 @@ contract ERC721Factory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     _checkNonce(params.nonce);
 
-    require(
-      hasRole(DEFAULT_ADMIN_ROLE, _recoverSigner(_hashERC721(params, args), signature)),
-      "ContractManager: Wrong signer"
-    );
+    address signer = _recoverSigner(_hashERC721(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
     addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
     _erc721_tokens.push(addr);

@@ -33,10 +33,8 @@ contract PyramidFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     _checkNonce(params.nonce);
 
-    require(
-      hasRole(DEFAULT_ADMIN_ROLE, _recoverSigner(_hashPyramid(params, args), signature)),
-      "ContractManager: Wrong signer"
-    );
+    address signer = _recoverSigner(_hashPyramid(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
     addr = deploy2(params.bytecode, abi.encode(), params.nonce);
     _pyramid_tokens.push(addr);

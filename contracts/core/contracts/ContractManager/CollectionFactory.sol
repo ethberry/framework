@@ -26,11 +26,7 @@ contract CollectionFactory is AbstractFactory {
     uint96 batchSize;
   }
 
-  event CollectionDeployed(
-    address addr,
-    CollectionArgs args,
-    address owner
-  );
+  event CollectionDeployed(address addr, CollectionArgs args, address owner);
 
   function deployCollection(
     Params calldata params,
@@ -39,10 +35,8 @@ contract CollectionFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     _checkNonce(params.nonce);
 
-    require(
-      hasRole(DEFAULT_ADMIN_ROLE, _recoverSigner(_hashCollection(params, args), signature)),
-      "ContractManager: Wrong signer"
-    );
+    address signer = _recoverSigner(_hashCollection(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
     addr = deploy2(
       params.bytecode,
@@ -51,16 +45,7 @@ contract CollectionFactory is AbstractFactory {
     );
     _erc721c_token.push(addr);
 
-    emit CollectionDeployed(
-      addr,
-      args,
-//      args.symbol,
-//      args.royalty,
-//      args.baseTokenURI,
-//      args.featureIds,
-//      args.batchSize,
-      _msgSender()
-    );
+    emit CollectionDeployed(addr, args, _msgSender());
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;

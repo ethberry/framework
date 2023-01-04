@@ -33,10 +33,8 @@ contract ERC1155Factory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     _checkNonce(params.nonce);
 
-    require(
-      hasRole(DEFAULT_ADMIN_ROLE, _recoverSigner(_hashERC1155(params, args), signature)),
-      "ContractManager: Wrong signer"
-    );
+    address signer = _recoverSigner(_hashERC1155(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
     addr = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
     _erc1155_tokens.push(addr);

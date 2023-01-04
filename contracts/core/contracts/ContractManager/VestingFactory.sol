@@ -37,10 +37,8 @@ contract VestingFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     _checkNonce(params.nonce);
 
-    require(
-      hasRole(DEFAULT_ADMIN_ROLE, _recoverSigner(_hashVesting(params, args), signature)),
-      "ContractManager: Wrong signer"
-    );
+    address signer = _recoverSigner(_hashVesting(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
     addr = deploy2(params.bytecode, abi.encode(args.account, args.startTimestamp, args.duration), params.nonce);
     _vesting.push(addr);
