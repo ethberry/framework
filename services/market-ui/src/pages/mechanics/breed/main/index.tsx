@@ -69,7 +69,6 @@ export const Breed: FC = () => {
           tokenId: values.dad.token.tokenId,
           amount: 1,
         },
-        process.env.ACCOUNT,
         sign.signature,
       ) as Promise<void>;
     },

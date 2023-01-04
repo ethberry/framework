@@ -20,7 +20,7 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc998ContractDeployDto, web3Context, sign) => {
-      const { contractFeatures, name, symbol, baseTokenURI, royalty } = values;
+      const { contractFeatures, name, symbol, royalty, baseTokenURI } = values;
 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
@@ -29,31 +29,19 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
         web3Context.provider?.getSigner(),
       );
 
-      // return contract.deployERC998Token(
-      //   nonce,
-      //   sign.bytecode,
-      //   name,
-      //   symbol,
-      //   royalty,
-      //   baseTokenURI,
-      //   contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
-      //   process.env.ACCOUNT,
-      //   sign.signature,
-      // ) as Promise<void>;
       return contract.deployERC998Token(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           name,
           symbol,
           royalty,
           baseTokenURI,
           featureIds: contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
-          nonce,
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

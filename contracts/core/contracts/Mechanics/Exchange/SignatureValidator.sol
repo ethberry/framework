@@ -7,12 +7,14 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
-import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
+  using ECDSA for bytes32;
   using Address for address;
 
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -26,15 +28,15 @@ contract SignatureValidator is EIP712, Context {
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
   bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
 
-  bytes32 private immutable ONE_TO_ONE_SIGNATURE =
+  bytes32 private immutable ONE_TO_ONE_TYPEHASH =
     keccak256(
       bytes.concat("EIP712(address account,Params params,Asset item,Asset price)", ASSET_SIGNATURE, PARAMS_SIGNATURE)
     );
-  bytes32 private immutable ONE_TO_MANY_SIGNATURE =
+  bytes32 private immutable ONE_TO_MANY_TYPEHASH =
     keccak256(
       bytes.concat("EIP712(address account,Params params,Asset item,Asset[] price)", ASSET_SIGNATURE, PARAMS_SIGNATURE)
     );
-  bytes32 private immutable MANY_TO_MANY_SIGNATURE =
+  bytes32 private immutable MANY_TO_MANY_TYPEHASH =
     keccak256(
       bytes.concat(
         "EIP712(address account,Params params,Asset[] items,Asset[] price)",
@@ -45,13 +47,12 @@ contract SignatureValidator is EIP712, Context {
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 
-  function _verifyOneToOneSignature(
+  function _recoverOneToOneSignature(
     Params memory params,
     Asset memory item,
     Asset memory price,
-    address signer,
     bytes calldata signature
-  ) internal {
+  ) internal returns (address) {
     require(!_expired[params.nonce], "Exchange: Expired signature");
     _expired[params.nonce] = true;
 
@@ -61,17 +62,15 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashOneToOne(account, params, item, price), signature);
-    require(isVerified, "Exchange: Invalid signature");
+    return _recoverSigner(_hashOneToOne(account, params, item, price), signature);
   }
 
-  function _verifyOneToManySignature(
+  function _recoverOneToManySignature(
     Params memory params,
     Asset memory item,
     Asset[] memory price,
-    address signer,
     bytes calldata signature
-  ) internal {
+  ) internal returns (address) {
     require(!_expired[params.nonce], "Exchange: Expired signature");
     _expired[params.nonce] = true;
 
@@ -81,17 +80,15 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashOneToMany(account, params, item, price), signature);
-    require(isVerified, "Exchange: Invalid signature");
+    return _recoverSigner(_hashOneToMany(account, params, item, price), signature);
   }
 
-  function _verifyManyToManySignature(
+  function _recoverManyToManySignature(
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
-    address signer,
     bytes calldata signature
-  ) internal {
+  ) internal returns (address) {
     require(!_expired[params.nonce], "Exchange: Expired signature");
     _expired[params.nonce] = true;
 
@@ -101,16 +98,11 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashManyToMany(account, params, items, price), signature);
-    require(isVerified, "Exchange: Invalid signature");
+    return _recoverSigner(_hashManyToMany(account, params, items, price), signature);
   }
 
-  function _verify(
-    address signer,
-    bytes32 digest,
-    bytes memory signature
-  ) private view returns (bool) {
-    return SignatureChecker.isValidSignatureNow(signer, digest, signature);
+  function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {
+    return digest.recover(signature);
   }
 
   function _hashOneToOne(
@@ -123,7 +115,7 @@ contract SignatureValidator is EIP712, Context {
       _hashTypedDataV4(
         keccak256(
           abi.encode(
-            ONE_TO_ONE_SIGNATURE,
+            ONE_TO_ONE_TYPEHASH,
             account,
             _hashParamsStruct(params),
             _hashAssetStruct(item),
@@ -143,7 +135,7 @@ contract SignatureValidator is EIP712, Context {
       _hashTypedDataV4(
         keccak256(
           abi.encode(
-            ONE_TO_MANY_SIGNATURE,
+            ONE_TO_MANY_TYPEHASH,
             account,
             _hashParamsStruct(params),
             _hashAssetStruct(item),
@@ -163,7 +155,7 @@ contract SignatureValidator is EIP712, Context {
       _hashTypedDataV4(
         keccak256(
           abi.encode(
-            MANY_TO_MANY_SIGNATURE,
+            MANY_TO_MANY_TYPEHASH,
             account,
             _hashParamsStruct(params),
             _hashAssetStructArray(items),

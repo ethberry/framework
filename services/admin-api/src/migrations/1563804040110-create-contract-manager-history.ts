@@ -13,7 +13,7 @@ export class CreateContractManagerHistory1563804040110 implements MigrationInter
         'ERC998TokenDeployed',
         'ERC1155TokenDeployed',
         'MysteryboxDeployed',
-        'ERC721CollectionDeployed',
+        'CollectionDeployed',
         'PyramidDeployed'
       );
     `);

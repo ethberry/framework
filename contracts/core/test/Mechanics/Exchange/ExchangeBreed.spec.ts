@@ -35,7 +35,7 @@ describe("ExchangeBreed", function () {
   describe("breed", function () {
     describe("ERC721", function () {
       it("should breed", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
@@ -104,7 +104,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature,
         );
 
@@ -138,7 +137,7 @@ describe("ExchangeBreed", function () {
       });
 
       it("should fail: pregnancy count", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
@@ -180,7 +179,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature,
         );
 
@@ -238,7 +236,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature1,
         );
         await expect(tx2).to.be.revertedWith("Exchange: pregnancy count exceeded");
@@ -284,14 +281,13 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature2,
         );
         await expect(tx3).to.be.revertedWith("Exchange: pregnancy count exceeded");
       });
 
       it("should fail: pregnancy time", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
@@ -333,7 +329,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature,
         );
         await expect(tx1)
@@ -390,7 +385,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature1,
         );
         await expect(tx2).to.be.revertedWith("Exchange: pregnancy time limit");
@@ -483,7 +477,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature,
         );
 
@@ -526,11 +519,11 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          owner.address,
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Invalid signature");
+        // ECDSA always returns an address
+        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
       });
 
       it("should fail: Wrong signer", async function () {
@@ -569,7 +562,6 @@ describe("ExchangeBreed", function () {
             tokenId: 2,
             amount: 1,
           },
-          receiver.address,
           signature,
         );
 

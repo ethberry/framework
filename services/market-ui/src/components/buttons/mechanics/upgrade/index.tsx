@@ -76,7 +76,6 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
             amount: "1",
           },
           price,
-          process.env.ACCOUNT,
           sign.signature,
           {
             value: getEthPrice(price),

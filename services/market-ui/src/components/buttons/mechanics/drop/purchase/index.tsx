@@ -42,7 +42,6 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
-      process.env.ACCOUNT,
       sign.signature,
       {
         value: getEthPrice(drop.price),

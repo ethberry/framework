@@ -9,50 +9,39 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract ERC721Factory is AbstractFactory {
-  bytes private constant ERC721_PARAMS =
-  "Erc721(bytes bytecode,string name,string symbol,string baseTokenURI,uint8[] featureIds,uint96 royalty,bytes32 nonce)";
-  bytes32 private constant ERC721_PARAMS_TYPEHASH = keccak256(abi.encodePacked(ERC721_PARAMS));
+  bytes private constant ERC721_ARGUMENTS_SIGNATURE =
+    "Erc721Args(string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)";
+  bytes32 private constant ERC721_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC721_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable ERC721_PERMIT_SIGNATURE =
-  keccak256(bytes.concat("EIP712(Erc721 c)", ERC721_PARAMS));
+    keccak256(bytes.concat("EIP712(Params params,Erc721Args args)", ERC721_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
   address[] private _erc721_tokens;
 
-  struct Erc721 {
-    bytes bytecode;
+  struct Erc721Args {
     string name;
     string symbol;
+    uint96 royalty;
     string baseTokenURI;
     uint8[] featureIds;
-    uint96 royalty;
-    bytes32 nonce;
   }
 
-  event ERC721TokenDeployed(
-    address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds
-  );
+  event ERC721TokenDeployed(address addr, Erc721Args args);
 
   function deployERC721Token(
-    Signature calldata sig,
-    Erc721 calldata c
+    Params calldata params,
+    Erc721Args calldata args,
+    bytes calldata signature
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
+    _checkNonce(params.nonce);
 
-    bytes32 digest = _hashERC721(c);
+    address signer = _recoverSigner(_hashERC721(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    _checkSignature(sig.signer, digest, sig.signature);
-    _checkNonce(c.nonce);
-
-//    addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
-    addr = deploy2(c.bytecode, abi.encode(c.name, c.symbol, c.royalty, c.baseTokenURI), c.nonce);
+    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
     _erc721_tokens.push(addr);
 
-    emit ERC721TokenDeployed(addr, c.name, c.symbol, c.royalty, c.baseTokenURI, c.featureIds);
+    emit ERC721TokenDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
@@ -63,24 +52,25 @@ contract ERC721Factory is AbstractFactory {
     fixPermissions(addr, roles);
   }
 
-  function _hashERC721(Erc721 calldata c) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(ERC721_PERMIT_SIGNATURE, _hashErc721Struct(c))));
+  function _hashERC721(Params calldata params, Erc721Args calldata args) internal view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(abi.encode(ERC721_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc721Struct(args)))
+      );
   }
 
-  function _hashErc721Struct(Erc721 calldata c) private pure returns (bytes32) {
+  function _hashErc721Struct(Erc721Args calldata args) private pure returns (bytes32) {
     return
-    keccak256(
-      abi.encode(
-        ERC721_PARAMS_TYPEHASH,
-        keccak256(abi.encodePacked(c.bytecode)),
-        keccak256(abi.encodePacked(c.name)),
-        keccak256(abi.encodePacked(c.symbol)),
-        keccak256(abi.encodePacked(c.baseTokenURI)),
-        keccak256(abi.encodePacked(c.featureIds)),
-        c.royalty,
-        c.nonce
-      )
-    );
+      keccak256(
+        abi.encode(
+          ERC721_ARGUMENTS_TYPEHASH,
+          keccak256(abi.encodePacked(args.name)),
+          keccak256(abi.encodePacked(args.symbol)),
+          args.royalty,
+          keccak256(abi.encodePacked(args.baseTokenURI)),
+          keccak256(abi.encodePacked(args.featureIds))
+        )
+      );
   }
 
   function allERC721Tokens() external view returns (address[] memory) {

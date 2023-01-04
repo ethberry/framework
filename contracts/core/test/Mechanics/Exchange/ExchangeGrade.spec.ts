@@ -10,7 +10,7 @@ import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shar
 describe("ExchangeGrade", function () {
   describe("upgrade", function () {
     it("should update metadata", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
@@ -57,7 +57,6 @@ describe("ExchangeGrade", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 
@@ -74,7 +73,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: insufficient allowance", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
@@ -121,7 +120,6 @@ describe("ExchangeGrade", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 
@@ -129,7 +127,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: transfer amount exceeds balance", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
@@ -177,7 +175,6 @@ describe("ExchangeGrade", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 

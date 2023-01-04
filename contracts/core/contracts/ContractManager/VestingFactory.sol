@@ -9,64 +9,54 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract VestingFactory is AbstractFactory {
-  bytes private constant VESTING_PARAMS =
-    "Vesting(bytes bytecode,address account,uint64 startTimestamp,uint64 duration,uint256 templateId,bytes32 nonce)";
-  bytes32 private constant VESTING_PARAMS_TYPEHASH = keccak256(abi.encodePacked(VESTING_PARAMS));
+  bytes private constant VESTING_ARGUMENTS_SIGNATURE =
+    "VestingArgs(address account,uint64 startTimestamp,uint64 duration,uint256 templateId)";
+  bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(VESTING_ARGUMENTS_SIGNATURE));
 
-  bytes32 private immutable VESTING_PERMIT_SIGNATURE = keccak256(bytes.concat("EIP712(Vesting v)", VESTING_PARAMS));
+  bytes32 private immutable VESTING_PERMIT_SIGNATURE =
+    keccak256(bytes.concat("EIP712(Params params,VestingArgs args)", PARAMS_SIGNATURE, VESTING_ARGUMENTS_SIGNATURE));
 
   address[] private _vesting;
 
-  struct Vesting {
-    bytes bytecode;
+  struct VestingArgs {
     address account;
-    uint64 startTimestamp;
-    uint64 duration;
+    uint64 startTimestamp; // in sec
+    uint64 duration; // in sec
     uint256 templateId;
-    bytes32 nonce;
   }
 
   event VestingDeployed(
     address addr,
-    address account,
-    uint64 startTimestamp, // in seconds
-    uint64 duration, // in seconds
-    uint256 templateId
+    VestingArgs args
   );
 
   function deployVesting(
-    Signature calldata sig,
-    Vesting calldata v
+    Params calldata params,
+    VestingArgs calldata args,
+    bytes calldata signature
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
+    _checkNonce(params.nonce);
 
-    bytes32 digest = _hashVesting(v);
+    address signer = _recoverSigner(_hashVesting(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    _checkSignature(sig.signer, digest, sig.signature);
-    _checkNonce(v.nonce);
-
-    addr = deploy2(v.bytecode, abi.encode(v.account, v.startTimestamp, v.duration), v.nonce);
+    addr = deploy2(params.bytecode, abi.encode(args.account, args.startTimestamp, args.duration), params.nonce);
     _vesting.push(addr);
 
-    emit VestingDeployed(addr, v.account, v.startTimestamp, v.duration, v.templateId);
+    emit VestingDeployed(addr, args);
   }
 
-  function _hashVesting(Vesting calldata v) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(VESTING_PERMIT_SIGNATURE, _hashVestingStruct(v))));
+  function _hashVesting(Params calldata params, VestingArgs calldata args) internal view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(abi.encode(VESTING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashVestingStruct(args)))
+      );
   }
 
-  function _hashVestingStruct(Vesting calldata v) private pure returns (bytes32) {
+  function _hashVestingStruct(VestingArgs calldata args) private pure returns (bytes32) {
     return
       keccak256(
-        abi.encode(
-          VESTING_PARAMS_TYPEHASH,
-          keccak256(abi.encodePacked(v.bytecode)),
-          v.account,
-          v.startTimestamp,
-          v.duration,
-          v.templateId,
-          v.nonce
-        )
+        abi.encode(VESTING_ARGUMENTS_TYPEHASH, args.account, args.startTimestamp, args.duration, args.templateId)
       );
   }
 

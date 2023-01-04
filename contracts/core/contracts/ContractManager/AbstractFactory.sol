@@ -8,11 +8,16 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
-import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
 abstract contract AbstractFactory is EIP712, AccessControl {
+  using ECDSA for bytes32;
+
   mapping(bytes32 => bool) private _expired;
+
+  bytes internal constant PARAMS_SIGNATURE = "Params(bytes32 nonce,bytes bytecode)";
+  bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
 
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant SNAPSHOT_ROLE = keccak256("SNAPSHOT_ROLE");
@@ -21,9 +26,9 @@ abstract contract AbstractFactory is EIP712, AccessControl {
   address[] _minters;
   address[] _manipulators;
 
-  struct Signature {
-    address signer;
-    bytes signature;
+  struct Params {
+    bytes32 nonce;
+    bytes bytecode;
   }
 
   constructor() EIP712("ContractManager", "1.0.0") {
@@ -76,7 +81,6 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     }
   }
 
-
   function grantFactoryMintPermission(address addr) internal {
     IAccessControl instance = IAccessControl(addr);
     for (uint256 i = 0; i < _minters.length; i++) {
@@ -99,12 +103,8 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     }
   }
 
-  function _checkSignature(
-    address signer,
-    bytes32 digest,
-    bytes calldata signature
-  ) internal view {
-    require(_verify(signer, digest, signature), "ContractManager: Invalid signature");
+  function _recoverSigner(bytes32 digest, bytes calldata signature) internal pure returns (address) {
+    return digest.recover(signature);
   }
 
   function _checkNonce(bytes32 nonce) internal {
@@ -112,11 +112,7 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     _expired[nonce] = true;
   }
 
-  function _verify(
-    address signer,
-    bytes32 digest,
-    bytes memory signature
-  ) internal view returns (bool) {
-    return SignatureChecker.isValidSignatureNow(signer, digest, signature);
+  function _hashParamsStruct(Params calldata params) internal pure returns (bytes32) {
+    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, keccak256(abi.encodePacked(params.bytecode))));
   }
 }

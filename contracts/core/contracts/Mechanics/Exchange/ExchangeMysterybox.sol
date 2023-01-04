@@ -20,11 +20,10 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
-    address signer,
     bytes calldata signature
   ) external payable {
+    address signer = _recoverManyToManySignature(params, items, price, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(params, items, price, signer, signature);
 
     require(items.length > 1, "Exchange: Wrong items count");
 

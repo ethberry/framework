@@ -29,37 +29,20 @@ export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps
         web3Context.provider?.getSigner(),
       );
 
-      // return contract.deployERC721Collection(
-      //   {
-      //     nonce,
-      //     bytecode: sign.bytecode,
-      //     name,
-      //     symbol,
-      //     royalty,
-      //     baseTokenURI,
-      //     // contractFeatures: contractFeatures.map(feature => Object.keys(Erc721CollectionFeatures).indexOf(feature)),
-      //     contractFeatures: [],
-      //     batchSize,
-      //   },
-      //   process.env.ACCOUNT,
-      //   sign.signature,
-      // ) as Promise<void>;
-
-      return contract.deployERC721Collection(
+      return contract.deployCollection(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           name,
           symbol,
-          baseTokenURI,
-          featureIds: contractFeatures.map(feature => Object.keys(Erc721CollectionFeatures).indexOf(feature)),
           royalty,
+          baseTokenURI,
           batchSize,
-          nonce,
+          featureIds: contractFeatures.map(feature => Object.keys(Erc721CollectionFeatures).indexOf(feature)),
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

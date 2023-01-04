@@ -1,5 +1,5 @@
 import { Contract } from "ethers";
-
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
 import {
   shouldBalanceOf,
   shouldBalanceOfBatch,
@@ -15,8 +15,10 @@ import {
 } from "@gemunion/contracts-erc1155";
 
 export function shouldBehaveLikeERC1155(factory: () => Promise<Contract>) {
-  shouldMint(factory);
-  shouldMintBatch(factory);
+  shouldMint(factory, { minterRole: MINTER_ROLE });
+  shouldMintBatch(factory, { minterRole: MINTER_ROLE });
+  // shouldMint(factory);
+  // shouldMintBatch(factory);
   shouldBalanceOf(factory);
   shouldBalanceOfBatch(factory);
   shouldSetApprovalForAll(factory);

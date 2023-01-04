@@ -9,60 +9,47 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract StakingFactory is AbstractFactory {
-  bytes private constant STAKING_PARAMS =
-  "Staking(bytes bytecode,uint256 maxStake,uint8[] featureIds,bytes32 nonce)";
-  bytes32 private constant STAKING_PARAMS_TYPEHASH = keccak256(abi.encodePacked(STAKING_PARAMS));
+  bytes private constant STAKING_ARGUMENTS_SIGNATURE = "StakingArgs(uint256 maxStake,uint8[] featureIds)";
+  bytes32 private constant STAKING_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(STAKING_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable STAKING_PERMIT_SIGNATURE =
-  keccak256(bytes.concat("EIP712(Staking s)", STAKING_PARAMS));
+    keccak256(bytes.concat("EIP712(Params params,StakingArgs args)", PARAMS_SIGNATURE, STAKING_ARGUMENTS_SIGNATURE));
 
   address[] private _staking;
 
-  struct Staking {
-    bytes bytecode;
+  struct StakingArgs {
     uint256 maxStake;
     uint8[] featureIds;
-    bytes32 nonce;
   }
 
-  event StakingDeployed(
-    address addr,
-    uint256 maxStake,
-    uint8[] featureIds
-  );
+  event StakingDeployed(address addr, StakingArgs args);
 
   function deployStaking(
-    Signature calldata sig,
-    Staking calldata s
+    Params calldata params,
+    StakingArgs calldata args,
+    bytes calldata signature
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
+    _checkNonce(params.nonce);
 
-    bytes32 digest = _hashStaking(s);
+    address signer = _recoverSigner(_hashStaking(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    _checkSignature(sig.signer, digest, sig.signature);
-    _checkNonce(s.nonce);
-
-    addr = deploy2(s.bytecode, abi.encode(s.maxStake), s.nonce);
+    addr = deploy2(params.bytecode, abi.encode(args.maxStake), params.nonce);
     _staking.push(addr);
 
-    emit StakingDeployed(addr, s.maxStake, s.featureIds);
+    emit StakingDeployed(addr, args);
   }
 
-  function _hashStaking(Staking calldata s) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(STAKING_PERMIT_SIGNATURE, _hashStakingStruct(s))));
-  }
-
-  function _hashStakingStruct(Staking calldata s) private pure returns (bytes32) {
+  function _hashStaking(Params calldata params, StakingArgs calldata args) internal view returns (bytes32) {
     return
-    keccak256(
-      abi.encode(
-        STAKING_PARAMS_TYPEHASH,
-        keccak256(abi.encodePacked(s.bytecode)),
-        s.maxStake,
-        keccak256(abi.encodePacked(s.featureIds)),
-        s.nonce
-      )
-    );
+      _hashTypedDataV4(
+        keccak256(abi.encode(STAKING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashStakingStruct(args)))
+      );
+  }
+
+  function _hashStakingStruct(StakingArgs calldata args) private pure returns (bytes32) {
+    return
+      keccak256(abi.encode(STAKING_ARGUMENTS_TYPEHASH, args.maxStake, keccak256(abi.encodePacked(args.featureIds))));
   }
 
   function allStaking() external view returns (address[] memory) {

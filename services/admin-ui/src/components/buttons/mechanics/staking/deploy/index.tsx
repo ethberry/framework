@@ -31,15 +31,14 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
 
       return contract.deployStaking(
         {
-          signer: process.env.ACCOUNT,
-          signature: sign.signature,
+          nonce,
+          bytecode: sign.bytecode,
         },
         {
-          bytecode: sign.bytecode,
           maxStake,
           featureIds: contractFeatures.map(feature => Object.keys(StakingContractFeatures).indexOf(feature)),
-          nonce,
         },
+        sign.signature,
       ) as Promise<void>;
     },
   );

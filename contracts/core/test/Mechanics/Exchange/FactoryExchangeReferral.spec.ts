@@ -142,7 +142,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature,
         { value: amountWeiEth },
       );
@@ -211,7 +210,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature,
         { value: constants.WeiPerEther },
       );
@@ -293,7 +291,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature,
         { value: constants.WeiPerEther },
       );
@@ -365,7 +362,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature1,
         { value: constants.WeiPerEther },
       );
@@ -445,7 +441,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature2,
         { value: constants.WeiPerEther },
       );
@@ -546,7 +541,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature,
         { value: constants.WeiPerEther },
       );
@@ -618,7 +612,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature1,
         { value: constants.WeiPerEther },
       );
@@ -698,7 +691,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature2,
         { value: constants.WeiPerEther },
       );
@@ -822,7 +814,6 @@ describe("Factory Exchange Referral", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
         signature,
         { value: constants.WeiPerEther },
       );
@@ -933,7 +924,6 @@ describe("Factory Exchange Referral", function () {
             amount: constants.WeiPerEther,
           },
         ],
-        this.owner.address,
         signature,
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
@@ -1057,7 +1047,6 @@ describe("Factory Exchange Referral", function () {
             amount: constants.WeiPerEther,
           },
         ],
-        this.owner.address,
         signature,
         { value: constants.WeiPerEther },
       );

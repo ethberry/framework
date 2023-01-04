@@ -11,17 +11,17 @@ import {
   tokenSymbol,
 } from "@gemunion/contracts-constants";
 
-import { featureIds, templateId, tokenId } from "../constants";
+import { batchSize, featureIds, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
-describe("ERC998Factory", function () {
+describe("CollectionFactory", function () {
   const factory = () => deployContractManager(this.title);
 
-  describe("deployERC998Token", function () {
+  describe("deployCollection", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc998 = await ethers.getContractFactory("ERC998Simple");
+      const erc721 = await ethers.getContractFactory("ERC721Collection");
 
       const contractInstance = await factory();
 
@@ -37,25 +37,26 @@ describe("ERC998Factory", function () {
         {
           EIP712: [
             { name: "params", type: "Params" },
-            { name: "args", type: "Erc998Args" },
+            { name: "args", type: "CollectionArgs" },
           ],
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
           ],
-          Erc998Args: [
+          CollectionArgs: [
             { name: "name", type: "string" },
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
             { name: "featureIds", type: "uint8[]" },
+            { name: "batchSize", type: "uint96" },
           ],
         },
         // Values
         {
           params: {
             nonce,
-            bytecode: erc998.bytecode,
+            bytecode: erc721.bytecode,
           },
           args: {
             name: tokenName,
@@ -63,33 +64,31 @@ describe("ERC998Factory", function () {
             royalty,
             baseTokenURI,
             featureIds,
+            batchSize,
           },
         },
       );
 
-      const tx = await contractInstance.deployERC998Token(
+      const tx = await contractInstance.deployCollection(
         {
           nonce,
-          bytecode: erc998.bytecode,
+          bytecode: erc721.bytecode,
         },
         {
           name: tokenName,
           symbol: tokenSymbol,
+          royalty,
           baseTokenURI,
           featureIds,
-          royalty,
+          batchSize,
         },
         signature,
       );
 
-      const [address] = await contractInstance.allERC998Tokens();
-
-      // await expect(tx)
-      //   .to.emit(contractInstance, "ERC998TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+      const [address] = await contractInstance.allCollections();
 
       await expect(tx)
-        .to.emit(contractInstance, "ERC998TokenDeployed")
+        .to.emit(contractInstance, "CollectionDeployed")
         .withNamedArgs({
           addr: address,
           args: {
@@ -98,25 +97,31 @@ describe("ERC998Factory", function () {
             royalty: BigNumber.from(royalty),
             baseTokenURI,
             featureIds,
+            batchSize: BigNumber.from(batchSize),
           },
+          owner: owner.address,
         });
 
-      const erc998Instance = erc998.attach(address);
+      const erc721Instance = erc721.attach(address);
 
-      const hasRole1 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
+      await expect(tx)
+        .to.emit(erc721Instance, "ConsecutiveTransfer")
+        .withArgs(0, batchSize - 1, constants.AddressZero, owner.address);
+
+      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
       expect(hasRole1).to.equal(false);
 
-      const hasRole2 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
+      const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
       expect(hasRole2).to.equal(true);
 
-      const tx2 = erc998Instance.mintCommon(receiver.address, templateId);
-      await expect(tx2).to.emit(erc998Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
+      await expect(tx2).to.be.revertedWith("MethodNotSupported");
 
-      const balance = await erc998Instance.balanceOf(receiver.address);
-      expect(balance).to.equal(1);
+      const balance = await erc721Instance.balanceOf(owner.address);
+      expect(balance).to.equal(batchSize);
 
-      const uri = await erc998Instance.tokenURI(tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${erc998Instance.address.toLowerCase()}/${tokenId}`);
+      const uri = await erc721Instance.tokenURI(tokenId);
+      expect(uri).to.equal(`${baseTokenURI}/${erc721Instance.address.toLowerCase()}/${tokenId}`);
     });
   });
 });

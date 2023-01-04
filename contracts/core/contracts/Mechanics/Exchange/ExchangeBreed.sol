@@ -16,7 +16,6 @@ import "./interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-
   uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
   uint64 public _pregnancyCountLimit = 0;
   uint64 public _pregnancyMaxTime = 0;
@@ -34,11 +33,10 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     Params memory params,
     Asset memory item,
     Asset memory price,
-    address signer,
     bytes calldata signature
   ) external payable {
+    address signer = _recoverOneToOneSignature(params, item, price, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToOneSignature(params, item, price, signer, signature);
 
     address account = _msgSender();
 
@@ -71,8 +69,12 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
 
     require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
-    uint64 timeLimitM = pregnancyM.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
-    uint64 timeLimitS = pregnancyS.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
+    uint64 timeLimitM = pregnancyM.count > 13
+      ? _pregnancyMaxTime
+      : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
+    uint64 timeLimitS = pregnancyS.count > 13
+      ? _pregnancyMaxTime
+      : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
 
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
       require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");

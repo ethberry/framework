@@ -72,7 +72,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature1,
       );
 
@@ -123,7 +122,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature2,
       );
 
@@ -186,7 +184,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature3,
       );
 
@@ -283,7 +280,6 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 

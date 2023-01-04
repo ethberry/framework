@@ -22,6 +22,7 @@ import {
   PyramidContractFeatures,
   VestingContractTemplate,
   StakingContractFeatures,
+  Erc721CollectionFeatures,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -98,13 +99,16 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc20ContractFeatures(dto);
 
-    const c = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       name,
       symbol,
       cap,
       featureIds: contractFeatures.map(feature => Object.keys(Erc20ContractFeatures).indexOf(feature)),
-      nonce,
     };
 
     const signature = await this.signer._signTypedData(
@@ -117,18 +121,26 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "c", type: "Erc20" }],
-        Erc20: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "Erc20Args" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        Erc20Args: [
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
           { name: "cap", type: "uint256" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { c },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -140,14 +152,17 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractFeatures(dto);
 
-    const c = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       name,
       symbol,
+      royalty,
       baseTokenURI,
       featureIds: contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
-      royalty,
-      nonce,
     };
 
     const signature = await this.signer._signTypedData(
@@ -160,19 +175,27 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "c", type: "Erc721" }],
-        Erc721: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "Erc721Args" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        Erc721Args: [
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "royalty", type: "uint96" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { c },
+      // Values
+      {
+        params,
+        args,
+      },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
@@ -183,15 +206,18 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721CollectionFeatures(dto);
 
-    const c = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       name,
       symbol,
-      baseTokenURI,
-      featureIds: contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
       royalty,
+      baseTokenURI,
+      featureIds: contractFeatures.map(feature => Object.keys(Erc721CollectionFeatures).indexOf(feature)),
       batchSize,
-      nonce,
     };
 
     const signature = await this.signer._signTypedData(
@@ -204,20 +230,28 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "c", type: "Collection" }],
-        Collection: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "CollectionArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        CollectionArgs: [
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "royalty", type: "uint96" },
           { name: "batchSize", type: "uint96" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { c },
+      // Values
+      {
+        params,
+        args,
+      },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
@@ -228,15 +262,19 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc998ContractFeatures(dto);
 
-    const c = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       name,
       symbol,
       royalty,
       baseTokenURI,
       featureIds: contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
-      nonce,
     };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -247,19 +285,27 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "c", type: "Erc998" }],
-        Erc998: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "Erc998Args" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        Erc998Args: [
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
           { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { c },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -271,13 +317,17 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc1155ContractFeatures(dto);
 
-    const c = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       royalty,
       baseTokenURI,
       featureIds: contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
-      nonce,
     };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -288,17 +338,25 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "c", type: "Erc1155" }],
-        Erc1155: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "Erc1155Args" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        Erc1155Args: [
           { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { c },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -309,11 +367,16 @@ export class ContractManagerSignService {
     const { contractFeatures } = dto;
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByPyramidContractFeatures(dto);
-    const p = {
-      bytecode,
-      featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+
+    const params = {
       nonce,
+      bytecode,
     };
+
+    const args = {
+      featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+    };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -324,15 +387,21 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "p", type: "Pyramid" }],
-        Pyramid: [
-          { name: "bytecode", type: "bytes" },
-          { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "PyramidArgs" },
         ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+        ],
+        PyramidArgs: [{ name: "featureIds", type: "uint8[]" }],
       },
-      // Value
-      { p },
+      // Values
+      {
+        params,
+        args,
+      },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
@@ -343,15 +412,19 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByMysteryContractFeatures(dto);
 
-    const m = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       name,
       symbol,
       royalty,
       baseTokenURI,
       featureIds: contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
-      nonce,
     };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -362,19 +435,27 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "m", type: "Mystery" }],
-        Mystery: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "MysteryArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        MysteryArgs: [
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
           { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { m },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -387,14 +468,18 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
 
-    const v = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       account,
       startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
       duration: duration * 60 * 60 * 24, // in seconds
       templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
-      nonce,
     };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -405,18 +490,26 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "v", type: "Vesting" }],
-        Vesting: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "VestingArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        VestingArgs: [
           { name: "account", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "duration", type: "uint64" },
           { name: "templateId", type: "uint256" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { v },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -429,12 +522,16 @@ export class ContractManagerSignService {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByStakingContractFeatures(dto);
 
-    const s = {
+    const params = {
+      nonce,
       bytecode,
+    };
+
+    const args = {
       maxStake,
       featureIds: contractFeatures.map(feature => Object.keys(StakingContractFeatures).indexOf(feature)),
-      nonce,
     };
+
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -445,16 +542,24 @@ export class ContractManagerSignService {
       },
       // Types
       {
-        EIP712: [{ name: "s", type: "Staking" }],
-        Staking: [
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "StakingArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+        ],
+        StakingArgs: [
           { name: "maxStake", type: "uint256" },
           { name: "featureIds", type: "uint8[]" },
-          { name: "nonce", type: "bytes32" },
         ],
       },
-      // Value
-      { s },
+      // Values
+      {
+        params,
+        args,
+      },
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };

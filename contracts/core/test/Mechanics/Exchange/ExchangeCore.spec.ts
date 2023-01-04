@@ -21,7 +21,7 @@ describe("ExchangeCore", function () {
 
   describe("purchase", function () {
     it("should purchase, spend ERC20", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -64,7 +64,6 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 
@@ -72,7 +71,7 @@ describe("ExchangeCore", function () {
     });
 
     it("should purchase, spend ETH", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
@@ -111,7 +110,6 @@ describe("ExchangeCore", function () {
             tokenType: 0,
           },
         ],
-        owner.address,
         signature,
         { value: BigNumber.from("123000000000000000") },
       );
@@ -120,7 +118,7 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail: duplicate mint", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -163,7 +161,6 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 
@@ -185,7 +182,6 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
       await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
@@ -235,7 +231,6 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        stranger.address,
         signature,
       );
 
@@ -283,15 +278,14 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        receiver.address,
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
+      // ECDSA always returns an address
+      await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
     });
 
     it("should fail: wrong signature", async function () {
-      const [owner] = await ethers.getSigners();
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -312,15 +306,14 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        owner.address,
         utils.formatBytes32String("signature"),
       );
 
-      await expect(tx).to.be.revertedWith(`Exchange: Invalid signature`);
+      await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
 
     it("should fail: expired signature", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -367,7 +360,6 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        owner.address,
         signature,
       );
 

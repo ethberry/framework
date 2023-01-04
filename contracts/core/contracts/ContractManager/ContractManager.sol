@@ -13,7 +13,7 @@ import "./ERC998Factory.sol";
 import "./ERC1155Factory.sol";
 import "./MysteryboxFactory.sol";
 import "./PyramidFactory.sol";
-import "./ERC721CollectionFactory.sol";
+import "./CollectionFactory.sol";
 import "./StakingFactory.sol";
 
 contract ContractManager is
@@ -24,6 +24,6 @@ contract ContractManager is
   ERC1155Factory,
   MysteryboxFactory,
   PyramidFactory,
-  ERC721CollectionFactory,
+  CollectionFactory,
   StakingFactory
 {}

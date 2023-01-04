@@ -9,50 +9,42 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract MysteryboxFactory is AbstractFactory {
-  bytes private constant MYSTERYBOX_PARAMS =
-  "Mystery(bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds,bytes32 nonce)";
-  bytes32 private constant MYSTERYBOX_PARAMS_TYPEHASH = keccak256(abi.encodePacked(MYSTERYBOX_PARAMS));
+  bytes private constant MYSTERYBOX_ARGUMENTS_SIGNATURE =
+    "MysteryArgs(string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)";
+  bytes32 private constant MYSTERYBOX_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(MYSTERYBOX_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
-  keccak256(bytes.concat("EIP712(Mystery m)", MYSTERYBOX_PARAMS));
+    keccak256(bytes.concat("EIP712(Params params,MysteryArgs args)", MYSTERYBOX_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
   address[] private _mysterybox_tokens;
 
-  struct Mystery {
-    bytes bytecode;
+  struct MysteryArgs {
     string name;
     string symbol;
     uint96 royalty;
     string baseTokenURI;
     uint8[] featureIds;
-    bytes32 nonce;
   }
 
   event MysteryboxDeployed(
     address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds
+    MysteryArgs args
   );
 
   function deployMysterybox(
-    Signature calldata sig,
-    Mystery calldata m
+    Params calldata params,
+    MysteryArgs calldata args,
+    bytes calldata signature
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
+    _checkNonce(params.nonce);
 
-    bytes32 digest = _hashMysterybox(m);
+    address signer = _recoverSigner(_hashMysterybox(params, args), signature);
+    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    _checkSignature(sig.signer, digest, sig.signature);
-    _checkNonce(m.nonce);
-
-//    addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
-    addr = deploy2(m.bytecode, abi.encode(m.name, m.symbol, m.royalty, m.baseTokenURI), m.nonce);
+    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
     _mysterybox_tokens.push(addr);
 
-    emit MysteryboxDeployed(addr, m.name, m.symbol, m.royalty, m.baseTokenURI, m.featureIds);
+    emit MysteryboxDeployed(addr, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
@@ -64,24 +56,25 @@ contract MysteryboxFactory is AbstractFactory {
     addFactory(addr, MINTER_ROLE);
   }
 
-  function _hashMysterybox(Mystery calldata m) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(MYSTERYBOX_PERMIT_SIGNATURE, _hashMysteryStruct(m))));
+  function _hashMysterybox(Params calldata params, MysteryArgs calldata args) internal view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(abi.encode(MYSTERYBOX_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashMysteryStruct(args)))
+      );
   }
 
-  function _hashMysteryStruct(Mystery calldata m) private pure returns (bytes32) {
+  function _hashMysteryStruct(MysteryArgs calldata args) private pure returns (bytes32) {
     return
-    keccak256(
-      abi.encode(
-        MYSTERYBOX_PARAMS_TYPEHASH,
-        keccak256(abi.encodePacked(m.bytecode)),
-        keccak256(abi.encodePacked(m.name)),
-        keccak256(abi.encodePacked(m.symbol)),
-        m.royalty,
-        keccak256(abi.encodePacked(m.baseTokenURI)),
-        keccak256(abi.encodePacked(m.featureIds)),
-        m.nonce
-      )
-    );
+      keccak256(
+        abi.encode(
+          MYSTERYBOX_ARGUMENTS_TYPEHASH,
+          keccak256(abi.encodePacked(args.name)),
+          keccak256(abi.encodePacked(args.symbol)),
+          args.royalty,
+          keccak256(abi.encodePacked(args.baseTokenURI)),
+          keccak256(abi.encodePacked(args.featureIds))
+        )
+      );
   }
 
   function allMysteryboxes() external view returns (address[] memory) {
