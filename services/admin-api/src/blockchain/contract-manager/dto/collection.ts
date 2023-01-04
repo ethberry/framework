@@ -3,17 +3,17 @@ import { IsArray, IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "cl
 import { Transform } from "class-transformer";
 
 import type { IErc721CollectionDeployDto } from "@framework/types";
-import { Erc721ContractFeatures } from "@framework/types";
+import { Erc721CollectionFeatures } from "@framework/types";
 
 export class Erc721CollectionDeployDto implements IErc721CollectionDeployDto {
   @ApiProperty({
-    enum: Erc721ContractFeatures,
+    enum: Erc721CollectionFeatures,
     isArray: true,
   })
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<Erc721ContractFeatures>)
-  @IsEnum(Erc721ContractFeatures, { each: true, message: "badInput" })
-  public contractFeatures: Array<Erc721ContractFeatures>;
+  @Transform(({ value }) => value as Array<Erc721CollectionFeatures>)
+  @IsEnum(Erc721CollectionFeatures, { each: true, message: "badInput" })
+  public contractFeatures: Array<Erc721CollectionFeatures>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

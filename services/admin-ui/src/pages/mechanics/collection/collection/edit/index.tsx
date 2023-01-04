@@ -50,7 +50,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId="Erc721ContractEditForm"
+      testId="Erc721CollectionEditForm"
       action={
         <BlockchainInfoPopover
           name={name}

@@ -29,7 +29,7 @@ export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployERC721Collection(
+      return contract.deployCollection(
         {
           nonce,
           bytecode: sign.bytecode,
