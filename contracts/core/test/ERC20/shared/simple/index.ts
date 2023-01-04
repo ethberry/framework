@@ -1,4 +1,5 @@
 import { Contract } from "ethers";
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import {
   shouldBehaveLikeERC20,
@@ -10,7 +11,7 @@ import {
 import { shouldReceive } from "./receive";
 
 export function shouldBehaveLikeERC20Simple(factory: () => Promise<Contract>) {
-  shouldBehaveLikeERC20(factory);
+  shouldBehaveLikeERC20(factory, { minterRole: MINTER_ROLE });
   shouldBehaveLikeERC20Burnable(factory);
   shouldBehaveLikeERC20Capped(factory);
   shouldBehaveLikeERC20Snapshot(factory);

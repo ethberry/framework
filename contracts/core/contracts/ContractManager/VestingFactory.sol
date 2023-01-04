@@ -8,8 +8,6 @@ pragma solidity ^0.8.9;
 
 import "./AbstractFactory.sol";
 
-import "hardhat/console.sol";
-
 contract VestingFactory is AbstractFactory {
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =
     "VestingArgs(address account,uint64 startTimestamp,uint64 duration,uint256 templateId)";
