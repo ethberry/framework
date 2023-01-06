@@ -22,6 +22,10 @@ contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
     uint96 batchSize,
     address owner
   ) ERC721ABRK(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
+    _mintConsecutive2(owner, batchSize);
+  }
+
+  function _mintConsecutive2(address owner, uint96 batchSize) internal override {
     _mintConsecutive(owner, batchSize);
   }
 
