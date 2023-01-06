@@ -5,12 +5,12 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { decimals } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
+import { expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
-import { deployLinkVrfFixture } from "../../shared/link";
-import { randomRequest } from "../../shared/randomRequest";
-import { decodeGenes, decodeMetadata, decodeNumber } from "../../shared/metadata";
+import { LinkToken, VRFCoordinatorMock } from "../../typechain-types";
+import { deployLinkVrfFixture } from "../shared/link";
+import { randomRequest } from "../shared/randomRequest";
+import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
 
 describe("ExchangeBreed", function () {
   let linkInstance: LinkToken;
@@ -20,7 +20,7 @@ describe("ExchangeBreed", function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
+    ({ linkInstance, vrfInstance } = await loadFixture(function exchange() {
       return deployLinkVrfFixture();
     }));
 

@@ -4,7 +4,7 @@ import { BigNumber, constants, utils } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, tokenId, tokenZero } from "../../constants";
+import { expiresAt, externalId, tokenId, tokenZero } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {

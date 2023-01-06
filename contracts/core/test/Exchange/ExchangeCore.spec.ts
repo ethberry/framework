@@ -6,7 +6,7 @@ import { time } from "@openzeppelin/test-helpers";
 import { amount, DEFAULT_ADMIN_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
-import { externalId, params, tokenId } from "../../constants";
+import { externalId, params, tokenId } from "../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 

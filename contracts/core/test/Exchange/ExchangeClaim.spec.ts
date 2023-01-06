@@ -4,11 +4,11 @@ import { constants, BigNumber } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, decimals } from "@gemunion/contracts-constants";
-import { LINK_ADDR, params, tokenId, VRF_ADDR } from "../../constants";
+import { LINK_ADDR, params, tokenId, VRF_ADDR } from "../constants";
 
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { deployLinkVrfFixture } from "../../shared/link";
-import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
+import { deployLinkVrfFixture } from "../shared/link";
+import { LinkToken, VRFCoordinatorMock } from "../../typechain-types";
 
 describe("ExchangeClaim", function () {
   let linkInstance: LinkToken;
@@ -18,7 +18,7 @@ describe("ExchangeClaim", function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
+    ({ linkInstance, vrfInstance } = await loadFixture(function exchange() {
       return deployLinkVrfFixture();
     }));
 

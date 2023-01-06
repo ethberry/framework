@@ -23,8 +23,7 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
-
-import "../Exchange/referral/LinearReferral.sol";
+import "../../Exchange/referral/LinearReferral.sol";
 
 contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferral {
   using Address for address;
@@ -117,11 +116,7 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     return super._afterPurchase(referrer, price);
   }
 
-  function receiveReward(
-    uint256 stakeId,
-    bool withdrawDeposit,
-    bool breakLastPeriod
-  ) public virtual whenNotPaused {
+  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
     Rule memory rule = _rules[stake.ruleId];
     Asset memory depositItem = _stakes[stakeId].deposit;
@@ -140,8 +135,9 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     if (withdrawDeposit) {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
-      uint256 withdrawAmount = multiplier == 0 ? (stakeAmount - stakeAmount / 100 * (rule.penalty / 100)) : stakeAmount;
-
+      uint256 withdrawAmount = multiplier == 0
+        ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100))
+        : stakeAmount;
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), withdrawAmount);
@@ -150,7 +146,13 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
       } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
         IERC721Metadata(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
       } else if (depositItem.tokenType == TokenType.ERC1155) {
-        IERC1155(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId, withdrawAmount, "0x");
+        IERC1155(depositItem.token).safeTransferFrom(
+          address(this),
+          receiver,
+          depositItem.tokenId,
+          withdrawAmount,
+          "0x"
+        );
       }
     } else {
       stake.startTimestamp = block.timestamp;
@@ -205,13 +207,9 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     _unpause();
   }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC1155Receiver)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

@@ -4,7 +4,7 @@ import { constants } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { params, templateId, tokenId } from "../../constants";
+import { params, templateId, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeGrade", function () {

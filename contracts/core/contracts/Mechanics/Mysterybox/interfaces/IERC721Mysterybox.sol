@@ -6,12 +6,8 @@
 
 pragma solidity ^0.8.9;
 
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../../Exchange/interfaces/IAsset.sol";
 
 interface IERC721Mysterybox {
-  function mintBox(
-    address to,
-    uint256 templateId,
-    Asset[] memory items
-  ) external;
+  function mintBox(address to, uint256 templateId, Asset[] memory items) external;
 }

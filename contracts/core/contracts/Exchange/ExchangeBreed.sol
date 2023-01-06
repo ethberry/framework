@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
-import "../../ERC721/interfaces/IERC721Upgradeable.sol";
+import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
   uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time

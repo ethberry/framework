@@ -11,8 +11,8 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../Exchange/ExchangeUtils.sol";
-import "../Exchange/interfaces/IAsset.sol";
+import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/interfaces/IAsset.sol";
 
 contract Waitlist is ExchangeUtils, AccessControl, Pausable {
   using Counters for Counters.Counter;
@@ -64,8 +64,7 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
 
     address account = _msgSender();
 
-
-//    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(account)));
+    //    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(account)));
     bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(account)))));
 
     require(verified, "Waitlist: You are not in the wait list");

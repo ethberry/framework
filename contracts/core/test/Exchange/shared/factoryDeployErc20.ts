@@ -6,8 +6,8 @@ import { blockAwait } from "@gemunion/contracts-utils";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { cap, featureIds } from "../../../constants";
-import { ContractManager, ERC20Simple, Exchange } from "../../../../typechain-types";
+import { cap, featureIds } from "../../constants";
+import { ContractManager, ERC20Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc20(
   factoryInstance: ContractManager,
@@ -80,7 +80,15 @@ export async function factoryDeployErc20(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC20TokenDeployed")
-    .withArgs(address, tokenName, tokenSymbol, cap, featureIds);
+    .withNamedArgs({
+      addr: address,
+      args: {
+        name: tokenName,
+        symbol: tokenSymbol,
+        cap,
+        featureIds,
+      },
+    });
 
   const erc20Instance = erc20.attach(address);
 

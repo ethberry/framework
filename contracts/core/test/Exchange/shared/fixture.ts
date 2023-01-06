@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 
 import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-import { Exchange } from "../../../../typechain-types";
+import { Exchange } from "../../../typechain-types";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
 
 export async function deployExchangeFixture() {
@@ -47,4 +47,20 @@ export async function deployErc1155Base(name: string, exchangeInstance: Exchange
   await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
   return erc1155Instance;
+}
+
+export async function deployContractManager(exchangeInstance: Exchange) {
+  const managerFactory = await ethers.getContractFactory("ContractManager");
+  const managerInstance = await managerFactory.deploy();
+
+  const minters = [exchangeInstance.address];
+  const metadata = [exchangeInstance.address];
+  await managerInstance.setFactories(
+    // minters
+    minters,
+    // metadata editors
+    metadata,
+  );
+
+  return managerInstance;
 }

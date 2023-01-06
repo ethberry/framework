@@ -4,7 +4,7 @@ import { constants, utils } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { params, tokenId } from "../../constants";
+import { params, tokenId } from "../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeCraft", function () {

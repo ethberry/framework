@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../../Exchange/interfaces/IAsset.sol";
 
 interface IPyramid {
   struct Rule {

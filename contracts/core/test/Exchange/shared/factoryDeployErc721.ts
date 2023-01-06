@@ -1,5 +1,6 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
+import { BigNumber } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import {
@@ -13,8 +14,8 @@ import {
 } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { featureIds } from "../../../constants";
-import { ContractManager, ERC721Simple, Exchange } from "../../../../typechain-types";
+import { featureIds } from "../../constants";
+import { ContractManager, ERC721Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc721(
   factoryInstance: ContractManager,
@@ -89,7 +90,16 @@ export async function factoryDeployErc721(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC721TokenDeployed")
-    .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+    .withNamedArgs({
+      addr: address,
+      args: {
+        name: tokenName,
+        symbol: tokenSymbol,
+        royalty: BigNumber.from(royalty),
+        baseTokenURI,
+        featureIds,
+      },
+    });
 
   const erc721Instance = erc721.attach(address);
 
