@@ -131,7 +131,6 @@ export class ContractManagerServiceEth {
     } = event;
 
     const [name, symbol, royalty, baseTokenURI, featureIds] = args;
-    console.log("erc721Token-args", args);
 
     await this.updateHistory(event, ctx);
 
@@ -210,11 +209,14 @@ export class ContractManagerServiceEth {
       contractId: contractEntity.id,
     });
 
-    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
+    const currentDateTime = new Date().toISOString();
+    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
       attributes: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
       template: templateEntity,
+      createdAt: currentDateTime,
+      updatedAt: currentDateTime,
     }));
 
     const entityArray = await this.tokenService.createBatch(tokenArray);
@@ -228,10 +230,14 @@ export class ContractManagerServiceEth {
   }
 
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
+    const currentDateTime = new Date().toISOString();
+
     const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
       account: owner.toLowerCase(),
       amount: "1",
       tokenId: tokenArray[i].id,
+      createdAt: currentDateTime,
+      updatedAt: currentDateTime,
     }));
 
     await this.balanceService.createBatch(balanceArray);

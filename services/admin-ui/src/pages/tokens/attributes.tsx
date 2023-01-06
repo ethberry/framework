@@ -32,6 +32,8 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
           });
         break;
       case TokenAttributes.TEMPLATE_ID:
+        Object.assign(memo, { [key]: ~~value });
+        break;
       default:
         break;
     }

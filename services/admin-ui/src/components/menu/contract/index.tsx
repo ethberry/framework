@@ -17,6 +17,7 @@ import { EthListenerAddMenuItem } from "./eth-add";
 import { EthListenerRemoveMenuItem } from "./eth-remove";
 import { PyramidBalanceMenuItem } from "./pyramid-balances";
 import { StakesMenuItem } from "./max-stakes";
+import { CollectionUploadMenuItem } from "./collection/upload";
 
 export enum ContractActions {
   SNAPSHOT = "SNAPSHOT",
@@ -76,6 +77,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {actions.includes(ContractActions.PAUSABLE) ? <PausableMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.PYRAMID ? <PyramidBalanceMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.STAKING ? <StakesMenuItem contract={contract} /> : null}
+        {contract.contractModule === ModuleType.COLLECTION ? <CollectionUploadMenuItem contract={contract} /> : null}
       </Menu>
     </Fragment>
   );

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -19,7 +20,7 @@ export interface IErc721ViewDialogProps {
 export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, attributes, balance } = initialValues;
+  const { template, tokenId, attributes, balance, imageUrl } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -71,7 +72,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <img src={template?.imageUrl} alt={template?.title} />
+                <img src={imageUrl || ""} alt={template?.title} />
               </TableCell>
             </TableRow>
           </TableBody>

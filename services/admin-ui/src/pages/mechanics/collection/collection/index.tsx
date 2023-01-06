@@ -15,7 +15,7 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
+// import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   ContractFeatures,
   ContractStatus,
@@ -29,7 +29,7 @@ import { Erc721CollectionDeployButton } from "../../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
-export const Erc721Collection: FC = () => {
+export const Collection: FC = () => {
   const {
     rows,
     count,
@@ -49,10 +49,10 @@ export const Erc721Collection: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/erc721-collections/contracts",
+    baseUrl: "/collections/contracts",
     empty: {
       title: "",
-      description: emptyStateString,
+      // description: emptyStateString,
       contractStatus: ContractStatus.NEW,
     },
     search: {
@@ -70,9 +70,9 @@ export const Erc721Collection: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.contracts"]} />
 
-      <PageHeader message="pages.collections.title">
+      <PageHeader message="pages.collections.contracts">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -93,7 +93,12 @@ export const Erc721Collection: FC = () => {
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListItemText>
+                {contract.description && JSON.parse(contract.description).batchSize
+                  ? `Batch size: ${JSON.parse(contract.description).batchSize}`
+                  : ""}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

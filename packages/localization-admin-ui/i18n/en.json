@@ -310,6 +310,7 @@
       "addListener": "Add ETH Listener",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
+      "collectionUpload": "Upload collection",
       "claim": "Claim",
       "create": "Create",
       "delete": "Delete",
@@ -648,7 +649,7 @@
         "title": "Mechanics",
         "vesting": "Vesting",
         "waitlist": "Waitlist",
-        "erc721Collection": "ERC721 Collections"
+        "collection": "Collections"
       },
       "title": "Dashboard",
       "wallet": {
@@ -678,10 +679,10 @@
       }
     },
     "collections": {
-      "title": "ERC721 Collections",
-      "contracts": {
-        "title": "Collection Contracts"
-      }
+      "title": "Collections",
+      "contracts": "Collection contracts",
+      "templates": "Collection templates",
+      "tokens": "Collection tokens"
     },
    "erc721": {
       "contracts": {

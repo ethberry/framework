@@ -21,6 +21,7 @@ export class RoundServiceRmq {
       throw new NotFoundException("contractNotFound");
     }
 
+    // TODO VALIDATE?
     const descriptionJson = JSON.parse(lotteryEntity.description);
     Object.assign(descriptionJson, {
       schedule: dto.schedule,

@@ -45,7 +45,7 @@ export const Erc721Template: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/erc721-templates",
+    baseUrl: "/collections/templates",
     empty: {
       title: "",
       description: emptyStateString,
@@ -80,9 +80,9 @@ export const Erc721Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.templates"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.templates"]} />
 
-      <PageHeader message="pages.erc721.templates.title">
+      <PageHeader message="pages.collections.templates">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

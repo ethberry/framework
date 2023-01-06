@@ -26,7 +26,7 @@ import { Pyramid } from "./mechanics/pyramid";
 import { Breed } from "./mechanics/breed";
 import { Waitlist } from "./mechanics/waitlist";
 import { Wallet } from "./integrations/wallet";
-import { Erc721Collection } from "./mechanics/erc721collection";
+import { Collections } from "./mechanics/collection";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -44,7 +44,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
           <Mystery />
-          <Erc721Collection />
+          <Collections />
         </Grid>
         <Grid item xs={12} md={4}>
           <Vesting />

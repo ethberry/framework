@@ -35,7 +35,7 @@ export const Erc721Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/collections/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -51,9 +51,9 @@ export const Erc721Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.tokens"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.tokens"]} />
 
-      <PageHeader message="pages.erc721.tokens.title">
+      <PageHeader message="pages.collections.tokens">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -66,7 +66,7 @@ export const Erc721Token: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractModule={[ModuleType.HIERARCHY]}
+        contractModule={[ModuleType.COLLECTION]}
         contractType={[TokenType.ERC721]}
       />
 

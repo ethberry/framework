@@ -60,7 +60,7 @@ export const StakingContracts: FC = () => {
       contractStatus,
     }),
   });
-  console.log("rows", rows);
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.contracts"]} />
