@@ -18,26 +18,25 @@ export class AssetService {
     // @Inject(forwardRef(() => TemplateService))
     // private readonly templateService: TemplateService,
     private dataSource: DataSource,
-  ) { }
+  ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
     return this.assetEntityRepository.create(dto).save();
   }
 
-  public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {
-
+  public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
     // TODO transactions?
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
-
       // patch NATIVE and ERC20 tokens
       for (const component of dto.components) {
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-
-          const templateEntity = await queryRunner.manager.findOne(TemplateEntity, { where: { contractId: component.contractId } });
+          const templateEntity = await queryRunner.manager.findOne(TemplateEntity, {
+            where: { contractId: component.contractId },
+          });
           // const templateEntity = await this.templateService.findOne({ contractId: component.contractId });
 
           if (!templateEntity) {
@@ -46,9 +45,8 @@ export class AssetService {
           component.templateId = templateEntity.id;
         }
       }
-      
-      if (dto.components.length) {
 
+      if (dto.components.length) {
         // remove old
         await Promise.allSettled(
           asset.components
@@ -67,7 +65,7 @@ export class AssetService {
                 // this prevents typeorm to override ids using existing relations
                 { template: void 0, contract: void 0 },
               );
-              return queryRunner.manager.save(oldItem)
+              return queryRunner.manager.save(oldItem);
             }),
         ).then(values =>
           values
@@ -81,7 +79,7 @@ export class AssetService {
           dto.components
             .filter(newItem => !newItem.id)
             .map(newItem => {
-              return queryRunner.manager.create(AssetComponentEntity, { ...newItem, assetId: asset.id }).save()
+              return queryRunner.manager.create(AssetComponentEntity, { ...newItem, assetId: asset.id }).save();
               // return queryRunner.manager.save(this.assetComponentEntityRepository.create())
               // return this.assetComponentEntityRepository.create({ ...newItem, assetId: asset.id }).save()
             }),
@@ -94,22 +92,17 @@ export class AssetService {
 
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
       }
-      await queryRunner.manager.save(asset)
+      await queryRunner.manager.save(asset);
 
       // throw Error("just an Error")
 
-      await queryRunner.commitTransaction()
-
+      await queryRunner.commitTransaction();
     } catch (e) {
-      await queryRunner.rollbackTransaction()
+      await queryRunner.rollbackTransaction();
       // console.log(await queryRunner.manager.findOne(AssetEntity, { ...asset }))
       // throw new Exceptio
-
     } finally {
-      await queryRunner.release()
-
-      return asset
-
+      await queryRunner.release();
     }
   }
 
