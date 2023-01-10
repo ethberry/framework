@@ -61,6 +61,8 @@
     "@mui/x-data-grid": "5.17.18",
     "@observablehq/plot": "0.6.1",
     "@web3-react/core": "8.0.35-beta.0",
+    "@web3-react/metamask": "8.0.28-beta.0",
+    "@web3-react/walletconnect": "8.0.35-beta.0",
     "clsx": "1.2.1",
     "date-fns": "2.29.3",
     "ethers": "5.7.2",

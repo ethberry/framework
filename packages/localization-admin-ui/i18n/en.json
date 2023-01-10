@@ -133,6 +133,7 @@
       "LINEAR": "Linear"
     },
     "language": {
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arabic",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
@@ -289,7 +290,7 @@
     },
     "userRoles": {
       "ADMIN": "Admin",
-      "CUSTOMER": "Customer"
+      "USER": "User"
     },
     "userStatus": {
       "ACTIVE": "Active",

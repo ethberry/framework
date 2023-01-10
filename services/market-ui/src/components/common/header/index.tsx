@@ -3,13 +3,13 @@ import { AppBar, Hidden, Link, Toolbar } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { companyName, EnabledLanguages } from "@framework/constants";
-import { Wallet } from "@gemunion/provider-wallet";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
-import { useStyles } from "./styles";
-import { Sections } from "./sections";
+import { WalletButton } from "../../buttons/wallet";
 import { Referrer } from "./referrer";
+import { Sections } from "./sections";
+import { useStyles } from "./styles";
 
 export const Header: FC = () => {
   const classes = useStyles();
@@ -21,7 +21,7 @@ export const Header: FC = () => {
         </Link>
         <div className={classes.grow} />
         <Referrer />
-        <Wallet />
+        <WalletButton />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
         <Sections />

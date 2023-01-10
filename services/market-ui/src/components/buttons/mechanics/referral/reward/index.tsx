@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract } from "ethers";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 export const ReferralRewardButton: FC = () => {
   const [balance, setBalance] = useState("");

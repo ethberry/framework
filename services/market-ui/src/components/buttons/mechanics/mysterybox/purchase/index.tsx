@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { IMysterybox, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 

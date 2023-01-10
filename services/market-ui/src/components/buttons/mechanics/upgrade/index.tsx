@@ -9,7 +9,7 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 const getMultiplier = (level: number, amount: string, { gradeStrategy, growthRate }: IGrade) => {
   if (gradeStrategy === GradeStrategy.FLAT) {

@@ -13,7 +13,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { TokenType } from "@framework/types";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";

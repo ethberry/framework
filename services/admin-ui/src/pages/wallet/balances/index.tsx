@@ -25,7 +25,7 @@ import { formatEther } from "../../../utils/money";
 import { emptyToken } from "../../../components/common/interfaces";
 import { BalanceSearchForm } from "./form";
 import { BalanceWithdrawDialog, IBalanceWithdrawDto } from "./withdraw-dialog";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 export const SystemBalances: FC = () => {
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =

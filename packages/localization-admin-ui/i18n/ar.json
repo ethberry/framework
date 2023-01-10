@@ -1,0 +1,888 @@
+{
+  "components": {
+    "dropzone": {
+      "file-invalid-type": "لا يمكنك تحميل {type} فقط {Accept} المسموح بها",
+      "file-too-large": "حجم الملف {size} ، الحد الأقصى لحجم الملف هو {maxSize}",
+      "file-too-small": "الملف هو {size} ، الحد الأدنى لحجم الملف هو {minSize}",
+      "too-many-files": "ملفات كثيرة جدًا"
+    },
+    "header": {
+      "language": {
+        "switch": "تبديل اللغة"
+      },
+      "menu": {
+        "dashboard": "لوحة القيادة",
+        "login": "تسجيل الدخول",
+        "logout": "تسجيل خروج",
+        "profile": "حساب تعريفي"
+      },
+      "theme": {
+        "switch": "تبديل الموضوع"
+      },
+      "wallet": {
+        "connect": "ربط المحفظة",
+        "menu": "حساب",
+        "notValid": "شبكة غير صالحة. يرجى التبديل إلى الشبكة الصحيحة وفقًا لملف التعريف الخاص بك"
+      }
+    }
+  },
+  "dialogs": {
+    "blacklist": "أضف إلى القائمة السوداء",
+    "breedLimit": "ضع حدود السلالة",
+    "claim": "مطالبة",
+    "currentBalance": "الرصيد: {value}",
+    "confirmation": "يرجى تأكيد",
+    "create": "خلق",
+    "delete": "حذف &quot;{title}`؟",
+    "deploy": "نشر",
+    "edit": "تعديل",
+    "fund": "تمويل",
+    "grantRole": "دور المنحة",
+    "listenerAdd": "أضف مستمع ETH",
+    "listenerRemove": "إزالة ETH المستمع",
+    "mintToken": "الرموز المميزة للنعناع",
+    "pyramidBalance": "سحب أرصدة الهرم",
+    "renounceRole": "نبذ الدور",
+    "revokeRole": "إبطال الدور",
+    "setAmount": "حدد كمية",
+    "schedule": "حدد جدول جولة اليانصيب",
+    "top-up": "فوق حتى",
+    "unBlacklist": "إزالة من القائمة السوداء",
+    "unWhitelist": "إزالة من القائمة البيضاء",
+    "upload": "رفع",
+    "view": "رأي",
+    "whitelist": "إضافة إلى القائمة البيضاء",
+    "withdraw": "سحب الرصيد"
+  },
+  "enums": {
+    "GRADE": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "RARITY": {
+      "COMMON": "مشترك",
+      "EPIC": "ملحمي",
+      "LEGENDARY": "أسطوري",
+      "RARE": "نادر",
+      "UNCOMMON": "غير مألوف"
+    },
+    "chainId": {
+      "1": "الإيثيريوم",
+      "1337": "بيسو",
+      "13377": "BESU GEMUNION",
+      "13378": "المضيف المحلي BESU",
+      "137": "مضلع",
+      "5": "جويرلي",
+      "56": "المال",
+      "80001": "مومباي",
+      "97": "بينانس (testnet)"
+    },
+    "claimStatus": {
+      "NEW": "جديد",
+      "REDEEMED": "مخلص",
+      "UNPACKED": "غير معبأ"
+    },
+    "contractFeatures": {
+      "BLACKLIST": "القائمة السوداء",
+      "ERC1155OWNER": "ERC1155OWNER",
+      "ERC20OWNER": "ERC20OWNER",
+      "EXTERNAL": "خارجي",
+      "GENES": "الجينات",
+      "LINEAR_REFERRAL": "إحالة خطية",
+      "MYSTERYBOX": "الصندوق الغامض",
+      "NATIVE": "محلي",
+      "PAUSABLE": "متوقف",
+      "RANDOM": "عشوائي",
+      "SOULBOUND": "Soulbound",
+      "UPGRADEABLE": "قابل للترقية"
+    },
+    "contractStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط",
+      "NEW": "جديد"
+    },
+    "contractTemplate": {
+      "CLIFF": "جرف",
+      "GRADED": "متدرج",
+      "LINEAR": "خطي"
+    },
+    "craftStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط",
+      "NEW": "جديد"
+    },
+    "durationUnit": {
+      "DAY": "يوم",
+      "HOUR": "ساعة",
+      "MINUTE": "دقيقة"
+    },
+    "emailType": {
+      "DUMMY": "البريد الإلكتروني اختبار",
+      "LINK_TOKEN": "إشعار الارتباط"
+    },
+    "gradeStrategy": {
+      "EXPONENTIAL": "متسارع",
+      "FLAT": "مسطحة",
+      "LINEAR": "خطي"
+    },
+    "language": {
+      "AR": "🇦🇪 اللغة العربية",
+      "EN": "🇺🇸 English",
+      "RU": "🇷🇺 Русский",
+      "UA": "🇺🇦 Українська"
+    },
+    "listenerType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERYBOX": "الصندوق الغامض",
+      "NATIVE": "محلي",
+      "PYRAMID": "هرم",
+      "VESTING": "تكريم"
+    },
+    "mysteryboxStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط"
+    },
+    "pageStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط"
+    },
+    "pyramidDepositStatus": {
+      "ACTIVE": "نشيط",
+      "CANCELED": "ألغيت",
+      "COMPLETE": "اكتمال"
+    },
+    "pyramidRuleStatus": {
+      "ACTIVE": "نشيط",
+      "NEW": "الجديد"
+    },
+    "role": {
+      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
+      "MINTER_ROLE": "MINTER_ROLE",
+      "PAUSER_ROLE": "PAUSER_ROLE",
+      "PREDICATE_ROLE": "PREDICATE_ROLE",
+      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
+    "schedule": {
+      "* * * * * *": "EVERY_SECOND",
+      "*/5 * * * * *": "EVERY_5_SECONDS",
+      "*/10 * * * * *": "EVERY_10_SECONDS",
+      "*/30 * * * * *": "EVERY_30_SECONDS",
+      "*/1 * * * *": "EVERY_MINUTE",
+      "0 */5 * * * *": "EVERY_5_MINUTES",
+      "0 */10 * * * *": "EVERY_10_MINUTES",
+      "0 */30 * * * *": "EVERY_30_MINUTES",
+      "0 0-23/1 * * *": "EVERY_HOUR",
+      "0 0-23/2 * * *": "EVERY_2_HOURS",
+      "0 0-23/3 * * *": "EVERY_3_HOURS",
+      "0 0-23/4 * * *": "EVERY_4_HOURS",
+      "0 0-23/5 * * *": "EVERY_5_HOURS",
+      "0 0-23/6 * * *": "EVERY_6_HOURS",
+      "0 0-23/7 * * *": "EVERY_7_HOURS",
+      "0 0-23/8 * * *": "EVERY_8_HOURS",
+      "0 0-23/9 * * *": "EVERY_9_HOURS",
+      "0 0-23/10 * * *": "EVERY_10_HOURS",
+      "0 0-23/11 * * *": "EVERY_11_HOURS",
+      "0 0-23/12 * * *": "EVERY_12_HOURS",
+      "0 01 * * *": "EVERY_DAY_AT_1AM",
+      "0 02 * * *": "EVERY_DAY_AT_2AM",
+      "0 03 * * *": "EVERY_DAY_AT_3AM",
+      "0 04 * * *": "EVERY_DAY_AT_4AM",
+      "0 05 * * *": "EVERY_DAY_AT_5AM",
+      "0 06 * * *": "EVERY_DAY_AT_6AM",
+      "0 07 * * *": "EVERY_DAY_AT_7AM",
+      "0 08 * * *": "EVERY_DAY_AT_8AM",
+      "0 09 * * *": "EVERY_DAY_AT_9AM",
+      "0 10 * * *": "EVERY_DAY_AT_10AM",
+      "0 11 * * *": "EVERY_DAY_AT_11AM",
+      "0 12 * * *": "EVERY_DAY_AT_NOON",
+      "0 13 * * *": "EVERY_DAY_AT_1PM",
+      "0 14 * * *": "EVERY_DAY_AT_2PM",
+      "0 15 * * *": "EVERY_DAY_AT_3PM",
+      "0 16 * * *": "EVERY_DAY_AT_4PM",
+      "0 17 * * *": "EVERY_DAY_AT_5PM",
+      "0 18 * * *": "EVERY_DAY_AT_6PM",
+      "0 19 * * *": "EVERY_DAY_AT_7PM",
+      "0 20 * * *": "EVERY_DAY_AT_8PM",
+      "0 21 * * *": "EVERY_DAY_AT_9PM",
+      "0 22 * * *": "EVERY_DAY_AT_10PM",
+      "0 23 * * *": "EVERY_DAY_AT_11PM",
+      "0 0 * * *": "EVERY_DAY_AT_MIDNIGHT",
+      "0 0 * * 0": "EVERY_WEEK",
+      "0 0 * * 1-5": "EVERY_WEEKDAY",
+      "0 0 * * 6,0": "EVERY_WEEKEND",
+      "0 0 1 * *": "EVERY_1ST_DAY_OF_MONTH_AT_MIDNIGHT",
+      "0 12 1 * *": "EVERY_1ST_DAY_OF_MONTH_AT_NOON",
+      "0 */2 * * *": "EVERY_2ND_HOUR",
+      "0 1-23/2 * * *": "EVERY_2ND_HOUR_FROM_1AM_THROUGH_11PM",
+      "0 0 1 */2 *": "EVERY_2ND_MONTH",
+      "0 0 1 */3 *": "EVERY_QUARTER",
+      "0 0 1 */6 *": "EVERY_6_MONTHS",
+      "0 0 1 1 *": "EVERY_YEAR",
+      "0 */30 9-17 * * *": "EVERY_30_MINUTES_BETWEEN_9AM_AND_5PM",
+      "0 */30 9-18 * * *": "EVERY_30_MINUTES_BETWEEN_9AM_AND_6PM",
+      "0 */30 10-19 * * *": "EVERY_30_MINUTES_BETWEEN_10AM_AND_7PM",
+      "0 0 01 * * 1-5": "MONDAY_TO_FRIDAY_AT_1AM",
+      "0 0 02 * * 1-5": "MONDAY_TO_FRIDAY_AT_2AM",
+      "0 0 03 * * 1-5": "MONDAY_TO_FRIDAY_AT_3AM",
+      "0 0 04 * * 1-5": "MONDAY_TO_FRIDAY_AT_4AM",
+      "0 0 05 * * 1-5": "MONDAY_TO_FRIDAY_AT_5AM",
+      "0 0 06 * * 1-5": "MONDAY_TO_FRIDAY_AT_6AM",
+      "0 0 07 * * 1-5": "MONDAY_TO_FRIDAY_AT_7AM",
+      "0 0 08 * * 1-5": "MONDAY_TO_FRIDAY_AT_8AM",
+      "0 0 09 * * 1-5": "MONDAY_TO_FRIDAY_AT_9AM",
+      "0 30 09 * * 1-5": "MONDAY_TO_FRIDAY_AT_09_30AM",
+      "0 0 10 * * 1-5": "MONDAY_TO_FRIDAY_AT_10AM",
+      "0 0 11 * * 1-5": "MONDAY_TO_FRIDAY_AT_11AM",
+      "0 30 11 * * 1-5": "MONDAY_TO_FRIDAY_AT_11_30AM",
+      "0 0 12 * * 1-5": "MONDAY_TO_FRIDAY_AT_12PM",
+      "0 0 13 * * 1-5": "MONDAY_TO_FRIDAY_AT_1PM",
+      "0 0 14 * * 1-5": "MONDAY_TO_FRIDAY_AT_2PM",
+      "0 0 15 * * 1-5": "MONDAY_TO_FRIDAY_AT_3PM",
+      "0 0 16 * * 1-5": "MONDAY_TO_FRIDAY_AT_4PM",
+      "0 0 17 * * 1-5": "MONDAY_TO_FRIDAY_AT_5PM",
+      "0 0 18 * * 1-5": "MONDAY_TO_FRIDAY_AT_6PM",
+      "0 0 19 * * 1-5": "MONDAY_TO_FRIDAY_AT_7PM",
+      "0 0 20 * * 1-5": "MONDAY_TO_FRIDAY_AT_8PM",
+      "0 0 21 * * 1-5": "MONDAY_TO_FRIDAY_AT_9PM",
+      "0 0 22 * * 1-5": "MONDAY_TO_FRIDAY_AT_10PM",
+      "0 0 23 * * 1-5": "MONDAY_TO_FRIDAY_AT_11PM"
+    },
+    "stakingDepositStatus": {
+      "ACTIVE": "نشيط",
+      "CANCELED": "ألغيت",
+      "COMPLETE": "اكتمال"
+    },
+    "stakingRuleStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط",
+      "NEW": "جديد"
+    },
+    "templateStatus": {
+      "ACTIVE": "نشيط",
+      "HIDDEN": "مختفي",
+      "INACTIVE": "غير نشط"
+    },
+    "tokenStatus": {
+      "ACTIVE": "نشيط",
+      "BURNED": "أحرق",
+      "INACTIVE": "غير نشط",
+      "MINTED": "سكت",
+      "NEW": "جديد",
+      "PENDING": "قيد الانتظار"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "NATIVE": "محلي"
+    },
+    "userRoles": {
+      "ADMIN": "مسؤل",
+      "USER": "المستعمل"
+    },
+    "userStatus": {
+      "ACTIVE": "نشيط",
+      "INACTIVE": "غير نشط"
+    }
+  },
+  "errors": {
+    "page-not-found": "الصفحة غير موجودة"
+  },
+  "form": {
+    "adornment": {
+      "days": "أيام",
+      "percent": "%"
+    },
+    "buttons": {
+      "accept": "قبول",
+      "add": "يضيف",
+      "addListener": "أضف مستمع ETH",
+      "blacklist": "القائمة السوداء",
+      "cancel": "يلغي",
+      "claim": "مطالبة",
+      "create": "خلق",
+      "delete": "حذف",
+      "deploy": "نشر",
+      "disconnect": "قطع الاتصال",
+      "empty": "﻿",
+      "export": "يصدّر",
+      "finishRound": "إنهاء الجولة",
+      "forgot": "هل نسيت كلمة السر؟",
+      "fund": "تمويل",
+      "grantRole": "منح الدور",
+      "hideFilters": "إخفاء المرشحات",
+      "load": "حمل",
+      "loaded": "فعله",
+      "login": "تسجيل الدخول",
+      "logout": "تسجيل خروج",
+      "mainPage": "الصفحة الرئيسية",
+      "mint": "نعناع",
+      "mintToken": "رموز النعناع",
+      "ok": "موافق",
+      "pause": "وقفة",
+      "pyramidBalance": "التوازن الهرمي",
+      "reject": "يرفض",
+      "removeListener": "إزالة ETH المستمع",
+      "renounceRole": "نبذ الدور",
+      "revokeRole": "إبطال الدور",
+      "royalty": "ملكية",
+      "save": "يحفظ",
+      "search": "يبحث",
+      "showFilters": "اظهر الفلاتر",
+      "signup": "اشتراك",
+      "snapshot": "لمحة",
+      "schedule": "جدول",
+      "startRound": "ابدأ الجولة",
+      "submit": "إرسال",
+      "unblacklist": "غير القائمة السوداء",
+      "unpause": "غير وقفة",
+      "upload": "رفع",
+      "withdraw": "انسحب"
+    },
+    "hints": {
+      "editNotAllowed": "تحرير هذه القاعدة غير مسموح به",
+      "markdown": "هذا المجال يدعم<a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\"> GH نكهة Markdown</a>",
+      "maxValue": "الحد الأقصى {label}: {value}",
+      "prompt": "لديك معلومات غير محفوظة ، هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟",
+      "risk": "أنت تفعل هذا على مسؤوليتك الخاصة!"
+    },
+    "labels": {
+      "DUMMY": "غبي",
+      "GRADE": "رتبة",
+      "RARITY": "ندرة",
+      "account": "حساب",
+      "active": "نشيط",
+      "address": "تبوك",
+      "amount": "مقدار",
+      "attributes": "صفات",
+      "baseTokenURI": "رمز القاعدة URI",
+      "breeder": "مربي",
+      "cap": "قبعة",
+      "chainId": "سلسلة",
+      "child": "طفل",
+      "childId": "طفل",
+      "childIds": "طفل",
+      "claimStatus": "حالة",
+      "collection": "مجموعة",
+      "collectionType": "يكتب",
+      "comment": "تعليق",
+      "confirm": "يتأكد",
+      "contract": "لمدة",
+      "contractFeatures": "سمات",
+      "contractId": "لمدة",
+      "contractIds": "انكماش",
+      "contractStatus": "حالة",
+      "contractTemplate": "نموذج",
+      "count": "عدد السلالات القصوى",
+      "craftStatus": "حالة",
+      "createdAt": "مخلوق",
+      "dateRangeEnd": "ل",
+      "dateRangeStart": "من",
+      "dateTime": "وقت التاريخ",
+      "decimals": "الكسور العشرية",
+      "deposit": "إيداع",
+      "description": "وصف",
+      "displayName": "اسم العرض",
+      "duration": "مدة",
+      "durationAmount": "مدة",
+      "durationUnit": "وحدة المدة",
+      "email": "بريد إلكتروني",
+      "endTimestamp": "تاريخ الانتهاء",
+      "files": "الملفات",
+      "fromBlock": "الاستماع سجل من كتلة №",
+      "genes": "الجينات",
+      "gradeStrategy": "استراتيجية الصف",
+      "growthRate": "معدل النمو",
+      "id": "بطاقة تعريف",
+      "imageUrl": "الصورة الرمزية",
+      "item": "غرض",
+      "items": "العناصر",
+      "language": "لغة",
+      "listId": "معرف القائمة",
+      "listenerType": "نوع المستمع",
+      "matron": "ماترون",
+      "maxBalance": "الحد الأقصى للتوازن",
+      "maxStakes": "ماكس ستيكس",
+      "maxTime": "ماكس كولداون",
+      "minBalance": "الحد الأدنى للرصيد",
+      "maxCycles": "عدد الدورات القصوى (0 - بلا حدود)",
+      "mysteryboxStatus": "حالة",
+      "name": "اسم",
+      "numbers": "أعداد",
+      "owner": "صاحب",
+      "pageStatus": "حالة",
+      "parent": "الأبوين",
+      "parentId": "الأبوين",
+      "parentIds": "الأبوين",
+      "parents": "آباء",
+      "password": "كلمة المرور",
+      "payee": "المستفيد",
+      "penalty": "جزاء",
+      "price": "السعر",
+      "pyramidDepositStatus": "حالة",
+      "pyramidRuleStatus": "حالة",
+      "random": "عشوائي",
+      "schedule": "جدول الجولة",
+      "recipient": "متلقي",
+      "recurrent": "متكرر؟",
+      "reward": "جائزه",
+      "role": "دور",
+      "roundId": "مستدير",
+      "roundIds": "مستدير",
+      "royalty": "ملكية",
+      "sire": "مولى",
+      "slug": "سبيكة",
+      "stakingDepositStatus": "حالة",
+      "stakingRuleStatus": "حالة",
+      "startTimestamp": "تاريخ البدء",
+      "symbol": "رمز",
+      "templateId": "نموذج",
+      "templateIds": "القوالب",
+      "templateStatus": "حالة",
+      "time": "وقت التهدئة",
+      "title": "لقب",
+      "token": "رمز",
+      "tokenId": "رمز",
+      "tokenIds": "الرموز",
+      "tokenStatus": "حالة",
+      "tokenType": "يكتب",
+      "txHash": "txHash",
+      "type": "يكتب",
+      "updatedAt": "محدث",
+      "url": "عنوان Url",
+      "userId": "المستعمل",
+      "userIds": "المستخدمون",
+      "userRoles": "الأدوار",
+      "userStatus": "حالة",
+      "winNumbers": "اربح ارقام",
+      "year": "سنة"
+    },
+    "placeholders": {
+      "DUMMY": "غبي",
+      "account": "0 × ...",
+      "address": "0 × ...",
+      "amount": "10",
+      "attributes": "{}",
+      "baseTokenURI": "https://gemunion.io/",
+      "cap": "10",
+      "childId": "لمدة",
+      "childIds": "لمدة",
+      "comment": "احتيال",
+      "confirm": "******",
+      "contract": "لمدة",
+      "contractId": "لمدة",
+      "contractIds": "انكماش",
+      "count": "0",
+      "createdAt": "الآن",
+      "decimals": "18",
+      "definition": "10",
+      "description": "وصف",
+      "displayName": "غوردون فريمان",
+      "duration": "30",
+      "durationAmount": "30",
+      "durationUnit": "يوم",
+      "email": "me@google.com",
+      "fromBlock": "1",
+      "growthRate": "2",
+      "item": "قارورة ماء",
+      "listId": "1",
+      "maxBalance": "100",
+      "maxStakes": "0",
+      "maxTime": "0",
+      "minBalance": "0",
+      "maxCycles": "0",
+      "name": "الغبار الوردي",
+      "number": "100500",
+      "owner": "0 × ...",
+      "parentId": "لمدة",
+      "parentIds": "لمدة",
+      "password": "******",
+      "payee": "0 × ...",
+      "penalty": "1",
+      "price": "1000",
+      "priceCorrection": "0",
+      "query": "يبحث...",
+      "rarity": "أسطوري",
+      "recipient": "متلقي",
+      "roundIds": "مستدير",
+      "royalty": "1",
+      "search": "يبحث...",
+      "slug": "شروط الخدمة",
+      "stakingRuleStatus": "حالة",
+      "symbol": "XXX",
+      "templateId": "نموذج",
+      "templateIds": "نموذج",
+      "text": "qwerty",
+      "time": "0",
+      "title": "لقب",
+      "token": "قارورة ماء",
+      "tokenId": "رمز",
+      "tokenIds": "رمز",
+      "tokenStatus": "حالة",
+      "url": "https://youtube.com",
+      "userId": "غوردون فريمان",
+      "userIds": "غوردون فريمان"
+    },
+    "tips": {
+      "create": "خلق",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "fund": "تمويل",
+      "view": "رأي"
+    },
+    "validations": {
+      "badInput": "{label} غير صالحة",
+      "customError": "???",
+      "duplicate": "{label} قيد الاستخدام بالفعل",
+      "invalidJSON": "JSON غير صالح",
+      "patternMismatch": "{label} لا تتطابق مع النمط المتوقع",
+      "rangeOverflow": "{label} مرتفع جدًا",
+      "rangeUnderflow": "{label} منخفضة جدًا",
+      "stepMismatch": "{label} غير صالحة",
+      "tooLong": "{label} طويل جدًا",
+      "tooShort": "{label} أقصر مما يجب",
+      "typeMismatch": "{label} غير صالحة",
+      "unsupportedCombination": "يحتوي {label} على مجموعة غير مدعومة",
+      "valid": "??",
+      "valueMissing": "{label} مطلوب",
+      "weak": "{label} ضعيف جدا",
+      "whitelistValidation": "يجب ألا تكون الخاصية موجودة"
+    }
+  },
+  "messages": {
+    "empty-list": "لا شيء لعرضه",
+    "page-not-found": "الصفحة غير موجودة"
+  },
+  "pages": {
+    "blockchain": {
+      "title": "إعدادات Blockchain"
+    },
+    "breed": {
+      "breeds": {
+        "end": "نهاية الجولة",
+        "start": "ضع الحدود",
+        "title": "السلالات",
+        "wait": "في انتظار الجولة حتى النهاية"
+      },
+      "history": {
+        "title": "تاريخ السلالة"
+      },
+      "limit": "ضع الحدود",
+      "title": "تربية"
+    },
+    "chain-link": {
+      "fund": "تمويل",
+      "title": "سلسلة ربط"
+    },
+    "claims": {
+      "defaultItemTitle": "{account}",
+      "title": "مطالبة"
+    },
+    "coin-gecko": {
+      "ohlc": "OHLC",
+      "rates": "معدلات",
+      "title": "كوين جيكو"
+    },
+    "coin-market-cap": {
+      "rates": "معدلات",
+      "title": "CoinMarketCap"
+    },
+    "craft": {
+      "activate": "تفعيل القاعدة",
+      "deactivate": "قم بإلغاء تنشيط القاعدة",
+      "title": "وصفات حرفية"
+    },
+    "dashboard": {
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "محلي"
+      },
+      "integrations": {
+        "admin": {
+          "balances": "أرصدة النظام",
+          "emails": "رسائل البريد الإلكتروني",
+          "pages": "الصفحات",
+          "payees": "نظام المدفوعات",
+          "settings": "إعدادات",
+          "title": "مسؤل",
+          "users": "المستخدمون"
+        },
+        "chain-link": "سلسلة ربط",
+        "coin-gecko": "كوين جيكو",
+        "coin-market-cap": "CoinMarketCap",
+        "marketplace": {
+          "chart": "جدول",
+          "grade": "رتبة",
+          "rarity": "ندرة",
+          "report": "تقرير",
+          "title": "المتجر"
+        }
+      },
+      "mechanics": {
+        "breed": "تربية",
+        "claim": "مطالبة",
+        "craft": "حرفة",
+        "drop": "قطرة",
+        "grade": "رتبة",
+        "lottery": "اليانصيب",
+        "mystery": "الغموض",
+        "pyramid": "هرم",
+        "staking": "Staking",
+        "title": "علم الميكانيكا",
+        "vesting": "استحقاق",
+        "waitlist": "قائمة الانتظار"
+      },
+      "title": "لوحة القيادة",
+      "wallet": {
+        "balances": "أرصدة",
+        "payees": "المدفوع لهم",
+        "title": "محفظة النظام"
+      }
+    },
+    "drop": {
+      "title": "قطرات"
+    },
+    "emails": {
+      "title": "رسائل البريد الإلكتروني"
+    },
+    "erc1155": {
+      "contracts": {
+        "title": "عقود ERC1155"
+      },
+      "templates": {
+        "title": "قوالب ERC1155"
+      }
+    },
+    "erc20": {
+      "contracts": {
+        "snapshot": "قم بعمل لقطة",
+        "title": "عقود ERC20"
+      }
+    },
+    "erc721": {
+      "contracts": {
+        "royalty": "ملكية",
+        "title": "عقود ERC721"
+      },
+      "templates": {
+        "title": "قوالب ERC721"
+      },
+      "tokens": {
+        "title": "رموز ERC721"
+      }
+    },
+    "erc998": {
+      "composition": {
+        "title": "تكوين ERC998"
+      },
+      "contracts": {
+        "royalty": "ملكية",
+        "title": "عقود ERC998"
+      },
+      "templates": {
+        "title": "قوالب ERC998"
+      },
+      "tokens": {
+        "title": "رموز ERC998"
+      }
+    },
+    "grade": {
+      "title": "قواعد الصف"
+    },
+    "guest": {
+      "confirmation": "يرجى التحقق من صندوق الوارد الخاص بك للتحقق من بريدك الإلكتروني.",
+      "forgotPassword": "هل نسيت كلمة السر",
+      "login": "تسجيل الدخول"
+    },
+    "lottery": {
+      "rounds": {
+        "end": "نهاية الجولة",
+        "start": "ابدأ الجولة",
+        "title": "جولات",
+        "wait": "في انتظار الجولة حتى النهاية"
+      },
+      "tickets": {
+        "title": "تذاكر"
+      },
+      "title": "اليانصيب"
+    },
+    "marketplace": {
+      "chart": {
+        "title": "جدول"
+      },
+      "grade": {
+        "amount": "مقدار",
+        "attribute": "رتبة",
+        "title": "رتبة"
+      },
+      "rarity": {
+        "amount": "مقدار",
+        "attribute": "ندرة",
+        "title": "ندرة"
+      },
+      "report": {
+        "title": "تقرير"
+      },
+      "title": "المتجر"
+    },
+    "mystery": {
+      "boxes": {
+        "title": "صناديق الغموض"
+      },
+      "contracts": {
+        "title": "العقود الغامضة"
+      },
+      "tokens": {
+        "title": "الرموز الغامضة"
+      }
+    },
+    "native": {
+      "contracts": {
+        "title": "الرموز الأصلية"
+      }
+    },
+    "pages": {
+      "title": "الصفحات"
+    },
+    "payees": {
+      "attach": "يربط",
+      "balances": {
+        "title": "أرصدة النظام"
+      },
+      "detach": "فصل",
+      "title": "نظام المدفوعات",
+      "withdraw": "انسحب"
+    },
+    "profile": {
+      "title": "حساب تعريفي"
+    },
+    "pyramid": {
+      "chart": {
+        "title": "جدول"
+      },
+      "contracts": {
+        "title": "العقود الهرمية"
+      },
+      "report": {
+        "title": "تقرير"
+      },
+      "rules": {
+        "activate": "تفعيل القاعدة",
+        "deactivate": "إلغاء تنشيط القاعدة",
+        "title": "قواعد الهرم",
+        "upload": "تحميل القاعدة",
+        "finalizeByToken": "إنهاء رمز الإيداع",
+        "finalizeByRule": "إنهاء القاعدة"
+      },
+      "title": "هرم"
+    },
+    "settings": {
+      "title": "إعدادات"
+    },
+    "staking": {
+      "chart": {
+        "title": "جدول"
+      },
+      "report": {
+        "title": "تقرير"
+      },
+      "rules": {
+        "activate": "تفعيل القاعدة",
+        "deactivate": "إلغاء تنشيط القاعدة",
+        "title": "قواعد Staking",
+        "upload": "تحميل القاعدة"
+      },
+      "title": "Staking"
+    },
+    "staking-rules": {
+      "upload": "تحميل القاعدة"
+    },
+    "users": {
+      "title": "المستخدمون"
+    },
+    "vesting": {
+      "title": "استحقاق"
+    },
+    "waitlist": {
+      "item": {
+        "defaultItemTitle": "{account}",
+        "title": "حسابات"
+      },
+      "list": {
+        "title": "القوائم"
+      },
+      "title": "قائمة الانتظار"
+    },
+    "wallet": {
+      "balances": {
+        "title": "أرصدة"
+      },
+      "payees": {
+        "title": "نظام المدفوعات",
+        "withdraw": "انسحب"
+      },
+      "title": "محفظة النظام",
+      "withdraw": {
+        "dialog": "من العنوان",
+        "payee": "سوف يتلقى المدفوع لأمره",
+        "title": "انسحب",
+        "token": "رمز",
+        "total": "إجمالي الرصيد"
+      }
+    }
+  },
+  "snackbar": {
+    "accountNotFound": "الحساب غير موجود",
+    "active": "تم التفعيل بنجاح",
+    "approved": "تمت الموافقة عليه بنجاح",
+    "blockchainError": "خطأ Blockchain",
+    "contractNotFound": "العقد غير موجود",
+    "created": "تم إنشاؤه بنجاح",
+    "declined": "انخفض!",
+    "deleted": "تم الحذف بنجاح",
+    "deployed": "تم النشر بنجاح",
+    "duplicateAccount": "حساب مكرر",
+    "duplicateEmail": "المستخدم مع هذا البريد الإلكتروني مسجل بالفعل",
+    "email": "البريد الإلكتروني المرسلة بنجاح.",
+    "error": "خطأ غير معروف",
+    "inactive": "تم تعطيله بنجاح",
+    "insufficientPermissions": "أذونات غير كافية",
+    "internalServerError": "خطأ في الخادم الداخلي",
+    "invite": "تمت الدعوة بنجاح",
+    "listNotFound": "قائمة الانتظار غير موجودة",
+    "loaded": "تم التحميل بنجاح",
+    "pageNotFound": "خطأ API",
+    "passwordChanged": "تم تغيير كلمة المرور بنجاح. الآن يمكنك تسجيل الدخول باستخدام كلمة المرور الجديدة الخاصة بك.",
+    "registered": "تم التسجيل بنجاح ، يرجى التحقق من بريدك الإلكتروني للمتابعة",
+    "rejectedByUser": "رفضه المستخدم",
+    "saved": "حفظ بنجاح",
+    "success": "النجاح",
+    "templateNotFound": "القالب غير موجود",
+    "tokenNotFound": "الصنف غير موجود",
+    "tooManyRequests": "طلبات كثيرة جدا.",
+    "unauthorized": "تسجيل الدخول أو كلمة سر خاطئة",
+    "unsupportedCombination": "تركيبة ميزة غير مدعومة",
+    "updated": "تم التحديث بنجاح",
+    "userHasWrongRole": "أذونات غير كافية",
+    "userIsNotActive": "المستخدم غير نشط",
+    "userNotFound": "لم يتم العثور على المستخدم",
+    "walletIsNotConnected": "المحفظة غير متصلة",
+    "web3NotDetected": "لم يتم اكتشاف Web3"
+  }
+}
