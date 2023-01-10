@@ -1,4 +1,4 @@
-import { forwardRef, Module } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AssetService } from "./asset.service";
@@ -8,7 +8,7 @@ import { TemplateModule } from "../../hierarchy/template/template.module";
 
 @Module({
   imports: [forwardRef(() => TemplateModule), TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity])],
-  providers: [AssetService],
+  providers: [AssetService, Logger],
   exports: [AssetService],
 })
 export class AssetModule {}

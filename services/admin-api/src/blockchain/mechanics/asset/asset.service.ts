@@ -1,4 +1,12 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  LoggerService,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -11,6 +19,8 @@ import { TemplateEntity } from "../../hierarchy/template/template.entity";
 @Injectable()
 export class AssetService {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
@@ -35,7 +45,7 @@ export class AssetService {
           const templateEntity = await queryRunner.manager.findOne(TemplateEntity, {
             where: { contractId: component.contractId },
           });
-          // const templateEntity = await this.templateService.findOne({ contractId: component.contractId });
+
           if (!templateEntity) {
             throw new NotFoundException("templateNotFound");
           }
@@ -73,8 +83,6 @@ export class AssetService {
             .filter(newItem => !newItem.id)
             .map(newItem => {
               return queryRunner.manager.create(AssetComponentEntity, { ...newItem, assetId: asset.id }).save();
-              // return queryRunner.manager.save(this.assetComponentEntityRepository.create())
-              // return this.assetComponentEntityRepository.create({ ...newItem, assetId: asset.id }).save()
             }),
         ).then(values =>
           values
@@ -85,11 +93,15 @@ export class AssetService {
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
       }
       await queryRunner.manager.save(asset);
-      // throw Error("just an Error")
+
       await queryRunner.commitTransaction();
     } catch (e) {
+      this.loggerService.error(e, AssetService.name);
+
       // since we have errors lets rollback the changes we made
       await queryRunner.rollbackTransaction();
+
+      throw new InternalServerErrorException();
     } finally {
       // you need to release a queryRunner which was manually instantiated
       await queryRunner.release();
