@@ -8,7 +8,7 @@
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "2.2.6",
-    "@gemunion/draft-js-utils": "1.2.1",
+    "@gemunion/draft-js-utils": "1.2.2",
     "@gemunion/nest-js-guards": "2.0.14",
     "@framework/nest-js-module-exchange-signer": "0.0.1",
     "@gemunion/nest-js-module-helmet": "3.1.17",
