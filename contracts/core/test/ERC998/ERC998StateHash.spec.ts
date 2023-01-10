@@ -1,7 +1,7 @@
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { shouldBehaveLikeERC721Simple } from "../ERC721/shared/simple";
+import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 
 describe("ERC998StateHash", function () {
@@ -9,5 +9,5 @@ describe("ERC998StateHash", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldBehaveLikeERC721Simple(factory);
+  shouldBehaveLikeERC998Simple(factory);
 });

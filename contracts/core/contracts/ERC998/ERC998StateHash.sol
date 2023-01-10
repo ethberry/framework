@@ -8,8 +8,9 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "@gemunion/contracts-erc998/contracts/extensions/StateHash.sol";
+
 import "./ERC998Simple.sol";
-import "./extensions/StateHash.sol";
 
 contract ERC998StateHash is ERC998Simple, StateHash {
   using Counters for Counters.Counter;
@@ -36,15 +37,6 @@ contract ERC998StateHash is ERC998Simple, StateHash {
     uint256 _childTokenId
   ) internal override(ERC998ERC721, StateHash) {
     super._afterReceiveERC721(_from, _tokenId, _childContract, _childTokenId);
-  }
-
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 firstTokenId,
-    uint256 batchSize
-  ) internal override(ERC998Simple, StateHash) {
-    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
   function _localRootId(uint256 tokenId) internal view override(ERC998ERC721, StateHash) returns (uint256) {

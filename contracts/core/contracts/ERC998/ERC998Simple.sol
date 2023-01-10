@@ -6,9 +6,10 @@
 
 pragma solidity ^0.8.9;
 
+import "@gemunion/contracts-erc998/contracts/extensions/ERC998ERC721.sol";
+import "@gemunion/contracts-erc998/contracts/extensions/WhiteListChild.sol";
+
 import "../ERC721/ERC721Simple.sol";
-import "./extensions/WhiteListChild.sol";
-import "./extensions/ERC998ERC721.sol";
 
 contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
   constructor(
