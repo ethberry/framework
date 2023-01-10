@@ -13,7 +13,7 @@ import { LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
-import { deployStaking } from "./fixture";
+import { deployStaking } from "./shared/fixture";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";

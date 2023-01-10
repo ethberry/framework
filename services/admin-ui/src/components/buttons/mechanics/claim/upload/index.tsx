@@ -5,10 +5,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ApiError } from "@gemunion/provider-api-firebase";
 
 import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
 import { getFormData } from "./utils";
-import { ApiError } from "@gemunion/provider-api-firebase";
 
 export interface IClaimUploadButtonProps {
   className?: string;

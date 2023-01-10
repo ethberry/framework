@@ -30,9 +30,9 @@
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
     "claim": "Claim",
-    "currentBalance": "Balance: {value}",
     "confirmation": "Please confirm",
     "create": "Create",
+    "currentBalance": "Balance: {value}",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
@@ -44,8 +44,8 @@
     "pyramidBalance": "Pyramid Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
-    "setAmount": "Set Amount",
     "schedule": "Set Lottery Round schedule",
+    "setAmount": "Set Amount",
     "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
@@ -311,8 +311,8 @@
       "addListener": "Add ETH Listener",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
-      "collectionUpload": "Upload collection",
       "claim": "Claim",
+      "collectionUpload": "Upload collection",
       "create": "Create",
       "delete": "Delete",
       "deploy": "Deploy",
@@ -329,9 +329,9 @@
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
+      "maxStakes": "Max stakes count",
       "mint": "Mint",
       "mintToken": "Mint Tokens",
-      "maxStakes": "Max stakes count",
       "ok": "Ok",
       "pause": "Pause",
       "pyramidBalance": "Pyramid balance",
@@ -341,11 +341,11 @@
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
+      "schedule": "Schedule",
       "search": "Search",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
-      "schedule": "Schedule",
       "startRound": "Start round",
       "submit": "Submit",
       "unblacklist": "Un blacklist",
@@ -415,11 +415,11 @@
       "listenerType": "Listener type",
       "matron": "Matron",
       "maxBalance": "Max Balance",
+      "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
       "maxTime": "Max Cooldown",
       "minBalance": "Min Balance",
-      "maxCycles": "Max cycles count (0 - no limit)",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
@@ -436,7 +436,6 @@
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "random": "Random",
-      "schedule": "Round Schedule",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",
@@ -444,6 +443,7 @@
       "roundId": "Round",
       "roundIds": "Round",
       "royalty": "Royalty",
+      "schedule": "Round Schedule",
       "sire": "Sire",
       "slug": "Slug",
       "stakingDepositStatus": "Status",
@@ -502,11 +502,11 @@
       "item": "Bottle of water",
       "listId": "1",
       "maxBalance": "100",
+      "maxCycles": "0",
+      "maxStake": "10",
       "maxStakes": "0",
       "maxTime": "0",
       "minBalance": "0",
-      "maxCycles": "0",
-      "maxStake": "10",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
@@ -603,6 +603,12 @@
       "rates": "Rates",
       "title": "CoinMarketCap"
     },
+    "collections": {
+      "contracts": "Collection contracts",
+      "templates": "Collection templates",
+      "title": "Collections",
+      "tokens": "Collection tokens"
+    },
     "craft": {
       "activate": "Activate rule",
       "deactivate": "Deactivate rule",
@@ -640,6 +646,7 @@
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
+        "collection": "Collections",
         "craft": "Craft",
         "drop": "Drop",
         "grade": "Grade",
@@ -649,8 +656,7 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "waitlist": "Waitlist",
-        "collection": "Collections"
+        "waitlist": "Waitlist"
       },
       "title": "Dashboard",
       "wallet": {
@@ -679,13 +685,7 @@
         "title": "ERC20 Contracts"
       }
     },
-    "collections": {
-      "title": "Collections",
-      "contracts": "Collection contracts",
-      "templates": "Collection templates",
-      "tokens": "Collection tokens"
-    },
-   "erc721": {
+    "erc721": {
       "contracts": {
         "royalty": "Royalty",
         "title": "ERC721 Contracts"
@@ -795,10 +795,10 @@
       "rules": {
         "activate": "Activate rule",
         "deactivate": "Deactivate rule",
-        "title": "Pyramid rules",
-        "upload": "Upload rule",
+        "finalizeByRule": "Finalize rule",
         "finalizeByToken": "Finalize deposit token",
-        "finalizeByRule": "Finalize rule"
+        "title": "Pyramid rules",
+        "upload": "Upload rule"
       },
       "title": "Pyramid"
     },
@@ -806,11 +806,11 @@
       "title": "Settings"
     },
     "staking": {
-      "contracts": {
-        "title": "Staking Contracts"
-      },
       "chart": {
         "title": "Chart"
+      },
+      "contracts": {
+        "title": "Staking Contracts"
       },
       "report": {
         "title": "Report"

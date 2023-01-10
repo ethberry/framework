@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-
 import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { PauseCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
+
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import PauseSol from "../../../../menu/contract/pausable/pause.abi.json";

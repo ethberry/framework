@@ -107,6 +107,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
       IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
+    } else {
+      revert("Exchange: unsupported token type");
     }
   }
 

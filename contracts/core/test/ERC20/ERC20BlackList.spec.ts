@@ -4,7 +4,6 @@ import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 
 import { deployERC20 } from "./shared/fixtures";
 import { shouldBehaveLikeERC20Simple } from "./shared/simple";
-import { shouldBehaveLikeERC20BlackList } from "./shared/blacklist";
 
 describe("ERC20Blacklist", function () {
   const factory = () => deployERC20(this.title);
@@ -13,5 +12,4 @@ describe("ERC20Blacklist", function () {
   shouldBehaveLikeBlackList(factory);
 
   shouldBehaveLikeERC20Simple(factory);
-  shouldBehaveLikeERC20BlackList(factory);
 });

@@ -186,6 +186,8 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
         rewardAmount = rewardItem.amount * multiplier;
         IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardItem.tokenId, rewardAmount, "0x");
         // todo batch mint reward
+      } else {
+        revert("Exchange: unsupported token type");
       }
     }
     if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");

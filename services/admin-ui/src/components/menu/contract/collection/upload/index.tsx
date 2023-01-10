@@ -6,11 +6,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { ApiError } from "@gemunion/provider-api-firebase";
+import { IContract } from "@framework/types";
 
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
 import { getFormData } from "./utils";
-import { ApiError } from "@gemunion/provider-api-firebase";
-import { IContract } from "@framework/types";
 
 export interface ICollectionUploadMenuItemProps {
   contract: IContract;

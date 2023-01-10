@@ -39,7 +39,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
     return metaFn(rule, values);
   };
 
-  const handleDeployCancel = () => {
+  const handleDepositCancel = () => {
     setIsDepositDialogOpen(false);
   };
 
@@ -56,7 +56,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
       </Tooltip>
       <StakingDepositDialog
         onConfirm={handleDepositConfirm}
-        onCancel={handleDeployCancel}
+        onCancel={handleDepositCancel}
         open={isDepositDialogOpen}
         initialValues={{
           tokenId: 0,

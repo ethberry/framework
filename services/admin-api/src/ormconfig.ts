@@ -163,7 +163,7 @@ import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 import { SeedAssetComponentGrade1657846587020 } from "./migrations/1657846587020-seed-asset-component-grade";
 
 import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
-import { SeedAssetComponentHistory1657846609010 } from "./migrations/1657846609010-seed-asset-component-history";
+import { SeedAssetComponentHistoryErc721At1657846609030 } from "./migrations/1657846609030-seed-asset-component-history-erc721";
 
 import { CreateCompositionAt1658980520000 } from "./migrations/1658980520000-create-composition";
 import { SeedCompositionAt1658980520010 } from "./migrations/1658980520010-seed-composition";
@@ -207,7 +207,9 @@ import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-bree
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
 import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
+
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
+import { SeedAssetComponentHistoryErc998At1657846609040 } from "./migrations/1657846609040-seed-asset-component-history-erc998";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -388,7 +390,8 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentGrade1657846587020,
 
     CreateAssetComponentHistory1657846609000,
-    SeedAssetComponentHistory1657846609010,
+    SeedAssetComponentHistoryErc721At1657846609030,
+    SeedAssetComponentHistoryErc998At1657846609040,
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,

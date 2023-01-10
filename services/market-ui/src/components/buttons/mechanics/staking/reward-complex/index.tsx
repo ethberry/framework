@@ -35,7 +35,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
     return metaFn(stake, values);
   };
 
-  const handleDeployCancel = () => {
+  const handleRewardCancel = () => {
     setIsRewardDialogOpen(false);
   };
 
@@ -52,7 +52,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
       </Tooltip>
       <DepositRewardDialog
         onConfirm={handleRewardConfirm}
-        onCancel={handleDeployCancel}
+        onCancel={handleRewardCancel}
         open={isRewardDialogOpen}
         initialValues={{
           rule: stake.stakingRule!,

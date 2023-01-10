@@ -59,10 +59,10 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
   exports: [ExchangeLogService],
 })
 export class ExchangeLogModule implements OnModuleDestroy {
-  constructor(private readonly erc1155RecipeLogService: ExchangeLogService) {}
+  constructor(private readonly exchangeLogService: ExchangeLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.erc1155RecipeLogService.updateBlock();
+    return this.exchangeLogService.updateBlock();
   }
 }

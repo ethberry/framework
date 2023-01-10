@@ -39,7 +39,7 @@ export const PyramidRewardComplexButton: FC<IPyramidRewardComplexButtonProps> = 
     return metaFn(stake, values);
   };
 
-  const handleDeployCancel = () => {
+  const handleRewardCancel = () => {
     setIsRewardDialogOpen(false);
   };
 
@@ -56,7 +56,7 @@ export const PyramidRewardComplexButton: FC<IPyramidRewardComplexButtonProps> = 
       </Tooltip>
       <DepositRewardDialog
         onConfirm={handleRewardConfirm}
-        onCancel={handleDeployCancel}
+        onCancel={handleRewardCancel}
         open={isRewardDialogOpen}
         initialValues={{
           rule: stake.pyramidRule!,

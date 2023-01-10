@@ -2,7 +2,9 @@ import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, waffle, web3 } from "hardhat";
 import { constants, utils } from "ethers";
+
 import { time } from "@openzeppelin/test-helpers";
+
 import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { deployPyramid } from "./fixture";

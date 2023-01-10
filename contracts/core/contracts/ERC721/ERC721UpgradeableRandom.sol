@@ -44,13 +44,6 @@ contract ERC721UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC721Upgrad
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 
-  function upgrade(uint256 tokenId) public override onlyRole(MINTER_ROLE) returns (bool) {
-    uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    _upsertRecordField(tokenId, GRADE, grade + 1);
-    emit LevelUp(_msgSender(), tokenId, grade + 1);
-    return true;
-  }
-
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
     uint256 rarity = _getDispersion(randomness);

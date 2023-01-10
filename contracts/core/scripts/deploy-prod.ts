@@ -1,4 +1,5 @@
 import { Contract } from "ethers";
+
 import { deployLotteryProd } from "./deploy/mechanics/lottery_prod";
 import { deployWaitlist } from "./deploy/mechanics/waitlist";
 import { deployWrapper } from "./deploy/mechanics/wrapper";

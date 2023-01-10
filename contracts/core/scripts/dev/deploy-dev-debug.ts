@@ -74,7 +74,7 @@ async function main() {
 
   contracts.contractManager = await cmFactory.deploy();
   await debug(contracts);
-  console.log("contracts.contractManager.address", contracts.contractManager.address);
+  console.info("contracts.contractManager.address", contracts.contractManager.address);
   process.exit(0);
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");

@@ -1,5 +1,6 @@
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enumerable";
 
 import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
@@ -10,8 +11,9 @@ describe("ERC721UpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldBehaveLikeERC721Simple(factory);
+  shouldBehaveLikeERC721Metadata(factory);
 
+  shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);
 });

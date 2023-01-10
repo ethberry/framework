@@ -5,7 +5,6 @@ import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
-import { shouldBehaveLikeERC721Blacklist } from "./shared/blacklist";
 
 describe("ERC721Full", function () {
   const factory = () => deployERC721(this.title);
@@ -14,6 +13,5 @@ describe("ERC721Full", function () {
   shouldBehaveLikeBlackList(factory);
 
   shouldBehaveLikeERC721Simple(factory);
-  shouldBehaveLikeERC721Blacklist(factory);
   shouldMintCommon(factory);
 });
