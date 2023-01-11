@@ -101,7 +101,7 @@ export class AssetService {
       // since we have errors lets rollback the changes we made
       await queryRunner.rollbackTransaction();
 
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException("internalServerError");
     } finally {
       // you need to release a queryRunner which was manually instantiated
       await queryRunner.release();
