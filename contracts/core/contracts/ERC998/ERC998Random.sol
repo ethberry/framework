@@ -39,7 +39,7 @@ contract ERC998Random is IERC721Random, ChainLinkGoerli, ERC998Simple, Rarity {
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(account, tokenId);
   }

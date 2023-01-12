@@ -39,8 +39,8 @@ contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998Upgrad
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
+    _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(account, tokenId);
   }
@@ -58,7 +58,7 @@ contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998Upgrad
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];

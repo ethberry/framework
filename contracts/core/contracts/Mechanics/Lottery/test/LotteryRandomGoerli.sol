@@ -17,7 +17,7 @@ contract LotteryRandomGoerli is LotteryBase, ChainLinkGoerli {
     address acceptedToken
   ) LotteryBase(name, ticketFactory, acceptedToken) {}
 
-  function getRandomNumber() internal override(LotteryBase, ChainLinkTest) returns (bytes32 requestId) {
+  function getRandomNumber() internal override(LotteryBase, ChainLinkBase) returns (bytes32 requestId) {
     return super.getRandomNumber();
   }
 

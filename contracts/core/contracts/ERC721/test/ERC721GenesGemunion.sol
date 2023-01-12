@@ -41,8 +41,8 @@ contract ERC721GenesGemunion is IERC721Random, ChainLinkGemunion, ERC721Simple, 
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
+    _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(to, tokenId);
   }

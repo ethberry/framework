@@ -69,7 +69,7 @@ describe("ExchangeGrade", function () {
         //   [[1, erc20Instance.address, tokenId, amount]],
         // )
         .to.emit(erc721Instance, "LevelUp")
-        .withArgs(exchangeInstance.address, tokenId, 2);
+        .withArgs(exchangeInstance.address, tokenId, 1);
     });
 
     it("should fail: insufficient allowance", async function () {

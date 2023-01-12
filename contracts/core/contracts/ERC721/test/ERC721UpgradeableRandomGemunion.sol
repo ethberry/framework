@@ -34,8 +34,8 @@ contract ERC721UpgradeableRandomGemunion is IERC721Random, ChainLinkGemunion, ER
   function mintCommon(address account, uint256 templateId) public override(ERC721Upgradeable) onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
-    _upsertRecordField(tokenId, GRADE, 1);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
+    _upsertRecordField(tokenId, RARITY, 0);
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -56,7 +56,7 @@ contract ERC721UpgradeableRandomGemunion is IERC721Random, ChainLinkGemunion, ER
     Request memory request = _queue[requestId];
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];

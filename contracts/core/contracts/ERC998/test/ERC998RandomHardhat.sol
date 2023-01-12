@@ -38,8 +38,8 @@ contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeab
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
+    _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(account, tokenId);
   }
@@ -57,7 +57,7 @@ contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeab
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];

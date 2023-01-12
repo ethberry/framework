@@ -33,7 +33,7 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
 
     _safeMint(to, tokenId);
   }

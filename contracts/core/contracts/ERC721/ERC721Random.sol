@@ -35,7 +35,7 @@ contract ERC721Random is IERC721Random, ChainLinkGoerli, ERC721Simple, Rarity {
   function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, RARITY, 0);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {

@@ -41,8 +41,8 @@ contract ERC721GenesHardhat is IERC721Random, ChainLinkHardhat, ERC721Simple, Br
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 1);
-    _upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, GRADE, 0);
+    _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(to, tokenId);
   }
