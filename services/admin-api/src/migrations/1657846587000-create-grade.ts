@@ -25,6 +25,10 @@ export class CreateGrade1657846587000 implements MigrationInterface {
           type: `${ns}.grade_strategy_enum`,
         },
         {
+          name: "attribute",
+          type: "varchar",
+        },
+        {
           name: "price_id",
           type: "int",
         },

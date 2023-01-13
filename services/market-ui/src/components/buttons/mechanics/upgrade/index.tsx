@@ -1,38 +1,16 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { BigNumber, constants, Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ContractFeatures, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
+import { ContractFeatures, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
-
-const getMultiplier = (level: number, amount: string, { gradeStrategy, growthRate }: IGrade) => {
-  if (gradeStrategy === GradeStrategy.FLAT) {
-    return BigNumber.from(amount);
-  } else if (gradeStrategy === GradeStrategy.LINEAR) {
-    return BigNumber.from(amount).mul(level);
-  } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
-    const exp = (1 + growthRate / 100) ** level;
-    const [whole = "", decimals = ""] = exp.toString().split(".");
-    return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
-  } else {
-    throw new Error("unknownStrategy");
-  }
-};
-
-export const getEthPrice = (price: Array<{ tokenType: number; amount: BigNumber }>) => {
-  return price.reduce((memo, current) => {
-    if (current.tokenType === 0) {
-      return memo.add(current.amount);
-    }
-    return memo;
-  }, BigNumber.from(0));
-};
+import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {
   token: IToken;
@@ -48,7 +26,11 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     return api
       .fetchJson({
-        url: `/grade/${token.id}`,
+        url: `/grade`,
+        data: {
+          tokenId: token.id,
+          attribute: "GRADE",
+        },
       })
       .then((grade: IGrade) => {
         const level = token.attributes[TokenAttributes.GRADE];
@@ -91,6 +73,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         method: "POST",
         data: {
           tokenId: token.id,
+          attribute: "GRADE",
         },
       },
       null,

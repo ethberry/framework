@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 
 import { NotFoundInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -18,9 +18,9 @@ export class GradeController {
     return this.gradeService.sign(dto, userEntity);
   }
 
-  @Get("/:id")
+  @Get("/")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
-    return this.gradeService.findOneByToken({ id });
+  public findOne(@Query() dto: SignGradeDto): Promise<GradeEntity | null> {
+    return this.gradeService.findOneByToken(dto);
   }
 }

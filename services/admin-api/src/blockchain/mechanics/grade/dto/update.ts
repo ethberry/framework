@@ -1,14 +1,14 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsNumber, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { GradeStrategy } from "@framework/types";
+import { GradeStrategy, TokenAttributes } from "@framework/types";
 
 import { IGradeUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     minimum: 1,
   })
   @IsOptional()
@@ -16,7 +16,13 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 
-  @ApiPropertyOptional()
+  @ApiProperty({
+    enum: TokenAttributes,
+  })
+  @IsEnum(TokenAttributes, { message: "badInput" })
+  public attribute: TokenAttributes;
+
+  @ApiProperty()
   @IsOptional()
   @IsEnum(GradeStrategy, { message: "badInput" })
   public gradeStrategy: GradeStrategy;
@@ -27,7 +33,7 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   @ValidateIf(o => o.gradeStrategy === GradeStrategy.EXPONENTIAL)
   public growthRate: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: PriceDto,
   })
   @IsOptional()

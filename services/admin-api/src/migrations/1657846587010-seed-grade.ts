@@ -25,6 +25,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.grade (
         grade_strategy,
+        attribute,
         growth_rate,
         price_id,
         contract_id,
@@ -32,6 +33,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         updated_at
       ) VALUES (
         'FLAT',
+        'GRADE',
         0,
         50101,
         1305,
@@ -39,6 +41,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
+        'GRADE',
         0,
         50102,
         1306,
@@ -46,6 +49,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'LINEAR',
+        'GRADE',
         1,
         50201,
         1405,
@@ -53,6 +57,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
+        'GRADE',
         1,
         50202,
         1406, -- hero

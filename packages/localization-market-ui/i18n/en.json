@@ -63,8 +63,8 @@
     },
     "chainId": {
       "1": "ETHEREUM",
-      "13377": "BESU (remote)",
-      "13378": "BESU (local)",
+      "13377": "GEMUNION",
+      "13378": "BESU",
       "137": "POLYGON",
       "5": "GOERLI",
       "56": "BINANCE",

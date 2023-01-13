@@ -32,9 +32,10 @@ export const Grade: FC = () => {
         title: "",
       } as IContract,
     },
-    filter: ({ gradeStrategy, growthRate, price }) => ({
+    filter: ({ gradeStrategy, growthRate, price, attribute }) => ({
       gradeStrategy,
       growthRate,
+      attribute,
       price: cleanUpAsset(price),
     }),
   });
@@ -49,7 +50,9 @@ export const Grade: FC = () => {
         <List>
           {rows.map((grade, i) => (
             <ListItem key={i}>
-              <ListItemText>{grade.contract?.title}</ListItemText>
+              <ListItemText>
+                {grade.contract?.title} ({grade.attribute})
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(grade)}>
                   <Create />

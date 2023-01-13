@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IContract } from "../../hierarchy/contract";
+import { TokenAttributes } from "../../hierarchy/token";
 import { IAsset } from "../asset";
 
 export enum GradeStrategy {
@@ -14,5 +15,6 @@ export interface IGrade extends IIdDateBase {
   contract?: IContract;
   gradeStrategy: GradeStrategy;
   growthRate: number;
+  attribute: TokenAttributes;
   price?: IAsset;
 }

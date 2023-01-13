@@ -29,14 +29,19 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(where: FindOptionsWhere<TokenEntity>): Promise<GradeEntity | null> {
-    const tokenEntity = await this.tokenService.findOneWithRelations(where);
+  public async findOneByToken(dto: ISignGradeDto): Promise<GradeEntity | null> {
+    const { tokenId, attribute } = dto;
+
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    return this.findOneWithRelations({ contractId: tokenEntity.template.contract.id });
+    return this.findOneWithRelations({
+      contractId: tokenEntity.template.contract.id,
+      attribute,
+    });
   }
 
   public async findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
@@ -55,22 +60,25 @@ export class GradeService {
   }
 
   public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { tokenId } = dto;
+    const { tokenId, attribute } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const gradeEntity = await this.findOneWithRelations({ contractId: tokenEntity.template.contract.id });
-
-    if (!gradeEntity) {
-      throw new NotFoundException("gradeNotFound");
-    }
-
     const { contractFeatures } = tokenEntity.template.contract;
     if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       throw new BadRequestException("featureIsNotSupported");
+    }
+
+    const gradeEntity = await this.findOneWithRelations({
+      contractId: tokenEntity.template.contract.id,
+      attribute,
+    });
+
+    if (!gradeEntity) {
+      throw new NotFoundException("gradeNotFound");
     }
 
     const nonce = utils.randomBytes(32);

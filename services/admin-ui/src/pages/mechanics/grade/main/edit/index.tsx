@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { GradeStrategy, IGrade, TokenType } from "@framework/types";
@@ -19,13 +19,14 @@ export interface IGradeEditDialogProps {
 export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, gradeStrategy, growthRate, price, contractId } = initialValues;
+  const { id, gradeStrategy, growthRate, price, contractId, attribute } = initialValues;
   const fixedValues = {
     id,
     gradeStrategy,
     growthRate,
     price,
     contractId,
+    attribute,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -39,6 +40,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput name="contractId" controller="contracts" readOnly data={{}} />
+      <TextInput name="attribute" readOnly />
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />
       <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
