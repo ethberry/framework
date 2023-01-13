@@ -31,7 +31,7 @@ export const WaitlistItem: FC = () => {
   } = useCollection<IWaitlistItem, IWaitlistItemSearchDto>({
     baseUrl: "/waitlist/item",
     empty: {
-      account: process.env.ACCOUNT,
+      account: "",
     },
     search: {
       account: "",
