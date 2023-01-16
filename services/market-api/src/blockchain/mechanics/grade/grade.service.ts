@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ContractFeatures, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
+import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignGradeDto } from "./interfaces";
@@ -91,6 +91,7 @@ export class GradeService {
         expiresAt,
         referrer: constants.AddressZero,
       },
+      attribute,
       tokenEntity,
       gradeEntity,
     );
@@ -101,10 +102,11 @@ export class GradeService {
   public async getSignature(
     account: string,
     params: IParams,
+    attribute: GradeAttribute,
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const level = tokenEntity.attributes[TokenAttributes.GRADE];
+    const level = tokenEntity.attributes[attribute];
 
     return this.signerService.getOneToManySignature(
       account,

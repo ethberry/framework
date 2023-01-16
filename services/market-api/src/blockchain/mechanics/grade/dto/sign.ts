@@ -3,7 +3,7 @@ import { IsEnum, IsInt, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { ISignGradeDto } from "../interfaces";
-import { TokenAttributes } from "@framework/types";
+import { GradeAttribute } from "@framework/types";
 
 export class SignGradeDto implements ISignGradeDto {
   @ApiProperty({
@@ -15,8 +15,8 @@ export class SignGradeDto implements ISignGradeDto {
   public tokenId: number;
 
   @ApiProperty({
-    enum: TokenAttributes,
+    enum: GradeAttribute,
   })
-  @IsEnum(TokenAttributes, { message: "badInput" })
-  public attribute: TokenAttributes;
+  @IsEnum(GradeAttribute, { message: "badInput" })
+  public attribute: GradeAttribute;
 }

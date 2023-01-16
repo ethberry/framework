@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsNumber, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { GradeStrategy, TokenAttributes } from "@framework/types";
+import { GradeAttribute, GradeStrategy } from "@framework/types";
 
 import { IGradeUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
@@ -17,10 +17,10 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   public contractId: number;
 
   @ApiProperty({
-    enum: TokenAttributes,
+    enum: GradeAttribute,
   })
-  @IsEnum(TokenAttributes, { message: "badInput" })
-  public attribute: TokenAttributes;
+  @IsEnum(GradeAttribute, { message: "badInput" })
+  public attribute: GradeAttribute;
 
   @ApiProperty()
   @IsOptional()

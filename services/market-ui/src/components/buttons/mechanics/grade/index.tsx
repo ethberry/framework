@@ -7,17 +7,18 @@ import { Web3ContextType } from "@web3-react/core";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ContractFeatures, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
+import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {
   token: IToken;
+  attribute: GradeAttribute;
 }
 
-export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
-  const { token } = props;
+export const GradeButton: FC<IUpgradeButtonProps> = props => {
+  const { token, attribute } = props;
 
   const api = useApi();
 
@@ -29,11 +30,11 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         url: `/grade`,
         data: {
           tokenId: token.id,
-          attribute: "GRADE",
+          attribute,
         },
       })
       .then((grade: IGrade) => {
-        const level = token.attributes[TokenAttributes.GRADE];
+        const level = token.attributes[attribute];
 
         const price =
           grade.price?.components.map(component => ({
@@ -73,7 +74,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         method: "POST",
         data: {
           tokenId: token.id,
-          attribute: "GRADE",
+          attribute,
         },
       },
       null,
@@ -91,7 +92,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
 
   return (
     <Button onClick={handleLevelUp} data-testid="ExchangeUpgradeButton">
-      <FormattedMessage id="form.buttons.upgrade" />
+      <FormattedMessage id={`form.buttons.${attribute as string}`} />
     </Button>
   );
 };

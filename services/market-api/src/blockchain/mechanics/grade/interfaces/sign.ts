@@ -1,6 +1,6 @@
-import { TokenAttributes } from "@framework/types";
+import { GradeAttribute } from "@framework/types";
 
 export interface ISignGradeDto {
   tokenId: number;
-  attribute: TokenAttributes;
+  attribute: GradeAttribute;
 }

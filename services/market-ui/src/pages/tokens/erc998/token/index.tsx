@@ -4,13 +4,13 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractFeatures, ITemplate, IToken } from "@framework/types";
+import { ContractFeatures, GradeAttribute, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton, TokenTransferButton, UpgradeButton } from "../../../../components/buttons";
+import { TokenSellButton, TokenTransferButton, GradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { Erc998Composition } from "./composition";
 import { TokenAttributesView } from "../../genes";
@@ -75,7 +75,7 @@ export const Erc998Token: FC = () => {
               <Typography>
                 <FormattedMessage id="pages.erc998.token.level" values={selected.attributes} />
               </Typography>
-              <UpgradeButton token={selected} />
+              <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
             </Paper>
           ) : null}
 

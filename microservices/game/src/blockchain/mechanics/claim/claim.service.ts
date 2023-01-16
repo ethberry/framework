@@ -8,7 +8,7 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class ClaimService {

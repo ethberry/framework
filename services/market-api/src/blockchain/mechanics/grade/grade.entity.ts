@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { GradeStrategy, IGrade, TokenAttributes } from "@framework/types";
+import { GradeAttribute, GradeStrategy, IGrade } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
@@ -36,7 +36,7 @@ export class GradeEntity extends IdDateBaseEntity implements IGrade {
 
   @Column({
     type: "enum",
-    enum: TokenAttributes,
+    enum: GradeAttribute,
   })
-  public attribute: TokenAttributes;
+  public attribute: GradeAttribute;
 }

@@ -29,13 +29,16 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
             contractInterface: ExchangeSol.abi,
             // prettier-ignore
             eventNames: [
+              // MODULE:CORE
+              ContractEventType.Paused,
+              ContractEventType.Unpaused,
               ExchangeEventType.Purchase,
+              // MODULE:CLAIM
               ExchangeEventType.Claim,
+              // MODULE:REFERRAL
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralWithdraw,
               ReferralProgramEventType.ReferralReward,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
               // MODULE:WALLET

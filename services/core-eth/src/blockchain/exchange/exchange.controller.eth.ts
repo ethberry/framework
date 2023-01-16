@@ -20,52 +20,40 @@ import { ExchangeServiceEth } from "./exchange.service.eth";
 export class ExchangeControllerEth {
   constructor(private readonly exchangeServiceEth: ExchangeServiceEth) {}
 
+  // MODULE:CORE
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase }])
+  public purchase(@Payload() event: ILogEvent<IExchangePurchaseEvent>, @Ctx() context: Log): Promise<void> {
+    return this.exchangeServiceEth.purchase(event, context);
+  }
+
+  // MODULE:GRADE
+  // MODULE:MYSTERY
   @EventPattern([
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox },
   ])
   public exchange(
-    @Payload()
-    event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>,
+    @Payload() event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.log(event, context);
   }
 
+  // MODULE:CRAFT
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft }])
-  public craft(
-    @Payload()
-    event: ILogEvent<IExchangeCraftEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public craft(@Payload() event: ILogEvent<IExchangeCraftEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeServiceEth.craft(event, context);
   }
 
+  // MODULE:CLAIM
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim }])
-  public claim(
-    @Payload()
-    event: ILogEvent<IExchangeClaimEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public claim(@Payload() event: ILogEvent<IExchangeClaimEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeServiceEth.claim(event, context);
-  }
-
-  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase }])
-  public purchase(
-    @Payload()
-    event: ILogEvent<IExchangePurchaseEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.exchangeServiceEth.purchase(event, context);
   }
 
   // MODULE:BREEDING
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Breed }])
-  public breed(
-    @Payload()
-    event: ILogEvent<IExchangeBreedEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public breed(@Payload() event: ILogEvent<IExchangeBreedEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeServiceEth.breed(event, context);
   }
 }

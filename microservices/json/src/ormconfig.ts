@@ -1,8 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
-import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
+import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
+import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";

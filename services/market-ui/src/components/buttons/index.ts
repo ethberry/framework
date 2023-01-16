@@ -17,7 +17,7 @@ export * from "./mechanics/referral/reward";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/staking/reward";
 export * from "./mechanics/staking/reward-complex";
-export * from "./mechanics/upgrade";
+export * from "./mechanics/grade";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/waitlist/claim";
 export * from "./mechanics/wrapper/unpack";

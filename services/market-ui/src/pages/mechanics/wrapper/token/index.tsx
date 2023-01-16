@@ -4,13 +4,13 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import type { ITemplate, IToken } from "@framework/types";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { ModuleType } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
+import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 
 export const WrapperToken: FC = () => {
@@ -61,15 +61,6 @@ export const WrapperToken: FC = () => {
                 />
               </Typography>
               <TokenSellButton token={selected} />
-            </Paper>
-          ) : null}
-
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
-            <Paper className={classes.paper}>
-              <Typography>
-                <FormattedMessage id="pages.wrapper.token.level" values={selected.attributes} />
-              </Typography>
-              <UpgradeButton token={selected} />
             </Paper>
           ) : null}
         </Grid>

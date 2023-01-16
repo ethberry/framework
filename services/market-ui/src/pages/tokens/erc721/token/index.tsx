@@ -9,9 +9,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { ContractFeatures, GradeAttribute } from "@framework/types";
 
-import { TokenSellButton, TokenTransferButton, UpgradeButton } from "../../../../components/buttons";
+import { TokenSellButton, TokenTransferButton, GradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";
@@ -76,7 +76,7 @@ export const Erc721Token: FC = () => {
               <Typography>
                 <FormattedMessage id="pages.erc721.token.level" values={selected.attributes} />
               </Typography>
-              <UpgradeButton token={selected} />
+              <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
             </Paper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
