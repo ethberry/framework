@@ -7,7 +7,7 @@ import {
   LoggerService,
   NotFoundException,
 } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { InjectRepository, InjectDataSource } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
@@ -27,6 +27,7 @@ export class AssetService {
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    @InjectDataSource()
     private dataSource: DataSource,
   ) {}
 
