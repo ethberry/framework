@@ -1,9 +1,10 @@
-import { Module } from "@nestjs/common";
-import { APP_GUARD } from "@nestjs/core";
+import { Logger, Module } from "@nestjs/common";
+import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
+import { HttpExceptionFilter, HttpValidationPipe, ValidationExceptionFilter } from "@gemunion/nest-js-utils";
 import { ApiKeyGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
@@ -17,13 +18,26 @@ import { HealthModule } from "./health/health.module";
 import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { SyncModule } from "./sync/sync.module";
-import { MechanicsModule } from "./blockchain/mechanics/mechanics.module";
+import { BlockchainModule } from "./blockchain/blockchain.module";
 
 @Module({
   providers: [
+    Logger,
+    {
+      provide: APP_PIPE,
+      useClass: HttpValidationPipe,
+    },
     {
       provide: APP_GUARD,
       useClass: ApiKeyGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ValidationExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
     },
   ],
   imports: [
@@ -63,7 +77,7 @@ import { MechanicsModule } from "./blockchain/mechanics/mechanics.module";
     RequestLoggerModule,
     HealthModule,
     AuthModule,
-    MechanicsModule,
+    BlockchainModule,
     SyncModule,
   ],
   controllers: [AppController],

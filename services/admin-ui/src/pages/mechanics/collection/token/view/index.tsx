@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -64,7 +63,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <AddressLink address={balance?.slice(-1)[0]?.account} />
+                <AddressLink address={balance?.at(0)?.account} />
               </TableCell>
             </TableRow>
             <TableRow>

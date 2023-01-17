@@ -63,7 +63,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <AddressLink address={balance?.slice(-1)[0]?.account} />
+                <AddressLink address={balance?.at(0)?.account} />
               </TableCell>
             </TableRow>
             <TableRow>

@@ -2,6 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
+import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName } from "@framework/constants";
@@ -14,6 +15,8 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.set("trust proxy", true);
 

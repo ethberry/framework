@@ -10,10 +10,12 @@ import {
 import { InjectRepository, InjectDataSource } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
+import type { IAssetDto } from "@framework/types";
+import { TokenType } from "@framework/types";
+
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
-import { IAssetDto, TokenType } from "@framework/types";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
 @Injectable()
