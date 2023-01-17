@@ -91,6 +91,15 @@ export class ContractManagerServiceRmq {
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
     }
+    if (listenerType === ListenerType.STAKING) {
+      const contracts = await this.contractService.findAllByType(ModuleType.STAKING);
+      contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
+      const unique = [...new Set(contracts.address)];
+      this.vestingLogService.addListener({
+        address: unique,
+        fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
+      });
+    }
   }
 
   public async loggerOut(dto: IEthLoggerInOutDto): Promise<void> {

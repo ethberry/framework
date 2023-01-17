@@ -22,10 +22,20 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
-    return contract.receiveReward(stake.externalId, values.withdrawDeposit, values.breakLastPeriod) as Promise<void>;
-  });
+  const metaFn = useMetamask(
+    async (stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
+      const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
+      // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
+      const estGas = await contract.estimateGas.receiveReward(
+        stake.externalId,
+        values.withdrawDeposit,
+        values.breakLastPeriod,
+      );
+      return contract.receiveReward(stake.externalId, values.withdrawDeposit, values.breakLastPeriod, {
+        gasLimit: estGas.add(estGas.div(100).mul(10)),
+      }) as Promise<void>;
+    },
+  );
 
   const handleReward = () => {
     setIsRewardDialogOpen(true);

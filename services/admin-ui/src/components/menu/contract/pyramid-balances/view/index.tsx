@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { BigNumber, Contract } from "ethers";
+import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
@@ -39,13 +39,15 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
     { success: false },
   );
 
-  const metaWithdraw = useMetamask((values: IBalance, withdrawAmount: string, web3Context: Web3ContextType) => {
+  const metaWithdraw = useMetamask(async (values: IBalance, withdrawAmount: string, web3Context: Web3ContextType) => {
     const contract = new Contract(data.address, IPyramidSol.abi, web3Context.provider?.getSigner());
     // return contract.withdrawToken(values.token!.template!.contract!.address, values.amount) as Promise<void>;
-    return contract.withdrawToken(
-      values.token!.template!.contract!.address,
-      BigNumber.from(withdrawAmount),
-    ) as Promise<void>;
+    const token = values.token!.template!.contract!.address;
+    // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
+    const estGas = await contract.estimateGas.withdrawToken(token, withdrawAmount);
+    return contract.withdrawToken(token, withdrawAmount, {
+      gasLimit: estGas.add(estGas.div(100).mul(10)),
+    }) as Promise<void>;
   });
 
   useEffect(() => {

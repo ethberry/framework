@@ -68,7 +68,6 @@ export const SystemBalances: FC = () => {
     };
   };
 
-  // TODO extend Pyramid with paymentSplitter
   const metaFn = useMetamask((data: IBalanceWithdrawDto, web3Context: Web3ContextType) => {
     if (balance.token?.template!.contract!.contractType === TokenType.ERC20) {
       const contract = new Contract(balance.account, ExchangeSol.abi, web3Context.provider?.getSigner());

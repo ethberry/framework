@@ -4,6 +4,7 @@ import { ethers, waffle, web3 } from "hardhat";
 import { constants, utils } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
+import { blockAwait } from "@gemunion/contracts-utils";
 
 import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
@@ -1063,8 +1064,10 @@ describe("Pyramid", function () {
 
     it("should fund ETH", async function () {
       const pyramidInstance = await deployPyramid();
+      const [owner] = await ethers.getSigners();
 
       const tx = pyramidInstance.fundEth({ value: constants.WeiPerEther });
+      await expect(tx).to.emit(pyramidInstance, "PaymentEthReceived").withArgs(owner.address, constants.WeiPerEther);
       await expect(tx).to.changeEtherBalance(pyramidInstance, constants.WeiPerEther);
     });
 
@@ -1510,7 +1513,20 @@ describe("Pyramid", function () {
   });
 
   describe("Withdraw", function () {
-    it("should Withdraw", async function () {
+    it("should Fund and Withdraw ETH", async function () {
+      const pyramidInstance = await deployPyramid();
+
+      const amnt = utils.parseEther("99.0");
+      const amnt1 = utils.parseEther("9.0");
+      await pyramidInstance.fundEth({ value: amnt });
+      await blockAwait();
+      // WITHDRAW ETH
+      const estimateGas = await pyramidInstance.estimateGas.withdrawToken(tokenZero, amnt1);
+      const tx3 = pyramidInstance.withdrawToken(tokenZero, amnt1, { gasLimit: estimateGas.add(estimateGas.div(100).mul(10))});
+      await expect(tx3).to.emit(pyramidInstance, "WithdrawToken").withArgs(constants.AddressZero, amnt1);
+    });
+
+    it("should Withdraw after Deposit", async function () {
       const [owner] = await ethers.getSigners();
 
       const pyramidInstance = await deployPyramid();

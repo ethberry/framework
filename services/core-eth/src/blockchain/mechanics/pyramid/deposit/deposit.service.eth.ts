@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
+import { constants } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -7,6 +8,7 @@ import {
   IPyramidDepositEvent,
   IPyramidFinishEvent,
   IPyramidWithdrawEvent,
+  IWithdrawTokenEvent,
   PyramidDepositStatus,
   PyramidEventType,
   TPyramidEventData,
@@ -17,6 +19,8 @@ import { PyramidDepositService } from "./deposit.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { PyramidRulesService } from "../rules/rules.service";
 import { PyramidDepositEntity } from "./deposit.entity";
+import { BalanceService } from "../../../hierarchy/balance/balance.service";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class PyramidDepositServiceEth {
@@ -27,6 +31,8 @@ export class PyramidDepositServiceEth {
     private readonly pyramidRulesService: PyramidRulesService,
     private readonly historyService: PyramidHistoryService,
     private readonly contractService: ContractService,
+    private readonly balanceService: BalanceService,
+    private readonly tokenService: TokenService,
   ) {}
 
   public async start(event: ILogEvent<IPyramidDepositEvent>, context: Log): Promise<void> {
@@ -110,9 +116,27 @@ export class PyramidDepositServiceEth {
     await stakeEntity.save();
   }
 
-  public async finishToken(event: ILogEvent<IPyramidFinishEvent | IFinalizedTokenEvent>, context: Log): Promise<void> {
+  public async finishToken(event: ILogEvent<IFinalizedTokenEvent | IPyramidFinishEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-    // TODO cancel all stakes (or all TOKEN depost\reward stakes)
+    // TODO cancel all stakes? (or all TOKEN depost\reward stakes)
+  }
+
+  public async withdrawToken(event: ILogEvent<IWithdrawTokenEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    const {
+      args: { token, amount },
+    } = event;
+    const { address } = context;
+
+    if (token.toLowerCase() === constants.AddressZero) {
+      const tokenEntity = await this.tokenService.getToken("0", token.toLowerCase());
+
+      if (!tokenEntity) {
+        throw new NotFoundException("tokenNotFound");
+      }
+
+      await this.balanceService.decrement(tokenEntity.id, address.toLowerCase(), amount);
+    }
   }
 
   private async updateHistory(event: ILogEvent<TPyramidEventData>, context: Log) {

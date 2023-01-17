@@ -19,9 +19,13 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const metaRelease = useMetamask((vesting: IVesting, web3Context: Web3ContextType) => {
+  const metaRelease = useMetamask(async (vesting: IVesting, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.contract!.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
-    return contract["release()"]() as Promise<void>;
+    // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
+    const estGas = await contract["release()"].estimateGas();
+    return contract["release()"]({
+      gasLimit: estGas.add(estGas.div(100).mul(10)),
+    }) as Promise<void>;
   });
 
   const handleClick = () => {

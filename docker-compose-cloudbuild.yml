@@ -318,7 +318,6 @@ services:
       # emailer
       - "${PORT_EML_API}:${PORT_EML_API}"
 
-
   nginx:
     container_name: nginx
     image: nginx

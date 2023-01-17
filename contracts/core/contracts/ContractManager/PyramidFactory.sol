@@ -9,7 +9,7 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract PyramidFactory is AbstractFactory {
-  bytes private constant PYRAMID_ARGUMENTS_SIGNATURE = "PyramidArgs(uint8[] featureIds)";
+  bytes private constant PYRAMID_ARGUMENTS_SIGNATURE = "PyramidArgs(uint8[] featureIds,address[] payees,uint256[] shares)";
   bytes32 private constant PYRAMID_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(PYRAMID_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
@@ -21,6 +21,8 @@ contract PyramidFactory is AbstractFactory {
 
   struct PyramidArgs {
     uint8[] featureIds;
+    address[] payees;
+    uint256[] shares;
   }
 
   // todo emit struct PyramidArgs
@@ -36,7 +38,7 @@ contract PyramidFactory is AbstractFactory {
     address signer = _recoverSigner(_hashPyramid(params, args), signature);
     require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    addr = deploy2(params.bytecode, abi.encode(), params.nonce);
+    addr = deploy2(params.bytecode, abi.encode(args.payees, args.shares), params.nonce);
     _pyramid_tokens.push(addr);
 
     emit PyramidDeployed(addr, args.featureIds);
@@ -56,7 +58,15 @@ contract PyramidFactory is AbstractFactory {
   }
 
   function _hashPyramidStruct(PyramidArgs calldata p) private pure returns (bytes32) {
-    return keccak256(abi.encode(PYRAMID_ARGUMENTS_TYPEHASH, keccak256(abi.encodePacked(p.featureIds))));
+    return
+    keccak256(
+      abi.encode(
+        PYRAMID_ARGUMENTS_TYPEHASH,
+        keccak256(abi.encodePacked(p.featureIds)),
+        keccak256(abi.encodePacked(p.payees)),
+        keccak256(abi.encodePacked(p.shares))
+      )
+    );
   }
 
   function allPyramids() external view returns (address[] memory) {

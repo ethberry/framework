@@ -22,14 +22,20 @@ export const PyramidRewardComplexButton: FC<IPyramidRewardComplexButtonProps> = 
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((stake: IPyramidDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      stake.pyramidRule!.contract.address,
-      PyramidSol.abi,
-      web3Context.provider?.getSigner(),
-    );
-    return contract.receiveReward(stake.externalId, values.withdrawDeposit, false) as Promise<void>;
-  });
+  const metaFn = useMetamask(
+    async (stake: IPyramidDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
+      const contract = new Contract(
+        stake.pyramidRule!.contract.address,
+        PyramidSol.abi,
+        web3Context.provider?.getSigner(),
+      );
+      // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
+      const estGas = await contract.estimateGas.receiveReward(stake.externalId, values.withdrawDeposit, false);
+      return contract.receiveReward(stake.externalId, values.withdrawDeposit, false, {
+        gasLimit: estGas.add(estGas.div(100).mul(10)),
+      }) as Promise<void>;
+    },
+  );
 
   const handleReward = () => {
     setIsRewardDialogOpen(true);

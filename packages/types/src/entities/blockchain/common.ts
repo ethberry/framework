@@ -41,6 +41,7 @@ export enum ListenerType {
   MYSTERYBOX = "MYSTERYBOX",
   PYRAMID = "PYRAMID",
   VESTING = "VESTING",
+  STAKING = "STAKING",
 }
 
 export enum CronExpression {

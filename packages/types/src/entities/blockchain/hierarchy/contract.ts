@@ -55,6 +55,7 @@ export enum MysteryContractFeatures {
 
 export enum PyramidContractFeatures {
   "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
+  "PAYMENT_SPLITTER" = "PAYMENT_SPLITTER",
 }
 
 export enum StakingContractFeatures {

@@ -18,7 +18,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./interfaces/IPyramid.sol";
 import "./LinearReferralPyramid.sol";
 
-contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, PaymentSplitter {
+contract PyramidBasic is IPyramid, AccessControl, Pausable {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
@@ -40,7 +40,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
 
-  constructor(address[] memory payees, uint256[] memory shares) PaymentSplitter(payees, shares) {
+  constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
   }
@@ -54,7 +54,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
   }
 
   function deposit(
-    address referrer,
+    address,
     uint256 ruleId,
     uint256 tokenId
   ) public payable whenNotPaused {
@@ -82,11 +82,6 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     Asset[] memory depositItems = new Asset[](1);
     depositItems[0] = depositItem;
 
-    _afterPurchase(referrer, depositItems);
-  }
-
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferralPyramid) {
-    return super._afterPurchase(referrer, price);
   }
 
   function receiveReward(
@@ -192,9 +187,8 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     address account = _msgSender();
     uint256 totalBalance;
     if (token == address(0)) {
-    //      require included in sendValue()
-    //      totalBalance = address(this).balance;
-    //      require(totalBalance >= amount, "Pyramid: balance exceeded");
+      totalBalance = address(this).balance;
+      require(totalBalance >= amount, "Pyramid: balance exceeded");
       Address.sendValue(payable(account), amount);
     } else {
       totalBalance = IERC20(token).balanceOf(address(this));
@@ -246,10 +240,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
 
   // ETH FUND
   function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {
-    emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
-  receive() external override payable {
+  receive() external payable {
     revert();
   }
 

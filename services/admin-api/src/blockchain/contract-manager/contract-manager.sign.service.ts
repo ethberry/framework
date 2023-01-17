@@ -82,6 +82,7 @@ import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts
 import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
 
 import { UserEntity } from "../../user/user.entity";
 
@@ -364,7 +365,7 @@ export class ContractManagerSignService {
 
   // MODULE:PYRAMID
   public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractFeatures } = dto;
+    const { contractFeatures, payees, shares } = dto;
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByPyramidContractFeatures(dto);
 
@@ -375,6 +376,8 @@ export class ContractManagerSignService {
 
     const args = {
       featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+      payees,
+      shares,
     };
 
     const signature = await this.signer._signTypedData(
@@ -395,7 +398,11 @@ export class ContractManagerSignService {
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
         ],
-        PyramidArgs: [{ name: "featureIds", type: "uint8[]" }],
+        PyramidArgs: [
+          { name: "featureIds", type: "uint8[]" },
+          { name: "payees", type: "address[]" },
+          { name: "shares", type: "uint256[]" },
+        ],
       },
       // Values
       {
@@ -769,10 +776,14 @@ export class ContractManagerSignService {
     const { contractFeatures } = dto;
 
     if (!contractFeatures.length) {
-      return PyramidSol.bytecode;
+      return PyramidBasicSol.bytecode;
     }
 
     if (contractFeatures.includes(PyramidContractFeatures.LINEAR_REFERRAL)) {
+      return PyramidSol.bytecode;
+    }
+
+    if (contractFeatures.includes(PyramidContractFeatures.PAYMENT_SPLITTER)) {
       return PyramidSol.bytecode;
     }
 

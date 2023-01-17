@@ -21,8 +21,7 @@ export const PyramidContractDeployButton: FC<IPyramidContractDeployButtonProps> 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPyramidContractDeployDto, web3Context, sign) => {
-      const { contractFeatures } = values;
-
+      const { contractFeatures, payees, shares } = values;
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -37,6 +36,8 @@ export const PyramidContractDeployButton: FC<IPyramidContractDeployButtonProps> 
         },
         {
           featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+          payees,
+          shares,
         },
         sign.signature,
       ) as Promise<void>;
@@ -48,7 +49,7 @@ export const PyramidContractDeployButton: FC<IPyramidContractDeployButtonProps> 
       {
         url: "/contract-manager/pyramid",
         method: "POST",
-        data: values,
+        data: { contractFeatures: values.contractFeatures, payees: [values.payees], shares: [values.shares] },
       },
       form,
     );
@@ -70,7 +71,9 @@ export const PyramidContractDeployButton: FC<IPyramidContractDeployButtonProps> 
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          contractFeatures: [PyramidContractFeatures.LINEAR_REFERRAL],
+          contractFeatures: [],
+          payees: [],
+          shares: [],
         }}
       />
     </Fragment>

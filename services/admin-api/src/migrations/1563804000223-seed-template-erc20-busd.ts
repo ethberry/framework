@@ -29,7 +29,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         0,
         '31000000000000000000000000',
         'ACTIVE',
-        2207,
+        4207,
         '${currentDateTime}',
         '${currentDateTime}'
       );

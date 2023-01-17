@@ -39,15 +39,18 @@ export class PyramidDepositControllerEth {
       contractType: ContractType.PYRAMID,
       eventName: PyramidEventType.FinalizedToken,
     },
+  ])
+  public finishToken(@Payload() event: ILogEvent<IFinalizedTokenEvent | IPyramidFinishEvent>, @Ctx() context: Log): Promise<void> {
+    return this.pyramidServiceEth.finishToken(event, context);
+  }
+
+  @EventPattern([
     {
       contractType: ContractType.PYRAMID,
       eventName: PyramidEventType.WithdrawToken,
     },
   ])
-  public finishToken(
-    @Payload() event: ILogEvent<IFinalizedTokenEvent | IWithdrawTokenEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.pyramidServiceEth.finishToken(event, context);
+  public withdrawToken(@Payload() event: ILogEvent<IWithdrawTokenEvent>, @Ctx() context: Log): Promise<void> {
+    return this.pyramidServiceEth.withdrawToken(event, context);
   }
 }

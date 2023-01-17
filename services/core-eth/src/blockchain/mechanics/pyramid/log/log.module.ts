@@ -45,7 +45,13 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ReferralProgramEventType.ReferralReward,
               ReferralProgramEventType.ReferralWithdraw,
               ContractEventType.Paused,
-              ContractEventType.Unpaused
+              ContractEventType.Unpaused,
+              PyramidEventType.ERC20PaymentReleased,
+              PyramidEventType.PaymentEthReceived,
+              PyramidEventType.PaymentEthSent,
+              PyramidEventType.PayeeAdded,
+              PyramidEventType.PaymentReleased,
+              PyramidEventType.PaymentReceived,
             ],
           },
           block: {

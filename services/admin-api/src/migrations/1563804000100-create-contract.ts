@@ -77,6 +77,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     // MODULE:PYRAMID
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'LINEAR_REFERRAL';`);
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAYMENT_SPLITTER';`);
 
     const table = new Table({
       name: `${ns}.contract`,

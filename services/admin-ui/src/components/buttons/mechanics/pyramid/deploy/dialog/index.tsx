@@ -1,7 +1,9 @@
 import { FC } from "react";
+// import { useFormContext } from "react-hook-form";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+
 import { IContract, IPyramidContractDeployDto, PyramidContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -16,6 +18,13 @@ export interface IPyramidContractDeployDialogProps {
 export const PyramidContractDeployDialog: FC<IPyramidContractDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  // const form = useFormContext<any>();
+  //
+  // const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  //   form.setValue("payees", [option?.payees] ?? [0]);
+  //   form.setValue("shares", [option?.shares] ?? ["0x"]);
+  // };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -25,6 +34,8 @@ export const PyramidContractDeployDialog: FC<IPyramidContractDeployDialogProps> 
       {...rest}
     >
       <SelectInput name="contractFeatures" options={PyramidContractFeatures} multiple />
+      <TextInput name="payees" />
+      <TextInput name="shares" />
     </FormDialog>
   );
 };

@@ -43,7 +43,7 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
       {...rest}
     >
       <TextInput name="title" />
-      <RichTextEditor name="description" />
+      {/*<RichTextEditor name="description" />*/}
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

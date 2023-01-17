@@ -31,6 +31,7 @@ export class WalletService {
 
     const accounts = contractPyramidEntities.map(contract => contract.address).filter(c => c !== wallet);
     accounts.push(contractExchangeEntity.address);
+
     Object.assign(dto, { accounts }); // todo add to dto.accounts
     // return this.balanceService.search(dto, contractExchangeEntity.address);
     const balances = await this.balanceService.search(dto);

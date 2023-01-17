@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { BalanceEntity } from "./balance.entity";
-import { IBalanceAutocompleteDto, IBalanceSearchDto } from "@framework/types";
+import { IBalanceAutocompleteDto, IBalanceSearchDto, ModuleType } from "@framework/types";
 
 @Injectable()
 export class BalanceService {
@@ -23,13 +23,13 @@ export class BalanceService {
     return this.balanceEntityRepository.find({
       where: {
         account: address,
-        // token: {
-        //   template: {
-        //     contract: {
-        //       contractType,
-        //     },
-        //   },
-        // },
+        token: {
+          template: {
+            contract: {
+              contractModule: ModuleType.HIERARCHY,
+            },
+          },
+        },
       },
       join: {
         alias: "balance",

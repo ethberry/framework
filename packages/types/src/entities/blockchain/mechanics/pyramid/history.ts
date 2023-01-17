@@ -8,6 +8,13 @@ export enum PyramidEventType {
   StakingFinish = "StakingFinish",
   WithdrawToken = "WithdrawToken",
   FinalizedToken = "FinalizedToken",
+  // MODULE:WALLET
+  PayeeAdded = "PayeeAdded",
+  PaymentReleased = "PaymentReleased",
+  ERC20PaymentReleased = "ERC20PaymentReleased",
+  PaymentReceived = "PaymentReceived",
+  PaymentEthReceived = "PaymentEthReceived",
+  PaymentEthSent = "PaymentEthSent",
 }
 
 export interface IWithdrawTokenEvent {
@@ -74,13 +81,43 @@ export interface IPyramidFinishEvent {
   multiplier: string;
 }
 
+// MODULE:WALLET
+export interface IPyramidPayeeAddedEvent {
+  account: string;
+  shares: string;
+  externalId: 0;
+}
+
+export interface IPyramidPaymentReceivedEvent {
+  from: string;
+  amount: string;
+  externalId: 0;
+}
+
+export interface IPyramidPaymentReleasedEvent {
+  to: string;
+  amount: string;
+  externalId: 0;
+}
+
+export interface IPyramidErc20PaymentReleasedEvent {
+  token: string;
+  to: string;
+  amount: string;
+  externalId: 0;
+}
+
 export type TPyramidEventData =
   | IPyramidCreateEvent
   | IPyramidUpdateEvent
   | IPyramidDepositEvent
   | IPyramidWithdrawEvent
   | IFinalizedTokenEvent
-  | IWithdrawTokenEvent;
+  | IWithdrawTokenEvent
+  | IPyramidErc20PaymentReleasedEvent
+  | IPyramidPaymentReleasedEvent
+  | IPyramidPaymentReceivedEvent
+  | IPyramidPayeeAddedEvent;
 
 export interface IPyramidHistory extends IIdDateBase {
   address: string;

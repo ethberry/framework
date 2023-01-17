@@ -11,7 +11,14 @@ export class CreatePyramidDepositHistory1660436477400 implements MigrationInterf
         'StakingStart',
         'StakingWithdraw',
         'StakingFinish',
-        'FinalizedToken'
+        'FinalizedToken',
+        'PayeeAdded',
+        'PaymentReleased',
+        'ERC20PaymentReleased',
+        'PaymentEthReceived',
+        'PaymentReceived',
+        'PaymentEthSent',
+        'WithdrawToken',
       );
     `);
 

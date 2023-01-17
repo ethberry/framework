@@ -18,12 +18,16 @@ export const PyramidFinalizeRuleButton: FC<IPyramidFinalizeRuleButtonProps> = pr
   const { rule } = props;
   const { formatMessage } = useIntl();
 
-  const metaFinalizeRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
+  const metaFinalizeRule = useMetamask(async (rule: IPyramidRule, web3Context: Web3ContextType) => {
     if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
       return Promise.reject(new Error(""));
     }
     const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());
-    return contract.finalizeByRuleId(rule.externalId) as Promise<void>;
+    // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
+    const estGas = await contract.estimateGas.finalizeByRuleId(rule.externalId);
+    return contract.finalizeByRuleId(rule.externalId, {
+      gasLimit: estGas.add(estGas.div(100).mul(10)),
+    }) as Promise<void>;
   });
 
   const handleFinalizeRule = (rule: IPyramidRule): (() => Promise<void>) => {
