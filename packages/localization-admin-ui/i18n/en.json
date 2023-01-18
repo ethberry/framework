@@ -615,6 +615,15 @@
     },
     "collections": {
       "contracts": "Collection contracts",
+      "contract": {
+        "title": "Contracts"
+      },
+      "template": {
+        "title": "Templates"
+      },
+      "token": {
+        "title": "Tokens"
+      },
       "templates": "Collection templates",
       "title": "Collections",
       "tokens": "Collection tokens"

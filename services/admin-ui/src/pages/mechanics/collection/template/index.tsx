@@ -80,7 +80,7 @@ export const Erc721Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.templates"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.template"]} />
 
       <PageHeader message="pages.collections.templates">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

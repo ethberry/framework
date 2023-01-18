@@ -51,7 +51,7 @@ export const Erc721Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.tokens"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.token"]} />
 
       <PageHeader message="pages.collections.tokens">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

@@ -70,7 +70,7 @@ export const Collection: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.contracts"]} />
+      <Breadcrumbs path={["dashboard", "collections", "collections.contract"]} />
 
       <PageHeader message="pages.collections.contracts">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
