@@ -1522,7 +1522,9 @@ describe("Pyramid", function () {
       await blockAwait();
       // WITHDRAW ETH
       const estimateGas = await pyramidInstance.estimateGas.withdrawToken(tokenZero, amnt1);
-      const tx3 = pyramidInstance.withdrawToken(tokenZero, amnt1, { gasLimit: estimateGas.add(estimateGas.div(100).mul(10))});
+      const tx3 = pyramidInstance.withdrawToken(tokenZero, amnt1, {
+        gasLimit: estimateGas.add(estimateGas.div(100).mul(10)),
+      });
       await expect(tx3).to.emit(pyramidInstance, "WithdrawToken").withArgs(constants.AddressZero, amnt1);
     });
 
