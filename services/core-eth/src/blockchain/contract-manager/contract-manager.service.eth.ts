@@ -209,11 +209,15 @@ export class ContractManagerServiceEth {
       contractId: contractEntity.id,
     });
 
+    // TODO add options to set naming scheme ?
+    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
+
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
       attributes: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
+      imageUrl: `${imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
       updatedAt: currentDateTime,
