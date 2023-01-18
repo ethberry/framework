@@ -54,6 +54,7 @@ import { StakingLogService } from "../mechanics/staking/log/log.service";
 @Injectable()
 export class ContractManagerServiceEth {
   private chainId: number;
+  private imgUrl: string;
 
   constructor(
     @Inject(Logger)
@@ -76,6 +77,7 @@ export class ContractManagerServiceEth {
     private readonly balanceService: BalanceService,
   ) {
     this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
+    this.imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
@@ -210,14 +212,13 @@ export class ContractManagerServiceEth {
     });
 
     // TODO add options to set naming scheme ?
-    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
       attributes: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
-      imageUrl: `${imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
+      imageUrl: `${this.imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
       updatedAt: currentDateTime,
