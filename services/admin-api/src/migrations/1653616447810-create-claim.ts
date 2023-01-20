@@ -65,9 +65,27 @@ export class CreateClaim1653616447810 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`
+      CREATE OR REPLACE FUNCTION delete_expired_claims() RETURNS trigger
+      LANGUAGE plpgsql
+      AS $$
+        BEGIN
+          DELETE FROM ${ns}.claim WHERE end_timestamp < NOW() AND claim_status='NEW';
+          RETURN NEW;
+        END;
+      $$;
+    `);
+
+    await queryRunner.query(`
+      CREATE TRIGGER delete_expired_claims_trigger
+      AFTER INSERT ON ${ns}.claim
+      EXECUTE PROCEDURE delete_expired_claims();
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.claim`);
+    await queryRunner.query("DROP FUNCTION delete_expired_claims();");
   }
 }
