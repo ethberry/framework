@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateExchangeHistory1563804040210 implements MigrationInterface {
+export class CreateExchangeHistory1563804040200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TYPE ${ns}.exchange_event_enum AS ENUM (

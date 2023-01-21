@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedExchangeHistory1563804040220 implements MigrationInterface {
+export class SeedExchangeHistory1563804040230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -134,58 +134,6 @@ export class SeedExchangeHistory1563804040220 implements MigrationInterface {
         '${wallet}',
         '${constants.HashZero}',
         'Purchase',
-        '{}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      );
-    `);
-
-    await queryRunner.query(`
-      INSERT INTO ${ns}.exchange_history (
-        id,
-        address,
-        transaction_hash,
-        event_type,
-        event_data,
-        created_at,
-        updated_at
-      ) VALUES (
-        406001,
-        '${wallet}',
-        '${constants.HashZero}',
-        'Purchase',
-        '{}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        406002,
-        '${wallet}',
-        '${constants.HashZero}',
-        'Purchase',
-        '{}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        406003,
-        '${wallet}',
-        '${constants.HashZero}',
-        'Purchase',
-        '{}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        406004,
-        '${wallet}',
-        '${constants.HashZero}',
-        'Purchase',
-        '{}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        406005,
-        '${wallet}',
-        '${constants.HashZero}',
-        'Breed',
         '{}',
         '${currentDateTime}',
         '${currentDateTime}'

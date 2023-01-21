@@ -114,8 +114,9 @@ import { SeedAssetComponentsMysteryboxAt1563804001260 } from "./migrations/15638
 
 import { CreateContractHistory1563804040010 } from "./migrations/1563804040010-create-contract-history";
 import { CreateContractManagerHistory1563804040110 } from "./migrations/1563804040110-create-contract-manager-history";
-import { CreateExchangeHistory1563804040210 } from "./migrations/1563804040210-create-exchange-history";
-import { SeedExchangeHistory1563804040220 } from "./migrations/1563804040220-seed-exchange-history";
+import { CreateExchangeHistory1563804040200 } from "./migrations/1563804040200-create-exchange-history";
+import { SeedExchangeHistory1563804040230 } from "./migrations/1563804040230-seed-exchange-history-erc721";
+import { SeedExchangeHistory1563804040240 } from "./migrations/1563804040240-seed-exchange-history-erc998";
 
 import { CreateVesting1653616433210 } from "./migrations/1653616433210-create-vesting";
 import { SeedVesting1653616433210 } from "./migrations/1653616433220-seed-vesting";
@@ -341,8 +342,9 @@ const config: PostgresConnectionOptions = {
 
     CreateContractHistory1563804040010,
     CreateContractManagerHistory1563804040110,
-    CreateExchangeHistory1563804040210,
-    SeedExchangeHistory1563804040220,
+    CreateExchangeHistory1563804040200,
+    SeedExchangeHistory1563804040230,
+    SeedExchangeHistory1563804040240,
 
     CreateVesting1653616433210,
     SeedVesting1653616433210,
