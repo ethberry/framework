@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedUser1563803000140 implements MigrationInterface {
@@ -31,7 +31,33 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '',
         'ACTIVE',
         '{ADMIN}',
-        '${wallet}',
+        '${wallets[0]}',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'trejgun@gemunion.io',
+        'ia31Zjm8NUTstqI3Ug9mbHtiVbH2',
+        'Trej Gun',
+        '${imageUrl}',
+        'EN',
+        '',
+        'ACTIVE',
+        '{ADMIN}',
+        '${wallets[1]}',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'meowdao@gmail.com',
+        'E5PnxZDsjEZcDzS9o2HlDGfmNzW2',
+        'Meow Dao',
+        '${imageUrl}',
+        'EN',
+        '',
+        'ACTIVE',
+        '{USER}',
+        '${wallets[2]}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

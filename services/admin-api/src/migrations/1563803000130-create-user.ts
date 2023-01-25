@@ -67,6 +67,7 @@ export class CreateUser1563803000130 implements MigrationInterface {
           name: "wallet",
           type: "varchar",
           isNullable: true,
+          isUnique: true,
         },
         {
           name: "chain_id",

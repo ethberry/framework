@@ -731,6 +731,7 @@
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
+    "walletAlreadyInUse": "Wallet already in use",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
   }
