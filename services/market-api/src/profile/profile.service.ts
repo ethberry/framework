@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { Not } from "typeorm";
 
 import { IMetamaskDto, MetamaskService } from "@gemunion/nest-js-module-metamask";
+import { UserStatus } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
@@ -13,6 +14,11 @@ export class ProfileService {
 
   public update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
     Object.assign(userEntity, dto);
+    return userEntity.save();
+  }
+
+  public async delete(userEntity: UserEntity): Promise<UserEntity> {
+    Object.assign(userEntity, { userStatus: UserStatus.INACTIVE, wallet: null });
     return userEntity.save();
   }
 
