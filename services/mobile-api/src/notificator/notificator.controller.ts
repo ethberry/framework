@@ -1,7 +1,7 @@
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { Controller } from "@nestjs/common";
 
-import { GameType, IMessage } from "@framework/types";
+import { GameEventType, IMessage } from "@framework/types";
 
 import { NotificatorService } from "./notificator.service";
 
@@ -10,7 +10,7 @@ export class NotificatorController {
   constructor(private notificatorService: NotificatorService) {}
 
   // TODO listen to real events
-  @EventPattern(GameType.DUMMY)
+  @EventPattern(GameEventType.DUMMY)
   public dummy(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);
   }

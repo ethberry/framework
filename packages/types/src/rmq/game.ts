@@ -1,4 +1,4 @@
-export enum GameType {
+export enum GameEventType {
   DUMMY = "DUMMY",
 }
 

@@ -13,12 +13,12 @@ import { NotificatorService } from "./notificator.service";
     }),
     ClientsModule.registerAsync([
       {
-        name: RmqProviderType.NOTIFICATOR_SERVICE,
+        name: RmqProviderType.MOBILE_SERVICE,
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
           const rmqUrl = configService.get<string>("RMQ_URL", "");
-          const rmqQueueGame = configService.get<string>("RMQ_QUEUE_GAME", "");
+          const rmqQueueGame = configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
           return {
             transport: Transport.RMQ,
             options: {

@@ -2,14 +2,14 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { constants } from "ethers";
 
-import { GameType, RmqProviderType } from "@framework/types";
+import { GameEventType, RmqProviderType } from "@framework/types";
 
 @Injectable()
 export class NotificatorService {
-  constructor(@Inject(RmqProviderType.NOTIFICATOR_SERVICE) private client: ClientProxy) {}
+  constructor(@Inject(RmqProviderType.MOBILE_SERVICE) private mobileClient: ClientProxy) {}
 
   public dummy(): void {
-    this.client.emit(GameType.DUMMY, {
+    this.mobileClient.emit(GameEventType.DUMMY, {
       from: constants.AddressZero,
       to: constants.AddressZero,
       value: constants.WeiPerEther,
