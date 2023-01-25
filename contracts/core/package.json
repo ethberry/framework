@@ -22,7 +22,7 @@
     "@gemunion/contracts-mocha": "1.1.15",
     "@gemunion/contracts-mocks": "1.1.17",
     "@gemunion/contracts-utils": "1.1.11",
-    "@gemunion/utils-eth": "0.0.7",
+    "@gemunion/utils-eth": "0.0.8",
     "@nomicfoundation/hardhat-network-helpers": "1.0.7",
     "@nomiclabs/hardhat-ethers": "2.2.2",
     "@nomiclabs/hardhat-etherscan": "3.1.5",
