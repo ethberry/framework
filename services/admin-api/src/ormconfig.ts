@@ -6,7 +6,7 @@ import {
   createDomainUint256,
   createLanguageEnum,
   createSchema,
-  createTokenTypes,
+  createTokenTypesEnum,
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-postgres";
 
@@ -270,7 +270,7 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
-    createTokenTypes(ns),
+    createTokenTypesEnum(ns),
 
     CreateSettings1563803000010,
     SeedSettings1563803000020,
