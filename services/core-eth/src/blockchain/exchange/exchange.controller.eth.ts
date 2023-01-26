@@ -28,14 +28,14 @@ export class ExchangeControllerEth {
 
   // MODULE:GRADE
   // MODULE:MYSTERY
-  @EventPattern([
-    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
-    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox },
-  ])
-  public exchange(
-    @Payload() event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade }])
+  public upgrade(@Payload() event: ILogEvent<IExchangeGradeEvent>, @Ctx() context: Log): Promise<void> {
+    return this.exchangeServiceEth.upgrade(event, context);
+  }
+
+  // MODULE:MYSTERY
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox }])
+  public mysterybox(@Payload() event: ILogEvent<IExchangeMysteryEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeServiceEth.log(event, context);
   }
 

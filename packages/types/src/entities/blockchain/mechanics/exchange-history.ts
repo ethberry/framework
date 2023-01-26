@@ -50,7 +50,7 @@ export interface IExchangeCraftEvent {
 export interface IExchangeGradeEvent {
   from: string;
   externalId: string;
-  items: IExchangeItem;
+  item: IExchangeItem;
   price: Array<IExchangeItem>;
 }
 

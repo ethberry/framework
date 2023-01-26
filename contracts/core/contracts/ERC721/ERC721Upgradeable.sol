@@ -15,6 +15,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
   using Counters for Counters.Counter;
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);
+  event MetadataUpdate(uint256 _tokenId); // OpenSea
 
   constructor(
     string memory name,
@@ -36,6 +37,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
+    emit MetadataUpdate(tokenId);
     return true;
   }
 

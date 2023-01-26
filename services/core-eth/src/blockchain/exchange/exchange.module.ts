@@ -11,6 +11,7 @@ import { TokenModule } from "../hierarchy/token/token.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
 import { BreedModule } from "../mechanics/breed/breed.module";
+import { OpenSeaModule } from "../../integrations/opensea/opensea.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { BreedModule } from "../mechanics/breed/breed.module";
     TokenModule,
     AssetModule,
     BreedModule,
+    OpenSeaModule,
   ],
   providers: [Logger, ExchangeServiceEth],
   controllers: [ExchangeControllerEth],

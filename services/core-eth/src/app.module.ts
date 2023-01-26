@@ -15,6 +15,7 @@ import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { NotificatorModule } from "./notificator/notificator.module";
+import { IntegrationsModule } from "./integrations/integrations.module";
 
 @Module({
   providers: [
@@ -44,6 +45,7 @@ import { NotificatorModule } from "./notificator/notificator.module";
     RequestLoggerModule,
     HealthModule,
     BlockchainModule,
+    IntegrationsModule,
     NotificatorModule,
   ],
   controllers: [AppController],

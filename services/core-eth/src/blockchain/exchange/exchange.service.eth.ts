@@ -25,6 +25,7 @@ import { TemplateService } from "../hierarchy/template/template.service";
 import { ExchangeHistoryEntity } from "./history/history.entity";
 import { GradeService } from "../mechanics/grade/grade.service";
 import { BreedServiceEth } from "../mechanics/breed/breed.service.eth";
+import { OpenSeaService } from "../../integrations/opensea/opensea.service";
 
 @Injectable()
 export class ExchangeServiceEth {
@@ -39,6 +40,7 @@ export class ExchangeServiceEth {
     private readonly exchangeHistoryService: ExchangeHistoryService,
     private readonly assetService: AssetService,
     private readonly breedServiceEth: BreedServiceEth,
+    private readonly openSeaService: OpenSeaService,
   ) {}
 
   public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {
@@ -77,6 +79,24 @@ export class ExchangeServiceEth {
     await this.saveAssetHistory(history, items, price);
   }
 
+  public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
+    const {
+      args: { item },
+    } = event;
+
+    await this.updateHistory(event, context);
+
+    const [, itemTokenAddr, itemTokenId] = item;
+
+    const tokenEntity = await this.tokenService.getToken(itemTokenId, itemTokenAddr.toLowerCase());
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    await this.openSeaService.metadataUpdate(tokenEntity);
+  }
+
   public async breed(event: ILogEvent<IExchangeBreedEvent>, context: Log): Promise<void> {
     const {
       args: { matron, sire },
@@ -88,7 +108,7 @@ export class ExchangeServiceEth {
     await this.breedServiceEth.breed(event, history.id);
   }
 
-  public async log(event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>, context: Log): Promise<void> {
+  public async log(event: ILogEvent<IExchangeMysteryEvent>, context: Log): Promise<void> {
     const {
       args: { items, price },
     } = event;
