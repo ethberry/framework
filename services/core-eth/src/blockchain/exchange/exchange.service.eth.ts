@@ -81,10 +81,11 @@ export class ExchangeServiceEth {
 
   public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
     const {
-      args: { item },
+      args: { item, price },
     } = event;
 
-    await this.updateHistory(event, context);
+    const history = await this.updateHistory(event, context);
+    await this.saveAssetHistory(history, [item], price);
 
     const [, itemTokenAddr, itemTokenId] = item;
 
