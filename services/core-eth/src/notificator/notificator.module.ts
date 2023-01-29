@@ -8,9 +8,6 @@ import { NotificatorService } from "./notificator.service";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV as string}`,
-    }),
     ClientsModule.registerAsync([
       {
         name: RmqProviderType.MOBILE_SERVICE,

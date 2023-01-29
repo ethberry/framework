@@ -9,13 +9,13 @@ import { TokenStatus, TokenType } from "@framework/types";
 import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
 
-interface IMarketplaceGradeSearchFormProps {
+interface IMarketplaceRaritySearchFormProps {
   onSubmit: (values: IMarketplaceSupplySearchDto) => Promise<any>;
   initialValues: IMarketplaceSupplySearchDto;
   open: boolean;
 }
 
-export const MarketplaceRaritySearchForm: FC<IMarketplaceGradeSearchFormProps> = props => {
+export const MarketplaceRaritySearchForm: FC<IMarketplaceRaritySearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const { tokenStatus, tokenType, contractIds, templateIds, attribute } = initialValues;

@@ -18,7 +18,7 @@ export class CreatePyramidDepositHistory1660436477400 implements MigrationInterf
         'PaymentEthReceived',
         'PaymentReceived',
         'PaymentEthSent',
-        'WithdrawToken',
+        'WithdrawToken'
       );
     `);
 
