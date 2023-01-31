@@ -17,8 +17,6 @@ export type IStakingDeployedEventArgs = [string, Array<string>];
 export interface IContractManagerStakingDeployedEvent {
   addr: string;
   args: IStakingDeployedEventArgs;
-  // maxStake: string;
-  // featureIds: Array<number>;
 }
 
 export type ICollectionDeployedEventArgs = [string, string, string, string, Array<string>, string];
@@ -26,12 +24,6 @@ export type ICollectionDeployedEventArgs = [string, string, string, string, Arra
 export interface IContractManagerCollectionDeployedEvent {
   addr: string;
   args: ICollectionDeployedEventArgs;
-  // name: string;
-  // symbol: string;
-  // baseTokenURI: string;
-  // royalty: string;
-  // featureIds: Array<number>;
-  // batchSize: number;
   owner: string;
 }
 
@@ -45,10 +37,6 @@ export type IVestingDeployedEventArgs = [string, string, string, string, string]
 export interface IContractManagerVestingDeployedEvent {
   addr: string;
   args: IVestingDeployedEventArgs;
-  // account: string;
-  // startTimestamp: string; // in seconds
-  // duration: string; // in seconds
-  // templateId: string;
 }
 
 export type IMysteryTokenDeployedEventArgs = [string, string, string, string, Array<string>];
@@ -56,11 +44,6 @@ export type IMysteryTokenDeployedEventArgs = [string, string, string, string, Ar
 export interface IContractManagerMysteryTokenDeployedEvent {
   addr: string;
   args: IMysteryTokenDeployedEventArgs;
-  // name: string;
-  // symbol: string;
-  // baseTokenURI: string;
-  // royalty: string;
-  // featureIds: Array<number>;
 }
 
 export type IERC20TokenDeployedEventArgs = [string, string, string, Array<string>];
@@ -68,10 +51,6 @@ export type IERC20TokenDeployedEventArgs = [string, string, string, Array<string
 export interface IContractManagerERC20TokenDeployedEvent {
   addr: string;
   args: IERC20TokenDeployedEventArgs;
-  // name: string;
-  // symbol: string;
-  // cap: string;
-  // featureIds: Array<number>;
 }
 
 export type IERC721TokenDeployedEventArgs = [string, string, string, string, Array<string>];
@@ -79,11 +58,6 @@ export type IERC721TokenDeployedEventArgs = [string, string, string, string, Arr
 export interface IContractManagerERC721TokenDeployedEvent {
   addr: string;
   args: IERC721TokenDeployedEventArgs;
-  // name: string;
-  // symbol: string;
-  // baseTokenURI: string;
-  // royalty: string;
-  // featureIds: Array<number>;
 }
 
 export type IERC998TokenDeployedEventArgs = [string, string, string, string, Array<string>];
@@ -91,11 +65,6 @@ export type IERC998TokenDeployedEventArgs = [string, string, string, string, Arr
 export interface IContractManagerERC998TokenDeployedEvent {
   addr: string;
   args: IERC998TokenDeployedEventArgs;
-  // name: string;
-  // symbol: string;
-  // baseTokenURI: string;
-  // royalty: string;
-  // featureIds: Array<number>;
 }
 
 export type IERC1155TokenDeployedEventArgs = [string, Array<string>];
@@ -103,8 +72,6 @@ export type IERC1155TokenDeployedEventArgs = [string, Array<string>];
 export interface IContractManagerERC1155TokenDeployedEvent {
   addr: string;
   args: IERC1155TokenDeployedEventArgs;
-  // baseTokenURI: string;
-  // featureIds: Array<number>;
 }
 
 export type TContractManagerEventData =
