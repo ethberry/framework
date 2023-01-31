@@ -23,9 +23,9 @@
     "ethers": "5.7.2",
     "mathjs": "11.5.0",
     "notistack": "2.0.8",
-    "react-intl": "6.2.5",
+    "react-intl": "6.2.7",
     "react-window": "1.8.8",
-    "type-fest": "3.5.3"
+    "type-fest": "3.5.4"
   },
   "devDependencies": {
     "@types/react": "18.0.27",
