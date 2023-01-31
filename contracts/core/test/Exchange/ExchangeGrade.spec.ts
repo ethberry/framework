@@ -180,5 +180,56 @@ describe("ExchangeGrade", function () {
 
       await expect(tx2).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
     });
+
+    it("should fail: invalid token ID", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+
+      const tx2 = exchangeInstance.connect(receiver).upgrade(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx2).to.be.revertedWith("ERC721: invalid token ID");
+    });
   });
 });

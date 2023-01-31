@@ -34,6 +34,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
   }
 
   function upgrade(uint256 tokenId) public virtual onlyRole(MINTER_ROLE) returns (bool) {
+    _requireMinted(tokenId);
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
