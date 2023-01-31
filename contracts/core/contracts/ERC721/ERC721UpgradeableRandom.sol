@@ -45,16 +45,17 @@ contract ERC721UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC721Upgrad
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-    uint256 tokenId = _tokenIdTracker.current();
-    uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
+    uint256 tokenId = _tokenIdTracker.current();
+
+    emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, GRADE, 0);
-    _upsertRecordField(tokenId, RARITY, rarity);
+    _upsertRecordField(tokenId, RARITY, _getDispersion(randomness));
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _mintCommon(request.account, request.templateId);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
