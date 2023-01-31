@@ -4,12 +4,13 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "./AbstractFactory.sol";
 
 contract PyramidFactory is AbstractFactory {
-  bytes private constant PYRAMID_ARGUMENTS_SIGNATURE = "PyramidArgs(uint8[] featureIds,address[] payees,uint256[] shares)";
+  bytes private constant PYRAMID_ARGUMENTS_SIGNATURE =
+    "PyramidArgs(uint8[] featureIds,address[] payees,uint256[] shares)";
   bytes32 private constant PYRAMID_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(PYRAMID_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
@@ -59,14 +60,14 @@ contract PyramidFactory is AbstractFactory {
 
   function _hashPyramidStruct(PyramidArgs calldata p) private pure returns (bytes32) {
     return
-    keccak256(
-      abi.encode(
-        PYRAMID_ARGUMENTS_TYPEHASH,
-        keccak256(abi.encodePacked(p.featureIds)),
-        keccak256(abi.encodePacked(p.payees)),
-        keccak256(abi.encodePacked(p.shares))
-      )
-    );
+      keccak256(
+        abi.encode(
+          PYRAMID_ARGUMENTS_TYPEHASH,
+          keccak256(abi.encodePacked(p.featureIds)),
+          keccak256(abi.encodePacked(p.payees)),
+          keccak256(abi.encodePacked(p.shares))
+        )
+      );
   }
 
   function allPyramids() external view returns (address[] memory) {

@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "./AbstractFactory.sol";
 
@@ -25,10 +25,7 @@ contract VestingFactory is AbstractFactory {
     uint256 templateId;
   }
 
-  event VestingDeployed(
-    address addr,
-    VestingArgs args
-  );
+  event VestingDeployed(address addr, VestingArgs args);
 
   function deployVesting(
     Params calldata params,

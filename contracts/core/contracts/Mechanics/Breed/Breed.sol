@@ -4,9 +4,10 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
-contract Breed { // TODO all uint32 ??
+contract Breed {
+  // TODO all uint32 ??
   struct Genes {
     int256 strength;
     int256 dexterity;

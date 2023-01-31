@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "./AbstractFactory.sol";
 
@@ -26,10 +26,7 @@ contract MysteryboxFactory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event MysteryboxDeployed(
-    address addr,
-    MysteryArgs args
-  );
+  event MysteryboxDeployed(address addr, MysteryArgs args);
 
   function deployMysterybox(
     Params calldata params,

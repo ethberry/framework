@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
@@ -48,11 +48,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     bytes32 requestId;
   }
 
-  constructor(
-    string memory name,
-    address ticketFactory,
-    address acceptedToken
-  ) SignatureValidator(name) {
+  constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
     address account = _msgSender();
     _setupRole(DEFAULT_ADMIN_ROLE, account);
     _setupRole(PAUSER_ROLE, account);
@@ -166,6 +162,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
     emit RoundFinalized(currentRound.roundId, currentRound.values);
   }
+
   // MARKETPLACE
 
   function purchase(
@@ -197,7 +194,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
 
     emit Purchase(tokenId, account, price, roundNumber, numbers);
-
   }
 
   function getPrize(uint256 tokenId) external {

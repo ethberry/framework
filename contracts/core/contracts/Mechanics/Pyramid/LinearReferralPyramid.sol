@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -50,11 +50,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
 
   bool _autoWithdrawal = false;
 
-  function setRefProgram(
-    uint8 maxRefs,
-    uint256 refReward,
-    uint256 refDecrease
-  ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function setRefProgram(uint8 maxRefs, uint256 refReward, uint256 refDecrease) public onlyRole(DEFAULT_ADMIN_ROLE) {
     require(!_refProgram.init, "Referral: program already set");
     require(refReward >= 0 && refReward < 10000, "Referral: wrong refReward");
     _refProgram = Ref(refReward, refDecrease, maxRefs, true);
@@ -98,7 +94,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
         uint8 maxRefs = _maxAccountRefs[account] > 0 ? _maxAccountRefs[account] : program._maxRefs;
         for (uint8 level = 0; level < maxRefs; level++) {
           uint256 rewardAmount = ((ingredient.amount / 100) * (program._refReward / 100)) /
-            program._refDecrease**(level);
+            program._refDecrease ** (level);
           _rewardBalances[referrer][ingredient.token] += rewardAmount;
           getBonus(referrer);
           emit ReferralReward(account, referrer, level, ingredient.token, rewardAmount);
@@ -161,11 +157,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     return _rewardBalances[referral][token];
   }
 
-  function setRefBonus(
-    uint256[] memory tokenCounts,
-    uint256[] memory bonusAmounts,
-    address[] memory tokens
-  ) internal {
+  function setRefBonus(uint256[] memory tokenCounts, uint256[] memory bonusAmounts, address[] memory tokens) internal {
     uint256 tokensLength = tokenCounts.length;
     uint256 bonusLength = bonusAmounts.length;
     uint256 tokenLength = tokens.length;

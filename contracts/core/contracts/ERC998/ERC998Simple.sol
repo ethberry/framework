@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-erc998/contracts/extensions/ERC998ERC721.sol";
 import "@gemunion/contracts-erc998/contracts/extensions/WhiteListChild.sol";
@@ -19,22 +19,22 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function ownerOf(uint256 tokenId) public view virtual override(ERC721, ERC998ERC721) returns (address) {
+  function ownerOf(uint256 tokenId) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (address) {
     return super.ownerOf(tokenId);
   }
 
   function isApprovedForAll(
     address owner,
     address operator
-  ) public view virtual override(ERC721, ERC998ERC721) returns (bool) {
+  ) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (bool) {
     return super.isApprovedForAll(owner, operator);
   }
 
-  function approve(address to, uint256 _tokenId) public virtual override(ERC721, ERC998ERC721) {
+  function approve(address to, uint256 _tokenId) public virtual override(IERC721, ERC721, ERC998ERC721) {
     ERC998ERC721.approve(to, _tokenId);
   }
 
-  function getApproved(uint256 _tokenId) public view virtual override(ERC721, ERC998ERC721) returns (address) {
+  function getApproved(uint256 _tokenId) public view virtual override(IERC721, ERC721, ERC998ERC721) returns (address) {
     return ERC998ERC721.getApproved(_tokenId);
   }
 

@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.13;
 
 import "./AbstractFactory.sol";
 
@@ -26,10 +26,7 @@ contract ERC998Factory is AbstractFactory {
     uint8[] featureIds;
   }
 
-  event ERC998TokenDeployed(
-    address addr,
-    Erc998Args args
-  );
+  event ERC998TokenDeployed(address addr, Erc998Args args);
 
   function deployERC998Token(
     Params calldata params,
