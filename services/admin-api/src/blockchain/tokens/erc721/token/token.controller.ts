@@ -22,6 +22,16 @@ export class Erc721TokenController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.erc721TokenService.findOne({ id }, { relations: { template: true, balance: true } });
+    return this.erc721TokenService.findOne(
+      { id },
+      {
+        relations: {
+          template: {
+            contract: true,
+          },
+          balance: true,
+        },
+      },
+    );
   }
 }

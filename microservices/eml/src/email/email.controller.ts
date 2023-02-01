@@ -6,7 +6,7 @@ import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
 import { IPayload } from "./interfaces";
 
-@Controller("/")
+@Controller()
 export class EmailController {
   constructor(private readonly mailjetService: MailjetService) {}
 

@@ -4,10 +4,11 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IToken } from "@framework/types";
+import { ContractFeatures, IToken } from "@framework/types";
 
 import { TokenAttributesView } from "../../../attributes";
 import { AddressLink } from "../../../../../components/common/address-link";
+import { TokenGenesView } from "../../../genes";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -58,6 +59,16 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <TokenAttributesView attributes={JSON.parse(attributes)} />
               </TableCell>
             </TableRow>
+            {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.genes" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenGenesView attributes={JSON.parse(attributes)} />
+                </TableCell>
+              </TableRow>
+            ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.account" />

@@ -74,6 +74,10 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "attributeName": {
+      "RARITY": "Rarity",
+      "TEMPLATE_ID": "Template"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "GEMUNION",
@@ -96,10 +100,10 @@
       "EXTERNAL": "External",
       "GENES": "Genes",
       "LINEAR_REFERRAL": "LINEAR REFERRAL",
-      "PAYMENT_SPLITTER": "PAYMENT_SPLITTER REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
+      "PAYMENT_SPLITTER": "PAYMENT_SPLITTER REFERRAL",
       "RANDOM": "Random",
       "SOULBOUND": "Soulbound",
       "UPGRADEABLE": "Upgradeable"
@@ -127,6 +131,14 @@
     "emailType": {
       "DUMMY": "Test email",
       "LINK_TOKEN": "LINK notification"
+    },
+    "geneName": {
+      "CHARISMA": "Charisma",
+      "CONSTITUTION": "Constitution",
+      "DEXTERITY": "Dexterity",
+      "INTELLIGENCE": "Intelligence",
+      "STRENGTH": "Strength",
+      "WISDOM": "Wisdom"
     },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
@@ -429,12 +441,12 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
-      "payees": "Payees",
-      "payee": "Payee",
       "parentId": "Parent",
       "parentIds": "Parent",
       "parents": "Parents",
       "password": "Password",
+      "payee": "Payee",
+      "payees": "Payees",
       "penalty": "Penalty",
       "price": "Price",
       "pyramidDepositStatus": "Status",
@@ -448,10 +460,10 @@
       "roundIds": "Round",
       "royalty": "Royalty",
       "schedule": "Round Schedule",
+      "share": "Share",
+      "shares": "Shares",
       "sire": "Sire",
       "slug": "Slug",
-      "shares": "Shares",
-      "share": "Share",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
@@ -531,9 +543,9 @@
       "roundIds": "Round",
       "royalty": "1",
       "search": "Search...",
-      "slug": "terms-of-services",
-      "shares": "0",
       "share": "0",
+      "shares": "0",
+      "slug": "terms-of-services",
       "stakingRuleStatus": "Status",
       "symbol": "XXX",
       "templateId": "Template",
@@ -614,18 +626,18 @@
       "title": "CoinMarketCap"
     },
     "collections": {
-      "contracts": "Collection contracts",
       "contract": {
         "title": "Contracts"
       },
+      "contracts": "Collection contracts",
       "template": {
         "title": "Templates"
       },
+      "templates": "Collection templates",
+      "title": "Collections",
       "token": {
         "title": "Tokens"
       },
-      "templates": "Collection templates",
-      "title": "Collections",
       "tokens": "Collection tokens"
     },
     "craft": {
