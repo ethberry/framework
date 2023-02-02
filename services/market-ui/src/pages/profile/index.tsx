@@ -9,6 +9,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { availableChains, EnabledLanguages } from "@framework/constants";
+import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -31,8 +32,16 @@ export const Profile: FC = () => {
     await fn(form, values);
   };
 
-  const { email, displayName, language, imageUrl, chainId } = user.profile;
-  const fixedValues = { email, displayName, language, imageUrl, chainId };
+  const { email, displayName, language, country, gender, imageUrl, chainId } = user.profile;
+  const fixedValues = {
+    email,
+    displayName,
+    language,
+    gender: gender !== null ? gender : "", // temporarly solve null errors, while we can save in DB as null
+    country: country !== null ? country : "", // temporarly solve null errors, while we can save in DB as null
+    imageUrl,
+    chainId,
+  };
 
   return (
     <Grid>
@@ -48,6 +57,8 @@ export const Profile: FC = () => {
       >
         <TextInput name="email" autoComplete="username" onClick={onClick} />
         <TextInput name="displayName" />
+        <SelectInput name="gender" options={EnabledGenders} />
+        <SelectInput name="country" options={EnabledCountries} />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />
         <SelectInput

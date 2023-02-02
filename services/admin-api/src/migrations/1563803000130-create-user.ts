@@ -64,6 +64,16 @@ export class CreateUser1563803000130 implements MigrationInterface {
           isArray: true,
         },
         {
+          name: "gender",
+          type: `${ns}.gender_enum`,
+          isNullable: true,
+        },
+        {
+          name: "country",
+          type: `${ns}.country_enum`,
+          isNullable: true,
+        },
+        {
           name: "wallet",
           type: "varchar",
           isNullable: true,

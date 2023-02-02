@@ -2,7 +2,13 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsEmail, IsEnum, IsOptional, IsString, IsUrl, MaxLength, MinLength } from "class-validator";
 
-import { displayNameMaxLength, displayNameMinLength, emailMaxLength } from "@gemunion/constants";
+import {
+  displayNameMaxLength,
+  displayNameMinLength,
+  emailMaxLength,
+  EnabledCountries,
+  EnabledGenders,
+} from "@gemunion/constants";
 import { EnabledLanguages } from "@framework/constants";
 import { IUserCommonDto } from "@framework/types";
 
@@ -34,10 +40,26 @@ export class UserCommonDto implements IUserCommonDto {
   public language: EnabledLanguages = EnabledLanguages.EN;
 
   @ApiPropertyOptional({
+    enum: EnabledCountries,
+  })
+  @IsOptional()
+  @Transform(({ value }) => value as EnabledCountries)
+  @IsEnum(EnabledCountries, { message: "badInput" })
+  public country: EnabledCountries;
+
+  @ApiPropertyOptional({
+    enum: EnabledGenders,
+  })
+  @IsOptional()
+  @Transform(({ value }) => value as EnabledGenders)
+  @IsEnum(EnabledGenders, { message: "badInput" })
+  public gender: EnabledGenders;
+
+  @ApiPropertyOptional({
     maxLength: emailMaxLength,
   })
   @IsOptional()
-  @IsEmail()
+  @IsEmail({}, { message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 }

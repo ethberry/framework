@@ -42,6 +42,10 @@
     "view": "View"
   },
   "enums": {
+    "gender": {
+      "MALE": "Male",
+      "FEMALE": "Female"
+    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -186,6 +190,7 @@
       "contractIds": "Contracts",
       "contractTemplate": "Template",
       "count": "Count",
+      "country": "Country",
       "createdAt": "Created",
       "customContractId": "Allowance Contract",
       "dad": "Dad",
@@ -204,6 +209,7 @@
       "event": "Event",
       "externalId": "External ID",
       "from": "From",
+      "gender": "Gender",
       "id": "ID",
       "imageUrl": "Avatar",
       "item": "Item",

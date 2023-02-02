@@ -8,6 +8,8 @@ import {
   createSchema,
   createTokenTypesEnum,
   installExtensionUUID,
+  createCountryEnum,
+  createGenderEnum,
 } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { UserEntity } from "./user/user.entity";
@@ -271,6 +273,8 @@ const config: PostgresConnectionOptions = {
     installExtensionUUID(),
     createLanguageEnum(ns),
     createTokenTypesEnum(ns),
+    createCountryEnum(ns),
+    createGenderEnum(ns),
 
     CreateSettings1563803000010,
     SeedSettings1563803000020,

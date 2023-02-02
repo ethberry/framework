@@ -42,6 +42,10 @@
     "view": "رأي"
   },
   "enums": {
+    "gender": {
+      "MALE": "ذكر",
+      "FEMALE": "أنثى"
+    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -187,6 +191,7 @@
       "contractIds": "انكماش",
       "contractTemplate": "نموذج",
       "count": "عدد",
+      "country": "دولة",
       "createdAt": "مخلوق",
       "customContractId": "عقد البدل",
       "dad": "أب",
@@ -205,6 +210,7 @@
       "event": "حدث",
       "externalId": "معرف خارجي",
       "from": "من",
+      "gender": "جنس تذكير أو تأنيث",
       "id": "بطاقة تعريف",
       "imageUrl": "الصورة الرمزية",
       "item": "غرض",

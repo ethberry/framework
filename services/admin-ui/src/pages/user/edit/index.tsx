@@ -8,6 +8,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { IUser, UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages } from "@framework/constants";
+import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 
 import { validationSchema } from "./validation";
 
@@ -29,13 +30,16 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     });
   };
 
-  const { id, email, displayName, language, imageUrl, userRoles, userStatus, comment, createdAt } = initialValues;
+  const { id, email, displayName, language, country, gender, imageUrl, userRoles, userStatus, comment, createdAt } =
+    initialValues;
 
   const fixedValues = {
     id,
     email,
     displayName,
     language,
+    gender: gender !== null ? gender : "", // temporarly solve null errors, while we can save in DB as null
+    country: country !== null ? country : "", // temporarly solve null errors, while we can save in DB as null
     imageUrl,
     userRoles,
     userStatus,
@@ -52,6 +56,8 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     >
       <TextInput name="email" autoComplete="username" onClick={onClick} />
       <TextInput name="displayName" />
+      <SelectInput name="gender" options={EnabledGenders} />
+      <SelectInput name="country" options={EnabledCountries} />
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
       <br />
