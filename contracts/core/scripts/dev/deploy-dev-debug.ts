@@ -21,7 +21,7 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
     await blockAwaitMs(delayMs);
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
-    await blockAwait(delay);
+    await blockAwait(delay, delayMs);
   }
 };
 
