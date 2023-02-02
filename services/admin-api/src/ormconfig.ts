@@ -44,7 +44,7 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
-import { PayeesEntity } from "./blockchain/wallet/payees.entity";
+import { PayeesEntity } from "./blockchain/exchange/wallet/payees.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
@@ -100,6 +100,7 @@ import { SeedTokenWrapperAt1563804000370 } from "./migrations/1563804000370-seed
 import { SeedTokenLotteryAt1563804000380 } from "./migrations/1563804000380-seed-token-lottery";
 
 import { CreateBalance1563804000400 } from "./migrations/1563804000400-create-balance";
+import { SeedBalanceExchangeAt1563804020402 } from "./migrations/1563804000402-seed-balance-exchange";
 import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed-balance-erc20";
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
@@ -330,6 +331,7 @@ const config: PostgresConnectionOptions = {
     SeedTokenLotteryAt1563804000380,
 
     CreateBalance1563804000400,
+    SeedBalanceExchangeAt1563804020402,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,

@@ -17,15 +17,16 @@ import {
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-
 import { useCollection } from "@gemunion/react-hooks";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IBalance, IBalanceSearchDto, TokenType } from "@framework/types";
-import { formatEther } from "../../../utils/money";
-import { emptyToken } from "../../../components/common/interfaces";
+
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+
+import { formatEther } from "../../../../utils/money";
+import { emptyToken } from "../../../../components/common/interfaces";
 import { BalanceSearchForm } from "./form";
 import { BalanceWithdrawDialog, IBalanceWithdrawDto } from "./withdraw-dialog";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 export const SystemBalances: FC = () => {
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
@@ -37,6 +38,8 @@ export const SystemBalances: FC = () => {
         token: emptyToken,
       },
       search: {
+        contractIds: [],
+        templateIds: [],
         maxBalance: constants.WeiPerEther.mul(1000).toString(),
         minBalance: constants.Zero.toString(),
       },
@@ -100,12 +103,17 @@ export const SystemBalances: FC = () => {
           />
         </Button>
       </PageHeader>
+
       <BalanceSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((balance, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{balance.token!.template!.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                {/* @ts-ignore */}
+                {balance.owner.name}
+              </ListItemText>
               <ListItemText>
                 {formatEther(
                   balance.amount,
@@ -122,6 +130,7 @@ export const SystemBalances: FC = () => {
           ))}
         </List>
       </ProgressOverlay>
+
       <Pagination
         sx={{ mt: 2 }}
         shape="rounded"

@@ -5,10 +5,10 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 import { PaginationDto } from "@gemunion/collection";
 
 import { WalletService } from "./wallet.service";
-import { BalanceEntity } from "../hierarchy/balance/balance.entity";
+import { BalanceEntity } from "../../hierarchy/balance/balance.entity";
 import { PayeesService } from "./payees.service";
 import { PayeesEntity } from "./payees.entity";
-import { BalanceSearchDto } from "../hierarchy/balance/dto";
+import { BalanceSearchDto } from "../../hierarchy/balance/dto";
 
 @ApiBearerAuth()
 @Controller("/wallet")

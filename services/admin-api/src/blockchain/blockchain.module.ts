@@ -8,8 +8,8 @@ import { MechanicsModule } from "./mechanics/mechanics.module";
 import { TokensModule } from "./tokens/tokens.module";
 import { IntegrationsModule } from "./integrations/integrations.module";
 import { ContractHistoryModule } from "./contract-history/contract-history.module";
-import { WalletModule } from "./wallet/wallet.module";
 import { EthLoggerModule } from "./eth-logger/eth-logger.module";
+import { ExchangeModule } from "./exchange/exchange.module";
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { EthLoggerModule } from "./eth-logger/eth-logger.module";
     TokensModule,
     MechanicsModule,
     IntegrationsModule,
-    WalletModule,
+    ExchangeModule,
     EthLoggerModule,
   ],
 })

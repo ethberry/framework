@@ -2,9 +2,11 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput } from "@gemunion/mui-inputs-core";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { IBalanceSearchDto } from "@framework/types";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { IBalanceSearchDto, TokenType } from "@framework/types";
+
+import { TemplateInput } from "./template-input";
 
 interface IBalanceSearchFormProps {
   onSubmit: (values: IBalanceSearchDto) => Promise<void>;
@@ -15,8 +17,8 @@ interface IBalanceSearchFormProps {
 export const BalanceSearchForm: FC<IBalanceSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { minBalance, maxBalance } = initialValues;
-  const fixedValues = { minBalance, maxBalance };
+  const { minBalance, maxBalance, contractIds, templateIds } = initialValues;
+  const fixedValues = { minBalance, maxBalance, contractIds, templateIds };
 
   return (
     <FormWrapper
@@ -28,6 +30,19 @@ export const BalanceSearchForm: FC<IBalanceSearchFormProps> = props => {
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <EntityInput
+              multiple
+              name="contractIds"
+              controller="contracts"
+              data={{
+                contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TemplateInput />
+          </Grid>
           <Grid item xs={6}>
             <EthInput name="minBalance" />
           </Grid>

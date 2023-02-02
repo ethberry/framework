@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { wallet } from "@gemunion/constants";
 
-import { BalanceService } from "../hierarchy/balance/balance.service";
-import { BalanceEntity } from "../hierarchy/balance/balance.entity";
+import { BalanceService } from "../../hierarchy/balance/balance.service";
+import { BalanceEntity } from "../../hierarchy/balance/balance.entity";
 import { IBalanceSearchDto, ModuleType } from "@framework/types";
-import { ContractService } from "../hierarchy/contract/contract.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class WalletService {

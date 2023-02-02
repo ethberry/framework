@@ -4,7 +4,6 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { PaginationDto } from "@gemunion/collection";
 
 import { PayeesEntity } from "./payees.entity";
-import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class PayeesService {

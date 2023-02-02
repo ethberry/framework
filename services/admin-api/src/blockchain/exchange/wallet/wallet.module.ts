@@ -5,8 +5,8 @@ import { WalletController } from "./wallet.controller";
 import { WalletService } from "./wallet.service";
 import { PayeesEntity } from "./payees.entity";
 import { PayeesService } from "./payees.service";
-import { BalanceModule } from "../hierarchy/balance/balance.module";
-import { ContractModule } from "../hierarchy/contract/contract.module";
+import { BalanceModule } from "../../hierarchy/balance/balance.module";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
   imports: [ContractModule, BalanceModule, TypeOrmModule.forFeature([PayeesEntity])],

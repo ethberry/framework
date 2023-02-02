@@ -17,7 +17,7 @@ import { Page } from "./page";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
 import { tokenRoutes } from "./tokens/routes";
-import { walletRoutes } from "./wallet/routes";
+import { walletRoutes } from "./exchange/wallet/routes";
 
 const routes: Array<RouteObject> = [
   {
