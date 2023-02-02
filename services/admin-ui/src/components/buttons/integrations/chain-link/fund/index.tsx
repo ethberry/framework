@@ -2,7 +2,7 @@ import { FC, Fragment, useState, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { Savings } from "@mui/icons-material";
-import { Web3ContextType } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { FormattedMessage } from "react-intl";
@@ -15,6 +15,7 @@ import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import { formatEther } from "../../../../../utils/money";
 
 export const ChainLinkFundButton: FC = () => {
+  const { account } = useWeb3React();
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
 
   const metaFnTransfer = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
@@ -36,14 +37,14 @@ export const ChainLinkFundButton: FC = () => {
   );
 
   useEffect(() => {
-    if (currentValue) {
+    if (currentValue || !account) {
       return;
     }
 
     void getAccountBalance(18, "LINK").then((balance: string) => {
       setCurrentValue(balance);
     });
-  });
+  }, [account, currentValue]);
 
   const handleFund = (): void => {
     setIsFundDialogOpen(true);

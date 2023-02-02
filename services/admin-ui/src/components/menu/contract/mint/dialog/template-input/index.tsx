@@ -30,6 +30,7 @@ export const TemplateInput: FC = () => {
             templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
           }}
           onChange={handleChange}
+          isAutoselect
         />
       );
     case TokenType.ERC1155:
@@ -43,6 +44,7 @@ export const TemplateInput: FC = () => {
           }}
           // getTitle={(tem: IToken) => `${token.template!.title} #${token.tokenId}`}
           onChange={handleChange}
+          isAutoselect
         />
       );
     case TokenType.NATIVE:
