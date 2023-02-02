@@ -7,6 +7,7 @@
   "dependencies": {
     "@chainlink/contracts": "0.6.0",
     "@ambire/signature-validator": "1.1.0",
+    "@ethersproject/abstract-provider": "5.7.0",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/constants": "0.11.0",
