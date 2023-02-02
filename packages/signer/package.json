@@ -10,8 +10,8 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@gemunion/nestjs-ethers": "3.0.24",
-    "@nestjs/common": "9.2.1",
-    "@nestjs/config": "2.2.0",
+    "@nestjs/common": "9.3.1",
+    "@nestjs/config": "2.3.0",
     "ethers": "5.7.2"
   },
   "engines": {
