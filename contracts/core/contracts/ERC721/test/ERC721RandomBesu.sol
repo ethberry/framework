@@ -8,11 +8,10 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBesu.sol";
-
 import "../ERC721Upgradeable.sol";
 import "../interfaces/IERC721Random.sol";
 import "../../Mechanics/Rarity/Rarity.sol";
+import "../../MOCKS/ChainLinkBesu.sol";
 
 contract ERC721RandomBesu is IERC721Random, ChainLinkBesu, ERC721Upgradeable, Rarity {
   using Counters for Counters.Counter;
