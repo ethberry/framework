@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Email, MenuBook, PeopleAlt, Settings, Storefront } from "@mui/icons-material";
+import { Email, MenuBook, PeopleAlt, Settings } from "@mui/icons-material";
 
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -21,7 +21,7 @@ export const Admin: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.admin.title" />
+            <FormattedMessage id="pages.dashboard.ecommerce.admin.title" />
           </ListSubheader>
         }
       >
@@ -30,7 +30,7 @@ export const Admin: FC = () => {
             <PeopleAlt />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.users" />
+            <FormattedMessage id="pages.dashboard.ecommerce.admin.users" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/settings">
@@ -38,7 +38,7 @@ export const Admin: FC = () => {
             <Settings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.settings" />
+            <FormattedMessage id="pages.dashboard.ecommerce.admin.settings" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/pages">
@@ -46,7 +46,7 @@ export const Admin: FC = () => {
             <MenuBook />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.pages" />
+            <FormattedMessage id="pages.dashboard.ecommerce.admin.pages" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/emails">
@@ -54,7 +54,7 @@ export const Admin: FC = () => {
             <Email />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.emails" />
+            <FormattedMessage id="pages.dashboard.ecommerce.admin.emails" />
           </ListItemText>
         </ListItem>
         {/* <ListItem button component={RouterLink} to="/payees"> */}
@@ -62,7 +62,7 @@ export const Admin: FC = () => {
         {/*    <Storefront /> */}
         {/*  </ListItemIcon> */}
         {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.dashboard.integrations.admin.payees" /> */}
+        {/*    <FormattedMessage id="pages.dashboard.ecommerce.admin.payees" /> */}
         {/*  </ListItemText> */}
         {/* </ListItem> */}
         {/* <ListItem button component={RouterLink} to="/payees/balances"> */}
@@ -70,7 +70,7 @@ export const Admin: FC = () => {
         {/*    <Storefront /> */}
         {/*  </ListItemIcon> */}
         {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.dashboard.integrations.admin.balances" /> */}
+        {/*    <FormattedMessage id="pages.dashboard.ecommerce.admin.balances" /> */}
         {/*  </ListItemText> */}
         {/* </ListItem> */}
       </List>

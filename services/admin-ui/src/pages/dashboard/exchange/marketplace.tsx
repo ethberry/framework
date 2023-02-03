@@ -20,7 +20,7 @@ export const Marketplace: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.title" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.title" />
           </ListSubheader>
         }
       >
@@ -29,7 +29,7 @@ export const Marketplace: FC = () => {
             <BarChart />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.report" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.report" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/marketplace/report/chart">
@@ -37,7 +37,7 @@ export const Marketplace: FC = () => {
             <Timeline />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.chart" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.chart" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/marketplace/report/rarity">
@@ -45,7 +45,7 @@ export const Marketplace: FC = () => {
             <Hive />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.rarity" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.rarity" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/marketplace/report/grade">
@@ -53,7 +53,7 @@ export const Marketplace: FC = () => {
             <Grade />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.grade" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace.grade" />
           </ListItemText>
         </ListItem>
       </List>

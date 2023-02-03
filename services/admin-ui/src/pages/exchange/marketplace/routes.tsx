@@ -8,7 +8,7 @@ import { MarketplaceChart } from "./chart";
 import { MarketplaceRarity } from "./rarity";
 import { MarketplaceGrade } from "./grade";
 import { IndexWrapper } from "../../index-wrapper";
-import { Marketplace } from "../../dashboard/integrations/marketplace";
+import { Marketplace } from "../../dashboard/exchange/marketplace";
 
 export const marketRoutes: Array<RouteObject> = [
   {

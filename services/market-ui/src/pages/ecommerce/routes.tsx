@@ -4,6 +4,7 @@ import { Protected } from "@gemunion/common-pages";
 
 import { Profile } from "./profile";
 import { Page } from "./page";
+import { Feedback } from "./feedback";
 
 export const ecommerceRoutes: Array<RouteObject> = [
   {
@@ -19,7 +20,12 @@ export const ecommerceRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <Page /> },
-      { path: "/pages/:id", element: <Page /> },
+      { path: "/pages/:slug", element: <Page /> },
     ],
+  },
+  {
+    path: "/feedback",
+    element: <Protected />,
+    children: [{ index: true, element: <Feedback /> }],
   },
 ];

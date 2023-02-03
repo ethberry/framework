@@ -575,6 +575,11 @@
         "native": "NATIVE"
       },
       "integrations": {
+        "chain-link": "ChainLink",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap"
+      },
+      "ecommerce": {
         "admin": {
           "balances": "System Balances",
           "emails": "Emails",
@@ -583,16 +588,20 @@
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
-        },
-        "chain-link": "ChainLink",
-        "coin-gecko": "CoinGecko",
-        "coin-market-cap": "CoinMarketCap",
+        }
+      },
+      "exchange": {
         "marketplace": {
           "chart": "Chart",
           "grade": "Grade",
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
+        },
+        "wallet": {
+          "balances": "Balances",
+          "payees": "Payees",
+          "title": "System Wallet"
         }
       },
       "mechanics": {
@@ -610,12 +619,7 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist"
       },
-      "title": "Dashboard",
-      "wallet": {
-        "balances": "Balances",
-        "payees": "Payees",
-        "title": "System Wallet"
-      }
+      "title": "Dashboard"
     },
     "drop": {
       "title": "Drops"

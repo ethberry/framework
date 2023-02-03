@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../index-wrapper";
-import { Wallet } from "../../dashboard/integrations/wallet";
+import { Wallet } from "../../dashboard/exchange/wallet";
 import { SystemBalances } from "./balances";
 import { SystemPayees } from "./payees";
 

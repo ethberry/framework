@@ -5,8 +5,9 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { PageModule } from "./page/page.module";
 import { EmailModule } from "./email/email.module";
+import { FeedbackModule } from "./feedback/feedback.module";
 
 @Module({
-  imports: [AuthModule, ProfileModule, UserModule, PageModule, EmailModule],
+  imports: [AuthModule, ProfileModule, UserModule, PageModule, EmailModule, FeedbackModule],
 })
 export class EcommerceModule {}
