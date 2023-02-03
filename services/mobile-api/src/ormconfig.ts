@@ -1,8 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { UserEntity } from "./user/user.entity";
-import { OtpEntity } from "./otp/otp.entity";
+import { UserEntity } from "./ecommerce/user/user.entity";
+import { OtpEntity } from "./ecommerce/otp/otp.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

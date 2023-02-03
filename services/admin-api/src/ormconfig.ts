@@ -12,9 +12,9 @@ import {
   createGenderEnum,
 } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { UserEntity } from "./user/user.entity";
-import { OtpEntity } from "./otp/otp.entity";
-import { SettingsEntity } from "./settings/settings.entity";
+import { UserEntity } from "./ecommerce/user/user.entity";
+import { OtpEntity } from "./ecommerce/otp/otp.entity";
+import { SettingsEntity } from "./ecommerce/settings/settings.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
@@ -30,7 +30,7 @@ import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity"
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
-import { PageEntity } from "./page/page.entity";
+import { PageEntity } from "./ecommerce/page/page.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";

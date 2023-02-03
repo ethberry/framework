@@ -7,7 +7,7 @@ import type { IPyramidDepositSearchDto, IPyramidLeaderboard, IPyramidLeaderboard
 import { PyramidDepositStatus } from "@framework/types";
 
 import { PyramidDepositEntity } from "./deposit.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class PyramidDepositService {

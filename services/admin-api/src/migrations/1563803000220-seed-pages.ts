@@ -29,6 +29,20 @@ export class SeedPages1563803000220 implements MigrationInterface {
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'Privacy Policy',
+        '${simpleFormatting}',
+        'privacy-policy',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Terms of Services',
+        '${simpleFormatting}',
+        'terms-of-services',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { TokenType } from "@framework/types";
 
 import { BalanceEntity } from "./balance.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class BalanceService {

@@ -9,7 +9,7 @@ import { ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class MarketplaceService {

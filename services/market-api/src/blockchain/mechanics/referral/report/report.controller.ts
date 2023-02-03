@@ -6,7 +6,7 @@ import archiver from "archiver";
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { ReferralReportService } from "./report.service";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 import { ReferralReportSearchDto } from "../reward/dto";
 import { ReferralRewardEntity } from "../reward/reward.entity";
 

@@ -31,6 +31,22 @@ export const Pages: FC = () => {
             <FormattedMessage id="pages.dashboard.integrations.pages.faq" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/pages/privacy-policy">
+          <ListItemIcon>
+            <Storefront />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.integrations.pages.privacy-policy" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/pages/terms-of-services">
+          <ListItemIcon>
+            <Storefront />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.integrations.pages.terms-of-services" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );

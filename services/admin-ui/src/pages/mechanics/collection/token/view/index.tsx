@@ -6,9 +6,9 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../../tokens/attributes";
+import { TokenAttributesView } from "../../../../exchange/tokens/attributes";
 import { AddressLink } from "../../../../../components/common/address-link";
-import { TokenGenesView } from "../../../../tokens/genes";
+import { TokenGenesView } from "../../../../exchange/tokens/genes";
 
 export interface IErc721ViewDialogProps {
   open: boolean;

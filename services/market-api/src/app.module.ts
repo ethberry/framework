@@ -16,13 +16,9 @@ import { FirebaseModule } from "@gemunion/nest-js-module-firebase";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
-import { EmailModule } from "./email/email.module";
-import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
-import { ProfileModule } from "./profile/profile.module";
-import { UserModule } from "./user/user.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { PageModule } from "./page/page.module";
+import { EcommerceModule } from "./ecommerce/ecommerce.module";
 
 @Module({
   providers: [
@@ -89,14 +85,10 @@ import { PageModule } from "./page/page.module";
       },
     }),
     RequestLoggerModule,
-    AuthModule,
     GemunionThrottlerModule,
     HealthModule,
-    ProfileModule,
-    UserModule,
-    EmailModule,
+    EcommerceModule,
     BlockchainModule,
-    PageModule,
   ],
   controllers: [AppController],
 })

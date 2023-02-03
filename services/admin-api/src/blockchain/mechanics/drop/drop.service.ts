@@ -7,7 +7,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { DropEntity } from "./drop.entity";
 import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { PageEntity } from "../../../page/page.entity";
+import { PageEntity } from "../../../ecommerce/page/page.entity";
 
 @Injectable()
 export class DropService {

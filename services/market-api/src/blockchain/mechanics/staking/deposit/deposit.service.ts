@@ -7,7 +7,7 @@ import type { IStakingDepositSearchDto, IStakingLeaderboard, IStakingLeaderboard
 import { StakingDepositStatus } from "@framework/types";
 
 import { StakingDepositEntity } from "./deposit.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class StakingDepositService {

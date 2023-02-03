@@ -84,7 +84,7 @@ import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mec
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
 
-import { UserEntity } from "../../user/user.entity";
+import { UserEntity } from "../../ecommerce/user/user.entity";
 
 @Injectable()
 export class ContractManagerSignService {

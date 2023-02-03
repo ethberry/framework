@@ -21,7 +21,7 @@ import {
   VestingDeployDto,
   StakingDeployDto,
 } from "./dto";
-import { UserEntity } from "../../user/user.entity";
+import { UserEntity } from "../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")

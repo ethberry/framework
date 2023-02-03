@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
-import { UserEntity } from "../user/user.entity";
+import { UserEntity } from "../ecommerce/user/user.entity";
 import { EventService } from "./event.service";
 import ormconfig from "../ormconfig";
 

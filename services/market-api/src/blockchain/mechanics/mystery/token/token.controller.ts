@@ -4,7 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { MysteryTokenService } from "./token.service";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenAutocompleteDto, TokenSearchDto } from "../../../hierarchy/token/dto";
 

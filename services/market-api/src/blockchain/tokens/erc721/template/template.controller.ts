@@ -7,7 +7,7 @@ import { testChainId } from "@framework/constants";
 import { Erc721TemplateService } from "./template.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateSearchDto } from "../../../hierarchy/template/dto";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Public()
 @Controller("/erc721-templates")

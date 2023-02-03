@@ -9,7 +9,7 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 

@@ -13,7 +13,7 @@ import {
 } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class TokenService {

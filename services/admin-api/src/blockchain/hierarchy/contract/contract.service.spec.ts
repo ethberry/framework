@@ -12,7 +12,7 @@ import { ContractSeedService } from "./contract.seed.service";
 import { ContractSeedModule } from "./contract.seed.module";
 import { ContractEntity } from "./contract.entity";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 describe("ContractService", () => {
   let contractService: ContractService;

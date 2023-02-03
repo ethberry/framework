@@ -15,10 +15,9 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
-import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
-import { SyncModule } from "./sync/sync.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
+import { EcommerceModule } from "./ecommerce/ecommerce.module";
 
 @Module({
   providers: [
@@ -76,9 +75,8 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     }),
     RequestLoggerModule,
     HealthModule,
-    AuthModule,
     BlockchainModule,
-    SyncModule,
+    EcommerceModule,
   ],
   controllers: [AppController],
 })

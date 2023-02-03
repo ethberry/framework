@@ -6,7 +6,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class ContractService {

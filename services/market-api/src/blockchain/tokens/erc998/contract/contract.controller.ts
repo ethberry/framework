@@ -6,7 +6,7 @@ import { SearchDto } from "@gemunion/collection";
 
 import { Erc998ContractService } from "./contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc998-contracts")

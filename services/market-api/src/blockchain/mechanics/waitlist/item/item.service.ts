@@ -5,7 +5,7 @@ import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { IWaitlistItemCreateDto } from "./interfaces";
 import { WaitlistItemEntity } from "./item.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 import { WaitlistProofDto } from "./dto";
 
 @Injectable()

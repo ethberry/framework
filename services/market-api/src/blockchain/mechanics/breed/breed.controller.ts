@@ -5,7 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { BreedService } from "./breed.service";
 import { SignBreedDto } from "./dto";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Public()
 @Controller("/breed")

@@ -1,22 +1,17 @@
 import { FC } from "react";
 import { Navigate, useRoutes } from "react-router";
 import type { RouteObject } from "react-router-dom";
+
 import { Error, Message, Protected } from "@gemunion/common-pages";
-import { FirebaseLogin } from "@gemunion/firebase-login";
+import { routes as loginRoutes } from "@gemunion/firebase-login";
 
 import { Layout } from "../components/common/layout";
-
 import { Landing } from "./landing";
 import { Dashboard } from "./dashboard";
-import { Profile } from "./profile";
-
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
-import { tokenRoutes } from "./tokens/routes";
-
-import { Marketplace } from "./marketplace";
-import { MyWallet } from "./my-wallet";
-import { Page } from "./page";
+import { exchangeRoutes } from "./exchange/routes";
+import { ecommerceRoutes } from "./ecommerce/routes";
 
 const routes: Array<RouteObject> = [
   {
@@ -25,41 +20,15 @@ const routes: Array<RouteObject> = [
     children: [
       { index: true, element: <Landing /> },
       {
-        path: "/login",
-        element: <FirebaseLogin withMetamask />,
-      },
-      {
         path: "/dashboard",
         element: <Protected />,
         children: [{ index: true, element: <Dashboard /> }],
       },
-      {
-        path: "/profile",
-        element: <Protected />,
-        children: [
-          { index: true, element: <Profile /> },
-          { path: "/profile/:tab", element: <Profile /> },
-        ],
-      },
+      ...loginRoutes,
+      ...ecommerceRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,
-      ...tokenRoutes,
-      {
-        path: "/marketplace",
-        children: [
-          { index: true, element: <Marketplace /> },
-          { path: "/marketplace/:tab", element: <Marketplace /> },
-        ],
-      },
-      {
-        path: "/my-wallet",
-        element: <Protected />,
-        children: [{ index: true, element: <MyWallet /> }],
-      },
-      {
-        path: "/pages/:slug",
-        element: <Page />,
-      },
+      ...exchangeRoutes,
       {
         path: "/error/:error",
         element: <Error />,
