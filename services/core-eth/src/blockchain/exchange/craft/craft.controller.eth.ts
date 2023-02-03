@@ -1,0 +1,18 @@
+import { Controller } from "@nestjs/common";
+import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
+import { Log } from "@ethersproject/abstract-provider";
+
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ContractType, ExchangeEventType, IExchangeCraftEvent } from "@framework/types";
+
+import { ExchangeCraftServiceEth } from "./craft.service.eth";
+
+@Controller()
+export class ExchangeCraftControllerEth {
+  constructor(private readonly exchangeCraftServiceEth: ExchangeCraftServiceEth) {}
+
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft }])
+  public craft(@Payload() event: ILogEvent<IExchangeCraftEvent>, @Ctx() context: Log): Promise<void> {
+    return this.exchangeCraftServiceEth.craft(event, context);
+  }
+}
