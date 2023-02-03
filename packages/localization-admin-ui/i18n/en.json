@@ -134,6 +134,7 @@
     },
     "emailType": {
       "DUMMY": "Test email",
+      "FEEDBACK": "Feedback",
       "LINK_TOKEN": "LINK notification"
     },
     "geneName": {
