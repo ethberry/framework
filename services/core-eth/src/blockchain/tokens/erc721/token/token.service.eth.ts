@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet, BigNumber } from "ethers";
+import { BigNumber, constants, providers, Wallet } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
@@ -8,7 +8,6 @@ import { DeepPartial } from "typeorm";
 import {
   ContractEventType,
   IERC721ConsecutiveTransfer,
-  IERC721RandomRequestEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   TokenAttributes,
@@ -16,7 +15,7 @@ import {
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { callRandom, getMetadata } from "../../../../common/utils";
+import { getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -179,18 +178,5 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-  }
-
-  public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-    // DEV ONLY
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    // if (nodeEnv === "development") {    }
-    const {
-      args: { requestId },
-    } = event;
-    const { address } = context;
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 }

@@ -28,10 +28,6 @@ export interface IRoundStartedEvent {
   startTimestamp: string;
 }
 
-export interface ILotteryRandomRequestEvent {
-  requestId: string;
-}
-
 export interface IRoundEndedEvent {
   round: string;
   endTimestamp: string;
@@ -54,7 +50,6 @@ export type TLotteryEventData =
   | ILotteryPurchaseEvent
   | ILotteryPrizeEvent
   | ILotteryReleaseEvent
-  | ILotteryRandomRequestEvent
   | IRoundFinalizedEvent;
 
 export interface ILotteryHistory extends IIdDateBase {

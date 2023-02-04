@@ -21,6 +21,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const erc721Contracts = await contractService.findAllTokensByType(TokenType.ERC721);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN,
@@ -33,7 +34,6 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.DefaultRoyaltyInfo,
               ContractEventType.MintRandom,
               ContractEventType.Paused,
-              ContractEventType.RandomRequest,
               ContractEventType.RedeemClaim,
               ContractEventType.TokenRoyaltyInfo,
               ContractEventType.Transfer,
@@ -47,7 +47,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: erc721Contracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: erc721Contracts.fromBlock || startingBlock,
             debug: true,
           },
         };

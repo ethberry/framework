@@ -20,9 +20,9 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-        const fromBlock =
-          (await contractService.getLastBlock(contractManagerAddr)) ||
-          ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+
+        const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,

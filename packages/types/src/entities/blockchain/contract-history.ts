@@ -137,11 +137,6 @@ export interface IERC721TokenTransferEvent {
   tokenId: string;
 }
 
-// dev random test
-export interface IERC721RandomRequestEvent {
-  requestId: string;
-}
-
 export interface IERC721TokenMintRandomEvent {
   requestId: string;
   to: string;
@@ -212,7 +207,6 @@ export type TContractEventData =
   | IErc20TokenApproveEvent
   | IErc20TokenSnapshotEvent
   | IErc20TokenTransferEvent
-  | IERC721RandomRequestEvent
   | IERC721TokenApproveEvent
   | IERC721TokenApprovedForAllEvent
   | IERC721TokenMintRandomEvent

@@ -22,9 +22,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
-
-        const fromBlock =
-          (await contractService.getLastBlock(stakingAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.STAKING,

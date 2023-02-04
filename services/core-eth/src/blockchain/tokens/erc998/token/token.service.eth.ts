@@ -6,7 +6,6 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
-  IERC721RandomRequestEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
@@ -31,7 +30,6 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { OwnershipService } from "../ownership/ownership.service";
 import { Erc998CompositionService } from "../composition/composition.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { callRandom } from "../../../../common/utils/random";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -218,19 +216,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-  }
-
-  public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-    // TODO DEV ONLY!!!
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    // if (nodeEnv === "development") {    }
-    const {
-      args: { requestId },
-    } = event;
-    const { address } = context;
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 
   public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChildEvent>, context: Log): Promise<void> {
