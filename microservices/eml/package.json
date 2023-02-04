@@ -14,7 +14,7 @@
     "@gemunion/nest-js-module-mailjet": "2.2.3",
     "@gemunion/nest-js-module-request-logger": "2.0.16",
     "@gemunion/nest-js-module-winston-logdna": "2.0.18",
-    "@nestjs/axios": "1.0.1",
+    "@nestjs/axios": "2.0.0",
     "@nestjs/common": "9.3.2",
     "@nestjs/config": "2.3.0",
     "@nestjs/core": "9.3.2",
