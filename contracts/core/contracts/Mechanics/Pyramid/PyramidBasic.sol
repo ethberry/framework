@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -53,11 +53,7 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
     _updateRule(ruleId, active);
   }
 
-  function deposit(
-    address,
-    uint256 ruleId,
-    uint256 tokenId
-  ) public payable whenNotPaused {
+  function deposit(address, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Pyramid: rule doesn't exist");
     require(rule.active, "Pyramid: rule doesn't active");
@@ -81,14 +77,9 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
 
     Asset[] memory depositItems = new Asset[](1);
     depositItems[0] = depositItem;
-
   }
 
-  function receiveReward(
-    uint256 stakeId,
-    bool withdrawDeposit,
-    bool breakLastPeriod
-  ) public virtual whenNotPaused {
+  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
     Rule memory rule = _rules[stake.ruleId];
     Asset memory depositItem = _stakes[stakeId].deposit;
@@ -108,7 +99,7 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
       stake.activeDeposit = false;
 
       // PENALTY
-      uint256 withdrawAmount = stakeAmount - stakeAmount / 100 * (rule.penalty / 100);
+      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.penalty / 100);
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), withdrawAmount);
@@ -116,12 +107,11 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
       } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       }
-    } else  {
+    } else {
       stake.startTimestamp = block.timestamp;
     }
 
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
-
 
     // Check cycle count
     uint256 maxCycles = rule.maxCycles;
@@ -239,8 +229,7 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
   }
 
   // ETH FUND
-  function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {
-  }
+  function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {}
 
   receive() external payable {
     revert();

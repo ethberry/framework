@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -53,11 +53,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     _updateRule(ruleId, active);
   }
 
-  function deposit(
-    address referrer,
-    uint256 ruleId,
-    uint256 tokenId
-  ) public payable whenNotPaused {
+  function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Pyramid: rule doesn't exist");
     require(rule.active, "Pyramid: rule doesn't active");
@@ -89,11 +85,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     return super._afterPurchase(referrer, price);
   }
 
-  function receiveReward(
-    uint256 stakeId,
-    bool withdrawDeposit,
-    bool breakLastPeriod
-  ) public virtual whenNotPaused {
+  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
     Rule memory rule = _rules[stake.ruleId];
     Asset memory depositItem = _stakes[stakeId].deposit;
@@ -113,7 +105,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
       stake.activeDeposit = false;
 
       // PENALTY
-      uint256 withdrawAmount = stakeAmount - stakeAmount / 100 * (rule.penalty / 100);
+      uint256 withdrawAmount = stakeAmount - (stakeAmount / 100) * (rule.penalty / 100);
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), withdrawAmount);
@@ -121,12 +113,11 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
       } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       }
-    } else  {
+    } else {
       stake.startTimestamp = block.timestamp;
     }
 
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
-
 
     // Check cycle count
     uint256 maxCycles = rule.maxCycles;
@@ -192,9 +183,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     address account = _msgSender();
     uint256 totalBalance;
     if (token == address(0)) {
-    //      require included in sendValue()
-    //      totalBalance = address(this).balance;
-    //      require(totalBalance >= amount, "Pyramid: balance exceeded");
+      //      require included in sendValue()
+      //      totalBalance = address(this).balance;
+      //      require(totalBalance >= amount, "Pyramid: balance exceeded");
       Address.sendValue(payable(account), amount);
     } else {
       totalBalance = IERC20(token).balanceOf(address(this));
@@ -249,7 +240,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
-  receive() external override payable {
+  receive() external payable override {
     revert();
   }
 
