@@ -7,6 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import {
   Erc1155ContractFeatures,
   Erc20ContractFeatures,
+  Erc721CollectionFeatures,
   Erc721ContractFeatures,
   Erc998ContractFeatures,
   IErc1155ContractDeployDto,
@@ -15,14 +16,9 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
-  IPyramidContractDeployDto,
-  IStakingDeployDto,
   IVestingDeployDto,
   MysteryContractFeatures,
-  PyramidContractFeatures,
   VestingContractTemplate,
-  StakingContractFeatures,
-  Erc721CollectionFeatures,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -30,9 +26,6 @@ import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC
 import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
 import GradedVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
 import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
-
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
-import StakingReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingRef.sol/StakingReferral.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 
@@ -43,13 +36,11 @@ import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contra
 import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721GenesGemunion.sol/ERC721GenesGemunion.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
 // import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721GenesBesu.sol/ERC721GenesBesu.json";
-
 // import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Full.sol/ERC721Full.json";
 // import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 // import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
 // import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Genes.sol/ERC721Genes.json";
 // import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
-
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
@@ -80,9 +71,6 @@ import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/M
 import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
-
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
-import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
 
 import { UserEntity } from "../../ecommerce/user/user.entity";
 
@@ -363,56 +351,6 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:PYRAMID
-  public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractFeatures, payees, shares } = dto;
-    const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByPyramidContractFeatures(dto);
-
-    const params = {
-      nonce,
-      bytecode,
-    };
-
-    const args = {
-      featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
-      payees,
-      shares,
-    };
-
-    const signature = await this.signer._signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "PyramidArgs" },
-        ],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-        ],
-        PyramidArgs: [
-          { name: "featureIds", type: "uint8[]" },
-          { name: "payees", type: "address[]" },
-          { name: "shares", type: "uint256[]" },
-        ],
-      },
-      // Values
-      {
-        params,
-        args,
-      },
-    );
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
   // MODULE:MYSTERY
   public async mysterybox(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
@@ -522,56 +460,6 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:STAKING
-  public async staking(dto: IStakingDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractFeatures, maxStake } = dto;
-
-    const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByStakingContractFeatures(dto);
-
-    const params = {
-      nonce,
-      bytecode,
-    };
-
-    const args = {
-      maxStake,
-      featureIds: contractFeatures.map(feature => Object.keys(StakingContractFeatures).indexOf(feature)),
-    };
-
-    const signature = await this.signer._signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "StakingArgs" },
-        ],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-        ],
-        StakingArgs: [
-          { name: "maxStake", type: "uint256" },
-          { name: "featureIds", type: "uint8[]" },
-        ],
-      },
-      // Values
-      {
-        params,
-        args,
-      },
-    );
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
   public getBytecodeByErc20ContractFeatures(dto: IErc20TokenDeployDto) {
     const { contractFeatures } = dto;
 
@@ -597,20 +485,6 @@ export class ContractManagerSignService {
       default:
         throw new Error("Unknown template");
     }
-  }
-
-  public getBytecodeByStakingContractFeatures(dto: IStakingDeployDto) {
-    const { contractFeatures } = dto;
-
-    if (!contractFeatures.length) {
-      return StakingSol.bytecode;
-    }
-
-    if (contractFeatures.length === 1 && contractFeatures.includes(StakingContractFeatures.LINEAR_REFERRAL)) {
-      return StakingReferralSol.bytecode;
-    }
-
-    throw this.throwValidationError(dto);
   }
 
   public getBytecodeByErc721ContractFeatures(dto: IErc721ContractDeployDto) {
@@ -767,24 +641,6 @@ export class ContractManagerSignService {
       if (contractFeatures.includes(MysteryContractFeatures.PAUSABLE)) {
         return MysteryboxPausableSol.bytecode;
       }
-    }
-
-    throw this.throwValidationError(dto);
-  }
-
-  public getBytecodeByPyramidContractFeatures(dto: IPyramidContractDeployDto) {
-    const { contractFeatures } = dto;
-
-    if (!contractFeatures.length) {
-      return PyramidBasicSol.bytecode;
-    }
-
-    if (contractFeatures.includes(PyramidContractFeatures.LINEAR_REFERRAL)) {
-      return PyramidSol.bytecode;
-    }
-
-    if (contractFeatures.includes(PyramidContractFeatures.PAYMENT_SPLITTER)) {
-      return PyramidSol.bytecode;
     }
 
     throw this.throwValidationError(dto);
