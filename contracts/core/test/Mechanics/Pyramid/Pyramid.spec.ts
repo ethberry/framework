@@ -1834,7 +1834,7 @@ describe("Pyramid", function () {
           amount: 1000,
         }.amount * 2,
       );
-      await expect(tx3).to.be.revertedWith("Pyramid: balance exceeded");
+      await expect(tx3).to.be.revertedWith("Address: insufficient balance");
 
       // WITHDRAW 2
       const tx4 = pyramidInstance.withdrawToken(

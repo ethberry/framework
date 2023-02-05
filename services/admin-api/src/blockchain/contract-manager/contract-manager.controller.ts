@@ -17,9 +17,7 @@ import {
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
   MysteryContractDeployDto,
-  PyramidContractDeployDto,
   VestingDeployDto,
-  StakingDeployDto,
 } from "./dto";
 import { UserEntity } from "../../ecommerce/user/user.entity";
 
@@ -91,21 +89,9 @@ export class ContractManagerController {
     return this.contractManagerSignService.vesting(dto, userEntity);
   }
 
-  // MODULE:PYRAMID
-  @Post("/pyramid")
-  public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.pyramid(dto, userEntity);
-  }
-
   // MODULE:COLLECTION
   @Post("/erc721collection")
   public collection(@Body() dto: Erc721CollectionDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Collection(dto, userEntity);
-  }
-
-  // MODULE:STAKING
-  @Post("/staking")
-  public staking(@Body() dto: StakingDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.staking(dto, userEntity);
   }
 }

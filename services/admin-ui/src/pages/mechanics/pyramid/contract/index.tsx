@@ -25,7 +25,6 @@ import {
 } from "@framework/types";
 
 import { PyramidContractEditDialog } from "./edit";
-import { PyramidContractDeployButton } from "../../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
@@ -78,7 +77,6 @@ export const PyramidContract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <PyramidContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm
