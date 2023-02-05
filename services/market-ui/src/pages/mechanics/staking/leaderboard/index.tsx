@@ -6,11 +6,11 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
 import { StakingLeaderboardSearchForm } from "./form";
-import { AddressLink } from "../../../../components/common/address-link";
 import { formatEther } from "../../../../utils/money";
 
 export const StakingLeaderboard: FC = () => {

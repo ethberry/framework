@@ -4,10 +4,10 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
 import { TokenAttributesView } from "../../../../exchange/tokens/attributes";
-import { AddressLink } from "../../../../../components/common/address-link";
 import { TokenGenesView } from "../../../../exchange/tokens/genes";
 
 export interface IErc721ViewDialogProps {
