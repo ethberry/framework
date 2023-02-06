@@ -24,7 +24,7 @@ contract ERC721SoulboundVotes is ERC721Soulbound, ERC721Votes {
     address to,
     uint256 firstTokenId,
     uint256 batchSize
-  ) internal pure override(ERC721, ERC721Soulbound) {
+  ) internal override(ERC721, ERC721Soulbound) {
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 

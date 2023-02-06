@@ -25,19 +25,19 @@ contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
     _mintConsecutive2(owner, batchSize);
   }
 
-  function _mintConsecutive2(address owner, uint96 batchSize) internal override {
-    _mintConsecutive(owner, batchSize);
+  function _mintConsecutive2(address owner, uint96 batchSize) internal override returns (uint96) {
+    return super._mintConsecutive(owner, batchSize);
   }
 
-  function mintCommon(address, uint256) public pure {
+  function mintCommon(address to, uint256 tokenId) external virtual onlyRole(MINTER_ROLE) {
+    _safeMint(to, tokenId);
+  }
+
+  function mint(address, uint256) public pure override {
     revert MethodNotSupported();
   }
 
-  function mint(address) public pure {
-    revert MethodNotSupported();
-  }
-
-  function safeMint(address) public pure {
+  function safeMint(address, uint256) public pure override {
     revert MethodNotSupported();
   }
 
