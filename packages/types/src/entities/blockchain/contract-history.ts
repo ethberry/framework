@@ -12,6 +12,8 @@ export enum ContractEventType {
   MintRandom = "MintRandom",
   Paused = "Paused",
   RandomRequest = "RandomRequest",
+  RandomnessRequest = "RandomnessRequest",
+  RandomnessRequestId = "RandomnessRequestId",
   ReceivedChild = "ReceivedChild",
   RedeemClaim = "RedeemClaim",
   SetMaxChild = "SetMaxChild",
@@ -200,6 +202,18 @@ export interface IErc1155TokenUriEvent {
   id: string;
 }
 
+// VRF
+export interface IVrfRandomnessRequestEvent {
+  sender: string;
+  keyHash: string;
+  seed: string;
+}
+
+export interface IVrfRandomRequestEvent {
+  _requestID: string;
+  _sender: string;
+}
+
 export type TContractEventData =
   | IClaimRedeem
   | IClaimUnpack
@@ -212,6 +226,8 @@ export type TContractEventData =
   | IErc20TokenApproveEvent
   | IErc20TokenSnapshotEvent
   | IErc20TokenTransferEvent
+  | IVrfRandomnessRequestEvent
+  | IVrfRandomRequestEvent
   | IERC721RandomRequestEvent
   | IERC721TokenApproveEvent
   | IERC721TokenApprovedForAllEvent
