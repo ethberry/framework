@@ -44,8 +44,6 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 180101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

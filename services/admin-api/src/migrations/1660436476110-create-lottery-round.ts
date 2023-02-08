@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
+export class CreateLotteryRoundAt1660436476100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.lottery_ticket`,
+      name: `${ns}.lottery_round`,
       columns: [
         {
           name: "id",
@@ -13,25 +13,23 @@ export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "account",
-          type: "varchar",
-        },
-        {
           name: "numbers",
           type: "boolean",
           isArray: true,
+          isNullable: true,
         },
         {
           name: "round_id",
-          type: "int",
-        },
-        {
-          name: "token_id",
-          type: "int",
-        },
-        {
-          name: "amount",
           type: "uint256",
+        },
+        {
+          name: "start_timestamp",
+          type: "timestamptz",
+        },
+        {
+          name: "end_timestamp",
+          type: "timestamptz",
+          isNullable: true,
         },
         {
           name: "created_at",
@@ -42,26 +40,12 @@ export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
-      foreignKeys: [
-        {
-          columnNames: ["round_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.lottery_round`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["token_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.token`,
-          onDelete: "CASCADE",
-        },
-      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.lottery_ticket`);
+    await queryRunner.dropTable(`${ns}.lottery_round`);
   }
 }

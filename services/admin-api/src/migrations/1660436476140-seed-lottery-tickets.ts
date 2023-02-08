@@ -12,7 +12,7 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   return `{${numbers.join(",")}}`;
 };
 
-export class SeedLotteryTicketsAt1660436477030 implements MigrationInterface {
+export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 

@@ -174,6 +174,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 5000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

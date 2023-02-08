@@ -70,8 +70,6 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 4205001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

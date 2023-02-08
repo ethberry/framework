@@ -55,8 +55,6 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 12040101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

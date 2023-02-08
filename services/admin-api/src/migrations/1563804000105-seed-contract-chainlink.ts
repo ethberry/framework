@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
 
-export class SeedContractChainLinkAt1563804000199 implements MigrationInterface {
+export class SeedContractChainLinkAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
@@ -29,7 +29,7 @@ export class SeedContractChainLinkAt1563804000199 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        5,
+        7,
         '${vrfAddress.toLowerCase()}',
         '${chainId}',
         'VRF COORDINATOR',
@@ -47,8 +47,6 @@ export class SeedContractChainLinkAt1563804000199 implements MigrationInterface 
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 5, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
