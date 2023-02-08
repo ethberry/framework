@@ -37,8 +37,9 @@ import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
+import ERC721SoulboundVotesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulboundVotes.sol/ERC721SoulboundVotes.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
-import ERC721UpgradeableBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableBlacklist.sol/ERC721UpgradeableBlacklist.json";
+import ERC721BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeable.sol/ERC721BlacklistUpgradeable.json";
 
 import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
@@ -51,7 +52,8 @@ import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC99
 import ERC998StateHashSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998StateHash.sol/ERC998StateHash.json";
 import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
 import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/test/ERC998UpgradeableRandomGemunion.sol/ERC998UpgradeableRandomGemunion.json";
-import ERC998UpgradeableRandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998UpgradeableRandomBlacklist.sol/ERC998UpgradeableRandomBlacklist.json";
+import ERC998BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistUpgradeable.sol/ERC998BlacklistUpgradeable.json";
+import ERC998BlacklistUpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998BlacklistUpgradeableRandom.sol/ERC998UpgradeableRandom.json";
 
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
@@ -421,21 +423,22 @@ export class ContractManagerSignService {
         return ERC721GenesSol.bytecode;
       case Erc721ContractTemplates.RANDOM:
         return ERC721RandomSol.bytecode;
-      case Erc721ContractTemplates.RANDOM_BLACKLIST:
+      case Erc721ContractTemplates.BLACKLIST_RANDOM:
         return ERC721RandomBlacklistSol.bytecode;
       case Erc721ContractTemplates.SIMPLE:
         return ERC721SimpleSol.bytecode;
       case Erc721ContractTemplates.SOULBOUND:
         return ERC721SoulboundSol.bytecode;
       case Erc721ContractTemplates.SOULBOUND_VOTES:
+        return ERC721SoulboundVotesSol.bytecode;
       case Erc721ContractTemplates.UPGRADEABLE:
         return ERC721UpgradeableSol.bytecode;
-      case Erc721ContractTemplates.UPGRADEABLE_BLACKLIST:
-        return ERC721UpgradeableBlacklistSol.bytecode;
+      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE:
+        return ERC721BlacklistUpgradeableSol.bytecode;
       case Erc721ContractTemplates.UPGRADEABLE_RANDOM:
         return ERC721UpgradeableRandomSol.bytecode;
-      case Erc721ContractTemplates.UPGRADEABLE_RANDOM_BLACKLIST:
-        return ERC998UpgradeableRandomBlacklistSol.bytecode;
+      case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RANDOM:
+        return ERC998BlacklistUpgradeableRandomSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -457,7 +460,7 @@ export class ContractManagerSignService {
         return ERC998GenesSol.bytecode;
       case Erc998ContractTemplates.RANDOM:
         return ERC998RandomSol.bytecode;
-      case Erc998ContractTemplates.RANDOM_BLACKLIST:
+      case Erc998ContractTemplates.BLACKLIST_RANDOM:
         return ERC998RandomBlacklistSol.bytecode;
       case Erc998ContractTemplates.SIMPLE:
         return ERC998SimpleSol.bytecode;
@@ -465,10 +468,12 @@ export class ContractManagerSignService {
         return ERC998StateHashSol.bytecode;
       case Erc998ContractTemplates.UPGRADEABLE:
         return ERC998UpgradeableSol.bytecode;
+      case Erc998ContractTemplates.BLACKLIST_UPGRADEABLE:
+        return ERC998BlacklistUpgradeableSol.bytecode;
       case Erc998ContractTemplates.UPGRADEABLE_RANDOM:
         return ERC998UpgradeableRandomSol.bytecode;
-      case Erc998ContractTemplates.UPGRADEABLE_RANDOM_BLACKLIST:
-        return ERC998UpgradeableRandomBlacklistSol.bytecode;
+      case Erc998ContractTemplates.BLACKLIST_UPGRADEABLE_RANDOM:
+        return ERC998BlacklistUpgradeableRandomSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -530,6 +535,8 @@ export class ContractManagerSignService {
         return ERC721CollectionSol.bytecode;
       case Erc721CollectionTemplates.BLACKLIST:
         return ERC721CollectionBlacklistSol.bytecode;
+      default:
+        throw new NotFoundException("templateNotFound");
     }
   }
 }

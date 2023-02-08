@@ -129,13 +129,13 @@
 
       "GENES": "Genes",
       "RANDOM": "Random",
-      "RANDOM_BLACKLIST": "Random + Blacklist",
+      "BLACKLIST_RANDOM": "Blacklist + Random",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "UPGRADEABLE": "Upgradeable",
-      "UPGRADEABLE_BLACKLIST": "Upgradeable + Blacklist",
+      "BLACKLIST_UPGRADEABLE": "Blacklist + Upgradeable",
+      "BLACKLIST_UPGRADEABLE_RANDOM": "Blacklist + Upgradeable + Random",
       "UPGRADEABLE_RANDOM": "Upgradeable + Random",
-      "UPGRADEABLE_RANDOM_BLACKLIST": "Upgradeable + Random + Blacklist",
 
       "ERC20OWNER": "ERC20 Owner",
       "ERC1155OWNER": "ERC1155 Owner",
@@ -144,8 +144,6 @@
 
       "PAUSABLE": "Pausable",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable"
-
-
     },
     "craftStatus": {
       "ACTIVE": "Active",

@@ -1,5 +1,5 @@
 import { FormatTypes, Interface } from "@ethersproject/abi";
 
-import ERC721UpgradeableRandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandomBlacklist.sol/ERC721UpgradeableRandomBlacklist.json";
+import ERC721BlacklistUpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRandom.sol/ERC721BlacklistUpgradeableRandom.json";
 
-export const ABI = new Interface(ERC721UpgradeableRandomBlacklistSol.abi).format(FormatTypes.full);
+export const ABI = new Interface(ERC721BlacklistUpgradeableRandomSol.abi).format(FormatTypes.full);
