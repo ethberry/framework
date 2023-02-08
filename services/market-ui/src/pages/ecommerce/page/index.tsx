@@ -1,9 +1,9 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 
-import { PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api-firebase";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IPage } from "@framework/types";
@@ -17,6 +17,7 @@ export const Page: FC = () => {
   const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [page, setPage] = useState<IPage>({} as IPage);
 
   const api = useApi();
@@ -33,7 +34,7 @@ export const Page: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
+          setNotFound(true);
         } else {
           console.error(e);
           enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
@@ -48,16 +49,20 @@ export const Page: FC = () => {
     void fetchPage();
   }, [slug]);
 
-  if (isLoading) {
-    return <Spinner />;
+  if (notFound) {
+    return <Navigate to="/message/page-not-found" />;
   }
 
   return (
-    <Fragment>
-      <PageHeader message="pages.page.title" data={page} />
-      <div className={classes.content}>
-        <RichTextDisplay data={page.description} />
-      </div>
-    </Fragment>
+    <ProgressOverlay isLoading={isLoading}>
+      {page?.description ? (
+        <Fragment>
+          <PageHeader message="pages.page.title" data={page} />
+          <div className={classes.content}>
+            <RichTextDisplay data={page.description} />
+          </div>
+        </Fragment>
+      ) : null}
+    </ProgressOverlay>
   );
 };
