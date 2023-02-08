@@ -87,7 +87,7 @@ describe("MysteryboxFactory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "MysteryboxDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, template);
+      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate);
 
       await expect(tx)
         .to.emit(contractInstance, "MysteryboxDeployed")

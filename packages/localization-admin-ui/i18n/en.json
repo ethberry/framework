@@ -55,10 +55,6 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "gender": {
-      "MALE": "Male",
-      "FEMALE": "Female"
-    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -98,18 +94,19 @@
       "UNPACKED": "Unpacked"
     },
     "contractFeatures": {
+      "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
-      "ERC1155OWNER": "ERC1155OWNER",
-      "ERC20OWNER": "ERC20OWNER",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
-      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
-      "PAYMENT_SPLITTER": "PAYMENT_SPLITTER REFERRAL",
       "RANDOM": "Random",
+      "REFERRAL": "Linear referral",
       "SOULBOUND": "Soulbound",
+      "SPLITTER": "Payment Splitter",
       "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
@@ -118,32 +115,28 @@
       "NEW": "New"
     },
     "contractTemplate": {
-      "CLIFF": "Cliff",
-      "GRADED": "Graded",
-      "LINEAR": "Linear",
-
-      "SIMPLE": "Simple",
       "BLACKLIST": "Blacklist",
-      "WHITELIST": "Whitelist",
-      "EXTERNAL": "External",
-
-      "GENES": "Genes",
-      "RANDOM": "Random",
+      "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
       "BLACKLIST_RANDOM": "Blacklist + Random",
-      "SOULBOUND": "Soulbound",
-      "SOULBOUND_VOTES": "Soulbound + Votes",
-      "UPGRADEABLE": "Upgradeable",
       "BLACKLIST_UPGRADEABLE": "Blacklist + Upgradeable",
       "BLACKLIST_UPGRADEABLE_RANDOM": "Blacklist + Upgradeable + Random",
-      "UPGRADEABLE_RANDOM": "Upgradeable + Random",
-
-      "ERC20OWNER": "ERC20 Owner",
+      "CLIFF": "Cliff",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",
-      "STATEHASH": "State Hash",
-
+      "ERC20OWNER": "ERC20 Owner",
+      "EXTERNAL": "External",
+      "GENES": "Genes",
+      "GRADED": "Graded",
+      "LINEAR": "Linear",
       "PAUSABLE": "Pausable",
-      "BLACKLIST_PAUSABLE": "Blacklist + Pausable"
+      "RANDOM": "Random",
+      "SIMPLE": "Simple",
+      "SOULBOUND": "Soulbound",
+      "SOULBOUND_VOTES": "Soulbound + Votes",
+      "STATEHASH": "State Hash",
+      "UPGRADEABLE": "Upgradeable",
+      "UPGRADEABLE_RANDOM": "Upgradeable + Random",
+      "WHITELIST": "Whitelist"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -159,6 +152,10 @@
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
       "LINK_TOKEN": "LINK notification"
+    },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male"
     },
     "geneName": {
       "CHARISMA": "Charisma",
@@ -322,7 +319,6 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
-      "template": "Template",
       "active": "Active",
       "address": "Address",
       "amount": "Amount",
@@ -592,18 +588,6 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "hierarchy": {
-        "erc1155": "ERC1155",
-        "erc20": "ERC20",
-        "erc721": "ERC721",
-        "erc998": "ERC998",
-        "native": "NATIVE"
-      },
-      "integrations": {
-        "chain-link": "ChainLink",
-        "coin-gecko": "CoinGecko",
-        "coin-market-cap": "CoinMarketCap"
-      },
       "ecommerce": {
         "admin": {
           "balances": "System Balances",
@@ -628,6 +612,18 @@
           "payees": "Payees",
           "title": "System Wallet"
         }
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "NATIVE"
+      },
+      "integrations": {
+        "chain-link": "ChainLink",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap"
       },
       "mechanics": {
         "breed": "Breed",

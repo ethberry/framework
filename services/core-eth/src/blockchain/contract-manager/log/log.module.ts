@@ -7,6 +7,7 @@ import { ContractManagerEventType, ContractType } from "@framework/types";
 
 // system contract
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+
 import { ContractManagerLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";

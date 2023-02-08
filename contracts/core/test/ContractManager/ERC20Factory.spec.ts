@@ -76,7 +76,7 @@ describe("ERC20Factory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "ERC20TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, cap, template);
+      //   .withArgs(address, tokenName, tokenSymbol, cap, contractTemplate);
 
       await expect(tx)
         .to.emit(contractInstance, "ERC20TokenDeployed")
