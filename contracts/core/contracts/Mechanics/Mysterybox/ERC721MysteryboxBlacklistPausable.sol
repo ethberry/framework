@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "./ERC721MysteryboxBlacklist.sol";
 
-contract ERC721MysteryboxFull is ERC721MysteryboxBlacklist, Pausable {
+contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausable {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   constructor(

@@ -139,7 +139,7 @@ export class ContractService {
       .createQueryBuilder("contract")
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId: this.chainId })
-      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });
+      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [ContractFeatures.EXTERNAL] });
 
     if (contractType) {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });

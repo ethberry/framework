@@ -4,7 +4,7 @@ import { constants } from "ethers";
 
 import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-import { cap, featureIds } from "../constants";
+import { cap, contractTemplate } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("ERC20Factory", function () {
@@ -40,7 +40,7 @@ describe("ERC20Factory", function () {
             { name: "name", type: "string" },
             { name: "symbol", type: "string" },
             { name: "cap", type: "uint256" },
-            { name: "featureIds", type: "uint8[]" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -53,7 +53,7 @@ describe("ERC20Factory", function () {
             name: tokenName,
             symbol: tokenSymbol,
             cap,
-            featureIds,
+            contractTemplate,
           },
         },
       );
@@ -67,7 +67,7 @@ describe("ERC20Factory", function () {
           name: tokenName,
           symbol: tokenSymbol,
           cap,
-          featureIds,
+          contractTemplate,
         },
         signature,
       );
@@ -76,7 +76,7 @@ describe("ERC20Factory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "ERC20TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, cap, featureIds);
+      //   .withArgs(address, tokenName, tokenSymbol, cap, template);
 
       await expect(tx)
         .to.emit(contractInstance, "ERC20TokenDeployed")
@@ -86,7 +86,7 @@ describe("ERC20Factory", function () {
             name: tokenName,
             symbol: tokenSymbol,
             cap,
-            featureIds,
+            contractTemplate,
           },
         });
 

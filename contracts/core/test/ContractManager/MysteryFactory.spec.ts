@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import {
   amount,
@@ -12,7 +12,7 @@ import {
   tokenSymbol,
 } from "@gemunion/contracts-constants";
 
-import { featureIds, templateId, tokenId } from "../constants";
+import { contractTemplate, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("MysteryboxFactory", function () {
@@ -49,7 +49,7 @@ describe("MysteryboxFactory", function () {
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
-            { name: "featureIds", type: "uint8[]" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -63,7 +63,7 @@ describe("MysteryboxFactory", function () {
             symbol: tokenSymbol,
             royalty,
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         },
       );
@@ -78,7 +78,7 @@ describe("MysteryboxFactory", function () {
           symbol: tokenSymbol,
           royalty,
           baseTokenURI,
-          featureIds,
+          contractTemplate,
         },
         signature,
       );
@@ -87,7 +87,7 @@ describe("MysteryboxFactory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "MysteryboxDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, template);
 
       await expect(tx)
         .to.emit(contractInstance, "MysteryboxDeployed")
@@ -98,7 +98,7 @@ describe("MysteryboxFactory", function () {
             symbol: tokenSymbol,
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         });
 

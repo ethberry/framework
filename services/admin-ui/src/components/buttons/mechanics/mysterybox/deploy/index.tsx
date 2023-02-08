@@ -6,7 +6,7 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import type { IMysteryContractDeployDto } from "@framework/types";
-import { MysteryContractFeatures } from "@framework/types";
+import { MysteryContractTemplates } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
@@ -21,8 +21,6 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IMysteryContractDeployDto, web3Context, sign) => {
-      const { contractFeatures, name, symbol, royalty, baseTokenURI } = values;
-
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -35,13 +33,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
           nonce,
           bytecode: sign.bytecode,
         },
-        {
-          name,
-          symbol,
-          royalty,
-          baseTokenURI,
-          featureIds: contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
-        },
+        values,
         sign.signature,
       ) as Promise<void>;
     },
@@ -74,7 +66,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          contractFeatures: [],
+          contractTemplate: MysteryContractTemplates.SIMPLE,
           name: "",
           symbol: "",
           baseTokenURI: `${process.env.JSON_URL}/metadata`,

@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import {
   baseTokenURI,
@@ -11,7 +11,7 @@ import {
   tokenSymbol,
 } from "@gemunion/contracts-constants";
 
-import { featureIds, templateId, tokenId } from "../constants";
+import { contractTemplate, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("ERC721Factory", function () {
@@ -48,7 +48,7 @@ describe("ERC721Factory", function () {
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
-            { name: "featureIds", type: "uint8[]" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -62,7 +62,7 @@ describe("ERC721Factory", function () {
             symbol: tokenSymbol,
             royalty,
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         },
       );
@@ -77,7 +77,7 @@ describe("ERC721Factory", function () {
           symbol: tokenSymbol,
           royalty,
           baseTokenURI,
-          featureIds,
+          contractTemplate,
         },
         signature,
       );
@@ -86,7 +86,7 @@ describe("ERC721Factory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "ERC721TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
+      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, template);
 
       await expect(tx)
         .to.emit(contractInstance, "ERC721TokenDeployed")
@@ -97,7 +97,7 @@ describe("ERC721Factory", function () {
             symbol: tokenSymbol,
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         });
 

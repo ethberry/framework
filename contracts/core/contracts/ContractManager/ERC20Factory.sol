@@ -10,7 +10,7 @@ import "./AbstractFactory.sol";
 
 contract ERC20Factory is AbstractFactory {
   bytes private constant ERC20_ARGUMENTS_SIGNATURE =
-    "Erc20Args(string name,string symbol,uint256 cap,uint8[] featureIds)";
+    "Erc20Args(string name,string symbol,uint256 cap,string contractTemplate)";
   bytes32 private constant ERC20_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC20_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable ERC20_PERMIT_SIGNATURE =
@@ -22,7 +22,7 @@ contract ERC20Factory is AbstractFactory {
     string name;
     string symbol;
     uint256 cap;
-    uint8[] featureIds;
+    string contractTemplate;
   }
 
   event ERC20TokenDeployed(address addr, Erc20Args args);
@@ -66,7 +66,7 @@ contract ERC20Factory is AbstractFactory {
           keccak256(abi.encodePacked(args.name)),
           keccak256(abi.encodePacked(args.symbol)),
           args.cap,
-          keccak256(abi.encodePacked(args.featureIds))
+          keccak256(abi.encodePacked(args.contractTemplate))
         )
       );
   }

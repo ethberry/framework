@@ -120,7 +120,32 @@
     "contractTemplate": {
       "CLIFF": "Cliff",
       "GRADED": "Graded",
-      "LINEAR": "Linear"
+      "LINEAR": "Linear",
+
+      "SIMPLE": "Simple",
+      "BLACKLIST": "Blacklist",
+      "WHITELIST": "Whitelist",
+      "EXTERNAL": "External",
+
+      "GENES": "Genes",
+      "RANDOM": "Random",
+      "RANDOM_BLACKLIST": "Random + Blacklist",
+      "SOULBOUND": "Soulbound",
+      "SOULBOUND_VOTES": "Soulbound + Votes",
+      "UPGRADEABLE": "Upgradeable",
+      "UPGRADEABLE_BLACKLIST": "Upgradeable + Blacklist",
+      "UPGRADEABLE_RANDOM": "Upgradeable + Random",
+      "UPGRADEABLE_RANDOM_BLACKLIST": "Upgradeable + Random + Blacklist",
+
+      "ERC20OWNER": "ERC20 Owner",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",
+      "STATEHASH": "State Hash",
+
+      "PAUSABLE": "Pausable",
+      "BLACKLIST_PAUSABLE": "Blacklist + Pausable"
+
+
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -299,6 +324,7 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
+      "template": "Template",
       "active": "Active",
       "address": "Address",
       "amount": "Amount",

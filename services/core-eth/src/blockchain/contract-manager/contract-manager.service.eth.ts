@@ -9,24 +9,18 @@ import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
   ContractManagerEventType,
-  Erc1155ContractFeatures,
-  Erc20ContractFeatures,
-  Erc721ContractFeatures,
-  Erc998ContractFeatures,
+  IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
-  IContractManagerCollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
-  MysteryContractFeatures,
   TContractManagerEventData,
   TemplateStatus,
   TokenType,
   VestingContractTemplate,
-  Erc721CollectionFeatures,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";
@@ -81,12 +75,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, cap, featureIds] = args;
+    const [name, symbol, cap, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc20ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -96,7 +87,7 @@ export class ContractManagerServiceEth {
       decimals: 18,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC20,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -128,12 +119,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
+    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc721ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -142,7 +130,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       chainId: this.chainId,
       royalty: ~~royalty,
@@ -150,11 +138,11 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    if (contractFeatures.includes(Erc721ContractFeatures.GENES)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
         description: emptyStateString,
@@ -176,12 +164,9 @@ export class ContractManagerServiceEth {
       args: { addr, args, owner },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds, batchSize] = args;
+    const [name, symbol, royalty, baseTokenURI, batchSize, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc721CollectionFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -190,7 +175,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: JSON.stringify({ batchSize, owner }),
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId: this.chainId,
@@ -249,12 +234,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
+    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc998ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -263,7 +245,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC998,
       chainId: this.chainId,
       royalty: ~~royalty,
@@ -271,11 +253,11 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    if (contractFeatures.includes(Erc998ContractFeatures.GENES)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
         description: emptyStateString,
@@ -297,12 +279,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [baseTokenURI, featureIds] = args;
+    const [baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc1155ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -310,7 +289,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC1155,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -327,12 +306,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, baseTokenURI, royalty, featureIds] = args;
+    const [name, symbol, baseTokenURI, royalty, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(MysteryContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -341,7 +317,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_").slice(1) as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId: this.chainId,
@@ -361,13 +337,13 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [account, startTimestamp, duration, templateId] = args;
+    const [account, startTimestamp, duration, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
-      title: Object.values(VestingContractTemplate)[~~templateId].toString(),
+      title: contractTemplate,
       description: emptyStateString,
       imageUrl,
       contractFeatures: [],
@@ -380,7 +356,7 @@ export class ContractManagerServiceEth {
       account: account.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
+      contractTemplate: contractTemplate as VestingContractTemplate,
       contractId: contractEntity.id,
     });
 

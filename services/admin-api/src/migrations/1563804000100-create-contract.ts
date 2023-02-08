@@ -15,69 +15,34 @@ export class CreateContract1563804000100 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
         'SYSTEM',
-        'HIERARCHY'
+        'HIERARCHY',
+        'MYSTERY',
+        'WRAPPER',
+        'LOTTERY',
+        'STAKING',
+        'PYRAMID',
+        'WAITLIST',
+        'VESTING',
+        'POLYGON',
+        'COLLECTION'
       );
     `);
-
-    // MODULE:MYSTERY
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERY';`);
-
-    // MODULE:WRAPPER
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WRAPPER';`);
-
-    // MODULE:LOTTERY
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
-
-    // MODULE:STAKING
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'STAKING';`);
-
-    // MODULE:PYRAMID
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'PYRAMID';`);
-
-    // MODULE:WAITLIST
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WAITLIST';`);
-
-    // MODULE:VESTING
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'VESTING';`);
-
-    // MODULE:POLYGON
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'POLYGON';`);
-
-    // MODULE:COLLECTION
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'COLLECTION';`);
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
-        'ALLOWANCE',
-        'BLACKLIST',
         'EXTERNAL',
-        'NATIVE',
-        'SOULBOUND'
+        'BLACKLIST',
+        'WHITELIST',
+        'SOULBOUND',
+        'RANDOM',
+        'UPGRADEABLE',
+        'GENES',
+        'PAUSABLE',
+        'REFERRAL',
+        'SPLITTER',
+        'ALLOWANCE'
       );
     `);
-
-    // MODULE:GRADE
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'UPGRADEABLE';`);
-
-    // // MODULE:STAKING
-    // await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'REFERRAL';`);
-
-    // MODULE:RARITY
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'RANDOM';`);
-
-    // MODULE:GENES
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'GENES';`);
-
-    // MODULE:MYSTERY
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAUSABLE';`);
-
-    // MODULE:ERC998
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC20OWNER';`);
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC1155OWNER';`);
-
-    // MODULE:PYRAMID
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'LINEAR_REFERRAL';`);
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAYMENT_SPLITTER';`);
 
     const table = new Table({
       name: `${ns}.contract`,
@@ -181,6 +146,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.contract`);
     await queryRunner.query(`DROP TYPE ${ns}.contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.contract_features_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_template_enum;`);
   }
 }

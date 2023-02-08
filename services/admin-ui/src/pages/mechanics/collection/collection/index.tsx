@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import {
   ContractFeatures,
   ContractStatus,
-  Erc721ContractFeatures,
+  Erc721CollectionFeatures,
   IContract,
   IContractSearchDto,
 } from "@framework/types";
@@ -86,7 +86,7 @@ export const Collection: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={Erc721ContractFeatures}
+        contractFeaturesOptions={Erc721CollectionFeatures}
       />
 
       <ProgressOverlay isLoading={isLoading}>

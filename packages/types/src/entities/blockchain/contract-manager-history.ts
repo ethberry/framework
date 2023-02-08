@@ -10,7 +10,7 @@ export enum ContractManagerEventType {
   CollectionDeployed = "CollectionDeployed",
 }
 
-export type ICollectionDeployedEventArgs = [string, string, string, string, Array<string>, string];
+export type ICollectionDeployedEventArgs = [string, string, string, string, string, string];
 
 export interface IContractManagerCollectionDeployedEvent {
   addr: string;
@@ -25,35 +25,35 @@ export interface IContractManagerVestingDeployedEvent {
   args: IVestingDeployedEventArgs;
 }
 
-export type IMysteryTokenDeployedEventArgs = [string, string, string, string, Array<string>];
+export type IMysteryTokenDeployedEventArgs = [string, string, string, string, string];
 
 export interface IContractManagerMysteryTokenDeployedEvent {
   addr: string;
   args: IMysteryTokenDeployedEventArgs;
 }
 
-export type IERC20TokenDeployedEventArgs = [string, string, string, Array<string>];
+export type IERC20TokenDeployedEventArgs = [string, string, string, string];
 
 export interface IContractManagerERC20TokenDeployedEvent {
   addr: string;
   args: IERC20TokenDeployedEventArgs;
 }
 
-export type IERC721TokenDeployedEventArgs = [string, string, string, string, Array<string>];
+export type IERC721TokenDeployedEventArgs = [string, string, string, string, string];
 
 export interface IContractManagerERC721TokenDeployedEvent {
   addr: string;
   args: IERC721TokenDeployedEventArgs;
 }
 
-export type IERC998TokenDeployedEventArgs = [string, string, string, string, Array<string>];
+export type IERC998TokenDeployedEventArgs = [string, string, string, string, string];
 
 export interface IContractManagerERC998TokenDeployedEvent {
   addr: string;
   args: IERC998TokenDeployedEventArgs;
 }
 
-export type IERC1155TokenDeployedEventArgs = [string, Array<string>];
+export type IERC1155TokenDeployedEventArgs = [string, string];
 
 export interface IContractManagerERC1155TokenDeployedEvent {
   addr: string;

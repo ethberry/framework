@@ -10,7 +10,7 @@ import "./AbstractFactory.sol";
 
 contract ERC1155Factory is AbstractFactory {
   bytes private constant ERC1155_ARGUMENTS_SIGNATURE =
-    "Erc1155Args(uint96 royalty,string baseTokenURI,uint8[] featureIds)";
+    "Erc1155Args(uint96 royalty,string baseTokenURI,string contractTemplate)";
   bytes32 private constant ERC1155_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC1155_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
@@ -21,7 +21,7 @@ contract ERC1155Factory is AbstractFactory {
   struct Erc1155Args {
     uint96 royalty;
     string baseTokenURI;
-    uint8[] featureIds;
+    string contractTemplate;
   }
 
   event ERC1155TokenDeployed(address addr, Erc1155Args args);
@@ -63,7 +63,7 @@ contract ERC1155Factory is AbstractFactory {
           ERC1155_ARGUMENTS_TYPEHASH,
           args.royalty,
           keccak256(abi.encodePacked(args.baseTokenURI)),
-          keccak256(abi.encodePacked(args.featureIds))
+          keccak256(abi.encodePacked(args.contractTemplate))
         )
       );
   }

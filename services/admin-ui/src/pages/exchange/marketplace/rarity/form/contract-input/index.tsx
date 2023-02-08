@@ -15,7 +15,7 @@ export const ContractInput: FC = () => {
       data={{
         contractType: [tokenType],
         contractStatus: [ContractStatus.ACTIVE],
-        contractFeatures: [ContractFeatures.UPGRADEABLE],
+        contractFeatures: [ContractFeatures.RANDOM],
       }}
     />
   );

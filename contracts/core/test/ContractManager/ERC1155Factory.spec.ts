@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
-import { featureIds, tokenId } from "../constants";
+import { contractTemplate, tokenId } from "../constants";
 
 import { deployContractManager } from "./fixture";
 
@@ -40,7 +40,7 @@ describe("ERC1155Factory", function () {
           Erc1155Args: [
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
-            { name: "featureIds", type: "uint8[]" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -52,7 +52,7 @@ describe("ERC1155Factory", function () {
           args: {
             royalty,
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         },
       );
@@ -65,7 +65,7 @@ describe("ERC1155Factory", function () {
         {
           royalty,
           baseTokenURI,
-          featureIds,
+          contractTemplate,
         },
         signature,
       );
@@ -74,7 +74,7 @@ describe("ERC1155Factory", function () {
 
       // await expect(tx)
       //   .to.emit(contractInstance, "ERC1155TokenDeployed")
-      //   .withArgs(address, royalty, baseTokenURI, featureIds);
+      //   .withArgs(address, royalty, baseTokenURI, template);
 
       await expect(tx)
         .to.emit(contractInstance, "ERC1155TokenDeployed")
@@ -83,7 +83,7 @@ describe("ERC1155Factory", function () {
           args: {
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            featureIds,
+            contractTemplate,
           },
         });
 

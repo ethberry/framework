@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc721ContractFeatures, IErc721ContractDeployDto } from "@framework/types";
+import { Erc721ContractTemplates, IErc721ContractDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
@@ -20,8 +20,6 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721ContractDeployDto, web3Context, sign) => {
-      const { contractFeatures, name, symbol, royalty, baseTokenURI } = values;
-
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -34,13 +32,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
           nonce,
           bytecode: sign.bytecode,
         },
-        {
-          name,
-          symbol,
-          royalty,
-          baseTokenURI,
-          featureIds: contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
-        },
+        values,
         sign.signature,
       ) as Promise<void>;
     },
@@ -73,7 +65,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          contractFeatures: [],
+          contractTemplate: Erc721ContractTemplates.SIMPLE,
           name: "",
           symbol: "",
           baseTokenURI: `${process.env.JSON_URL}/metadata`,
