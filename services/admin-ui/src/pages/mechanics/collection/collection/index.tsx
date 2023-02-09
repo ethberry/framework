@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import {
   ContractFeatures,
   ContractStatus,
-  Erc721ContractFeatures,
+  Erc721CollectionFeatures,
   IContract,
   IContractSearchDto,
 } from "@framework/types";
@@ -86,7 +86,7 @@ export const Collection: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={Erc721ContractFeatures}
+        contractFeaturesOptions={Erc721CollectionFeatures}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -94,11 +94,7 @@ export const Collection: FC = () => {
           {rows.map((contract, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemText>
-                {contract.description && JSON.parse(contract.description).batchSize
-                  ? `Batch size: ${JSON.parse(contract.description).batchSize}`
-                  : ""}
-              </ListItemText>
+              <ListItemText>{JSON.parse(contract.parameters).batchSize}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

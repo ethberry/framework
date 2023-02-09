@@ -36,6 +36,7 @@
     "@gemunion/mui-inputs-picker": "5.2.55",
     "@gemunion/mui-page-layout": "2.1.0",
     "@gemunion/mui-rte": "3.0.1",
+    "@gemunion/mui-scanner": "1.0.1",
     "@gemunion/popup": "1.0.8",
     "@gemunion/provider-api-firebase": "2.0.8",
     "@gemunion/provider-coingecko": "2.0.21",

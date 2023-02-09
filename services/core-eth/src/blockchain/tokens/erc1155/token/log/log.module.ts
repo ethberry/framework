@@ -20,6 +20,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const erc1155Contracts = await contractService.findAllTokensByType(TokenType.ERC1155);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.ERC1155_TOKEN,
@@ -37,7 +38,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: erc1155Contracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: erc1155Contracts.fromBlock || startingBlock,
             debug: true,
           },
         };

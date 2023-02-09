@@ -27,6 +27,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const pyramidContracts = await contractService.findAllByType(ModuleType.PYRAMID);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.PYRAMID,
@@ -61,7 +62,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             ],
           },
           block: {
-            fromBlock: pyramidContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: pyramidContracts.fromBlock || startingBlock,
             debug: true,
           },
         };

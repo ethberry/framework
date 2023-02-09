@@ -6,7 +6,7 @@ import { blockAwait } from "@gemunion/contracts-utils";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { cap, featureIds } from "../../constants";
+import { cap, contractTemplate } from "../../constants";
 import { ContractManager, ERC20Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc20(
@@ -40,7 +40,7 @@ export async function factoryDeployErc20(
         { name: "name", type: "string" },
         { name: "symbol", type: "string" },
         { name: "cap", type: "uint256" },
-        { name: "featureIds", type: "uint8[]" },
+        { name: "contractTemplate", type: "string" },
       ],
     },
     // Values
@@ -53,7 +53,7 @@ export async function factoryDeployErc20(
         name: tokenName,
         symbol: tokenSymbol,
         cap,
-        featureIds,
+        contractTemplate,
       },
     },
   );
@@ -67,7 +67,7 @@ export async function factoryDeployErc20(
       name: tokenName,
       symbol: tokenSymbol,
       cap,
-      featureIds,
+      contractTemplate,
     },
     signature,
   );
@@ -86,7 +86,7 @@ export async function factoryDeployErc20(
         name: tokenName,
         symbol: tokenSymbol,
         cap,
-        featureIds,
+        contractTemplate,
       },
     });
 

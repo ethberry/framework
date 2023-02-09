@@ -7,7 +7,6 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {
   ILotteryPrizeEvent,
-  ILotteryRandomRequestEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
   IRoundFinalizedEvent,
@@ -19,7 +18,7 @@ import {
 import { LotteryHistoryService } from "../history/history.service";
 import { LotteryRoundService } from "./round.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { callRandom, getLotteryNumbers } from "../../../../common/utils";
+import { getLotteryNumbers } from "../../../../common/utils";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -106,18 +105,5 @@ export class LotteryRoundServiceEth {
     });
 
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
-  }
-
-  public async randomRequest(event: ILogEvent<ILotteryRandomRequestEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-    // DEV ONLY
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    // if (nodeEnv === "development") {    }
-    const {
-      args: { requestId },
-    } = event;
-    const { address } = context;
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 }

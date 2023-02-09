@@ -41,8 +41,6 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
-              // DEV ONLY
-              ContractEventType.RandomRequest
             ],
           },
           block: {

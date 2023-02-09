@@ -1,18 +1,15 @@
 import { Logger, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
 import { VestingServiceEth } from "./vesting.service.eth";
-import { VestingEntity } from "./vesting.entity";
 import { VestingControllerEth } from "./vesting.controller.eth";
-import { VestingHistoryModule } from "./history/vesting-history.module";
-import { VestingService } from "./vesting.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { ContractHistoryModule } from "../../hierarchy/contract/history/history.module";
 
 @Module({
-  imports: [ConfigModule, VestingHistoryModule, TypeOrmModule.forFeature([VestingEntity]), ContractModule],
-  providers: [Logger, VestingService, VestingServiceEth],
+  imports: [ConfigModule, ContractHistoryModule, ContractModule],
+  providers: [Logger, VestingServiceEth],
   controllers: [VestingControllerEth],
-  exports: [VestingService, VestingServiceEth],
+  exports: [VestingServiceEth],
 })
 export class VestingModule {}

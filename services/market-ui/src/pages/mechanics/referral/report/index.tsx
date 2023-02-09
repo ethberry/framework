@@ -6,13 +6,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import { AddressLink } from "@gemunion/mui-scanner";
+import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
 import { ReferralReportSearchForm } from "./form";
-import { AddressLink } from "../../../../components/common/address-link";
 
 export const ReferralReport: FC = () => {
   const {

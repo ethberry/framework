@@ -23,6 +23,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const vestingContracts = await contractService.findAllByType(ModuleType.VESTING);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.VESTING,
@@ -30,6 +31,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
             contractInterface: VestingAbi,
             // prettier-ignore
             eventNames: [
+              VestingEventType.OwnershipTransferred,
               VestingEventType.ERC20Released,
               VestingEventType.EtherReleased,
               VestingEventType.EtherReceived,
@@ -38,7 +40,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
             ],
           },
           block: {
-            fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: vestingContracts.fromBlock || startingBlock,
             debug: true,
           },
         };

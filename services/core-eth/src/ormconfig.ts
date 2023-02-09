@@ -3,7 +3,6 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/history/history.entity";
 import { ContractHistoryEntity } from "./blockchain/hierarchy/contract/history/history.entity";
-import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
@@ -35,7 +34,6 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
-import { VestingHistoryEntity } from "./blockchain/mechanics/vesting/history/vesting-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -47,8 +45,6 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     AccessControlHistoryEntity,
     ContractHistoryEntity,
-    VestingEntity,
-    VestingHistoryEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     StakingHistoryEntity,

@@ -6,10 +6,10 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractType,
-  IOwnershipTransferredEvent,
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
+  IOwnershipTransferredEvent,
   VestingEventType,
 } from "@framework/types";
 

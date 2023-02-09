@@ -2,13 +2,13 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { ContractFeatures } from "@framework/types";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";
 import { ChainLinkLogService } from "./log.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { keccak256It, abiEncode } from "../utils";
-import { ContractFeatures } from "@framework/types";
+import { abiEncode, keccak256It } from "../utils";
 
 @Module({
   imports: [

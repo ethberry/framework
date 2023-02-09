@@ -2,6 +2,7 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IContract } from "./hierarchy/contract";
 import { IToken } from "./hierarchy/token";
+import { TVestingEventData } from "./mechanics/vesting/history";
 
 export enum ContractEventType {
   Approval = "Approval",
@@ -31,6 +32,10 @@ export enum ContractEventType {
   Unpaused = "Unpaused",
   WhitelistedChild = "WhitelistedChild",
   ConsecutiveTransfer = "ConsecutiveTransfer",
+  // MODULE:VESTING
+  EtherReleased = "EtherReleased",
+  ERC20Released = "ERC20Released",
+  EtherReceived = "EtherReceived",
 }
 
 export interface IERC721ConsecutiveTransfer {
@@ -139,11 +144,6 @@ export interface IERC721TokenTransferEvent {
   tokenId: string;
 }
 
-// dev random test
-export interface IERC721RandomRequestEvent {
-  requestId: string;
-}
-
 export interface IERC721TokenMintRandomEvent {
   requestId: string;
   to: string;
@@ -228,7 +228,6 @@ export type TContractEventData =
   | IErc20TokenTransferEvent
   | IVrfRandomnessRequestEvent
   | IVrfRandomRequestEvent
-  | IERC721RandomRequestEvent
   | IERC721TokenApproveEvent
   | IERC721TokenApprovedForAllEvent
   | IERC721TokenMintRandomEvent
@@ -243,7 +242,8 @@ export type TContractEventData =
   | IErc998TokenWhitelistedChildEvent
   | IPausedEvent
   | IUnpackWrapper
-  | IERC721ConsecutiveTransfer;
+  | IERC721ConsecutiveTransfer
+  | TVestingEventData;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;

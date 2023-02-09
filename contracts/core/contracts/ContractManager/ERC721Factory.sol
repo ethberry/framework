@@ -10,7 +10,7 @@ import "./AbstractFactory.sol";
 
 contract ERC721Factory is AbstractFactory {
   bytes private constant ERC721_ARGUMENTS_SIGNATURE =
-    "Erc721Args(string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)";
+    "Erc721Args(string name,string symbol,uint96 royalty,string baseTokenURI,string contractTemplate)";
   bytes32 private constant ERC721_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC721_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable ERC721_PERMIT_SIGNATURE =
@@ -23,7 +23,7 @@ contract ERC721Factory is AbstractFactory {
     string symbol;
     uint96 royalty;
     string baseTokenURI;
-    uint8[] featureIds;
+    string contractTemplate;
   }
 
   event ERC721TokenDeployed(address addr, Erc721Args args);
@@ -68,7 +68,7 @@ contract ERC721Factory is AbstractFactory {
           keccak256(abi.encodePacked(args.symbol)),
           args.royalty,
           keccak256(abi.encodePacked(args.baseTokenURI)),
-          keccak256(abi.encodePacked(args.featureIds))
+          keccak256(abi.encodePacked(args.contractTemplate))
         )
       );
   }

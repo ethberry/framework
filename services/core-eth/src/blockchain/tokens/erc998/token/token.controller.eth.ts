@@ -4,7 +4,6 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type {
-  IERC721RandomRequestEvent,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
@@ -102,10 +101,5 @@ export class Erc998TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc998TokenServiceEth.unWhitelistChild(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.RandomRequest })
-  public randomRequest(@Payload() event: ILogEvent<IERC721RandomRequestEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.randomRequest(event, context);
   }
 }

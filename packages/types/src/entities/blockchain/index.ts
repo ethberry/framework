@@ -6,7 +6,6 @@ export * from "./common";
 export * from "./contract-history";
 export * from "./contract-manager";
 export * from "./contract-manager-history";
-export * from "./integrations/chain-link";
 
 export * from "./mechanics/asset";
 export * from "./mechanics/asset-component";
@@ -48,3 +47,5 @@ export * from "./hierarchy/token";
 export * from "./hierarchy/balance";
 export * from "./hierarchy/composition";
 export * from "./hierarchy/ownership";
+
+export * from "./integrations/chain-link";

@@ -3,43 +3,47 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IVestingSearchDto } from "@framework/types";
-
-import { VestingEntity } from "./vesting.entity";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ModuleType } from "@framework/types";
 
 @Injectable()
 export class VestingService {
   constructor(
-    @InjectRepository(VestingEntity)
-    private readonly vestingEntityRepository: Repository<VestingEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<VestingEntity>,
-    options?: FindOneOptions<VestingEntity>,
-  ): Promise<VestingEntity | null> {
-    return this.vestingEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
+    return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async search(dto: IVestingSearchDto): Promise<[Array<VestingEntity>, number]> {
+  public async search(dto: IVestingSearchDto): Promise<[Array<ContractEntity>, number]> {
     const { account, contractTemplate, skip, take } = dto;
 
-    const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");
 
     queryBuilder.select();
-    queryBuilder.leftJoinAndSelect("vesting.contract", "contract");
+    queryBuilder.andWhere("vesting.contractModule = :contractModule", {
+      contractModule: ModuleType.VESTING,
+    });
 
     if (contractTemplate) {
       if (contractTemplate.length === 1) {
-        queryBuilder.andWhere("vesting.contractTemplate = :contractTemplate", {
-          contractTemplate: contractTemplate[0],
+        queryBuilder.andWhere(":contractFeature = ANY(vesting.contractFeatures)", {
+          contractFeature: contractTemplate[0],
         });
       } else {
-        queryBuilder.andWhere("vesting.contractTemplate IN(:...contractTemplate)", { contractTemplate });
+        queryBuilder.andWhere("vesting.contractFeatures && :contractFeatures", { contractTemplate });
       }
     }
 
     if (account) {
-      queryBuilder.andWhere("vesting.account = :account", { account });
+      queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
+        account,
+      });
     }
 
     queryBuilder.skip(skip);

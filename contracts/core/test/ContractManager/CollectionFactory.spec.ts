@@ -1,18 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
   nonce,
   royalty,
+  tokenInitialAmount,
   tokenName,
   tokenSymbol,
-  tokenInitialAmount,
 } from "@gemunion/contracts-constants";
 
-import { featureIds, templateId, tokenId } from "../constants";
+import { contractTemplate, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("CollectionFactory", function () {
@@ -49,8 +49,8 @@ describe("CollectionFactory", function () {
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
-            { name: "featureIds", type: "uint8[]" },
             { name: "batchSize", type: "uint96" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -64,8 +64,8 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty,
             baseTokenURI,
-            featureIds,
             batchSize: tokenInitialAmount,
+            contractTemplate,
           },
         },
       );
@@ -80,7 +80,7 @@ describe("CollectionFactory", function () {
           symbol: tokenSymbol,
           royalty,
           baseTokenURI,
-          featureIds,
+          contractTemplate,
           batchSize: tokenInitialAmount,
         },
         signature,
@@ -97,8 +97,8 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            featureIds,
             batchSize: BigNumber.from(tokenInitialAmount),
+            contractTemplate,
           },
           owner: owner.address,
         });

@@ -5,7 +5,6 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type {
   IERC721ConsecutiveTransfer,
-  IERC721RandomRequestEvent,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
@@ -24,13 +23,13 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
 
-  // @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.ConsecutiveTransfer })
-  // public consecutiveTransfer(
-  //   @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
-  //   @Ctx() context: Log,
-  // ): Promise<void> {
-  //   return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
-  // }
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.ConsecutiveTransfer })
+  public consecutiveTransfer(
+    @Payload() event: ILogEvent<IERC721ConsecutiveTransfer>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc721TokenServiceEth.consecutiveTransfer(event, context);
+  }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
@@ -48,10 +47,5 @@ export class Erc721TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.MintRandom })
   public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.mintRandom(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.RandomRequest })
-  public randomRequest(@Payload() event: ILogEvent<IERC721RandomRequestEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.randomRequest(event, context);
   }
 }

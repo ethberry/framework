@@ -7,7 +7,7 @@ import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
-describe("ERC998Full", function () {
+describe("ERC998UpgradeableRandomBlacklist", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);

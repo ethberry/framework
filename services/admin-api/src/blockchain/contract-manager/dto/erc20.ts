@@ -1,20 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsString, MaxLength } from "class-validator";
+import { IsEnum, IsString, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import type { IErc20TokenDeployDto } from "@framework/types";
-import { Erc20ContractFeatures } from "@framework/types";
+import { Erc20ContractTemplates } from "@framework/types";
 
 export class Erc20ContractDeployDto implements IErc20TokenDeployDto {
   @ApiProperty({
-    enum: Erc20ContractFeatures,
-    isArray: true,
+    enum: Erc20ContractTemplates,
   })
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<Erc20ContractFeatures>)
-  @IsEnum(Erc20ContractFeatures, { each: true, message: "badInput" })
-  public contractFeatures: Array<Erc20ContractFeatures>;
+  @Transform(({ value }) => value as Erc20ContractTemplates)
+  @IsEnum(Erc20ContractTemplates, { message: "badInput" })
+  public contractTemplate: Erc20ContractTemplates;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

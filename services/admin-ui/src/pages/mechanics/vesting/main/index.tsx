@@ -15,13 +15,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IVesting, IVestingSearchDto } from "@framework/types";
+import { AddressLink } from "@gemunion/mui-scanner";
+import { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/vesting";
-import { emptyContract } from "../../../../components/common/interfaces";
+import { emptyVestingContract } from "../../../../components/common/interfaces";
 
 export const Vesting: FC = () => {
   const {
@@ -38,18 +39,13 @@ export const Vesting: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<IVesting, IVestingSearchDto>({
+  } = useCollection<IContract, IVestingSearchDto>({
     baseUrl: "/vesting",
     search: {
       account: "",
       contractTemplate: [],
     },
-    empty: {
-      account: "",
-      duration: 0,
-      startTimestamp: new Date().toISOString(),
-      contract: emptyContract,
-    },
+    empty: emptyVestingContract,
   });
 
   const { formatMessage } = useIntl();
@@ -71,8 +67,10 @@ export const Vesting: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractTemplate}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                <AddressLink address={JSON.parse(vesting.parameters).account} />
+              </ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },
