@@ -8,6 +8,7 @@ import {
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
+  IVestingOwnershipTransferreddEvent,
   VestingEventType,
 } from "@framework/types";
 
@@ -16,6 +17,14 @@ import { VestingServiceEth } from "./vesting.service.eth";
 @Controller()
 export class VestingControllerEth {
   constructor(private readonly vestingServiceEth: VestingServiceEth) {}
+
+  @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.OwnershipTransferred })
+  public ownerChange(
+    @Payload() event: ILogEvent<IVestingOwnershipTransferreddEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.vestingServiceEth.ownerChange(event, context);
+  }
 
   @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.ERC20Released })
   public erc20Released(@Payload() event: ILogEvent<IVestingERC20ReleasedEvent>, @Ctx() context: Log): Promise<void> {

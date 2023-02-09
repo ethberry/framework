@@ -20,11 +20,10 @@ import {
   TContractManagerEventData,
   TemplateStatus,
   TokenType,
-  VestingContractTemplate,
+  // VestingContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";
-import { VestingService } from "../mechanics/vesting/vesting.service";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
 import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
@@ -51,7 +50,6 @@ export class ContractManagerServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
-    private readonly vestingService: VestingService,
     private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
@@ -341,24 +339,29 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    const contractEntity = await this.contractService.create({
+    await this.contractService.create({
       address: addr.toLowerCase(),
       title: contractTemplate,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: [],
+      parameters: JSON.stringify({
+        account: account.toLowerCase(),
+        startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+        duration: ~~duration * 1000,
+      }),
+      contractFeatures: [contractTemplate as ContractFeatures],
       contractModule: ModuleType.VESTING,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    await this.vestingService.create({
-      account: account.toLowerCase(),
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-      duration: ~~duration * 1000, // msec
-      contractTemplate: contractTemplate as VestingContractTemplate,
-      contractId: contractEntity.id,
-    });
+    // await this.vestingService.create({
+    //   account: account.toLowerCase(),
+    //   startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+    //   duration: ~~duration * 1000, // msec
+    //   contractTemplate: contractTemplate as VestingContractTemplate,
+    //   contractId: contractEntity.id,
+    // });
 
     this.vestingLogService.addListener({
       address: [addr.toLowerCase()],

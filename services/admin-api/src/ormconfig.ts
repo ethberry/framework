@@ -34,7 +34,6 @@ import { PageEntity } from "./ecommerce/page/page.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
-import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
@@ -120,10 +119,6 @@ import { CreateContractManagerHistory1563804040110 } from "./migrations/15638040
 import { CreateExchangeHistory1563804040200 } from "./migrations/1563804040200-create-exchange-history";
 import { SeedExchangeHistory1563804040230 } from "./migrations/1563804040230-seed-exchange-history-erc721";
 import { SeedExchangeHistory1563804040240 } from "./migrations/1563804040240-seed-exchange-history-erc998";
-
-import { CreateVesting1653616433210 } from "./migrations/1653616433210-create-vesting";
-import { SeedVesting1653616433210 } from "./migrations/1653616433220-seed-vesting";
-import { CreateVestingHistory1563804010230 } from "./migrations/1653616433230-create-vesting-history";
 
 import { CreateClaim1653616447810 } from "./migrations/1653616447810-create-claim";
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
@@ -227,7 +222,6 @@ const config: PostgresConnectionOptions = {
     ContractManagerEntity,
     AccessControlEntity,
     AccessListEntity,
-    VestingEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     PageEntity,
@@ -352,10 +346,6 @@ const config: PostgresConnectionOptions = {
     CreateExchangeHistory1563804040200,
     SeedExchangeHistory1563804040230,
     SeedExchangeHistory1563804040240,
-
-    CreateVesting1653616433210,
-    SeedVesting1653616433210,
-    CreateVestingHistory1563804010230,
 
     CreateAccessControl1653616447230,
     CreateAccessControlHistory1653616447240,

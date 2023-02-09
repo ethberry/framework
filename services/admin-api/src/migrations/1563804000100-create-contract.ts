@@ -40,7 +40,10 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'PAUSABLE',
         'REFERRAL',
         'SPLITTER',
-        'ALLOWANCE'
+        'ALLOWANCE',
+        'LINEAR',
+        'GRADED',
+        'CLIFF'
       );
     `);
 
@@ -96,6 +99,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
           name: "base_token_uri",
           type: "varchar",
           default: "''",
+        },
+        {
+          name: "parameters",
+          type: "json",
+          default: "'{}'",
         },
         {
           name: "contract_status",

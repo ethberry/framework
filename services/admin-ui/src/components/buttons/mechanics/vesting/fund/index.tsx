@@ -7,14 +7,14 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IVesting, TokenType } from "@framework/types";
+import { IContract, TokenType } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
 export interface IVestingButtonProps {
-  vesting: IVesting;
+  vesting: IContract;
 }
 
 export const VestingFundButton: FC<IVestingButtonProps> = props => {
@@ -27,12 +27,12 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.NATIVE) {
       return web3Context.provider?.getSigner().sendTransaction({
-        to: vesting.contract!.address,
+        to: vesting.address,
         value: values.amount,
       }) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC20) {
       const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contract.transfer(vesting.contract!.address, values.amount) as Promise<any>;
+      return contract.transfer(vesting.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

@@ -169,6 +169,10 @@ export enum ContractFeatures {
   "GENES" = "GENES",
   "PAUSABLE" = "PAUSABLE",
   "ALLOWANCE" = "ALLOWANCE",
+  // MODULE:VESTING
+  "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
+  "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
+  "CLIFF" = "CLIFF", // 0 -> 100
 }
 
 export interface IContract extends IDeployable, ISearchable {
@@ -178,6 +182,7 @@ export interface IContract extends IDeployable, ISearchable {
   decimals: number;
   royalty: number;
   baseTokenURI: string;
+  parameters: any;
   isPaused: boolean;
   fromBlock: number;
   contractStatus: ContractStatus;

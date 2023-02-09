@@ -2,6 +2,7 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IContract } from "./hierarchy/contract";
 import { IToken } from "./hierarchy/token";
+import { TVestingEventData } from "./mechanics/vesting/history";
 
 export enum ContractEventType {
   Approval = "Approval",
@@ -31,6 +32,10 @@ export enum ContractEventType {
   Unpaused = "Unpaused",
   WhitelistedChild = "WhitelistedChild",
   ConsecutiveTransfer = "ConsecutiveTransfer",
+  // MODULE:VESTING
+  EtherReleased = "EtherReleased",
+  ERC20Released = "ERC20Released",
+  EtherReceived = "EtherReceived",
 }
 
 export interface IERC721ConsecutiveTransfer {
@@ -243,7 +248,8 @@ export type TContractEventData =
   | IErc998TokenWhitelistedChildEvent
   | IPausedEvent
   | IUnpackWrapper
-  | IERC721ConsecutiveTransfer;
+  | IERC721ConsecutiveTransfer
+  | TVestingEventData;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;
