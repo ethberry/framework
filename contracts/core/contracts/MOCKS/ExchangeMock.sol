@@ -8,8 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "../ExchangeUtils.sol";
-import "../interfaces/IAsset.sol";
+import "../Exchange/ExchangeUtils.sol";
 
 contract ExchangeMock is ExchangeUtils, AccessControl {
   function testSpendFrom(Asset[] memory price) external payable {
