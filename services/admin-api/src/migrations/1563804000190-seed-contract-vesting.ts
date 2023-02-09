@@ -79,8 +79,6 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${currentDateTime}'
       )
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1903, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

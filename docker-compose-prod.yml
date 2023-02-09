@@ -59,8 +59,8 @@ services:
       BESU_MINER_ENABLED: "true"
       BESU_MINER_COINBASE: fe3b557e8fb62b89f4916b721be55ceb828dbd73
     volumes:
-      - ${BASE_PATH}besu:/var/lib/besu
-      - ${BASE_PATH}gen-besu.json:/var/lib/besu/gen-besu.json
+      - ${BASE_PATH}/besu:/var/lib/besu
+      - ${BASE_PATH}/gen-besu.json:/var/lib/besu/gen-besu.json
     ports:
       - "8545:8545"
       - "8546:8546"

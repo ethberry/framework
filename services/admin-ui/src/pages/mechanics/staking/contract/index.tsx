@@ -21,7 +21,6 @@ import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures 
 import { StakingEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { StakingDeployButton } from "../../../../components/buttons/mechanics/staking/deploy";
 
 export const StakingContracts: FC = () => {
   const {
@@ -72,7 +71,6 @@ export const StakingContracts: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <StakingDeployButton />
       </PageHeader>
 
       <ContractSearchForm

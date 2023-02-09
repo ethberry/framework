@@ -60,21 +60,24 @@ export const MarketplaceReport: FC = () => {
       field: "title",
       headerName: formatMessage({ id: "form.labels.title" }),
       sortable: false,
-      flex: 1
+      flex: 1,
+      minWidth: 200
     },
     {
       field: "price",
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: true,
       valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatPrice({ id: 0, components: value }),
-      flex: 1
+      flex: 1,
+      minWidth: 100
     },
     {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
-      flex: 1
+      flex: 1,
+      minWidth: 160
     }
   ];
 

@@ -59,7 +59,7 @@ import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asse
 import { CreateContract1563804000100 } from "./migrations/1563804000100-create-contract";
 import { SeedContractManagerAt1563804000101 } from "./migrations/1563804000101-seed-contract-manager";
 import { SeedContractExchangeAt1563804000102 } from "./migrations/1563804000102-seed-contract-exchange";
-import { SeedContractLotteryAt1563804000103 } from "./migrations/1563804000103-seed-contract-lottery";
+import { SeedContractLotteryAt1660436476100 } from "./migrations/1660436476100-seed-contract-lottery";
 import { SeedContractNativeAt1563804000110 } from "./migrations/1563804000110-seed-contract-native";
 import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-contract-erc20";
 import { SeedContractErc20USDTAt1563804000121 } from "./migrations/1563804000121-seed-contract-erc20-usdt";
@@ -184,11 +184,11 @@ import { CreateReferralRewardAt1660103709900 } from "./migrations/1660103709900-
 import { SeedReferralRewardAt1660103709910 } from "./migrations/1660103709910-seed-referral-reward";
 import { CreateReferralHistoryAt1660103709950 } from "./migrations/1660103709950-create-referral-history";
 
-import { CreateLotteryRoundAt1660436477000 } from "./migrations/1660436477000-create-lottery-round";
-import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed-lottery-round";
-import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
-import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
-import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
+import { CreateLotteryRoundAt1660436476100 } from "./migrations/1660436476110-create-lottery-round";
+import { SeedLotteryRoundAt1660436476120 } from "./migrations/1660436476120-seed-lottery-round";
+import { CreateLotteryTicketAt1660436476130 } from "./migrations/1660436476130-create-lottery-tickets";
+import { SeedLotteryTicketsAt1660436476140 } from "./migrations/1660436476140-seed-lottery-tickets";
+import { CreateLotteryHistoryAt1660436476150 } from "./migrations/1660436476150-create-lottery-history";
 
 import { SeedContractPyramidAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
 import { CreatePyramidRules1660436477200 } from "./migrations/1660436477200-create-pyramid-rules";
@@ -214,6 +214,7 @@ import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-b
 
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
 import { SeedAssetComponentHistoryErc998At1657846609040 } from "./migrations/1657846609040-seed-asset-component-history-erc998";
+import { SeedContractChainLinkAt1563804000105 } from "./migrations/1563804000105-seed-contract-chainlink";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -290,7 +291,7 @@ const config: PostgresConnectionOptions = {
     CreateContract1563804000100,
     SeedContractManagerAt1563804000101,
     SeedContractExchangeAt1563804000102,
-    SeedContractLotteryAt1563804000103,
+    SeedContractLotteryAt1660436476100,
     SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc20USDTAt1563804000121,
@@ -416,11 +417,11 @@ const config: PostgresConnectionOptions = {
     SeedReferralRewardAt1660103709910,
     CreateReferralHistoryAt1660103709950,
 
-    CreateLotteryRoundAt1660436477000,
-    SeedLotteryRoundAt1660436477010,
-    CreateLotteryTicketAt1660436477020,
-    SeedLotteryTicketsAt1660436477030,
-    CreateLotteryHistoryAt1660436477040,
+    CreateLotteryRoundAt1660436476100,
+    SeedLotteryRoundAt1660436476120,
+    CreateLotteryTicketAt1660436476130,
+    SeedLotteryTicketsAt1660436476140,
+    CreateLotteryHistoryAt1660436476150,
 
     SeedContractPyramidAt1660436477100,
     CreatePyramidRules1660436477200,
@@ -443,6 +444,7 @@ const config: PostgresConnectionOptions = {
     SeedBreedHistory1663047650411,
 
     CreateWalletPayees1663047650510,
+    SeedContractChainLinkAt1563804000105,
   ],
 };
 

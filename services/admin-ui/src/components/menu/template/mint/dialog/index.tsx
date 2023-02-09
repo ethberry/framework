@@ -1,23 +1,15 @@
 import { FC } from "react";
 
-import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
 import { TokenType } from "@framework/types";
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { ITemplateAsset, TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
-import { ContractInput } from "./contract-input";
-import { TemplateInput } from "./template-input";
-import { AmountInput } from "./amount-input";
 
 export interface IMintTokenDto {
-  tokenType: TokenType;
-  address: string;
-  contractId: number;
-  templateId: number;
-  tokenId?: number;
-  amount: string;
   account: string;
-  decimals: number;
+  template: ITemplateAsset;
 }
 
 export interface IMintTokenDialogProps {
@@ -30,6 +22,9 @@ export interface IMintTokenDialogProps {
 export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const contractType = initialValues.template.components[0].tokenType;
+  const disabledOptions = Object.keys(TokenType).filter(tokenType => tokenType !== contractType) as TokenType[];
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -38,9 +33,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       testId="MintForm"
       {...rest}
     >
-      <ContractInput />
-      <TemplateInput />
-      <AmountInput />
+      <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
       <TextInput name="account" />
     </FormDialog>
   );

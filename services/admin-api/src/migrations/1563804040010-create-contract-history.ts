@@ -12,6 +12,8 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'MintRandom',
         'Paused',
         'RandomRequest',
+        'RandomnessRequest',
+        'RandomnessRequestId',
         'ReceivedChild',
         'RedeemClaim',
         'SetMaxChild',
