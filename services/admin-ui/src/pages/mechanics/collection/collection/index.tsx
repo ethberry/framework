@@ -15,7 +15,7 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-// import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   ContractFeatures,
   ContractStatus,
@@ -52,7 +52,7 @@ export const Collection: FC = () => {
     baseUrl: "/collections/contracts",
     empty: {
       title: "",
-      // description: emptyStateString,
+      description: emptyStateString,
       contractStatus: ContractStatus.NEW,
     },
     search: {
