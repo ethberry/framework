@@ -18,8 +18,6 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ReferralServiceEth {
-  private chainId: number;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -27,9 +25,7 @@ export class ReferralServiceEth {
     private readonly referralService: ReferralService,
     private readonly referralHistoryService: ReferralHistoryService,
     private readonly contractService: ContractService,
-  ) {
-    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
-  }
+  ) {}
 
   public async reward(event: ILogEvent<IReferralRewardEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
@@ -37,7 +33,9 @@ export class ReferralServiceEth {
     const { args } = event;
     const { token } = args;
 
-    const contractEntity = await this.contractService.findOne({ chainId: this.chainId, address: token });
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    const contractEntity = await this.contractService.findOne({ chainId, address: token });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");

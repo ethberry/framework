@@ -3,7 +3,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractEventType, ContractType, ModuleType, StakingEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractType,
+  ModuleType,
+  StakingEventType,
+} from "@framework/types";
 
 // system contract
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -36,8 +42,13 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               StakingEventType.StakingStart,
               StakingEventType.StakingWithdraw,
               StakingEventType.StakingFinish,
+              // MODULE:PAUSE
               ContractEventType.Paused,
               ContractEventType.Unpaused,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

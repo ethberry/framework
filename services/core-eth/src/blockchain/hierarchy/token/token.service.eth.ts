@@ -12,7 +12,7 @@ import {
 } from "@framework/types";
 
 import { TokenService } from "./token.service";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../contract/history/history.service";
 import { ContractService } from "../contract/contract.service";
 
 @Injectable()

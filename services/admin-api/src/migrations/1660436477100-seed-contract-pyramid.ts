@@ -38,7 +38,7 @@ export class SeedContractPyramidAt1660436477100 implements MigrationInterface {
         '',
         '',
         'ACTIVE',
-        '{REFERRAL}',
+        '{SPLITTER,REFERRAL}',
         'PYRAMID',
         '${fromBlock}',
         '${currentDateTime}',

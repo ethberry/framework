@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 

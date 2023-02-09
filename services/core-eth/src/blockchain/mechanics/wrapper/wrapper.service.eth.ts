@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 
 import { Log } from "@ethersproject/abstract-provider";
-import { providers, constants } from "ethers";
+import { constants, providers } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
@@ -10,7 +10,7 @@ import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
 import { IERC721TokenTransferEvent, IUnpackWrapper, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../hierarchy/contract/history/history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
 import { getMetadata } from "../../../common/utils";

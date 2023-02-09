@@ -11,7 +11,7 @@ import {
   TContractEventData,
 } from "@framework/types";
 
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

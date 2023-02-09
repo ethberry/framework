@@ -15,7 +15,7 @@ import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
-import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { ContractHistoryEntity } from "./blockchain/hierarchy/contract/history/history.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";

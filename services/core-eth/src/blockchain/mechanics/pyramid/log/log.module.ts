@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
+  AccessControlEventType,
   ContractEventType,
   ContractType,
   ModuleType,
@@ -45,14 +46,19 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralReward,
               ReferralProgramEventType.ReferralWithdraw,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
               PyramidEventType.ERC20PaymentReleased,
               PyramidEventType.PaymentEthReceived,
               PyramidEventType.PaymentEthSent,
               PyramidEventType.PayeeAdded,
               PyramidEventType.PaymentReleased,
               PyramidEventType.PaymentReceived,
+              // MODULE:PAUSE
+              ContractEventType.Paused,
+              ContractEventType.Unpaused,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

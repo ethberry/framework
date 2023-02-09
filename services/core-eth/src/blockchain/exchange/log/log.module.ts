@@ -3,7 +3,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractEventType, ContractType, ExchangeEventType, ReferralProgramEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractType,
+  ExchangeEventType,
+  ReferralProgramEventType,
+} from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { ExchangeLogService } from "./log.service";
@@ -14,7 +20,6 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
   imports: [
     ConfigModule,
     ContractModule,
-    // ContractManager
     EthersContractModule.forRootAsync(EthersContractModule, {
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
@@ -29,25 +34,32 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
             contractInterface: ExchangeSol.abi,
             // prettier-ignore
             eventNames: [
-              // MODULE:CORE
+              // MODULE:PAUSE
               ContractEventType.Paused,
               ContractEventType.Unpaused,
+              // MODULE:CORE
               ExchangeEventType.Purchase,
+              ExchangeEventType.PaymentEthReceived,
+              ExchangeEventType.PaymentEthSent,
               // MODULE:CLAIM
               ExchangeEventType.Claim,
               // MODULE:REFERRAL
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralWithdraw,
               ReferralProgramEventType.ReferralReward,
+              // MODULE:GRADE
+              ExchangeEventType.Upgrade,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
-              // MODULE:WALLET
+              // MODULE:PAYMENT_SPLITTER
               ExchangeEventType.PayeeAdded,
               ExchangeEventType.PaymentReceived,
-              ExchangeEventType.PaymentEthReceived,
-              ExchangeEventType.PaymentEthSent,
               ExchangeEventType.PaymentReleased,
               ExchangeEventType.ERC20PaymentReleased,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

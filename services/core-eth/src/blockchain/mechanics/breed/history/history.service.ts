@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { BreedHistoryEntity } from "./history.entity";
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { ContractEventType, IERC721TokenMintRandomEvent } from "@framework/types";
 
 @Injectable()

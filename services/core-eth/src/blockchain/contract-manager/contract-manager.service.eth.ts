@@ -42,7 +42,6 @@ import { StakingLogService } from "../mechanics/staking/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
-  private chainId: number;
   private imgUrl: string;
 
   constructor(
@@ -64,7 +63,6 @@ export class ContractManagerServiceEth {
     private readonly gradeService: GradeService,
     private readonly balanceService: BalanceService,
   ) {
-    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
     this.imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
   }
 
@@ -77,6 +75,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
@@ -87,7 +87,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC20,
-      chainId: this.chainId,
+      chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
@@ -121,6 +121,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
@@ -130,7 +132,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
-      chainId: this.chainId,
+      chainId,
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -166,6 +168,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
@@ -176,7 +180,7 @@ export class ContractManagerServiceEth {
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
-      chainId: this.chainId,
+      chainId,
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -236,6 +240,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
@@ -245,7 +251,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC998,
-      chainId: this.chainId,
+      chainId,
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -281,6 +287,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: "new 1155 contract",
@@ -289,7 +297,7 @@ export class ContractManagerServiceEth {
       baseTokenURI,
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC1155,
-      chainId: this.chainId,
+      chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
@@ -308,6 +316,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
@@ -318,7 +328,7 @@ export class ContractManagerServiceEth {
       contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
-      chainId: this.chainId,
+      chainId,
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -339,6 +349,8 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: contractTemplate,
@@ -351,17 +363,9 @@ export class ContractManagerServiceEth {
       }),
       contractFeatures: [contractTemplate as ContractFeatures],
       contractModule: ModuleType.VESTING,
-      chainId: this.chainId,
+      chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
-
-    // await this.vestingService.create({
-    //   account: account.toLowerCase(),
-    //   startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-    //   duration: ~~duration * 1000, // msec
-    //   contractTemplate: contractTemplate as VestingContractTemplate,
-    //   contractId: contractEntity.id,
-    // });
 
     this.vestingLogService.addListener({
       address: [addr.toLowerCase()],

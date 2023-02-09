@@ -7,13 +7,13 @@ import type {
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
-  IVestingOwnershipTransferreddEvent,
+  IOwnershipTransferredEvent,
   TVestingEventData,
 } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../hierarchy/contract/history/history.service";
 
 @Injectable()
 export class VestingServiceEth {
@@ -23,24 +23,6 @@ export class VestingServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {}
-
-  public async ownerChange(event: ILogEvent<IVestingOwnershipTransferreddEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-    const { args } = event;
-    const { previousOwner, newOwner } = args;
-    const { address } = context;
-
-    const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });
-    if (!vestingEntity) {
-      throw new NotFoundException("vestingNotFound");
-    }
-    const vestingParams = vestingEntity.parameters;
-    if (vestingParams.account && vestingParams.account === previousOwner.toLowerCase()) {
-      Object.assign(vestingParams, { account: newOwner.toLowerCase() });
-      Object.assign(vestingEntity, { parameters: vestingParams });
-      await vestingEntity.save();
-    }
-  }
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
@@ -52,6 +34,26 @@ export class VestingServiceEth {
 
   public async ethReceived(event: ILogEvent<IVestingEtherReceivedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
+  }
+
+  public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    const { args } = event;
+    const { previousOwner, newOwner } = args;
+    const { address } = context;
+
+    const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    if (!vestingEntity) {
+      throw new NotFoundException("vestingNotFound");
+    }
+
+    // TODO simplify
+    const vestingParams = vestingEntity.parameters;
+    if (vestingParams.account && vestingParams.account === previousOwner.toLowerCase()) {
+      Object.assign(vestingParams, { account: newOwner.toLowerCase() });
+      Object.assign(vestingEntity, { parameters: vestingParams });
+      await vestingEntity.save();
+    }
   }
 
   private async updateHistory(event: ILogEvent<TVestingEventData>, context: Log) {

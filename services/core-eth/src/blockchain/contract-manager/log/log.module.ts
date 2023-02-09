@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractManagerEventType, ContractType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType, ContractType } from "@framework/types";
 
 // system contract
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
@@ -22,7 +22,6 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
-
         const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
         return {
           contract: {
@@ -38,6 +37,10 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ContractManagerEventType.ERC1155TokenDeployed,
               ContractManagerEventType.MysteryboxDeployed,
               ContractManagerEventType.CollectionDeployed,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

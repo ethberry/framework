@@ -7,7 +7,7 @@ import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { ExchangeHistoryModule } from "../history/history.module";
-import { ContractHistoryModule } from "../../contract-history/contract-history.module";
+import { ContractHistoryModule } from "../../hierarchy/contract/history/history.module";
 
 @Module({
   imports: [
