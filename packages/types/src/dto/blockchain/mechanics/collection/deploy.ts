@@ -1,7 +1,7 @@
-import { Erc721CollectionFeatures } from "../../../../entities";
+import { Erc721CollectionTemplates } from "../../../../entities";
 
 export interface IErc721CollectionDeployDto {
-  contractFeatures: Array<Erc721CollectionFeatures>;
+  contractTemplate: Erc721CollectionTemplates;
   name: string;
   symbol: string;
   baseTokenURI: string;

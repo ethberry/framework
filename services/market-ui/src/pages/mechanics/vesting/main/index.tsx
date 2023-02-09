@@ -7,11 +7,12 @@ import { useIntl } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IContract, IVesting, IVestingSearchDto } from "@framework/types";
+import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingViewDialog } from "./view";
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { VestingReleaseButton } from "../../../../components/buttons";
+import { emptyVestingContract } from "../../../../components/common/interfaces/empty-contract";
 
 export const Vesting: FC = () => {
   const { account } = useWeb3React();
@@ -27,20 +28,12 @@ export const Vesting: FC = () => {
     handleViewConfirm,
     handleViewCancel,
     handleChangePage,
-  } = useCollection<IVesting, IVestingSearchDto>({
+  } = useCollection<IContract, IVestingSearchDto>({
     baseUrl: `/vesting`,
     search: {
       account,
     },
-    empty: {
-      account: "",
-      duration: 0,
-      startTimestamp: new Date().toISOString(),
-      contract: {
-        id: 1,
-        address: "",
-      } as IContract,
-    },
+    empty: emptyVestingContract,
   });
 
   const { formatMessage } = useIntl();
@@ -56,9 +49,9 @@ export const Vesting: FC = () => {
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>
-                <AddressLink address={vesting.account} />
-              </ListItemText>{" "}
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractTemplate}</ListItemText>
+                <AddressLink address={JSON.parse(vesting.parameters).account} />
+              </ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },

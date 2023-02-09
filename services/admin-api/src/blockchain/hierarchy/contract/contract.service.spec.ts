@@ -5,13 +5,13 @@ import { Logger } from "@nestjs/common";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import ormconfig from "../../../ormconfig";
 import { ContractService } from "./contract.service";
 import { ContractSeedService } from "./contract.seed.service";
 import { ContractSeedModule } from "./contract.seed.module";
 import { ContractEntity } from "./contract.entity";
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 describe("ContractService", () => {

@@ -13,7 +13,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 
 error MethodNotSupported();
 
-contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
+contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
   constructor(
     string memory name,
     string memory symbol,

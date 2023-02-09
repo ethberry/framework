@@ -9,28 +9,21 @@ import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
   ContractManagerEventType,
-  Erc1155ContractFeatures,
-  Erc20ContractFeatures,
-  Erc721ContractFeatures,
-  Erc998ContractFeatures,
+  IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
-  IContractManagerCollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
-  MysteryContractFeatures,
   TContractManagerEventData,
   TemplateStatus,
   TokenType,
-  VestingContractTemplate,
-  Erc721CollectionFeatures,
+  // VestingContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";
-import { VestingService } from "../mechanics/vesting/vesting.service";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
 import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
@@ -57,7 +50,6 @@ export class ContractManagerServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
-    private readonly vestingService: VestingService,
     private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
@@ -81,12 +73,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, cap, featureIds] = args;
+    const [name, symbol, cap, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc20ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -96,7 +85,7 @@ export class ContractManagerServiceEth {
       decimals: 18,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC20,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -128,12 +117,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
+    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc721ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -142,7 +128,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       chainId: this.chainId,
       royalty: ~~royalty,
@@ -150,11 +136,11 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    if (contractFeatures.includes(Erc721ContractFeatures.GENES)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
         description: emptyStateString,
@@ -176,12 +162,9 @@ export class ContractManagerServiceEth {
       args: { addr, args, owner },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds, batchSize] = args;
+    const [name, symbol, royalty, baseTokenURI, batchSize, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc721CollectionFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -190,7 +173,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: JSON.stringify({ batchSize, owner }),
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId: this.chainId,
@@ -249,12 +232,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, featureIds] = args;
+    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc998ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -263,7 +243,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC998,
       chainId: this.chainId,
       royalty: ~~royalty,
@@ -271,11 +251,11 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    if (contractFeatures.includes(Erc998ContractFeatures.GENES)) {
+    if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
         description: emptyStateString,
@@ -297,12 +277,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [baseTokenURI, featureIds] = args;
+    const [baseTokenURI, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(Erc1155ContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -310,7 +287,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC1155,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -327,12 +304,9 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, baseTokenURI, royalty, featureIds] = args;
+    const [name, symbol, baseTokenURI, royalty, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(MysteryContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -341,7 +315,7 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId: this.chainId,
@@ -361,28 +335,33 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [account, startTimestamp, duration, templateId] = args;
+    const [account, startTimestamp, duration, contractTemplate] = args;
 
     await this.updateHistory(event, ctx);
 
-    const contractEntity = await this.contractService.create({
+    await this.contractService.create({
       address: addr.toLowerCase(),
-      title: Object.values(VestingContractTemplate)[~~templateId].toString(),
+      title: contractTemplate,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: [],
+      parameters: JSON.stringify({
+        account: account.toLowerCase(),
+        startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+        duration: ~~duration * 1000,
+      }),
+      contractFeatures: [contractTemplate as ContractFeatures],
       contractModule: ModuleType.VESTING,
       chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    await this.vestingService.create({
-      account: account.toLowerCase(),
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-      duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
-      contractId: contractEntity.id,
-    });
+    // await this.vestingService.create({
+    //   account: account.toLowerCase(),
+    //   startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+    //   duration: ~~duration * 1000, // msec
+    //   contractTemplate: contractTemplate as VestingContractTemplate,
+    //   contractId: contractEntity.id,
+    // });
 
     this.vestingLogService.addListener({
       address: [addr.toLowerCase()],

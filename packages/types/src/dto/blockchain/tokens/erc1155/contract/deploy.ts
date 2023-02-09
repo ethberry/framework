@@ -1,7 +1,7 @@
-import { Erc1155ContractFeatures } from "../../../../../entities";
+import { Erc1155ContractTemplates } from "../../../../../entities";
 
 export interface IErc1155ContractDeployDto {
-  contractFeatures: Array<Erc1155ContractFeatures>;
+  contractTemplate: Erc1155ContractTemplates;
   baseTokenURI: string;
   royalty: number;
 }

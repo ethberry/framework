@@ -28,7 +28,11 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'UnpackClaim',
         'UnpackMysterybox',
         'Unpaused',
-        'WhitelistedChild'
+        'WhitelistedChild',
+        'EtherReleased',
+        'ERC20Released',
+        'EtherReceived',
+        'OwnershipTransferred'
       );
     `);
 

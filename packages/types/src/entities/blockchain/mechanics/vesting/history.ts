@@ -1,10 +1,16 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
+// import type { IIdDateBase } from "@gemunion/types-collection";
 
 export enum VestingEventType {
   EtherReleased = "EtherReleased",
   ERC20Released = "ERC20Released",
   EtherReceived = "EtherReceived",
+  OwnershipTransferred = "OwnershipTransferred",
   // TODO add ERC20Received event
+}
+
+export interface IVestingOwnershipTransferreddEvent {
+  previousOwner: string;
+  newOwner: string;
 }
 
 export interface IVestingEtherReleasedEvent {
@@ -21,11 +27,15 @@ export interface IVestingEtherReceivedEvent {
   amount: string;
 }
 
-export type TVestingEventData = IVestingEtherReleasedEvent | IVestingERC20ReleasedEvent | IVestingEtherReceivedEvent;
+export type TVestingEventData =
+  | IVestingEtherReleasedEvent
+  | IVestingERC20ReleasedEvent
+  | IVestingEtherReceivedEvent
+  | IVestingOwnershipTransferreddEvent;
 
-export interface IVestingHistory extends IIdDateBase {
-  address: string;
-  transactionHash: string;
-  eventType: VestingEventType;
-  eventData: TVestingEventData;
-}
+// export interface IVestingHistory extends IIdDateBase {
+//   address: string;
+//   transactionHash: string;
+//   eventType: VestingEventType;
+//   eventData: TVestingEventData;
+// }

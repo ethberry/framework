@@ -11,7 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
 import { ContractFeatures, GradeAttribute } from "@framework/types";
 
-import { TokenSellButton, TokenTransferButton, GradeButton } from "../../../../../components/buttons";
+import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";

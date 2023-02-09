@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -7,21 +7,40 @@ import type {
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
+  IVestingOwnershipTransferreddEvent,
   TVestingEventData,
 } from "@framework/types";
-import { VestingEventType } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 
-import { VestingHistoryService } from "./history/vesting-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractHistoryService } from "../../contract-history/contract-history.service";
 
 @Injectable()
 export class VestingServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly vestingHistoryService: VestingHistoryService,
+    private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {}
+
+  public async ownerChange(event: ILogEvent<IVestingOwnershipTransferreddEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    const { args } = event;
+    const { previousOwner, newOwner } = args;
+    const { address } = context;
+
+    const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    if (!vestingEntity) {
+      throw new NotFoundException("vestingNotFound");
+    }
+    const vestingParams = vestingEntity.parameters;
+    if (vestingParams.account && vestingParams.account === previousOwner.toLowerCase()) {
+      Object.assign(vestingParams, { account: newOwner.toLowerCase() });
+      Object.assign(vestingEntity, { parameters: vestingParams });
+      await vestingEntity.save();
+    }
+  }
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
@@ -41,10 +60,10 @@ export class VestingServiceEth {
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.vestingHistoryService.create({
+    await this.contractHistoryService.create({
       address,
       transactionHash,
-      eventType: name as VestingEventType,
+      eventType: name as ContractEventType,
       eventData: args,
     });
 

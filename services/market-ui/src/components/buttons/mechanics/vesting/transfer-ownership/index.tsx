@@ -4,7 +4,7 @@ import { Send } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { IVesting } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { useIntl } from "react-intl";
 
 import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
@@ -12,7 +12,7 @@ import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mecha
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
 interface IVestingSellButtonProps {
-  vesting: IVesting;
+  vesting: IContract;
 }
 
 export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props => {
@@ -23,7 +23,7 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.contract!.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
     return contract.transferOwnership(dto.account) as Promise<any>;
   });
 

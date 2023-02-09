@@ -14,7 +14,7 @@ import {
 } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { featureIds } from "../../constants";
+import { contractTemplate } from "../../constants";
 import { ContractManager, ERC721Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc721(
@@ -48,7 +48,7 @@ export async function factoryDeployErc721(
         { name: "symbol", type: "string" },
         { name: "royalty", type: "uint96" },
         { name: "baseTokenURI", type: "string" },
-        { name: "featureIds", type: "uint8[]" },
+        { name: "contractTemplate", type: "string" },
       ],
     },
     // Values
@@ -62,7 +62,7 @@ export async function factoryDeployErc721(
         symbol: tokenSymbol,
         royalty,
         baseTokenURI,
-        featureIds,
+        contractTemplate,
       },
     },
   );
@@ -77,7 +77,7 @@ export async function factoryDeployErc721(
       symbol: tokenSymbol,
       royalty,
       baseTokenURI,
-      featureIds,
+      contractTemplate,
     },
     signature,
   );
@@ -97,7 +97,7 @@ export async function factoryDeployErc721(
         symbol: tokenSymbol,
         royalty: BigNumber.from(royalty),
         baseTokenURI,
-        featureIds,
+        contractTemplate,
       },
     });
 

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { IContract, IMysteryContractDeployDto, MysteryContractFeatures } from "@framework/types";
+import { IContract, IMysteryContractDeployDto, MysteryContractTemplates } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -25,7 +25,7 @@ export const MysteryContractDeployDialog: FC<IMysteryContractDeployDialogProps> 
       testId="MysteryContractDeployForm"
       {...rest}
     >
-      <SelectInput name="contractFeatures" options={MysteryContractFeatures} multiple />
+      <SelectInput name="contractTemplate" options={MysteryContractTemplates} />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

@@ -6,20 +6,26 @@ import { format, formatDistance, formatDuration, intervalToDuration, parseISO } 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IVesting } from "@framework/types";
+import type { IContract } from "@framework/types";
+
+export interface IVestingParams {
+  account: string;
+  startTimestamp: string;
+  duration: number;
+}
 
 export interface IVestingViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IVesting;
+  initialValues: IContract;
 }
 
 export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { account, contract, duration, contractTemplate, startTimestamp } = initialValues;
-
+  const { address, parameters, contractFeatures } = initialValues;
+  const { account, duration, startTimestamp } = JSON.parse(parameters) as IVestingParams;
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
 
@@ -37,7 +43,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
               <TableCell align="right">
-                <AddressLink address={contract!.address} />
+                <AddressLink address={address} />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -80,7 +86,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.contractTemplate" />
               </TableCell>
-              <TableCell align="right">{contractTemplate}</TableCell>
+              <TableCell align="right">{contractFeatures}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -1,7 +1,7 @@
-import { Erc20ContractFeatures } from "../../../../../entities";
+import { Erc20ContractTemplates } from "../../../../../entities";
 
 export interface IErc20TokenDeployDto {
-  contractFeatures: Array<Erc20ContractFeatures>;
+  contractTemplate: Erc20ContractTemplates;
   name: string;
   symbol: string;
   cap: string;

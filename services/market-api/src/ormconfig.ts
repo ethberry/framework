@@ -3,7 +3,6 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { UserEntity } from "./ecommerce/user/user.entity";
 import { PageEntity } from "./ecommerce/page/page.entity";
-import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
@@ -37,7 +36,6 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    VestingEntity,
     ContractHistoryEntity,
     UserEntity,
     CraftEntity,

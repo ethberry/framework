@@ -1,19 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
+import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
 import type { IMysteryContractDeployDto } from "@framework/types";
-import { MysteryContractFeatures } from "@framework/types";
+import { MysteryContractTemplates } from "@framework/types";
 
 export class MysteryContractDeployDto implements IMysteryContractDeployDto {
   @ApiProperty({
-    enum: MysteryContractFeatures,
-    isArray: true,
+    enum: MysteryContractTemplates,
   })
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<MysteryContractFeatures>)
-  @IsEnum(MysteryContractFeatures, { each: true, message: "badInput" })
-  public contractFeatures: Array<MysteryContractFeatures>;
+  @Transform(({ value }) => value as MysteryContractTemplates)
+  @IsEnum(MysteryContractTemplates, { message: "badInput" })
+  public contractTemplate: MysteryContractTemplates;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

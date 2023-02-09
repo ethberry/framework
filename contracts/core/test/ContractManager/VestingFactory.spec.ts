@@ -5,7 +5,7 @@ import { time } from "@openzeppelin/test-helpers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
-import { span, templateId } from "../constants";
+import { contractTemplate, span } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("VestingFactory", function () {
@@ -43,7 +43,7 @@ describe("VestingFactory", function () {
             { name: "account", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "duration", type: "uint64" },
-            { name: "templateId", type: "uint256" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -56,7 +56,7 @@ describe("VestingFactory", function () {
             account: receiver.address,
             startTimestamp: timestamp,
             duration: span,
-            templateId,
+            contractTemplate,
           },
         },
       );
@@ -70,7 +70,7 @@ describe("VestingFactory", function () {
           account: receiver.address,
           startTimestamp: timestamp,
           duration: span,
-          templateId,
+          contractTemplate,
         },
         signature,
       );
@@ -89,7 +89,7 @@ describe("VestingFactory", function () {
             account: receiver.address,
             startTimestamp: BigNumber.from(timestamp),
             duration: BigNumber.from(span),
-            templateId: BigNumber.from(templateId),
+            contractTemplate,
           },
         });
     });

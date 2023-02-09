@@ -1,7 +1,7 @@
-import { MysteryContractFeatures } from "../../../../entities";
+import { MysteryContractTemplates } from "../../../../entities";
 
 export interface IMysteryContractDeployDto {
-  contractFeatures: Array<MysteryContractFeatures>;
+  contractTemplate: MysteryContractTemplates;
   name: string;
   symbol: string;
   baseTokenURI: string;

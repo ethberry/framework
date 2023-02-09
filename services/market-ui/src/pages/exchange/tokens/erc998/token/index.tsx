@@ -10,7 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton, TokenTransferButton, GradeButton } from "../../../../../components/buttons";
+import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { Erc998Composition } from "./composition";
 import { TokenAttributesView } from "../../genes";

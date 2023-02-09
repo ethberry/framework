@@ -34,4 +34,4 @@ export const params = {
   referrer: constants.AddressZero,
 };
 
-export const featureIds = [1, 3];
+export const contractTemplate = "SIMPLE";

@@ -10,8 +10,8 @@ export * from "./hierarchy/balance/autocomplete";
 export * from "./hierarchy/balance/search";
 export * from "./hierarchy/contract-history/search";
 
-export * from "./mechanics/asset/asset";
-export * from "./mechanics/asset/components";
+export * from "./exchange/asset/asset";
+export * from "./exchange/asset/components";
 export * from "./mechanics/claim/search";
 export * from "./mechanics/craft/search";
 export * from "./mechanics/lottery/search";
@@ -29,7 +29,6 @@ export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
 export * from "./mechanics/waitlist/search";
-export * from "./mechanics/pyramid/contract/deploy";
 export * from "./mechanics/pyramid/chart";
 export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/report";
