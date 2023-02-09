@@ -20,6 +20,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const mysteryContracts = await contractService.findAllByType(ModuleType.MYSTERY);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.MYSTERY,
@@ -41,7 +42,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: mysteryContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: mysteryContracts.fromBlock || startingBlock,
             debug: true,
           },
         };

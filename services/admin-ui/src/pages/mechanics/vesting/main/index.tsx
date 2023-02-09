@@ -15,6 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { AddressLink } from "@gemunion/mui-scanner";
 import { IVesting, IVestingSearchDto } from "@framework/types";
 
 import { VestingSearchForm } from "./form";
@@ -71,7 +72,9 @@ export const Vesting: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                <AddressLink address={vesting.account} />
+              </ListItemText>{" "}
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction
                 sx={{

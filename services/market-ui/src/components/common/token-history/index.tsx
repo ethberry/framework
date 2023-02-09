@@ -4,12 +4,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
 
+import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
 import { ExchangeType, IAsset, IBreed, IContractHistory, IToken } from "@framework/types";
 
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
-import { AddressLink } from "../address-link";
-import { TxHashLink } from "../tx-hash-link";
 
 import { useStyles } from "./styles";
 

@@ -48,3 +48,5 @@ export * from "./hierarchy/token";
 export * from "./hierarchy/balance";
 export * from "./hierarchy/composition";
 export * from "./hierarchy/ownership";
+
+export * from "./integrations/chain-link";

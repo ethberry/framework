@@ -3,9 +3,8 @@ import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow } fr
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { TxHashLink } from "@gemunion/mui-scanner";
 import type { IBreedHistory } from "@framework/types";
-
-import { TxHashLink } from "../../../../../components/common/tx-hash-link";
 
 export interface IBreedHistoryViewDialogProps {
   open: boolean;

@@ -5,9 +5,8 @@ import { format, formatDistance, formatDuration, intervalToDuration, parseISO } 
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { IVesting } from "@framework/types";
-
-import { AddressLink } from "../../../../../components/common/address-link";
 
 export interface IVestingViewDialogProps {
   open: boolean;

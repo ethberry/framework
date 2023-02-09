@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { utils, Wallet } from "ethers";
 
@@ -483,7 +483,7 @@ export class ContractManagerSignService {
       case VestingContractTemplate.CLIFF:
         return CliffVestingSol.bytecode;
       default:
-        throw new Error("Unknown template");
+        throw new NotFoundException("vestingTemplateNotFound");
     }
   }
 

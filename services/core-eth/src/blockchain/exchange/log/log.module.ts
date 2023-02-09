@@ -20,8 +20,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const exchangeAddr = configService.get<string>("EXCHANGE_ADDR", "");
-        const fromBlock =
-          (await contractService.getLastBlock(exchangeAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const fromBlock = (await contractService.getLastBlock(exchangeAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.EXCHANGE,
