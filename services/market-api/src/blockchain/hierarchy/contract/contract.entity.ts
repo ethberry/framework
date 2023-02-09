@@ -7,7 +7,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
 import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
-import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
+import { ContractHistoryEntity } from "./history/history.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {

@@ -9,16 +9,18 @@ import type {
   IVestingEtherReleasedEvent,
   TVestingEventData,
 } from "@framework/types";
-import { VestingEventType } from "@framework/types";
+import { IOwnershipTransferredEvent, VestingEventType } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { VestingService } from "./vesting.service";
 
 @Injectable()
 export class VestingServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly vestingService: VestingService,
     private readonly vestingHistoryService: VestingHistoryService,
     private readonly contractService: ContractService,
   ) {}
@@ -33,6 +35,21 @@ export class VestingServiceEth {
 
   public async ethReceived(event: ILogEvent<IVestingEtherReceivedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
+  }
+
+  public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
+    const {
+      args: { newOwner, previousOwner },
+    } = event;
+
+    await this.updateHistory(event, context);
+
+    await this.vestingService.update(
+      {
+        account: previousOwner.toLowerCase(),
+      },
+      { account: newOwner.toLowerCase() },
+    );
   }
 
   private async updateHistory(event: ILogEvent<TVestingEventData>, context: Log) {

@@ -40,7 +40,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '',
         'ACTIVE',
         null,
-        '{ALLOWANCE}',
+        '{ALLOWANCE,SPLITTER,REFERRAL}',
         'SYSTEM',
         '${fromBlock}',
         '${currentDateTime}',

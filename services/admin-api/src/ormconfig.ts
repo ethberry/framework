@@ -23,8 +23,8 @@ import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
-import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
-import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
+import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
+import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
@@ -43,7 +43,7 @@ import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.en
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
-import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { ContractHistoryEntity } from "./blockchain/hierarchy/contract/history/history.entity";
 import { PayeesEntity } from "./blockchain/exchange/wallet/payees.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";

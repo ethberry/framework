@@ -8,7 +8,8 @@ export class CreateAccessControlHistory1653616447240 implements MigrationInterfa
       CREATE TYPE ${ns}.access_control_event_enum AS ENUM (
         'RoleGranted',
         'RoleRevoked',
-        'RoleAdminChanged'
+        'RoleAdminChanged',
+        'OwnershipTransferred'
       );
     `);
 

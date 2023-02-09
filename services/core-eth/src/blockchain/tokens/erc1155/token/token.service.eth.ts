@@ -12,7 +12,7 @@ import {
   IErc1155TokenUriEvent,
 } from "@framework/types";
 
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

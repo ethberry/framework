@@ -22,7 +22,7 @@ import {
 
 import { ABI } from "../../erc721/token/log/interfaces";
 import { getMetadata } from "../../../../common/utils";
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";

@@ -5,8 +5,6 @@ import { VestingEntity } from "./vesting.entity";
 
 @Injectable()
 export class VestingService {
-  public chainId: number;
-
   constructor(
     @InjectRepository(VestingEntity)
     private readonly vestingEntityRepository: Repository<VestingEntity>,

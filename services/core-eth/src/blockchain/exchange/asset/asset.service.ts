@@ -8,7 +8,7 @@ import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../hierarchy/contract/history/history.service";
 import { ExchangeHistoryEntity } from "../history/history.entity";
 
 @Injectable()

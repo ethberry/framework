@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet, BigNumber } from "ethers";
+import { BigNumber, constants, providers, Wallet } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
@@ -17,7 +17,7 @@ import {
 
 import { ABI } from "./log/interfaces";
 import { callRandom, getMetadata } from "../../../../common/utils";
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";

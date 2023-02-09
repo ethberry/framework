@@ -19,8 +19,8 @@ import { LotteryTicketLogService } from "./log.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const lotteryTicketAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "");
-        const fromBlock =
-          (await contractService.getLastBlock(lotteryTicketAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const fromBlock = (await contractService.getLastBlock(lotteryTicketAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.LOTTERY,

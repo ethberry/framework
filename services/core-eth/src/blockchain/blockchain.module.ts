@@ -1,26 +1,20 @@
 import { Module } from "@nestjs/common";
 
 import { ContractManagerModuleEth } from "./contract-manager/contract-manager.module.eth";
-import { AccessControlModule } from "./access-control/access-control.module";
-import { ContractHistoryModule } from "./contract-history/contract-history.module";
-import { RoyaltyModule } from "./royalty/royalty.module";
+import { ContractHistoryModule } from "./hierarchy/contract/history/history.module";
 import { TokensModule } from "./tokens/tokens.module";
 import { MechanicsModule } from "./mechanics/mechanics.module";
-import { PauseModule } from "./pause/pause.module";
-import { WalletModule } from "./wallet/wallet.module";
 import { ExchangeModule } from "./exchange/exchange.module";
+import { ExtensionsModule } from "./extensions/extensions.module";
 
 @Module({
   imports: [
     ContractManagerModuleEth,
     ContractHistoryModule,
-    AccessControlModule,
-    PauseModule,
-    RoyaltyModule,
     TokensModule,
     MechanicsModule,
     ExchangeModule,
-    WalletModule,
+    ExtensionsModule,
   ],
 })
 export class BlockchainModule {}

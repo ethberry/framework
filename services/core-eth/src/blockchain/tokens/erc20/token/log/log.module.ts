@@ -36,8 +36,8 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.Transfer,
               AccessListEventType.Blacklisted,
               AccessListEventType.UnBlacklisted,
-              // AccessListEventType.Whitelisted,
-              // AccessListEventType.UnWhitelisted,
+              AccessListEventType.Whitelisted,
+              AccessListEventType.UnWhitelisted,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged

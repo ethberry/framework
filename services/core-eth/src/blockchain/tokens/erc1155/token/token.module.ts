@@ -7,9 +7,8 @@ import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { Erc1155TokenControllerEth } from "./token.controller.eth";
 import { Erc1155TokenServiceEth } from "./token.service.eth";
-import { ContractHistoryModule } from "../../../contract-history/contract-history.module";
+import { ContractHistoryModule } from "../../../hierarchy/contract/history/history.module";
 import { Erc1155TokenLogModule } from "./log/log.module";
-import { AccessControlModule } from "../../../access-control/access-control.module";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
@@ -27,7 +26,6 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
     TemplateModule,
     ContractModule,
     BalanceModule,
-    AccessControlModule,
     TypeOrmModule.forFeature([TemplateEntity]),
   ],
   providers: [Logger, ethersRpcProvider, Erc1155TokenServiceEth],
