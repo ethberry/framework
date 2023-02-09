@@ -26,45 +26,63 @@ contract ExchangeUtils {
 
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(Asset[] memory price, address account, address receiver) internal {
+  function spendFrom(Asset[] memory price, address account, address receiver) internal {
     uint256 length = price.length;
 
-    // TODO calculate what is most efficient to pre-calculate here
-    // TODO or calculate in next loop and validate at the end
     uint256 totalAmount;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length;) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
-      }
-    }
-
-    for (uint256 i = 0; i < length; i++) {
-      Asset memory ingredient = price[i];
-      if (ingredient.tokenType == TokenType.NATIVE) {
-        if (account == address(this)) {
-          if (totalAmount > 0) {
-            Address.sendValue(payable(receiver), totalAmount);
-            totalAmount = 0;
-            emit PaymentEthSent(receiver, totalAmount);
-          }
-        } else {
-          require(totalAmount == msg.value, "Exchange: Wrong amount");
-          emit PaymentEthReceived(receiver, msg.value);
-        }
       } else if (ingredient.tokenType == TokenType.ERC20) {
-        if (account == address(this)) {
-          SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
-        } else {
+        // if (account == address(this)) {
+        //   SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
+        // } else {
           SafeERC20.safeTransferFrom(IERC20(ingredient.token), account, receiver, ingredient.amount);
-        }
-      } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
+        // }
+      } else if (ingredient.tokenType == TokenType.ERC721) {
         IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
-      } else if (ingredient.tokenType == TokenType.ERC1155) {
+      }  else if (ingredient.tokenType == TokenType.ERC1155) {
         IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
       } else {
         revert("Exchange: unsupported token type");
       }
+
+      unchecked {
+        i++;
+      }
+    }
+
+    require(totalAmount == msg.value, "Exchange: Wrong amount");
+    emit PaymentEthReceived(receiver, msg.value);
+  }
+
+  function spend(Asset[] memory price, address account, address receiver) internal {
+    uint256 length = price.length;
+
+    uint256 totalAmount;
+    for (uint256 i = 0; i < length;) {
+      Asset memory ingredient = price[i];
+      if (ingredient.tokenType == TokenType.NATIVE) {
+        totalAmount = totalAmount + ingredient.amount;
+      } else if (ingredient.tokenType == TokenType.ERC20) {
+          SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
+      } else if (ingredient.tokenType == TokenType.ERC721) {
+        IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
+      }  else if (ingredient.tokenType == TokenType.ERC1155) {
+        IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
+      } else {
+        revert("Exchange: unsupported token type");
+      }
+
+      unchecked {
+        i++;
+      }
+    }
+
+    if (totalAmount > 0) {
+      Address.sendValue(payable(receiver), totalAmount);
+      emit PaymentEthSent(receiver, totalAmount);
     }
   }
 

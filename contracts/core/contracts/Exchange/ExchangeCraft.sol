@@ -27,7 +27,7 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
 
     address account = _msgSender();
 
-    spend(price, account, address(this));
+    spendFrom(price, account, address(this));
     acquire(items, account);
 
     emit Craft(account, params.externalId, items, price);
