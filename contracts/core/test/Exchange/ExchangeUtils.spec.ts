@@ -6,32 +6,34 @@ import { templateId } from "../constants";
 
 describe("ExchangeMock", function () {
   describe("spendFrom", function () {
-    it("should spendFrom ERC20 Blacklist", async function () {
+    it("should spendFrom ERC20", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const oneEth = ethers.constants.WeiPerEther;
 
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20Blacklist");
-      const erc20Instance = await erc20Factory.deploy("TEST", "TEST", ethers.constants.WeiPerEther.mul(amount));
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, oneEth.mul(amount));
 
-      await erc20Instance.mint(receiver.address, ethers.constants.WeiPerEther.mul("100"));
+      await erc20Instance.mint(receiver.address, oneEth.mul(amount));
 
-      await erc20Instance
-        .connect(receiver)
-        .approve(exchangeMockInstance.address, ethers.constants.WeiPerEther.mul(amount));
+      await erc20Instance.connect(receiver).approve(exchangeMockInstance.address, oneEth.mul(amount));
 
       const tx = await exchangeMockInstance.connect(receiver).testSpendFrom([
         {
           tokenType: 1,
           token: erc20Instance.address,
           tokenId: 0,
-          amount: ethers.constants.WeiPerEther,
+          amount: oneEth.mul(amount),
         },
       ]);
 
-      await expect(tx).changeTokenBalances(erc20Instance, [receiver, exchangeMockInstance], [oneEth.mul(-1), oneEth]);
+      await expect(tx).changeTokenBalances(
+        erc20Instance,
+        [receiver, exchangeMockInstance],
+        [oneEth.mul(amount).mul(-1), oneEth.mul(amount)],
+      );
     });
 
     it("should spendFrom ETH", async function () {
@@ -74,7 +76,7 @@ describe("ExchangeMock", function () {
           tokenType: 2,
           token: erc721Instance.address,
           tokenId: 1,
-          amount,
+          amount: 0,
         },
       ]);
 
@@ -126,7 +128,7 @@ describe("ExchangeMock", function () {
           tokenType: 3,
           token: erc998Instance.address,
           tokenId: 1,
-          amount,
+          amount: 0,
         },
       ]);
 
@@ -136,33 +138,34 @@ describe("ExchangeMock", function () {
   });
 
   describe("spend", function () {
-    it("should spend ERC20 Blacklist", async function () {
+    it("should spend ERC20", async function () {
       const [_owner, receiver] = await ethers.getSigners();
+      const oneEth = ethers.constants.WeiPerEther;
 
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20Blacklist");
-      const erc20Instance = await erc20Factory.deploy("TEST", "TEST", ethers.constants.WeiPerEther.mul(amount));
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, oneEth.mul(amount));
 
-      await erc20Instance.mint(exchangeMockInstance.address, ethers.constants.WeiPerEther.mul("100"));
+      await erc20Instance.mint(exchangeMockInstance.address, oneEth.mul(amount));
 
-      const oneEth = ethers.constants.WeiPerEther;
-
-      await erc20Instance
-        .connect(receiver)
-        .approve(exchangeMockInstance.address, ethers.constants.WeiPerEther.mul(amount));
+      await erc20Instance.connect(receiver).approve(exchangeMockInstance.address, oneEth.mul(amount));
 
       const tx = await exchangeMockInstance.connect(receiver).testSpend([
         {
           tokenType: 1,
           token: erc20Instance.address,
           tokenId: 0,
-          amount: ethers.constants.WeiPerEther,
+          amount: oneEth.mul(amount),
         },
       ]);
 
-      await expect(tx).changeTokenBalances(erc20Instance, [exchangeMockInstance, receiver], [oneEth.mul(-1), oneEth]);
+      await expect(tx).changeTokenBalances(
+        erc20Instance,
+        [exchangeMockInstance, receiver],
+        [oneEth.mul(amount).mul(-1), oneEth.mul(amount)],
+      );
     });
 
     it("should spend ETH", async function () {
@@ -202,7 +205,7 @@ describe("ExchangeMock", function () {
           tokenType: 2,
           token: erc721Instance.address,
           tokenId: 1,
-          amount,
+          amount: 0,
         },
       ]);
 
@@ -253,7 +256,7 @@ describe("ExchangeMock", function () {
           tokenType: 3,
           token: erc998Instance.address,
           tokenId: 1,
-          amount,
+          amount: 0,
         },
       ]);
 
