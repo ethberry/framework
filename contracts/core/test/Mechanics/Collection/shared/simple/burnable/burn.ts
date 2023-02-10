@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
-import { tokenInitialAmount } from "@gemunion/contracts-constants";
+import { batchSize } from "@gemunion/contracts-constants";
 
-import { tokenId } from "../../../../constants";
+import { tokenId } from "../../../../../constants";
 
 export function shouldBurn(factory: () => Promise<Contract>) {
   describe("burn", function () {
@@ -12,8 +12,8 @@ export function shouldBurn(factory: () => Promise<Contract>) {
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
-      const tx = contractInstance.connect(receiver).burn(tokenInitialAmount + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
+      const tx = contractInstance.connect(receiver).burn(batchSize + tokenId);
 
       await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner or approved`);
     });
@@ -22,32 +22,32 @@ export function shouldBurn(factory: () => Promise<Contract>) {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
-      const tx = await contractInstance.burn(tokenInitialAmount + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
+      const tx = await contractInstance.burn(batchSize + tokenId);
 
       await expect(tx)
         .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, constants.AddressZero, tokenInitialAmount + tokenId);
+        .withArgs(owner.address, constants.AddressZero, batchSize + tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
-      expect(balanceOfOwner).to.equal(tokenInitialAmount);
+      expect(balanceOfOwner).to.equal(batchSize);
     });
 
     it("should burn approved token", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
-      await contractInstance.approve(receiver.address, tokenInitialAmount + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
+      await contractInstance.approve(receiver.address, batchSize + tokenId);
 
-      const tx = await contractInstance.burn(tokenInitialAmount + tokenId);
+      const tx = await contractInstance.burn(batchSize + tokenId);
 
       await expect(tx)
         .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, constants.AddressZero, tokenInitialAmount + tokenId);
+        .withArgs(owner.address, constants.AddressZero, batchSize + tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
-      expect(balanceOfOwner).to.equal(tokenInitialAmount);
+      expect(balanceOfOwner).to.equal(batchSize);
     });
   });
 }

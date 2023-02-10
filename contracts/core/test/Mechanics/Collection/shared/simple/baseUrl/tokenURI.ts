@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { baseTokenURI, tokenInitialAmount } from "@gemunion/contracts-constants";
+import { baseTokenURI, batchSize } from "@gemunion/contracts-constants";
 
-import { tokenId } from "../../../../constants";
+import { tokenId } from "../../../../../constants";
 
 export function shouldTokenURI(factory: () => Promise<Contract>) {
   describe("tokenURI", function () {
@@ -12,9 +12,9 @@ export function shouldTokenURI(factory: () => Promise<Contract>) {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
-      const uri = await contractInstance.tokenURI(tokenInitialAmount + tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${contractInstance.address.toLowerCase()}/${tokenInitialAmount + tokenId}`);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
+      const uri = await contractInstance.tokenURI(batchSize + tokenId);
+      expect(uri).to.equal(`${baseTokenURI}/${contractInstance.address.toLowerCase()}/${batchSize + tokenId}`);
     });
 
     // setTokenURI is not supported
@@ -22,7 +22,7 @@ export function shouldTokenURI(factory: () => Promise<Contract>) {
     it("should fail: URI query for nonexistent token", async function () {
       const contractInstance = await factory();
 
-      const uri = contractInstance.tokenURI(tokenInitialAmount + tokenId);
+      const uri = contractInstance.tokenURI(batchSize + tokenId);
       await expect(uri).to.be.revertedWith("ERC721: invalid token ID");
     });
   });

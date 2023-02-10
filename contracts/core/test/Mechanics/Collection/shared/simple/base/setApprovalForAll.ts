@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
-import { tokenInitialAmount } from "@gemunion/contracts-constants";
+import { batchSize } from "@gemunion/contracts-constants";
 
-import { tokenId } from "../../../../constants";
+import { tokenId } from "../../../../../constants";
 
 export function shouldSetApprovalForAll(factory: () => Promise<Contract>) {
   describe("setApprovalForAll", function () {
@@ -12,16 +12,16 @@ export function shouldSetApprovalForAll(factory: () => Promise<Contract>) {
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId + 1);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId + 1);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
-      expect(balanceOfOwner).to.equal(tokenInitialAmount + 2);
+      expect(balanceOfOwner).to.equal(batchSize + 2);
 
       const tx1 = contractInstance.setApprovalForAll(receiver.address, true);
       await expect(tx1).to.not.be.reverted;
 
-      const approved1 = await contractInstance.getApproved(tokenInitialAmount + tokenId);
+      const approved1 = await contractInstance.getApproved(batchSize + tokenId);
       expect(approved1).to.equal(constants.AddressZero);
 
       const isApproved1 = await contractInstance.isApprovedForAll(owner.address, receiver.address);
@@ -30,7 +30,7 @@ export function shouldSetApprovalForAll(factory: () => Promise<Contract>) {
       const tx2 = contractInstance.setApprovalForAll(receiver.address, false);
       await expect(tx2).to.not.be.reverted;
 
-      const approved3 = await contractInstance.getApproved(tokenInitialAmount + tokenId);
+      const approved3 = await contractInstance.getApproved(batchSize + tokenId);
       expect(approved3).to.equal(constants.AddressZero);
 
       const isApproved2 = await contractInstance.isApprovedForAll(owner.address, receiver.address);

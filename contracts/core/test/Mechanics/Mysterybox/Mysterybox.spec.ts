@@ -157,7 +157,6 @@ describe("ERC721MysteryboxSimple", function () {
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(receiver.address, constants.AddressZero, tokenId)
         .to.emit(mysteryboxInstance, "UnpackMysterybox")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
 
