@@ -13,7 +13,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 
 error MethodNotSupported();
 
-contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
+contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
   constructor(
     string memory name,
     string memory symbol,
@@ -26,18 +26,18 @@ contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
   }
 
   function _mintConsecutive2(address owner, uint96 batchSize) internal override returns (uint96) {
-    return _mintConsecutive(owner, batchSize);
+    return super._mintConsecutive(owner, batchSize);
   }
 
-  function mintCommon(address, uint256) public pure {
+  function mintCommon(address to, uint256 tokenId) external virtual onlyRole(MINTER_ROLE) {
+    _safeMint(to, tokenId);
+  }
+
+  function mint(address, uint256) public pure override {
     revert MethodNotSupported();
   }
 
-  function mint(address) public pure {
-    revert MethodNotSupported();
-  }
-
-  function safeMint(address) public pure {
+  function safeMint(address, uint256) public pure override {
     revert MethodNotSupported();
   }
 
