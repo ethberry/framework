@@ -49,7 +49,7 @@ contract ERC721TokenWrapper is ERC721Simple, ExchangeUtils, ERC1155Holder, ERC72
     }
 
     address account = _msgSender();
-    spend(items, account, address(this));
+    spendFrom(items, account, address(this));
 
     _safeMint(to, tokenId);
   }

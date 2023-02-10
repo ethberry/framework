@@ -134,18 +134,18 @@ describe("Lottery", function () {
       }
 
       const tx = await lotteryInstance.endRound();
-      await expect(tx).to.emit(lotteryInstance, "RandomRequest");
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
+
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
       }
 
       if (network.name === "hardhat") {
         // RANDOM
-        await randomRequest(lotteryInstance, vrfInstance);
+        const tx1 = await randomRequest(lotteryInstance, vrfInstance);
+        await expect(tx1).to.emit(lotteryInstance, "RoundFinalized");
       }
-
-      const current: number = (await time.latest()).toNumber();
-      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
     });
 
     it("should fail: previous round is already finished", async function () {
@@ -193,22 +193,23 @@ describe("Lottery", function () {
       }
 
       const tx = await lotteryInstance.endRound();
-      await expect(tx).to.emit(lotteryInstance, "RandomRequest");
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
+
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
       }
 
       if (network.name === "hardhat") {
         // RANDOM
-        await randomRequest(lotteryInstance, vrfInstance);
+        const tx1 = await randomRequest(lotteryInstance, vrfInstance);
+        await expect(tx1).to.emit(lotteryInstance, "RoundFinalized");
+      } else {
+        const eventFilter = lotteryInstance.filters.RoundFinalized();
+        const events = await lotteryInstance.queryFilter(eventFilter);
+        expect(events.length).to.be.greaterThan(0);
+        expect(events[0].args?.round).to.equal(1);
       }
-
-      const current: number = (await time.latest()).toNumber();
-      await expect(tx).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
-      const eventFilter = lotteryInstance.filters.RoundFinalized();
-      const events = await lotteryInstance.queryFilter(eventFilter);
-      expect(events.length).to.be.greaterThan(0);
-      expect(events[0].args?.round).to.equal(1);
     });
   });
 
@@ -493,7 +494,7 @@ describe("Lottery", function () {
 
       await lotteryInstance.startRound();
       const tx0 = await lotteryInstance.endRound();
-      await expect(tx0).to.emit(lotteryInstance, "RandomRequest");
+
       const current: number = (await time.latest()).toNumber();
       await expect(tx0).to.emit(lotteryInstance, "RoundEnded").withArgs(1, current);
 

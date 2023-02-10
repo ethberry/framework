@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
-import { tokenInitialAmount } from "@gemunion/contracts-constants";
+import { batchSize } from "@gemunion/contracts-constants";
 
-import { tokenId } from "../../../../constants";
+import { tokenId } from "../../../../../constants";
 
 export function shouldGetBalanceOf(factory: () => Promise<Contract>) {
   describe("balanceOf", function () {
@@ -19,16 +19,16 @@ export function shouldGetBalanceOf(factory: () => Promise<Contract>) {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
       const balance = await contractInstance.balanceOf(owner.address);
-      expect(balance).to.equal(tokenInitialAmount + 1);
+      expect(balance).to.equal(batchSize + 1);
     });
 
     it("should get balance of not owner", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, tokenInitialAmount + tokenId);
+      await contractInstance.mintCommon(owner.address, batchSize + tokenId);
       const balance = await contractInstance.balanceOf(receiver.address);
       expect(balance).to.equal(0);
     });

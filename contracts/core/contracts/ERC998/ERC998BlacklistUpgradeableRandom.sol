@@ -15,7 +15,7 @@ import "../ERC721/interfaces/IERC721Random.sol";
 import "./ERC998BlacklistUpgradeable.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998BlacklistUpgradeable, Rarity {
+contract ERC998BlacklistUpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998BlacklistUpgradeable, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {

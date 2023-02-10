@@ -115,7 +115,6 @@ describe("ExchangeBreed", function () {
             [2, erc721Instance.address, 1, 1],
             [2, erc721Instance.address, 2, 1],
           )
-          .to.emit(erc721Instance, "RandomRequest")
           .to.emit(linkInstance, "Transfer(address,address,uint256)")
           .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
 
@@ -185,7 +184,6 @@ describe("ExchangeBreed", function () {
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1])
-          .to.emit(erc721Instance, "RandomRequest")
           .to.emit(linkInstance, "Transfer(address,address,uint256)")
           .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
 
@@ -334,7 +332,6 @@ describe("ExchangeBreed", function () {
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1])
-          .to.emit(erc721Instance, "RandomRequest")
           .to.emit(linkInstance, "Transfer(address,address,uint256)")
           .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
 

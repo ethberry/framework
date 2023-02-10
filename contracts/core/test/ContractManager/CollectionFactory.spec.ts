@@ -7,7 +7,7 @@ import {
   DEFAULT_ADMIN_ROLE,
   nonce,
   royalty,
-  tokenInitialAmount,
+  batchSize,
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";
@@ -22,7 +22,7 @@ describe("CollectionFactory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721Collection");
+      const erc721 = await ethers.getContractFactory("ERC721CollectionSimple");
 
       const contractInstance = await factory();
 
@@ -64,7 +64,7 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty,
             baseTokenURI,
-            batchSize: tokenInitialAmount,
+            batchSize,
             contractTemplate,
           },
         },
@@ -81,7 +81,7 @@ describe("CollectionFactory", function () {
           royalty,
           baseTokenURI,
           contractTemplate,
-          batchSize: tokenInitialAmount,
+          batchSize,
         },
         signature,
       );
@@ -97,7 +97,7 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            batchSize: BigNumber.from(tokenInitialAmount),
+            batchSize: BigNumber.from(batchSize),
             contractTemplate,
           },
           owner: owner.address,
@@ -107,7 +107,7 @@ describe("CollectionFactory", function () {
 
       await expect(tx)
         .to.emit(erc721Instance, "ConsecutiveTransfer")
-        .withArgs(0, tokenInitialAmount - 1, constants.AddressZero, owner.address);
+        .withArgs(0, batchSize - 1, constants.AddressZero, owner.address);
 
       const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
       expect(hasRole1).to.equal(false);
@@ -119,7 +119,7 @@ describe("CollectionFactory", function () {
       await expect(tx2).to.be.revertedWith("MethodNotSupported");
 
       const balance = await erc721Instance.balanceOf(owner.address);
-      expect(balance).to.equal(tokenInitialAmount);
+      expect(balance).to.equal(batchSize);
 
       const uri = await erc721Instance.tokenURI(tokenId);
       expect(uri).to.equal(`${baseTokenURI}/${erc721Instance.address.toLowerCase()}/${tokenId}`);

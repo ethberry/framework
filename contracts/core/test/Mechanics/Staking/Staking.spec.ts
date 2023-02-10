@@ -23,7 +23,7 @@ use(solidity);
 describe("Staking", function () {
   const period = 300;
   const penalty = 0;
-  const cycles = 2;
+  const cycles = 3;
 
   // TODO use @types
   const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
@@ -710,11 +710,11 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
+      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
       const balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(2);
       // DEPOSIT
@@ -1038,12 +1038,12 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2)
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
+      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       balance = await erc20Instance.balanceOf(owner.address);
@@ -1391,11 +1391,11 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
+      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(3);
     });
@@ -1735,7 +1735,6 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
 

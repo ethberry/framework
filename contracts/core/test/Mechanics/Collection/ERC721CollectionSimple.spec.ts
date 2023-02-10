@@ -13,7 +13,7 @@ describe("ERC721CollectionSimple", function () {
 
   shouldMintCommon(factory);
 
-  // shouldBehaveLikeERC721Consecutive(factory, { initialBalance: tokenInitialAmount });
+  // shouldBehaveLikeERC721Consecutive(factory, { initialBalance: batchSize });
 
   shouldSupportsInterface(factory)(
     InterfaceId.IERC165,
