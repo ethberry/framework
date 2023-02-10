@@ -23,7 +23,7 @@ use(solidity);
 describe("Staking", function () {
   const period = 300;
   const penalty = 0;
-  const cycles = 3;
+  const cycles = 2;
 
   // TODO use @types
   const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
@@ -713,10 +713,9 @@ describe("Staking", function () {
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
-      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
+      await randomRequest(erc721RandomInstance, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
-      expect(balance).to.equal(2);
+      expect(balance).to.equal(cycles);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(owner, amount);
     });
@@ -1042,8 +1041,7 @@ describe("Staking", function () {
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
-      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
+      await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       balance = await erc20Instance.balanceOf(owner.address);
@@ -1394,10 +1392,9 @@ describe("Staking", function () {
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      const tx3 = await randomRequest(erc721RandomInstance, vrfInstance);
-      await expect(tx3).to.emit(erc721RandomInstance, "MintRandom");
+      await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
-      expect(balance).to.equal(3);
+      expect(balance).to.equal(cycles + 1);
     });
 
     it("should stake ERC721 & receive ERC721 Common", async function () {

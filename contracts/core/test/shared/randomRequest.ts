@@ -6,9 +6,7 @@ import { VRFCoordinatorMock } from "../../typechain-types";
 export async function randomRequest(rndInstance: Contract, vrfInstance: VRFCoordinatorMock) {
   const eventFilter = vrfInstance.filters.RandomnessRequestId();
   const events = await vrfInstance.queryFilter(eventFilter);
-  return vrfInstance.callBackWithRandomness(
-    events[events.length - 1].args[0],
-    utils.randomBytes(32),
-    rndInstance.address,
-  );
+  for (const e of events) {
+    await vrfInstance.callBackWithRandomness(e.args[0], utils.randomBytes(32), rndInstance.address);
+  }
 }

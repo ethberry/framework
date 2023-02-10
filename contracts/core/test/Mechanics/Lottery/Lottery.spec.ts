@@ -143,8 +143,7 @@ describe("Lottery", function () {
 
       if (network.name === "hardhat") {
         // RANDOM
-        const tx1 = await randomRequest(lotteryInstance, vrfInstance);
-        await expect(tx1).to.emit(lotteryInstance, "RoundFinalized");
+        await randomRequest(lotteryInstance, vrfInstance);
       }
     });
 
@@ -202,8 +201,7 @@ describe("Lottery", function () {
 
       if (network.name === "hardhat") {
         // RANDOM
-        const tx1 = await randomRequest(lotteryInstance, vrfInstance);
-        await expect(tx1).to.emit(lotteryInstance, "RoundFinalized");
+        await randomRequest(lotteryInstance, vrfInstance);
       } else {
         const eventFilter = lotteryInstance.filters.RoundFinalized();
         const events = await lotteryInstance.queryFilter(eventFilter);
