@@ -7,16 +7,11 @@
 pragma solidity ^0.8.13;
 
 enum TokenType {
-  // 0: ETH on mainnet, MATIC on polygon, etc.
-  NATIVE,
-  // 1: ERC20 items (ERC777 and other ERC20 analogues could also technically work)
-  ERC20,
-  // 2: ERC721 items
-  ERC721,
-  // 3: ERC998 heroes
-  ERC998,
-  // 4: ERC1155 items
-  ERC1155
+  NATIVE, // 0: ETH on mainnet, MATIC on polygon, etc.
+  ERC20,  // 1: ERC20 items (ERC777 and other ERC20 analogues could also technically work)
+  ERC721, // 2: ERC721 items
+  ERC998, // 3: ERC998 heroes
+  ERC1155 // 4: ERC1155 items
 }
 
 struct Asset {
