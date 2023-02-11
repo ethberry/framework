@@ -25,7 +25,7 @@
     "notistack": "2.0.8",
     "react-intl": "6.2.8",
     "react-window": "1.8.8",
-    "type-fest": "3.5.6"
+    "type-fest": "3.5.7"
   },
   "devDependencies": {
     "@types/react": "18.0.27",
