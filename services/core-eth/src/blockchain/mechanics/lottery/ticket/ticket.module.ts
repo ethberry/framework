@@ -5,7 +5,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { LotteryHistoryModule } from "../history/history.module";
 import { LotteryRoundModule } from "../round/round.module";
 import { LotteryTicketControllerEth } from "./ticket.controller.eth";
 import { LotteryTicketEntity } from "./ticket.entity";
@@ -14,6 +13,7 @@ import { LotteryTicketService } from "./ticket.service";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
     TemplateModule,
     BalanceModule,
     LotteryRoundModule,
-    LotteryHistoryModule,
+    EventHistoryModule,
     TypeOrmModule.forFeature([LotteryTicketEntity]),
   ],
   providers: [Logger, LotteryTicketService, LotteryTicketServiceEth],

@@ -3,8 +3,8 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 import { ITemplate } from "./template";
 import { IBalance } from "./balance";
 import { IOwnership } from "./ownership";
-import { IAssetComponentHistory } from "../mechanics/asset-component-history";
-import { IContractHistory } from "../contract-history";
+import { IAssetComponentHistory } from "../exchange/asset-component-history";
+import { IEventHistory } from "../event-history";
 
 export enum TokenStatus {
   MINTED = "MINTED",
@@ -39,6 +39,6 @@ export interface IToken extends IIdDateBase {
   balance?: Array<IBalance>;
   parent?: Array<IOwnership>;
   children?: Array<IOwnership>;
-  exchangeHistory?: Array<IAssetComponentHistory>;
-  contractHistory?: Array<IContractHistory>;
+  exchange?: Array<IAssetComponentHistory>;
+  history?: Array<IEventHistory>;
 }

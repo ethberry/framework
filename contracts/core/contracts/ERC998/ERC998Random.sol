@@ -8,14 +8,11 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBinance.sol";
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
-
 import "./ERC998Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC998Random is IERC721Random, ChainLinkGoerli, ERC998Simple, Rarity {
+abstract contract ERC998Random is IERC721Random, ERC998Simple, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -49,7 +46,7 @@ contract ERC998Random is IERC721Random, ChainLinkGoerli, ERC998Simple, Rarity {
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
@@ -66,4 +63,6 @@ contract ERC998Random is IERC721Random, ChainLinkGoerli, ERC998Simple, Rarity {
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  function getRandomNumber() internal virtual returns (bytes32 requestId);
 }

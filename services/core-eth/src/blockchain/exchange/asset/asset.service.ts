@@ -2,14 +2,14 @@ import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, IsNull, Repository } from "typeorm";
 
-import { ExchangeType, IExchangeItem } from "@framework/types";
+import { ExchangeType, IExchangeItem, IExchangePurchaseEvent } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
-import { ContractHistoryService } from "../../hierarchy/contract/history/history.service";
-import { ExchangeHistoryEntity } from "../history/history.entity";
+import { EventHistoryService } from "../../event-history/event-history.service";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 
 @Injectable()
 export class AssetService {
@@ -22,7 +22,7 @@ export class AssetService {
     private readonly assetComponentHistoryEntityRepository: Repository<AssetComponentHistoryEntity>,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
-    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
@@ -51,7 +51,7 @@ export class AssetService {
   }
 
   public async updateAssetHistoryRandom(requestId: string, tokenId: number): Promise<void> {
-    const historyEntity = await this.contractHistoryService.findByRandomRequest(requestId);
+    const historyEntity = await this.eventHistoryService.findByRandomRequest(requestId);
     if (historyEntity) {
       const transactionHash = historyEntity.transactionHash;
 
@@ -73,20 +73,22 @@ export class AssetService {
   }
 
   public async saveAssetHistory(
-    exchangeHistoryEntity: ExchangeHistoryEntity,
+    eventHistoryEntity: EventHistoryEntity,
     items: Array<IExchangeItem>,
     price: Array<IExchangeItem>,
   ): Promise<void> {
     await Promise.allSettled(
       items.map(async ([itemType, _itemTokenAddr, itemTokenId, itemAmount]) => {
         const assetComponentHistoryItem = {
-          historyId: exchangeHistoryEntity.id,
+          historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.ITEM,
           amount: itemAmount,
         };
 
         const templateEntity = await this.templateService.findOne(
-          { id: itemType === 4 ? ~~exchangeHistoryEntity.eventData.externalId : ~~itemTokenId },
+          {
+            id: itemType === 4 ? ~~(eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId : ~~itemTokenId,
+          },
           { relations: { tokens: true } },
         );
         if (!templateEntity) {
@@ -105,7 +107,7 @@ export class AssetService {
     await Promise.allSettled(
       price.map(async ([_priceType, _priceTokenAddr, priceTokenId, priceAmount]) => {
         const assetComponentHistoryPrice = {
-          historyId: exchangeHistoryEntity.id,
+          historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.PRICE,
           amount: priceAmount,
         };

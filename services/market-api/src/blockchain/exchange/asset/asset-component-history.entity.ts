@@ -5,7 +5,7 @@ import { ExchangeType, IAssetComponentHistory } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { ExchangeHistoryEntity } from "../history/history.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Entity({ schema: ns, name: "asset_component_history" })
@@ -20,8 +20,8 @@ export class AssetComponentHistoryEntity extends IdBaseEntity implements IAssetC
   public historyId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => ExchangeHistoryEntity)
-  public history?: ExchangeHistoryEntity;
+  @ManyToOne(_type => EventHistoryEntity)
+  public history?: EventHistoryEntity;
 
   @Column({ type: "int" })
   public contractId: number;

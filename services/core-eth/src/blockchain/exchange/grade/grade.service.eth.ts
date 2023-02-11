@@ -4,10 +4,10 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IExchangeGradeEvent } from "@framework/types";
 
-import { ExchangeHistoryService } from "../history/history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { OpenSeaService } from "../../../integrations/opensea/opensea.service";
+import { OpenSeaService } from "../../integrations/opensea/opensea.service";
 import { AssetService } from "../asset/asset.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class ExchangeGradeServiceEth {
@@ -15,7 +15,7 @@ export class ExchangeGradeServiceEth {
     private readonly tokenService: TokenService,
     private readonly openSeaService: OpenSeaService,
     private readonly assetService: AssetService,
-    private readonly exchangeHistoryService: ExchangeHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
@@ -23,7 +23,7 @@ export class ExchangeGradeServiceEth {
       args: { item, price },
     } = event;
 
-    const history = await this.exchangeHistoryService.updateHistory(event, context);
+    const history = await this.eventHistoryService.updateHistory(event, context);
     await this.assetService.saveAssetHistory(history, [item], price);
 
     const [, itemTokenAddr, itemTokenId] = item;
@@ -34,6 +34,6 @@ export class ExchangeGradeServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.openSeaService.metadataUpdate(tokenEntity);
+    // await this.openSeaService.metadataUpdate(tokenEntity);
   }
 }

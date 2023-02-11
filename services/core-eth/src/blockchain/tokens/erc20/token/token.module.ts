@@ -3,19 +3,19 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc20TokenControllerEth } from "./token.controller.eth";
 import { Erc20TokenServiceEth } from "./token.service.eth";
-import { ContractHistoryModule } from "../../../hierarchy/contract/history/history.module";
 import { Erc20TokenLogModule } from "./log/log.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
     TokenModule,
     BalanceModule,
     ContractModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     Erc20TokenLogModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],

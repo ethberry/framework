@@ -31,7 +31,6 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
             contractInterface: VestingAbi,
             // prettier-ignore
             eventNames: [
-              VestingEventType.OwnershipTransferred,
               VestingEventType.ERC20Released,
               VestingEventType.EtherReleased,
               VestingEventType.EtherReceived,

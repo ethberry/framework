@@ -3,32 +3,26 @@ import { constants } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  ContractEventType,
-  IErc20TokenApproveEvent,
-  IErc20TokenSnapshotEvent,
-  IErc20TokenTransferEvent,
-  TContractEventData,
-} from "@framework/types";
+import { IErc20TokenApproveEvent, IErc20TokenSnapshotEvent, IErc20TokenTransferEvent } from "@framework/types";
 
-import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class Erc20TokenServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly contractHistoryService: ContractHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
   ) {}
 
   public async transfer(event: ILogEvent<IErc20TokenTransferEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const { args } = event;
     const { from, to, value } = args;
@@ -53,26 +47,10 @@ export class Erc20TokenServiceEth {
   }
 
   public async approval(event: ILogEvent<IErc20TokenApproveEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async snapshot(event: ILogEvent<IErc20TokenSnapshotEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceEth.name);
-
-    const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.contractHistoryService.create({
-      address,
-      transactionHash,
-      eventType: name as ContractEventType,
-      eventData: args,
-    });
-
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

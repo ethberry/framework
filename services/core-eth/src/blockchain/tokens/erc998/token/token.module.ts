@@ -3,8 +3,6 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
-import { ContractHistoryModule } from "../../../hierarchy/contract/history/history.module";
-
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
 import { Erc998TokenLogModule } from "./log/log.module";
@@ -16,12 +14,13 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { OwnershipModule } from "../ownership/ownership.module";
 import { Erc998CompositionModule } from "../composition/composition.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
     ConfigModule,
     AssetModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     Erc998TokenLogModule,
     TemplateModule,
     TokenModule,

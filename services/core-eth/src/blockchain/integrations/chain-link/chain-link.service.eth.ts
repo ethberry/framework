@@ -7,7 +7,7 @@ import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 import { callRandom } from "./utils";
 import { IChainLinkRandomRequestEvent } from "./log/interfaces";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class ChainLinkServiceEth {
@@ -20,16 +20,15 @@ export class ChainLinkServiceEth {
     protected readonly ethersSignerProviderAws: Wallet,
     protected readonly configService: ConfigService,
     protected readonly contractService: ContractService,
-    protected readonly tokenServiceEth: TokenServiceEth,
+    protected readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async randomRequest(event: ILogEvent<IChainLinkRandomRequestEvent>, context: Log): Promise<void> {
     const {
       args: { _requestID, _sender },
     } = event;
-    const { address, blockNumber } = context;
-    await this.tokenServiceEth.updateHistory(event, context);
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+
+    await this.eventHistoryService.updateHistory(event, context);
 
     // DEV ONLY
     // !!!should work while on Gemunion's BESU!!!

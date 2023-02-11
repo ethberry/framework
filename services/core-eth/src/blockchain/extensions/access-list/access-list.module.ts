@@ -3,13 +3,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AccessListEntity } from "./access-list.entity";
 import { AccessListService } from "./access-list.service";
-import { AccessListHistoryModule } from "./history/history.module";
 import { AccessListControllerEth } from "./access-list.controller.eth";
 import { AccessListServiceEth } from "./access-list.service.eth";
-import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
-  imports: [ContractModule, AccessListHistoryModule, TypeOrmModule.forFeature([AccessListEntity])],
+  imports: [EventHistoryModule, TypeOrmModule.forFeature([AccessListEntity])],
   controllers: [AccessListControllerEth],
   providers: [Logger, AccessListService, AccessListServiceEth],
   exports: [AccessListService],

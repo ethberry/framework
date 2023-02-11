@@ -121,6 +121,8 @@
       "BLACKLIST_RANDOM": "Blacklist + Random",
       "BLACKLIST_UPGRADEABLE": "Blacklist + Upgradeable",
       "BLACKLIST_UPGRADEABLE_RANDOM": "Blacklist + Upgradeable + Random",
+      "BLACKLIST_UPGRADEABLE_RENTABLE": "Blacklist + Upgradeable + Rentable",
+      "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM": "Blacklist + Upgradeable + Rentable + Random",
       "CLIFF": "Cliff",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",

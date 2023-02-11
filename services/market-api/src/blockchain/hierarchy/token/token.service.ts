@@ -202,9 +202,9 @@ export class TokenService {
           price_contract: "price_components.contract",
           price_template: "price_components.template",
           contract_history: "token.contractHistory",
-          breeds: "token.breeds",
-          breed_childs: "breeds.children",
-          breed_history: "breed_childs.history",
+          // breeds: "token.breeds",
+          // breed_childs: "breeds.children",
+          // breed_history: "breed_childs.history",
         },
       },
     });

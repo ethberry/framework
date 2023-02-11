@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
-import { DeployableEntity, SearchableEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-postgres";
+import { DeployableEntity, JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ns } from "@framework/constants";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../template/template.entity";
-import { ContractHistoryEntity } from "./history/history.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -67,6 +67,6 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;
 
-  @OneToMany(_type => ContractHistoryEntity, history => history.contractId)
-  public history: Array<ContractHistoryEntity>;
+  @OneToMany(_type => EventHistoryEntity, history => history.contractId)
+  public history: Array<EventHistoryEntity>;
 }

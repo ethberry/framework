@@ -8,15 +8,14 @@ import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundServiceCron } from "./round.service.cron";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { LotteryRoundControllerEth } from "./round.controller.eth";
 import { LotteryRoundServiceEth } from "./round.service.eth";
-import { LotteryHistoryModule } from "../history/history.module";
 import { RoundControllerRmq } from "./round.controller.rmq";
 import { RoundServiceRmq } from "./round.service.rmq";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, LotteryHistoryModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
+  imports: [ConfigModule, EventHistoryModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
   controllers: [RoundControllerRmq, LotteryRoundControllerEth],
   providers: [
     Logger,

@@ -4,23 +4,23 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ClaimStatus, IExchangeClaimEvent } from "@framework/types";
 
-import { ExchangeHistoryService } from "../history/history.service";
 import { ClaimService } from "../../mechanics/claim/claim.service";
 import { AssetService } from "../asset/asset.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class ExchangeClaimServiceEth {
   constructor(
     private readonly claimService: ClaimService,
     private readonly assetService: AssetService,
-    private readonly exchangeHistoryService: ExchangeHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async claim(event: ILogEvent<IExchangeClaimEvent>, context: Log): Promise<void> {
     const {
       args: { items, externalId },
     } = event;
-    const history = await this.exchangeHistoryService.updateHistory(event, context);
+    const history = await this.eventHistoryService.updateHistory(event, context);
 
     const claimEntity = await this.claimService.findOne({ id: ~~externalId });
 

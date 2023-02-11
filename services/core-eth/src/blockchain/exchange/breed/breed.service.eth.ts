@@ -4,15 +4,15 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IExchangeBreedEvent } from "@framework/types";
 
-import { ExchangeHistoryService } from "../history/history.service";
 import { AssetService } from "../asset/asset.service";
 import { BreedServiceEth } from "../../mechanics/breed/breed.service.eth";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class ExchangeBreedServiceEth {
   constructor(
     private readonly assetService: AssetService,
-    private readonly exchangeHistoryService: ExchangeHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     private readonly breedServiceEth: BreedServiceEth,
   ) {}
 
@@ -20,10 +20,8 @@ export class ExchangeBreedServiceEth {
     const {
       args: { matron, sire },
     } = event;
-    const history = await this.exchangeHistoryService.updateHistory(event, context);
+    const history = await this.eventHistoryService.updateHistory(event, context);
 
     await this.assetService.saveAssetHistory(history, [matron], [sire]);
-
-    await this.breedServiceEth.breed(event, history.id);
   }
 }

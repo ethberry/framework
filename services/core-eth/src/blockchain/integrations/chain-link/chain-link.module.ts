@@ -7,11 +7,11 @@ import { ChainLinkServiceEth } from "./chain-link.service.eth";
 import { emlServiceProvider } from "../../../common/providers";
 import { ChainLinkLogModule } from "./log/log.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
-import { TokenModule } from "../../hierarchy/token/token.module";
 import { ChainLinkServiceCron } from "./chain-link.service.cron";
+import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, ChainLinkLogModule, TokenModule],
+  imports: [ConfigModule, ContractModule, ChainLinkLogModule, EventHistoryModule],
   providers: [
     Logger,
     ethersRpcProvider,

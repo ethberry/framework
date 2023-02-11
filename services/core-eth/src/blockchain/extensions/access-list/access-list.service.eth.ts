@@ -2,18 +2,9 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  AccessListEventType,
-  IBlacklistedEvent,
-  IUnBlacklistedEvent,
-  IUnWhitelistedEvent,
-  IWhitelistedEvent,
-  TAccessListEventData,
-} from "@framework/types";
-
-import { AccessListHistoryService } from "./history/history.service";
+import { IBlacklistedEvent, IUnBlacklistedEvent, IUnWhitelistedEvent, IWhitelistedEvent } from "@framework/types";
 import { AccessListService } from "./access-list.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class AccessListServiceEth {
@@ -21,8 +12,7 @@ export class AccessListServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly accessListService: AccessListService,
-    private readonly accessListHistoryService: AccessListHistoryService,
-    private readonly contractService: ContractService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async blacklisted(event: ILogEvent<IBlacklistedEvent>, context: Log): Promise<void> {
@@ -30,7 +20,7 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.accessListService.create({
       address: context.address.toLowerCase(),
@@ -44,7 +34,7 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.accessListService.remove({
       address: context.address.toLowerCase(),
@@ -57,7 +47,7 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.accessListService.create({
       address: context.address.toLowerCase(),
@@ -71,27 +61,11 @@ export class AccessListServiceEth {
       args: { account },
     } = event;
 
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await this.accessListService.remove({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
     });
-  }
-
-  private async updateHistory(event: ILogEvent<TAccessListEventData>, context: Log) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), AccessListServiceEth.name);
-
-    const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.accessListHistoryService.create({
-      address,
-      transactionHash,
-      eventType: name as AccessListEventType,
-      eventData: args,
-    });
-
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

@@ -11,14 +11,11 @@ import {
   IRoundEndedEvent,
   IRoundFinalizedEvent,
   IRoundStartedEvent,
-  LotteryEventType,
-  TLotteryEventData,
 } from "@framework/types";
 
-import { LotteryHistoryService } from "../history/history.service";
 import { LotteryRoundService } from "./round.service";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { getLotteryNumbers } from "../../../../common/utils";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -26,15 +23,14 @@ export class LotteryRoundServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly lotteryRoundService: LotteryRoundService,
-    private readonly lotteryHistoryService: LotteryHistoryService,
-    private readonly contractService: ContractService,
+    private readonly eventHistoryService: EventHistoryService,
     private readonly configService: ConfigService,
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
   ) {}
 
   public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { round, startTimestamp },
     } = event;
@@ -46,7 +42,7 @@ export class LotteryRoundServiceEth {
   }
 
   public async finalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { round, winValues },
     } = event;
@@ -62,7 +58,7 @@ export class LotteryRoundServiceEth {
   }
 
   public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const {
       args: { round, endTimestamp },
@@ -83,27 +79,11 @@ export class LotteryRoundServiceEth {
 
   public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     // TODO use it, check ticketId?
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
     // TODO use it somehow?
-    await this.updateHistory(event, context);
-  }
-
-  private async updateHistory(event: ILogEvent<TLotteryEventData>, context: Log) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), LotteryRoundServiceEth.name);
-
-    const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.lotteryHistoryService.create({
-      address: address.toLowerCase(),
-      transactionHash: transactionHash.toLowerCase(),
-      eventType: name as LotteryEventType,
-      eventData: args,
-    });
-
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

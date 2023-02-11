@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../asset";
+import { IAsset } from "../../exchange/asset";
 
 export enum ClaimStatus {
   NEW = "NEW",

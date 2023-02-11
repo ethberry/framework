@@ -12,11 +12,11 @@ import type {
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { ExchangeHistoryService } from "../../exchange/history/history.service";
 import { PayeesService } from "./payee/payees.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class PaymentSplitterServiceEth {
@@ -28,14 +28,14 @@ export class PaymentSplitterServiceEth {
     private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
-    private readonly exchangeHistoryService: ExchangeHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async addPayee(event: ILogEvent<IExchangePayeeAddedEvent>, context: Log): Promise<void> {
     const {
       args: { account, shares },
     } = event;
-    await this.exchangeHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const contractEntity = await this.contractService.findOne({ address: context.address.toLowerCase() });
 
@@ -54,7 +54,7 @@ export class PaymentSplitterServiceEth {
     const {
       args: { amount },
     } = event;
-    await this.exchangeHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
@@ -71,7 +71,7 @@ export class PaymentSplitterServiceEth {
     const {
       args: { amount },
     } = event;
-    await this.exchangeHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
     const tokenEntity = await this.tokenService.getToken("0", constants.AddressZero.toLowerCase(), chainId);
@@ -84,7 +84,7 @@ export class PaymentSplitterServiceEth {
   }
 
   public async releaseErc20(event: ILogEvent<IExchangeErc20PaymentReleasedEvent>, context: Log): Promise<void> {
-    await this.exchangeHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     // Balance will decrement by Erc20 controller
   }
 }

@@ -2,15 +2,9 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 
 import { BigNumber } from "ethers";
-
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangeBreedEvent } from "@framework/types";
-
-import { BreedHistoryService } from "./history/history.service";
 import { BreedService } from "./breed.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { TokenService } from "../../hierarchy/token/token.service";
 import { decodeGenes, decodeNumber } from "@framework/genes";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class BreedServiceEth {
@@ -19,43 +13,33 @@ export class BreedServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly breedService: BreedService,
-    private readonly breedHistoryService: BreedHistoryService,
-    private readonly contractService: ContractService,
-    private readonly tokenService: TokenService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public async breed(event: ILogEvent<IExchangeBreedEvent>, historyId: number): Promise<void> {
-    const { args } = event;
-    const { from, matron, sire } = args;
-    // const [matronType, matronTokenAddr, matronTokenId, matronAmount] = matron;
-    const matronTokenAddr = matron[1].toLowerCase();
-    const matronTokenId = matron[2];
-    // const [sireType, sireTokenAddr, sireTokenId, sireAmount] = sire;
-    const sireTokenAddr = sire[1].toLowerCase();
-    const sireTokenId = sire[2];
-
-    const matronTokenEntity = await this.tokenService.getToken(matronTokenId, matronTokenAddr);
-
-    if (!matronTokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    const sireTokenEntity = await this.tokenService.getToken(sireTokenId, sireTokenAddr);
-
-    if (!sireTokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    const breedMatronEntity = await this.breedService.append(matronTokenEntity.id);
-    const breedSireEntity = await this.breedService.append(sireTokenEntity.id);
-
-    await this.breedHistoryService.create({
-      historyId,
-      account: from,
-      matronId: breedMatronEntity.id,
-      sireId: breedSireEntity.id,
-    });
-  }
+  // public async breed(event: ILogEvent<IExchangeBreedEvent>, historyId: number): Promise<void> {
+  //   const { args } = event;
+  //   const { from, matron, sire } = args;
+  //   // const [matronType, matronTokenAddr, matronTokenId, matronAmount] = matron;
+  //   const matronTokenAddr = matron[1].toLowerCase();
+  //   const matronTokenId = matron[2];
+  //   // const [sireType, sireTokenAddr, sireTokenId, sireAmount] = sire;
+  //   const sireTokenAddr = sire[1].toLowerCase();
+  //   const sireTokenId = sire[2];
+  //
+  //   const matronTokenEntity = await this.tokenService.getToken(matronTokenId, matronTokenAddr);
+  //
+  //   if (!matronTokenEntity) {
+  //     throw new NotFoundException("tokenNotFound");
+  //   }
+  //
+  //   const sireTokenEntity = await this.tokenService.getToken(sireTokenId, sireTokenAddr);
+  //
+  //   if (!sireTokenEntity) {
+  //     throw new NotFoundException("tokenNotFound");
+  //   }
+  //
+  //   await this.eventHistoryService.updateHistory(event);
+  // }
 
   public async newborn(tokenId: number, genes: string, transactionHash: string): Promise<void> {
     const { matronId, sireId } = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
@@ -85,7 +69,8 @@ export class BreedServiceEth {
     });
 
     if (matronId > 0 && sireId > 0) {
-      await this.breedHistoryService.updateHistory(matronId, sireId, breedEntity.id, transactionHash);
+      // await this.eventHistoryService.updateHistory(matronId, sireId, breedEntity.id, transactionHash);
+      console.info(matronId, sireId, breedEntity.id, transactionHash);
     }
   }
 }

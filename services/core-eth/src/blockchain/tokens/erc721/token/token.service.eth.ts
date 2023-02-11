@@ -16,7 +16,6 @@ import {
 
 import { ABI } from "./log/interfaces";
 import { getMetadata } from "../../../../common/utils";
-import { ContractHistoryService } from "../../../hierarchy/contract/history/history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -26,6 +25,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -43,9 +43,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
     protected readonly breedServiceEth: BreedServiceEth,
-    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -74,7 +74,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.contractHistoryService.findOne({
+        const historyEntity = await this.eventHistoryService.findOne({
           transactionHash,
           eventType: ContractEventType.MintRandom,
         });
@@ -101,7 +101,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, void 0, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;
@@ -135,7 +135,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
-      await this.updateHistory(event, context, templateEntity.contract.id, void 0);
+      await this.eventHistoryService.updateHistory(event, context, templateEntity.contract.id, void 0);
 
       const batchSize = JSON.parse(templateEntity.contract.description).batchSize
         ? JSON.parse(templateEntity.contract.description).batchSize
@@ -177,6 +177,6 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

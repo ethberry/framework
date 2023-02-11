@@ -1,7 +1,7 @@
 import type { ISearchable } from "@gemunion/types-collection";
 import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
-import { IContractHistory } from "../contract-history";
+import { IEventHistory } from "../event-history";
 
 import { ITemplate } from "./template";
 import { ModuleType } from "../common";
@@ -35,6 +35,7 @@ export enum Erc20ContractTemplates {
 export enum Erc721ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
+  "USABLE" = "USABLE",
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
@@ -45,6 +46,8 @@ export enum Erc721ContractTemplates {
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
   "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
   "BLACKLIST_UPGRADEABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RANDOM",
+  "BLACKLIST_UPGRADEABLE_RENTABLE" = "BLACKLIST_UPGRADEABLE_RENTABLE",
+  "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
   "SIMPLE" = "SIMPLE",
@@ -160,15 +163,16 @@ export enum ContractTemplates {
 }
 
 export enum ContractFeatures {
+  "ALLOWANCE" = "ALLOWANCE",
   "EXTERNAL" = "EXTERNAL",
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
   "SOULBOUND" = "SOULBOUND",
-  "RANDOM" = "RANDOM",
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
   "PAUSABLE" = "PAUSABLE",
-  "ALLOWANCE" = "ALLOWANCE",
+  "USABLE" = "USABLE",
+  "RANDOM" = "RANDOM",
   // MODULE:VESTING
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
   "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
@@ -190,7 +194,7 @@ export interface IContract extends IDeployable, ISearchable {
   contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
   templates: Array<ITemplate>;
-  history?: Array<IContractHistory>;
+  history?: Array<IEventHistory>;
   parent?: Array<IComposition>;
   children?: Array<IComposition>;
 }

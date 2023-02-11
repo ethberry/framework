@@ -8,7 +8,7 @@ import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-p
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
 import { AssetComponentHistoryEntity } from "../../exchange/asset/asset-component-history.entity";
-import { ContractHistoryEntity } from "../contract/history/history.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
@@ -44,8 +44,8 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public balance: Array<BalanceEntity>;
 
   @OneToMany(_type => AssetComponentHistoryEntity, history => history.token)
-  public exchangeHistory: Array<AssetComponentHistoryEntity>;
+  public exchange: Array<AssetComponentHistoryEntity>;
 
-  @OneToMany(_type => ContractHistoryEntity, contractHistory => contractHistory.token)
-  public contractHistory: Array<ContractHistoryEntity>;
+  @OneToMany(_type => EventHistoryEntity, contractHistory => contractHistory.token)
+  public history: Array<EventHistoryEntity>;
 }

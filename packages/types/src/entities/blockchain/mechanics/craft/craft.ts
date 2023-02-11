@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../asset";
-import { IExchangeHistory } from "../exchange-history";
+import { IAsset } from "../../exchange/asset";
+import { IEventHistory } from "../../event-history";
 
 export enum CraftStatus {
   NEW = "NEW",
@@ -13,5 +13,5 @@ export interface ICraft extends IIdDateBase {
   item?: IAsset;
   price?: IAsset;
   craftStatus: CraftStatus;
-  history?: Array<IExchangeHistory>;
+  history?: Array<IEventHistory>;
 }

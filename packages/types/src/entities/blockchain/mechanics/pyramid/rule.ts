@@ -1,7 +1,7 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
 import { IContract } from "../../hierarchy/contract";
-import { IAsset } from "../asset";
+import { IAsset } from "../../exchange/asset";
 import { DurationUnit } from "../../common";
 
 export enum PyramidRuleStatus {

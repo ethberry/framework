@@ -5,7 +5,7 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
 
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
-import { ExchangeType, IAsset, IBreed, IContractHistory, IToken } from "@framework/types";
+import { ExchangeType, IAsset, IBreed, IEventHistory, IToken } from "@framework/types";
 
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
@@ -13,7 +13,7 @@ import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
 
 export interface ITokenWithHistory extends IToken {
-  contractHistory?: Array<IContractHistory>;
+  contractHistory?: Array<IEventHistory>;
   breeds?: Array<IBreed>;
 }
 
@@ -31,7 +31,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   const { formatMessage } = useIntl();
 
   const exchangeHistory =
-    token.exchangeHistory
+    token.exchange
       ?.filter(sale => sale.exchangeType === ExchangeType.ITEM)
       ?.map(history => {
         return {
@@ -76,30 +76,30 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       };
     }) || [];
 
-  const breedHistoryArr =
-    token.breeds?.map(breed => {
-      return breed.children!.map(child => {
-        return {
-          price: {
-            components: [] as Array<any>,
-          },
-          // @ts-ignore
-          from: (child.history.eventData.from as string) || (child.history.eventData.owner as string),
-          // @ts-ignore
-          to: child.history.eventData.to || child.history.eventData.approved || "",
-          type: child.history?.eventType as string,
-          date: child.history?.updatedAt || "",
-          tx: child.history?.transactionHash || "",
-          // quantity: 1,
-        };
-      });
-    }) || [];
-
-  const breedHistory = breedHistoryArr?.flat();
+  // const breedHistoryArr =
+  //   token.breeds?.map(breed => {
+  //     return breed.children!.map(child => {
+  //       return {
+  //         price: {
+  //           components: [] as Array<any>,
+  //         },
+  //         // @ts-ignore
+  //         from: (child.history.eventData.from as string) || (child.history.eventData.owner as string),
+  //         // @ts-ignore
+  //         to: child.history.eventData.to || child.history.eventData.approved || "",
+  //         type: child.history?.eventType as string,
+  //         date: child.history?.updatedAt || "",
+  //         tx: child.history?.transactionHash || "",
+  //         // quantity: 1,
+  //       };
+  //     });
+  //   }) || [];
+  //
+  // const breedHistory = breedHistoryArr?.flat();
 
   const fullTokenHistory = contractHistory
     ?.concat(exchangeHistory)
-    .concat(breedHistory)
+    // .concat(breedHistory)
     .sort(sorter("date"))
     .map((history, i: number) => {
       return Object.assign(history, { id: i });

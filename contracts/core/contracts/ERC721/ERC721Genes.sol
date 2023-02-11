@@ -8,14 +8,11 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBinance.sol";
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
-
 import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Breed/Breed.sol";
 
-contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
+abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -46,14 +43,13 @@ contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
     _queue[getRandomNumber()] = Request(account, uint32(childId), uint32(matronId), uint32(sireId));
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
     Request memory request = _queue[requestId];
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     uint256 genes = encodeData(request, randomness);
     _upsertRecordField(tokenId, GENES, genes);
 
@@ -72,4 +68,6 @@ contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
     genes |= uint32(req.sireId) << 32;
     genes |= uint192(randomness) << 64;
   }
+
+  function getRandomNumber() internal virtual returns (bytes32 requestId);
 }

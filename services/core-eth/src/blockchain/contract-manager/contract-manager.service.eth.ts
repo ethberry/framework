@@ -8,7 +8,6 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
-  ContractManagerEventType,
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
@@ -17,13 +16,9 @@ import {
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
-  TContractManagerEventData,
   TemplateStatus,
   TokenType,
-  // VestingContractTemplate,
 } from "@framework/types";
-
-import { ContractManagerHistoryService } from "./history/history.service";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
 import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
@@ -39,6 +34,7 @@ import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
+import { EventHistoryService } from "../event-history/event-history.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -48,7 +44,7 @@ export class ContractManagerServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
-    private readonly contractManagerHistoryService: ContractManagerHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
@@ -73,7 +69,7 @@ export class ContractManagerServiceEth {
 
     const [name, symbol, cap, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -119,7 +115,7 @@ export class ContractManagerServiceEth {
 
     const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -166,7 +162,7 @@ export class ContractManagerServiceEth {
 
     const [name, symbol, royalty, baseTokenURI, batchSize, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -238,7 +234,7 @@ export class ContractManagerServiceEth {
 
     const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -285,7 +281,7 @@ export class ContractManagerServiceEth {
 
     const [baseTokenURI, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -314,7 +310,7 @@ export class ContractManagerServiceEth {
 
     const [name, symbol, baseTokenURI, royalty, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -347,7 +343,7 @@ export class ContractManagerServiceEth {
 
     const [account, startTimestamp, duration, contractTemplate] = args;
 
-    await this.updateHistory(event, ctx);
+    await this.eventHistoryService.updateHistory(event, ctx);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -371,32 +367,5 @@ export class ContractManagerServiceEth {
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
-  }
-
-  private async updateHistory(event: ILogEvent<TContractManagerEventData>, ctx: Log) {
-    this.loggerService.log(
-      JSON.stringify({
-        name: event.name,
-        signature: event.signature,
-        topic: event.topic,
-        args: event.args,
-        address: ctx.address,
-        transactionHash: ctx.transactionHash,
-        blockNumber: ctx.blockNumber,
-      }),
-      ContractManagerServiceEth.name,
-    );
-
-    const { args, name } = event;
-    const { address, transactionHash, blockNumber } = ctx;
-
-    await this.contractManagerHistoryService.create({
-      address,
-      transactionHash,
-      eventType: name as ContractManagerEventType,
-      eventData: args,
-    });
-
-    await this.contractService.updateLastBlockByAddr(address, parseInt(blockNumber.toString(), 16));
   }
 }

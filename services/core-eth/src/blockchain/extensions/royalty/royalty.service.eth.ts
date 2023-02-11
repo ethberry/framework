@@ -4,15 +4,14 @@ import { BigNumber } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type { IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent } from "@framework/types";
-
-import { ContractHistoryService } from "../../hierarchy/contract/history/history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class RoyaltyServiceEth {
   constructor(
     private readonly contractService: ContractService,
-    private readonly contractHistoryService: ContractHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfoEvent>, context: Log): Promise<void> {
@@ -32,10 +31,10 @@ export class RoyaltyServiceEth {
 
     await contractEntity.save();
 
-    await this.contractHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfoEvent>, context: Log): Promise<void> {
-    await this.contractHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }
