@@ -7,8 +7,8 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../../exchange/tokens/attributes";
-import { TokenGenesView } from "../../../../exchange/tokens/genes";
+import { TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
+import { TokenGenesView } from "../../../../hierarchy/tokens/genes";
 
 export interface IErc721ViewDialogProps {
   open: boolean;

@@ -846,6 +846,7 @@
     "active": "Successfully activated",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
+    "claimNotFound": "Claim not found",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",

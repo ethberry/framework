@@ -8,6 +8,7 @@ import { routes as loginRoutes } from "@gemunion/firebase-login";
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
 import { Providers } from "./providers";
+import { hierarchyRoutes } from "./hierarchy/routes";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       },
       ...loginRoutes,
       ...ecommerceRoutes,
+      ...hierarchyRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,
       ...exchangeRoutes,

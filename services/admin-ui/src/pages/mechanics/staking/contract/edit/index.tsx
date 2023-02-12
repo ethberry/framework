@@ -3,6 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -41,6 +42,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       {...rest}
     >
       <TextInput name="title" />
+      <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

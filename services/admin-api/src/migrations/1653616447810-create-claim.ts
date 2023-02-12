@@ -71,7 +71,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       LANGUAGE plpgsql
       AS $$
         BEGIN
-          DELETE FROM ${ns}.claim WHERE end_timestamp < NOW() AND claim_status='NEW';
+          DELETE FROM ${ns}.claim WHERE end_timestamp != to_timestamp(0) AND end_timestamp < NOW() AND claim_status='NEW';
           RETURN NEW;
         END;
       $$;

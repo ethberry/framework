@@ -9,7 +9,7 @@ export class SeedEventHistoryExchangeErc998At1563804040240 implements MigrationI
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.exchange_history (
+      INSERT INTO ${ns}.event_history (
         id,
         address,
         transaction_hash,
@@ -62,6 +62,6 @@ export class SeedEventHistoryExchangeErc998At1563804040240 implements MigrationI
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.exchange_history RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.event_history RESTART IDENTITY CASCADE;`);
   }
 }

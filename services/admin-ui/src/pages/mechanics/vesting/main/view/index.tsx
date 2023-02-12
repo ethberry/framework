@@ -25,9 +25,9 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
   const { address, parameters, contractFeatures } = initialValues;
-  const { account, duration, startTimestamp } = JSON.parse(parameters) as IVestingParams;
+  const { account, duration, startTimestamp } = parameters as IVestingParams;
   const dateStart = new Date(startTimestamp);
-  const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
+  const dateFinish = new Date(dateStart.getTime() + duration);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -86,7 +86,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.contractTemplate" />
               </TableCell>
-              <TableCell align="right">{contractFeatures}</TableCell>
+              <TableCell align="right">{contractFeatures.join(", ")}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

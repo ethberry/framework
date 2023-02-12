@@ -1,10 +1,11 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
-import { DeployableEntity, JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
+
 import { TemplateEntity } from "../template/template.entity";
 import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
@@ -24,16 +25,16 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public decimals: number;
 
   @Column({ type: "int" })
-  public royalty: number;
+  public fromBlock: number;
 
   @Column({ type: "int" })
-  public fromBlock: number;
+  public royalty: number;
 
   @Column({ type: "varchar" })
   public baseTokenURI: string;
 
-  @JsonColumn()
-  public parameters: any;
+  @Column({ type: "json" })
+  public parameters: Record<string, string>;
 
   @Column({ type: "boolean" })
   public isPaused: boolean;
