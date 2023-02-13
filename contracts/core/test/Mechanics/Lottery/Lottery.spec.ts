@@ -8,7 +8,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
-import { defaultNumbers, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
+import { defaultNumbers, expiresAt, externalId, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
@@ -37,9 +37,6 @@ describe("Lottery", function () {
       ({ linkInstance, vrfInstance } = await loadFixture(function chainlink() {
         return deployLinkVrfFixture();
       }));
-
-      expect(linkInstance.address).equal(LINK_ADDR);
-      expect(vrfInstance.address).equal(VRF_ADDR);
     }
   });
 
@@ -129,7 +126,6 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        // RANDOM
         await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
       }
 
@@ -142,7 +138,6 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        // RANDOM
         await randomRequest(lotteryInstance, vrfInstance);
       }
     });

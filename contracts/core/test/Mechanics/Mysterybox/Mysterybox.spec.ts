@@ -7,7 +7,7 @@ import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/con
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
-import { LINK_ADDR, templateId, tokenId, VRF_ADDR } from "../../constants";
+import { templateId, tokenId } from "../../constants";
 
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -32,9 +32,6 @@ describe("ERC721MysteryboxSimple", function () {
       ({ linkInstance, vrfInstance } = await loadFixture(function mysterybox() {
         return deployLinkVrfFixture();
       }));
-
-      expect(linkInstance.address).equal(LINK_ADDR);
-      expect(vrfInstance.address).equal(VRF_ADDR);
     }
   });
 

@@ -376,9 +376,8 @@ async function main() {
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
-  // const lotteryFactory = await ethers.getContractFactory("Lottery");
-  // const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
-  const lotteryFactory = await ethers.getContractFactory("LotteryRandomGemunion");
+  // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
+  const lotteryFactory = await ethers.getContractFactory("LotteryGemunion");
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   contracts.lottery = await lotteryFactory.deploy(

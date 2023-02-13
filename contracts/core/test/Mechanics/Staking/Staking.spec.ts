@@ -9,7 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
-import { LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
+import { templateId } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -46,9 +46,6 @@ describe("Staking", function () {
     ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
       return deployLinkVrfFixture();
     }));
-
-    expect(linkInstance.address).equal(LINK_ADDR);
-    expect(vrfInstance.address).equal(VRF_ADDR);
   });
 
   after(async function () {

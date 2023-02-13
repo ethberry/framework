@@ -8,20 +8,20 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
 
-import "../LotteryBase.sol";
+import "../LotteryRandom.sol";
 
-contract LotteryRandomHardhat is LotteryBase, ChainLinkHardhat {
+contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
   constructor(
     string memory name,
     address ticketFactory,
     address acceptedToken
-  ) LotteryBase(name, ticketFactory, acceptedToken) {}
+  ) LotteryRandom(name, ticketFactory, acceptedToken) {}
 
-  function getRandomNumber() internal override(LotteryBase, ChainLinkBase) returns (bytes32 requestId) {
+  function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (bytes32 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomness(bytes32 random, uint256 randomness) internal override(LotteryBase, VRFConsumerBase) {
+  function fulfillRandomness(bytes32 random, uint256 randomness) internal override(LotteryRandom, VRFConsumerBase) {
     super.fulfillRandomness(random, randomness);
   }
 
