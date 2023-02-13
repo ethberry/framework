@@ -6,13 +6,7 @@ import { format, formatDistance, formatDuration, intervalToDuration, parseISO } 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IContract } from "@framework/types";
-
-export interface IVestingParams {
-  account: string;
-  startTimestamp: string;
-  duration: number;
-}
+import type { IContract, IVestingParams } from "@framework/types";
 
 export interface IVestingViewDialogProps {
   open: boolean;

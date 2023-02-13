@@ -352,11 +352,11 @@ export class ContractManagerServiceEth {
       title: contractTemplate,
       description: emptyStateString,
       imageUrl,
-      parameters: JSON.stringify({
+      parameters: {
         account: account.toLowerCase(),
         startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
         duration: ~~duration * 1000,
-      }),
+      },
       contractFeatures: [contractTemplate as ContractFeatures],
       contractModule: ModuleType.VESTING,
       chainId,

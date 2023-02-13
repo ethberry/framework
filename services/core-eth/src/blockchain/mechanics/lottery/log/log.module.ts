@@ -7,8 +7,8 @@ import { AccessControlEventType, ContractEventType, ContractType, LotteryEventTy
 import { LotteryLogService } from "./log.service";
 
 // system contract
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/test/LotteryRandomHardhat.sol/LotteryRandomHardhat.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 

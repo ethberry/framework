@@ -94,7 +94,7 @@ export const Collection: FC = () => {
           {rows.map((contract, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemText>{JSON.parse(contract.parameters).batchSize}</ListItemText>
+              <ListItemText>{contract.parameters.batchSize}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

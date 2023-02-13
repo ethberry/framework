@@ -186,7 +186,7 @@ export interface IContract extends IDeployable, ISearchable {
   decimals: number;
   royalty: number;
   baseTokenURI: string;
-  parameters: any;
+  parameters: Record<string, string | number>;
   isPaused: boolean;
   fromBlock: number;
   contractStatus: ContractStatus;

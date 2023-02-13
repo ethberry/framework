@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
@@ -10,7 +9,6 @@ import { DropEntity } from "./drop.entity";
 import { SignDropDto } from "./dto";
 
 @Public()
-@ApiBearerAuth()
 @Controller("/drops")
 export class DropController {
   constructor(private readonly dropService: DropService) {}
