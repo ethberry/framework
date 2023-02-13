@@ -28,7 +28,7 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-    besugem: {
+    gemunion: {
       url: process.env.JSON_RPC_ADDR_GEMUNION,
       timeout: 30000,
       accounts: [
@@ -37,8 +37,17 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-    binancetest: {
+    binance: {
       url: process.env.JSON_RPC_ADDR_BINANCE,
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: {
+        mnemonic: process.env.MM_MNEMONIC,
+      },
+    },
+    // has to have underscore
+    binance_test: {
+      url: process.env.JSON_RPC_ADDR_BINANCE_TEST,
       chainId: 97,
       gasPrice: 20000000000,
       accounts: {
