@@ -27,6 +27,7 @@
     }
   },
   "dialogs": {
+    "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
     "claim": "Claim",
@@ -265,6 +266,7 @@
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
+      "allowance": "Allowance",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",

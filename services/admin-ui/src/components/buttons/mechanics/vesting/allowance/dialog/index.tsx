@@ -7,32 +7,33 @@ import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IVestingFundDto {
+export interface IVestingAllowanceDto {
   token: ITokenAsset;
   address: string;
 }
 
-export interface IVestingFundDialogProps {
+export interface IVestingAllowanceDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IVestingFundDto, form: any) => Promise<void>;
-  initialValues: IVestingFundDto;
+  onConfirm: (values: IVestingAllowanceDto, form: any) => Promise<void>;
+  initialValues: IVestingAllowanceDto;
 }
 
-export const VestingFundDialog: FC<IVestingFundDialogProps> = props => {
+export const VestingAllowanceDialog: FC<IVestingAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.top-up"
-      testId="VestingTopUpForm"
+      message="dialogs.allowance"
+      testId="VestingAllowanceForm"
+      showDebug={true}
       {...rest}
     >
       <TokenAssetInput
         prefix="token"
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
       />
     </FormDialog>
   );

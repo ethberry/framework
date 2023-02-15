@@ -1,38 +1,52 @@
 import { FC, Fragment, useState } from "react";
-import { useIntl } from "react-intl";
-
-import { IconButton, Tooltip } from "@mui/material";
-import { Savings } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
+import { ListItemIcon, MenuItem, Typography } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Contract, constants } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract } from "ethers";
 
+import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IContract, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
-export interface IVestingButtonProps {
-  vesting: IContract;
+export interface IMintMenuItemProps {
+  contract: IContract;
 }
 
-export const VestingFundButton: FC<IVestingButtonProps> = props => {
-  const { vesting } = props;
+export const FundMenuItem: FC<IMintMenuItemProps> = props => {
+  const {
+    contract: { address },
+  } = props;
 
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
 
-  const { formatMessage } = useIntl();
-
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
-    if (values.tokenType === TokenType.NATIVE) {
-      return web3Context.provider?.getSigner().sendTransaction({
-        to: vesting.address,
-        value: values.amount,
-      }) as Promise<any>;
-    } else if (values.tokenType === TokenType.ERC20) {
-      const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contract.transfer(vesting.address, values.amount) as Promise<any>;
+    const asset = values.token.components[0];
+    const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
+    if (asset.tokenType === TokenType.NATIVE) {
+      return contract.topUp([
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId: 0,
+          amount: asset.amount,
+        },
+      ]) as Promise<any>;
+    } else if (asset.tokenType === TokenType.ERC20) {
+      const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
+      return contract.topUp([
+        {
+          tokenType: 1,
+          token: values.address,
+          tokenId: 0,
+          amount: asset.amount,
+        },
+      ]) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
@@ -53,23 +67,21 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.fund" })}>
-        <IconButton onClick={handleFund} data-testid="VestingFundButton">
-          <Savings />
-        </IconButton>
-      </Tooltip>
+      <MenuItem onClick={handleFund}>
+        <ListItemIcon>
+          <AddCircleOutlineIcon />
+        </ListItemIcon>
+        <Typography variant="inherit">
+          <FormattedMessage id="form.buttons.fund" />
+        </Typography>
+      </MenuItem>
       <VestingFundDialog
         onConfirm={handleFundConfirm}
         onCancel={handleFundCancel}
         open={isFundDialogOpen}
         initialValues={{
-          tokenType: TokenType.NATIVE,
-          amount: "0",
-          contract: {
-            address: "",
-            decimals: 0,
-          },
-          contractId: 0,
+          token: getEmptyToken(),
+          address,
         }}
       />
     </Fragment>

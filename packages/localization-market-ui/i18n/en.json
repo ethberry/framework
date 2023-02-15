@@ -137,6 +137,7 @@
   "form": {
     "buttons": {
       "add": "Add",
+      "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
       "buy": "Buy now!",
@@ -621,7 +622,6 @@
       "title": "Primary market"
     },
     "my-wallet": {
-      "allowance": "Allowance",
       "attach": "Attach",
       "detach": "Detach",
       "title": "My wallet"
