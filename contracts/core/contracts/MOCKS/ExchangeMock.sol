@@ -11,9 +11,8 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "../Exchange/ExchangeUtils.sol";
-import "../ERC20/extensions/ERC1363Receiver.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, ERC1155Holder, ERC721Holder, ERC1363Receiver {
+contract ExchangeMock is ExchangeUtils, AccessControl, ERC1155Holder, ERC721Holder {
   function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
     spendFrom(price, spender, receiver);
   }
