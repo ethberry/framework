@@ -20,8 +20,6 @@ export class SeedClaimErc998At1653616447840 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 10003, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

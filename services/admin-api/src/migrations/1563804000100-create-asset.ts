@@ -16,6 +16,8 @@ export class CreateAsset1563804000100 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 50000000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

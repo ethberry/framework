@@ -34,8 +34,6 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 80352, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

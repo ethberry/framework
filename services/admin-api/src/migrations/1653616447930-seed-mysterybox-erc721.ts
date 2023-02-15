@@ -17,8 +17,6 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 33201, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

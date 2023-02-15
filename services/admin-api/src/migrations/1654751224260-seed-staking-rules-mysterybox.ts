@@ -34,8 +34,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 80652, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

@@ -19,8 +19,6 @@ export class SeedDropErc721At1658980521030 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 63111, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,
