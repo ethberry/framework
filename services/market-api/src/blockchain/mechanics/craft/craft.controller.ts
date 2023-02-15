@@ -7,7 +7,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { SignCraftDto } from "./dto";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Public()
 @Controller("/craft")

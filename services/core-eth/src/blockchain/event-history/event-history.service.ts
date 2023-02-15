@@ -1,0 +1,101 @@
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Log } from "@ethersproject/abstract-provider";
+
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ContractEventType, TContractEventData } from "@framework/types";
+
+import { EventHistoryEntity } from "./event-history.entity";
+import { ContractService } from "../hierarchy/contract/contract.service";
+
+@Injectable()
+export class EventHistoryService {
+  constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
+    @InjectRepository(EventHistoryEntity)
+    private readonly contractEventEntityRepository: Repository<EventHistoryEntity>,
+    private readonly contractService: ContractService,
+  ) {}
+
+  public async create(dto: DeepPartial<EventHistoryEntity>): Promise<EventHistoryEntity> {
+    return this.contractEventEntityRepository.create(dto).save();
+  }
+
+  public async findJson(key: string, value: string): Promise<EventHistoryEntity | null> {
+    const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("history");
+    queryBuilder.select();
+    queryBuilder.andWhere(`history.event_data->>'${key}' = :${key}`, { [key]: value });
+    return await queryBuilder.getOne();
+  }
+
+  public async findByRandomRequest(requestId: string): Promise<EventHistoryEntity | null> {
+    const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("history");
+    queryBuilder.select();
+    queryBuilder.andWhere("history.eventType = :eventType", {
+      eventType: ContractEventType.RandomnessRequestId,
+    });
+    queryBuilder.andWhere(`history.event_data->>'_requestID' = :_requestID`, { _requestID: requestId });
+    return await queryBuilder.getOne();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<EventHistoryEntity>,
+    options?: FindOneOptions<EventHistoryEntity>,
+  ): Promise<EventHistoryEntity | null> {
+    return this.contractEventEntityRepository.findOne({ where, ...options });
+  }
+
+  public async update(
+    where: FindOptionsWhere<EventHistoryEntity>,
+    dto: DeepPartial<EventHistoryEntity>,
+  ): Promise<EventHistoryEntity> {
+    const { ...rest } = dto;
+
+    const historyEntity = await this.findOne(where);
+
+    if (!historyEntity) {
+      throw new NotFoundException("historyNotFound");
+    }
+
+    Object.assign(historyEntity, rest);
+
+    return historyEntity.save();
+  }
+
+  public async updateHistory(
+    event: ILogEvent<TContractEventData>,
+    context: Log,
+    tokenId?: number,
+    contractId?: number,
+  ): Promise<EventHistoryEntity> {
+    this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
+    this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
+
+    const { args, name } = event;
+    const { transactionHash, address, blockNumber } = context;
+
+    if (!contractId) {
+      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+      if (!parentContractEntity) {
+        throw new NotFoundException("contractNotFound");
+      }
+      contractId = parentContractEntity.id;
+    }
+
+    const contractEventEntity = await this.create({
+      address,
+      transactionHash,
+      eventType: name as ContractEventType,
+      eventData: args,
+      tokenId: tokenId || null,
+      contractId,
+    });
+
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+
+    return contractEventEntity;
+  }
+}

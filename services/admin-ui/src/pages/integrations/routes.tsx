@@ -5,7 +5,7 @@ import { Protected } from "@gemunion/common-pages";
 import { ChainLink } from "./chain-link";
 import { coinGeckoRoutes } from "./coin-gecko/routes";
 import { coinMarketCapRoutes } from "./coin-market-cap/routes";
-import { marketRoutes } from "./marketplace/routes";
+import { marketRoutes } from "../exchange/marketplace/routes";
 
 export const integrationsRoutes: Array<RouteObject> = [
   {

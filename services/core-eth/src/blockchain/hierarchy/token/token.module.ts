@@ -8,10 +8,10 @@ import { TokenEntity } from "./token.entity";
 import { TokenService } from "./token.service";
 import { TokenServiceEth } from "./token.service.eth";
 import { ContractModule } from "../contract/contract.module";
-import { ContractHistoryModule } from "../../contract-history/contract-history.module";
+import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, ContractHistoryModule, TypeOrmModule.forFeature([TokenEntity])],
+  imports: [ConfigModule, ContractModule, EventHistoryModule, TypeOrmModule.forFeature([TokenEntity])],
   providers: [Logger, ethersRpcProvider, ethersSignerProvider, TokenService, TokenServiceEth],
   exports: [TokenService, TokenServiceEth],
 })

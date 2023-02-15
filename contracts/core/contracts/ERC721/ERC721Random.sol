@@ -8,14 +8,11 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBinance.sol";
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
-
-import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
+import "./ERC721Simple.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC721Random is IERC721Random, ChainLinkGoerli, ERC721Simple, Rarity {
+abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -43,13 +40,12 @@ contract ERC721Random is IERC721Random, ChainLinkGoerli, ERC721Simple, Rarity {
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomness));
 
     delete _queue[requestId];
@@ -60,4 +56,6 @@ contract ERC721Random is IERC721Random, ChainLinkGoerli, ERC721Simple, Rarity {
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  function getRandomNumber() internal virtual returns (bytes32 requestId);
 }

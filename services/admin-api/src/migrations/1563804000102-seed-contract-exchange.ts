@@ -40,15 +40,13 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '',
         'ACTIVE',
         null,
-        '{ALLOWANCE}',
+        '{ALLOWANCE,SPLITTER,REFERRAL}',
         'SYSTEM',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -10,7 +10,7 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class CraftService {

@@ -6,7 +6,7 @@ import { User } from "@gemunion/nest-js-utils";
 import { ContractAutocompleteDto } from "./dto";
 import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/contracts")

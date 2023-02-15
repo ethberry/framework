@@ -5,7 +5,8 @@ import { ConfigService } from "@nestjs/config";
 import { Contract, providers, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+
 import { blockAwait } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ModuleType, ILotteryOption } from "@framework/types";

@@ -21,7 +21,7 @@ import { AddressPipe, ApiAddress, NotFoundInterceptor, PaginationInterceptor, Us
 import { Erc721CollectionService } from "./collection.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateSearchDto } from "../../../hierarchy/template/dto";

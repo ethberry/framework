@@ -1,29 +1,25 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, decimals } from "@gemunion/contracts-constants";
-import { LINK_ADDR, params, tokenId, VRF_ADDR } from "../constants";
+import { params, tokenId } from "../constants";
 
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
-import { LinkToken, VRFCoordinatorMock } from "../../typechain-types";
+import { LinkToken } from "../../typechain-types";
 
 describe("ExchangeClaim", function () {
   let linkInstance: LinkToken;
-  let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function exchange() {
+    ({ linkInstance } = await loadFixture(function exchange() {
       return deployLinkVrfFixture();
     }));
-
-    expect(linkInstance.address).equal(LINK_ADDR);
-    expect(vrfInstance.address).equal(VRF_ADDR);
   });
 
   after(async function () {

@@ -27,7 +27,19 @@ export const useStyles = makeStyles<Theme>(
       },
       dotList: {
         position: "absolute",
+        [theme.breakpoints.down("sm")]: {
+          justifyContent: "space-around",
+          width: "100%",
+        },
         "& .react-multi-carousel-dot": {
+          [theme.breakpoints.down("sm")]: {
+            width: "100%",
+            marginRight: "8px",
+            justifyContent: "center",
+            "&:last-of-type": {
+              marginRight: 0,
+            },
+          },
           "& button": {
             pointerEvents: "all",
             cursor: "pointer",
@@ -38,6 +50,10 @@ export const useStyles = makeStyles<Theme>(
             border: 0,
             backgroundColor: "#C1D6E9",
             overflow: "hidden",
+            [theme.breakpoints.down("sm")]: {
+              width: "100%",
+              maxWidth: "100px",
+            },
             "&:before": {
               content: `''`,
               display: "block",

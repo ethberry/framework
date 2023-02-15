@@ -14,15 +14,10 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
-import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
-import { ProfileModule } from "./profile/profile.module";
-import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
-import { EmailModule } from "./email/email.module";
-import { SettingsModule } from "./settings/settings.module";
-import { PageModule } from "./page/page.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
+import { EcommerceModule } from "./ecommerce/ecommerce.module";
 
 @Module({
   providers: [
@@ -84,13 +79,8 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     }),
     RequestLoggerModule,
     GemunionThrottlerModule,
-    AuthModule,
-    EmailModule,
     HealthModule,
-    ProfileModule,
-    UserModule,
-    SettingsModule,
-    PageModule,
+    EcommerceModule,
     BlockchainModule,
   ],
   controllers: [AppController],

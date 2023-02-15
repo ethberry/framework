@@ -1,17 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, BigNumber } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
   nonce,
   royalty,
+  batchSize,
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";
 
-import { batchSize, featureIds, templateId, tokenId } from "../constants";
+import { contractTemplate, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("CollectionFactory", function () {
@@ -21,7 +22,7 @@ describe("CollectionFactory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721Collection");
+      const erc721 = await ethers.getContractFactory("ERC721CollectionSimple");
 
       const contractInstance = await factory();
 
@@ -48,8 +49,8 @@ describe("CollectionFactory", function () {
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
-            { name: "featureIds", type: "uint8[]" },
             { name: "batchSize", type: "uint96" },
+            { name: "contractTemplate", type: "string" },
           ],
         },
         // Values
@@ -63,8 +64,8 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty,
             baseTokenURI,
-            featureIds,
             batchSize,
+            contractTemplate,
           },
         },
       );
@@ -79,7 +80,7 @@ describe("CollectionFactory", function () {
           symbol: tokenSymbol,
           royalty,
           baseTokenURI,
-          featureIds,
+          contractTemplate,
           batchSize,
         },
         signature,
@@ -96,8 +97,8 @@ describe("CollectionFactory", function () {
             symbol: tokenSymbol,
             royalty: BigNumber.from(royalty),
             baseTokenURI,
-            featureIds,
             batchSize: BigNumber.from(batchSize),
+            contractTemplate,
           },
           owner: owner.address,
         });
@@ -114,7 +115,7 @@ describe("CollectionFactory", function () {
       const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
       expect(hasRole2).to.equal(true);
 
-      const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
+      const tx2 = erc721Instance.mint(receiver.address, templateId);
       await expect(tx2).to.be.revertedWith("MethodNotSupported");
 
       const balance = await erc721Instance.balanceOf(owner.address);

@@ -10,7 +10,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { Erc1155TokenService } from "../token/token.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {

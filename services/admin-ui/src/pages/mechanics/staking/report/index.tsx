@@ -8,12 +8,12 @@ import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 
 import { StakingReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
-import { AddressLink } from "../../../../components/common/address-link";
 
 export const StakingReport: FC = () => {
   const {

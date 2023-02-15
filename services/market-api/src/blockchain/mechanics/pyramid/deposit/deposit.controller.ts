@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { PyramidDepositEntity } from "./deposit.entity";
 import { PyramidDepositService } from "./deposit.service";
 import { PyramidDepositSearchDto } from "./dto";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/pyramid/stakes")

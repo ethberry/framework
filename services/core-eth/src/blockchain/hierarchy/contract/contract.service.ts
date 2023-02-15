@@ -12,15 +12,11 @@ import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
 export class ContractService {
-  public chainId: number;
-
   constructor(
     @InjectRepository(ContractEntity)
     private readonly contractEntityRepository: Repository<ContractEntity>,
     private readonly configService: ConfigService,
-  ) {
-    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
-  }
+  ) {}
 
   public findOne(
     where: FindOptionsWhere<ContractEntity>,
@@ -56,7 +52,8 @@ export class ContractService {
   }
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const contractEntity = await this.findOne({ address: address.toLowerCase(), chainId: this.chainId });
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const contractEntity = await this.findOne({ address: address.toLowerCase(), chainId });
     if (contractEntity) {
       return contractEntity.fromBlock;
     }
@@ -64,9 +61,11 @@ export class ContractService {
   }
 
   public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const entity = await this.findOne({
       address,
-      chainId: this.chainId,
+      chainId,
     });
 
     if (entity) {
@@ -83,9 +82,11 @@ export class ContractService {
   }
 
   public async updateLastBlockByType(contractModule: ModuleType, lastBlock: number): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const entity = await this.findOne({
       contractModule,
-      chainId: this.chainId,
+      chainId,
     });
 
     if (entity) {
@@ -101,10 +102,12 @@ export class ContractService {
   }
 
   public async updateLastBlockByTokenType(contractType: TokenType, lastBlock: number): Promise<number> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const entity = await this.findOne({
       contractType,
       contractModule: ModuleType.HIERARCHY,
-      chainId: this.chainId,
+      chainId,
     });
 
     if (entity) {
@@ -120,7 +123,8 @@ export class ContractService {
   }
 
   public async findAllByType(contractModule: ModuleType): Promise<IContractListenerResult> {
-    const contractEntities = await this.findAll({ contractModule, chainId: this.chainId });
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const contractEntities = await this.findAll({ contractModule, chainId });
 
     if (contractEntities.length) {
       return {
@@ -131,14 +135,34 @@ export class ContractService {
     return { address: [], fromBlock: undefined };
   }
 
-  public async findAllTokensByType(contractType: TokenType): Promise<IContractListenerResult> {
-    const contractEntities = await this.contractEntityRepository
+  public async findAllTokensByType(
+    contractType?: TokenType,
+    contractFeatures?: Array<ContractFeatures>,
+  ): Promise<IContractListenerResult> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    const queryBuilder = this.contractEntityRepository
       .createQueryBuilder("contract")
-      .andWhere("contract.contractType = :contractType", { contractType })
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
-      .andWhere("contract.chainId = :chainId", { chainId: this.chainId })
-      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] })
-      .getMany();
+      .andWhere("contract.chainId = :chainId", { chainId })
+      // it should be nested array
+      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });
+
+    if (contractType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    }
+
+    if (contractFeatures) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
+      }
+    }
+
+    const contractEntities = await queryBuilder.getMany();
 
     if (contractEntities.length) {
       const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);

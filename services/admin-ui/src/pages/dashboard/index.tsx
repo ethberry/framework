@@ -17,15 +17,15 @@ import { Claim } from "./mechanics/claim";
 import { Grade } from "./mechanics/grade";
 import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
-import { Admin } from "./integrations/admin";
+import { Admin } from "./ecommerce/admin";
 import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";
-import { Marketplace } from "./integrations/marketplace";
+import { Marketplace } from "./exchange/marketplace";
 import { Pyramid } from "./mechanics/pyramid";
 import { Breed } from "./mechanics/breed";
 import { Waitlist } from "./mechanics/waitlist";
-import { Wallet } from "./integrations/wallet";
+import { Wallet } from "./exchange/wallet";
 import { Collections } from "./mechanics/collection";
 
 export const Dashboard: FC = () => {

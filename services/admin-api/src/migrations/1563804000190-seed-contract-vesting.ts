@@ -23,8 +23,8 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         name,
         symbol,
         base_token_uri,
+        parameters,
         contract_status,
-        contract_type,
         contract_features,
         contract_module,
         from_block,
@@ -40,9 +40,9 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Linear vesting',
         '',
         '',
+        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
         'ACTIVE',
-        'ERC20',
-        '{}',
+        '{LINEAR}',
         'VESTING',
         '${fromBlock}',
         '${currentDateTime}',
@@ -57,9 +57,9 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Graded vesting',
         '',
         '',
+        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
         'ACTIVE',
-        'ERC20',
-        '{}',
+        '{GRADED}',
         'VESTING',
         '${fromBlock}',
         '${currentDateTime}',
@@ -74,17 +74,15 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Cliff vesting',
         '',
         '',
+        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
         'ACTIVE',
-        'ERC20',
-        '{}',
+        '{CLIFF}',
         'VESTING',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1903, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

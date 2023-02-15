@@ -5,7 +5,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { GradeService } from "./grade.service";
 import { SignGradeDto } from "./dto";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { GradeEntity } from "./grade.entity";
 
 @Public()

@@ -6,7 +6,7 @@ import { ns } from "@framework/constants";
 import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTicketSearchDto } from "@framework/types";
 
 import { LotteryTicketEntity } from "./ticket.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class LotteryTicketService {

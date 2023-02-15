@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
+  AccessControlEventType,
   ContractEventType,
   ContractType,
   ModuleType,
@@ -26,6 +27,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const pyramidContracts = await contractService.findAllByType(ModuleType.PYRAMID);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.PYRAMID,
@@ -44,18 +46,23 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralReward,
               ReferralProgramEventType.ReferralWithdraw,
-              ContractEventType.Paused,
-              ContractEventType.Unpaused,
               PyramidEventType.ERC20PaymentReleased,
               PyramidEventType.PaymentEthReceived,
               PyramidEventType.PaymentEthSent,
               PyramidEventType.PayeeAdded,
               PyramidEventType.PaymentReleased,
               PyramidEventType.PaymentReceived,
+              // MODULE:PAUSE
+              ContractEventType.Paused,
+              ContractEventType.Unpaused,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {
-            fromBlock: pyramidContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: pyramidContracts.fromBlock || startingBlock,
             debug: true,
           },
         };

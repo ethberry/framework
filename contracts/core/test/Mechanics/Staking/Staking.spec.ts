@@ -9,7 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
-import { LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
+import { templateId } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -46,9 +46,6 @@ describe("Staking", function () {
     ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
       return deployLinkVrfFixture();
     }));
-
-    expect(linkInstance.address).equal(LINK_ADDR);
-    expect(vrfInstance.address).equal(VRF_ADDR);
   });
 
   after(async function () {
@@ -710,13 +707,12 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
-      expect(balance).to.equal(2);
+      expect(balance).to.equal(cycles);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(owner, amount);
     });
@@ -1038,7 +1034,6 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2)
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
@@ -1391,13 +1386,12 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
-      expect(balance).to.equal(3);
+      expect(balance).to.equal(cycles + 1);
     });
 
     it("should stake ERC721 & receive ERC721 Common", async function () {
@@ -1735,7 +1729,6 @@ describe("Staking", function () {
       await expect(tx2)
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(erc721RandomInstance, "RandomRequest")
         .to.emit(linkInstance, "Transfer(address,address,uint256)")
         .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
 

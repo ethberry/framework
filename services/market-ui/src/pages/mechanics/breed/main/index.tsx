@@ -89,7 +89,7 @@ export const Breed: FC = () => {
     );
   });
 
-  const onSubmit = async (values: IBreedDto) => {
+  const handleSubmit = async (values: IBreedDto) => {
     await metaFn(values);
   };
 
@@ -118,7 +118,7 @@ export const Breed: FC = () => {
           },
         }}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         showPrompt={false}
         testId="BreedForm"
       >

@@ -1,9 +1,9 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc721CollectionFeatures, IContract, IErc721CollectionDeployDto } from "@framework/types";
+import { Erc721CollectionTemplates, IContract, IErc721CollectionDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -25,7 +25,7 @@ export const Erc721CollectionDeployDialog: FC<IErc721CollectionDeployDialogProps
       testId="Erc721CollectionDeployForm"
       {...rest}
     >
-      <SelectInput name="contractFeatures" options={Erc721CollectionFeatures} multiple />
+      <SelectInput name="contractTemplate" options={Erc721CollectionTemplates} />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

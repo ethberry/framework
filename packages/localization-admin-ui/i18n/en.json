@@ -47,6 +47,7 @@
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
     "top-up": "Top up",
+    "transferOwnership": "Transfer Ownership",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
@@ -55,10 +56,6 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "gender": {
-      "MALE": "Male",
-      "FEMALE": "Female"
-    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -98,18 +95,19 @@
       "UNPACKED": "Unpacked"
     },
     "contractFeatures": {
+      "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
-      "ERC1155OWNER": "ERC1155OWNER",
-      "ERC20OWNER": "ERC20OWNER",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
       "GENES": "Genes",
-      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
-      "PAYMENT_SPLITTER": "PAYMENT_SPLITTER REFERRAL",
       "RANDOM": "Random",
+      "REFERRAL": "Linear referral",
       "SOULBOUND": "Soulbound",
+      "SPLITTER": "Payment Splitter",
       "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
@@ -118,9 +116,30 @@
       "NEW": "New"
     },
     "contractTemplate": {
+      "BLACKLIST": "Blacklist",
+      "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
+      "BLACKLIST_RANDOM": "Blacklist + Random",
+      "BLACKLIST_UPGRADEABLE": "Blacklist + Upgradeable",
+      "BLACKLIST_UPGRADEABLE_RANDOM": "Blacklist + Upgradeable + Random",
+      "BLACKLIST_UPGRADEABLE_RENTABLE": "Blacklist + Upgradeable + Rentable",
+      "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM": "Blacklist + Upgradeable + Rentable + Random",
       "CLIFF": "Cliff",
+      "ERC1155OWNER": "ERC1155 Owner",
+      "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",
+      "ERC20OWNER": "ERC20 Owner",
+      "EXTERNAL": "External",
+      "GENES": "Genes",
       "GRADED": "Graded",
-      "LINEAR": "Linear"
+      "LINEAR": "Linear",
+      "PAUSABLE": "Pausable",
+      "RANDOM": "Random",
+      "SIMPLE": "Simple",
+      "SOULBOUND": "Soulbound",
+      "SOULBOUND_VOTES": "Soulbound + Votes",
+      "STATEHASH": "State Hash",
+      "UPGRADEABLE": "Upgradeable",
+      "UPGRADEABLE_RANDOM": "Upgradeable + Random",
+      "WHITELIST": "Whitelist"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -134,7 +153,12 @@
     },
     "emailType": {
       "DUMMY": "Test email",
+      "FEEDBACK": "Feedback",
       "LINK_TOKEN": "LINK notification"
+    },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male"
     },
     "geneName": {
       "CHARISMA": "Charisma",
@@ -281,6 +305,7 @@
       "snapshot": "Snapshot",
       "startRound": "Start round",
       "submit": "Submit",
+      "transferOwnership": "Transfer Ownership",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
       "upload": "Upload",
@@ -567,14 +592,7 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "hierarchy": {
-        "erc1155": "ERC1155",
-        "erc20": "ERC20",
-        "erc721": "ERC721",
-        "erc998": "ERC998",
-        "native": "NATIVE"
-      },
-      "integrations": {
+      "ecommerce": {
         "admin": {
           "balances": "System Balances",
           "emails": "Emails",
@@ -583,17 +601,33 @@
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
-        },
-        "chain-link": "ChainLink",
-        "coin-gecko": "CoinGecko",
-        "coin-market-cap": "CoinMarketCap",
+        }
+      },
+      "exchange": {
         "marketplace": {
           "chart": "Chart",
           "grade": "Grade",
           "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
+        },
+        "wallet": {
+          "balances": "Balances",
+          "payees": "Payees",
+          "title": "System Wallet"
         }
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "NATIVE"
+      },
+      "integrations": {
+        "chain-link": "ChainLink",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap"
       },
       "mechanics": {
         "breed": "Breed",
@@ -610,12 +644,7 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist"
       },
-      "title": "Dashboard",
-      "wallet": {
-        "balances": "Balances",
-        "payees": "Payees",
-        "title": "System Wallet"
-      }
+      "title": "Dashboard"
     },
     "drop": {
       "title": "Drops"
@@ -805,7 +834,7 @@
       "title": "System Wallet",
       "withdraw": {
         "dialog": "From address",
-        "payee": "Payee will receive",
+        "payee": "Payee will receive: ",
         "title": "Withdraw",
         "token": "Token",
         "total": "Total balance"
@@ -817,6 +846,7 @@
     "active": "Successfully activated",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
+    "claimNotFound": "Claim not found",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",

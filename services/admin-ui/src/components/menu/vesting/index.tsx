@@ -2,15 +2,16 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IVesting } from "@framework/types";
+import { IContract } from "@framework/types";
 import { FundMenuItem } from "./fund";
 import { EthListenerAddMenuItem } from "../contract/eth-add";
 import { EthListenerRemoveMenuItem } from "../contract/eth-remove";
+import { TransferOwnershipMenuItem } from "./transfer-ownership";
 
 export enum VestingActions {}
 
 export interface IVestingActionsMenu {
-  vesting: IVesting;
+  vesting: IContract;
   disabled?: boolean;
   actions?: Array<VestingActions | null>;
 }
@@ -45,8 +46,9 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
       </IconButton>
       <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <FundMenuItem vesting={vesting} />
-        <EthListenerAddMenuItem contract={vesting.contract!} />
-        <EthListenerRemoveMenuItem contract={vesting.contract!} />
+        <TransferOwnershipMenuItem vesting={vesting} />
+        <EthListenerAddMenuItem contract={vesting} />
+        <EthListenerRemoveMenuItem contract={vesting} />
       </Menu>
     </Fragment>
   );

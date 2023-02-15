@@ -4,21 +4,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { constants } from "ethers";
 
-import {
-  ContractFeatures,
-  ContractStatus,
-  IContractSearchDto,
-  INativeContractCreateDto,
-  ModuleType,
-  TokenType,
-} from "@framework/types";
+import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class NativeContractService extends ContractService {
@@ -49,7 +42,7 @@ export class NativeContractService extends ContractService {
         decimals: 18,
         royalty: 0,
         contractType: TokenType.NATIVE,
-        contractFeatures: [ContractFeatures.NATIVE],
+        contractFeatures: [],
         contractModule: ModuleType.HIERARCHY,
         contractStatus: ContractStatus.ACTIVE,
         name: title,

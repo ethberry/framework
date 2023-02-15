@@ -7,8 +7,8 @@ import { AccessControlEventType, ContractEventType, ContractType, LotteryEventTy
 import { LotteryLogService } from "./log.service";
 
 // system contract
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/test/LotteryRandomHardhat.sol/LotteryRandomHardhat.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
@@ -21,8 +21,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const lotteryAddr = configService.get<string>("LOTTERY_ADDR", "");
-        const fromBlock =
-          (await contractService.getLastBlock(lotteryAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const fromBlock = (await contractService.getLastBlock(lotteryAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.LOTTERY,
@@ -41,8 +41,6 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
-              // DEV ONLY
-              ContractEventType.RandomRequest
             ],
           },
           block: {

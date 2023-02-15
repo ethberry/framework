@@ -4,10 +4,12 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  AccessControlEventType,
   ContractType,
   IVestingERC20ReleasedEvent,
   IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
+  IOwnershipTransferredEvent,
   VestingEventType,
 } from "@framework/types";
 
@@ -30,5 +32,15 @@ export class VestingControllerEth {
   @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.EtherReceived })
   public ethReceived(@Payload() event: ILogEvent<IVestingEtherReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.vestingServiceEth.ethReceived(event, context);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.VESTING,
+      eventName: AccessControlEventType.OwnershipTransferred,
+    },
+  ])
+  public ownership(@Payload() event: ILogEvent<IOwnershipTransferredEvent>, @Ctx() context: Log): Promise<void> {
+    return this.vestingServiceEth.ownershipChanged(event, context);
   }
 }

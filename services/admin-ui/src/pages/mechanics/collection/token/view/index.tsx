@@ -4,11 +4,11 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../../tokens/attributes";
-import { AddressLink } from "../../../../../components/common/address-link";
-import { TokenGenesView } from "../../../../tokens/genes";
+import { TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
+import { TokenGenesView } from "../../../../hierarchy/tokens/genes";
 
 export interface IErc721ViewDialogProps {
   open: boolean;

@@ -9,7 +9,7 @@ export const FileInput: FC = () => {
   const classes = useStyles();
 
   const handleChange = (files: Array<File>): void => {
-    form.setValue("files", files, { shouldTouch: true });
+    form.setValue("files", files, { shouldTouch: true, shouldDirty: true });
   };
 
   return (

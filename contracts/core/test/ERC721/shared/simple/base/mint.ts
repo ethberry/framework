@@ -7,7 +7,7 @@ export function shouldMint(factory: () => Promise<Contract>) {
     it("should fail: MethodNotSupported", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
-      const tx = contractInstance.connect(receiver).mint(receiver.address);
+      const tx = contractInstance.mint(receiver.address);
       await expect(tx).to.be.revertedWith("MethodNotSupported");
     });
   });

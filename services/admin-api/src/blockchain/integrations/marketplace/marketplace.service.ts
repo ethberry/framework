@@ -9,7 +9,7 @@ import { ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -36,8 +36,8 @@ export class MarketplaceService {
       chainId: userEntity.chainId,
     });
 
-    queryBuilder.leftJoinAndSelect("token.exchangeHistory", "item_history");
-    queryBuilder.leftJoinAndSelect("item_history.history", "exchange_history");
+    queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
+    queryBuilder.leftJoinAndSelect("exchange.history", "exchange_history");
     queryBuilder.leftJoinAndSelect(
       "exchange_history.assets",
       "price_history",

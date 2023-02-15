@@ -9,13 +9,13 @@ import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenAttributes, TokenS
 import { getMetadata } from "../../../../common/utils";
 
 import { ABI } from "../../../tokens/erc721/token/log/interfaces";
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { MysteryBoxService } from "./box.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -28,10 +28,10 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
-    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -78,7 +78,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, void 0, mysteryboxTokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, void 0, mysteryboxTokenEntity.id);
 
     if (from === constants.AddressZero) {
       mysteryboxTokenEntity.template.amount += 1;
@@ -122,6 +122,6 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, void 0, TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, void 0, TokenEntity.id);
   }
 }

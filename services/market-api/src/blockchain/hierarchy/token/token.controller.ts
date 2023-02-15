@@ -6,7 +6,7 @@ import { User } from "@gemunion/nest-js-utils";
 import { TokenAutocompleteDto } from "./dto";
 import { TokenService } from "./token.service";
 import { TokenEntity } from "./token.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/tokens")

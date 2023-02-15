@@ -21,6 +21,18 @@ export class EmailController {
     });
   }
 
+  @EventPattern(EmailType.FEEDBACK)
+  async feedback(@Payload() payload: IPayload): Promise<any> {
+    return this.mailjetService.sendTemplate({
+      template: 12345,
+      to: ["info@gemunion.io"],
+      data: {
+        displayName: payload.user.displayName,
+        text: payload.feedback.text,
+      },
+    });
+  }
+
   // INTEGRATION:CHAIN-LINK
   @EventPattern(EmailType.LINK_TOKEN)
   async linkToken(@Payload() payload: IPayload): Promise<IEmailResult> {

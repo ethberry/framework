@@ -11,8 +11,8 @@ import {
   Pagination,
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
-// import { emptyStateString } from "@gemunion/draft-js-utils";
 
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -21,7 +21,6 @@ import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures 
 import { StakingEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { StakingDeployButton } from "../../../../components/buttons/mechanics/staking/deploy";
 
 export const StakingContracts: FC = () => {
   const {
@@ -46,6 +45,7 @@ export const StakingContracts: FC = () => {
     baseUrl: "/staking/contracts",
     empty: {
       title: "",
+      description: emptyStateString,
       contractStatus: ContractStatus.NEW,
     },
     search: {
@@ -72,7 +72,6 @@ export const StakingContracts: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <StakingDeployButton />
       </PageHeader>
 
       <ContractSearchForm
@@ -87,11 +86,7 @@ export const StakingContracts: FC = () => {
           {rows.map((contract, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemText>
-                {contract.description && JSON.parse(contract.description).maxStake
-                  ? `Max stakes: ${JSON.parse(contract.description).maxStake}`
-                  : "Max stakes: ∞"}
-              </ListItemText>
+              <ListItemText>{contract.parameters.maxStake}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

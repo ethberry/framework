@@ -4,7 +4,6 @@ import { ConfigModule } from "@nestjs/config";
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
-import { ContractManagerHistoryModule } from "./history/history.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";
 import { Erc20TokenLogModule } from "../tokens/erc20/token/log/log.module";
 import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
@@ -22,7 +21,7 @@ import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq"
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
-
+import { EventHistoryModule } from "../event-history/event-history.module";
 
 @Module({
   imports: [
@@ -36,7 +35,7 @@ import { StakingLogModule } from "../mechanics/staking/log/log.module";
     StakingLogModule,
     PyramidLogModule,
     ContractManagerLogModule,
-    ContractManagerHistoryModule,
+    EventHistoryModule,
     VestingModule,
     ContractModule,
     TemplateModule,

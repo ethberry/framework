@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/mystery-boxes")

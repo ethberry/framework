@@ -6,13 +6,11 @@ import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
-import { ExchangeHistoryModule } from "../history/history.module";
-import { ContractHistoryModule } from "../../contract-history/contract-history.module";
+import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
   imports: [
-    ExchangeHistoryModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     forwardRef(() => TemplateModule),
     TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity, AssetComponentHistoryEntity]),
   ],

@@ -6,17 +6,17 @@ import { PyramidDepositEntity } from "./deposit.entity";
 import { PyramidDepositControllerEth } from "./deposit.controller.eth";
 import { PyramidDepositServiceEth } from "./deposit.service.eth";
 import { PyramidRulesModule } from "../rules/rules.module";
-import { PyramidHistoryModule } from "../history/history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
     ContractModule,
     TokenModule,
     BalanceModule,
-    PyramidHistoryModule,
+    EventHistoryModule,
     forwardRef(() => PyramidRulesModule),
     TypeOrmModule.forFeature([PyramidDepositEntity]),
   ],

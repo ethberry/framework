@@ -9,7 +9,7 @@ import { PyramidRulesEntity } from "./rules.entity";
 import { PyramidLogModule } from "../log/log.module";
 import { PyramidRulesControllerEth } from "./rules.controller.eth";
 import { PyramidRulesServiceEth } from "./rules.service.eth";
-import { PyramidHistoryModule } from "../history/history.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { PyramidHistoryModule } from "../history/history.module";
     ContractModule,
     PyramidLogModule,
     PyramidDepositModule,
-    PyramidHistoryModule,
+    EventHistoryModule,
     TypeOrmModule.forFeature([PyramidRulesEntity]),
   ],
   providers: [Logger, PyramidRulesService, PyramidRulesServiceEth],

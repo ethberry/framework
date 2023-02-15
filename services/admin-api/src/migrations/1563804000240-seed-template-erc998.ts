@@ -128,8 +128,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 2401001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

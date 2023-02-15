@@ -4,6 +4,7 @@ import { In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { BalanceEntity } from "./balance.entity";
 import { IBalanceAutocompleteDto, IBalanceSearchDto, ModuleType } from "@framework/types";
+import { ContractEntity } from "../contract/contract.entity";
 
 @Injectable()
 export class BalanceService {
@@ -43,7 +44,7 @@ export class BalanceService {
   }
 
   public search(dto: IBalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
-    const { accounts, tokenIds, contractIds, minBalance, maxBalance, skip, take } = dto;
+    const { accounts, templateIds, contractIds, minBalance, maxBalance, skip, take } = dto;
 
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");
 
@@ -53,13 +54,7 @@ export class BalanceService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    // if (accounts) {
-    //   if (accounts.length === 1) {
-    //     queryBuilder.andWhere("balance.account = :account", { account: accounts[0] });
-    //   } else {
-    //     queryBuilder.andWhere("balance.account IN(:...accounts)", { accounts });
-    //   }
-    // }
+    queryBuilder.innerJoinAndMapOne("balance.owner", ContractEntity, "owner", "balance.account = owner.address");
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -71,13 +66,13 @@ export class BalanceService {
       }
     }
 
-    if (tokenIds) {
-      if (tokenIds.length === 1) {
-        queryBuilder.andWhere("balance.tokenId = :tokenId", {
-          tokenId: tokenIds[0],
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
         });
       } else {
-        queryBuilder.andWhere("balance.tokenId IN(:...tokenIds)", { tokenIds });
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
       }
     }
 

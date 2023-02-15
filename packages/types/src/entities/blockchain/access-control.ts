@@ -23,5 +23,5 @@ export enum AccessControlRoleHash {
 export interface IAccessControl extends IIdDateBase {
   address: string;
   account: string;
-  role: AccessControlRoleHash;
+  role: AccessControlRoleType;
 }

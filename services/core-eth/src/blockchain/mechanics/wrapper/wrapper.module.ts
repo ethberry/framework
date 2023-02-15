@@ -8,10 +8,10 @@ import { WrapperControllerEth } from "./wrapper.controller.eth";
 import { WrapperLogModule } from "./log/log.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
-import { ContractHistoryModule } from "../../contract-history/contract-history.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { BalanceModule } from "../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../exchange/asset/asset.module";
+import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { AssetModule } from "../../exchange/asset/asset.module";
     TemplateModule,
     BalanceModule,
     AssetModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     WrapperLogModule,
   ],
   providers: [Logger, ethersRpcProvider, WrapperServiceEth],

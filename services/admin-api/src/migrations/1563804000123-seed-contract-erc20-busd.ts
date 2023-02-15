@@ -66,8 +66,6 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         '${currentDateTime}'
       );
     `);
-
-    // await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2207, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

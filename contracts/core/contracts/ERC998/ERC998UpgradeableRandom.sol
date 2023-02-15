@@ -8,14 +8,11 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkBinance.sol";
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
-
-import "../ERC721/interfaces/IERC721Random.sol";
 import "./ERC998Upgradeable.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998Upgradeable, Rarity {
+abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -50,7 +47,7 @@ contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998Upgrad
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
@@ -67,4 +64,6 @@ contract ERC998UpgradeableRandom is IERC721Random, ChainLinkGoerli, ERC998Upgrad
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  function getRandomNumber() internal virtual returns (bytes32 requestId);
 }

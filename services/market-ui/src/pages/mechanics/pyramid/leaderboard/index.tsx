@@ -6,11 +6,11 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { IPyramidLeaderboard, IPyramidLeaderboardSearchDto } from "@framework/types";
 import { PyramidLeaderboardRank, TokenType } from "@framework/types";
 
 import { PyramidLeaderboardSearchForm } from "./form";
-import { AddressLink } from "../../../../components/common/address-link";
 import { formatEther } from "../../../../utils/money";
 
 export const PyramidLeaderboard: FC = () => {

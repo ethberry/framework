@@ -11,8 +11,6 @@ import "./tasks";
 
 config();
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
 export default {
   defaultNetwork: "hardhat",
   networks: {
@@ -22,7 +20,7 @@ export default {
       gas: 7000000,
     },
     besu: {
-      url: process.env.BESU_RPC_URL,
+      url: process.env.JSON_RPC_ADDR_BESU,
       timeout: 142000,
       accounts: [
         "0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63", // 0xfe3b557e8fb62b89f4916b721be55ceb828dbd73
@@ -30,8 +28,8 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-    besugem: {
-      url: process.env.BESU_GEM_RPC_URL,
+    gemunion: {
+      url: process.env.JSON_RPC_ADDR_GEMUNION,
       timeout: 30000,
       accounts: [
         "0x93551a60e21c15bd7cf36eb98cadba972e44aed3e7405f3bcee3c8d8fcb03c95", // 0x61284003E50b2D7cA2B95F93857abB78a1b0F3Ca
@@ -39,8 +37,17 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
-    binancetest: {
-      url: process.env.BINANCE_RPC_URL,
+    binance: {
+      url: process.env.JSON_RPC_ADDR_BINANCE,
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: {
+        mnemonic: process.env.MM_MNEMONIC,
+      },
+    },
+    // has to have underscore
+    binance_test: {
+      url: process.env.JSON_RPC_ADDR_BINANCE_TEST,
       chainId: 97,
       gasPrice: 20000000000,
       accounts: {
@@ -48,8 +55,8 @@ export default {
       },
     },
     goerli: {
-      url: process.env.GOERLI_RPC_URL,
-      accounts: [`0x${PRIVATE_KEY}`],
+      url: process.env.JSON_RPC_ADDR_GORLY,
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
       timeout: 142000,
     },
   },

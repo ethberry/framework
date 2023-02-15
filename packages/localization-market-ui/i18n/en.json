@@ -42,10 +42,6 @@
     "view": "View"
   },
   "enums": {
-    "gender": {
-      "MALE": "Male",
-      "FEMALE": "Female"
-    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -84,6 +80,10 @@
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
       "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
       "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}"
+    },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male"
     },
     "language": {
       "AR": "\uD83C\uDDE6\uD83C\uDDEA Arabic",
@@ -244,6 +244,7 @@
       "status": "Status",
       "templateId": "Template",
       "templateIds": "Templates",
+      "text": "Text",
       "title": "Title",
       "to": "To",
       "token": "Token",
@@ -278,6 +279,7 @@
       "search": "Search...",
       "templateId": "Template",
       "templateIds": "Templates",
+      "text": "Type something",
       "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens"
@@ -425,6 +427,19 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "ecommerce": {
+        "feedback": {
+          "form": "Feedback",
+          "title": "Feedback"
+        },
+        "pages": {
+          "about-us": "About us",
+          "faq": "FAQ",
+          "privacy-policy": "Privacy Policy",
+          "terms-of-services": "Terms of Services",
+          "title": "Pages"
+        }
+      },
       "hierarchy": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -435,11 +450,6 @@
         "coin-gecko": "CoinGecko",
         "ipfs": "IPFS",
         "marketplace": "Marketplace",
-        "pages": {
-          "about-us": "About us",
-          "faq": "FAQ",
-          "title": "Pages"
-        },
         "personal": "My stash",
         "referral": "Referral program"
       },

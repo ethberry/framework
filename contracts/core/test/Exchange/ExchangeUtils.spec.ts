@@ -323,7 +323,7 @@ describe("ExchangeMock", function () {
           {
             tokenType: 4,
             token: erc1155Instance.address,
-            tokenId: 1,
+            tokenId,
             amount,
           },
         ],
@@ -536,7 +536,7 @@ describe("ExchangeMock", function () {
       expect(balance).to.equal(1);
     });
 
-    it("should spend: ERC721 => Contract - ERC721 Holder", async function () {
+    it("should spend: ERC721 => Contract - ERC721 Holder ", async function () {
       // const [owner] = await ethers.getSigners();
 
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
@@ -567,8 +567,6 @@ describe("ExchangeMock", function () {
     });
 
     it("should fail spend: ERC721 => Contract - non ERC721 Holder", async function () {
-      // const [owner] = await ethers.getSigners();
-
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
@@ -695,13 +693,24 @@ describe("ExchangeMock", function () {
 
       await erc998Instance.mintCommon(exchangeMockInstance.address, templateId);
 
+      // await exchangeMockInstance.connect(receiver).testSpend(
+      //   [
+      //     {
+      //       tokenType: 3,
+      //       token: erc998Instance.address,
+      //       tokenId: 1,
+      //       amount: 0,
+      //     },
+      //   ],
+      //   receiver.address,
+      // );
       await exchangeMockInstance.connect(receiver).testSpend(
         [
           {
             tokenType: 3,
             token: erc998Instance.address,
-            tokenId: 1,
-            amount: 0,
+            tokenId,
+            amount,
           },
         ],
         receiver.address,

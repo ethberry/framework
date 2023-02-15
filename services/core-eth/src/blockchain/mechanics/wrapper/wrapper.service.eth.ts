@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 
 import { Log } from "@ethersproject/abstract-provider";
-import { providers, constants } from "ethers";
+import { constants, providers } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
@@ -10,7 +10,6 @@ import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
 import { IERC721TokenTransferEvent, IUnpackWrapper, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
 import { getMetadata } from "../../../common/utils";
@@ -18,6 +17,7 @@ import { ABI } from "../../tokens/erc721/token/log/interfaces";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class WrapperServiceEth {
@@ -27,7 +27,7 @@ export class WrapperServiceEth {
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly configService: ConfigService,
-    private readonly contractHistoryService: ContractHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly tokenServiceEth: TokenServiceEth,
@@ -47,7 +47,7 @@ export class WrapperServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.tokenServiceEth.updateHistory(event, context, void 0, tokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -81,7 +81,7 @@ export class WrapperServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.tokenServiceEth.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;

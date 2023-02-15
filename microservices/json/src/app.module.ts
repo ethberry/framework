@@ -15,7 +15,7 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
-import { MetadataModule } from "./metadata/metadata.module";
+import { MetadataModule } from "./blockchain/metadata/metadata.module";
 
 @Module({
   providers: [

@@ -3,14 +3,21 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateInput } from "@gemunion/mui-inputs-picker";
-import { IVesting, IVestingDeployDto, VestingContractTemplate } from "@framework/types";
+import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
 import { validationSchema } from "./validation";
+
+export interface IVestingDeployProps {
+  contractTemplate: VestingContractTemplate;
+  account: string;
+  startTimestamp: string;
+  duration: number;
+}
 
 export interface IVestingDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IVesting>, form: any) => Promise<void>;
+  onConfirm: (values: IVestingDeployProps, form: any) => Promise<void>;
 }
 
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {

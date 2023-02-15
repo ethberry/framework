@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { Erc20ContractFeatures, IContract, IErc20TokenDeployDto } from "@framework/types";
+import { Erc20ContractTemplates, IContract, IErc20TokenDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -26,10 +26,9 @@ export const Erc20ContractDeployDialog: FC<IErc20ContractDeployDialogProps> = pr
       {...rest}
     >
       <SelectInput
-        name="contractFeatures"
-        options={Erc20ContractFeatures}
-        disabledOptions={[Erc20ContractFeatures.EXTERNAL]}
-        multiple
+        name="contractTemplate"
+        options={Erc20ContractTemplates}
+        disabledOptions={[Erc20ContractTemplates.EXTERNAL]}
       />
       <TextInput name="name" />
       <TextInput name="symbol" />

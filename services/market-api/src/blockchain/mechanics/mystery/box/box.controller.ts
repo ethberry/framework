@@ -7,7 +7,7 @@ import { testChainId } from "@framework/constants";
 import { MysteryboxSearchDto } from "./dto";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 
 @Public()

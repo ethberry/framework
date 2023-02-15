@@ -9,7 +9,7 @@ import { ITemplate, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
-import { Erc721TemplateListItem } from "../../tokens/erc721/template-list/item";
+import { Erc721TemplateListItem } from "../../exchange/tokens/erc721/template-list/item";
 
 export const NewErc721: FC = () => {
   const classes = useStyles();

@@ -16,7 +16,13 @@ contract ERC721Soulbound is ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function _beforeTokenTransfer(address from, address to, uint256, uint256) internal pure override {
+  function _beforeTokenTransfer(
+    address from,
+    address to,
+    uint256 firstTokenId,
+    uint256 batchSize
+  ) internal virtual override {
     require(from == address(0) || to == address(0), "ERC721Soulbound: can't be transferred");
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 }

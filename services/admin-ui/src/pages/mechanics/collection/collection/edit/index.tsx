@@ -2,8 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -65,7 +65,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       {...rest}
     >
       <TextInput name="title" />
-      {/*<RichTextEditor name="description" />*/}
+      <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

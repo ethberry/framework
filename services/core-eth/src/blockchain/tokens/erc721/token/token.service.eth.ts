@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet, BigNumber } from "ethers";
+import { BigNumber, constants, providers, Wallet } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
@@ -8,7 +8,6 @@ import { DeepPartial } from "typeorm";
 import {
   ContractEventType,
   IERC721ConsecutiveTransfer,
-  IERC721RandomRequestEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   TokenAttributes,
@@ -16,8 +15,7 @@ import {
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { callRandom, getMetadata } from "../../../../common/utils";
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { getMetadata } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -27,6 +25,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -44,9 +43,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
     protected readonly breedServiceEth: BreedServiceEth,
-    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -75,7 +74,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.contractHistoryService.findOne({
+        const historyEntity = await this.eventHistoryService.findOne({
           transactionHash,
           eventType: ContractEventType.MintRandom,
         });
@@ -102,7 +101,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, void 0, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;
@@ -136,7 +135,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
-      await this.updateHistory(event, context, templateEntity.contract.id, void 0);
+      await this.eventHistoryService.updateHistory(event, context, templateEntity.contract.id, void 0);
 
       const batchSize = JSON.parse(templateEntity.contract.description).batchSize
         ? JSON.parse(templateEntity.contract.description).batchSize
@@ -178,19 +177,6 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-    // DEV ONLY
-    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    // if (nodeEnv === "development") {    }
-    const {
-      args: { requestId },
-    } = event;
-    const { address } = context;
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

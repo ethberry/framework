@@ -45,7 +45,7 @@ export class CreateAssetComponentHistory1657846609000 implements MigrationInterf
         {
           columnNames: ["history_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.exchange_history`,
+          referencedTableName: `${ns}.event_history`,
           onDelete: "CASCADE",
         },
         {

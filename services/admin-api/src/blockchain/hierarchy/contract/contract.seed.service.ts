@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { generateTestContract, generateTestUser } from "../../../common/test";
 
 @Injectable()

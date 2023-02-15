@@ -8,23 +8,24 @@ import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
 import { OneInch } from "./integrations/1inch";
-import { Personal } from "./integrations/personal";
-import { Marketplace } from "./integrations/marketplace";
+import { Personal } from "./exchange/personal";
+import { Marketplace } from "./exchange/marketplace";
 import { Mysterybox } from "./mechanics/mysterybox";
-import { Pages } from "./integrations/pages";
+import { Pages } from "./ecommerce/pages";
 import { Staking } from "./mechanics/staking";
 import { Lottery } from "./mechanics/lottery";
 import { Vesting } from "./mechanics/vesting";
 import { Claim } from "./mechanics/claim";
 import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
-import { Referral } from "./integrations/referral";
+import { Referral } from "./exchange/referral";
 import { Ipfs } from "./integrations/ipfs";
 import { Wrapper } from "./mechanics/wrapper";
 import { Breed } from "./mechanics/breed";
 import { Pyramid } from "./mechanics/pyramid";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { Waitlist } from "./mechanics/waitlist";
+import { Feedback } from "./ecommerce/feedback";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -60,6 +61,7 @@ export const Dashboard: FC = () => {
           <CoinGecko />
           <Ipfs />
           <Pages />
+          <Feedback />
         </Grid>
       </Grid>
     </div>

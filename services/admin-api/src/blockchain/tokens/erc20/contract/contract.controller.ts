@@ -7,7 +7,7 @@ import { Erc20ContractService } from "./contract.service";
 import { Erc20ContractCreateDto } from "./dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc20-contracts")

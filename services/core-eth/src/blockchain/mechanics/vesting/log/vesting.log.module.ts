@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractType, ModuleType, VestingEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, ModuleType, VestingEventType } from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
@@ -23,6 +23,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const vestingContracts = await contractService.findAllByType(ModuleType.VESTING);
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.VESTING,
@@ -33,10 +34,12 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
               VestingEventType.ERC20Released,
               VestingEventType.EtherReleased,
               VestingEventType.EtherReceived,
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.OwnershipTransferred,
             ],
           },
           block: {
-            fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
+            fromBlock: vestingContracts.fromBlock || startingBlock,
             debug: true,
           },
         };

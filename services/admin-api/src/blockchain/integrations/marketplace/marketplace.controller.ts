@@ -8,7 +8,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { MarketplaceService } from "./marketplace.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { MarketplaceReportSearchDto, MarketplaceSupplySearchDto } from "./dto";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/marketplace/report")

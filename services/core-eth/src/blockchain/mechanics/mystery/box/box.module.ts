@@ -9,12 +9,11 @@ import { MysteryBoxService } from "./box.service";
 import { MysteryLogModule } from "./log/log.module";
 import { MysteryBoxControllerEth } from "./box.controller.eth";
 import { MysteryBoxServiceEth } from "./box.service.eth";
-import { AccessControlModule } from "../../../access-control/access-control.module";
-import { ContractHistoryModule } from "../../../contract-history/contract-history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
@@ -22,9 +21,8 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
     TokenModule,
     BalanceModule,
     MysteryLogModule,
-    AccessControlModule,
     TemplateModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     ContractModule,
     TypeOrmModule.forFeature([MysteryBoxEntity]),
   ],

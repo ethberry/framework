@@ -8,12 +8,6 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ReactRefreshTypeScript from "react-refresh-typescript";
 import "webpack-dev-server";
 
-const nodeModules = "[\\/]node_modules[\\/]";
-const reGemunion = "(@gemunion)";
-const reMui = "(@mui)";
-
-const reVendors = new RegExp(`${nodeModules}(?!${reMui}|${reGemunion})`);
-
 const config: Configuration = {
   mode: "development",
   devtool: "cheap-module-source-map",
@@ -91,19 +85,19 @@ const config: Configuration = {
     splitChunks: {
       cacheGroups: {
         vendors: {
-          test: reVendors,
+          test: /[\\/]node_modules[\\/]((?!@gemunion|@mui).*)[\\/]/,
           name: "vendors",
           chunks: "all",
           enforce: true,
         },
         gemunion: {
-          test: new RegExp(`${nodeModules}${reGemunion}`),
+          test: /[\\/]node_modules[\\/]@gemunion[\\/]/,
           name: "gemunion",
           chunks: "all",
           enforce: true,
         },
         mui: {
-          test: new RegExp(`${nodeModules}${reMui}`),
+          test: /[\\/]node_modules[\\/]@mui[\\/]/,
           name: "mui",
           chunks: "all",
           enforce: true,

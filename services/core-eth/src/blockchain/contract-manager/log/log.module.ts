@@ -3,10 +3,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractManagerEventType, ContractType } from "@framework/types";
+import { AccessControlEventType, ContractManagerEventType, ContractType } from "@framework/types";
 
 // system contract
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+
 import { ContractManagerLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -20,9 +21,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-        const fromBlock =
-          (await contractService.getLastBlock(contractManagerAddr)) ||
-          ~~configService.get<string>("STARTING_BLOCK", "1");
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
@@ -36,9 +36,11 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ContractManagerEventType.ERC998TokenDeployed,
               ContractManagerEventType.ERC1155TokenDeployed,
               ContractManagerEventType.MysteryboxDeployed,
-              ContractManagerEventType.PyramidDeployed,
               ContractManagerEventType.CollectionDeployed,
-              ContractManagerEventType.StakingDeployed
+              // MODULE:ACCESS_CONTROL
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

@@ -29,7 +29,7 @@ export class BalanceSearchDto extends SearchDto implements IBalanceSearchDto {
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public tokenIds: Array<number>;
+  public templateIds: Array<number>;
 
   @ApiPropertyOptional({
     type: String,

@@ -10,7 +10,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class MysteryBoxService {

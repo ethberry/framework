@@ -8,15 +8,11 @@ import {
   IStakingFinishEvent,
   IStakingUpdateEvent,
   IStakingWithdrawEvent,
-  StakingEventType,
   StakingRuleStatus,
-  TStakingEventData,
 } from "@framework/types";
-
-import { StakingHistoryService } from "../history/history.service";
 import { StakingRulesService } from "./rules.service";
 import { StakingDepositService } from "../deposit/deposit.service";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -25,12 +21,11 @@ export class StakingRulesServiceEth {
     private readonly loggerService: LoggerService,
     private readonly stakingRulesService: StakingRulesService,
     private readonly stakingDepositService: StakingDepositService,
-    private readonly historyService: StakingHistoryService,
-    private readonly contractService: ContractService,
+    private readonly eventHistoryService: EventHistoryService,
   ) {}
 
   public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { ruleId, externalId },
     } = event;
@@ -51,7 +46,7 @@ export class StakingRulesServiceEth {
   }
 
   public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { ruleId, active },
     } = event;
@@ -71,7 +66,7 @@ export class StakingRulesServiceEth {
 
   public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
     // TODO fix it!    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { stakingId, ruleId, owner, startTimestamp },
     } = event;
@@ -91,40 +86,10 @@ export class StakingRulesServiceEth {
   }
 
   public async withdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  private async updateHistory(event: ILogEvent<TStakingEventData>, context: Log) {
-    this.loggerService.log(
-      JSON.stringify(
-        Object.assign(
-          { name: event.name, signature: event.signature, topic: event.topic, args: event.args },
-          {
-            address: context.address,
-            transactionHash: context.transactionHash,
-            blockNumber: context.blockNumber,
-          },
-        ),
-        null,
-        "\t",
-      ),
-      StakingRulesServiceEth.name,
-    );
-
-    const { name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.historyService.create({
-      address,
-      transactionHash,
-      eventType: name as StakingEventType,
-      eventData: event.args,
-    });
-
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

@@ -6,18 +6,18 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { IVesting } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
-export interface IMintMenuItemProps {
-  vesting: IVesting;
+export interface IFundMenuItemProps {
+  vesting: IContract;
 }
 
-export const FundMenuItem: FC<IMintMenuItemProps> = props => {
+export const FundMenuItem: FC<IFundMenuItemProps> = props => {
   const { vesting } = props;
 
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
@@ -25,12 +25,12 @@ export const FundMenuItem: FC<IMintMenuItemProps> = props => {
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.NATIVE) {
       return web3Context.provider?.getSigner().sendTransaction({
-        to: vesting.contract!.address,
+        to: vesting.address,
         value: values.amount,
       }) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC20) {
       const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contract.transfer(vesting.contract!.address, values.amount) as Promise<any>;
+      return contract.transfer(vesting.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

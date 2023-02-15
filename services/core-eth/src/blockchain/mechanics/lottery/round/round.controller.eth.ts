@@ -4,9 +4,7 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  ContractEventType,
   ContractType,
-  IERC721RandomRequestEvent,
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
@@ -44,11 +42,5 @@ export class LotteryRoundControllerEth {
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.Released })
   public release(@Payload() event: ILogEvent<ILotteryReleaseEvent>, @Ctx() context: Log): Promise<void> {
     return this.roundServiceEth.release(event, context);
-  }
-
-  // DEV ONLY
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: ContractEventType.RandomRequest })
-  public randomRequest(@Payload() event: ILogEvent<IERC721RandomRequestEvent>, @Ctx() context: Log): Promise<void> {
-    return this.roundServiceEth.randomRequest(event, context);
   }
 }

@@ -3,12 +3,9 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
-import { ContractHistoryModule } from "../../../contract-history/contract-history.module";
-
 import { Erc721TokenControllerEth } from "./token.controller.eth";
 import { Erc721TokenServiceEth } from "./token.service.eth";
 import { Erc721TokenLogModule } from "./log/log.module";
-import { AccessControlModule } from "../../../access-control/access-control.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
@@ -16,13 +13,13 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { BreedModule } from "../../../mechanics/breed/breed.module";
+import { EventHistoryModule } from "../../../event-history/event-history.module";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractHistoryModule,
+    EventHistoryModule,
     Erc721TokenLogModule,
-    AccessControlModule,
     TemplateModule,
     BalanceModule,
     ContractModule,

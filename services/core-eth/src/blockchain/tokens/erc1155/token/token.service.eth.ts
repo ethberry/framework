@@ -12,11 +12,11 @@ import {
   IErc1155TokenUriEvent,
 } from "@framework/types";
 
-import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
@@ -26,11 +26,11 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly contractService: ContractService,
-    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
   }
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingleEvent>, context: Log): Promise<void> {
@@ -44,7 +44,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
-    await this.updateHistory(event, context, void 0, tokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
   }
 
@@ -53,7 +53,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       args: { from, to, ids, values },
     } = event;
 
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
     await Promise.all(
       ids.map((tokenId: string, i: number) =>
@@ -69,11 +69,11 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
   }
 
   public async approvalForAllErc1155(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   public async uri(event: ILogEvent<IErc1155TokenUriEvent>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
   }
 
   private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {

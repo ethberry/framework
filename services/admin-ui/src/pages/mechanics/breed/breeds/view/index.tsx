@@ -60,22 +60,22 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
               <TableCell align="right">
                 {children && children.length ? (
                   <>
-                    <Typography variant="body1" color="textSecondary">
-                      <Link
-                        target={"_blank"}
-                        href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.matron.tokenId : 0}`}
-                      >
-                        {children[0]?.matron.token?.template?.title} #{children[0]?.matron.token?.tokenId}
-                      </Link>
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      <Link
-                        target={"_blank"}
-                        href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.sire.tokenId : 0}`}
-                      >
-                        {children[0]?.sire.token?.template?.title} #{children[0]?.sire.token?.tokenId}
-                      </Link>
-                    </Typography>
+                    {/* <Typography variant="body1" color="textSecondary"> */}
+                    {/*  <Link */}
+                    {/*    target={"_blank"} */}
+                    {/*    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.matron?.tokenId : 0}`} */}
+                    {/*  > */}
+                    {/*    {children[0]?.matron?.token?.template?.title} #{children[0]?.matron?.token?.tokenId} */}
+                    {/*  </Link> */}
+                    {/* </Typography> */}
+                    {/* <Typography variant="body1" color="textSecondary"> */}
+                    {/*  <Link */}
+                    {/*    target={"_blank"} */}
+                    {/*    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.sire?.tokenId : 0}`} */}
+                    {/*  > */}
+                    {/*    {children[0]?.sire?.token?.template?.title} #{children[0]?.sire?.token?.tokenId} */}
+                    {/*  </Link> */}
+                    {/* </Typography> */}
                   </>
                 ) : (
                   "genesisZero"

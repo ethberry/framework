@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ContractEntity } from "./contract.entity";
 
 import { ContractSeedService } from "./contract.seed.service";
-import { UserEntity } from "../../../user/user.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ContractEntity, UserEntity])],

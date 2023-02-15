@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { Erc721TokenService } from "./token.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenSearchDto } from "../../../hierarchy/token/dto";
-import { UserEntity } from "../../../../user/user.entity";
+import { UserEntity } from "../../../../ecommerce/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")

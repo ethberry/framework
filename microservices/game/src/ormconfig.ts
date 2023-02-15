@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { UserEntity } from "./user/user.entity";
+import { UserEntity } from "./ecommerce/user/user.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";

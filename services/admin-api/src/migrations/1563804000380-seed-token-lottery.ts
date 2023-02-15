@@ -29,8 +29,6 @@ export class SeedTokenLotteryAt1563804000380 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 180101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
