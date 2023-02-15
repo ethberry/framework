@@ -1,12 +1,13 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { EventHistoryEntity } from "./event-history.entity";
 import { EventHistoryService } from "./event-history.service";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ContractModule, TypeOrmModule.forFeature([EventHistoryEntity])],
+  imports: [ContractModule, ConfigModule, TypeOrmModule.forFeature([EventHistoryEntity])],
   providers: [EventHistoryService],
   exports: [EventHistoryService],
 })
