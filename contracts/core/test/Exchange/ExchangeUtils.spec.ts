@@ -36,7 +36,7 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Factory = await ethers.getContractFactory("ERC20Mock");
       const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(owner.address, amount);
@@ -67,8 +67,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver.
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363"); // extansion ERC1363, but not ERC1363 receiver
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple"); // extansion ERC1363, but not ERC1363 receiver
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(owner.address, amount);
 
@@ -96,8 +96,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver. Inherited from ExchangeUtils
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363"); // extansion ERC1363, but not ERC1363 receiver
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple"); // extansion ERC1363, but not ERC1363 receiver
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(owner.address, amount);
 
@@ -127,8 +127,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver. Inherited from ExchangeUtils
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363"); // extansion ERC1363, but not ERC1363 receiver
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple"); // extansion ERC1363, but not ERC1363 receiver
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(owner.address, amount);
 
@@ -394,7 +394,7 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Factory = await ethers.getContractFactory("ERC20Mock");
       const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(exchangeMockInstance.address, amount);
@@ -422,8 +422,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363");
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(exchangeMockInstance.address, amount);
 
@@ -450,8 +450,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363");
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       const erc1363ReceiverFactory = await ethers.getContractFactory("ExchangeMock");
       const erc1363ReceiverInstance = await erc1363ReceiverFactory.deploy();
@@ -487,8 +487,8 @@ describe("ExchangeMock", function () {
       const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
       const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20AB1363");
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol);
+      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
       await erc20Instance.mint(exchangeMockInstance.address, amount);
 
