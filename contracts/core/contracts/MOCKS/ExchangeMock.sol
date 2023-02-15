@@ -11,17 +11,16 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "../Exchange/ExchangeUtils.sol";
+import "../ERC20/extensions/ERC1363Receiver.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, ERC1155Holder, ERC721Holder {
-  function testSpendFrom(Asset[] memory price) external payable {
-    address account = _msgSender();
-    spendFrom(price, account, address(this));
+contract ExchangeMock is ExchangeUtils, AccessControl, ERC1155Holder, ERC721Holder, ERC1363Receiver {
+  function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
+    spendFrom(price, spender, receiver);
   }
 
-  function testSpend(Asset[] memory price) external payable {
-    address account = _msgSender();
-
-    spend(price, address(this), account);
+  function testSpend(Asset[] memory price, address receiver) external payable {
+    //` Spender here always Exchange contract - address(this)), due to only he have permision to call ERC20.transfer
+    spend(price, address(this), receiver);
   }
 
   function supportsInterface(
