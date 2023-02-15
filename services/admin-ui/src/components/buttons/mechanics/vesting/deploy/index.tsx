@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
+import { IVestingDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
@@ -38,7 +38,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           account,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
           duration: duration * 60 * 60 * 24, // days in seconds
-          templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
+          contractTemplate,
         },
         sign.signature,
       ) as Promise<void>;
