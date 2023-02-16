@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { ns } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class CreateContractHistory1563804040010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -110,6 +110,11 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         {
           name: "address",
           type: "varchar",
+        },
+        {
+          name: "chain_id",
+          type: "int",
+          default: testChainId,
         },
         {
           name: "transaction_hash",

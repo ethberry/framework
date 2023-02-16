@@ -15,8 +15,6 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 1701001, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,

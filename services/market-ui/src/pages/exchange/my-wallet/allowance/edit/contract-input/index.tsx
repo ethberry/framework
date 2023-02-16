@@ -16,7 +16,7 @@ export const ContractInput: FC = () => {
 
   return (
     <EntityInput
-      name="contractId"
+      name="address"
       controller="contracts"
       data={{
         contractType: [tokenType],

@@ -1,4 +1,4 @@
-import type { IIdDateBase } from "@gemunion/types-collection";
+import type { IDeployable } from "@gemunion/types-blockchain";
 
 import { IContract } from "../hierarchy/contract";
 import { IToken } from "../hierarchy/token";
@@ -147,8 +147,7 @@ export type TContractEventData =
   | TExchangeEvents
   | TReferralEventData;
 
-export interface IEventHistory extends IIdDateBase {
-  address: string;
+export interface IEventHistory extends IDeployable {
   transactionHash: string;
   eventType: ContractEventType;
   eventData: TContractEventData;

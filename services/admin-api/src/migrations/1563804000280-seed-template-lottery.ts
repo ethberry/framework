@@ -15,8 +15,6 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 1801001, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,

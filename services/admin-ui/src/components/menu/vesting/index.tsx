@@ -3,10 +3,10 @@ import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
-import { FundMenuItem } from "./fund";
+
+import { FundMenuItem, VestingAllowanceMenu } from "../../buttons";
 import { EthListenerAddMenuItem } from "../contract/eth-add";
 import { EthListenerRemoveMenuItem } from "../contract/eth-remove";
-import { TransferOwnershipMenuItem } from "./transfer-ownership";
 
 export enum VestingActions {}
 
@@ -45,8 +45,8 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <FundMenuItem vesting={vesting} />
-        <TransferOwnershipMenuItem vesting={vesting} />
+        <VestingAllowanceMenu contract={vesting} />
+        <FundMenuItem contract={vesting} />
         <EthListenerAddMenuItem contract={vesting} />
         <EthListenerRemoveMenuItem contract={vesting} />
       </Menu>

@@ -2,7 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import {
+  ITokenAutocompleteDto,
+  ITokenSearchDto,
+  ModuleType,
+  TokenAttributes,
+  TokenRarity,
+  TokenType,
+} from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../ecommerce/user/user.entity";
@@ -124,12 +131,46 @@ export class TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<TokenEntity>> {
+  public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    const { contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
-    queryBuilder.select(["id", "tokenId"]);
+    queryBuilder.select(["token.id", "token.tokenId"]);
+
+    queryBuilder.leftJoin("token.balance", "balance");
+    queryBuilder.addSelect(["balance.account"]);
+
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
+
     queryBuilder.leftJoin("token.template", "template");
-    queryBuilder.addSelect(["template.title"]);
+    queryBuilder.addSelect(["template.title", "template.id"]);
+
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address", "contract.contractType"]);
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",

@@ -1,10 +1,12 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractEventType, TContractEventData } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { EventHistoryEntity } from "./event-history.entity";
 import { ContractService } from "../hierarchy/contract/contract.service";
@@ -17,6 +19,7 @@ export class EventHistoryService {
     @InjectRepository(EventHistoryEntity)
     private readonly contractEventEntityRepository: Repository<EventHistoryEntity>,
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async create(dto: DeepPartial<EventHistoryEntity>): Promise<EventHistoryEntity> {
@@ -73,6 +76,8 @@ export class EventHistoryService {
     this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
     this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
 
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
@@ -92,6 +97,7 @@ export class EventHistoryService {
       eventData: args,
       tokenId: tokenId || null,
       contractId,
+      chainId,
     });
 
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));

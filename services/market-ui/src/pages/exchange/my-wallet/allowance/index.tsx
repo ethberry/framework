@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { emptyToken } from "@gemunion/mui-inputs-asset";
+import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
@@ -57,14 +57,14 @@ export const AllowanceButton: FC = () => {
   return (
     <Fragment>
       <Button onClick={handleAllowance}>
-        <FormattedMessage id="pages.my-wallet.allowance" />
+        <FormattedMessage id="form.buttons.allowance" />
       </Button>
       <AllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
-          token: emptyToken as any,
+          token: getEmptyToken(),
           address: "",
         }}
       />

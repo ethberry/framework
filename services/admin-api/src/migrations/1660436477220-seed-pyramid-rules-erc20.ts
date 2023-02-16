@@ -22,8 +22,6 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 90252, true);`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,
