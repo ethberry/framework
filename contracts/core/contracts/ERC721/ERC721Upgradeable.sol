@@ -41,7 +41,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     return true;
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721Simple) returns (bool) {
     return interfaceId == type(IERC721Upgradeable).interfaceId || super.supportsInterface(interfaceId);
   }
 }

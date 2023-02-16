@@ -35,7 +35,7 @@ export enum Erc20ContractTemplates {
 export enum Erc721ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
-  "USABLE" = "USABLE",
+  "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",

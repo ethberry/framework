@@ -41,7 +41,7 @@ contract ERC721BlacklistUpgradeable is IERC721Upgradeable, ERC721Blacklist {
     return true;
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721Blacklist) returns (bool) {
     return interfaceId == type(IERC721Upgradeable).interfaceId || super.supportsInterface(interfaceId);
   }
 }
