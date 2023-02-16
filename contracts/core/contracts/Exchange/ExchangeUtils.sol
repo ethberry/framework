@@ -11,14 +11,14 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "../ERC20/extensions/ERC1363Receiver.sol";
 
-import "../ERC20/extensions/IERC1363.sol";
+import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-erc20/contracts/interfaces/IERC1363.sol";
+
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./interfaces/IAsset.sol";
-
 
 contract ExchangeUtils is ERC1363Receiver {
   using Address for address;

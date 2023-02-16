@@ -38,6 +38,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'UPGRADEABLE',
         'GENES',
         'PAUSABLE',
+        'RENTABLE',
         'REFERRAL',
         'SPLITTER',
         'ALLOWANCE',
