@@ -6,7 +6,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 
-describe("ERC721BlacklistUpgradeableRandom", function () {
+describe("ERC721BlacklistUpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
@@ -20,5 +20,6 @@ describe("ERC721BlacklistUpgradeableRandom", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
+    InterfaceId.IERC4907,
   );
 });

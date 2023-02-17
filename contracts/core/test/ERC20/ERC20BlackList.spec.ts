@@ -1,5 +1,5 @@
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 
 import { deployERC20 } from "./shared/fixtures";
@@ -12,4 +12,11 @@ describe("ERC20Blacklist", function () {
   shouldBehaveLikeBlackList(factory);
 
   shouldBehaveLikeERC20Simple(factory);
+
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC20,
+    InterfaceId.IERC1363,
+  );
 });

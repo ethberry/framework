@@ -24,6 +24,8 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
 
   mapping(bytes32 => Request) internal _queue;
 
+  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
+
   constructor(
     string memory name,
     string memory symbol,

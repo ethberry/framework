@@ -35,7 +35,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
-  bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
+  bytes4 private constant IERC721_RANDOM_ID = type(IERC721Random).interfaceId;
   bytes4 private constant IERC721_MYSTERYBOX = type(IERC721Mysterybox).interfaceId;
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes32 public constant TEMPLATE_ID = keccak256("TEMPLATE_ID");
@@ -168,7 +168,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         rewardAmount = rewardItem.amount * multiplier;
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
-        bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM);
+        bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM_ID);
         bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERYBOX);
 
         for (uint256 i = 0; i < multiplier; i++) {

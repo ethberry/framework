@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { templateId, tokenId } from "../constants";
 
@@ -71,4 +71,6 @@ describe("ERC721Soulbound", function () {
       await expect(tx2).to.be.revertedWith("ERC721Soulbound: can't be transferred");
     });
   });
+
+  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
 });

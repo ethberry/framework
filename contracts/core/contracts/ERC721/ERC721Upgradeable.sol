@@ -16,6 +16,9 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);
 
+  bytes4 private constant IERC49064906_ID = 0x49064906;
+  bytes4 private constant IERC721_UPGRADEABLE_ID = type(IERC721Upgradeable).interfaceId;
+
   constructor(
     string memory name,
     string memory symbol,
@@ -42,6 +45,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721Simple) returns (bool) {
-    return interfaceId == type(IERC721Upgradeable).interfaceId || super.supportsInterface(interfaceId);
+    return
+      interfaceId == IERC49064906_ID || interfaceId == IERC721_UPGRADEABLE_ID || super.supportsInterface(interfaceId);
   }
 }

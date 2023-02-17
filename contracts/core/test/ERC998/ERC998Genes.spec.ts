@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { shouldMint } from "../ERC721/shared/simple/base/mint";
 import { shouldSafeMint } from "../ERC721/shared/simple/base/safeMint";
@@ -25,4 +25,6 @@ describe("ERC998Genes", function () {
       await expect(tx).to.be.revertedWith("MethodNotSupported");
     });
   });
+
+  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
 });

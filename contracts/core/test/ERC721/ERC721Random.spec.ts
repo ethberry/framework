@@ -1,5 +1,5 @@
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
@@ -14,4 +14,6 @@ describe("ERC721Random", function () {
 
   shouldMintCommon(factory);
   shouldMintRandom(factory);
+
+  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
 });

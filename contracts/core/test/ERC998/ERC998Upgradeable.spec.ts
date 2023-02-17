@@ -1,5 +1,5 @@
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
@@ -12,4 +12,11 @@ describe("ERC998Upgradeable", function () {
 
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
+
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    InterfaceId.IERC4906,
+  );
 });

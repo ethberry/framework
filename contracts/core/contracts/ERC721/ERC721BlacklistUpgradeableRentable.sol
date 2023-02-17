@@ -10,7 +10,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC4907.sol";
 
 import "./ERC721BlacklistUpgradeable.sol";
 
-abstract contract ERC721BlacklistUpgradeableRentable is ERC721BlacklistUpgradeable, ERC4907 {
+contract ERC721BlacklistUpgradeableRentable is ERC721BlacklistUpgradeable, ERC4907 {
   constructor(
     string memory name,
     string memory symbol,

@@ -22,6 +22,8 @@ abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
 
   mapping(bytes32 => Request) internal _queue;
 
+  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
+
   constructor(
     string memory name,
     string memory symbol,
@@ -57,7 +59,7 @@ abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
+    return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }
 
   function getRandomNumber() internal virtual returns (bytes32 requestId);

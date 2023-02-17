@@ -1,5 +1,5 @@
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 
 import { shouldMintCommon } from "./shared/mintCommon";
@@ -15,4 +15,6 @@ describe("ERC721Blacklist", function () {
 
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
+
+  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
 });

@@ -1,6 +1,6 @@
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enumerable";
 
 import { shouldMintCommon } from "./shared/mintCommon";
@@ -16,4 +16,11 @@ describe("ERC721BlacklistUpgradeable", function () {
 
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
+
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    InterfaceId.IERC4906,
+  );
 });
