@@ -56,7 +56,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.attributes" />
               </TableCell>
               <TableCell align="right">
-                <TokenAttributesView attributes={JSON.parse(attributes)} />
+                <TokenAttributesView attributes={attributes} />
               </TableCell>
             </TableRow>
             {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
