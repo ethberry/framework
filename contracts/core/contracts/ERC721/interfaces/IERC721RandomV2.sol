@@ -6,8 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-interface IERC721Random {
-  event MintRandom(bytes32 requestId, address to, uint256 randomness, uint256 templateId, uint256 tokenId);
+interface IERC721RandomV2 {
   event MintRandomV2(uint256 requestId, address to, uint256[] randomWords, uint256 templateId, uint256 tokenId);
 
   function mintRandom(address to, uint256 templateId) external;
