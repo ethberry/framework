@@ -29,6 +29,9 @@ export class EventHistoryEntity extends IdDateBaseEntity implements IEventHistor
   @Column({ type: "int", nullable: true })
   public tokenId: number | null;
 
+  @Column({ type: "int" })
+  public chainId: number;
+
   @JoinColumn()
   @ManyToOne(_type => TokenEntity, token => token.history)
   public token: TokenEntity;

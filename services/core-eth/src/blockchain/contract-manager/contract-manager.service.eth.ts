@@ -197,6 +197,7 @@ export class ContractManagerServiceEth {
       attributes: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       imageUrl: `${this.imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
