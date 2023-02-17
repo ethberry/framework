@@ -42,7 +42,10 @@ abstract contract ERC998Random is IERC721Random, ERC998Simple, Rarity {
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 

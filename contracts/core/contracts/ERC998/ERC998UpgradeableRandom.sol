@@ -30,7 +30,9 @@ abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, R
   ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) external override(ERC998Upgradeable) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
@@ -43,7 +45,10 @@ abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, R
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 

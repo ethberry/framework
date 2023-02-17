@@ -37,7 +37,10 @@ abstract contract ERC721UpgradeableRandom is IERC721Random, ERC721Upgradeable, R
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 

@@ -34,7 +34,10 @@ abstract contract ERC721BlacklistUpgradeableRentableRandom is
   ) ERC721BlacklistUpgradeableRentable(name, symbol, royalty, baseTokenURI) {}
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 

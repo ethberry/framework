@@ -36,7 +36,10 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 

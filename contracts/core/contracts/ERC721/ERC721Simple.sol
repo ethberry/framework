@@ -12,6 +12,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABER.sol";
 
+import "./interfaces/errors.sol";
 import "./interfaces/IERC721Simple.sol";
 
 contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
@@ -36,7 +37,9 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaD
   }
 
   function _mintCommon(address account, uint256 templateId) internal returns (uint256) {
-    require(templateId != 0, "ERC721Simple: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
