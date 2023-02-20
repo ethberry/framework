@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
-import { WalletModule } from "./wallet/wallet.module";
+import { PayeesModule } from "./payees/payees.module";
 
 @Module({
-  imports: [WalletModule],
+  imports: [PayeesModule],
 })
 export class ExchangeModule {}

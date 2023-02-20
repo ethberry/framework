@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, FindOptionsWhere, FindOneOptions } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import csv2json from "csvtojson";
 import { validateSync } from "class-validator";
 
@@ -32,8 +32,11 @@ export class Erc721CollectionService extends ContractService {
     super(contractEntityRepository);
   }
 
-  public searchContracts(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.COLLECTION);
+  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(
+      Object.assign(dto, { contractType: [TokenType.ERC721], contractModule: [ModuleType.COLLECTION] }),
+      userEntity,
+    );
   }
 
   public searchTemplates(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

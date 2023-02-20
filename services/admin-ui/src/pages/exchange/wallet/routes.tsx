@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../index-wrapper";
 import { Wallet } from "../../dashboard/exchange/wallet";
-import { SystemBalances } from "./balances";
+import { SystemContracts } from "./balances";
 import { SystemPayees } from "./payees";
 
 export const walletRoutes: Array<RouteObject> = [
@@ -22,8 +22,8 @@ export const walletRoutes: Array<RouteObject> = [
         path: "/wallet/balances",
         element: <Protected />,
         children: [
-          { index: true, element: <SystemBalances /> },
-          { path: "/wallet/balances/:id", element: <SystemBalances /> },
+          { index: true, element: <SystemContracts /> },
+          { path: "/wallet/balances/:id", element: <SystemContracts /> },
         ],
       },
       {

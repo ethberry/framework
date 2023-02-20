@@ -7,7 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IBalance, IContract } from "@framework/types";
 
-import { ExchangeReleasableButton, ExchangeReleaseButton } from "../../../../../components/buttons";
+import { VestingReleasableButton, VestingReleaseButton } from "../../../../../components/buttons";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;
@@ -50,10 +50,10 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
         <List>
           {rows.map((row, i) => (
             <ListItem key={i}>
-              <ListItemText>{row.token!.template!.contract!.title}</ListItemText>
+              <ListItemText>{row.token?.template?.contract?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <ExchangeReleasableButton balance={row} />
-                <ExchangeReleaseButton balance={row} />
+                <VestingReleasableButton balance={row} />
+                <VestingReleaseButton balance={row} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

@@ -3,11 +3,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
 
-export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
+export class SeedContractChainLinkAt1563804000199 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
-    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
+    const vrfAddress = process.env.VRF_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
@@ -29,19 +29,19 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        2,
-        '${exchangeAddress}',
+        5,
+        '${vrfAddress.toLowerCase()}',
         '${chainId}',
-        'EXCHANGE',
+        'VRF COORDINATOR',
         '${JSON.stringify({})}',
         '',
-        'Exchange',
+        'ChainLink VRF',
         '',
         '',
         'ACTIVE',
         null,
-        '{WITHDRAW,ALLOWANCE,SPLITTER,REFERRAL}',
-        'SYSTEM',
+        '{}',
+        'TEST',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

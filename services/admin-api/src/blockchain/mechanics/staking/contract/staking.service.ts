@@ -18,6 +18,6 @@ export class StakingService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, void 0, ModuleType.STAKING);
+    return super.search(Object.assign(dto, { contractModule: [ModuleType.STAKING] }), userEntity);
   }
 }

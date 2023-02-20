@@ -29,7 +29,13 @@ export class Erc20ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC20, ModuleType.HIERARCHY);
+    return super.search(
+      Object.assign(dto, {
+        contractType: [TokenType.ERC20],
+        contractModule: [ModuleType.HIERARCHY],
+      }),
+      userEntity,
+    );
   }
 
   public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {

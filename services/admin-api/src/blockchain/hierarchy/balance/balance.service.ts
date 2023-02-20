@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { BalanceEntity } from "./balance.entity";
 import { IBalanceAutocompleteDto, IBalanceSearchDto, ModuleType } from "@framework/types";
@@ -44,7 +44,7 @@ export class BalanceService {
   }
 
   public search(dto: IBalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
-    const { accounts, templateIds, contractIds, minBalance, maxBalance, skip, take } = dto;
+    const { accounts, templateIds, contractIds, skip, take } = dto;
 
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");
 
@@ -83,16 +83,6 @@ export class BalanceService {
         });
       } else {
         queryBuilder.andWhere("balance.account IN(:...accounts)", { accounts });
-      }
-    }
-
-    if (minBalance || maxBalance) {
-      if (maxBalance) {
-        queryBuilder.andWhere("balance.amount <= :maxBalance", { maxBalance });
-      }
-
-      if (minBalance) {
-        queryBuilder.andWhere("balance.amount >= :minBalance", { minBalance });
       }
     }
 

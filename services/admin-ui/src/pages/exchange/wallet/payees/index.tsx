@@ -3,6 +3,7 @@ import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { AddressLink } from "@gemunion/mui-scanner";
 import { IUserSearchDto, IWalletPayee } from "@framework/types";
 
 export const SystemPayees: FC = () => {
@@ -23,9 +24,11 @@ export const SystemPayees: FC = () => {
         <List>
           {rows.map((payee, i) => (
             <ListItem key={i}>
-              <ListItemText>{payee.contract!.title}</ListItemText>
-              <ListItemText>{payee.account}</ListItemText>
-              <ListItemText>{payee.shares}%</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{payee.contract!.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                <AddressLink address={payee.account} />
+              </ListItemText>
+              <ListItemText sx={{ width: 0.2, textAlign: "right" }}>{payee.shares}</ListItemText>
             </ListItem>
           ))}
         </List>
