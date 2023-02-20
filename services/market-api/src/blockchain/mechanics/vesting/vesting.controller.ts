@@ -1,10 +1,11 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { VestingService } from "./vesting.service";
 import { VestingSearchDto } from "./dto";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Public()
 @Controller("/vesting")
@@ -13,8 +14,11 @@ export class VestingController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: VestingSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return this.vestingService.search(dto);
+  public search(
+    @Query() dto: VestingSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
+    return this.vestingService.search(dto, userEntity);
   }
 
   @Get("/:id")

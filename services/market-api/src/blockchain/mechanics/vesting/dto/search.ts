@@ -1,12 +1,11 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
-import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
 import { IVestingSearchDto, VestingContractTemplate } from "@framework/types";
 
-export class VestingSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IVestingSearchDto {
+export class VestingSearchDto extends PaginationDto implements IVestingSearchDto {
   @ApiPropertyOptional({
     enum: VestingContractTemplate,
     isArray: true,
@@ -18,4 +17,6 @@ export class VestingSearchDto extends Mixin(AccountOptionalDto, PaginationDto) i
   @Transform(({ value }) => value as Array<VestingContractTemplate>)
   @IsEnum(VestingContractTemplate, { each: true, message: "badInput" })
   public contractTemplate: Array<VestingContractTemplate>;
+
+  public account: string;
 }

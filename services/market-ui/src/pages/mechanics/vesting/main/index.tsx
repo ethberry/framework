@@ -1,7 +1,6 @@
 import { FC, Fragment } from "react";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination, Tooltip } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
-import { useWeb3React } from "@web3-react/core";
 import { useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -15,8 +14,6 @@ import { VestingReleaseButton } from "../../../../components/buttons";
 import { emptyVestingContract } from "../../../../components/common/interfaces/empty-contract";
 
 export const Vesting: FC = () => {
-  const { account } = useWeb3React();
-
   const {
     rows,
     count,
@@ -30,9 +27,6 @@ export const Vesting: FC = () => {
     handleChangePage,
   } = useCollection<IContract, IVestingSearchDto>({
     baseUrl: `/vesting`,
-    search: {
-      account,
-    },
     empty: emptyVestingContract,
   });
 

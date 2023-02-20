@@ -3,8 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IVestingSearchDto } from "@framework/types";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { ModuleType } from "@framework/types";
+
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class VestingService {
@@ -20,8 +22,8 @@ export class VestingService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async search(dto: IVestingSearchDto): Promise<[Array<ContractEntity>, number]> {
-    const { account, contractTemplate, skip, take } = dto;
+  public async search(dto: IVestingSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    const { contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");
 
@@ -40,11 +42,9 @@ export class VestingService {
       }
     }
 
-    if (account) {
-      queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
-        account,
-      });
-    }
+    queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
+      account: userEntity.wallet,
+    });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
