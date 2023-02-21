@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { wallet } from "@gemunion/constants";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns, testChainId } from "@framework/constants";
@@ -48,7 +49,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4207,
-        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        '${process.env.BUSD_ADDR || wallet}',
         '${chainId}',
         'BUSD',
         '${simpleFormatting}',

@@ -25,7 +25,7 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
-        12050101,
+        42050101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

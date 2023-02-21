@@ -95,7 +95,11 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
       
         -- MODULE:CHAINLINK
         'RandomnessRequest',
-        'RandomnessRequestId'
+        'RandomnessRequestId',
+        
+        -- MODULE:CHAINLINKV2
+        'RandomWordsRequested',
+        'RandomWordsFulfilled'
       );
     `);
 
