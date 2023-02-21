@@ -12,6 +12,8 @@ import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Breed/Breed.sol";
 
+import "../utils/constants.sol";
+
 abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
@@ -23,8 +25,6 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
   }
 
   mapping(bytes32 => Request) internal _queue;
-
-  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
 
   constructor(
     string memory name,

@@ -17,6 +17,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
+import "../../utils/constants.sol";
 import "./interfaces/IStaking.sol";
 import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
@@ -34,11 +35,6 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
-
-  bytes4 private constant IERC721_RANDOM_ID = type(IERC721Random).interfaceId;
-  bytes4 private constant IERC721_MYSTERYBOX = type(IERC721Mysterybox).interfaceId;
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 public constant TEMPLATE_ID = keccak256("TEMPLATE_ID");
 
   struct Metadata {
     bytes32 key;
@@ -169,7 +165,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM_ID);
-        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERYBOX);
+        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID);
 
         for (uint256 i = 0; i < multiplier; i++) {
           if (randomInterface) {

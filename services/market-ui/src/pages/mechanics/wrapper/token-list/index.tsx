@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import ERC721TokenWrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721TokenWrapper.sol/ERC721TokenWrapper.json";
+import ERC721WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 import { WrapperTokenListItem } from "./item";
 import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
@@ -56,11 +56,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
       return token;
     });
 
-    const contract = new Contract(
-      values.contract.address,
-      ERC721TokenWrapperSol.abi,
-      web3Context.provider?.getSigner(),
-    );
+    const contract = new Contract(values.contract.address, ERC721WrapperSol.abi, web3Context.provider?.getSigner());
 
     return contract.mintBox(web3Context.account, values.templateId, items, { value: totalValue }) as Promise<any>;
   });

@@ -12,6 +12,8 @@ import "./interfaces/IERC721Random.sol";
 import "./ERC721Blacklist.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
+import "../utils/constants.sol";
+
 abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarity {
   using Counters for Counters.Counter;
 
@@ -21,8 +23,6 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
   }
 
   mapping(bytes32 => Request) internal _queue;
-
-  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
 
   constructor(
     string memory name,

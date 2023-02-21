@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../utils/constants.sol";
 import "./ERC998Upgradeable.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
@@ -21,8 +22,6 @@ abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, R
   }
 
   mapping(bytes32 => Request) internal _queue;
-
-  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
 
   constructor(
     string memory name,

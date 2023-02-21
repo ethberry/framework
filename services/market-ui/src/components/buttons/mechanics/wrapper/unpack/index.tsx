@@ -7,7 +7,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC721TokenWrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721TokenWrapper.sol/ERC721TokenWrapper.json";
+import ERC721WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 export interface IWrapperUnpackButtonProps {
   token: IToken;
@@ -19,7 +19,7 @@ export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
     const contract = new Contract(
       token.template!.contract!.address,
-      ERC721TokenWrapperSol.abi,
+      ERC721WrapperSol.abi,
       web3Context.provider?.getSigner(),
     );
     return contract.unpack(token.tokenId) as Promise<void>;

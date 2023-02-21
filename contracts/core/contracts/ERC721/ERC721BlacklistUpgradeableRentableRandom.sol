@@ -12,6 +12,8 @@ import "./interfaces/IERC721Random.sol";
 import "./ERC721BlacklistUpgradeableRentable.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 
+import "../utils/constants.sol";
+
 abstract contract ERC721BlacklistUpgradeableRentableRandom is
   IERC721Random,
   ERC721BlacklistUpgradeableRentable,
@@ -25,8 +27,6 @@ abstract contract ERC721BlacklistUpgradeableRentableRandom is
   }
 
   mapping(bytes32 => Request) internal _queue;
-
-  bytes4 private constant IERC721_RANDOM_ID = 0x32034d27;
 
   constructor(
     string memory name,

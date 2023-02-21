@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "../../utils/constants.sol";
 import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
@@ -19,9 +20,6 @@ import "./interfaces/IERC721Ticket.sol";
 abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
   using Address for address;
   using SafeERC20 for IERC20;
-
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
   address private _ticketFactory;
   address private _acceptedToken;

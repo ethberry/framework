@@ -9,7 +9,7 @@ import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 
 describe("Wrapper", function () {
-  const factory = () => deployERC721("ERC721TokenWrapperTest");
+  const factory = () => deployERC721("ERC721WrapperTest");
   const erc20Factory = () => deployERC20();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);

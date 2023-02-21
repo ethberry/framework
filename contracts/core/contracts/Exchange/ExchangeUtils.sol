@@ -12,23 +12,20 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
 import "@gemunion/contracts-erc20/contracts/interfaces/IERC1363.sol";
 
+import "../utils/constants.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./interfaces/IAsset.sol";
 
-contract ExchangeUtils is ERC1363Receiver {
+contract ExchangeUtils {
   using Address for address;
   using SafeERC20 for IERC20;
 
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
-
-  bytes4 private constant IERC721_RANDOM_ID = type(IERC721Random).interfaceId;
-  bytes4 private constant IERC1363_ID = type(IERC1363).interfaceId;
 
   function spendFrom(Asset[] memory price, address account, address receiver) internal {
     uint256 length = price.length;
@@ -57,11 +54,13 @@ contract ExchangeUtils is ERC1363Receiver {
       }
     }
 
-    require(totalAmount == msg.value, "Exchange: Wrong amount");
-    emit PaymentEthReceived(receiver, msg.value);
+    if (totalAmount > 0) {
+      require(totalAmount == msg.value, "Exchange: Wrong amount");
+      emit PaymentEthReceived(receiver, msg.value);
+    }
   }
 
-  function spend(Asset[] memory price, address account, address receiver) internal {
+  function spend(Asset[] memory price, address receiver) internal {
     uint256 length = price.length;
 
     uint256 totalAmount;
@@ -76,9 +75,15 @@ contract ExchangeUtils is ERC1363Receiver {
           SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
         }
       } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
-        IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
+        IERC721(ingredient.token).safeTransferFrom(address(this), receiver, ingredient.tokenId);
       } else if (ingredient.tokenType == TokenType.ERC1155) {
-        IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
+        IERC1155(ingredient.token).safeTransferFrom(
+          address(this),
+          receiver,
+          ingredient.tokenId,
+          ingredient.amount,
+          "0x"
+        );
       } else {
         revert("Exchange: unsupported token type");
       }
