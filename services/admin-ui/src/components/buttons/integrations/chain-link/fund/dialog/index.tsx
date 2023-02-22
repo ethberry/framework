@@ -4,19 +4,16 @@ import { Contract } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import { TextInput } from "@gemunion/mui-inputs-core";
 
 import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
-import { ContractInput } from "../../../../../inputs/contract";
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
 import { formatEther } from "../../../../../../utils/money";
 
 export interface IChainLinkFundDto {
-  contractId: number;
-  contract: {
-    address: string;
-  };
+  subscriptionId: string;
   amount: string;
 }
 
@@ -49,7 +46,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       testId="FundLinkForm"
       {...rest}
     >
-      <ContractInput name="contractId" controller="chain-link" />
+      <TextInput name="subscriptionId" />
       <AmountInput symbol="LINK " decimals={18} getCurrentBalance={getCurrentBalance} />
     </FormDialog>
   );
