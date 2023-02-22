@@ -5,6 +5,7 @@ import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ICraft, TokenType } from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
@@ -17,6 +18,8 @@ interface ICraftButtonProps {
 
 export const CraftButton: FC<ICraftButtonProps> = props => {
   const { craft } = props;
+
+  const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -48,11 +51,15 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    const { account } = web3Context;
+
     return metaFnWithSign(
       {
         url: "/craft/sign",
         method: "POST",
         data: {
+          account,
+          referrer: settings.getReferrer(),
           craftId: craft.id,
         },
       },

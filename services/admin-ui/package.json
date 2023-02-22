@@ -15,7 +15,7 @@
     "@framework/genes": "0.0.1",
     "@framework/localization-admin-ui": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/collection": "2.3.5",
+    "@gemunion/collection": "2.4.0",
     "@gemunion/common-pages": "10.2.6",
     "@gemunion/constants": "0.12.0",
     "@gemunion/draft-js-utils": "1.2.7",

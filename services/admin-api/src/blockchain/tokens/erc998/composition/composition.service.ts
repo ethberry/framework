@@ -25,9 +25,20 @@ export class Erc998CompositionService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(child.description->'blocks') child_blocks ON TRUE LEFT JOIN LATERAL json_array_elements(parent.description->'blocks') parent_blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(child.description->'blocks')`;
+          return qb;
+        },
+        `child_blocks`,
+        `TRUE`,
+      );
+      queryBuilder.leftJoin(
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(parent.description->'blocks')`;
+          return qb;
+        },
+        `parent_blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

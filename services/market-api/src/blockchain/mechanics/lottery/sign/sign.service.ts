@@ -18,7 +18,7 @@ export class LotterySignService {
   ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { ticketNumbers, account, referrer } = dto;
+    const { account, referrer = constants.AddressZero, ticketNumbers } = dto;
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;

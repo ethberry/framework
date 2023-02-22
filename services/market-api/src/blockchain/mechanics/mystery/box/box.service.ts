@@ -64,13 +64,16 @@ export class MysteryBoxService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(box.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("box.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
