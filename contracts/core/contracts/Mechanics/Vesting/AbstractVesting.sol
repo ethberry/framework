@@ -14,7 +14,6 @@ import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
 contract AbstractVesting is VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
-
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,

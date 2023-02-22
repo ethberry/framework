@@ -4,7 +4,7 @@ import { subDays } from "date-fns";
 import { ns } from "@framework/constants";
 import { TokenAttributes } from "@framework/types";
 
-export class SeedTokenWrapperAt1563804000370 implements MigrationInterface {
+export class SeedWrapperAt1563804000370 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const now = new Date();

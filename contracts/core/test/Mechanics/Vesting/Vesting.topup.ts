@@ -2,13 +2,12 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBehaveLikeOwnable } from "@gemunion/contracts-mocha";
-import { tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import { amount, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 import { deployVesting } from "./shared/fixture";
 
 describe("Vesting TopUp", function () {
   const factory = () => deployVesting("LinearVesting");
-  const amount = 10000000;
 
   shouldBehaveLikeOwnable(factory);
 

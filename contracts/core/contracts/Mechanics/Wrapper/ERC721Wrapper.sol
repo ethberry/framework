@@ -12,11 +12,11 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
 
-import "./interfaces/IERC721TokenWrapper.sol";
+import "./interfaces/IERC721Wrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
-contract ERC721Wrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder, ERC1363Receiver {
+contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Asset[]) internal _itemData;

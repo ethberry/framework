@@ -17,6 +17,7 @@ import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { constants } from "ethers";
+import { templateId, tokenId } from "../../constants";
 
 describe("Wrapper", function () {
   const factory = () => deployERC721("ERC721WrapperTest");
@@ -37,16 +38,19 @@ describe("Wrapper", function () {
 
     const erc721WrapperInstance = await factory();
 
-    const items = [
-      {
-        tokenType: 0,
-        token: constants.AddressZero,
-        tokenId: 0,
-        amount,
-      },
-    ];
-
-    const tx = erc721WrapperInstance.mintBox(owner.address, 1, items, { value: amount });
+    const tx = erc721WrapperInstance.mintBox(
+      owner.address,
+      templateId,
+      [
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId: 0,
+          amount,
+        },
+      ],
+      { value: amount },
+    );
     await expect(tx).to.changeEtherBalances([owner, erc721WrapperInstance], [-amount, amount]);
 
     const tx1 = erc721WrapperInstance.unpack(1);
@@ -62,16 +66,14 @@ describe("Wrapper", function () {
     await erc20Instance.mint(owner.address, amount);
     await erc20Instance.approve(erc721WrapperInstance.address, amount);
 
-    const items = [
+    const tx = erc721WrapperInstance.mintBox(owner.address, templateId, [
       {
         tokenType: 1,
         token: erc20Instance.address,
         tokenId: 0,
         amount,
       },
-    ];
-
-    const tx = erc721WrapperInstance.mintBox(owner.address, 1, items);
+    ]);
     await expect(tx).to.emit(erc20Instance, "Transfer");
     await expect(tx).to.changeTokenBalances(erc20Instance, [owner, erc721WrapperInstance], [-amount, amount]);
 
@@ -90,21 +92,20 @@ describe("Wrapper", function () {
     await erc20Instance.mint(owner.address, amount);
     await erc20Instance.approve(erc721WrapperInstance.address, amount);
 
-    const items = [
+    const tx = erc721WrapperInstance.mintBox(owner.address, templateId, [
       {
         tokenType: 1,
         token: erc20Instance.address,
         tokenId: 0,
         amount,
       },
-    ];
-
-    const tx = erc721WrapperInstance.mintBox(walletMockInstance.address, 1, items);
+    ]);
     await expect(tx).to.emit(erc20Instance, "Transfer");
     await expect(tx).to.changeTokenBalances(erc20Instance, [owner, erc721WrapperInstance], [-amount, amount]);
+    await expect(tx).to.emit(erc721WrapperInstance, "Transfer").withArgs(constants.AddressZero, owner.address, tokenId);
 
     // Calling WrapperWalletMock.unpack
-    const tx1 = walletMockInstance.unpack(erc721WrapperInstance.address, 1);
+    const tx1 = walletMockInstance.unpack(erc721WrapperInstance.address, tokenId);
     await expect(tx1).to.emit(erc20Instance, "Transfer");
     await expect(tx1).to.emit(walletMockInstance, "TransferReceived");
     await expect(tx1).to.changeTokenBalances(
@@ -123,16 +124,14 @@ describe("Wrapper", function () {
     await erc721Instance.mintCommon(owner.address, 1);
     await erc721Instance.setApprovalForAll(erc721WrapperInstance.address, true);
 
-    const items = [
+    await erc721WrapperInstance.mintBox(owner.address, templateId, [
       {
         tokenType: 2,
         token: erc721Instance.address,
         tokenId: 1,
         amount,
       },
-    ];
-
-    await erc721WrapperInstance.mintBox(owner.address, 1, items);
+    ]);
     const balanace = await erc721Instance.balanceOf(erc721WrapperInstance.address);
     expect(balanace).to.be.equal(1);
 
@@ -150,16 +149,14 @@ describe("Wrapper", function () {
     await erc998Instance.mintCommon(owner.address, 1);
     await erc998Instance.setApprovalForAll(erc721WrapperInstance.address, true);
 
-    const items = [
+    await erc721WrapperInstance.mintBox(owner.address, templateId, [
       {
         tokenType: 3,
         token: erc998Instance.address,
         tokenId: 1,
         amount,
       },
-    ];
-
-    await erc721WrapperInstance.mintBox(owner.address, 1, items);
+    ]);
     const balanace = await erc998Instance.balanceOf(erc721WrapperInstance.address);
     expect(balanace).to.be.equal(1);
 
@@ -177,16 +174,14 @@ describe("Wrapper", function () {
     await erc1155Instance.mint(owner.address, 1, amount, "0x");
     await erc1155Instance.setApprovalForAll(erc721WrapperInstance.address, true);
 
-    const items = [
+    await erc721WrapperInstance.mintBox(owner.address, templateId, [
       {
         tokenType: 4,
         token: erc1155Instance.address,
         tokenId: 1,
         amount,
       },
-    ];
-
-    await erc721WrapperInstance.mintBox(owner.address, 1, items);
+    ]);
     const balanace = await erc1155Instance.balanceOf(erc721WrapperInstance.address, 1);
     expect(balanace).to.be.equal(amount);
 
@@ -217,39 +212,6 @@ describe("Wrapper", function () {
     await erc998Instance.mintCommon(owner.address, 1);
     await erc998Instance.setApprovalForAll(erc721WrapperInstance.address, true);
 
-    const items = [
-      {
-        tokenType: 0,
-        token: constants.AddressZero,
-        tokenId: 1,
-        amount,
-      },
-      {
-        tokenType: 1,
-        token: erc20Instance.address,
-        tokenId: 1,
-        amount,
-      },
-      {
-        tokenType: 2,
-        token: erc721Instance.address,
-        tokenId: 1,
-        amount,
-      },
-      {
-        tokenType: 3,
-        token: erc998Instance.address,
-        tokenId: 1,
-        amount,
-      },
-      {
-        tokenType: 4,
-        token: erc1155Instance.address,
-        tokenId: 1,
-        amount,
-      },
-    ];
-
     const balanace01 = await erc1155Instance.balanceOf(owner.address, 1);
     expect(balanace01).to.be.equal(amount);
     const balanace02 = await erc721Instance.balanceOf(owner.address);
@@ -257,7 +219,43 @@ describe("Wrapper", function () {
     const balanace03 = await erc998Instance.balanceOf(owner.address);
     expect(balanace03).to.be.equal(1);
 
-    const tx1 = erc721WrapperInstance.mintBox(owner.address, 1, items, { value: amount });
+    const tx1 = erc721WrapperInstance.mintBox(
+      owner.address,
+      templateId,
+      [
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 3,
+          token: erc998Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 4,
+          token: erc1155Instance.address,
+          tokenId: 1,
+          amount,
+        },
+      ],
+      { value: amount },
+    );
     await expect(tx1).to.changeTokenBalances(erc20Instance, [owner, erc721WrapperInstance], [-amount, amount]);
     await expect(tx1).to.changeEtherBalances([owner, erc721WrapperInstance], [-amount, amount]);
     const balanace11 = await erc721Instance.balanceOf(owner.address);
