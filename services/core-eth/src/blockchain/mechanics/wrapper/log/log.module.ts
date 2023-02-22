@@ -8,7 +8,6 @@ import { WrapperLogService } from "./log.service";
 
 // system contract
 import WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
-
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
