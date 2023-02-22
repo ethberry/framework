@@ -18,6 +18,7 @@ interface ITemplatePurchaseButtonProps {
 
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { template } = props;
+
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -60,9 +61,9 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         url: "/marketplace/sign",
         method: "POST",
         data: {
-          templateId: template.id,
           account,
           referrer: settings.getReferrer(),
+          templateId: template.id,
         },
       },
       null,

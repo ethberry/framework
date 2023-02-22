@@ -2,10 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
-import { AccountDto } from "@gemunion/collection";
+import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
 import { ISignMysteryboxDto } from "../interfaces";
-import { ReferrerOptionalDto } from "../../../../../common/validators/referrer";
 
 export class SignMysteryboxDto extends Mixin(ReferrerOptionalDto, AccountDto) implements ISignMysteryboxDto {
   @ApiProperty({

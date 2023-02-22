@@ -4,13 +4,13 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
-import { ISignDropDto } from "../interfaces";
+import { ISignTemplateDto } from "../interfaces";
 
-export class SignDropDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignDropDto {
+export class SignTemplateDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignTemplateDto {
   @ApiProperty({
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  public dropId: number;
+  public templateId: number;
 }

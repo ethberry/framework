@@ -10,7 +10,6 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class CraftService {
@@ -92,8 +91,8 @@ export class CraftService {
     });
   }
 
-  public async sign(dto: ISignCraftDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { craftId } = dto;
+  public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
+    const { account, referrer = constants.AddressZero, craftId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
@@ -103,12 +102,12 @@ export class CraftService {
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      userEntity.wallet,
+      account,
       {
         nonce,
         externalId: craftEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer,
       },
       craftEntity,
     );
