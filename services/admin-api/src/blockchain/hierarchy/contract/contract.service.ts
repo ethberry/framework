@@ -24,7 +24,7 @@ export class ContractService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("contract.templates", "templates");
+    // queryBuilder.leftJoinAndSelect("contract.templates", "templates");
 
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
