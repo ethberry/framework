@@ -41,7 +41,7 @@ import { EventHistoryEntity } from "./blockchain/event-history/event-history.ent
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
-import { PayeesEntity } from "./blockchain/exchange/wallet/payees.entity";
+import { PayeesEntity } from "./blockchain/exchange/payees/payees.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
@@ -105,6 +105,7 @@ import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-se
 import { SeedBalanceErc721MysteryAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
 import { SeedBalanceErc721WrapperAt1563804020470 } from "./migrations/1563804000470-seed-balance-wrapper";
 import { SeedBalanceErc721LotteryAt1563804020480 } from "./migrations/1563804000480-seed-balance-lottery";
+import { SeedBalanceVestingAt1563804000490 } from "./migrations/1563804000490-seed-balance-vesting";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
@@ -195,9 +196,11 @@ import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 
-import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
+import { CreateWalletPayees1663047650500 } from "./migrations/1663047650500-create-wallet-payees";
+import { SeedExchangePayees1663047650510 } from "./migrations/1663047650510-seed-exchange-payees";
 import { SeedAssetComponentHistoryErc998At1657846609040 } from "./migrations/1657846609040-seed-asset-component-history-erc998";
 import { SeedContractChainLinkAt1563804000105 } from "./migrations/1563804000105-seed-contract-chainlink";
+import { SeedPyramidPayees1663047650520 } from "./migrations/1663047650520-seed-pyramid-payees";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -320,6 +323,7 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc721MysteryAt1563804020460,
     SeedBalanceErc721WrapperAt1563804020470,
     SeedBalanceErc721LotteryAt1563804020480,
+    SeedBalanceVestingAt1563804000490,
 
     CreateAssetComponent1563804001220,
     SeedAssetComponentsErc721At1563804001230,
@@ -409,7 +413,9 @@ const config: PostgresConnectionOptions = {
     CreateBreed1663047650400,
     SeedBreed1663047650401,
 
-    CreateWalletPayees1663047650510,
+    CreateWalletPayees1663047650500,
+    SeedExchangePayees1663047650510,
+    SeedPyramidPayees1663047650520,
     SeedContractChainLinkAt1563804000105,
   ],
 };

@@ -14,6 +14,7 @@ import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 
 contract InterfaceIdCalculator {
   constructor() {
+    console.logBytes4(type(IERC721Simple).interfaceId);
     console.logBytes4(type(IERC721Upgradeable).interfaceId);
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Mysterybox).interfaceId);

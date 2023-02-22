@@ -6,8 +6,20 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.event_history_event_enum AS ENUM (
+        -- MODULE:CONTRACT-MANAGER
+        'CollectionDeployed',
+        'VestingDeployed',
+        'MysteryboxDeployed',
+        'ERC20TokenDeployed',
+        'ERC721TokenDeployed',
+        'ERC998TokenDeployed',
+        'ERC1155TokenDeployed',
+        
         -- MODULE:ERC20
         'Snapshot',
+
+        -- MODULE:ERC1363
+        'TransferReceived',
 
         -- MODULE:ERC721
         'Approval',
@@ -61,6 +73,7 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'RoleGranted',
         'RoleRevoked',
         'RoleAdminChanged',
+        'OwnershipTransferred',
       
         -- MODULE:STAKING
         'RuleCreated',
@@ -85,6 +98,7 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'ClaimReward',
         -- MODULE:BREEDING
         'Breed',
+
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',
         'PaymentReleased',
@@ -95,7 +109,11 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
       
         -- MODULE:CHAINLINK
         'RandomnessRequest',
-        'RandomnessRequestId'
+        'RandomnessRequestId',
+        
+        -- MODULE:CHAINLINKV2
+        'RandomWordsRequested',
+        'RandomWordsFulfilled'
       );
     `);
 

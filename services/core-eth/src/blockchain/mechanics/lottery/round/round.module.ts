@@ -13,9 +13,10 @@ import { LotteryRoundServiceEth } from "./round.service.eth";
 import { RoundControllerRmq } from "./round.controller.rmq";
 import { RoundServiceRmq } from "./round.service.rmq";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ConfigModule, EventHistoryModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
+  imports: [ConfigModule, ContractModule, EventHistoryModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
   controllers: [RoundControllerRmq, LotteryRoundControllerEth],
   providers: [
     Logger,

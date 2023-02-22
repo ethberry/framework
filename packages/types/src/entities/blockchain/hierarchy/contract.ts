@@ -163,6 +163,7 @@ export enum ContractTemplates {
 }
 
 export enum ContractFeatures {
+  "WITHDRAW" = "WITHDRAW",
   "ALLOWANCE" = "ALLOWANCE",
   "EXTERNAL" = "EXTERNAL",
   "BLACKLIST" = "BLACKLIST",

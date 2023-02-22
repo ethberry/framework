@@ -10,9 +10,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
+import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+import "../../Exchange/ExchangeUtils.sol";
 
-contract AbstractVesting is VestingWallet, Ownable, Multicall {
-  event EtherReceived(address from, uint256 amount);
+contract AbstractVesting is VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
 
   constructor(
     address beneficiaryAddress,
@@ -22,8 +23,12 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall {
     _transferOwnership(beneficiaryAddress);
   }
 
+  function topUp(Asset[] memory price) external payable {
+    spendFrom(price, _msgSender(), address(this));
+  }
+
   receive() external payable override {
-    emit EtherReceived(_msgSender(), msg.value);
+    revert();
   }
 
   // Vesting beneficiary

@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractType, ModuleType, VestingEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
@@ -33,9 +33,12 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
             eventNames: [
               VestingEventType.ERC20Released,
               VestingEventType.EtherReleased,
-              VestingEventType.EtherReceived,
+              // VestingEventType.EtherReceived,
+              VestingEventType.PaymentEthReceived,
               // MODULE:ACCESS_CONTROL
               AccessControlEventType.OwnershipTransferred,
+              // MODULE:ERC1363
+              Erc1363EventType.TransferReceived
             ],
           },
           block: {

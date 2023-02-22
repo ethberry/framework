@@ -11,13 +11,12 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
+import "../utils/constants.sol";
 import "./interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
   using ECDSA for bytes32;
   using Address for address;
-
-  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
   mapping(bytes32 => bool) private _expired;
 

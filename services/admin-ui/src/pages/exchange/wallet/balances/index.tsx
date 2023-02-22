@@ -1,9 +1,5 @@
 import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Contract, constants } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
-
-import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import {
   Button,
@@ -15,77 +11,38 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { AccountBalanceWallet, FilterList } from "@mui/icons-material";
 
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IBalance, IBalanceSearchDto, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
-
-import { formatEther } from "../../../../utils/money";
-import { emptyToken } from "../../../../components/common/interfaces";
-import { BalanceSearchForm } from "./form";
-import { BalanceWithdrawDialog, IBalanceWithdrawDto } from "./withdraw-dialog";
-
-export const SystemBalances: FC = () => {
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IBalance, IBalanceSearchDto>({
-      baseUrl: "/wallet/balances",
-      empty: {
-        account: "",
-        amount: "",
-        token: emptyToken,
-      },
-      search: {
-        contractIds: [],
-        templateIds: [],
-        maxBalance: constants.WeiPerEther.mul(1000).toString(),
-        minBalance: constants.Zero.toString(),
-      },
-      filter: ({ account, amount, token }) => ({
-        account,
-        amount,
-        token,
-      }),
-    });
+export const SystemContracts: FC = () => {
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleChangePage } = useCollection<
+    IContract,
+    IContractSearchDto
+  >({
+    baseUrl: "/contracts",
+    search: {
+      contractFeatures: [ContractFeatures.WITHDRAW],
+    },
+    redirect: () => "/wallet/balances",
+  });
 
   const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
 
-  const [balance, setBalance] = useState<IBalance>({
-    account: "",
-    amount: "",
-    token: emptyToken,
-    tokenId: 0,
-    id: 0,
-    createdAt: "",
-    updatedAt: "",
-  });
+  const [contract, setContract] = useState<IContract>({} as IContract);
 
-  const handleWithdraw = (balance: IBalance): (() => Promise<void>) => {
-    return (): Promise<void> => {
-      setBalance(balance);
+  const handleWithdraw = (contract: IContract): (() => void) => {
+    return (): void => {
+      setContract(contract);
       setIsWithdrawDialogOpen(true);
-      // to promisify Withdraw?
-      return Promise.resolve();
     };
   };
 
-  const metaFn = useMetamask((data: IBalanceWithdrawDto, web3Context: Web3ContextType) => {
-    if (balance.token?.template!.contract!.contractType === TokenType.ERC20) {
-      const contract = new Contract(balance.account, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract["release(address,address)"](balance.token?.template.contract.address, data.payee) as Promise<any>;
-    } else {
-      // TODO NATIVE type check?
-      const contract = new Contract(balance.account, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract["release(address)"](data.payee) as Promise<any>;
-    }
-  });
-
-  const handleWithdrawConfirm = async (values: IBalanceWithdrawDto): Promise<void> => {
-    await metaFn(values).finally(() => {
-      setIsWithdrawDialogOpen(false);
-    });
+  const handleWithdrawConfirm = () => {
+    setIsWithdrawDialogOpen(false);
   };
 
   const handleWithdrawCancel = () => {
@@ -104,26 +61,15 @@ export const SystemBalances: FC = () => {
         </Button>
       </PageHeader>
 
-      <BalanceSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
-
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((balance, i) => (
+          {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>
-                {/* @ts-ignore */}
-                {balance.owner.name}
-              </ListItemText>
-              <ListItemText>
-                {formatEther(
-                  balance.amount,
-                  balance.token!.template!.contract!.decimals,
-                  balance.token!.template!.contract!.symbol,
-                )}
-              </ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.address}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleWithdraw(balance)}>
-                  <Visibility />
+                <IconButton onClick={handleWithdraw(contract)}>
+                  <AccountBalanceWallet />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -138,11 +84,12 @@ export const SystemBalances: FC = () => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
+
       <BalanceWithdrawDialog
         onConfirm={handleWithdrawConfirm}
         onCancel={handleWithdrawCancel}
         open={isWithdrawDialogOpen}
-        initialValues={{ balance, payee: "" }}
+        initialValues={contract}
       />
     </Grid>
   );

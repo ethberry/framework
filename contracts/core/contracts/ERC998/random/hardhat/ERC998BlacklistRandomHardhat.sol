@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhatV2.sol";
 
 import "../../ERC998BlacklistRandom.sol";
 
-contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhat {
+contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhatV2 {
   constructor(
     string memory name,
     string memory symbol,
@@ -18,14 +18,11 @@ contract ERC998BlacklistRandomHardhat is ERC998BlacklistRandom, ChainLinkHardhat
     string memory baseTokenURI
   ) ERC998BlacklistRandom(name, symbol, royalty, baseTokenURI) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC998BlacklistRandom) returns (bytes32 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998BlacklistRandom) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomness(
-    bytes32 requestId,
-    uint256 randomness
-  ) internal override(ERC998BlacklistRandom, VRFConsumerBase) {
-    return super.fulfillRandomness(requestId, randomness);
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override(ERC998BlacklistRandom, VRFConsumerBaseV2) {
+    return super.fulfillRandomWords(requestId, randomWords);
   }
 }

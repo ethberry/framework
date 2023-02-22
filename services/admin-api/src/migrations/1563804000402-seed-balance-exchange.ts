@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -18,8 +18,20 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${exchangeAddress}',
-        '${constants.WeiPerEther.mul(1e3).toString()}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
         12010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
+        42050101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        22070101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

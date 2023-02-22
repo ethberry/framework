@@ -5,7 +5,7 @@ import { amount, baseTokenURI, royalty, tokenName, tokenSymbol } from "@gemunion
 import { templateId, tokenId } from "../constants";
 import { constants } from "ethers";
 
-describe("ExchangeMock", function () {
+describe("Exchange", function () {
   describe("spendFrom", function () {
     it("should spendFrom: ETH", async function () {
       const [owner] = await ethers.getSigners();

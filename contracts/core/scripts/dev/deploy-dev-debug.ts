@@ -4,11 +4,12 @@ import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
 import { baseTokenURI, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
+import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
-const delayMs = 1000; // block delay ms
-const linkAmountInEth = ethers.utils.parseEther("1");
+const delayMs = 500; // block delay ms
+// const linkAmountInEth = ethers.utils.parseEther("1");
 
 interface IObj {
   address?: string;
@@ -44,9 +45,12 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
 const contracts: Record<string, Contract> = {};
 const amount = constants.WeiPerEther.mul(1e6);
 const timestamp = Math.ceil(Date.now() / 1000);
+let currentBlock: { number: number } = { number: 1 };
 
 async function main() {
   const [owner] = await ethers.getSigners();
+  currentBlock = await ethers.provider.getBlock("latest");
+
   // LINK & VRF
   // const decimals = BigNumber.from(10).pow(18);
   // const linkAmountInWei = BigNumber.from("1000").mul(decimals);
@@ -64,18 +68,14 @@ async function main() {
   // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  const link = await ethers.getContractFactory("LinkToken");
-  const linkAddr =
+  const vrf = await ethers.getContractFactory("VRFCoordinatorV2Mock");
+  const vrfAddr =
     network.name === "besu"
-      ? "0x42699A7612A82f1d9C36148af9C77354759b210b"
+      ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost
       : network.name === "gemunion"
-      ? "0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"
-      : "0x42699A7612A82f1d9C36148af9C77354759b210b";
-  const linkInstance = link.attach(linkAddr); // localhost BESU or GEMUNION
-  // const linkInstance = link.attach("0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd"); // localhost BESU
-  // const linkInstance = link.attach("0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"); // Gemunion BESU
-  // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI
-  // const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
+      ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
+      : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
+  const vrfInstance = vrf.attach(vrfAddr); // localhost BESU or GEMUNION
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
   // contracts.contractManager = cmFactory.attach("0x690579e4b583dd87db51361e30e0b3493d5c5e6c");
@@ -150,12 +150,13 @@ async function main() {
   contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const randomContractName =
-    network.name === "besu"
-      ? "ERC721RandomBesu"
-      : network.name === "gemunion"
-      ? "ERC721RandomGemunion"
-      : "ERC721Random";
+  // const randomContractName =
+  //   network.name === "besu"
+  //     ? "ERC721RandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "ERC721RandomGemunionV2"
+  //     : "ERC721Random";
+  const randomContractName = getContractName("ERC721Random", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
@@ -165,7 +166,11 @@ async function main() {
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
 
-  await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
+  // await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Random.address),
+    "vrfInstance.addConsumer",
+  );
 
   const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
@@ -191,12 +196,14 @@ async function main() {
   contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  const randomContract998Name =
-    network.name === "besu"
-      ? "ERC998RandomBesu"
-      : network.name === "gemunion"
-      ? "ERC998RandomGemunion"
-      : "ERC998Random";
+  // const randomContract998Name =
+  //   network.name === "besu"
+  //     ? "ERC998RandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "ERC998RandomGemunionV2"
+  //     : "ERC998Random";
+
+  const randomContract998Name = getContractName("ERC998Random", network.name);
 
   const erc998RandomFactory = await ethers.getContractFactory(randomContract998Name);
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
@@ -206,7 +213,11 @@ async function main() {
   contracts.erc998Random = erc998RandomInstance;
   await debug(contracts);
 
-  await debug(await linkInstance.transfer(contracts.erc998Random.address, linkAmountInEth), "linkInstance.transfer");
+  // await debug(await linkInstance.transfer(contracts.erc998Random.address, linkAmountInEth), "linkInstance.transfer");
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Random.address),
+    "vrfInstance.addConsumer",
+  );
 
   await debug(
     await erc998RandomInstance.whiteListChild(contracts.erc721Random.address, 5),
@@ -376,8 +387,17 @@ async function main() {
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
+  // const randomContractLotteryName =
+  //   network.name === "besu"
+  //     ? "LotteryRandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "LotteryRandomGemunionV2"
+  //     : "LotteryGemunion";
+
+  const randomContractLotteryName = getContractName("LotteryRandom", network.name);
+
   // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
-  const lotteryFactory = await ethers.getContractFactory("LotteryGemunion");
+  const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   contracts.lottery = await lotteryFactory.deploy(
@@ -387,12 +407,20 @@ async function main() {
   );
   await debug(contracts);
 
-  await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
+  // await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lottery.address),
+    "vrfInstance.addConsumer",
+  );
 
   await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
+  await debug(contracts);
+
+  const busdFactory = await ethers.getContractFactory("BEP20Token");
+  contracts.busd = await busdFactory.deploy();
   await debug(contracts);
 
   const waitlistFactory = await ethers.getContractFactory("Waitlist");
@@ -411,7 +439,7 @@ async function main() {
 
   await debug(await contracts.waitlist.setReward(root, items, 2), "waitlist.setReward");
 
-  const erc721WrapFactory = await ethers.getContractFactory("ERC721TokenWrapper");
+  const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
@@ -453,6 +481,7 @@ async function main() {
 
 main()
   .then(() => {
+    console.info(`STARTING_BLOCK=${currentBlock.number}`);
     Object.entries(contracts).map(([key, value]) =>
       console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.address.toLowerCase()}`),
     );

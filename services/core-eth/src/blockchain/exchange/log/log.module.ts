@@ -7,6 +7,7 @@ import {
   AccessControlEventType,
   ContractEventType,
   ContractType,
+  Erc1363EventType,
   ExchangeEventType,
   ReferralProgramEventType,
 } from "@framework/types";
@@ -60,6 +61,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged,
+              // MODULE:ERC1363
+              Erc1363EventType.TransferReceived,
             ],
           },
           block: {

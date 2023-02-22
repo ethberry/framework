@@ -5,9 +5,11 @@ import { VestingServiceEth } from "./vesting.service.eth";
 import { VestingControllerEth } from "./vesting.controller.eth";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { EventHistoryModule } from "../../event-history/event-history.module";
+import { TokenModule } from "../../hierarchy/token/token.module";
+import { BalanceModule } from "../../hierarchy/balance/balance.module";
 
 @Module({
-  imports: [ConfigModule, EventHistoryModule, ContractModule],
+  imports: [ConfigModule, EventHistoryModule, ContractModule, TokenModule, BalanceModule],
   providers: [Logger, VestingServiceEth],
   controllers: [VestingControllerEth],
   exports: [VestingServiceEth],
