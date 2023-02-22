@@ -44,13 +44,16 @@ export class CraftService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );

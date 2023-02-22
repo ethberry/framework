@@ -29,7 +29,7 @@ export class ContractService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("contract.templates", "templates");
+    // queryBuilder.leftJoinAndSelect("contract.templates", "templates");
 
     if (contractType) {
       queryBuilder.andWhere("contract.contractType = :contractType", {
@@ -64,9 +64,12 @@ export class ContractService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(contract.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(contract.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

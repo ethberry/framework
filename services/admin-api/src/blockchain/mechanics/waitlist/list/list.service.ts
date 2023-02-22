@@ -25,9 +25,12 @@ export class WaitlistListService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(waitlist.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(waitlist.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {

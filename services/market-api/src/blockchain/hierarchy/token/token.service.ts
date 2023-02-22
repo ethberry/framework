@@ -108,9 +108,12 @@ export class TokenService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(template.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
