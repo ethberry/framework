@@ -4,6 +4,7 @@ import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
 import { baseTokenURI, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
+import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
@@ -149,12 +150,13 @@ async function main() {
   contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const randomContractName =
-    network.name === "besu"
-      ? "ERC721RandomBesuV2"
-      : network.name === "gemunion"
-      ? "ERC721RandomGemunionV2"
-      : "ERC721Random";
+  // const randomContractName =
+  //   network.name === "besu"
+  //     ? "ERC721RandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "ERC721RandomGemunionV2"
+  //     : "ERC721Random";
+  const randomContractName = getContractName("ERC721Random", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
@@ -194,12 +196,14 @@ async function main() {
   contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  const randomContract998Name =
-    network.name === "besu"
-      ? "ERC998RandomBesuV2"
-      : network.name === "gemunion"
-      ? "ERC998RandomGemunionV2"
-      : "ERC998Random";
+  // const randomContract998Name =
+  //   network.name === "besu"
+  //     ? "ERC998RandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "ERC998RandomGemunionV2"
+  //     : "ERC998Random";
+
+  const randomContract998Name = getContractName("ERC998Random", network.name);
 
   const erc998RandomFactory = await ethers.getContractFactory(randomContract998Name);
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
@@ -383,12 +387,15 @@ async function main() {
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const randomContractLotteryName =
-    network.name === "besu"
-      ? "LotteryRandomBesuV2"
-      : network.name === "gemunion"
-      ? "LotteryRandomGemunionV2"
-      : "LotteryGemunion";
+  // const randomContractLotteryName =
+  //   network.name === "besu"
+  //     ? "LotteryRandomBesuV2"
+  //     : network.name === "gemunion"
+  //     ? "LotteryRandomGemunionV2"
+  //     : "LotteryGemunion";
+
+  const randomContractLotteryName = getContractName("LotteryRandom", network.name);
+
   // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
   const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
