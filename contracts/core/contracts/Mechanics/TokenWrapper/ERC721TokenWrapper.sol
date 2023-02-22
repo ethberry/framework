@@ -10,15 +10,16 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
+import "./interfaces/IERC721TokenWrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
-contract ERC721TokenWrapper is ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder {
+contract ERC721TokenWrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Asset[]) internal _itemData;
 
-  event UnpackWrapper(uint256 tokenId);
+  // event UnpackWrapper(uint256 tokenId);
 
   constructor(
     string memory name,
