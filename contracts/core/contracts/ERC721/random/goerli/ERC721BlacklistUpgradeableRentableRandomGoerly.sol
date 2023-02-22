@@ -6,33 +6,28 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerliV2.sol";
 
 import "../../ERC721BlacklistUpgradeableRentableRandom.sol";
 
 abstract contract ERC721BlacklistUpgradeableRentableRandomGoerli is
   ERC721BlacklistUpgradeableRentableRandom,
-  ChainLinkGoerli
+ChainLinkGoerliV2
 {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721BlacklistUpgradeableRentableRandom(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721BlacklistUpgradeableRentableRandom(name, symbol, royalty, baseTokenURI)
+  ChainLinkGoerliV2(uint64(1), uint16(6),uint32(600000),uint32(1))
+  {}
 
-  function getRandomNumber()
-    internal
-    override(ChainLinkBase, ERC721BlacklistUpgradeableRentableRandom)
-    returns (bytes32 requestId)
-  {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721BlacklistUpgradeableRentableRandom) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomness(
-    bytes32 requestId,
-    uint256 randomness
-  ) internal override(ERC721BlacklistUpgradeableRentableRandom, VRFConsumerBase) {
-    return super.fulfillRandomness(requestId, randomness);
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override(ERC721BlacklistUpgradeableRentableRandom, VRFConsumerBaseV2) {
+    return super.fulfillRandomWords(requestId, randomWords);
   }
 }

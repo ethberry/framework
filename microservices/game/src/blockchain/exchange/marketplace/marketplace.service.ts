@@ -14,7 +14,7 @@ export class MarketplaceService {
   constructor(private readonly templateService: TemplateService, private readonly signerService: SignerService) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { templateId, account, referrer = constants.AddressZero } = dto;
+    const { account, referrer = constants.AddressZero, templateId } = dto;
     const templateEntity = await this.templateService.findOne(
       { id: templateId },
       {

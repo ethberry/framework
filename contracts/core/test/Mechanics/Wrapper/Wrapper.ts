@@ -19,7 +19,7 @@ import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { constants } from "ethers";
 
 describe("Wrapper", function () {
-  const factory = () => deployERC721("ERC721TokenWrapperTest");
+  const factory = () => deployERC721("ERC721WrapperTest");
   const erc20Factory = () => deployERC20();
   const erc721Factory = () => deployERC721();
   const erc1155Factory = () => deployERC1155();

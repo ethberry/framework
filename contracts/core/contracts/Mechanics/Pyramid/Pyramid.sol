@@ -15,6 +15,7 @@ import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../../utils/constants.sol";
 import "./interfaces/IPyramid.sol";
 import "./LinearReferralPyramid.sol";
 
@@ -28,8 +29,6 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
 
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
-
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256 tokenId);
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);

@@ -38,7 +38,7 @@ export class Erc721CollectionController {
     @Query() dto: ContractSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ContractEntity>, number]> {
-    return this.erc721CollectionService.searchContracts(dto, userEntity);
+    return this.erc721CollectionService.search(dto, userEntity);
   }
 
   @Get("/templates/")

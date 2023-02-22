@@ -9,6 +9,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const chainId = process.env.CHAIN_ID || testChainId;
+    const usdtAddr = process.env.USDT_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -85,7 +86,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4205,
-        '${process.env.USDT_ADDR || wallet}',
+        '${usdtAddr}',
         '${chainId}',
         'USDT',
         '${simpleFormatting}',

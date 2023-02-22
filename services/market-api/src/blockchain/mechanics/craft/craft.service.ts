@@ -10,7 +10,6 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
 
 @Injectable()
 export class CraftService {
@@ -44,13 +43,16 @@ export class CraftService {
 
     if (query) {
       queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(item_template.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -89,8 +91,8 @@ export class CraftService {
     });
   }
 
-  public async sign(dto: ISignCraftDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { craftId } = dto;
+  public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
+    const { account, referrer = constants.AddressZero, craftId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
@@ -100,12 +102,12 @@ export class CraftService {
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      userEntity.wallet,
+      account,
       {
         nonce,
         externalId: craftEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer,
       },
       craftEntity,
     );

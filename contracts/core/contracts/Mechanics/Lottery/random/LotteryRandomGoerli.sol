@@ -6,30 +6,33 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerliV2.sol";
 
 import "../LotteryRandom.sol";
 
-contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
+contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerliV2 {
   constructor(
     string memory name,
     address ticketFactory,
     address acceptedToken
-  ) LotteryRandom(name, ticketFactory, acceptedToken) {}
+  ) LotteryRandom(name, ticketFactory, acceptedToken)
+  ChainLinkGoerliV2(uint64(1), uint16(6),uint32(600000),uint32(1))
+  {}
 
-  function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (bytes32 requestId) {
+  function getRandomNumber() internal override(LotteryRandom, ChainLinkBaseV2) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomness(bytes32 random, uint256 randomness) internal override(LotteryRandom, VRFConsumerBase) {
-    super.fulfillRandomness(random, randomness);
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal
+  override(LotteryRandom, VRFConsumerBaseV2) {
+    return super.fulfillRandomWords(requestId, randomWords);
   }
 
   function setDummyRound(
     bool[] calldata ticket,
     uint8[6] calldata values,
     uint8[7] calldata aggregation,
-    bytes32 requestId
+    uint256 requestId
   ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);

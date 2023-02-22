@@ -8,11 +8,10 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/security/Pausable.sol";
 
+import "../../utils/constants.sol";
 import "./ERC721MysteryboxBlacklist.sol";
 
 contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausable {
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-
   constructor(
     string memory name,
     string memory symbol,

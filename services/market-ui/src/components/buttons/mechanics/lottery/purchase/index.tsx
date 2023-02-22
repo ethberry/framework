@@ -46,9 +46,9 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         url: "/lottery/ticket/sign",
         method: "POST",
         data: {
-          ticketNumbers,
           account,
           referrer: settings.getReferrer(),
+          ticketNumbers,
         },
       },
       null,

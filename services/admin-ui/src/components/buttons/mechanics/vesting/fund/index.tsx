@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Contract, constants } from "ethers";
+import { Contract, constants, BigNumber } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
@@ -29,20 +29,23 @@ export const FundMenuItem: FC<IMintMenuItemProps> = props => {
     const asset = values.token.components[0];
     const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
     if (asset.tokenType === TokenType.NATIVE) {
-      return contract.topUp([
-        {
-          tokenType: 0,
-          token: constants.AddressZero,
-          tokenId: 0,
-          amount: asset.amount,
-        },
-      ]) as Promise<any>;
+      return contract.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: asset.amount,
+          },
+        ],
+        { value: BigNumber.from(asset.amount) },
+      ) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
-      const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
+      // const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
       return contract.topUp([
         {
           tokenType: 1,
-          token: values.address,
+          token: asset.contract.address,
           tokenId: 0,
           amount: asset.amount,
         },

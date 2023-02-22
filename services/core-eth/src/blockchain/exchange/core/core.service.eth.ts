@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangePurchaseEvent } from "@framework/types";
+import { IErc1363TransferReceivedEvent, IExchangePurchaseEvent } from "@framework/types";
 
 import { AssetService } from "../asset/asset.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -19,5 +19,9 @@ export class ExchangeCoreServiceEth {
     const history = await this.eventHistoryService.updateHistory(event, context);
 
     await this.assetService.saveAssetHistory(history, [item], price);
+  }
+
+  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
+    await this.eventHistoryService.updateHistory(event, context);
   }
 }

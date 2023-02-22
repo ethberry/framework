@@ -5,8 +5,10 @@ import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { IMysterybox, TokenType } from "@framework/types";
+import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { IMysterybox, TokenType } from "@framework/types";
+
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../../utils/money";
@@ -17,6 +19,8 @@ interface IMysteryboxBuyButtonProps {
 
 export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
   const { mysterybox } = props;
+
+  const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -62,9 +66,9 @@ export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         url: "/mysteryboxes/sign",
         method: "POST",
         data: {
-          mysteryboxId: mysterybox.id,
           account,
-          referrer: constants.AddressZero,
+          referrer: settings.getReferrer(),
+          mysteryboxId: mysterybox.id,
         },
       },
       null,

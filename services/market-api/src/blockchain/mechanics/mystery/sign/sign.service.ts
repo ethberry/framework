@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { TokenType } from "@framework/types";
@@ -19,7 +19,7 @@ export class MysterySignService {
   ) {}
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { mysteryboxId, account, referrer } = dto;
+    const { account, referrer = constants.AddressZero, mysteryboxId } = dto;
 
     const mysteryboxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryboxId });
 

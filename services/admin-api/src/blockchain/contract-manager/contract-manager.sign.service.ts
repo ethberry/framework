@@ -350,10 +350,8 @@ export class ContractManagerSignService {
   // MODULE:VESTING
   public async vesting(dto: IVestingDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
-
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
-
     const params = {
       nonce,
       bytecode,
@@ -363,7 +361,7 @@ export class ContractManagerSignService {
       account,
       startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
       duration: duration * 60 * 60 * 24, // in seconds
-      templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
+      contractTemplate,
     };
 
     const signature = await this.signer._signTypedData(

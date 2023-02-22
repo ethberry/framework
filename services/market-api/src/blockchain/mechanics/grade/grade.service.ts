@@ -9,7 +9,6 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 
 import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 
@@ -59,8 +58,8 @@ export class GradeService {
     });
   }
 
-  public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { tokenId, attribute } = dto;
+  public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
+    const { account, referrer = constants.AddressZero, tokenId, attribute } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -84,12 +83,12 @@ export class GradeService {
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      userEntity.wallet,
+      account,
       {
         nonce,
         externalId: gradeEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer,
       },
       attribute,
       tokenEntity,

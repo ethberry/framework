@@ -18,6 +18,6 @@ export class PyramidContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, void 0, ModuleType.PYRAMID);
+    return super.search(Object.assign(dto, { contractModule: [ModuleType.PYRAMID] }), userEntity);
   }
 }

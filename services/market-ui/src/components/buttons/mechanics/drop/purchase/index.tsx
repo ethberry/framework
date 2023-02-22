@@ -57,9 +57,9 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         url: "/drops/sign",
         method: "POST",
         data: {
-          dropId: drop.id,
           account,
           referrer: settings.getReferrer(),
+          dropId: drop.id,
         },
       },
       null,

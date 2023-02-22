@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../../utils/constants.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Exchange/interfaces/IAsset.sol";
 
@@ -25,8 +26,6 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
 
   event RewardSet(uint256 externalId, Asset[] items);
   event ClaimReward(address from, uint256 externalId, Asset[] items);
-
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());

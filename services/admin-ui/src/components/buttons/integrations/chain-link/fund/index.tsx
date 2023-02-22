@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 
 import { Savings } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Contract } from "ethers";
+import { Contract, utils, BigNumber } from "ethers";
 
 import { FormattedMessage } from "react-intl";
 
@@ -21,7 +21,8 @@ export const ChainLinkFundButton: FC = () => {
   const metaFnTransfer = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
     const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
-    return contract.transfer(values.contract.address, values.amount) as Promise<void>;
+    const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
+    return contract.transferAndCall(process.env.VRF_ADDR, values.amount, subId) as Promise<void>;
   });
 
   const [currentValue, setCurrentValue] = useState<string | null>(null);
@@ -73,11 +74,8 @@ export const ChainLinkFundButton: FC = () => {
         onConfirm={handleFundConfirm}
         open={isFundDialogOpen}
         initialValues={{
-          contractId: 0,
-          contract: {
-            address: "",
-          },
           amount: "0",
+          subscriptionId: "2",
         }}
       />
     </Fragment>

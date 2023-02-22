@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../utils/constants.sol";
 import "./ERC998Simple.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
@@ -15,9 +16,6 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
   using Counters for Counters.Counter;
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);
-
-  bytes4 private constant IERC49064906_ID = 0x49064906;
-  bytes4 private constant IERC721_UPGRADEABLE_ID = type(IERC721Upgradeable).interfaceId;
 
   constructor(
     string memory name,
@@ -49,7 +47,6 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC998Simple) returns (bool) {
-    return
-      interfaceId == IERC49064906_ID || interfaceId == IERC721_UPGRADEABLE_ID || super.supportsInterface(interfaceId);
+    return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
   }
 }

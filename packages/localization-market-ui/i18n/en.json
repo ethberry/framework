@@ -39,7 +39,8 @@
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
     "transfer": "Transfer",
-    "view": "View"
+    "view": "View",
+    "withdraw": "Withdraw balance"
   },
   "enums": {
     "GRADE": {
@@ -294,6 +295,7 @@
       "deposit": "Deposit",
       "edit": "Edit",
       "redeem": "Redeem",
+      "releasable": "Check releasable amount",
       "release": "Release",
       "reward": "Reward",
       "transfer": "Transfer ownership",

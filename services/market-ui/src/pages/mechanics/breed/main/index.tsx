@@ -8,10 +8,11 @@ import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { useSettings } from "@gemunion/provider-settings";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
-import { TokenType } from "@framework/types";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import { TokenType } from "@framework/types";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
@@ -46,6 +47,8 @@ export interface IBreedDto {
 export const Breed: FC = () => {
   const classes = useStyles();
 
+  const settings = useSettings();
+
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -75,11 +78,15 @@ export const Breed: FC = () => {
   );
 
   const metaFn = useMetamask((data: IBreedDto, web3Context: Web3ContextType) => {
+    const { account } = web3Context;
+
     return metaFnWithSign(
       {
         url: "/breed/sign",
         method: "POST",
         data: {
+          account,
+          referrer: settings.getReferrer(),
           momId: data.mom.tokenId,
           dadId: data.dad.tokenId,
         },

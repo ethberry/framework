@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -81,7 +81,7 @@ export class DropService {
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
-    const { dropId, account, referrer } = dto;
+    const { account, referrer = constants.AddressZero, dropId } = dto;
 
     const dropEntity = await this.findOneWithRelations({ id: dropId });
 

@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhat.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhatV2.sol";
 
 import "../../ERC721Random.sol";
 
-contract ERC721RandomHardhat is ERC721Random, ChainLinkHardhat {
+contract ERC721RandomHardhat is ERC721Random, ChainLinkHardhatV2 {
   constructor(
     string memory name,
     string memory symbol,
@@ -18,11 +18,11 @@ contract ERC721RandomHardhat is ERC721Random, ChainLinkHardhat {
     string memory baseTokenURI
   ) ERC721Random(name, symbol, royalty, baseTokenURI) {}
 
-  function getRandomNumber() internal override(ChainLinkBase, ERC721Random) returns (bytes32 requestId) {
+  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721Random) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override(ERC721Random, VRFConsumerBase) {
-    return super.fulfillRandomness(requestId, randomness);
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override(ERC721Random, VRFConsumerBaseV2) {
+    return super.fulfillRandomWords(requestId, randomWords);
   }
 }

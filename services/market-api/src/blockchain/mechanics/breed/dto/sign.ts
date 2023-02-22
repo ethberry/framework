@@ -1,9 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
+import { Mixin } from "ts-mixer";
+
+import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
 import { ISignBreedDto } from "../interfaces";
 
-export class SignBreedDto implements ISignBreedDto {
+export class SignBreedDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignBreedDto {
   @ApiProperty({
     minimum: 1,
   })

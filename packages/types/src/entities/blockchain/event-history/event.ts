@@ -22,6 +22,7 @@ import { TClaimEvents } from "./claim";
 import { TMysteryEvents } from "./mystery";
 import { TWrapperEvents } from "./wrapper";
 import { IAssetComponentHistory } from "../exchange/asset-component-history";
+import { TErc1363Events } from "./erc1363";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -142,6 +143,9 @@ export type TContractEventData =
 
   // integrations
   | TChainLinkEvents
+
+  // erc1363
+  | TErc1363Events
 
   // exchange
   | TExchangeEvents

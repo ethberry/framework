@@ -10,11 +10,13 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
+import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+
 import "./interfaces/IERC721TokenWrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
-contract ERC721TokenWrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder {
+contract ERC721Wrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Asset[]) internal _itemData;
@@ -32,27 +34,20 @@ contract ERC721TokenWrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils,
     revert MethodNotSupported();
   }
 
-  function mintBox(address to, uint256 templateId, Asset[] memory items) external payable onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "Wrapper: wrong item");
+  function mintBox(address account, uint256 templateId, Asset[] memory items) external payable onlyRole(MINTER_ROLE) {
     require(items.length > 0, "Wrapper: no content");
-
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _itemData[tokenId] = items;
+
+    uint256 tokenId = _mintCommon(account, templateId);
 
     uint256 length = items.length;
     for (uint256 i = 0; i < length; i++) {
       _itemData[tokenId].push(items[i]);
     }
 
-    address account = _msgSender();
     spendFrom(items, account, address(this));
-
-    _safeMint(to, tokenId);
   }
 
   function unpack(uint256 tokenId) public {
@@ -60,7 +55,7 @@ contract ERC721TokenWrapper is IERC721TokenWrapper, ERC721Simple, ExchangeUtils,
 
     require(_isApprovedOrOwner(account, tokenId), "Wrapper: unpack caller is not owner nor approved");
 
-    spend(_itemData[tokenId], address(this), account);
+    spend(_itemData[tokenId], account);
 
     emit UnpackWrapper(tokenId);
 

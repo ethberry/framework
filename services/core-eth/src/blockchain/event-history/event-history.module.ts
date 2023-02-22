@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
@@ -8,7 +8,7 @@ import { ContractModule } from "../hierarchy/contract/contract.module";
 
 @Module({
   imports: [ContractModule, ConfigModule, TypeOrmModule.forFeature([EventHistoryEntity])],
-  providers: [EventHistoryService],
+  providers: [Logger, EventHistoryService],
   exports: [EventHistoryService],
 })
 export class EventHistoryModule {}

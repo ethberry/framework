@@ -9,7 +9,6 @@ import { ContractFeatures, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignBreedDto } from "./interfaces";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
@@ -54,8 +53,8 @@ export class BreedService {
     });
   }
 
-  public async sign(dto: ISignBreedDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { momId, dadId } = dto;
+  public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
+    const { account, referrer = constants.AddressZero, momId, dadId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
@@ -82,12 +81,12 @@ export class BreedService {
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      userEntity.wallet,
+      account,
       {
         nonce,
         externalId: encodedExternalId.toString(),
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer,
       },
       momTokenEntity.token,
       dadTokenEntity.token,

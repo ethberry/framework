@@ -11,6 +11,8 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
+import "../utils/constants.sol";
+
 abstract contract AbstractFactory is EIP712, AccessControl {
   using ECDSA for bytes32;
 
@@ -18,10 +20,6 @@ abstract contract AbstractFactory is EIP712, AccessControl {
 
   bytes internal constant PARAMS_SIGNATURE = "Params(bytes32 nonce,bytes bytecode)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
-
-  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-  bytes32 public constant SNAPSHOT_ROLE = keccak256("SNAPSHOT_ROLE");
-  bytes32 public constant METADATA_ADMIN_ROLE = keccak256("METADATA_ADMIN_ROLE");
 
   address[] _minters;
   address[] _manipulators;

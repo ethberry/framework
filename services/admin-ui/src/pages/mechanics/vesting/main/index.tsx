@@ -16,6 +16,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
+
 import { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingSearchForm } from "./form";
@@ -23,6 +25,7 @@ import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/vesting";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
+import { format, parseISO } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -67,8 +70,11 @@ export const Vesting: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>
+              <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
+              </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {format(parseISO(vesting.parameters.startTimestamp.toString()), humanReadableDateTimeFormat)}
               </ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
