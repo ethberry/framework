@@ -18,5 +18,6 @@ export * from "./royalty";
 export * from "./staking";
 export * from "./vesting";
 export * from "./wrapper";
+export * from "./erc1363";
 
 export * from "./event";

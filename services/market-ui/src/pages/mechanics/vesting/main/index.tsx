@@ -6,12 +6,14 @@ import { useIntl } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import type { IContract, IVestingSearchDto } from "@framework/types";
+
+import type { IContract, IVestingParams, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { emptyVestingContract } from "../../../../components/common/interfaces/empty-contract";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
+import { formatDistance } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -43,6 +45,13 @@ export const Vesting: FC = () => {
     };
   };
 
+  const getDistance = (contract: IContract): string => {
+    const { duration, startTimestamp } = contract.parameters as IVestingParams;
+    const dateStart = new Date(startTimestamp);
+    const dateFinish = new Date(dateStart.getTime() + duration);
+    return formatDistance(dateFinish, Date.now(), { addSuffix: true });
+  };
+
   const handleWithdrawConfirm = () => {
     setIsWithdrawDialogOpen(false);
   };
@@ -61,9 +70,10 @@ export const Vesting: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>
+              <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{getDistance(vesting)}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{

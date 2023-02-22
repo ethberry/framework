@@ -65,7 +65,8 @@ export const SystemContracts: FC = () => {
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.address}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleWithdraw(contract)}>
                   <AccountBalanceWallet />

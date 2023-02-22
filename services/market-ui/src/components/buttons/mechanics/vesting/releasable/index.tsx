@@ -9,7 +9,7 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { formatEther } from "../../../../../utils/money";
 
@@ -19,12 +19,11 @@ export interface IVestingReleasableButtonProps {
 
 export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props => {
   const { balance } = props;
-
   const { formatMessage } = useIntl();
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, VestingSol.abi, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address)"](balance.token.template.contract.address) as Promise<any>;
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {
@@ -39,11 +38,11 @@ export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props 
   const handleClick = async () => {
     const amount = await metaReleasable(balance);
     alert(
-      formatEther(
+      `Releasable: ${formatEther(
         amount.toString(),
         balance.token?.template?.contract?.decimals,
         balance.token?.template?.contract?.symbol,
-      ),
+      )}`,
     );
   };
 

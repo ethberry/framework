@@ -8,6 +8,7 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IBalance, IContract } from "@framework/types";
 
 import { VestingReleasableButton, VestingReleaseButton } from "../../../../../components/buttons";
+import { formatEther } from "../../../../../utils/money";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;
@@ -43,17 +44,23 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
       setRows(json.rows);
     });
   }, [initialValues.address]);
-
   return (
     <ConfirmationDialog message={"dialogs.withdraw"} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((row, i) => (
             <ListItem key={i}>
-              <ListItemText>{row.token?.template?.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>
+                {formatEther(
+                  row.amount.toString(),
+                  row.token?.template?.contract?.decimals,
+                  row.token?.template?.contract?.symbol,
+                )}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <VestingReleasableButton balance={row} />
-                <VestingReleaseButton balance={row} />
+                <VestingReleaseButton balance={row} disabled={row.amount === "0"} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
