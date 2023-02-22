@@ -24,7 +24,7 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
     uint32 sireId;
   }
 
-  mapping(bytes32 => Request) internal _queue;
+  mapping(uint256 => Request) internal _queue;
 
   constructor(
     string memory name,
@@ -45,14 +45,14 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
     _queue[getRandomNumber()] = Request(account, uint32(childId), uint32(matronId), uint32(sireId));
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
     Request memory request = _queue[requestId];
 
-    emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
+    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
 
-    uint256 genes = encodeData(request, randomness);
+    uint256 genes = encodeData(request, randomWords[0]);
     _upsertRecordField(tokenId, GENES, genes);
 
     delete _queue[requestId];
@@ -71,5 +71,5 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
     genes |= uint192(randomness) << 64;
   }
 
-  function getRandomNumber() internal virtual returns (bytes32 requestId);
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 }

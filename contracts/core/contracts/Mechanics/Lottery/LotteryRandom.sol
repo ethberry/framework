@@ -12,10 +12,10 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "../../utils/constants.sol";
 import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
+import "../../utils/constants.sol";
 
 abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
   using Address for address;
@@ -45,7 +45,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     bool[][] tickets; // all round tickets
     uint8[6] values; // prize numbers
     uint8[7] aggregation; // prize counts
-    bytes32 requestId;
+    uint256 requestId;
   }
 
   constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
@@ -99,7 +99,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     return _rounds[_rounds.length - 1];
   }
 
-  function getRandomNumber() internal virtual returns (bytes32 requestId);
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {
     uint256 roundNumber = _rounds.length - 1;
@@ -131,7 +131,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
   // ROUND
 
-  function fulfillRandomness(bytes32, uint256 randomness) internal virtual {
+  function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
     // may be storage
     Round storage currentRound = _rounds[_rounds.length - 1];
 
@@ -139,8 +139,8 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     bool[36] memory tmp1;
     uint8 i = 0;
     while (i < 6) {
-      uint256 number = randomness % 36;
-      randomness = randomness / 37;
+      uint256 number = randomWords[0] % 36;
+      randomWords[0] = randomWords[0] / 37;
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;

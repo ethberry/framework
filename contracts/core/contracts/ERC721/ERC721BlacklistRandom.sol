@@ -8,10 +8,9 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/IERC721Random.sol";
 import "./ERC721Blacklist.sol";
+import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
-
 import "../utils/constants.sol";
 
 abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarity {
@@ -22,7 +21,7 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
     uint256 templateId;
   }
 
-  mapping(bytes32 => Request) internal _queue;
+  mapping(uint256 => Request) internal _queue;
 
   constructor(
     string memory name,
@@ -45,13 +44,13 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
-  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal virtual {
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
+    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomness));
+    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
 
@@ -62,5 +61,5 @@ abstract contract ERC721BlacklistRandom is IERC721Random, ERC721Blacklist, Rarit
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }
 
-  function getRandomNumber() internal virtual returns (bytes32 requestId);
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 }
