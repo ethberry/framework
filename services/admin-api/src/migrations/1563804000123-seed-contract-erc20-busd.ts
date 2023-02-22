@@ -8,6 +8,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
+    const busdAddr = process.env.BUSD_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
@@ -49,7 +50,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4207,
-        '${process.env.BUSD_ADDR || wallet}',
+        '${busdAddr}',
         '${chainId}',
         'BUSD',
         '${simpleFormatting}',
