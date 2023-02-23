@@ -57,6 +57,26 @@ describe("Wrapper", function () {
     await expect(tx1).to.changeEtherBalances([owner, erc721WrapperInstance], [amount, -amount]);
   });
 
+  it("should fail wrap other ERC20", async function () {
+    const [_owner, receiver] = await ethers.getSigners();
+
+    const erc20Instance = await erc20Factory();
+    const erc721WrapperInstance = await factory();
+
+    await erc20Instance.mint(receiver.address, amount);
+    await erc20Instance.connect(receiver).approve(erc721WrapperInstance.address, amount);
+
+    const tx = erc721WrapperInstance.mintBox(receiver.address, templateId, [
+      {
+        tokenType: 1,
+        token: erc20Instance.address,
+        tokenId: 0,
+        amount,
+      },
+    ]);
+    await expect(tx).to.be.revertedWith("Revert");
+  });
+
   it("should wrap ERC20 and unwrap ERC20", async function () {
     const [owner] = await ethers.getSigners();
 
