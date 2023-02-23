@@ -33,7 +33,7 @@ describe("ExchangeCraft", function () {
       it("should purchase", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -113,7 +113,7 @@ describe("ExchangeCraft", function () {
       it("should purchase", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -175,7 +175,7 @@ describe("ExchangeCraft", function () {
       it("should fail: Wrong amount", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -231,7 +231,7 @@ describe("ExchangeCraft", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -295,7 +295,7 @@ describe("ExchangeCraft", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -349,7 +349,7 @@ describe("ExchangeCraft", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -404,7 +404,7 @@ describe("ExchangeCraft", function () {
       it("should craft", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
@@ -460,7 +460,7 @@ describe("ExchangeCraft", function () {
       it("should fail: caller is not token owner nor approved", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
@@ -514,7 +514,7 @@ describe("ExchangeCraft", function () {
       it("should fail: insufficient balance for transfer", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({

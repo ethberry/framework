@@ -24,7 +24,7 @@ describe("ExchangeCore", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -73,7 +73,7 @@ describe("ExchangeCore", function () {
     it("should purchase, spend ETH", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -121,7 +121,7 @@ describe("ExchangeCore", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -191,7 +191,7 @@ describe("ExchangeCore", function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const network = await ethers.provider.getNetwork();
       const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, stranger);
@@ -241,7 +241,7 @@ describe("ExchangeCore", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -288,7 +288,7 @@ describe("ExchangeCore", function () {
     it("should fail: wrong signature", async function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const tx = exchangeInstance.purchase(
         params,
@@ -316,7 +316,7 @@ describe("ExchangeCore", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
       const expiresAt = (await time.latest()).toString();
       const params = {

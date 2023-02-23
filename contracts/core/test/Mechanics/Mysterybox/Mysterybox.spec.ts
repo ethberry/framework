@@ -1,27 +1,27 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { constants } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
-import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
+import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
 import { templateId, tokenId } from "../../constants";
 
-import { randomRequest } from "../../shared/randomRequest";
-import { deployLinkVrfFixture } from "../../shared/link";
+import { randomRequestV2 } from "../../shared/randomRequest";
+import { deployLinkVrfFixtureV2 } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
+import { deployErc721Base } from "../../Exchange/shared/fixture";
 
 describe("ERC721MysteryboxSimple", function () {
-  let linkInstance: LinkToken;
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const factory = () => deployERC721("ERC721MysteryboxTest");
   const erc721Factory = () => deployERC721();
-  const erc721RandomFactory = () => deployERC721("ERC721RandomHardhat");
+  // const erc721RandomFactory = () => deployERC721("ERC721RandomHardhat");
   const erc1155Factory = () => deployERC1155();
 
   before(async function () {
@@ -29,8 +29,8 @@ describe("ERC721MysteryboxSimple", function () {
       await network.provider.send("hardhat_reset");
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
-      ({ linkInstance, vrfInstance } = await loadFixture(function mysterybox() {
-        return deployLinkVrfFixture();
+      ({ vrfInstance } = await loadFixture(function mysterybox() {
+        return deployLinkVrfFixtureV2();
       }));
     }
   });
@@ -131,10 +131,11 @@ describe("ERC721MysteryboxSimple", function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const mysteryboxInstance = await factory();
-      const erc721RandomInstance = await erc721RandomFactory();
+      const erc721RandomInstance = await deployErc721Base("ERC721RandomHardhat", mysteryboxInstance.address);
 
-      await erc721RandomInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
@@ -153,12 +154,11 @@ describe("ERC721MysteryboxSimple", function () {
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(receiver.address, constants.AddressZero, tokenId)
-        .to.emit(mysteryboxInstance, "UnpackMysterybox")
-        .to.emit(linkInstance, "Transfer(address,address,uint256)")
-        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+        .to.emit(mysteryboxInstance, "UnpackMysterybox");
 
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+
       const balance = await erc721RandomInstance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
     });

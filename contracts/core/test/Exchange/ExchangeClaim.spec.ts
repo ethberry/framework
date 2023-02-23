@@ -1,24 +1,24 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { constants } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, decimals } from "@gemunion/contracts-constants";
+import { amount } from "@gemunion/contracts-constants";
 import { params, tokenId } from "../constants";
 
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { deployLinkVrfFixture } from "../shared/link";
-import { LinkToken } from "../../typechain-types";
+import { deployLinkVrfFixtureV2 } from "../shared/link";
+import { VRFCoordinatorV2Mock } from "../../typechain-types";
 
 describe("ExchangeClaim", function () {
-  let linkInstance: LinkToken;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance } = await loadFixture(function exchange() {
-      return deployLinkVrfFixture();
+    ({ vrfInstance } = await loadFixture(function exchange() {
+      return deployLinkVrfFixtureV2();
     }));
   });
 
@@ -31,7 +31,7 @@ describe("ExchangeClaim", function () {
       it("should claim ", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -74,9 +74,11 @@ describe("ExchangeClaim", function () {
       it("should claim random", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
 
-        await linkInstance.transfer(erc721Instance.address, BigNumber.from("1000").mul(decimals));
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,

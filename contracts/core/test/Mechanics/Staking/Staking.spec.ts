@@ -1,18 +1,18 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, network, waffle, web3 } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
-import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
-import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
+import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
 import { templateId } from "../../constants";
 import { IRule } from "./interface/staking";
-import { randomRequest } from "../../shared/randomRequest";
-import { deployLinkVrfFixture } from "../../shared/link";
+import { randomRequestV2 } from "../../shared/randomRequest";
+import { deployLinkVrfFixtureV2 } from "../../shared/link";
 import { deployStaking } from "./shared/fixture";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -28,8 +28,7 @@ describe("Staking", function () {
   // TODO use @types
   const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
 
-  let linkInstance: LinkToken;
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const factory = () => deployStaking();
   const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
@@ -43,8 +42,8 @@ describe("Staking", function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
-      return deployLinkVrfFixture();
+    ({ vrfInstance } = await loadFixture(function staking() {
+      return deployLinkVrfFixtureV2();
     }));
   });
 
@@ -668,7 +667,9 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
         externalId: 1,
@@ -704,13 +705,9 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
-        .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(linkInstance, "Transfer(address,address,uint256)")
-        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       // DEPOSIT
@@ -991,7 +988,9 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
         externalId: 1,
@@ -1034,11 +1033,8 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2)
-        .to.emit(linkInstance, "Transfer(address,address,uint256)")
-        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       balance = await erc20Instance.balanceOf(owner.address);
@@ -1343,7 +1339,9 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
         externalId: 1,
@@ -1383,13 +1381,9 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
-        .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(linkInstance, "Transfer(address,address,uint256)")
-        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles + 1);
     });
@@ -1687,7 +1681,9 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
         externalId: 1,
@@ -1726,14 +1722,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
-        .to.emit(stakingInstance, "StakingFinish")
-        .to.emit(linkInstance, "Transfer(address,address,uint256)")
-        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
 
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance);
+      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(2);
       balance = await erc1155Instance.balanceOf(owner.address, 1);

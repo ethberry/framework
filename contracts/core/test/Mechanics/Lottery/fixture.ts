@@ -17,7 +17,6 @@ export async function deployLottery(): Promise<{
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
-
   const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
   const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });

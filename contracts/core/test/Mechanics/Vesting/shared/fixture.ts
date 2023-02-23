@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { Contract, constants } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
 import { amount, tokenName, tokenSymbol, span } from "@gemunion/contracts-constants";
@@ -12,10 +12,17 @@ export async function deployVesting(name: string): Promise<Contract> {
   const vestingFactory = await ethers.getContractFactory(name);
   const vestingInstance = await vestingFactory.deploy(owner.address, current.toNumber(), span * 4);
 
-  await owner.sendTransaction({
-    to: vestingInstance.address,
-    value: amount * 100,
-  });
+  await vestingInstance.topUp(
+    [
+      {
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount: amount * 100,
+      },
+    ],
+    { value: amount * 100 },
+  );
 
   return vestingInstance;
 }

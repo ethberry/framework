@@ -31,7 +31,9 @@ abstract contract ERC998Random is IERC721Random, ERC998Simple, Rarity {
   ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
@@ -54,7 +56,7 @@ abstract contract ERC998Random is IERC721Random, ERC998Simple, Rarity {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));

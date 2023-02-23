@@ -1,17 +1,17 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, network, web3 } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
 import { defaultNumbers, expiresAt, externalId, params } from "../../constants";
-import { deployLinkVrfFixture } from "../../shared/link";
-import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
-import { randomRequest } from "../../shared/randomRequest";
+import { deployLinkVrfFixtureV2 } from "../../shared/link";
+import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
+import { randomRequestV2 } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -24,8 +24,7 @@ const delay = (milliseconds: number) => {
 use(solidity);
 
 describe("Lottery", function () {
-  let linkInstance: LinkToken;
-  let vrfInstance: VRFCoordinatorMock;
+  let vrfInstance: VRFCoordinatorV2Mock;
 
   const factory = () => deployLottery();
 
@@ -34,8 +33,8 @@ describe("Lottery", function () {
       await network.provider.send("hardhat_reset");
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
-      ({ linkInstance, vrfInstance } = await loadFixture(function chainlink() {
-        return deployLinkVrfFixture();
+      ({ vrfInstance } = await loadFixture(function chainlink() {
+        return deployLinkVrfFixtureV2();
       }));
     }
   });
@@ -126,7 +125,9 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       const tx = await lotteryInstance.endRound();
@@ -138,7 +139,7 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        await randomRequest(lotteryInstance, vrfInstance);
+        await randomRequestV2(lotteryInstance as IERC721Random, vrfInstance);
       }
     });
 
@@ -167,7 +168,9 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       await lotteryInstance.startRound();
@@ -196,7 +199,7 @@ describe("Lottery", function () {
 
       if (network.name === "hardhat") {
         // RANDOM
-        await randomRequest(lotteryInstance, vrfInstance);
+        await randomRequestV2(lotteryInstance as IERC721Random, vrfInstance);
       } else {
         const eventFilter = lotteryInstance.filters.RoundFinalized();
         const events = await lotteryInstance.queryFilter(eventFilter);
@@ -242,7 +245,8 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       await lotteryInstance.startRound();
@@ -276,7 +280,8 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       await lotteryInstance.startRound();
@@ -411,7 +416,8 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       await lotteryInstance.startRound();
@@ -482,7 +488,8 @@ describe("Lottery", function () {
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
       if (network.name === "hardhat") {
-        await linkInstance.transfer(lotteryInstance.address, BigNumber.from("1000").mul(decimals));
+        const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
       await lotteryInstance.startRound();

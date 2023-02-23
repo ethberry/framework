@@ -5,22 +5,22 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
-import { deployLinkVrfFixture } from "../../../shared/link";
+import { IERC721Random, LinkToken, VRFCoordinatorV2Mock } from "../../../../typechain-types";
+import { deployLinkVrfFixtureV2 } from "../../../shared/link";
 import { templateId } from "../../../constants";
-import { randomRequest } from "../../../shared/randomRequest";
+import { randomRequestV2 } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<Contract>) {
   describe("mintRandom", function () {
     let linkInstance: LinkToken;
-    let vrfInstance: VRFCoordinatorMock;
+    let vrfInstance: VRFCoordinatorV2Mock;
 
     before(async function () {
       await network.provider.send("hardhat_reset");
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
       ({ linkInstance, vrfInstance } = await loadFixture(function shouldMintRandom() {
-        return deployLinkVrfFixture();
+        return deployLinkVrfFixtureV2();
       }));
     });
 
@@ -28,12 +28,13 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await linkInstance.transfer(contractInstance.address, constants.WeiPerEther);
-
+      // Add Consumer to VRFV2
+      const tx02 = vrfInstance.addConsumer(1, contractInstance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, contractInstance.address);
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {
-        await randomRequest(contractInstance, vrfInstance);
+        await randomRequestV2(contractInstance as IERC721Random, vrfInstance);
       }
 
       const balance = await contractInstance.balanceOf(receiver.address);

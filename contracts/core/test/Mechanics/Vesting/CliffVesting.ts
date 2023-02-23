@@ -17,9 +17,9 @@ describe("CliffVesting", function () {
     const vestingInstance = await factory();
 
     const expectedAmounts = [0, 0, 0, 0, amount * 100, 0];
-
     for (const expectedAmount of expectedAmounts) {
       const releaseable = await vestingInstance["releaseable()"]();
+
       expect(releaseable).to.be.equal(expectedAmount);
 
       const tx = await vestingInstance["release()"]();

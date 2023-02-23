@@ -58,7 +58,7 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, GRADE, 0);

@@ -14,7 +14,7 @@ export function shouldReceive(factory: () => Promise<Contract>) {
         gasLimit: 21000 + 61, // + revert
       });
 
-      await expect(tx).to.be.reverted;
+      await expect(tx).to.be.revertedWith("");
     });
   });
 }

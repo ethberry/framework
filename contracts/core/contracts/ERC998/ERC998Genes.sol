@@ -35,7 +35,10 @@ abstract contract ERC998Genes is IERC721Random, ERC998Simple, Breed {
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
@@ -44,7 +47,7 @@ abstract contract ERC998Genes is IERC721Random, ERC998Simple, Breed {
     _tokenIdTracker.increment();
     Request memory request = _queue[requestId];
 
-    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, GENES, randomWords[0]);

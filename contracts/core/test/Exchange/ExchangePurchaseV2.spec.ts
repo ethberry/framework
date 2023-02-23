@@ -1,26 +1,24 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, decimals } from "@gemunion/contracts-constants";
+import { amount } from "@gemunion/contracts-constants";
 import { params, tokenId } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixtureV2 } from "../shared/link";
-import { LinkToken, VRFCoordinatorV2Mock, ERC721RandomHardhatV2 } from "../../typechain-types";
+import { IERC721Random, VRFCoordinatorV2Mock } from "../../typechain-types";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { randomRequestV2 } from "../shared/randomRequest";
 
 describe("ExchangePurchaseV2", function () {
-  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorV2Mock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function exchange() {
+    ({ vrfInstance } = await loadFixture(function exchange() {
       return deployLinkVrfFixtureV2();
     }));
   });
@@ -34,34 +32,15 @@ describe("ExchangePurchaseV2", function () {
       it("should purchase ERC721 Random for ERC20", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-        const erc721Instance: ERC721RandomHardhatV2 = (await deployErc721Base(
-          "ERC721RandomHardhatV2",
-          exchangeInstance,
-        )) as ERC721RandomHardhatV2;
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        // GET CHAIN_LINK V2 TO WORK
-        const tx0 = vrfInstance.setConfig(3, 1000000, 1, 1, 1);
-        await expect(tx0).to.emit(vrfInstance, "ConfigSet").withArgs(3, 1000000, 1, 1, 1);
-        const tx = vrfInstance.createSubscription();
-        await expect(tx).to.emit(vrfInstance, "SubscriptionCreated");
-        const vrfEventFilter = vrfInstance.filters.SubscriptionCreated();
-        const vrfEvents = await vrfInstance.queryFilter(vrfEventFilter);
-        const subsriptionId = vrfEvents[0].args.subId;
-        expect(subsriptionId).to.equal(1);
-        const tx01 = linkInstance.transferAndCall(
-          vrfInstance.address,
-          BigNumber.from("10").mul(decimals),
-          utils.hexZeroPad(ethers.utils.hexlify(~~subsriptionId.toString()), 32),
-        );
-        await expect(tx01).to.emit(vrfInstance, "SubscriptionFunded");
-        const tx02 = vrfInstance.addConsumer(subsriptionId, erc721Instance.address);
-        await expect(tx02)
-          .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subsriptionId, erc721Instance.address);
+        // addConsumer to VRFCOORDINATOR
+        const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
 
+        await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
@@ -76,7 +55,7 @@ describe("ExchangePurchaseV2", function () {
               tokenType: 1,
               token: erc20Instance.address,
               tokenId: 0,
-              amount: amount,
+              amount,
             },
           ],
         });
@@ -102,16 +81,7 @@ describe("ExchangePurchaseV2", function () {
 
         await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
-        await randomRequestV2(erc721Instance, vrfInstance);
-
-        const eventFilter = vrfInstance.filters.RandomWordsFulfilled();
-        const events = await vrfInstance.queryFilter(eventFilter);
-
-        expect(events[0].args.success).to.equal(true);
-
-        const eventRndFilter = erc721Instance.filters.MintRandomV2();
-        const eventsRnd = await erc721Instance.queryFilter(eventRndFilter);
-        expect(eventsRnd[0].args.to).to.equal(receiver.address);
+        await randomRequestV2(erc721Instance as IERC721Random, vrfInstance);
 
         const balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(1);

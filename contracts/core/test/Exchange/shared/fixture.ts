@@ -33,10 +33,10 @@ export async function deployErc20Base(name: string, exchangeInstance: Exchange) 
   return erc20Instance;
 }
 
-export async function deployErc721Base(name: string, exchangeInstance: Exchange) {
+export async function deployErc721Base(name: string, minterInstance: string) {
   const erc721Factory = await ethers.getContractFactory(name);
   const erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-  await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
+  await erc721Instance.grantRole(MINTER_ROLE, minterInstance);
 
   return erc721Instance;
 }
