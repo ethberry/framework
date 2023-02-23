@@ -104,6 +104,8 @@ describe("Wrapper", function () {
     await expect(tx).to.changeTokenBalances(erc20Instance, [owner, erc721WrapperInstance], [-amount, amount]);
     await expect(tx).to.emit(erc721WrapperInstance, "Transfer").withArgs(constants.AddressZero, owner.address, tokenId);
 
+    await erc721WrapperInstance.transferFrom(owner.address, walletMockInstance.address, 1);
+
     // Calling WrapperWalletMock.unpack
     const tx1 = walletMockInstance.unpack(erc721WrapperInstance.address, tokenId);
     await expect(tx1).to.emit(erc20Instance, "Transfer");
