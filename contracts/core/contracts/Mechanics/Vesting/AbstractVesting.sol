@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -14,7 +14,6 @@ import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
 contract AbstractVesting is VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
-
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,

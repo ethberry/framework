@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -18,11 +18,18 @@ contract ERC721BlacklistUpgradeableRandomHardhat is ERC721BlacklistUpgradeableRa
     string memory baseTokenURI
   ) ERC721BlacklistUpgradeableRandom(name, symbol, royalty, baseTokenURI) {}
 
-  function getRandomNumber() internal override(ChainLinkBaseV2, ERC721BlacklistUpgradeableRandom) returns (uint256 requestId) {
+  function getRandomNumber()
+    internal
+    override(ChainLinkBaseV2, ERC721BlacklistUpgradeableRandom)
+    returns (uint256 requestId)
+  {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override(ERC721BlacklistUpgradeableRandom, VRFConsumerBaseV2) {
+  function fulfillRandomWords(
+    uint256 requestId,
+    uint256[] memory randomWords
+  ) internal override(ERC721BlacklistUpgradeableRandom, VRFConsumerBaseV2) {
     return super.fulfillRandomWords(requestId, randomWords);
   }
 }

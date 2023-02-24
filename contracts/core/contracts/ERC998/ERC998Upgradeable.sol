@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -31,7 +31,6 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
     if (templateId == 0) {
       revert TemplateZero();
     }
-
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
