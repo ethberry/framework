@@ -6,6 +6,7 @@ export enum ClaimStatus {
   NEW = "NEW",
   REDEEMED = "REDEEMED",
   UNPACKED = "UNPACKED",
+  EXPIRED = "EXPIRED",
 }
 
 export interface IClaim extends IIdDateBase {
