@@ -4,8 +4,9 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
-import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";

@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { SignerModule } from "@framework/nest-js-module-exchange-signer";
+import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
 
 import { BreedService } from "./breed.service";
 import { BreedController } from "./breed.controller";

@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { SignerModule } from "@framework/nest-js-module-exchange-signer";
+import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ClaimEntity } from "./claim.entity";
 import { ClaimService } from "./claim.service";

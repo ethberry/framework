@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { SignerModule } from "@framework/nest-js-module-exchange-signer";
+import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
 
 import { DropEntity } from "./drop.entity";
 import { DropService } from "./drop.service";
