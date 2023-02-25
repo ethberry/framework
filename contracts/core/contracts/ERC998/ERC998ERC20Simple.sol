@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 
-import "@gemunion/contracts-erc998/contracts/extensions/ERC998ERC20.sol";
+import "@gemunion/contracts-erc998td/contracts/extensions/ERC998ERC20.sol";
 
 import "./ERC998Simple.sol";
 

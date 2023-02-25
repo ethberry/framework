@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-erc998/contracts/extensions/StateHash.sol";
+import "@gemunion/contracts-erc998td/contracts/extensions/StateHash.sol";
 
 import "./ERC998Simple.sol";
 
