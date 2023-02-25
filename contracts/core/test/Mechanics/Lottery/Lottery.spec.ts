@@ -10,7 +10,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 
 import { defaultNumbers, expiresAt, externalId, params } from "../../constants";
 import { deployLinkVrfFixtureV2 } from "../../shared/link";
-import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
+import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequestV2 } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
@@ -24,7 +24,7 @@ const delay = (milliseconds: number) => {
 use(solidity);
 
 describe("Lottery", function () {
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployLottery();
 

@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGemunionV2.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion.sol";
 
 import "../../ERC998Random.sol";
 
-contract ERC998RandomGemunion is ERC998Random, ChainLinkGemunionV2 {
+contract ERC998RandomGemunion is ERC998Random, ChainLinkGemunion {
   constructor(
     string memory name,
     string memory symbol,
@@ -18,10 +18,10 @@ contract ERC998RandomGemunion is ERC998Random, ChainLinkGemunionV2 {
     string memory baseTokenURI
   )
     ERC998Random(name, symbol, royalty, baseTokenURI)
-    ChainLinkGemunionV2(uint64(2), uint16(6), uint32(600000), uint32(1))
+    ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1))
   {}
 
-  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998Random) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBase, ERC998Random) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

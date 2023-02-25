@@ -7,12 +7,12 @@ import { params, tokenId } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixtureV2 } from "../shared/link";
-import { IERC721Random, VRFCoordinatorV2Mock } from "../../typechain-types";
+import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { randomRequestV2 } from "../shared/randomRequest";
 
 describe("ExchangePurchaseV2", function () {
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -73,7 +73,7 @@ describe("ExchangePurchaseV2", function () {
               tokenType: 1,
               token: erc20Instance.address,
               tokenId: 0,
-              amount: amount,
+              amount,
             },
           ],
           signature,

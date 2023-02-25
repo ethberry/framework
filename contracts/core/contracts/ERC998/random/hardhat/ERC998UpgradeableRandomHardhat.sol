@@ -6,19 +6,22 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkHardhatV2.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhat.sol";
 
 import "../../ERC998UpgradeableRandom.sol";
 
-contract ERC998UpgradeableRandomHardhat is ERC998UpgradeableRandom, ChainLinkHardhatV2 {
+contract ERC998UpgradeableRandomHardhat is ERC998UpgradeableRandom, ChainLinkHardhat {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC998UpgradeableRandom(name, symbol, royalty, baseTokenURI) {}
+  )
+    ERC998UpgradeableRandom(name, symbol, royalty, baseTokenURI)
+    ChainLinkHardhat(uint64(1), uint16(6), uint32(600000), uint32(1))
+  {}
 
-  function getRandomNumber() internal override(ChainLinkBaseV2, ERC998UpgradeableRandom) returns (uint256 requestId) {
+  function getRandomNumber() internal override(ChainLinkBase, ERC998UpgradeableRandom) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 

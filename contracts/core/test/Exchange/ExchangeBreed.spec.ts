@@ -5,13 +5,13 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { expiresAt, externalId, params } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { VRFCoordinatorV2Mock, IERC721Random } from "../../typechain-types";
+import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixtureV2 } from "../shared/link";
 import { randomRequestV2 } from "../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
 
 describe("ExchangeBreed", function () {
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");

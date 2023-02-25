@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun@gemunion.io
+// Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -36,7 +36,18 @@ contract ExchangeUtils {
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
       } else if (ingredient.tokenType == TokenType.ERC20) {
-        if (IERC165(ingredient.token).supportsInterface(IERC1363_ID) && receiver.isContract()) {
+        bool supported;
+        if (receiver.isContract()) {
+          try IERC165(ingredient.token).supportsInterface(IERC1363_ID) returns (bool isERC1363) {
+            if (isERC1363) {
+              try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
+                supported = isERC1363Receiver;
+              } catch (bytes memory /*lowLevelData*/) {}
+            }
+          } catch (bytes memory /*lowLevelData*/) {}
+        }
+
+        if (supported) {
           IERC1363(ingredient.token).transferFromAndCall(account, receiver, ingredient.amount);
         } else {
           SafeERC20.safeTransferFrom(IERC20(ingredient.token), account, receiver, ingredient.amount);
@@ -69,7 +80,18 @@ contract ExchangeUtils {
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
       } else if (ingredient.tokenType == TokenType.ERC20) {
-        if (IERC165(ingredient.token).supportsInterface(IERC1363_ID) && receiver.isContract()) {
+        bool supported;
+        if (receiver.isContract()) {
+          try IERC165(ingredient.token).supportsInterface(IERC1363_ID) returns (bool isERC1363) {
+            if (isERC1363) {
+              try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
+                supported = isERC1363Receiver;
+              } catch (bytes memory /*lowLevelData*/) {}
+            }
+          } catch (bytes memory /*lowLevelData*/) {}
+        }
+
+        if (supported) {
           IERC1363(ingredient.token).transferAndCall(receiver, ingredient.amount);
         } else {
           SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);

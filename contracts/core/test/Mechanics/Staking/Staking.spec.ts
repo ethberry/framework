@@ -8,7 +8,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
-import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
+import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequestV2 } from "../../shared/randomRequest";
@@ -28,7 +28,7 @@ describe("Staking", function () {
   // TODO use @types
   const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
 
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployStaking();
   const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });

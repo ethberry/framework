@@ -10,10 +10,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+
 import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+
 import "../../Exchange/ExchangeUtils.sol";
 
-contract AbstractVesting is VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
+contract AbstractVesting is ERC165, VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,
@@ -46,5 +49,12 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, ExchangeUtils, ER
   // Allow delegation of votes
   function delegate(IVotes token, address delegatee) public virtual onlyOwner {
     token.delegate(delegatee);
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return
+      interfaceId == type(IERC1363Receiver).interfaceId ||
+      interfaceId == type(IERC1363Spender).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 }

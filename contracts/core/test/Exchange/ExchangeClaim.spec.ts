@@ -8,10 +8,10 @@ import { params, tokenId } from "../constants";
 
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixtureV2 } from "../shared/link";
-import { VRFCoordinatorV2Mock } from "../../typechain-types";
+import { VRFCoordinatorMock } from "../../typechain-types";
 
 describe("ExchangeClaim", function () {
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
     await network.provider.send("hardhat_reset");

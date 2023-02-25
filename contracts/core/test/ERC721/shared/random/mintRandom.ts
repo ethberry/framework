@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { IERC721Random, LinkToken, VRFCoordinatorV2Mock } from "../../../../typechain-types";
+import { IERC721Random, LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
 import { deployLinkVrfFixtureV2 } from "../../../shared/link";
 import { templateId } from "../../../constants";
 import { randomRequestV2 } from "../../../shared/randomRequest";
@@ -13,7 +13,7 @@ import { randomRequestV2 } from "../../../shared/randomRequest";
 export function shouldMintRandom(factory: () => Promise<Contract>) {
   describe("mintRandom", function () {
     let linkInstance: LinkToken;
-    let vrfInstance: VRFCoordinatorV2Mock;
+    let vrfInstance: VRFCoordinatorMock;
 
     before(async function () {
       await network.provider.send("hardhat_reset");

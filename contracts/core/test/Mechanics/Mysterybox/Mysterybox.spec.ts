@@ -6,7 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
-import { IERC721Random, VRFCoordinatorV2Mock } from "../../../typechain-types";
+import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId, tokenId } from "../../constants";
 
 import { randomRequestV2 } from "../../shared/randomRequest";
@@ -17,7 +17,7 @@ import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 import { deployErc721Base } from "../../Exchange/shared/fixture";
 
 describe("ERC721MysteryboxSimple", function () {
-  let vrfInstance: VRFCoordinatorV2Mock;
+  let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployERC721("ERC721MysteryboxTest");
   const erc721Factory = () => deployERC721();

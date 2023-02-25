@@ -1,7 +1,7 @@
 import { Contract, utils } from "ethers";
 import { ethers } from "hardhat";
 
-import { VRFCoordinatorMock, VRFCoordinatorV2Mock, IERC721Random } from "../../typechain-types";
+import { VRFCoordinatorMock, VRFCoordinatorMock, IERC721Random } from "../../typechain-types";
 
 // this works not only on ERC721 but also on Lottery
 export async function randomRequest(rndInstance: Contract, vrfInstance: VRFCoordinatorMock) {
@@ -12,7 +12,7 @@ export async function randomRequest(rndInstance: Contract, vrfInstance: VRFCoord
   }
 }
 
-export async function randomRequestV2(rndInstance: IERC721Random, vrfInstance: VRFCoordinatorV2Mock) {
+export async function randomRequestV2(rndInstance: IERC721Random, vrfInstance: VRFCoordinatorMock) {
   const eventFilter = vrfInstance.filters.RandomWordsRequested();
   const events = await vrfInstance.queryFilter(eventFilter);
 
