@@ -22,7 +22,7 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
     Asset memory item,
     Asset[] memory price,
     bytes calldata signature
-  ) external payable {
+  ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
 

@@ -34,7 +34,7 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     Asset memory item,
     Asset memory price,
     bytes calldata signature
-  ) external payable {
+  ) external payable whenNotPaused {
     address signer = _recoverOneToOneSignature(params, item, price, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
 

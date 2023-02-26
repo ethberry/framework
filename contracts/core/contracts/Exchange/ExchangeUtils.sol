@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -13,12 +13,13 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "@gemunion/contracts-erc20/contracts/interfaces/IERC1363.sol";
+import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "../utils/constants.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./interfaces/IAsset.sol";
+import "../utils/constants.sol";
 
 contract ExchangeUtils {
   using Address for address;
