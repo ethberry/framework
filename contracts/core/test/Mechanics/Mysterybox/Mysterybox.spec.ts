@@ -8,17 +8,18 @@ import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId, tokenId } from "../../constants";
-
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
+import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 
 describe("ERC721MysteryboxSimple", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployERC721("ERC721MysteryboxTest");
+  const erc20Factory = (name: string) => deployERC20(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
   const erc1155Factory = (name: string) => deployERC1155(name);
@@ -50,8 +51,48 @@ describe("ERC721MysteryboxSimple", function () {
   });
 
   describe("mint/unpack", function () {
+    describe("NATIVE", function () {
+      it("should mint/unpack", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const mysteryboxInstance = await factory();
+
+        const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
+          {
+            tokenType: 1,
+            token: constants.AddressZero,
+            tokenId: templateId,
+            amount,
+          },
+        ]);
+
+        await expect(tx1).to.be.revertedWith("UnsupportedTokenType");
+      });
+    });
+
+    describe("ERC20", function () {
+      it("should mint/unpack", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const mysteryboxInstance = await factory();
+        const erc20SimpleInstance = await erc20Factory("ERC20Simple");
+        await erc20SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+
+        const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
+          {
+            tokenType: 1,
+            token: erc20SimpleInstance.address,
+            tokenId: templateId,
+            amount,
+          },
+        ]);
+
+        await expect(tx1).to.be.revertedWith("UnsupportedTokenType");
+      });
+    });
+
     describe("ERC721", function () {
-      it("should mint (Simple)", async function () {
+      it("should mint/unpack (Simple)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -79,7 +120,7 @@ describe("ERC721MysteryboxSimple", function () {
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
-      it("should mint (Random)", async function () {
+      it("should mint/unpack (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -118,7 +159,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     describe("ERC998", function () {
-      it("should mint (Simple)", async function () {
+      it("should mint/unpack (Simple)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -146,7 +187,7 @@ describe("ERC721MysteryboxSimple", function () {
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
-      it("should mint (Random)", async function () {
+      it("should mint/unpack (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -184,7 +225,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     describe("ERC1155", function () {
-      it("should mint", async function () {
+      it("should mint/unpack", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -214,53 +255,55 @@ describe("ERC721MysteryboxSimple", function () {
       });
     });
 
-    it("should mint multiple", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+    describe("MIX", function () {
+      it("should mint/unpack multiple", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
 
-      const mysteryboxInstance = await factory();
-      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
-      const erc998SimpleInstance = await erc721Factory("ERC998Simple");
-      const erc1155SimpleInstance = await erc1155Factory("ERC1155Simple");
+        const mysteryboxInstance = await factory();
+        const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+        const erc998SimpleInstance = await erc721Factory("ERC998Simple");
+        const erc1155SimpleInstance = await erc1155Factory("ERC1155Simple");
 
-      await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-      await erc998SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-      await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+        await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+        await erc998SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+        await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
 
-      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
-        {
-          tokenType: 2,
-          token: erc721SimpleInstance.address,
-          tokenId: templateId,
-          amount,
-        },
-        {
-          tokenType: 3,
-          token: erc998SimpleInstance.address,
-          tokenId: templateId,
-          amount,
-        },
-        {
-          tokenType: 4,
-          token: erc1155SimpleInstance.address,
-          tokenId: templateId,
-          amount,
-        },
-      ]);
+        const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
+          {
+            tokenType: 2,
+            token: erc721SimpleInstance.address,
+            tokenId: templateId,
+            amount,
+          },
+          {
+            tokenType: 3,
+            token: erc998SimpleInstance.address,
+            tokenId: templateId,
+            amount,
+          },
+          {
+            tokenType: 4,
+            token: erc1155SimpleInstance.address,
+            tokenId: templateId,
+            amount,
+          },
+        ]);
 
-      await expect(tx1)
-        .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(constants.AddressZero, receiver.address, tokenId);
+        await expect(tx1)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
-      await expect(tx2)
-        .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(receiver.address, constants.AddressZero, tokenId)
-        .to.emit(erc721SimpleInstance, "Transfer")
-        .withArgs(constants.AddressZero, receiver.address, tokenId)
-        .to.emit(erc998SimpleInstance, "Transfer")
-        .withArgs(constants.AddressZero, receiver.address, tokenId)
-        .to.emit(erc1155SimpleInstance, "TransferSingle")
-        .withArgs(mysteryboxInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
+        const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
+        await expect(tx2)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(receiver.address, constants.AddressZero, tokenId)
+          .to.emit(erc721SimpleInstance, "Transfer")
+          .withArgs(constants.AddressZero, receiver.address, tokenId)
+          .to.emit(erc998SimpleInstance, "Transfer")
+          .withArgs(constants.AddressZero, receiver.address, tokenId)
+          .to.emit(erc1155SimpleInstance, "TransferSingle")
+          .withArgs(mysteryboxInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
+      });
     });
   });
 });

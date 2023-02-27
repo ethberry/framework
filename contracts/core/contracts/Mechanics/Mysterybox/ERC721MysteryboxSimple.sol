@@ -43,6 +43,9 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     uint256 length = items.length;
     for (uint256 i = 0; i < length; i++) {
+      if (items[i].tokenType == TokenType.NATIVE || items[i].tokenType == TokenType.ERC20) {
+        revert UnsupportedTokenType();
+      }
       _itemData[tokenId].push(items[i]);
     }
   }
