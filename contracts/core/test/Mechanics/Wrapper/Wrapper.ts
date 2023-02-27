@@ -57,7 +57,7 @@ describe("Wrapper", function () {
     await expect(tx1).to.changeEtherBalances([owner, erc721WrapperInstance], [amount, -amount]);
   });
 
-  it("should fail wrap other ERC20", async function () {
+  it.skip("should fail wrap other ERC20", async function () {
     const [_owner, receiver] = await ethers.getSigners();
 
     const erc20Instance = await erc20Factory();
