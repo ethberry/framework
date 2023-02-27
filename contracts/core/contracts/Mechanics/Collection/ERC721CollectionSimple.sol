@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/preset/ERC721ABRK.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 
-error MethodNotSupported();
+import "../../utils/errors.sol";
 
 contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
   constructor(
