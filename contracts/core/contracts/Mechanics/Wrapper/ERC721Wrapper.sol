@@ -47,7 +47,7 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Ho
       _itemData[tokenId].push(items[i]);
     }
 
-    spendFrom(items, account, address(this));
+    spendFrom(items, _msgSender(), address(this));
   }
 
   function unpack(uint256 tokenId) public {
