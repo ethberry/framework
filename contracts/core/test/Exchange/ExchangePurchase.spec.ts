@@ -6,10 +6,10 @@ import { amount } from "@gemunion/contracts-constants";
 import { params, tokenId } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { deployLinkVrfFixtureV2 } from "../shared/link";
+import { deployLinkVrfFixture } from "../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployERC20 } from "../ERC20/shared/fixtures";
-import { randomRequestV2 } from "../shared/randomRequest";
+import { randomRequest } from "../shared/randomRequest";
 
 describe("ExchangePurchaseV2", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -19,7 +19,7 @@ describe("ExchangePurchaseV2", function () {
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
     ({ vrfInstance } = await loadFixture(function exchange() {
-      return deployLinkVrfFixtureV2();
+      return deployLinkVrfFixture();
     }));
   });
 
@@ -32,7 +32,7 @@ describe("ExchangePurchaseV2", function () {
       it("should purchase ERC721 Random for ERC20", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
@@ -81,7 +81,7 @@ describe("ExchangePurchaseV2", function () {
 
         await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
-        await randomRequestV2(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
 
         const balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(1);

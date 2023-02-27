@@ -9,9 +9,9 @@ import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@ge
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
 import { defaultNumbers, expiresAt, externalId, params } from "../../constants";
-import { deployLinkVrfFixtureV2 } from "../../shared/link";
+import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { randomRequestV2 } from "../../shared/randomRequest";
+import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -34,7 +34,7 @@ describe("Lottery", function () {
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
       ({ vrfInstance } = await loadFixture(function chainlink() {
-        return deployLinkVrfFixtureV2();
+        return deployLinkVrfFixture();
       }));
     }
   });
@@ -139,7 +139,7 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        await randomRequestV2(lotteryInstance as IERC721Random, vrfInstance);
+        await randomRequest(lotteryInstance as IERC721Random, vrfInstance);
       }
     });
 
@@ -199,7 +199,7 @@ describe("Lottery", function () {
 
       if (network.name === "hardhat") {
         // RANDOM
-        await randomRequestV2(lotteryInstance as IERC721Random, vrfInstance);
+        await randomRequest(lotteryInstance as IERC721Random, vrfInstance);
       } else {
         const eventFilter = lotteryInstance.filters.RoundFinalized();
         const events = await lotteryInstance.queryFilter(eventFilter);

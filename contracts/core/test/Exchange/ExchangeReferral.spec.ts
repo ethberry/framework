@@ -19,7 +19,7 @@ describe("ExchangeReferral", function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
@@ -227,7 +227,7 @@ describe("ExchangeReferral", function () {
       const [owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance.address);
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);

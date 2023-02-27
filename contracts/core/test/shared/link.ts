@@ -11,19 +11,6 @@ export async function deployLinkVrfFixture() {
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfInstance = await vrfFactory.deploy(linkInstance.address);
   await vrfInstance.deployed();
-  // console.info(`VRF_ADDR=${vrfInstance.address}`);
-  return { linkInstance, vrfInstance };
-}
-
-export async function deployLinkVrfFixtureV2() {
-  // Deploy Chainlink & Vrf contracts
-  const link = await ethers.getContractFactory("LinkToken");
-  const linkInstance = await link.deploy();
-  await linkInstance.deployed();
-  // console.info(`LINK_ADDR=${linkInstance.address}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  const vrfInstance = await vrfFactory.deploy(linkInstance.address);
-  await vrfInstance.deployed();
   // GET CHAIN_LINK V2 TO WORK
   await vrfInstance.setConfig(3, 1000000, 1, 1, 1);
   await vrfInstance.createSubscription();

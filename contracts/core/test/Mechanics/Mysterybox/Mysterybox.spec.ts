@@ -9,8 +9,8 @@ import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId, tokenId } from "../../constants";
 
-import { randomRequestV2 } from "../../shared/randomRequest";
-import { deployLinkVrfFixtureV2 } from "../../shared/link";
+import { randomRequest } from "../../shared/randomRequest";
+import { deployLinkVrfFixture } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
@@ -30,7 +30,7 @@ describe("ERC721MysteryboxSimple", function () {
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
       ({ vrfInstance } = await loadFixture(function mysterybox() {
-        return deployLinkVrfFixtureV2();
+        return deployLinkVrfFixture();
       }));
     }
   });
@@ -131,7 +131,7 @@ describe("ERC721MysteryboxSimple", function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const mysteryboxInstance = await factory();
-      const erc721RandomInstance = await deployErc721Base("ERC721RandomHardhat", mysteryboxInstance.address);
+      const erc721RandomInstance = await deployErc721Base("ERC721RandomHardhat", mysteryboxInstance);
 
       // Add Consumer to VRFV2
       const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
@@ -157,7 +157,7 @@ describe("ERC721MysteryboxSimple", function () {
         .to.emit(mysteryboxInstance, "UnpackMysterybox");
 
       // RANDOM
-      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
 
       const balance = await erc721RandomInstance.balanceOf(receiver.address);
       expect(balance).to.equal(1);

@@ -6,9 +6,9 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { IERC721Random, LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
-import { deployLinkVrfFixtureV2 } from "../../../shared/link";
+import { deployLinkVrfFixture } from "../../../shared/link";
 import { templateId } from "../../../constants";
-import { randomRequestV2 } from "../../../shared/randomRequest";
+import { randomRequest } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<Contract>) {
   describe("mintRandom", function () {
@@ -20,7 +20,7 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
 
       // https://github.com/NomicFoundation/hardhat/issues/2980
       ({ linkInstance, vrfInstance } = await loadFixture(function shouldMintRandom() {
-        return deployLinkVrfFixtureV2();
+        return deployLinkVrfFixture();
       }));
     });
 
@@ -34,7 +34,7 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {
-        await randomRequestV2(contractInstance as IERC721Random, vrfInstance);
+        await randomRequest(contractInstance as IERC721Random, vrfInstance);
       }
 
       const balance = await contractInstance.balanceOf(receiver.address);

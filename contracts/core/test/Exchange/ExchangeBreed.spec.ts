@@ -6,8 +6,8 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expiresAt, externalId, params } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
-import { deployLinkVrfFixtureV2 } from "../shared/link";
-import { randomRequestV2 } from "../shared/randomRequest";
+import { deployLinkVrfFixture } from "../shared/link";
+import { randomRequest } from "../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
 
 describe("ExchangeBreed", function () {
@@ -18,7 +18,7 @@ describe("ExchangeBreed", function () {
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
     ({ vrfInstance } = await loadFixture(function exchange() {
-      return deployLinkVrfFixtureV2();
+      return deployLinkVrfFixture();
     }));
   });
 
@@ -31,7 +31,7 @@ describe("ExchangeBreed", function () {
       it.skip("should breed", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
@@ -113,7 +113,7 @@ describe("ExchangeBreed", function () {
           );
 
         // RANDOM
-        await randomRequestV2(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
         const balance2 = await erc721Instance.balanceOf(receiver.address);
         expect(balance2).to.equal(3);
 
@@ -132,7 +132,7 @@ describe("ExchangeBreed", function () {
       it("should fail: pregnancy count", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
@@ -181,7 +181,7 @@ describe("ExchangeBreed", function () {
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
 
         // RANDOM
-        await randomRequestV2(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
         balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(3);
 
@@ -280,7 +280,7 @@ describe("ExchangeBreed", function () {
       it("should fail: pregnancy time", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
@@ -328,7 +328,7 @@ describe("ExchangeBreed", function () {
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
 
         // RANDOM
-        await randomRequestV2(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
         balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(3);
 
@@ -428,7 +428,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Not an owner", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
@@ -476,7 +476,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Invalid signature", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const signature = await generateOneToOneSignature({
           account: owner.address, // should be receiver.address
@@ -519,7 +519,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Wrong signer", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance.address);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const signature = await generateOneToOneSignature({
           account: owner.address,

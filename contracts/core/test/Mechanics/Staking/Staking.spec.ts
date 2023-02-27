@@ -11,8 +11,8 @@ import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId } from "../../constants";
 import { IRule } from "./interface/staking";
-import { randomRequestV2 } from "../../shared/randomRequest";
-import { deployLinkVrfFixtureV2 } from "../../shared/link";
+import { randomRequest } from "../../shared/randomRequest";
+import { deployLinkVrfFixture } from "../../shared/link";
 import { deployStaking } from "./shared/fixture";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -43,7 +43,7 @@ describe("Staking", function () {
 
     // https://github.com/NomicFoundation/hardhat/issues/2980
     ({ vrfInstance } = await loadFixture(function staking() {
-      return deployLinkVrfFixtureV2();
+      return deployLinkVrfFixture();
     }));
   });
 
@@ -707,7 +707,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       // RANDOM
-      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       // DEPOSIT
@@ -1034,7 +1034,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       // RANDOM
-      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
       balance = await erc20Instance.balanceOf(owner.address);
@@ -1383,7 +1383,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       // RANDOM
-      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles + 1);
     });
@@ -1725,7 +1725,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
 
       // RANDOM
-      await randomRequestV2(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(2);
       balance = await erc1155Instance.balanceOf(owner.address, 1);

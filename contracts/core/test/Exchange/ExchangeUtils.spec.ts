@@ -16,8 +16,8 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { VRFCoordinatorMock } from "../../typechain-types";
 import { subscriptionId, templateId, tokenId } from "../constants";
 import { deployContract } from "../shared/fixture";
-import { deployLinkVrfFixtureV2 } from "../shared/link";
-import { randomRequestV2 } from "../shared/randomRequest";
+import { deployLinkVrfFixture } from "../shared/link";
+import { randomRequest } from "../shared/randomRequest";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
@@ -1213,7 +1213,7 @@ describe("ExchangeUtils", function () {
 
         // https://github.com/NomicFoundation/hardhat/issues/2980
         ({ vrfInstance } = await loadFixture(function staking() {
-          return deployLinkVrfFixtureV2();
+          return deployLinkVrfFixture();
         }));
       });
 
@@ -1268,7 +1268,7 @@ describe("ExchangeUtils", function () {
           receiver.address,
         );
 
-        await randomRequestV2(erc721Instance, vrfInstance);
+        await randomRequest(erc721Instance, vrfInstance);
 
         // await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
