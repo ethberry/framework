@@ -18,6 +18,7 @@ import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { constants } from "ethers";
 import { templateId, tokenId } from "../../constants";
+import { deployContract } from "../../shared/fixture";
 
 describe("Wrapper", function () {
   const factory = () => deployERC721("ERC721WrapperTest");
@@ -28,7 +29,6 @@ describe("Wrapper", function () {
     const _erc998Factory = await ethers.getContractFactory("ERC998Simple");
     return _erc998Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
   };
-  const walletMockFactory = async () => (await ethers.getContractFactory("WrapperMock")).deploy();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeERC721Simple(factory);
@@ -107,7 +107,7 @@ describe("Wrapper", function () {
 
     const erc20Instance = await erc20Factory();
     const erc721WrapperInstance = await factory();
-    const walletMockInstance = await walletMockFactory();
+    const walletMockInstance = await deployContract("WrapperMock");
 
     await erc20Instance.mint(owner.address, amount);
     await erc20Instance.approve(erc721WrapperInstance.address, amount);
@@ -128,7 +128,10 @@ describe("Wrapper", function () {
 
     // Calling WrapperWalletMock.unpack
     const tx1 = walletMockInstance.unpack(erc721WrapperInstance.address, tokenId);
-    await expect(tx1).to.emit(erc20Instance, "Transfer");
+    await expect(tx1)
+      .to.emit(erc20Instance, "Transfer")
+      .withArgs(erc721WrapperInstance.address, walletMockInstance.address, amount);
+    await expect(tx1).to.emit(erc721WrapperInstance, "UnpackWrapper");
     await expect(tx1).to.emit(walletMockInstance, "TransferReceived");
     await expect(tx1).to.changeTokenBalances(
       erc20Instance,
