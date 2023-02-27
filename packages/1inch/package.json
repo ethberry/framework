@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun+gemunion@gmail.com",
+    "email": "trejgun@gemunion.io",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -14,16 +14,16 @@
     "@framework/types": "0.0.1",
     "@gemunion/provider-license": "3.0.8",
     "@gemunion/provider-user": "6.0.13",
-    "@gemunion/provider-wallet": "3.2.4",
-    "@gemunion/react-hooks-eth": "1.0.75",
-    "@mui/material": "5.11.9",
+    "@gemunion/provider-wallet": "3.2.5",
+    "@gemunion/react-hooks-eth": "1.0.76",
+    "@mui/material": "5.11.10",
     "@mui/icons-material": "5.11.9",
     "@web3-react/core": "8.0.35-beta.0",
     "cross-fetch": "3.1.5",
     "ethers": "5.7.2",
-    "mathjs": "11.5.1",
+    "mathjs": "11.6.0",
     "notistack": "3.0.0-alpha.11",
-    "react-intl": "6.2.8",
+    "react-intl": "6.2.10",
     "react-window": "1.8.8",
     "type-fest": "3.6.0"
   },

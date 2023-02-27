@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -54,7 +54,7 @@ abstract contract ERC998BlacklistRandom is IERC721Random, ERC998Blacklist, Rarit
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
-    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));

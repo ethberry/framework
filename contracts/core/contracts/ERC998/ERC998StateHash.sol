@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-erc998/contracts/extensions/StateHash.sol";
+import "@gemunion/contracts-erc998td/contracts/extensions/StateHash.sol";
 
 import "./ERC998Simple.sol";
 

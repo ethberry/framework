@@ -12,7 +12,7 @@ export class CreateAccessControl1653616447230 implements MigrationInterface {
         'SNAPSHOT_ROLE',
         'PREDICATE_ROLE',
         'DEPOSITOR_ROLE',
-        'METADATA_ADMIN_ROLE'
+        'METADATA_ROLE'
       );
     `);
 

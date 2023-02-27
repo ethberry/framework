@@ -1,4 +1,5 @@
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
@@ -25,7 +26,7 @@ export async function deployExchangeFixture() {
   };
 }
 
-export async function deployErc20Base(name: string, exchangeInstance: Exchange) {
+export async function deployErc20Base(name: string, exchangeInstance: Contract) {
   const erc20Factory = await ethers.getContractFactory(name);
   const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 10);
   await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -33,7 +34,7 @@ export async function deployErc20Base(name: string, exchangeInstance: Exchange) 
   return erc20Instance;
 }
 
-export async function deployErc721Base(name: string, exchangeInstance: Exchange) {
+export async function deployErc721Base(name: string, exchangeInstance: Contract) {
   const erc721Factory = await ethers.getContractFactory(name);
   const erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
   await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -41,7 +42,7 @@ export async function deployErc721Base(name: string, exchangeInstance: Exchange)
   return erc721Instance;
 }
 
-export async function deployErc1155Base(name: string, exchangeInstance: Exchange) {
+export async function deployErc1155Base(name: string, exchangeInstance: Contract) {
   const erc1155Factory = await ethers.getContractFactory(name);
   const erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
   await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);

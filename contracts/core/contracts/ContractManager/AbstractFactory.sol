@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
+
+import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../utils/constants.sol";
 
@@ -33,17 +35,6 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
   }
 
-  function deploy(bytes calldata bytecode, bytes memory arguments) internal returns (address addr) {
-    bytes memory _bytecode = abi.encodePacked(bytecode, arguments);
-
-    assembly {
-      addr := create(0, add(_bytecode, 0x20), mload(_bytecode))
-      if iszero(extcodesize(addr)) {
-        revert(0, 0)
-      }
-    }
-  }
-
   function deploy2(bytes calldata bytecode, bytes memory arguments, bytes32 nonce) internal returns (address addr) {
     bytes memory _bytecode = abi.encodePacked(bytecode, arguments);
 
@@ -56,11 +47,11 @@ abstract contract AbstractFactory is EIP712, AccessControl {
   }
 
   function addFactory(address factory, bytes32 role) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require((role == MINTER_ROLE || role == METADATA_ADMIN_ROLE), "ContractManager: Wrong role");
+    require((role == MINTER_ROLE || role == METADATA_ROLE), "ContractManager: Wrong role");
 
     if (role == MINTER_ROLE) {
       _minters.push(factory);
-    } else if (role == METADATA_ADMIN_ROLE) {
+    } else if (role == METADATA_ROLE) {
       _manipulators.push(factory);
     }
   }
@@ -89,7 +80,7 @@ abstract contract AbstractFactory is EIP712, AccessControl {
   function grantFactoryMetadataPermission(address addr) internal {
     IAccessControl instance = IAccessControl(addr);
     for (uint256 i = 0; i < _manipulators.length; i++) {
-      instance.grantRole(METADATA_ADMIN_ROLE, _manipulators[i]);
+      instance.grantRole(METADATA_ROLE, _manipulators[i]);
     }
   }
 

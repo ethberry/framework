@@ -5,7 +5,8 @@ import { BigNumber, constants, utils } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 
 import { ISignDropDto } from "./interfaces";

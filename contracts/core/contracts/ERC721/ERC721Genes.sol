@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -38,7 +38,9 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     (uint256 childId, uint256 matronId, uint256 sireId) = decodeData(templateId);
 
@@ -50,7 +52,7 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
     _tokenIdTracker.increment();
     Request memory request = _queue[requestId];
 
-    emit MintRandomV2(requestId, request.account, randomWords, request.templateId, tokenId);
+    emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     uint256 genes = encodeData(request, randomWords[0]);
     _upsertRecordField(tokenId, GENES, genes);

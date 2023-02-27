@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/mocks/VRFCoordinatorV2.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol";
 
-contract VrfV2 is VRFCoordinatorV2Mock {
-  constructor( address link ) VRFCoordinatorV2Mock(link) {}
+contract VrfV2 is VRFCoordinatorMock {
+  constructor(address link) VRFCoordinatorMock(link) {}
 }

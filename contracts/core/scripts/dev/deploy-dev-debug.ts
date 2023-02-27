@@ -68,7 +68,7 @@ async function main() {
   // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  const vrf = await ethers.getContractFactory("VRFCoordinatorV2Mock");
+  const vrf = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfAddr =
     network.name === "besu"
       ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost

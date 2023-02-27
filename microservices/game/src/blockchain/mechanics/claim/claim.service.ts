@@ -3,8 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
 
+import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ClaimStatus, TokenType } from "@framework/types";
-import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";

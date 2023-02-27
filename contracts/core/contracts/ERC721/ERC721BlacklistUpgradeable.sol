@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
@@ -42,7 +42,10 @@ contract ERC721BlacklistUpgradeable is IERC721Upgradeable, ERC721Blacklist {
     return true;
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721Blacklist) returns (bool) {
-    return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Blacklist, IERC165) returns (bool) {
+    return
+      interfaceId == IERC4906_ID ||
+      interfaceId == type(IERC721Upgradeable).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 }

@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
-error MethodNotSupported();
-error TemplateZero();
+contract Reverter {
+  receive() external payable {
+    revert();
+  }
+}

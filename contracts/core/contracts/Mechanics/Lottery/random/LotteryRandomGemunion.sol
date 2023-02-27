@@ -1,29 +1,33 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGemunionV2.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion.sol";
 
 import "../LotteryRandom.sol";
 
-contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunionV2 {
+contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunion {
   constructor(
     string memory name,
     address ticketFactory,
     address acceptedToken
-  ) LotteryRandom(name, ticketFactory, acceptedToken)
-    ChainLinkGemunionV2(uint64(2), uint16(6),uint32(600000),uint32(1))
+  )
+    LotteryRandom(name, ticketFactory, acceptedToken)
+    ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1))
   {}
 
-  function getRandomNumber() internal override(LotteryRandom, ChainLinkBaseV2) returns (uint256 requestId) {
+  function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
-  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override(LotteryRandom, VRFConsumerBaseV2) {
+  function fulfillRandomWords(
+    uint256 requestId,
+    uint256[] memory randomWords
+  ) internal override(LotteryRandom, VRFConsumerBaseV2) {
     super.fulfillRandomWords(requestId, randomWords);
   }
 

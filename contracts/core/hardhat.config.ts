@@ -6,6 +6,7 @@ import "@typechain/hardhat";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
+import "solidity-coverage";
 
 import "./tasks";
 

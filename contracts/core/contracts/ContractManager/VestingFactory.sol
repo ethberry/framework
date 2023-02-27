@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
 import "./AbstractFactory.sol";
-import "hardhat/console.sol";
 
 contract VestingFactory is AbstractFactory {
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =

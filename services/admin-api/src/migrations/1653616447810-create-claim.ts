@@ -8,7 +8,8 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       CREATE TYPE ${ns}.claim_status_enum AS ENUM (
         'NEW',
         'REDEEMED',
-        'UNPACKED'
+        'UNPACKED',
+        'EXPIRED'
       );
     `);
 
@@ -67,25 +68,25 @@ export class CreateClaim1653616447810 implements MigrationInterface {
     await queryRunner.createTable(table, true);
 
     await queryRunner.query(`
-      CREATE OR REPLACE FUNCTION delete_expired_claims() RETURNS trigger
+      CREATE OR REPLACE FUNCTION update_expired_claims() RETURNS trigger
       LANGUAGE plpgsql
       AS $$
         BEGIN
-          DELETE FROM ${ns}.claim WHERE end_timestamp != to_timestamp(0) AND end_timestamp < NOW() AND claim_status='NEW';
+          UPDATE ${ns}.claim SET claim_status='EXPIRED' WHERE end_timestamp != to_timestamp(0) AND end_timestamp < NOW() AND claim_status='NEW';
           RETURN NEW;
         END;
       $$;
     `);
 
     await queryRunner.query(`
-      CREATE TRIGGER delete_expired_claims_trigger
-      AFTER INSERT ON ${ns}.claim
-      EXECUTE PROCEDURE delete_expired_claims();
+      CREATE OR REPLACE TRIGGER update_expired_claims_trigger
+      BEFORE INSERT OR UPDATE OR DELETE ON ${ns}.claim
+      EXECUTE PROCEDURE update_expired_claims();
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.claim`);
-    await queryRunner.query("DROP FUNCTION delete_expired_claims();");
+    await queryRunner.query("DROP FUNCTION update_expired_claims();");
   }
 }

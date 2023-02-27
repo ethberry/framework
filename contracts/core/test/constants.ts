@@ -30,3 +30,4 @@ export const params = {
 };
 
 export const contractTemplate = "SIMPLE";
+export const subscriptionId = 1;

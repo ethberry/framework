@@ -93,7 +93,8 @@
     "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked"
+      "UNPACKED": "Unpacked",
+      "EXPIRED": "Expired"
     },
     "contractFeatures": {
       "ALLOWANCE": "Allowance",

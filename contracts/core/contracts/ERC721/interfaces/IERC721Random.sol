@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
 interface IERC721Random {
-  event MintRandom(bytes32 requestId, address to, uint256 randomness, uint256 templateId, uint256 tokenId);
-  event MintRandomV2(uint256 requestId, address to, uint256[] randomWords, uint256 templateId, uint256 tokenId);
+  event MintRandom(uint256 requestId, address to, uint256 randomness, uint256 templateId, uint256 tokenId);
 
   function mintRandom(address to, uint256 templateId) external;
 }

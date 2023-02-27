@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+gemunion@gmail.com
+// Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
 
 enum TokenType {
   NATIVE, // 0: ETH on mainnet, MATIC on polygon, etc.
-  ERC20,  // 1: ERC20 items (ERC777 and other ERC20 analogues could also technically work)
+  ERC20, // 1: ERC20 items (ERC777 and other ERC20 analogues could also technically work)
   ERC721, // 2: ERC721 items
   ERC998, // 3: ERC998 heroes
   ERC1155 // 4: ERC1155 items

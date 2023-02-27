@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun+gemunion@gmail.com",
+    "email": "trejgun@gemunion.io",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -9,11 +9,11 @@
     "nx": "15.7.2"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "2.0.5",
-    "@types/node": "18.14.0",
+    "@gemunion/eslint-config": "2.0.7",
+    "@types/node": "18.14.1",
     "@types/react": "18.0.28",
-    "@typescript-eslint/eslint-plugin": "5.52.0",
-    "@typescript-eslint/parser": "5.52.0",
+    "@typescript-eslint/eslint-plugin": "5.53.0",
+    "@typescript-eslint/parser": "5.53.0",
     "eslint": "8.34.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-config-standard": "17.0.0",
