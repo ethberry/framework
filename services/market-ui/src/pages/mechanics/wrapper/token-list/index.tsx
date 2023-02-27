@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import ERC721WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
+import ERC721WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Wrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 import { WrapperTokenListItem } from "./item";
 import { ICreateWrappedToken, WrapperEditDialog } from "./edit";

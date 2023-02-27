@@ -93,7 +93,7 @@ import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
 import { SeedTokenMysteryAt1563804000360 } from "./migrations/1563804000360-seed-token-mystery";
-import { SeedTokenWrapperAt1563804000370 } from "./migrations/1563804000370-seed-token-wrapper";
+import { SeedWrapperAt1563804000370 } from "./migrations/1563804000370-seed-token-wrapper";
 import { SeedTokenLotteryAt1563804000380 } from "./migrations/1563804000380-seed-token-lottery";
 
 import { CreateBalance1563804000400 } from "./migrations/1563804000400-create-balance";
@@ -311,7 +311,7 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
     SeedTokenMysteryAt1563804000360,
-    SeedTokenWrapperAt1563804000370,
+    SeedWrapperAt1563804000370,
     SeedTokenLotteryAt1563804000380,
 
     CreateBalance1563804000400,

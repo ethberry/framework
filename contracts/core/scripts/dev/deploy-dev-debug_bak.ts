@@ -411,7 +411,7 @@ async function main() {
 
   await debug(await contracts.waitlist.setReward(root, items, 2), "waitlist.setReward");
 
-  const erc721WrapFactory = await ethers.getContractFactory("ERC721TokenWrapper");
+  const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
