@@ -50,7 +50,7 @@
   "description": "JSON API",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
-    "@gemunion/eslint-config": "2.0.6",
+    "@gemunion/eslint-config": "2.0.7",
     "@nestjs/testing": "9.3.9",
     "@types/node": "18.14.1",
     "@typescript-eslint/eslint-plugin": "5.53.0",
