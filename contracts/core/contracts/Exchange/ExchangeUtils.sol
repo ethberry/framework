@@ -20,6 +20,7 @@ import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./interfaces/IAsset.sol";
 import "../utils/constants.sol";
+import "../utils/errors.sol";
 
 contract ExchangeUtils {
   using Address for address;
@@ -43,9 +44,9 @@ contract ExchangeUtils {
             if (isERC1363) {
               try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
                 supported = isERC1363Receiver;
-              } catch (bytes memory /*lowLevelData*/) {}
+              } catch (bytes memory) {}
             }
-          } catch (bytes memory /*lowLevelData*/) {}
+          } catch (bytes memory) {}
         }
 
         if (supported) {
@@ -58,7 +59,8 @@ contract ExchangeUtils {
       } else if (ingredient.tokenType == TokenType.ERC1155) {
         IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
       } else {
-        revert("Exchange: unsupported token type");
+        // should never happen
+        revert UnsupportedTokenType();
       }
 
       unchecked {
@@ -68,7 +70,11 @@ contract ExchangeUtils {
 
     if (totalAmount > 0) {
       require(totalAmount == msg.value, "Exchange: Wrong amount");
-      emit PaymentEthReceived(receiver, msg.value);
+      if (address(this) == receiver) {
+        emit PaymentEthReceived(receiver, msg.value);
+      } else {
+        Address.sendValue(payable(receiver), totalAmount);
+      }
     }
   }
 
@@ -87,9 +93,9 @@ contract ExchangeUtils {
             if (isERC1363) {
               try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
                 supported = isERC1363Receiver;
-              } catch (bytes memory /*lowLevelData*/) {}
+              } catch (bytes memory) {}
             }
-          } catch (bytes memory /*lowLevelData*/) {}
+          } catch (bytes memory) {}
         }
 
         if (supported) {
@@ -108,7 +114,8 @@ contract ExchangeUtils {
           "0x"
         );
       } else {
-        revert("Exchange: unsupported token type");
+        // should never happen
+        revert UnsupportedTokenType();
       }
 
       unchecked {
@@ -137,7 +144,8 @@ contract ExchangeUtils {
       } else if (item.tokenType == TokenType.ERC1155) {
         IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");
       } else {
-        revert("Exchange: unsupported token type");
+        // should never happen
+        revert UnsupportedTokenType();
       }
 
       unchecked {

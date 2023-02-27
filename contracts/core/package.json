@@ -93,7 +93,8 @@
     "prepare:contracts:mainnet": "hardhat --network binancetest run scripts/deploy-prod.ts",
     "prepublish": "npm run build",
     "solhint": "solhint -f table contracts/**/*.sol",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage"
   },
   "types": "./typechain-types/index.ts",
   "version": "0.0.1"

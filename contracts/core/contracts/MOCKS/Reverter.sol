@@ -6,5 +6,8 @@
 
 pragma solidity ^0.8.13;
 
-error MethodNotSupported();
-error TemplateZero();
+contract Reverter {
+  receive() external payable {
+    revert();
+  }
+}

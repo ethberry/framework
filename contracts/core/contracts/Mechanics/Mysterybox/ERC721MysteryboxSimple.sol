@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
+import "../../utils/errors.sol";
 
 contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtils {
   using Counters for Counters.Counter;

@@ -13,7 +13,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.so
 import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABER.sol";
 
 import "../utils/constants.sol";
-import "./interfaces/errors.sol";
+import "../utils/errors.sol";
 import "./interfaces/IERC721Simple.sol";
 
 contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
