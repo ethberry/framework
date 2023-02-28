@@ -4,7 +4,7 @@ import { NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { GradeService } from "./grade.service";
-import { SignGradeDto } from "./dto";
+import { SearchGradeDto, SignGradeDto } from "./dto";
 import { GradeEntity } from "./grade.entity";
 
 @Public()
@@ -19,7 +19,7 @@ export class GradeController {
 
   @Get("/")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Query() dto: SignGradeDto): Promise<GradeEntity | null> {
+  public findOne(@Query() dto: SearchGradeDto): Promise<GradeEntity | null> {
     return this.gradeService.findOneByToken(dto);
   }
 }

@@ -8,7 +8,7 @@ import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
 
-import { ISignGradeDto } from "./interfaces";
+import { ISearchGradeDto, ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
@@ -29,7 +29,7 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneByToken(dto: ISignGradeDto): Promise<GradeEntity | null> {
+  public async findOneByToken(dto: ISearchGradeDto): Promise<GradeEntity | null> {
     const { tokenId, attribute } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
