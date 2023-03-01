@@ -80,7 +80,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE OR REPLACE TRIGGER update_expired_claims_trigger
-      BEFORE INSERT OR UPDATE OR DELETE ON ${ns}.claim
+      AFTER INSERT ON ${ns}.claim
       EXECUTE PROCEDURE update_expired_claims();
     `);
   }
