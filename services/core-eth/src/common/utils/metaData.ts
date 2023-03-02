@@ -1,5 +1,7 @@
 import { BigNumber, ethers } from "ethers";
+
 import { MetadataHash } from "@framework/types";
+
 import { blockAwait } from "./blockAwait";
 
 export const getMetadata = async function (

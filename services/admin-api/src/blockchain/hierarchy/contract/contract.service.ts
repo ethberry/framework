@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
@@ -24,7 +24,9 @@ export class ContractService {
 
     queryBuilder.select();
 
-    // queryBuilder.leftJoinAndSelect("contract.templates", "templates");
+    queryBuilder.leftJoinAndSelect("contract.templates", "templates", "contract.contractType = :erc20", {
+      erc20: TokenType.ERC20,
+    });
 
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
