@@ -17,7 +17,7 @@ import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { EcommerceModule } from "./ecommerce/ecommerce.module";
+import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 
 @Module({
   providers: [
@@ -76,7 +76,7 @@ import { EcommerceModule } from "./ecommerce/ecommerce.module";
     RequestLoggerModule,
     HealthModule,
     BlockchainModule,
-    EcommerceModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
 })

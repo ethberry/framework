@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { ContractEventType, IContractHistorySearchDto, IErc1155TokenApprovalForAllEvent } from "@framework/types";
 
 import { EventHistoryEntity } from "./event-history.entity";
-import { UserEntity } from "../../ecommerce/user/user.entity";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()
 export class EventHistoryService {

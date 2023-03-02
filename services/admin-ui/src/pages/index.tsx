@@ -11,7 +11,7 @@ import { Providers } from "./providers";
 import { hierarchyRoutes } from "./hierarchy/routes";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
-import { ecommerceRoutes } from "./ecommerce/routes";
+import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         children: [{ index: true, element: <Dashboard /> }],
       },
       ...loginRoutes,
-      ...ecommerceRoutes,
+      ...infrastructureRoutes,
       ...hierarchyRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,

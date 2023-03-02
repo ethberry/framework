@@ -8,7 +8,7 @@ import { ContractStatus, TokenType } from "@framework/types";
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
 import { IContractUpdateDto } from "./interfaces";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ContractService {

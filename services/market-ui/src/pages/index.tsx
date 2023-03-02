@@ -10,7 +10,7 @@ import { Dashboard } from "./dashboard";
 import { Providers } from "./providers";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
-import { ecommerceRoutes } from "./ecommerce/routes";
+import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 
 const router = createBrowserRouter([
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         children: [{ index: true, element: <Dashboard /> }],
       },
       ...loginRoutes,
-      ...ecommerceRoutes,
+      ...infrastructureRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,
       ...exchangeRoutes,

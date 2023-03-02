@@ -6,7 +6,7 @@ import { IContractSearchDto, ModuleType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class StakingService extends ContractService {

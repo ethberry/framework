@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { Erc721TemplateService } from "./template.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../../hierarchy/template/dto";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-templates")

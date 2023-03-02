@@ -11,7 +11,7 @@ export const Pages: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.ecommerce.pages.title" />
+            <FormattedMessage id="pages.dashboard.infrastructure.pages.title" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Pages: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.ecommerce.pages.about-us" />
+            <FormattedMessage id="pages.dashboard.infrastructure.pages.about-us" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/pages/faq">
@@ -28,7 +28,7 @@ export const Pages: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.ecommerce.pages.faq" />
+            <FormattedMessage id="pages.dashboard.infrastructure.pages.faq" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/pages/privacy-policy">
@@ -36,7 +36,7 @@ export const Pages: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.ecommerce.pages.privacy-policy" />
+            <FormattedMessage id="pages.dashboard.infrastructure.pages.privacy-policy" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/pages/terms-of-services">
@@ -44,7 +44,7 @@ export const Pages: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.ecommerce.pages.terms-of-services" />
+            <FormattedMessage id="pages.dashboard.infrastructure.pages.terms-of-services" />
           </ListItemText>
         </ListItem>
       </List>

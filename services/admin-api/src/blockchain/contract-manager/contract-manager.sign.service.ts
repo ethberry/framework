@@ -70,7 +70,7 @@ import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/
 import ERC721CollectionSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionSimple.sol/ERC721CollectionSimple.json";
 import ERC721CollectionBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol/ERC721CollectionBlacklist.json";
 
-import { UserEntity } from "../../ecommerce/user/user.entity";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ContractManagerSignService {

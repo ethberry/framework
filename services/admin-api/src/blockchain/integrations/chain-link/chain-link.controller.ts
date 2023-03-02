@@ -6,7 +6,7 @@ import { User } from "@gemunion/nest-js-utils";
 import { ChainLinkService } from "./chain-link.service";
 import { ContractAutocompleteDto } from "../../hierarchy/contract/dto";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/chain-link")

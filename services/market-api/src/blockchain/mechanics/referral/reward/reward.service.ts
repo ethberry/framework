@@ -6,7 +6,7 @@ import { ns } from "@framework/constants";
 import { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
 
 import { ReferralRewardEntity } from "./reward.entity";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { parse } from "json2csv";
 import { formatEther } from "./reward.utils";
 

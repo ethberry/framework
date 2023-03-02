@@ -11,7 +11,7 @@ export const Feedback: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.ecommerce.feedback.title" />
+            <FormattedMessage id="pages.dashboard.infrastructure.feedback.title" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Feedback: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.ecommerce.feedback.form" />
+            <FormattedMessage id="pages.dashboard.infrastructure.feedback.form" />
           </ListItemText>
         </ListItem>
       </List>

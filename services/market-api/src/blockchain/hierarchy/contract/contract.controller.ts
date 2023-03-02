@@ -7,7 +7,7 @@ import { testChainId } from "@framework/constants";
 import { ContractAutocompleteDto } from "./dto";
 import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Public()
 @Controller("/contracts")

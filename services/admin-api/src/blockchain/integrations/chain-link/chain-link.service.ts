@@ -5,7 +5,7 @@ import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ChainLinkService {

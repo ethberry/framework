@@ -8,7 +8,7 @@ import { IContractSearchDto, ITemplateSearchDto, ITokenSearchDto, ModuleType, To
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { CollectionUploadDto, TokenUploadDto } from "./dto";
 import { TemplateService } from "../../../hierarchy/template/template.service";

@@ -11,7 +11,7 @@ import { OneInch } from "./integrations/1inch";
 import { Personal } from "./exchange/personal";
 import { Marketplace } from "./exchange/marketplace";
 import { Mysterybox } from "./mechanics/mysterybox";
-import { Pages } from "./ecommerce/pages";
+import { Pages } from "./infrastructure/pages";
 import { Staking } from "./mechanics/staking";
 import { Lottery } from "./mechanics/lottery";
 import { Vesting } from "./mechanics/vesting";
@@ -25,7 +25,7 @@ import { Breed } from "./mechanics/breed";
 import { Pyramid } from "./mechanics/pyramid";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { Waitlist } from "./mechanics/waitlist";
-import { Feedback } from "./ecommerce/feedback";
+import { Feedback } from "./infrastructure/feedback";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();

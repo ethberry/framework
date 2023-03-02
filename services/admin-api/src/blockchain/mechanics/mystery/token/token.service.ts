@@ -6,7 +6,7 @@ import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class MysteryTokenService extends TokenService {

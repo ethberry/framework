@@ -6,7 +6,7 @@ import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ReferralRewardEntity } from "../reward/reward.entity";
 import { formatEther } from "../reward/reward.utils";
 import { ReferralRewardService } from "../reward/reward.service";

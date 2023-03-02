@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { StakingDepositEntity } from "./deposit.entity";
 import { StakingDepositService } from "./deposit.service";
 import { StakingDepositSearchDto } from "./dto";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/staking/stakes")

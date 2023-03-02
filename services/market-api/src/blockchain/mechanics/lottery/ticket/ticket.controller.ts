@@ -6,7 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { LotteryTicketSearchDto } from "./dto";
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryTicketEntity } from "./ticket.entity";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/lottery/ticket")

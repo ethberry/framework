@@ -4,7 +4,7 @@ import { FindOptionsWhere, Repository } from "typeorm";
 
 import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 

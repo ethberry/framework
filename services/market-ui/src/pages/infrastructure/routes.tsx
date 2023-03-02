@@ -6,7 +6,7 @@ import { Profile } from "./profile";
 import { Page } from "./page";
 import { Feedback } from "./feedback";
 
-export const ecommerceRoutes: Array<RouteObject> = [
+export const infrastructureRoutes: Array<RouteObject> = [
   {
     path: "/profile",
     element: <Protected />,

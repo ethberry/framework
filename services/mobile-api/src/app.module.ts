@@ -20,7 +20,7 @@ import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { NotificatorModule } from "./notificator/notificator.module";
 import { WebhookModule } from "./webhook/webhook.module";
-import { EcommerceModule } from "./ecommerce/ecommerce.module";
+import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 
 @Module({
   providers: [
@@ -84,7 +84,7 @@ import { EcommerceModule } from "./ecommerce/ecommerce.module";
     RequestLoggerModule,
     GemunionThrottlerModule,
     HealthModule,
-    EcommerceModule,
+    InfrastructureModule,
     EventModule,
     NotificatorModule,
     WebhookModule,

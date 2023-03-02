@@ -12,7 +12,7 @@ import { ContractService } from "./contract.service";
 import { ContractSeedService } from "./contract.seed.service";
 import { ContractSeedModule } from "./contract.seed.module";
 import { ContractEntity } from "./contract.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 describe.skip("ContractService", () => {
   let contractService: ContractService;

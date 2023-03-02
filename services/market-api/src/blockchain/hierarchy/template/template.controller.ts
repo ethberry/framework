@@ -8,7 +8,7 @@ import { testChainId } from "@framework/constants";
 import { TemplateService } from "./template.service";
 import { TemplateEntity } from "./template.entity";
 import { TemplateNewDto } from "./dto/new";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TemplateAutocompleteDto } from "./dto/autocomplete";
 
 @Public()

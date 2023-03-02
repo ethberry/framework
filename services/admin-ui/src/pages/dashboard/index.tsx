@@ -17,7 +17,7 @@ import { Claim } from "./mechanics/claim";
 import { Grade } from "./mechanics/grade";
 import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
-import { Admin } from "./ecommerce/admin";
+import { Admin } from "./infrastructure/admin";
 import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";

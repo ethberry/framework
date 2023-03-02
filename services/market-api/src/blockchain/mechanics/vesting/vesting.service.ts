@@ -6,7 +6,7 @@ import type { IVestingSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class VestingService {

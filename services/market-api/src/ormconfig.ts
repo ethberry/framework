@@ -1,8 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { UserEntity } from "./ecommerce/user/user.entity";
-import { PageEntity } from "./ecommerce/page/page.entity";
+import { UserEntity } from "./infrastructure/user/user.entity";
+import { PageEntity } from "./infrastructure/page/page.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";

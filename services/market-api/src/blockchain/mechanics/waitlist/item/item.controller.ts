@@ -6,7 +6,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { WaitlistItemService } from "./item.service";
 import { WaitlistItemEntity } from "./item.entity";
 import { WaitlistItemCreateDto, WaitlistProofDto } from "./dto";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/waitlist/item")

@@ -9,4 +9,4 @@ import { SyncModule } from "./sync/sync.module";
 @Module({
   imports: [AuthModule, ProfileModule, UserModule, EmailModule, SyncModule],
 })
-export class EcommerceModule {}
+export class InfrastructureModule {}

@@ -8,7 +8,7 @@ import { Page } from "./page";
 import { Settings } from "./settings";
 import { Email } from "./email";
 
-export const ecommerceRoutes: Array<RouteObject> = [
+export const infrastructureRoutes: Array<RouteObject> = [
   {
     path: "/profile",
     element: <Protected />,

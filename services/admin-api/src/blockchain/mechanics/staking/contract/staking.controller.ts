@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { StakingService } from "./staking.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/staking/contracts")

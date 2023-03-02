@@ -7,7 +7,7 @@ import { NativeContractService } from "./contract.service";
 import { NativeContractCreateDto } from "./dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
-import { UserEntity } from "../../../../ecommerce/user/user.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/native-contracts")
