@@ -24,6 +24,7 @@ export class ContractService {
 
     queryBuilder.select();
 
+    // we need to get single template for erc20 to display cap
     queryBuilder.leftJoinAndSelect("contract.templates", "templates", "contract.contractType = :erc20", {
       erc20: TokenType.ERC20,
     });
