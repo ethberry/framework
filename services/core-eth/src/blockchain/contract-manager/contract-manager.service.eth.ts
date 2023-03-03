@@ -38,8 +38,6 @@ import { EventHistoryService } from "../event-history/event-history.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
-  private imgUrl: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -58,9 +56,7 @@ export class ContractManagerServiceEth {
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
     private readonly balanceService: BalanceService,
-  ) {
-    this.imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
-  }
+  ) {}
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
@@ -191,6 +187,7 @@ export class ContractManagerServiceEth {
     });
 
     // TODO add options to set naming scheme ?
+    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
@@ -198,7 +195,7 @@ export class ContractManagerServiceEth {
       tokenId: i.toString(),
       royalty: ~~royalty,
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      imageUrl: `${this.imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
+      imageUrl: `${imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
       updatedAt: currentDateTime,

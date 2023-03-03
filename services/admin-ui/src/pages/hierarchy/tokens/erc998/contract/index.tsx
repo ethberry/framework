@@ -16,17 +16,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  ContractFeatures,
-  ContractStatus,
-  Erc998ContractFeatures,
-  IContract,
-  IContractSearchDto,
-} from "@framework/types";
+import { ContractStatus, Erc998ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
 
 import { Erc998ContractEditDialog } from "./edit";
 import { Erc998ContractDeployButton } from "../../../../../components/buttons";
-import { ContractActions, ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const Erc998Contract: FC = () => {
@@ -107,15 +101,6 @@ export const Erc998Contract: FC = () => {
                 <ContractActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  actions={[
-                    ContractActions.ROYALTY,
-                    contract.contractFeatures.includes(ContractFeatures.BLACKLIST)
-                      ? ContractActions.BLACKLIST_ADD
-                      : null,
-                    contract.contractFeatures.includes(ContractFeatures.BLACKLIST)
-                      ? ContractActions.BLACKLIST_REMOVE
-                      : null,
-                  ]}
                 />
               </ListItemSecondaryAction>
             </ListItem>

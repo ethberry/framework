@@ -11,8 +11,7 @@ export const Referrer: FC = () => {
   const referrer = settings.getReferrer();
 
   const handleRemoveReferrer = () => {
-    // settings.setReferrer(void 0);
-    settings.setReferrer(""); // TODO
+    settings.setReferrer(constants.AddressZero);
   };
 
   if (referrer === constants.AddressZero) {

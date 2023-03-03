@@ -28,7 +28,7 @@ import {
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20ContractCreateButton, Erc20ContractDeployButton } from "../../../../../components/buttons";
-import { ContractActions, ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const Erc20Contract: FC = () => {
@@ -115,15 +115,6 @@ export const Erc20Contract: FC = () => {
                     contract.contractStatus === ContractStatus.INACTIVE ||
                     contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
                   }
-                  actions={[
-                    ContractActions.SNAPSHOT,
-                    contract.contractFeatures.includes(ContractFeatures.BLACKLIST)
-                      ? ContractActions.BLACKLIST_ADD
-                      : null,
-                    contract.contractFeatures.includes(ContractFeatures.BLACKLIST)
-                      ? ContractActions.BLACKLIST_REMOVE
-                      : null,
-                  ]}
                 />
               </ListItemSecondaryAction>
             </ListItem>

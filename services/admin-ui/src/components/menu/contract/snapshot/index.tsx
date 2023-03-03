@@ -14,7 +14,7 @@ export interface IErc20TokenSnapshotMenuItemProps {
   contract: IContract;
 }
 
-export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
+export const Erc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
   const {
     contract: { address },
   } = props;

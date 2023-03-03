@@ -16,16 +16,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  ContractFeatures,
-  ContractStatus,
-  IContract,
-  IContractSearchDto,
-  PyramidContractFeatures,
-} from "@framework/types";
+import { ContractStatus, IContract, IContractSearchDto, PyramidContractFeatures } from "@framework/types";
 
 import { PyramidContractEditDialog } from "./edit";
-import { ContractActions, ContractActionsMenu } from "../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
 export const PyramidContract: FC = () => {
@@ -104,9 +98,6 @@ export const PyramidContract: FC = () => {
                 <ContractActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                  actions={[
-                    contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? ContractActions.PAUSABLE : null,
-                  ]}
                 />
               </ListItemSecondaryAction>
             </ListItem>

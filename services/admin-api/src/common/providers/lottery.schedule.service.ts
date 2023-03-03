@@ -8,12 +8,12 @@ export const scheduleServiceProvider = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueuelogger = configService.get<string>("RMQ_QUEUE_ETHLOGGER", "ethlogger");
+    const rmqQueueLogger = configService.get<string>("RMQ_QUEUE_ETHLOGGER", "ethlogger");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: [rmqUrl],
-        queue: rmqQueuelogger,
+        queue: rmqQueueLogger,
       },
     });
   },

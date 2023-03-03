@@ -2,9 +2,9 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IContract, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, IContract, ModuleType, TokenType } from "@framework/types";
 
-import { IErc20TokenSnapshotMenuItem } from "./snapshot";
+import { Erc20TokenSnapshotMenuItem } from "./snapshot";
 import { RoyaltyMenuItem } from "./royalty";
 import { ContractGrantRoleMenuItem } from "./grant-role";
 import { ContractRevokeRoleMenuItem } from "./revoke-role";
@@ -19,23 +19,15 @@ import { PyramidBalanceMenuItem } from "./pyramid-balances";
 import { StakesMenuItem } from "./max-stakes";
 import { CollectionUploadMenuItem } from "./collection/upload";
 import { FundEthMenuItem } from "./fund-eth";
-
-export enum ContractActions {
-  SNAPSHOT = "SNAPSHOT",
-  ROYALTY = "ROYALTY",
-  BLACKLIST_ADD = "BLACKLIST_ADD",
-  BLACKLIST_REMOVE = "BLACKLIST_REMOVE",
-  PAUSABLE = "PAUSABLE",
-}
+import { AllowanceMenu } from "./allowance";
 
 export interface IContractActionsMenu {
   contract: IContract;
   disabled?: boolean;
-  actions?: Array<ContractActions | null>;
 }
 
 export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
-  const { contract, disabled, actions = [] } = props;
+  const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -66,22 +58,34 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {contract.contractType !== TokenType.NATIVE && contract.contractModule === ModuleType.HIERARCHY ? (
           <MintMenuItem contract={contract} />
         ) : null}
-        {contract.contractType !== TokenType.NATIVE ? <EthListenerAddMenuItem contract={contract} /> : null}
-        {contract.contractType !== TokenType.NATIVE ? <EthListenerRemoveMenuItem contract={contract} /> : null}
-        {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem contract={contract} /> : null}
-        {actions.includes(ContractActions.ROYALTY) ? <RoyaltyMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC20 ? <Erc20TokenSnapshotMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC721 ? <RoyaltyMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC998 ? <RoyaltyMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC1155 ? <RoyaltyMenuItem contract={contract} /> : null}
+
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
-        {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem contract={contract} /> : null}
-        {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem contract={contract} /> : null}
-        {actions.includes(ContractActions.PAUSABLE) ? <PausableMenuItem contract={contract} /> : null}
-        {contract.contractModule === ModuleType.PYRAMID ? <PyramidBalanceMenuItem contract={contract} /> : null}
-        {contract.contractModule === ModuleType.PYRAMID || contract.contractModule === ModuleType.STAKING ? (
-          <FundEthMenuItem contract={contract} />
+
+        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
+          <BlacklistAddMenuItem contract={contract} />
         ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
+          <UnBlacklistMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
+          <PausableMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.ALLOWANCE) ? <AllowanceMenu contract={contract} /> : null}
+
+        {contract.contractModule === ModuleType.PYRAMID ? <PyramidBalanceMenuItem contract={contract} /> : null}
+        {contract.contractModule === ModuleType.PYRAMID ? <FundEthMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.STAKING ? <StakesMenuItem contract={contract} /> : null}
+        {contract.contractModule === ModuleType.STAKING ? <FundEthMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.COLLECTION ? <CollectionUploadMenuItem contract={contract} /> : null}
+
+        {contract.contractType !== TokenType.NATIVE ? <EthListenerAddMenuItem contract={contract} /> : null}
+        {contract.contractType !== TokenType.NATIVE ? <EthListenerRemoveMenuItem contract={contract} /> : null}
       </Menu>
     </Fragment>
   );

@@ -6,7 +6,7 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE, TEMPLATE_ID } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { templateId } from "../../constants";
@@ -24,9 +24,6 @@ describe("Staking", function () {
   const period = 300;
   const penalty = 0;
   const cycles = 2;
-
-  // TODO use @types
-  const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
 
   let vrfInstance: VRFCoordinatorMock;
 
@@ -547,8 +544,8 @@ describe("Staking", function () {
       await erc721RandomInstance.mintCommon(owner.address, templateId + 1);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance).to.equal(2);
-      expect(await erc721RandomInstance.getRecordFieldValue(1, templateKey)).to.equal(templateId);
-      expect(await erc721RandomInstance.getRecordFieldValue(2, templateKey)).to.equal(templateId + 1);
+      expect(await erc721RandomInstance.getRecordFieldValue(1, TEMPLATE_ID)).to.equal(templateId);
+      expect(await erc721RandomInstance.getRecordFieldValue(2, TEMPLATE_ID)).to.equal(templateId + 1);
       // APPROVE
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       await erc721RandomInstance.approve(stakingInstance.address, 2);
