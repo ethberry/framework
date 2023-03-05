@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "hardhat/console.sol";
 
+import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";

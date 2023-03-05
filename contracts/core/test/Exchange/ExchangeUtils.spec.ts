@@ -3,14 +3,7 @@ import { ethers, network } from "hardhat";
 import { constants } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import {
-  deployErc1155NonReceiver,
-  deployErc1155Receiver,
-  deployErc20NonReceiver,
-  deployErc20Receiver,
-  deployErc721NonReceiver,
-  deployErc721Receiver,
-} from "@gemunion/contracts-mocks";
+import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { VRFCoordinatorMock } from "../../typechain-types";
@@ -122,7 +115,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ETH => Reverter", async function () {
         const [owner] = await ethers.getSigners();
 
-        const reverterInstance = await deployContract("Reverter");
+        const jerkInstance = await deployContract("Jerk");
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -137,7 +130,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           owner.address,
-          reverterInstance.address,
+          jerkInstance.address,
           { value: amount },
         );
 
@@ -149,7 +142,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => ERC1363 non Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc20NonReceiverInstance = await deployErc20NonReceiver();
+        const erc20NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -180,7 +173,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => ERC1363 Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc20ReceiverInstance = await deployErc20Receiver();
+        const erc20ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -291,7 +284,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1363 => ERC1363 non Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc20NonReceiverInstance = await deployErc20NonReceiver();
+        const erc20NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver. Inherited from ExchangeUtils
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -322,7 +315,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1363 => ERC1363 Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc20ReceiverInstance = await deployErc20Receiver();
+        const erc20ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -383,7 +376,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC721 => non Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc721NonReceiverInstance = await deployErc721NonReceiver();
+        const erc721NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -411,7 +404,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC721 => Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc721ReceiverInstance = await deployErc721Receiver();
+        const erc721ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -526,7 +519,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1155 => non Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc1155NonReceiverInstance = await deployErc1155NonReceiver();
+        const erc1155NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -554,7 +547,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1155 => Holder", async function () {
         const [owner] = await ethers.getSigners();
 
-        const erc1155ReceiverInstance = await deployErc1155Receiver();
+        const erc1155ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -718,7 +711,7 @@ describe("ExchangeUtils", function () {
 
     describe("ERC20", function () {
       it("should spend: ERC20 => ERC1363 non Holder", async function () {
-        const erc20NonReceiverInstance = await deployErc20NonReceiver();
+        const erc20NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -750,7 +743,7 @@ describe("ExchangeUtils", function () {
       });
 
       it("should spend: ERC20 => ERC1363 Holder", async function () {
-        const erc20ReceiverInstance = await deployErc20Receiver();
+        const erc20ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -834,7 +827,7 @@ describe("ExchangeUtils", function () {
       });
 
       it("should spend: ERC1363 => ERC1363 non Holder", async function () {
-        const erc20NonReceiverInstance = await deployErc20NonReceiver();
+        const erc20NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -865,7 +858,7 @@ describe("ExchangeUtils", function () {
       });
 
       it("should spend: ERC1363 => ERC1363 Holder", async function () {
-        const erc20ReceiverInstance = await deployErc20Receiver();
+        const erc20ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -1038,7 +1031,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1155 => non Holder", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const erc1155NonReceiverInstance = await deployErc1155NonReceiver();
+        const erc1155NonReceiverInstance = await deployJerk();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
@@ -1064,7 +1057,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1155 => Holder", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const erc1155ReceiverInstance = await deployErc1155Receiver();
+        const erc1155ReceiverInstance = await deployWallet();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
