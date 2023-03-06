@@ -49,7 +49,7 @@ export class MarketplaceService {
     queryBuilder.leftJoinAndSelect("price_history.contract", "price_contract");
 
     // DEV
-    queryBuilder.andWhere("item_history.id IS NOT NULL");
+    queryBuilder.andWhere("exchange.id IS NOT NULL");
 
     queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
       contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
