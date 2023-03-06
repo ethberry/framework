@@ -35,7 +35,7 @@ export const PauseToggleButton: FC<IPauseToggleButton> = props => {
     void getPauseStatus().then((value: boolean) => {
       setIsPaused(value);
     });
-  });
+  }, [isPaused]);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, PauseSol.abi, web3Context.provider?.getSigner());
