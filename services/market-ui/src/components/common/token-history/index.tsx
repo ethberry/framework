@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid, Typography } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, useGridApiRef } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
 
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
@@ -29,6 +29,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   const { token, isLoading, search, handleChangePage, handleChangeRowsPerPage } = props;
   const classes = useStyles();
   const { formatMessage } = useIntl();
+  const apiRef = useGridApiRef();
 
   const exchangeHistory =
     token.exchange
@@ -119,13 +120,13 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: false,
       valueFormatter: ({ value }: { value: IAsset }) => value ? formatPrice(value) : "",
-      renderCell: (params: GridCellParams) => {
+      renderCell: (params: GridCellParams<any, any>) => {
         let value = params.value;
         if (params.colDef.valueFormatter) {
           value = params.colDef.valueFormatter({
             value: params.value,
             field: "",
-            api: undefined
+            api: apiRef.current,
           });
         }
         return (
@@ -150,7 +151,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "from",
       headerName: formatMessage({ id: "form.labels.from" }),
       sortable: false,
-      renderCell: (params: GridCellParams) => {
+      renderCell: (params: GridCellParams<any, string>) => {
         return (
           <AddressLink address={params.value} />
         );
@@ -162,7 +163,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "to",
       headerName: formatMessage({ id: "form.labels.to" }),
       sortable: false,
-      renderCell: (params: GridCellParams) => {
+      renderCell: (params: GridCellParams<any, string>) => {
         return (
           <AddressLink address={params.value} />
         );
@@ -182,9 +183,9 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "tx",
       headerName: formatMessage({ id: "form.labels.tx" }),
       sortable: false,
-      renderCell: (params: GridCellParams) => {
+      renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <TxHashLink hash={params.value} />
+          <TxHashLink hash={params.value as string} />
         );
       },
       flex: 1,
@@ -201,10 +202,12 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
         pagination
         paginationMode="server"
         rowCount={fullTokenHistory.length}
-        pageSize={search.take}
-        onPageChange={page => handleChangePage(null as any, page + 1)}
-        onPageSizeChange={handleChangeRowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
+        onPaginationModelChange={({ page, pageSize }) => {
+          handleChangePage(null as any, page + 1);
+          handleChangeRowsPerPage(pageSize);
+        }}
+        pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
         rows={fullTokenHistory}

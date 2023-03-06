@@ -103,10 +103,12 @@ export const MarketplaceReport: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        pageSize={search.take}
-        onPageChange={page => handleChangePage(null as any, page + 1)}
-        onPageSizeChange={handleChangeRowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
+        onPaginationModelChange={({ page, pageSize }) => {
+          handleChangePage(null as any, page + 1);
+          handleChangeRowsPerPage(pageSize);
+        }}
+        pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
         rows={rows.map((token: IToken) => ({
