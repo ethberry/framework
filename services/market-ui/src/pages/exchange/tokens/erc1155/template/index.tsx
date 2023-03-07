@@ -42,10 +42,13 @@ export const Erc1155Template: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Box component="img" src={selected.imageUrl} alt="Gemunion template image" sx={{ width: "70%" }} />
-          </Box>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Box
+            component="img"
+            src={selected.imageUrl}
+            alt="Gemunion template image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
             <RichTextDisplay data={selected.description} />
           </Typography>
         </Grid>

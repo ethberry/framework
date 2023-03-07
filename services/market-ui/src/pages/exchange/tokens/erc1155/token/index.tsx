@@ -45,10 +45,13 @@ export const Erc1155Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Box component="img" src={selected.template!.imageUrl} alt="Gemunion token image" sx={{ width: "70%" }} />
-          </Box>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Box
+            component="img"
+            src={selected.template!.imageUrl}
+            alt="Gemunion token image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>

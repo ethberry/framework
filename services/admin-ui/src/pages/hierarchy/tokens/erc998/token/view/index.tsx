@@ -47,7 +47,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.description" />
               </TableCell>
-              <TableCell align="right" sx={{ width: "100%" }}>
+              <TableCell align="right" sx={{ maxWidth: "100%" }}>
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
@@ -82,7 +82,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <Box component="img" src={template?.imageUrl} alt={template?.title} sx={{ width: "100%" }} />
+                <Box component="img" src={template?.imageUrl} alt={template?.title} sx={{ maxWidth: "100%" }} />
               </TableCell>
             </TableRow>
           </TableBody>

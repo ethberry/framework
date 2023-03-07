@@ -47,7 +47,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.description" />
               </TableCell>
-              <TableCell align="right" sx={{ width: "100%" }}>
+              <TableCell align="right" sx={{ maxWidth: "100%" }}>
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
@@ -82,7 +82,7 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <Box component="img" src={template?.imageUrl} alt={template?.title} sx={{ width: "100%" }} />
+                <Box component="img" src={template?.imageUrl} alt={template?.title} sx={{ maxWidth: "100%" }} />
               </TableCell>
             </TableRow>
           </TableBody>
