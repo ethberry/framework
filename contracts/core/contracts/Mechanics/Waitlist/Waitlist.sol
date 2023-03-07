@@ -20,6 +20,7 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
   using MerkleProof for bytes32[];
 
   mapping(uint256 => bytes32) internal _roots;
+  mapping(uint256 => mapping(address => bool)) internal _expired;
   mapping(uint256 => Asset[]) internal _items;
 
   Counters.Counter internal _itemsCounter;
@@ -60,8 +61,10 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
     require(_roots[externalId] != "", "Waitlist: Not yet started");
-
+    
     address account = _msgSender();
+    require(!_expired[externalId][account], "Witlist: Reward already claimed");
+    _expired[externalId][account] = true;
 
     //    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(account)));
     bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(account)))));
