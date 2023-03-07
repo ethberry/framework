@@ -9,10 +9,7 @@ pragma solidity ^0.8.13;
 import "../../ERC721BlacklistUpgradeableRentableRandom.sol";
 import "../../../MOCKS/ChainLinkBesu.sol";
 
-abstract contract ERC721BlacklistUpgradeableRentableRandomBesu is
-  ERC721BlacklistUpgradeableRentableRandom,
-  ChainLinkBesu
-{
+contract ERC721BlacklistUpgradeableRentableRandomBesu is ERC721BlacklistUpgradeableRentableRandom, ChainLinkBesu {
   constructor(
     string memory name,
     string memory symbol,
