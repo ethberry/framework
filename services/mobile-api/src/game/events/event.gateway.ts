@@ -5,7 +5,7 @@ import { Socket } from "socket.io";
 import { WsValidationPipe } from "@gemunion/nest-js-utils-ws";
 import { FirebaseWsGuard } from "@gemunion/nest-js-guards-ws";
 
-import { SessionInterceptor } from "../common/interceptors/session.ws";
+import { SessionInterceptor } from "../../common/interceptors/session.ws";
 
 @UsePipes(WsValidationPipe)
 @UseInterceptors(SessionInterceptor)

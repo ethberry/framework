@@ -11,10 +11,10 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
 import ormconfig from "./ormconfig";
-import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { NotificatorModule } from "./notificator/notificator.module";
+import { InfrastructureModule } from "./infrastructure/infrastructure.module";
+import { GameModule } from "./game/game.module";
 
 @Module({
   providers: [
@@ -42,9 +42,9 @@ import { NotificatorModule } from "./notificator/notificator.module";
     }),
     ScheduleModule.forRoot(),
     RequestLoggerModule,
-    HealthModule,
     BlockchainModule,
-    NotificatorModule,
+    GameModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
 })

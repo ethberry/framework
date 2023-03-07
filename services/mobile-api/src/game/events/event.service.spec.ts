@@ -6,9 +6,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
-import { UserEntity } from "../infrastructure/user/user.entity";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { EventService } from "./event.service";
-import ormconfig from "../ormconfig";
+import ormconfig from "../../ormconfig";
 
 describe("EventService", () => {
   let eventService: EventService;

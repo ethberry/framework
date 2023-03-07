@@ -13,14 +13,11 @@ import { RedisProviderType } from "@framework/types";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { EventModule } from "./events/event.module";
-import { HealthModule } from "./health/health.module";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
-import { NotificatorModule } from "./notificator/notificator.module";
-import { WebhookModule } from "./webhook/webhook.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
+import { GameModule } from "./game/game.module";
 
 @Module({
   providers: [
@@ -83,11 +80,8 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
     }),
     RequestLoggerModule,
     GemunionThrottlerModule,
-    HealthModule,
     InfrastructureModule,
-    EventModule,
-    NotificatorModule,
-    WebhookModule,
+    GameModule,
   ],
   controllers: [AppController],
 })
