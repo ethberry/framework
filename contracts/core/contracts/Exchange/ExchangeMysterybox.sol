@@ -34,10 +34,10 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
     emit Mysterybox(account, params.externalId, items, price);
 
     Asset memory box = items[items.length - 1];
-    
-    // pop from array not support
-    Asset[] memory mysteryItems = new Asset[](items.length -1);
-    for(uint256 i =0; i<items.length -1; i++) {
+
+    // pop from array is not supported
+    Asset[] memory mysteryItems = new Asset[](items.length - 1);
+    for (uint256 i = 0; i < items.length - 1; i++) {
       mysteryItems[i] = items[i];
     }
 
