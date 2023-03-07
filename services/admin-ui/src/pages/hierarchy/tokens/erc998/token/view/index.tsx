@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
@@ -47,7 +47,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.description" />
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{ width: "100%" }}>
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
@@ -82,7 +82,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <img src={template?.imageUrl} alt={template?.title} />
+                <Box component="img" src={template?.imageUrl} alt={template?.title} sx={{ width: "100%" }} />
               </TableCell>
             </TableRow>
           </TableBody>
