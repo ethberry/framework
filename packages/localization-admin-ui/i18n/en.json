@@ -597,7 +597,7 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "ecommerce": {
+      "infrastructure": {
         "admin": {
           "balances": "System Balances",
           "emails": "Emails",

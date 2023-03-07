@@ -172,7 +172,7 @@ export enum ContractFeatures {
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
   "PAUSABLE" = "PAUSABLE",
-  "USABLE" = "USABLE",
+  "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
   // MODULE:VESTING
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
