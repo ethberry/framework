@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ import { TokenAttributesView } from "../../genes";
 import { TokenHistory } from "../../../../../components/common/token-history";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading, search, handleChangePage, handleChangeRowsPerPage } = useCollection<IToken>({
+  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
     baseUrl: "/erc998-tokens",
     empty: {
       template: {
@@ -48,7 +48,9 @@ export const Erc998Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Box component="img" src={selected.template!.imageUrl} alt="Gemunion token image" sx={{ width: "70%" }} />
+          </Box>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
@@ -92,8 +94,7 @@ export const Erc998Token: FC = () => {
           token={selected}
           isLoading={isLoading}
           search={search}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleChangePaginationModel={handleChangePaginationModel}
         />
       </Grid>
     </Fragment>

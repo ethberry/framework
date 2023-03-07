@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -14,7 +14,7 @@ import { formatPrice } from "../../../../../utils/money";
 import { TokenHistory } from "../../../../../components/common/token-history";
 
 export const Erc1155Token: FC = () => {
-  const { selected, isLoading, search, handleChangePage, handleChangeRowsPerPage } = useCollection<IToken>({
+  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
     baseUrl: "/erc1155-tokens",
     empty: {
       template: {
@@ -45,7 +45,9 @@ export const Erc1155Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.template!.imageUrl} alt="Gemunion token image" />
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Box component="img" src={selected.template!.imageUrl} alt="Gemunion token image" sx={{ width: "70%" }} />
+          </Box>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
@@ -67,8 +69,7 @@ export const Erc1155Token: FC = () => {
           token={selected}
           isLoading={isLoading}
           search={search}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleChangePaginationModel={handleChangePaginationModel}
         />
       </Grid>
     </Fragment>

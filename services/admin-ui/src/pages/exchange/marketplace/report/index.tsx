@@ -10,8 +10,8 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import type { IAssetComponent, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
-import { MarketplaceReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
+import { MarketplaceReportSearchForm } from "./form";
 
 export const MarketplaceReport: FC = () => {
   const {
@@ -22,8 +22,7 @@ export const MarketplaceReport: FC = () => {
     isFiltersOpen,
     handleToggleFilters,
     handleSearch,
-    handleChangePage,
-    handleChangeRowsPerPage,
+    handleChangePaginationModel,
   } = useCollection<IToken, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
@@ -103,11 +102,8 @@ export const MarketplaceReport: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
+        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+        onPaginationModelChange={handleChangePaginationModel}
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}

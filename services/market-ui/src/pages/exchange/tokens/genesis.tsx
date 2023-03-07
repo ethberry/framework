@@ -25,8 +25,12 @@ export const TokenGenesisView: FC<ITokenGenesisView> = props => {
         .reverse()
         .map(([key, value], i) => (
           <Grid key={i} container>
-            <Grid xs={6}>{key}</Grid>
-            <Grid xs={6}>{value}</Grid>
+            <Grid item xs={6}>
+              {key}
+            </Grid>
+            <Grid item xs={6}>
+              {value}
+            </Grid>
           </Grid>
         ))}
     </Grid>
