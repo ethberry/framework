@@ -1,5 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { ethersSignerProvider, ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
@@ -43,7 +44,7 @@ import { EventHistoryModule } from "../event-history/event-history.module";
     GradeModule,
     BalanceModule,
   ],
-  providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq],
+  providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],
   exports: [ContractManagerServiceEth, ContractManagerServiceRmq],
 })

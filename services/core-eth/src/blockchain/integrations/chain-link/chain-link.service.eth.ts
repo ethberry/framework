@@ -5,7 +5,7 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import { callRandom } from "./utils";
-import { IChainLinkRandomRequestEvent } from "./log/interfaces";
+import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 
@@ -23,9 +23,9 @@ export class ChainLinkServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public async randomRequest(event: ILogEvent<IChainLinkRandomRequestEvent>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IChainLinkRandomWordsRequestedEvent>, context: Log): Promise<void> {
     const {
-      args: { _requestID, _sender },
+      args: { requestId, sender, subId, callbackGasLimit, numWords, keyHash },
     } = event;
 
     await this.eventHistoryService.updateHistory(event, context);
@@ -38,7 +38,18 @@ export class ChainLinkServiceEth {
     // }
 
     const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    const txr: string = await callRandom(vrfAddr, _sender, _requestID, this.ethersSignerProviderAws);
+    const txr: string = await callRandom(
+      vrfAddr,
+      {
+        requestId,
+        sender,
+        subId,
+        callbackGasLimit,
+        numWords,
+        keyHash,
+      },
+      this.ethersSignerProviderAws,
+    );
     this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkServiceEth.name);
   }
 }

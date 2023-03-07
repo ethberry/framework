@@ -12,6 +12,12 @@ export class CreateGrade1657846587000 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.grade_attribute_enum AS ENUM (
+        'GRADE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.grade`,
       columns: [
@@ -26,7 +32,8 @@ export class CreateGrade1657846587000 implements MigrationInterface {
         },
         {
           name: "attribute",
-          type: "varchar",
+          type: `${ns}.grade_attribute_enum`,
+          default: "'GRADE'",
         },
         {
           name: "price_id",

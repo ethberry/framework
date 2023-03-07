@@ -43,6 +43,7 @@ import ERC721BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/c
 import ERC721BlacklistUpgradeableRandom from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRandomGemunion.sol/ERC721BlacklistUpgradeableRandomGemunion.json";
 import ERC721BlacklistUpgradeableRentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRentable.sol/ERC721BlacklistUpgradeableRentable.json";
 import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
+// import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/besu/ERC721BlacklistUpgradeableRentableRandomBesu.sol/ERC721BlacklistUpgradeableRentableRandomBesu.json";
 
 import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
@@ -127,7 +128,6 @@ export class ContractManagerSignService {
   public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
-
     const params = {
       nonce,
       bytecode,
@@ -171,7 +171,7 @@ export class ContractManagerSignService {
   public async erc721Collection(dto: IErc721CollectionDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721CollectionTemplates(dto);
-
+    console.log("bytecode", bytecode);
     const params = {
       nonce,
       bytecode,
@@ -416,7 +416,6 @@ export class ContractManagerSignService {
 
   public getBytecodeByErc721ContractTemplates(dto: IErc721ContractDeployDto) {
     const { contractTemplate } = dto;
-
     switch (contractTemplate) {
       case Erc721ContractTemplates.BLACKLIST:
         return ERC721BlackListSol.bytecode;

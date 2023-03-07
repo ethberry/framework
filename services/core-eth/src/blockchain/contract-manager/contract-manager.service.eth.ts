@@ -2,8 +2,11 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 import { DeepPartial } from "typeorm";
+import { Wallet, providers } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_SIGNER, ETHERS_RPC } from "@gemunion/nestjs-ethers";
+
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import {
@@ -35,12 +38,17 @@ import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
 import { EventHistoryService } from "../event-history/event-history.service";
+import { addConsumer } from "../integrations/chain-link/utils";
 
 @Injectable()
 export class ContractManagerServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_SIGNER)
+    protected readonly ethersSignerProvider: Wallet,
+    @Inject(ETHERS_RPC)
+    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -129,6 +137,13 @@ export class ContractManagerServiceEth {
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
+
+    if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
+      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
+      const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, addr.toLowerCase(), this.ethersSignerProvider);
+      this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+    }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
@@ -251,6 +266,13 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
+    if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
+      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
+      const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, addr.toLowerCase(), this.ethersSignerProvider);
+      this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+    }
+
     if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
@@ -301,7 +323,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async mysterybox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, ctx: Log): Promise<void> {
+  public async mysteryBox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, args },
     } = event;

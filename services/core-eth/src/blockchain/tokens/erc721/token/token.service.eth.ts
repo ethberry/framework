@@ -101,7 +101,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;
@@ -135,7 +135,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
-      await this.eventHistoryService.updateHistory(event, context, templateEntity.contract.id, void 0);
+      await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
 
       const batchSize = JSON.parse(templateEntity.contract.description).batchSize
         ? JSON.parse(templateEntity.contract.description).batchSize

@@ -152,6 +152,7 @@
       "empty": "\uFEFF",
       "export": "Export",
       "forgot": "Forgot password?",
+      "GRADE": "Grade",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
       "login": "Login",
@@ -468,6 +469,19 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist",
         "wrapper": "Token wrapper"
+      },
+      "infrastructure": {
+        "feedback": {
+          "form": "Feedback",
+          "title": "Feedback"
+        },
+        "pages": {
+          "privacy-policy": "Privacy Policy",
+          "terms-of-services": "Terms of Services",
+          "title": "Pages",
+          "about-us": "About us",
+          "faq": "FAQ"
+        }
       },
       "title": "Dashboard"
     },

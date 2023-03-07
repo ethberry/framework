@@ -9,4 +9,15 @@ export interface IVrfRandomRequestEvent {
   _sender: string;
 }
 
-export type TChainLinkEvents = IVrfRandomnessRequestEvent | IVrfRandomRequestEvent;
+export interface IVrfRandomWordsRequestedEvent {
+  keyHash: string;
+  requestId: string;
+  preSeed: string;
+  subId: string;
+  minimumRequestConfirmations: string;
+  callbackGasLimit: string;
+  numWords: string;
+  sender: string;
+}
+
+export type TChainLinkEvents = IVrfRandomnessRequestEvent | IVrfRandomRequestEvent | IVrfRandomWordsRequestedEvent;
