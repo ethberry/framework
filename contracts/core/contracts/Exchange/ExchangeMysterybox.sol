@@ -34,10 +34,14 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
     emit Mysterybox(account, params.externalId, items, price);
 
     Asset memory box = items[items.length - 1];
-    delete items[items.length - 1];
 
-    IERC721Mysterybox(box.token).mintBox(account, box.tokenId, items);
+    // pop from array is not supported
+    Asset[] memory mysteryItems = new Asset[](items.length - 1);
+    for (uint256 i = 0; i < items.length - 1; i++) {
+      mysteryItems[i] = items[i];
+    }
 
+    IERC721Mysterybox(box.token).mintBox(account, box.tokenId, mysteryItems);
     _afterPurchase(params.referrer, price);
   }
 

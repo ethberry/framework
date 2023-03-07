@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
-import { deployErc721NonReceiver, deployErc721Receiver } from "@gemunion/contracts-mocks";
+import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { MINTER_ROLE, batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../constants";
@@ -24,7 +24,7 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
 
     it("should mint to receiver", async function () {
       const contractInstance = await factory();
-      const erc721ReceiverInstance = await deployErc721Receiver();
+      const erc721ReceiverInstance = await deployWallet();
 
       const tx = contractInstance.mintCommon(erc721ReceiverInstance.address, batchSize + tokenId);
       await expect(tx)
@@ -47,7 +47,7 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
 
     it("should fail: to mint to non receiver", async function () {
       const contractInstance = await factory();
-      const erc721NonReceiverInstance = await deployErc721NonReceiver();
+      const erc721NonReceiverInstance = await deployJerk();
 
       const tx = contractInstance.mintCommon(erc721NonReceiverInstance.address, batchSize + tokenId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);

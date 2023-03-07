@@ -115,9 +115,9 @@ describe("MysteryboxFactory", function () {
 
       const tx3 = erc721Instance.mintBox(receiver.address, templateId, [
         {
-          tokenType: 0,
-          token: constants.AddressZero,
-          tokenId: 0,
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
           amount,
         },
       ]);
