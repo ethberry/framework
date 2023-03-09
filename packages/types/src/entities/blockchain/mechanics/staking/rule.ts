@@ -1,7 +1,7 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
 import { DurationUnit } from "../../common";
-import { IAsset } from "../../exchange/asset";
+import type { IAsset } from "../../exchange/asset";
 
 export enum StakingRuleStatus {
   NEW = "NEW",

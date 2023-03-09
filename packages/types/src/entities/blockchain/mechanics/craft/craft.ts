@@ -1,7 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "../../exchange/asset";
-import { IEventHistory } from "../../event-history";
+import type { IAsset } from "../../exchange/asset";
+import type { IEventHistory } from "../../event-history";
 
 export enum CraftStatus {
   NEW = "NEW",

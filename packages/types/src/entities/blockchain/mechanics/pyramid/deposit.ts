@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IPyramidRule } from "./rule";
+import type { IPyramidRule } from "./rule";
 
 export enum PyramidDepositStatus {
   ACTIVE = "ACTIVE",

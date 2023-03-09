@@ -1,9 +1,8 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet } from "ethers";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
@@ -35,13 +34,8 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
   constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    @Inject(ETHERS_SIGNER)
-    protected readonly ethersSignerProvider: Wallet,
-    protected readonly configService: ConfigService,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
@@ -51,7 +45,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
+    super(tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {

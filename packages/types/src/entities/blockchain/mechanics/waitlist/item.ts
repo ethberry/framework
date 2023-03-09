@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IWaitlistList } from "./list";
+import type { IWaitlistList } from "./list";
 
 export interface IWaitlistItem extends IIdDateBase {
   account: string;

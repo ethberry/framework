@@ -1,6 +1,6 @@
 import type { IUuidDateBase } from "@gemunion/types-collection";
 
-import { IUser } from "./user";
+import type { IUser } from "./user";
 
 export enum OtpType {
   EMAIL = "EMAIL",

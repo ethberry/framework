@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IUser } from "./user";
+import type { IUser } from "./user";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",
