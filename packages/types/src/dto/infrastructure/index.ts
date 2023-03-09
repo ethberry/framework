@@ -1,3 +1,5 @@
+export * from "./merchant/search";
+
 export * from "./page/search";
 
 export * from "./user/common";

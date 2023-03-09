@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
@@ -30,7 +30,7 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
     Erc998CompositionModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, ethersRpcProvider, ethersSignerProvider, Erc998TokenServiceEth],
+  providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth],
   controllers: [Erc998TokenControllerEth],
   exports: [Erc998TokenServiceEth],
 })

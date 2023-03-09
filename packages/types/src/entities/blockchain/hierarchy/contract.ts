@@ -1,11 +1,11 @@
 import type { ISearchable } from "@gemunion/types-collection";
 import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
-import { IEventHistory } from "../event-history";
+import type { IEventHistory } from "../event-history";
 
-import { ITemplate } from "./template";
+import type { ITemplate } from "./template";
+import type { IComposition } from "./composition";
 import { ModuleType } from "../common";
-import { IComposition } from "./composition";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",

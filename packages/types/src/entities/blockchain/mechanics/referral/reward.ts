@@ -1,5 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
-import { IContract } from "../../hierarchy/contract";
+
+import type { IContract } from "../../hierarchy/contract";
 
 export interface IReferralReward extends IIdDateBase {
   account: string;

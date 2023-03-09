@@ -7,7 +7,8 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.merchant_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'PENDING'
       );
     `);
 
@@ -33,26 +34,16 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           isUnique: true,
         },
         {
+          name: "phone_number",
+          type: "varchar",
+        },
+        {
           name: "image_url",
           type: "varchar",
         },
         {
-          name: "webhook_url",
-          type: "varchar",
-        },
-        {
-          name: "api_key",
-          type: "uuid",
-          default: "uuid_generate_v4()",
-        },
-        {
           name: "merchant_status",
           type: `${ns}.merchant_status_enum`,
-        },
-        {
-          name: "social",
-          type: "json",
-          default: "'{}'",
         },
         {
           name: "created_at",

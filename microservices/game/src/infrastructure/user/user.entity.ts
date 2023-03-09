@@ -1,10 +1,11 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import type { IUser } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
+import { MerchantEntity } from "../merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "user" })
 export class UserEntity extends IdDateBaseEntity implements IUser {
@@ -61,4 +62,10 @@ export class UserEntity extends IdDateBaseEntity implements IUser {
     array: true,
   })
   public userRoles: Array<UserRole>;
+
+  @Column({ type: "int" })
+  public merchantId: number;
+
+  @ManyToOne(_type => MerchantEntity, merchantEntity => merchantEntity.users)
+  public merchant: MerchantEntity;
 }

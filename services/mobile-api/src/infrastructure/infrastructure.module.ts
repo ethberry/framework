@@ -7,8 +7,9 @@ import { OtpModule } from "./otp/otp.module";
 import { ProfileModule } from "./profile/profile.module";
 import { SyncModule } from "./sync/sync.module";
 import { UserModule } from "./user/user.module";
+import { MerchantModule } from "./merchant/merchant.module";
 
 @Module({
-  imports: [AuthModule, EmailModule, HealthModule, OtpModule, ProfileModule, SyncModule, UserModule],
+  imports: [AuthModule, EmailModule, HealthModule, MerchantModule, OtpModule, ProfileModule, SyncModule, UserModule],
 })
 export class InfrastructureModule {}

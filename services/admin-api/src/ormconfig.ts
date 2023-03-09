@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ns } from "@framework/constants";
+import { EnabledLanguages, ns } from "@framework/constants";
 import {
   createCountryEnum,
   createDomainUint256,
@@ -12,8 +12,7 @@ import {
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { UserEntity } from "./infrastructure/user/user.entity";
-import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -42,14 +41,19 @@ import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.en
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/exchange/payees/payees.entity";
+import { UserEntity } from "./infrastructure/user/user.entity";
+import { OtpEntity } from "./infrastructure/otp/otp.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
+import { CreateMerchant1563803000110 } from "./migrations/1563803000110-create-merchant";
+import { SeedMerchant1563803000120 } from "./migrations/1563803000120-seed-merchant";
 import { CreateUser1563803000130 } from "./migrations/1563803000130-create-user";
 import { SeedUser1563803000140 } from "./migrations/1563803000140-seed-user";
+import { CreateAuth1563803000150 } from "./migrations/1563803000150-create-auth";
+import { CreateOtp1563803000160 } from "./migrations/1563803000160-create-otp";
 import { CreatePage1563803000210 } from "./migrations/1563803000210-create-page";
 import { SeedPages1563803000220 } from "./migrations/1563803000220-seed-pages";
-import { CreateOtp1563803000160 } from "./migrations/1563803000160-create-otp";
 
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
@@ -209,6 +213,7 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    MerchantEntity,
     UserEntity,
     OtpEntity,
     SettingsEntity,
@@ -258,18 +263,21 @@ const config: PostgresConnectionOptions = {
     createSchema(ns),
     createDomainUint256(),
     installExtensionUUID(),
-    createLanguageEnum(ns),
+    createLanguageEnum(ns, Object.keys(EnabledLanguages)),
     createTokenTypesEnum(ns),
     createCountryEnum(ns),
     createGenderEnum(ns),
 
     CreateSettings1563803000010,
     SeedSettings1563803000020,
+    CreateMerchant1563803000110,
+    SeedMerchant1563803000120,
     CreateUser1563803000130,
     SeedUser1563803000140,
+    CreateAuth1563803000150,
+    CreateOtp1563803000160,
     CreatePage1563803000210,
     SeedPages1563803000220,
-    CreateOtp1563803000160,
 
     CreateAsset1563804000100,
 

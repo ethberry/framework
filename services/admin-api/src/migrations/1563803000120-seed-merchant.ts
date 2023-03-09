@@ -12,35 +12,26 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         email,
         title,
         description,
+        phone_number,
         image_url,
-        webhook_url,
         merchant_status,
         created_at,
         updated_at
       ) VALUES (
         'trejgun+merchant1@gmail.com',
-        'GEMUNION',
+        'MEOW DOA',
         '${simpleFormatting}',
+        '+62 (812) 3919-8760',
         '${imageUrl}',
-        'http://localhost:3012/webhook',
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'trejgun+merchant2@gmail.com',
-        'MEOW DOA',
+        'CTAPbIu SHOP',
         '${simpleFormatting}',
+        '+62 (812) 3919-8760',
         '${imageUrl}',
-        'http://localhost:3012/webhook',
-        'ACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'trejgun+merchant3@gmail.com',
-        'TREJ SHOP',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'http://localhost:3012/webhook',
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -1,9 +1,8 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { constants } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
 
 import {
   IErc1155TokenApprovalForAllEvent,
@@ -14,23 +13,17 @@ import {
 
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
   constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
-    @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    protected readonly contractService: ContractService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
+    super(tokenService, eventHistoryService);
   }
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingleEvent>, context: Log): Promise<void> {

@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { ILotteryTicket } from "./ticket";
+import type { ILotteryTicket } from "./ticket";
 import { CronExpression } from "../../common";
 
 export interface ILotteryRound extends IIdDateBase {
