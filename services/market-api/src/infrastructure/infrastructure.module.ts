@@ -4,11 +4,12 @@ import { AuthModule } from "./auth/auth.module";
 import { EmailModule } from "./email/email.module";
 import { FeedbackModule } from "./feedback/feedback.module";
 import { HealthModule } from "./health/health.module";
+import { OtpModule } from "./otp/otp.module";
 import { PageModule } from "./page/page.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 
 @Module({
-  imports: [AuthModule, EmailModule, FeedbackModule, HealthModule, PageModule, ProfileModule, UserModule],
+  imports: [AuthModule, EmailModule, FeedbackModule, HealthModule, OtpModule, PageModule, ProfileModule, UserModule],
 })
 export class InfrastructureModule {}
