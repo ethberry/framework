@@ -13,7 +13,7 @@ import { AuthModule } from "../auth/auth.module";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
 
-describe.skip("UserService", () => {
+describe("UserService", () => {
   let userService: UserService;
   let userSeedService: UserSeedService;
 

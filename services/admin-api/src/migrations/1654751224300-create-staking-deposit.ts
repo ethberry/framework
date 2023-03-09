@@ -65,6 +65,7 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
           columnNames: ["staking_rule_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.staking_rules`,
+          onDelete: "CASCADE",
         },
       ],
     });

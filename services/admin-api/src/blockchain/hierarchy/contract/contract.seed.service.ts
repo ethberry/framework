@@ -66,7 +66,7 @@ export class ContractSeedService {
           contractType: TokenType.ERC20,
           contractStatus: ContractStatus.ACTIVE,
           contractModule: ModuleType.MYSTERY,
-          chainId: 1,
+          chainId: 0,
         }),
       )
       .save();
@@ -78,6 +78,7 @@ export class ContractSeedService {
   }
 
   public async tearDown(): Promise<void> {
+    await this.userEntityRepository.delete({});
     await this.contractEntityRepository.delete({});
   }
 }

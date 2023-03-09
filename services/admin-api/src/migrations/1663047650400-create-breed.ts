@@ -38,6 +38,7 @@ export class CreateBreed1663047650400 implements MigrationInterface {
           columnNames: ["token_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.token`,
+          onDelete: "CASCADE",
         },
       ],
     });

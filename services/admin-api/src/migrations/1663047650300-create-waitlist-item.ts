@@ -34,6 +34,7 @@ export class CreateWaitlistItem1663047650300 implements MigrationInterface {
           columnNames: ["list_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.waitlist_list`,
+          onDelete: "CASCADE",
         },
       ],
     });

@@ -14,7 +14,7 @@ import { ContractSeedModule } from "./contract.seed.module";
 import { ContractEntity } from "./contract.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 
-describe.skip("ContractService", () => {
+describe("ContractService", () => {
   let contractService: ContractService;
   let contractSeedService: ContractSeedService;
 
@@ -46,24 +46,26 @@ describe.skip("ContractService", () => {
     await contractSeedService.tearDown();
   });
 
-  describe.skip("findOne", () => {
+  describe("findOne", () => {
     it("should find one", async () => {
       await contractSeedService.setup();
 
-      const contractEntity = await contractService.findOne({});
+      const contractEntity = await contractService.findOne({
+        contractStatus: ContractStatus.NEW,
+      });
       expect(contractEntity).toMatchObject({
-        contractStatus: ContractStatus.ACTIVE,
-        contractType: TokenType.NATIVE,
+        contractStatus: ContractStatus.NEW,
+        contractType: TokenType.ERC20,
       });
     });
   });
 
-  describe.skip("autocomplete", () => {
+  describe("autocomplete", () => {
     it("should use default filter", async () => {
       const { users } = await contractSeedService.setup();
 
       const contractEntities = await contractService.autocomplete({}, users[0]);
-      expect(contractEntities).toHaveLength(54);
+      expect(contractEntities).toHaveLength(4);
     });
 
     it("should filter by contractStatus", async () => {

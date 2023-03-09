@@ -64,6 +64,7 @@ export class CreatePyramidDeposit1660436477300 implements MigrationInterface {
           columnNames: ["pyramid_rule_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.pyramid_rules`,
+          onDelete: "CASCADE",
         },
       ],
     });
