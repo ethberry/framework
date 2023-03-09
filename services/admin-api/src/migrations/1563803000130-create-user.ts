@@ -13,8 +13,10 @@ export class CreateUser1563803000130 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.user_role_enum AS ENUM (
-        'USER',
-        'ADMIN'
+        'ADMIN',
+        'OWNER',
+        'MANAGER',
+        'USER'
       );
     `);
 
@@ -44,6 +46,11 @@ export class CreateUser1563803000130 implements MigrationInterface {
           name: "image_url",
           type: "varchar",
           default: "''",
+        },
+        {
+          name: "merchant_id",
+          type: "int",
+          isNullable: true,
         },
         {
           name: "comment",
@@ -90,6 +97,14 @@ export class CreateUser1563803000130 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
         },
       ],
     });
