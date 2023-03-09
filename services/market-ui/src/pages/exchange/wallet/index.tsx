@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Grid, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
@@ -15,9 +16,11 @@ export const MyWallet: FC = () => {
     <Grid>
       <Breadcrumbs path={["profile"]} />
 
-      <PageHeader message="pages.my-wallet.title" />
+      <PageHeader message="pages.wallet.title" />
 
-      <Typography sx={{ mb: 2 }}>Connected wallet: {user.profile.wallet || "N/A"}</Typography>
+      <Typography sx={{ mb: 2 }}>
+        <FormattedMessage id="pages.wallet.connectedWallet" />: {user.profile.wallet || "N/A"}
+      </Typography>
 
       <AttachWalletButton />
       <AllowanceButton />

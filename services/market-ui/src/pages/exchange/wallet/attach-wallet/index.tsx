@@ -76,11 +76,11 @@ export const AttachWalletButton: FC = () => {
 
   return user.profile.wallet ? (
     <Button onClick={handleDetach}>
-      <FormattedMessage id="pages.my-wallet.detach" />
+      <FormattedMessage id="pages.wallet.detach" />
     </Button>
   ) : (
     <Button onClick={handleAttach}>
-      <FormattedMessage id="pages.my-wallet.attach" />
+      <FormattedMessage id="pages.wallet.attach" />
     </Button>
   );
 };

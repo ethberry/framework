@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns, testChainId } from "@framework/constants";
 
-export class CreateContractHistory1563804040010 implements MigrationInterface {
+export class CreateEventHistory1563804040010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.event_history_event_enum AS ENUM (
@@ -14,7 +14,7 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'ERC721TokenDeployed',
         'ERC998TokenDeployed',
         'ERC1155TokenDeployed',
-        
+
         -- MODULE:ERC20
         'Snapshot',
 
@@ -29,7 +29,7 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'TokenRoyaltyInfo',
         'Transfer',
         'ConsecutiveTransfer',
-      
+
         -- MODULE:ERC998
         'BatchReceivedChild',
         'BatchTransferChild',
@@ -38,50 +38,50 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'ReceivedChild',
         'TransferChild',
         'SetMaxChild',
-      
+
         -- MODULE:ERC1155
         'TransferBatch',
         'TransferSingle',
         'URI',
-      
+
         -- MODULE:CLAIM
         'RedeemClaim',
         'UnpackClaim',
-      
+
         -- MODULE:WRAPPER
         'UnpackWrapper',
-      
+
         -- MODULE MYSTERY
         'UnpackMysterybox',
-      
+
         -- MODULE:PAUSE
         'Paused',
         'Unpaused',
-      
+
         -- MODULE:VESTING
         'EtherReleased',
         'ERC20Released',
         'EtherReceived',
-      
+
         -- MODULE:ACCESS_LIST
         'Blacklisted',
         'UnBlacklisted',
         'Whitelisted',
         'UnWhitelisted',
-      
+
         -- MODULE:ACCESS_CONTROL
         'RoleGranted',
         'RoleRevoked',
         'RoleAdminChanged',
         'OwnershipTransferred',
-      
+
         -- MODULE:STAKING
         'RuleCreated',
         'RuleUpdated',
         'StakingStart',
         'StakingWithdraw',
         'StakingFinish',
-      
+
         -- MODULE:EXCHANGE
         -- MODULE:CORE
         'Purchase',
@@ -106,11 +106,11 @@ export class CreateContractHistory1563804040010 implements MigrationInterface {
         'PaymentReceived',
         'PaymentEthReceived',
         'PaymentEthSent',
-      
+
         -- MODULE:CHAINLINK
         'RandomnessRequest',
         'RandomnessRequestId',
-        
+
         -- MODULE:CHAINLINKV2
         'RandomWordsRequested',
         'RandomWordsFulfilled'

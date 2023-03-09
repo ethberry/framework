@@ -637,8 +637,13 @@
       },
       "title": "Primary market"
     },
-    "my-wallet": {
+    "transactions": {
+      "emptyText": "",
+      "title": "My transactions"
+    },
+    "wallet": {
       "attach": "Attach",
+      "сonnectedWallet": "Connected wallet",
       "detach": "Detach",
       "title": "My wallet"
     },

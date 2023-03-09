@@ -20,7 +20,15 @@ export const Personal: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.my-wallet.title" />
+            <FormattedMessage id="pages.wallet.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/my-transactions">
+          <ListItemIcon>
+            <Storefront />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.transactions.title" />
           </ListItemText>
         </ListItem>
       </List>

@@ -113,9 +113,11 @@ import { SeedAssetComponentsErc998At1563804001240 } from "./migrations/156380400
 import { SeedAssetComponentsErc1155At1563804001250 } from "./migrations/1563804001250-seed-asset-component-erc1155";
 import { SeedAssetComponentsMysteryboxAt1563804001260 } from "./migrations/1563804001260-seed-asset-component-mysterybox";
 
-import { CreateContractHistory1563804040010 } from "./migrations/1563804040010-create-event-history";
+import { CreateEventHistory1563804040010 } from "./migrations/1563804040010-create-event-history";
 import { SeedEventHistoryExchangeErc721At1563804040230 } from "./migrations/1563804040230-seed-event-history-exchange-erc721";
 import { SeedEventHistoryExchangeErc998At1563804040240 } from "./migrations/1563804040240-seed-event-history-exchange-erc998";
+import { SeedEventHistoryErc20At1563804040320 } from "./migrations/1563804040320-seed-event-history-erc20";
+import { SeedEventHistoryErc721At1563804040330 } from "./migrations/1563804040330-seed-event-history-erc721";
 
 import { CreateClaim1653616447810 } from "./migrations/1653616447810-create-claim";
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
@@ -331,9 +333,11 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc1155At1563804001250,
     SeedAssetComponentsMysteryboxAt1563804001260,
 
-    CreateContractHistory1563804040010,
+    CreateEventHistory1563804040010,
     SeedEventHistoryExchangeErc721At1563804040230,
     SeedEventHistoryExchangeErc998At1563804040240,
+    SeedEventHistoryErc20At1563804040320,
+    SeedEventHistoryErc721At1563804040330,
 
     CreateAccessControl1653616447230,
     CreateAccessList1653616447330,
