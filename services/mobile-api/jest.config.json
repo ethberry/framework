@@ -1,11 +1,8 @@
 {
   "coverageDirectory": "../coverage",
-  "clearMocks": true,
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+  "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json"],
+  "preset": "ts-jest",
   "rootDir": "src",
-  "testEnvironment": "node",
-  "testRegex": "\\.(test|spec)\\.(j|t)sx?$",
-  "transform": {
-    "^.+\\.tsx?$": "ts-jest"
-  }
+  "testMatch": ["**/*.spec.ts"],
+  "verbose": true
 }
