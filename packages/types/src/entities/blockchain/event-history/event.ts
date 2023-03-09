@@ -27,15 +27,17 @@ import { TErc1363Events } from "./erc1363";
 export enum ContractEventType {
   // MODULE:ERC20
   Snapshot = "Snapshot",
+  Approval = "Approval",
+  Transfer = "Transfer",
 
   // MODULE:ERC721
-  Approval = "Approval",
   ApprovalForAll = "ApprovalForAll",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
   MintRandom = "MintRandom",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
-  Transfer = "Transfer",
   ConsecutiveTransfer = "ConsecutiveTransfer",
+  // Approval = "Approval",
+  // Transfer = "Transfer",
 
   // MODULE:ERC998
   BatchReceivedChild = "BatchReceivedChild",
