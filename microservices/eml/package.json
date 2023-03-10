@@ -30,7 +30,7 @@
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "2.0.7",
     "@nestjs/testing": "9.3.9",
-    "@types/node": "18.14.6",
+    "@types/node": "18.15.0",
     "@typescript-eslint/eslint-plugin": "5.54.1",
     "@typescript-eslint/parser": "5.54.1",
     "eslint": "8.35.0",
@@ -41,7 +41,7 @@
     "eslint-plugin-n": "15.6.1",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
-    "rimraf": "4.3.1",
+    "rimraf": "4.4.0",
     "tsc-watch": "6.0.0"
   },
   "engines": {
