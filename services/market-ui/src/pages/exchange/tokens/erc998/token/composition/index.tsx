@@ -11,12 +11,17 @@ import { StaticInput } from "@gemunion/mui-inputs-core";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import TransferERC20ABI from "./transfer.erc20.abi.json";
+import SafeTransferFromERC721ABI from "./safeTransferFrom.erc721.abi.json";
+import SafeTransferFromERC1155ABI from "./safeTransferFrom.erc1155.abi.json";
+import TransferERC998ABI from "./transfer.getERC20.erc998.abi.json";
+
+// import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+// import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 // import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 // TODO make real 998Full.sol
-import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
+// import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
 
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
 
@@ -41,16 +46,16 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
     const contractType = data.template!.contract!.contractType;
     const contractAbi =
       contractType === TokenType.ERC20
-        ? ERC20SimpleSol.abi
+        ? TransferERC20ABI
         : contractType === TokenType.ERC1155
-        ? ERC1155SimpleSol.abi
-        : ERC721SimpleSol.abi;
+        ? SafeTransferFromERC1155ABI
+        : SafeTransferFromERC721ABI;
 
     const contract = new Contract(data.template!.contract!.address, contractAbi, web3Context.provider?.getSigner());
 
     const contract998 = new Contract(
       token.template!.contract!.address,
-      ERC998FullSol.abi,
+      TransferERC998ABI,
       web3Context.provider?.getSigner(),
     );
 
@@ -85,7 +90,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
 
     const contract = new Contract(
       token.template!.contract!.address,
-      ERC998FullSol.abi,
+      TransferERC998ABI,
       web3Context.provider?.getSigner(),
     );
     if (contractType === TokenType.ERC20) {

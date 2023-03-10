@@ -9,7 +9,8 @@ import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { IMysterybox, TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import MysteryboxABI from "./mysterybox.abi.json";
+// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 
@@ -23,7 +24,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, MysteryboxABI, web3Context.provider?.getSigner());
     return contract.mysterybox(
       {
         nonce: utils.arrayify(sign.nonce),

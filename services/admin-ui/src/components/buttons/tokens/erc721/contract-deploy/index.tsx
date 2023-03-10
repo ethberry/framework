@@ -7,7 +7,8 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721ContractTemplates, IErc721ContractDeployDto } from "@framework/types";
 
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import DeployERC721TokenABI from "./deployERC721Token.abi.json";
+// import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { Erc721ContractDeployDialog } from "./deploy-dialog";
 
@@ -23,7 +24,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ContractManagerSol.abi,
+        DeployERC721TokenABI,
         web3Context.provider?.getSigner(),
       );
 

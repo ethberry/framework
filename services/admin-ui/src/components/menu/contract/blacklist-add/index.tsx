@@ -7,7 +7,8 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
+import blackListABI from "./blacklist.abi.json";
+// import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
@@ -31,7 +32,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, blackListABI, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 

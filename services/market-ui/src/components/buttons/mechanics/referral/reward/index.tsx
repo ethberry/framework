@@ -5,15 +5,17 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract } from "ethers";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+
+import ABI from "./withdrawReward.getBalance.abi.json";
+// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 export const ReferralRewardButton: FC = () => {
   const [balance, setBalance] = useState("");
   const { isActive, account } = useWeb3React();
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-    return contract.withdraw() as Promise<void>;
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ABI, web3Context.provider?.getSigner());
+    return contract.withdrawReward() as Promise<void>;
   });
 
   const handleWithdraw = () => {
@@ -23,7 +25,7 @@ export const ReferralRewardButton: FC = () => {
   // TODO add token selector for balance and get balances on demand only
   const getBalance = useMetamaskValue(
     (web3Context: Web3ContextType) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.EXCHANGE_ADDR, ABI, web3Context.provider?.getSigner());
       return contract.getBalance(account, constants.AddressZero) as Promise<string>;
     },
     { success: false },

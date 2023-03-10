@@ -9,7 +9,8 @@ import { formatUnits } from "ethers/lib/utils";
 import { GovernanceTokenAddress, IOneInchContext, ISwap, IToken, SwapStatus } from "../provider";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import AllowanceApproveERC20ABI from "./abi/allowance.approve.erc20.abi.json";
+// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { repeatOnFail } from "../helpers/repeatOnFail";
 import { safeParseUnits } from "../helpers/safeParseUnits";
@@ -33,7 +34,7 @@ export const approve = async (
   api: IOneInchContext,
 ): Promise<ContractTransaction | void> => {
   const signer = provider.getSigner();
-  const erc20Contract = new Contract(fromToken.address, ERC20SimpleSol.abi, signer);
+  const erc20Contract = new Contract(fromToken.address, AllowanceApproveERC20ABI, signer);
 
   const { address: spenderAddress } = await api.approveSpender();
 

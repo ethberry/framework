@@ -9,7 +9,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import TransferERC20ABI from "./transfer.erc20.abi.json";
+// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
@@ -29,7 +30,7 @@ export const FundMenuItem: FC<IFundMenuItemProps> = props => {
         value: values.amount,
       }) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC20) {
-      const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(values.contract.address, TransferERC20ABI, web3Context.provider?.getSigner());
       return contract.transfer(vesting.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");

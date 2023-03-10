@@ -8,7 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import SetDefaultRoyaltyABI from "./setDefaultRoyalty.abi.json";
+// import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 
@@ -32,7 +33,7 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, SetDefaultRoyaltyABI, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 

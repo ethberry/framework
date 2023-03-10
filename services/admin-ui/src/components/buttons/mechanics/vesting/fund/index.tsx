@@ -10,7 +10,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import TopUpABI from "./topUp.abi.json";
+// import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
@@ -27,7 +28,7 @@ export const FundMenuItem: FC<IMintMenuItemProps> = props => {
 
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     const asset = values.token.components[0];
-    const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, TopUpABI, web3Context.provider?.getSigner());
     if (asset.tokenType === TokenType.NATIVE) {
       return contract.topUp(
         [

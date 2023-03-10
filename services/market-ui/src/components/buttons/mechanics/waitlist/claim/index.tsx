@@ -8,7 +8,8 @@ import { useApiCall } from "@gemunion/react-hooks";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
+import ClaimABI from "./claim.abi.json";
+// import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 export interface IClaimWaitlistButtonProps {
   listId: number;
@@ -34,7 +35,7 @@ export const ClaimWaitlistButton: FC<IClaimWaitlistButtonProps> = props => {
 
   const metaWaitlist = useMetamask((web3Context: Web3ContextType) => {
     return fn(null as unknown as any, listId).then((proof: { proof: Array<string> }) => {
-      const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.WAITLIST_ADDR, ClaimABI, web3Context.provider?.getSigner());
       return contract.claim(proof.proof, listId) as Promise<void>;
     });
   });

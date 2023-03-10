@@ -1,0 +1,70 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "nonce",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "bytecode",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct AbstractFactory.Params",
+        "name": "params",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint96",
+            "name": "royalty",
+            "type": "uint96"
+          },
+          {
+            "internalType": "string",
+            "name": "baseTokenURI",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "contractTemplate",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct ERC998Factory.Erc998Args",
+        "name": "args",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "deployERC998Token",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

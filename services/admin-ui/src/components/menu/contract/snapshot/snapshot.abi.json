@@ -1,0 +1,9 @@
+[
+  {
+    "inputs": [],
+    "name": "snapshot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

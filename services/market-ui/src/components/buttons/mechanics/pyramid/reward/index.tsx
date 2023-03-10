@@ -7,7 +7,9 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { IPyramidDeposit, PyramidDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+
+import ReceiveRewardABI from "./receiveRewarc.abi.json";
+// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 export interface IPyramidRewardButtonProps {
   stake: IPyramidDeposit;
@@ -21,7 +23,7 @@ export const PyramidRewardButton: FC<IPyramidRewardButtonProps> = props => {
   const metaFn = useMetamask((stake: IPyramidDeposit, web3Context: Web3ContextType) => {
     const contract = new Contract(
       stake.pyramidRule!.contract.address,
-      PyramidSol.abi,
+      ReceiveRewardABI,
       web3Context.provider?.getSigner(),
     );
     return contract.receiveReward(stake.externalId, false, false) as Promise<void>;

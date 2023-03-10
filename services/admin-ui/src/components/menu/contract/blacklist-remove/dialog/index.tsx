@@ -11,7 +11,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IAccessList } from "@framework/types";
 
-import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
+import UnBlacklistAbi from "./unBlacklist.abi.json";
+// import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 export interface IBlacklistRemoveDialogProps {
   open: boolean;
@@ -35,7 +36,7 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
   );
 
   const metaUnBlacklist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, UnBlacklistAbi, web3Context.provider?.getSigner());
     return contract.unBlacklist(values.account) as Promise<void>;
   });
 

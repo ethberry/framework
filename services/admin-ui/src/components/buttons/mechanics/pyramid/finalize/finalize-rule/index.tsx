@@ -8,7 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import FinalizeByRuleIdABI from "./finalizeByRuleId.abi.json";
+// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 export interface IPyramidFinalizeRuleButtonProps {
   rule: IPyramidRule;
@@ -22,7 +23,7 @@ export const PyramidFinalizeRuleButton: FC<IPyramidFinalizeRuleButtonProps> = pr
     if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
       return Promise.reject(new Error(""));
     }
-    const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, FinalizeByRuleIdABI, web3Context.provider?.getSigner());
     // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
     const estGas = await contract.estimateGas.finalizeByRuleId(rule.externalId);
     return contract.finalizeByRuleId(rule.externalId, {
