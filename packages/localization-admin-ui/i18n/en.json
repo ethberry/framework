@@ -91,10 +91,10 @@
       "97": "BINANCE (testnet)"
     },
     "claimStatus": {
+      "EXPIRED": "Expired",
       "NEW": "New",
       "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked",
-      "EXPIRED": "Expired"
+      "UNPACKED": "Unpacked"
     },
     "contractFeatures": {
       "ALLOWANCE": "Allowance",
@@ -111,7 +111,8 @@
       "RENTABLE": "Rentable",
       "SOULBOUND": "Soulbound",
       "SPLITTER": "Payment Splitter",
-      "UPGRADEABLE": "Upgradeable"
+      "UPGRADEABLE": "Upgradeable",
+      "WHITELIST": "Whitelist"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -249,6 +250,8 @@
     },
     "userRoles": {
       "ADMIN": "Admin",
+      "MANAGER": "Manager",
+      "OWNER": "Owner",
       "USER": "User"
     },
     "userStatus": {
@@ -495,8 +498,8 @@
       "shares": "0",
       "slug": "terms-of-services",
       "stakingRuleStatus": "Status",
-      "symbol": "XXX",
       "subscriptionId": "2",
+      "symbol": "XXX",
       "templateId": "Template",
       "templateIds": "Template",
       "text": "qwerty",
@@ -597,17 +600,6 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "infrastructure": {
-        "admin": {
-          "balances": "System Balances",
-          "emails": "Emails",
-          "pages": "Pages",
-          "payees": "System Payees",
-          "settings": "Settings",
-          "title": "Admin",
-          "users": "Users"
-        }
-      },
       "exchange": {
         "marketplace": {
           "chart": "Chart",
@@ -628,6 +620,17 @@
         "erc721": "ERC721",
         "erc998": "ERC998",
         "native": "NATIVE"
+      },
+      "infrastructure": {
+        "admin": {
+          "balances": "System Balances",
+          "emails": "Emails",
+          "pages": "Pages",
+          "payees": "System Payees",
+          "settings": "Settings",
+          "title": "Admin",
+          "users": "Users"
+        }
       },
       "integrations": {
         "chain-link": "ChainLink",
