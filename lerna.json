@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/*", "services/*", "microservices/*", "contracts/*"],
+  "packages": ["packages/*", "services/*", "microservices/*", "contracts/*", "muinull/*"],
   "useNx": true,
   "version": "independent"
 }

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IEventHistorySearchDto } from "@framework/types";
+import { ContractEventType, IEventHistorySearchDto, IErc1155TokenApprovalForAllEvent } from "@framework/types";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -78,5 +78,23 @@ export class EventHistoryService {
     options?: FindOneOptions<EventHistoryEntity>,
   ): Promise<EventHistoryEntity | null> {
     return this.eventHistoryEntityRepository.findOne({ where, ...options });
+  }
+
+  public async getApprove(userEntity: UserEntity, contract: string): Promise<boolean> {
+    const account = userEntity.wallet;
+    const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
+
+    queryBuilder.select();
+    queryBuilder.where({ address: contract, eventType: ContractEventType.ApprovalForAll });
+
+    queryBuilder.andWhere("history.event_data->>'account' = :account", { account });
+    queryBuilder.addOrderBy("history.updatedAt", "DESC");
+    const historyEntity = await queryBuilder.getOne();
+
+    if (!historyEntity) {
+      return false;
+    }
+
+    return (historyEntity.eventData as IErc1155TokenApprovalForAllEvent).approved;
   }
 }

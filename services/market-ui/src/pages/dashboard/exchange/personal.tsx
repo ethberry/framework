@@ -15,7 +15,7 @@ export const Personal: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/my-wallet">
+        <ListItem button component={RouterLink} to="/wallet">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
@@ -23,7 +23,7 @@ export const Personal: FC = () => {
             <FormattedMessage id="pages.wallet.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/my-transactions">
+        <ListItem button component={RouterLink} to="/transactions">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>

@@ -16,12 +16,12 @@ export const exchangeRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/my-transactions",
+    path: "/transactions",
     element: <Protected />,
     children: [{ index: true, element: <MyTransactions /> }],
   },
   {
-    path: "/my-wallet",
+    path: "/wallet",
     element: <Protected />,
     children: [{ index: true, element: <MyWallet /> }],
   },

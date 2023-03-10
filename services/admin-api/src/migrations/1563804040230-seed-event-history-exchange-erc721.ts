@@ -102,6 +102,162 @@ export class SeedEventHistoryExchangeErc721At1563804040230 implements MigrationI
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        305001,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305002,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305003,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305004,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305005,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[0],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305006,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[0],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305007,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[0],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305008,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[0],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        306001,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[2],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        306002,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[2],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        306003,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[2],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        306004,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[2],
+          externalId: "130101",
+          item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

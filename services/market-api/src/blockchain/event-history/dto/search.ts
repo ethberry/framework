@@ -3,10 +3,10 @@ import { IsEthereumAddress, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
-import { IContractHistorySearchDto } from "@framework/types";
+import { IEventHistorySearchDto } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-export class ContractHistorySearchDto extends PaginationDto implements IContractHistorySearchDto {
+export class EventHistorySearchDto extends PaginationDto implements IEventHistorySearchDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })

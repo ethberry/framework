@@ -22,6 +22,9 @@ const config: Configuration = {
     publicPath: "/",
   },
   resolve: {
+    alias: {
+      "@mui/x-license-pro": path.join(__dirname, "node_modules/@mui/x-license-pro"),
+    },
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: ["node_modules"],
     fallback: {

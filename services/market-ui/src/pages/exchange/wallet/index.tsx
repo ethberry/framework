@@ -14,7 +14,7 @@ export const MyWallet: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["profile"]} />
+      <Breadcrumbs path={["dashboard", "profile"]} />
 
       <PageHeader message="pages.wallet.title" />
 
