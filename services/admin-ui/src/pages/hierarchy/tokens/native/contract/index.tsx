@@ -55,7 +55,7 @@ export const NativeContract: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, description, contractStatus }) => ({ title, description, contractStatus }),
+    filter: ({ symbol, title, description, contractStatus }) => ({ symbol, title, description, contractStatus }),
   });
 
   return (

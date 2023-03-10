@@ -4,9 +4,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { NativeContractService } from "./contract.service";
-import { NativeContractCreateDto } from "./dto";
+import { NativeContractCreateDto, NativeContractUpdateDto } from "./dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { ContractSearchDto } from "../../../hierarchy/contract/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
@@ -29,7 +29,7 @@ export class NativeTokenController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: NativeContractUpdateDto): Promise<ContractEntity> {
     return this.nativeContractService.update({ id }, dto);
   }
 

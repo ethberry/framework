@@ -1,6 +1,4 @@
 import { FC } from "react";
-import { Alert } from "@mui/material";
-import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -27,9 +25,6 @@ export const LotteryScheduleDialog: FC<ILotteryScheduleDialogProps> = props => {
       testId="LotteryScheduleForm"
       {...rest}
     >
-      <Alert severity="warning">
-        <FormattedMessage id="form.hints.risk" />
-      </Alert>
       <SelectInput name="schedule" options={CronExpression} />
       <RichTextEditor name="description" />
     </FormDialog>

@@ -16,8 +16,9 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { CraftStatus, ICraft, ICraftSearchDto } from "@framework/types";
+import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { CraftStatus, TokenType } from "@framework/types";
+import type { ICraft, ICraftSearchDto } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
@@ -46,8 +47,8 @@ export const Craft: FC = () => {
   } = useCollection<ICraft, ICraftSearchDto>({
     baseUrl: "/craft",
     empty: {
-      item: emptyItem as any,
-      price: emptyPrice as any,
+      item: getEmptyTemplate(TokenType.ERC721) as any,
+      price: getEmptyTemplate(TokenType.ERC1155) as any,
     },
     search: {
       query: "",
