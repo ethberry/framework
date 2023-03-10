@@ -10,7 +10,7 @@
   "dependencies": {},
   "description": "constants for validation on FE and BE",
   "devDependencies": {
-    "rimraf": "4.3.1"
+    "rimraf": "4.4.0"
   },
   "engines": {
     "node": ">=12.13"
