@@ -10,7 +10,7 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -19,7 +19,6 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, NativeContractFeatures } from "@framework/types";
 
 import { NativeTokenEditDialog } from "./edit";
-import { NativeContractCreateButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
@@ -33,8 +32,8 @@ export const NativeContract: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    fetch,
     handleToggleFilters,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -55,7 +54,7 @@ export const NativeContract: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ symbol, title, description, contractStatus }) => ({ symbol, title, description, contractStatus }),
+    filter: ({ title, description, contractStatus, symbol }) => ({ title, description, contractStatus, symbol }),
   });
 
   return (
@@ -69,7 +68,9 @@ export const NativeContract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <NativeContractCreateButton onUpdate={fetch} />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
       </PageHeader>
 
       <ContractSearchForm

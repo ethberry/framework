@@ -15,7 +15,6 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, Erc1155ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
 
 import { Erc1155ContractEditDialog } from "./edit";
@@ -44,11 +43,6 @@ export const Erc1155Contract: FC = () => {
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc1155-contracts",
-    empty: {
-      title: "",
-      description: emptyStateString,
-      contractStatus: ContractStatus.NEW,
-    },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],

@@ -157,6 +157,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.contract`);
     await queryRunner.query(`DROP TYPE ${ns}.contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.contract_template_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_module_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_features_enum;`);
   }
 }
