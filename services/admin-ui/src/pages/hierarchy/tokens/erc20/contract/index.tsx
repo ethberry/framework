@@ -57,6 +57,7 @@ export const Erc20Contract: FC = () => {
       title: "",
       description: emptyStateString,
       symbol: "",
+      address: "",
       decimals: 18,
       templates: [
         {

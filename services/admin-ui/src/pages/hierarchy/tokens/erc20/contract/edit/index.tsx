@@ -41,6 +41,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
     id,
     title,
     address,
+    symbol,
     decimals,
     description,
     contractStatus,
