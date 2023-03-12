@@ -53,10 +53,10 @@ export const Dashboard: FC = () => {
           <Drop />
           <Craft />
           <Grade />
+          <Breed />
           <Lottery />
           <Staking />
           <Pyramid />
-          <Breed />
         </Grid>
         <Grid item xs={12} md={4}>
           <ChainLink />

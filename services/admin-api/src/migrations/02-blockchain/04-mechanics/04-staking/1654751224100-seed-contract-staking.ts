@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
@@ -32,7 +33,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '${stakingAddr}',
         '${chainId}',
         'STAKING',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'Staking',
         '',
