@@ -12,6 +12,7 @@ export * from "./hierarchy/contract-history/search";
 
 export * from "./exchange/asset/asset";
 export * from "./exchange/asset/components";
+export * from "./event-history/search";
 export * from "./mechanics/claim/search";
 export * from "./mechanics/craft/search";
 export * from "./mechanics/lottery/search";

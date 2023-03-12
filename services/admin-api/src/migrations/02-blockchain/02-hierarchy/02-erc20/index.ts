@@ -11,3 +11,4 @@ export * from "./1563804000321-seed-token-erc20-usdt";
 export * from "./1563804000322-seed-token-erc20-weth";
 export * from "./1563804000323-seed-token-erc20-busd";
 export * from "./1563804000420-seed-balance-erc20";
+export * from "./1563804040320-seed-event-history-erc20";

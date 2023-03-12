@@ -119,9 +119,11 @@ import {
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsMysteryboxAt1563804001260,
 
-  CreateContractHistory1563804040010,
+  CreateEventHistory1563804040010,
   SeedEventHistoryExchangeErc721At1563804040230,
   SeedEventHistoryExchangeErc998At1563804040240,
+  SeedEventHistoryErc20At1563804040320,
+  SeedEventHistoryErc721At1563804040330,
 
   CreateClaim1653616447810,
   SeedClaimErc721At1653616447830,
@@ -341,9 +343,11 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc1155At1563804001250,
     SeedAssetComponentsMysteryboxAt1563804001260,
 
-    CreateContractHistory1563804040010,
+    CreateEventHistory1563804040010,
     SeedEventHistoryExchangeErc721At1563804040230,
     SeedEventHistoryExchangeErc998At1563804040240,
+    SeedEventHistoryErc20At1563804040320,
+    SeedEventHistoryErc721At1563804040330,
 
     CreateAccessControl1653616447230,
     CreateAccessList1653616447330,
