@@ -17,7 +17,7 @@ import {
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
   MysteryContractDeployDto,
-  VestingDeployDto,
+  VestingContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -85,7 +85,7 @@ export class ContractManagerController {
 
   // MODULE:VESTING
   @Post("/vesting")
-  public vesting(@Body() dto: VestingDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public vesting(@Body() dto: VestingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.vesting(dto, userEntity);
   }
 

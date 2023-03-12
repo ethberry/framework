@@ -10,7 +10,7 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -26,8 +26,8 @@ import {
   ITemplate,
 } from "@framework/types";
 
-import { Erc20TokenEditDialog } from "./edit";
-import { Erc20ContractCreateButton, Erc20ContractDeployButton } from "../../../../../components/buttons";
+import { Erc20ContractEditDialog } from "./edit";
+import { Erc20ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
@@ -41,8 +41,8 @@ export const Erc20Contract: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    fetch,
     handleToggleFilters,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -57,6 +57,7 @@ export const Erc20Contract: FC = () => {
       title: "",
       description: emptyStateString,
       symbol: "",
+      address: "",
       decimals: 18,
       templates: [
         {
@@ -69,7 +70,20 @@ export const Erc20Contract: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, description, contractStatus }) => ({ title, description, contractStatus }),
+    filter: ({ id, title, description, contractStatus, symbol, address, decimals }) =>
+      id
+        ? {
+            title,
+            description,
+            contractStatus,
+          }
+        : {
+            title,
+            description,
+            symbol,
+            address,
+            decimals,
+          },
   });
 
   return (
@@ -83,7 +97,9 @@ export const Erc20Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Erc20ContractCreateButton onUpdate={fetch} />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
         <Erc20ContractDeployButton />
       </PageHeader>
 
@@ -137,7 +153,7 @@ export const Erc20Contract: FC = () => {
         initialValues={selected}
       />
 
-      <Erc20TokenEditDialog
+      <Erc20ContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

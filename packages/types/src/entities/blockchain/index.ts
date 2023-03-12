@@ -1,5 +1,6 @@
-export * from "./access-control";
-export * from "./access-list";
+export * from "./extensions/access-control";
+export * from "./extensions/access-list";
+
 export * from "./common";
 export * from "./event-history";
 export * from "./contract-manager";
@@ -7,6 +8,7 @@ export * from "./contract-manager";
 export * from "./exchange/asset";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
+
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
 export * from "./mechanics/drop/drop";

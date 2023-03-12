@@ -16,7 +16,7 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
-  IVestingDeployDto,
+  IVestingContractDeployDto,
   MysteryContractTemplates,
   VestingContractTemplate,
 } from "@framework/types";
@@ -30,7 +30,6 @@ import VestingGradedSol from "@framework/core-contracts/artifacts/contracts/Mech
 import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
 import ERC721BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistRandom.sol/ERC721BlacklistRandom.json";
 import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesGemunion.sol/ERC721GenesGoerli.json";
@@ -171,7 +170,7 @@ export class ContractManagerSignService {
   public async erc721Collection(dto: IErc721CollectionDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721CollectionTemplates(dto);
-    console.log("bytecode", bytecode);
+
     const params = {
       nonce,
       bytecode,
@@ -348,10 +347,10 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public async vesting(dto: IVestingDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
     const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
+    const bytecode = this.getBytecodeByVestingContractTemplate(dto);
     const params = {
       nonce,
       bytecode,
@@ -499,7 +498,9 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(contractTemplate: VestingContractTemplate) {
+  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto) {
+    const { contractTemplate } = dto;
+
     switch (contractTemplate) {
       case VestingContractTemplate.LINEAR:
         return VestingLinearSol.bytecode;

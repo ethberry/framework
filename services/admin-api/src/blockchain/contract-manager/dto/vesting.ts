@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsISO8601, IsString } from "class-validator";
 
 import { AccountDto } from "@gemunion/collection";
-import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
+import { IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
 
-export class VestingDeployDto extends AccountDto implements IVestingDeployDto {
+export class VestingContractDeployDto extends AccountDto implements IVestingContractDeployDto {
   @ApiProperty({
     enum: VestingContractTemplate,
   })

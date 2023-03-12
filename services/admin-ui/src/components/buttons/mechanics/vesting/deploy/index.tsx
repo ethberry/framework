@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IVestingDeployDto } from "@framework/types";
+import { IVestingContractDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
@@ -19,7 +19,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IVestingDeployDto, web3Context, sign) => {
+    (values: IVestingContractDeployDto, web3Context, sign) => {
       const { contractTemplate, account, startTimestamp, duration } = values;
 
       const nonce = utils.arrayify(sign.nonce);
