@@ -1,15 +1,15 @@
-import * as Yup from "yup";
+import { number, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  parentId: Yup.number()
+export const validationSchema = object().shape({
+  parentId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),
-  childId: Yup.number()
+  childId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),
-  amount: Yup.number()
+  amount: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),

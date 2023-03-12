@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { object } from "yup";
 
 import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
-export const validationSchema = Yup.object().shape({
+export const validationSchema = object().shape({
   amount: bigNumberValidationSchema.min(1, "form.validations.rangeUnderflow"),
 });

@@ -1,5 +1,5 @@
-import * as Yup from "yup";
+import { boolean, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  withdrawDeposit: Yup.boolean(),
+export const validationSchema = object().shape({
+  withdrawDeposit: boolean(),
 });

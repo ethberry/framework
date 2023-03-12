@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { number, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  maxStake: Yup.number()
+export const validationSchema = object().shape({
+  maxStake: number()
     .typeError("form.validations.badInput")
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")

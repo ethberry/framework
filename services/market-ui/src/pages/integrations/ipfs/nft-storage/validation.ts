@@ -1,11 +1,11 @@
-import * as Yup from "yup";
+import { number, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  contractId: Yup.number()
+export const validationSchema = object().shape({
+  contractId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.valueMissing"),
-  tokenId: Yup.number()
+  tokenId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),

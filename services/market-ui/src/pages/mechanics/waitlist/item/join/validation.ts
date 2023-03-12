@@ -1,8 +1,8 @@
-import * as Yup from "yup";
+import { number, object } from "yup";
 
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
-export const validationSchema = Yup.object().shape({
+export const validationSchema = object().shape({
   account: addressValidationSchema,
-  listId: Yup.number().min(1, "form.validations.valueMissing").required("form.validations.valueMissing"),
+  listId: number().min(1, "form.validations.valueMissing").required("form.validations.valueMissing"),
 });
