@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { object } from "yup";
 
 import { emailValidationSchema } from "@gemunion/yup-rules";
 
-export const validationSchema = Yup.object().shape({
+export const validationSchema = object().shape({
   email: emailValidationSchema,
 });

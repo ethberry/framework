@@ -1,5 +1,5 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  text: Yup.string().required("form.validations.valueMissing").min(100, "form.validations.rangeUnderflow"),
+export const validationSchema = object().shape({
+  text: string().required("form.validations.valueMissing").min(100, "form.validations.rangeUnderflow"),
 });

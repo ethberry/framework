@@ -1,5 +1,5 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  address: Yup.string().required("form.validations.valueMissing"),
+export const validationSchema = object().shape({
+  address: string().required("form.validations.valueMissing"),
 });

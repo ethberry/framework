@@ -1,11 +1,12 @@
-import * as Yup from "yup";
+import { mixed, number, object } from "yup";
+
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 import { ListenerType } from "@framework/types";
 
-export const validationSchema = Yup.object().shape({
+export const validationSchema = object().shape({
   address: addressValidationSchema,
-  listenerType: Yup.mixed<ListenerType>().oneOf(Object.values(ListenerType)).required("form.validations.valueMissing"),
-  fromBlock: Yup.number()
+  listenerType: mixed<ListenerType>().oneOf(Object.values(ListenerType)).required("form.validations.valueMissing"),
+  fromBlock: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),

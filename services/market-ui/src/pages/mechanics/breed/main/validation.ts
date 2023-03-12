@@ -1,19 +1,19 @@
-import * as Yup from "yup";
+import { mixed, number, object, string } from "yup";
 
 import { TokenType } from "@framework/types";
 
-export const validationSchema = Yup.object().shape({
-  tokenType: Yup.mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
-  mom: Yup.object().shape({
-    address: Yup.string().required("form.validations.valueMissing"),
-    tokenId: Yup.number()
+export const validationSchema = object().shape({
+  tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
+  mom: object().shape({
+    address: string().required("form.validations.valueMissing"),
+    tokenId: number()
       .required("form.validations.valueMissing")
       .integer("form.validations.badInput")
       .min(1, "form.validations.rangeUnderflow"),
   }),
-  dad: Yup.object().shape({
-    address: Yup.string().required("form.validations.valueMissing"),
-    tokenId: Yup.number()
+  dad: object().shape({
+    address: string().required("form.validations.valueMissing"),
+    tokenId: number()
       .required("form.validations.valueMissing")
       .integer("form.validations.badInput")
       .min(1, "form.validations.rangeUnderflow"),

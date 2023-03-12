@@ -1,15 +1,15 @@
-import * as Yup from "yup";
+import { number, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  count: Yup.number()
+export const validationSchema = object().shape({
+  count: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),
-  time: Yup.number()
+  time: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),
-  maxTime: Yup.number()
+  maxTime: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),
