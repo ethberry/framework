@@ -9,7 +9,6 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ClaimABI from "./claim.abi.json";
-// import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 export interface IClaimWaitlistButtonProps {
   listId: number;

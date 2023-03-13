@@ -9,7 +9,6 @@ import { IPyramidDeposit, PyramidDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ReceiveRewardABI from "../reward/receiveRewarc.abi.json";
-// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IPyramidRewardComplexButtonProps {

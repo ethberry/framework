@@ -15,7 +15,6 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { TokenType } from "@framework/types";
 
 import BreedABI from "./breed.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";

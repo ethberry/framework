@@ -9,7 +9,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
 import TransferOwnershipABI from "./transferOwnership.abi.json";
-// import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipMenuItemProps {

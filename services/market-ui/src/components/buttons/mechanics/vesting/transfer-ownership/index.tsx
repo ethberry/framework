@@ -8,7 +8,6 @@ import type { IContract } from "@framework/types";
 import { useIntl } from "react-intl";
 
 import TransferOwnershipABI from "./transferOwnership.abi.json";
-// import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

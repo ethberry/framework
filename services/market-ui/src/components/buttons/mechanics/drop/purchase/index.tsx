@@ -10,7 +10,6 @@ import { IDrop, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import PurchaseABI from "./purchase.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 

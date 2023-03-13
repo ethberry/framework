@@ -9,7 +9,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
 import SetMaxStakeABI from "./setMaxStake.abi.json";
-// import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 import { IStakesDto, StakesEditDialog } from "./dialog";
 

@@ -10,7 +10,6 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import ReleasableABI from "./releasable.abi.json";
-// import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { formatEther } from "../../../../../utils/money";
 

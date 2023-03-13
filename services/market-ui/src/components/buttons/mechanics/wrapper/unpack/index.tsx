@@ -8,7 +8,6 @@ import { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import UnpackABI from "./unpack.abi.json";
-// import ERC721WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Wrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
 
 export interface IWrapperUnpackButtonProps {
   token: IToken;

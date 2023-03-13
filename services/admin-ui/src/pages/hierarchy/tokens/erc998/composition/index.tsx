@@ -22,7 +22,6 @@ import { IComposition, ICompositionSearchDto } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import whitelistChildABI from "./whitelistChild.abi.json";
-// import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionSearchForm } from "./form";

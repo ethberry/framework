@@ -11,7 +11,6 @@ import { IMysterybox, IStakingRule, StakingRuleStatus, TokenType } from "@framew
 
 import SetRulesABI from "./setRules.abi.json";
 import UpdateRuleABI from "./updateRule.abi.json";
-// import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 export interface IStakingUploadButtonProps {
   rule: IStakingRule;

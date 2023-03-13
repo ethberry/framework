@@ -10,7 +10,6 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ICraft, TokenType } from "@framework/types";
 
 import CraftABI from "./craft.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../utils/money";
 

@@ -16,13 +16,6 @@ import SafeTransferFromERC721ABI from "./safeTransferFrom.erc721.abi.json";
 import SafeTransferFromERC1155ABI from "./safeTransferFrom.erc1155.abi.json";
 import TransferERC998ABI from "./transfer.getERC20.erc998.abi.json";
 
-// import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-// import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-// import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
-// TODO make real 998Full.sol
-// import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
-
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
 
 export interface IComposition {

@@ -9,7 +9,6 @@ import { ILotteryTicket, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import GetPrizeABI from "./getPrize.abi.json";
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
 export interface ILotteryRewardButtonProps {
   ticket: ILotteryTicket;

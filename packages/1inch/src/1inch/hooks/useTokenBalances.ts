@@ -6,7 +6,6 @@ import { formatUnits } from "ethers/lib/utils";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import BalanceOfERC20ABI from "./abi/balanceOf.erc20.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { GovernanceTokenAddress, IToken } from "../provider";
 

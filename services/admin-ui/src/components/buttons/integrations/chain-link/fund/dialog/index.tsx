@@ -7,7 +7,6 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import BalanceOfABI from "../balanceOf.abi.json";
-// import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";

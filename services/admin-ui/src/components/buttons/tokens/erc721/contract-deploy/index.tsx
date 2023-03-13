@@ -8,7 +8,6 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721ContractTemplates, IErc721ContractDeployDto } from "@framework/types";
 
 import DeployERC721TokenABI from "./deployERC721Token.abi.json";
-// import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { Erc721ContractDeployDialog } from "./deploy-dialog";
 

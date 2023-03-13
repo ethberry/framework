@@ -8,7 +8,6 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import blackListABI from "./blacklist.abi.json";
-// import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 

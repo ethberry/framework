@@ -8,7 +8,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
 
 import SafeTransferFromERC721ABI from "./safeTransferFrom.erc721.abi.json";
-// import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

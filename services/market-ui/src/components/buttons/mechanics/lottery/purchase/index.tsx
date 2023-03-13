@@ -10,7 +10,6 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 
 import PurchaseABI from "./purchase.abi.json";
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
 export interface ILotteryPurchaseButtonProps {
   ticketNumbers: Array<boolean>;

@@ -10,7 +10,6 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import ReleaseABI from "./release.abi.json";
-// import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;

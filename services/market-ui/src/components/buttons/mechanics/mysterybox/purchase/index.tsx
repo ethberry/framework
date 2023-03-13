@@ -10,7 +10,6 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { IMysterybox, TokenType } from "@framework/types";
 
 import MysteryboxABI from "./mysterybox.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 

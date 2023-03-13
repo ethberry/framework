@@ -9,7 +9,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
 import FundEthABI from "./fundEth.abi.json";
-// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 import { IFundEthDto, FundEthEditDialog } from "./dialog";
 

@@ -9,7 +9,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
 import FinalizeByRuleIdABI from "./finalizeByRuleId.abi.json";
-// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 export interface IPyramidFinalizeRuleButtonProps {
   rule: IPyramidRule;

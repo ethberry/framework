@@ -11,7 +11,6 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
 import DepositABI from "./deposit.abi.json";
-// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IPyramidDepositButtonProps {

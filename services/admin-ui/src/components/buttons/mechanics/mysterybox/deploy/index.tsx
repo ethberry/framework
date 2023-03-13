@@ -9,7 +9,6 @@ import type { IMysteryContractDeployDto } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
 import DeployMysteryboxABI from "./deployMysterybox.abi.json";
-// import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 

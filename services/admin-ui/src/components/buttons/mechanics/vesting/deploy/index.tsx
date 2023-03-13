@@ -8,7 +8,6 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IVestingDeployDto } from "@framework/types";
 
 import DeployVestingABI from "./deployVesting.abi.json";
-// import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { VestingDeployDialog } from "./dialog";
 

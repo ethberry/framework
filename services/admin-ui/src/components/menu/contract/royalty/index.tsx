@@ -9,7 +9,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
 import SetDefaultRoyaltyABI from "./setDefaultRoyalty.abi.json";
-// import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 

@@ -9,7 +9,6 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import SetPregnancyLimitsABI from "./setPregnancyLimits.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
 

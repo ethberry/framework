@@ -10,7 +10,6 @@ import { GovernanceTokenAddress, IOneInchContext, ISwap, IToken, SwapStatus } fr
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import AllowanceApproveERC20ABI from "./abi/allowance.approve.erc20.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { repeatOnFail } from "../helpers/repeatOnFail";
 import { safeParseUnits } from "../helpers/safeParseUnits";

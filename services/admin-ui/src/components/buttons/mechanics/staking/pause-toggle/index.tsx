@@ -8,7 +8,6 @@ import { Contract } from "ethers";
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import PauseABI from "./pause.abi.json";
-// import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 export interface IPauseToggleButton {
   className?: string;

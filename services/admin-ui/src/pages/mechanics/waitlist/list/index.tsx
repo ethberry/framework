@@ -16,7 +16,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 
 import SetRewardABI from "./setReward.abi.json";
-// import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 import { WaitlistSearchForm } from "./form";
 import { WaitlistListEditDialog } from "./edit";

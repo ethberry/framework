@@ -11,7 +11,6 @@ import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import BalanceOfABI from "./balanceOf.abi.json";
 import TransferAndCallABI from "./transferAndCall.abi.json";
-// import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import { formatEther } from "../../../../../utils/money";

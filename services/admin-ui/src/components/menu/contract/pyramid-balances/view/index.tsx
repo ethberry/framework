@@ -12,7 +12,6 @@ import { useApiCall } from "@gemunion/react-hooks";
 import type { IBalance } from "@framework/types";
 
 import WithdrawTokenABI from "./withdrawToken.abi.json";
-// import IPyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import { formatEther } from "../../../../../utils/money";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
 import { emptyBalance } from "../../../../common/interfaces";

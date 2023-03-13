@@ -10,7 +10,6 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import TransferERC20ABI from "./transfer.erc20.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 

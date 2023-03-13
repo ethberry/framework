@@ -13,7 +13,6 @@ import { useUser } from "@gemunion/provider-user";
 import type { IAccessControl, IUser } from "@framework/types";
 
 import RenounceRoleABI from "./renounceRole.abi.json";
-// import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;

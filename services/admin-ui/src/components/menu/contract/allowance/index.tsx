@@ -11,8 +11,6 @@ import { TokenType } from "@framework/types";
 
 import ApproveERC20ABI from "./approve.erc20.abi.json";
 import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-// import ERC721BlacklistUpgradeableRentableRandomGemunionSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

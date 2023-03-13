@@ -11,7 +11,6 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
 
 import AllowanceERC20ABI from "./allowance.erc20.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { IAllowanceDto, DepositAllowanceDialog } from "../../dialogs/deposit-allowance";
 

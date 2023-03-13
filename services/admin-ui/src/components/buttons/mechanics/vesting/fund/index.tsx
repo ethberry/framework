@@ -11,7 +11,6 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import TopUpABI from "./topUp.abi.json";
-// import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 

@@ -9,7 +9,6 @@ import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ReceiveRewardABI from "../reward/receiveReward.abi.json";
-// import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 export interface IStakingRewardSimpleButtonProps {
   stake: IStakingDeposit;

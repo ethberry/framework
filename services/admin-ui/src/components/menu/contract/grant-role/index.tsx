@@ -10,7 +10,6 @@ import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
 import GrantRoleABI from "./grantRole.abi.json";
-// import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 

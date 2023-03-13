@@ -10,7 +10,6 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
 import UpgradeABI from "./upgrade.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {

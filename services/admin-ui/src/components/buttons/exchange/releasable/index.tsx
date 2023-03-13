@@ -10,7 +10,6 @@ import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import RelesableABI from "./releasable.abi.json";
-// import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { formatEther } from "../../../../utils/money";
 

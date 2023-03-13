@@ -10,7 +10,6 @@ import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 
 import SetRulesABI from "./setRules.abi.json";
 import UpdateRuleABI from "./updateRule.abi.json";
-// import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 export interface IPyramidUploadButtonProps {
   rule: IPyramidRule;

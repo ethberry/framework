@@ -11,7 +11,6 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import ApproveERC20ABI from "./approve.erc20.abi.json";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 import { VestingAllowanceDialog, IVestingAllowanceDto } from "./dialog";
 

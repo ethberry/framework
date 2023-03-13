@@ -8,7 +8,6 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import EndRoundABI from "./endRound.abi.json";
-// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
 export const LotteryRoundEndButton: FC = () => {
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

@@ -9,7 +9,6 @@ import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import DepositABI from "../deposit/deposit.abi.json";
-// import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IStakingDepositSimpleButtonProps {
