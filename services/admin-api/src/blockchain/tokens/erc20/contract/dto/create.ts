@@ -21,4 +21,6 @@ export class Erc20ContractCreateDto extends SearchableDto implements IErc20Contr
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public address: string;
+
+  public merchantId: number;
 }

@@ -9,4 +9,6 @@ export class NativeContractCreateDto extends SearchableDto implements INativeCon
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
+
+  public merchantId: number;
 }

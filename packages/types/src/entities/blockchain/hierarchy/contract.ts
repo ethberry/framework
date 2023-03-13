@@ -121,6 +121,7 @@ export enum PyramidContractFeatures {
 }
 
 export enum PyramidContractTemplates {
+  "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",
 }
@@ -130,6 +131,7 @@ export enum StakingContractFeatures {
 }
 
 export enum StakingContractTemplates {
+  "SIMPLE" = "SIMPLE",
   "REFERRAL" = "REFERRAL",
 }
 
@@ -181,6 +183,7 @@ export enum ContractFeatures {
 }
 
 export interface IContract extends IDeployable, ISearchable {
+  merchantId: number;
   imageUrl: string;
   name: string;
   symbol: string;

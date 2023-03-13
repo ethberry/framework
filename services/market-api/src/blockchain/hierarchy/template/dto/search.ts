@@ -56,4 +56,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsOptional()
   @IsBigNumber({}, { message: "typeMismatch" })
   public maxPrice: string;
+
+  public merchantId: number;
 }

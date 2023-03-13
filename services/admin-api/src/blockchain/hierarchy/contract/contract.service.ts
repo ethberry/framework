@@ -29,6 +29,10 @@ export class ContractService {
       erc20: TokenType.ERC20,
     });
 
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });

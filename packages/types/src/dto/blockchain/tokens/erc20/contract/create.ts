@@ -4,4 +4,5 @@ export interface IErc20ContractCreateDto {
   title: string;
   description: string;
   address: string;
+  merchantId: number;
 }

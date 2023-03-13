@@ -5,6 +5,7 @@ import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import type { IUser } from "@framework/types";
 import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
+
 import { MerchantEntity } from "../merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "user" })

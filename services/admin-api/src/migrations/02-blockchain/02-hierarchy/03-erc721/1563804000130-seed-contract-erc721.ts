@@ -35,6 +35,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         contract_type,
         contract_features,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -52,6 +53,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -69,6 +71,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -86,6 +89,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -103,6 +107,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{BLACKLIST}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -120,6 +125,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{UPGRADEABLE}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -137,6 +143,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{UPGRADEABLE,RANDOM}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -154,6 +161,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{GENES}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -171,6 +179,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{SOULBOUND}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -188,6 +197,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -205,6 +215,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ERC721',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

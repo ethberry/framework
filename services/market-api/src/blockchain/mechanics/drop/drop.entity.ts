@@ -5,9 +5,17 @@ import { ns } from "@framework/constants";
 import { IDrop } from "@framework/types";
 
 import { AssetEntity } from "../../exchange/asset/asset.entity";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "drop" })
 export class DropEntity extends IdDateBaseEntity implements IDrop {
+  @Column({ type: "int" })
+  public merchantId: number;
+
+  @JoinColumn()
+  @OneToOne(_type => MerchantEntity)
+  public merchant: MerchantEntity;
+
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
   public item: AssetEntity;

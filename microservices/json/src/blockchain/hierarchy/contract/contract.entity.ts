@@ -10,6 +10,9 @@ import { TemplateEntity } from "../template/template.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
+  @Column({ type: "int" })
+  public merchantId: number;
+
   @Column({ type: "varchar" })
   public imageUrl: string;
 

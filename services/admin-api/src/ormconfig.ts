@@ -270,10 +270,6 @@ const config: PostgresConnectionOptions = {
     PhotoEntity,
     ProductEntity,
     PromoEntity,
-    OtpEntity,
-    UserEntity,
-    SettingsEntity,
-    PageEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,

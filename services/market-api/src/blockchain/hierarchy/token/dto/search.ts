@@ -65,6 +65,15 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @Type(() => TokenAttributesSearchDto)
   public attributes: TokenAttributesSearchDto;
 
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public merchantId: number;
+
   public tokenStatus: Array<TokenStatus>;
   public tokenId: string;
 }

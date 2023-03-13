@@ -21,6 +21,10 @@ export class CreateDropAt1658980521000 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "start_timestamp",
           type: "timestamptz",
         },
@@ -48,6 +52,12 @@ export class CreateDropAt1658980521000 implements MigrationInterface {
           columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
       ],

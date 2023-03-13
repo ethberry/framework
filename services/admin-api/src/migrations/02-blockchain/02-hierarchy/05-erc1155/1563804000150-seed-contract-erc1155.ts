@@ -30,6 +30,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         contract_type,
         contract_features,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -47,6 +48,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ERC1155',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -64,6 +66,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ERC1155',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -81,6 +84,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ERC1155',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -98,6 +102,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ERC1155',
         '{BLACKLIST}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -115,6 +120,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ERC1155',
         '{}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

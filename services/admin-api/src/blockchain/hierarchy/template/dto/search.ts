@@ -52,4 +52,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @Transform(({ value }) => value as Array<TemplateStatus>)
   @IsEnum(TemplateStatus, { each: true, message: "badInput" })
   public templateStatus: Array<TemplateStatus>;
+
+  public merchantId: number;
 }

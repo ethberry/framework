@@ -52,6 +52,7 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         signature,
         nonce,
         end_timestamp,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -61,6 +62,7 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         '0xcd1b1a4803b8d01757eabff41348275fdda5acf9f45511fd275e5d3076f0169549507eef804244d2a97eade4d93fd20d3f6c5aaaf1deafe97bcd01a4522deb0f1c',
         '0x01252ba107b2da38c6b1ba1dce277f777daa3f86ef63a32a59904c3db5baedc0',
         '${zeroDateTime}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

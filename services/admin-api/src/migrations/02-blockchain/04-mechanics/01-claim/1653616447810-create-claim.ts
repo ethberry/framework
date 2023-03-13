@@ -43,6 +43,10 @@ export class CreateClaim1653616447810 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "end_timestamp",
           type: "timestamptz",
         },
@@ -60,6 +64,12 @@ export class CreateClaim1653616447810 implements MigrationInterface {
           columnNames: ["item_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
       ],

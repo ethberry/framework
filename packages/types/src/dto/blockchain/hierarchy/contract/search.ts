@@ -8,4 +8,5 @@ export interface IContractSearchDto extends ISearchDto {
   contractFeatures: Array<ContractFeatures>;
   contractType: Array<TokenType>;
   contractModule: Array<ModuleType>;
+  merchantId: number;
 }

@@ -38,7 +38,7 @@ export class Erc20ContractService extends ContractService {
     );
   }
 
-  public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {
+  public async create(dto: IErc20ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { address, symbol, decimals, title, description } = dto;
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -56,6 +56,7 @@ export class Erc20ContractService extends ContractService {
         description,
         chainId,
         imageUrl: "",
+        merchantId: userEntity.merchantId,
       })
       .save();
 

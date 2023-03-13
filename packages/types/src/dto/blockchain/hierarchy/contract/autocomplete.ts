@@ -7,4 +7,5 @@ export interface IContractAutocompleteDto {
   contractType: Array<TokenType>;
   contractFeatures: Array<ContractFeatures>;
   contractModule: Array<ModuleType>;
+  merchantId: number;
 }

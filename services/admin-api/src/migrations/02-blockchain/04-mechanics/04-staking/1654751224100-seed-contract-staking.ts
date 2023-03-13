@@ -26,6 +26,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         contract_features,
         contract_module,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -42,6 +43,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '{ALLOWANCE,REFERRAL}',
         'STAKING',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

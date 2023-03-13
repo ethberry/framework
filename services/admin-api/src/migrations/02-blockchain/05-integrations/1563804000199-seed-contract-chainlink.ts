@@ -26,6 +26,7 @@ export class SeedContractChainLinkAt1563804000199 implements MigrationInterface 
         contract_features,
         contract_module,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -43,6 +44,7 @@ export class SeedContractChainLinkAt1563804000199 implements MigrationInterface 
         '{}',
         'TEST',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

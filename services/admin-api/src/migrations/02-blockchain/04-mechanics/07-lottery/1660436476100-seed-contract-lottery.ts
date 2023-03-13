@@ -32,6 +32,7 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           contract_features,
           contract_module,
           from_block,
+          merchant_id,
           created_at,
           updated_at
         ) VALUES (
@@ -49,6 +50,7 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           '{RANDOM, ALLOWANCE}',
           'LOTTERY',
           '${fromBlock}',
+          1,
           '${currentDateTime}',
           '${currentDateTime}'
         );

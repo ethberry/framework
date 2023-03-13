@@ -40,6 +40,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         signature,
         nonce,
         end_timestamp,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -49,6 +50,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         '0x8ec31888371c5ecad6c93ac7c6e4f2519f2bea53231ed5b48be3a5bcd346d6b75a9abaf173dc703b4e3b628d5a8b6e9cd75eebace06b25cf7402bde23af7526e1b',
         '0xb7a84a4d540ad682fe1f3da89b7255586ddbc299be8e04f7576b1ad985dde16b',
         '${zeroDateTime}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

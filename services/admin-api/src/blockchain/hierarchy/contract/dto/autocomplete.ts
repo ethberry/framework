@@ -49,4 +49,6 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Transform(({ value }) => value as Array<ModuleType>)
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
+
+  public merchantId: number;
 }

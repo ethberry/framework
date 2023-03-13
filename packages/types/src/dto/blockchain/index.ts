@@ -1,4 +1,5 @@
 export * from "./contract-manager/search";
+export * from "./event-history/search";
 
 export * from "./hierarchy/contract/autocomplete";
 export * from "./hierarchy/contract/search";
@@ -12,9 +13,10 @@ export * from "./hierarchy/contract-history/search";
 
 export * from "./exchange/asset/asset";
 export * from "./exchange/asset/components";
-export * from "./event-history/search";
+
 export * from "./mechanics/claim/search";
 export * from "./mechanics/craft/search";
+export * from "./mechanics/drop/search";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/leaderboard";
 export * from "./mechanics/breed/search";
@@ -22,6 +24,8 @@ export * from "./mechanics/breed/leaderboard";
 export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/mysterybox/deploy";
 export * from "./mechanics/referral/search";
+
+export * from "./mechanics/staking/deploy";
 export * from "./mechanics/staking/chart";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/report";
@@ -30,6 +34,8 @@ export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
 export * from "./mechanics/waitlist/search";
+
+export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/chart";
 export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/report";

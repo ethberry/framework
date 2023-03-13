@@ -44,7 +44,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
       ), (
         'trejgun@gemunion.io',
         'ia31Zjm8NUTstqI3Ug9mbHtiVbH2',
-        'CTAPbIu_MABP>',
+        'CTAPbIu_MABP',
         '${imageUrl}',
         'EN',
         'US',

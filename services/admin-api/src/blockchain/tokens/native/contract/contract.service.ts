@@ -37,7 +37,7 @@ export class NativeContractService extends ContractService {
     );
   }
 
-  public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
+  public async create(dto: INativeContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { symbol, title, description } = dto;
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -56,6 +56,7 @@ export class NativeContractService extends ContractService {
         description,
         chainId,
         imageUrl: "",
+        merchantId: userEntity.merchantId,
       })
       .save();
 

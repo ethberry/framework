@@ -25,6 +25,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -42,6 +43,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'ACTIVE',
         'NATIVE',
         '{}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -59,6 +61,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'INACTIVE',
         'NATIVE',
         '{}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -76,6 +79,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'ACTIVE',
         'NATIVE',
         '{}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -93,6 +97,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'INACTIVE',
         'NATIVE',
         '{}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -110,6 +115,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'ACTIVE',
         'NATIVE',
         '{}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

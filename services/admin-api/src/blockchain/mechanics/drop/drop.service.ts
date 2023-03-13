@@ -1,13 +1,14 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IDropSearchDto } from "@framework/types";
 
 import { DropEntity } from "./drop.entity";
 import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { PageEntity } from "../../../infrastructure/page/page.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class DropService {
@@ -17,7 +18,7 @@ export class DropService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: ISearchDto): Promise<[Array<DropEntity>, number]> {
+  public async search(dto: IDropSearchDto, userEntity: UserEntity): Promise<[Array<DropEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
@@ -28,6 +29,10 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("drop.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -75,7 +80,7 @@ export class DropService {
     return dropEntity.save();
   }
 
-  public async create(dto: IDropCreateDto): Promise<DropEntity> {
+  public async create(dto: IDropCreateDto, userEntity: UserEntity): Promise<DropEntity> {
     const { price, item, ...rest } = dto;
 
     const priceEntity = await this.assetService.create({
@@ -91,6 +96,7 @@ export class DropService {
     return this.dropEntityRepository
       .create({
         ...rest,
+        merchantId: userEntity.merchantId,
         price: priceEntity,
         item: itemEntity,
       })
@@ -115,7 +121,17 @@ export class DropService {
     });
   }
 
-  public delete(where: FindOptionsWhere<PageEntity>): Promise<DeleteResult> {
-    return this.dropEntityRepository.delete(where);
+  public async delete(where: FindOptionsWhere<PageEntity>, userEntity: UserEntity): Promise<DropEntity> {
+    const dropEntity = await this.findOne(where);
+
+    if (!dropEntity) {
+      throw new NotFoundException("dropNotFound");
+    }
+
+    if (dropEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return dropEntity.remove();
   }
 }
