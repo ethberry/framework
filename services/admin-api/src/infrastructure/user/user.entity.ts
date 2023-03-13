@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
@@ -7,6 +7,7 @@ import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
 
 import { MerchantEntity } from "../merchant/merchant.entity";
+import { AddressEntity } from "../../ecommerce/address/address.entity";
 
 @Entity({ schema: ns, name: "user" })
 export class UserEntity extends IdDateBaseEntity implements IUser {
@@ -24,6 +25,11 @@ export class UserEntity extends IdDateBaseEntity implements IUser {
 
   @Column({ type: "varchar" })
   public comment: string;
+
+  @OneToMany(_type => AddressEntity, address => address.user, {
+    cascade: ["remove", "insert"],
+  })
+  public addresses: Array<AddressEntity>;
 
   @Column({ type: "varchar" })
   public wallet: string;

@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-import { baseTokenURI, royalty, batchSize, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import { baseTokenURI, batchSize, royalty, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 export async function deployERC721(name = "ERC721Collection") {
   const [owner] = await ethers.getSigners();

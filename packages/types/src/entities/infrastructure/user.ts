@@ -1,6 +1,7 @@
 import { EnabledLanguages } from "@framework/constants";
 import type { IIdDateBase } from "@gemunion/types-collection";
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
+import { IAddress } from "../ecommerce";
 
 export enum UserStatus {
   ACTIVE = "ACTIVE",
@@ -11,7 +12,7 @@ export enum UserRole {
   ADMIN = "ADMIN",
   OWNER = "OWNER",
   MANAGER = "MANAGER",
-  USER = "USER",
+  CUSTOMER = "CUSTOMER",
 }
 
 export interface IUser extends IIdDateBase {
@@ -27,4 +28,5 @@ export interface IUser extends IIdDateBase {
   chainId: number;
   gender: EnabledGenders | null;
   country: EnabledCountries | null;
+  addresses: Array<IAddress>;
 }

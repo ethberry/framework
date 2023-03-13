@@ -194,11 +194,37 @@
       "PYRAMID": "PYRAMID",
       "VESTING": "VESTING"
     },
+    "merchantStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    },
     "mysteryboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "orderStatus": {
+      "CANCELED": "Canceled",
+      "CLOSED": "Closed",
+      "DELIVERED": "Delivered",
+      "NEW": "New",
+      "NOW_IN_DELIVERY": "Now in delivery",
+      "SCHEDULED": "Scheduled"
+    },
     "pageStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "parameterName": {
+      "COLOR": "Color",
+      "SIZE": "Size"
+    },
+    "parameterType": {
+      "date": "Date",
+      "number": "Number",
+      "string": "String"
+    },
+    "productStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -251,9 +277,9 @@
     },
     "userRoles": {
       "ADMIN": "Admin",
+      "CUSTOMER": "Customer",
       "MANAGER": "Manager",
-      "OWNER": "Owner",
-      "USER": "User"
+      "OWNER": "Owner"
     },
     "userStatus": {
       "ACTIVE": "Active",
@@ -333,6 +359,8 @@
       "account": "Account",
       "active": "Active",
       "address": "Address",
+      "addressId": "Address",
+      "addresses": "Addresses",
       "amount": "Amount",
       "attribute": "Attribute",
       "attributes": "Attributes",
@@ -340,6 +368,7 @@
       "batchSize": "Collection size",
       "breeder": "Breeder",
       "cap": "Cap",
+      "categoryIds": "Categories",
       "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
@@ -377,6 +406,7 @@
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "isDefault": "Is default",
       "item": "Item",
       "items": "Items",
       "language": "Language",
@@ -387,11 +417,21 @@
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
       "maxTime": "Max Cooldown",
+      "merchantId": "Merchant",
+      "merchantStatus": "Status",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
+      "orderStatus": "Status",
+      "orderType": "Type",
       "owner": "Owner",
       "pageStatus": "Status",
+      "parameterMaxValue": "Max Value",
+      "parameterName": "Name",
+      "parameterType": "Type",
+      "parameterValue": "Value",
+      "parameterWithLabel": "Parameter{br}\"{label}\"",
+      "parameters": "Parameters",
       "parent": "Parent",
       "parentId": "Parent",
       "parentIds": "Parent",
@@ -400,7 +440,10 @@
       "payee": "Payee",
       "payees": "Payees",
       "penalty": "Penalty",
+      "photos": "Photos",
       "price": "Price",
+      "productId": "Product",
+      "productStatus": "Status",
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "random": "Random",
@@ -446,6 +489,7 @@
     "placeholders": {
       "DUMMY": "Dummy",
       "account": "0x...",
+      "address": "NY, Washington st., 1",
       "address": "0x...",
       "amount": "10",
       "attribute": "...",
@@ -453,6 +497,7 @@
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
       "cap": "10",
+      "categoryIds": "Root",
       "childId": "Contract",
       "childIds": "Contract",
       "comment": "Fraud",
@@ -478,9 +523,11 @@
       "maxStake": "10",
       "maxStakes": "0",
       "maxTime": "0",
+      "merchantId": "Gordon Freeman",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parentId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
@@ -488,7 +535,8 @@
       "payees": "0x...",
       "penalty": "1",
       "price": "1000",
-      "priceCorrection": "0",
+      "productId": "Bottle of water",
+      "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
       "recipient": "Recipient",
@@ -563,6 +611,9 @@
       "limit": "Set limits",
       "title": "Breed"
     },
+    "category": {
+      "title": "Categories"
+    },
     "chain-link": {
       "fund": "Fund",
       "title": "ChainLink"
@@ -601,6 +652,18 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "ecommerce": {
+        "store": {
+          "categories": "Categories",
+          "kanban": "Orders",
+          "orders": "Orders Archive",
+          "photos": "Photos",
+          "products": "Products",
+          "promos": "Promos",
+          "statistics": "Statistics",
+          "title": "Ecommerce"
+        }
+      },
       "exchange": {
         "marketplace": {
           "chart": "Chart",
@@ -711,6 +774,9 @@
       "login": "Login"
     },
     "lottery": {
+      "kanban": {
+        "title": "Orders"
+      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -769,8 +835,24 @@
       "title": "System Payees",
       "withdraw": "Withdraw"
     },
+    "products": {
+      "title": "Products"
+    },
     "profile": {
+      "addresses": {
+        "default": "default",
+        "empty": "You don't have any addresses yet",
+        "inactive": "inactive"
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "subscriptions": "Subscriptions"
+      },
       "title": "Profile"
+    },
+    "promos": {
+      "title": "Promos"
     },
     "pyramid": {
       "chart": {
@@ -814,6 +896,9 @@
       "title": "Staking"
     },
     "users": {
+      "addresses": {
+        "default": "default"
+      },
       "title": "Users"
     },
     "vesting": {
@@ -850,8 +935,13 @@
   "snackbar": {
     "accountNotFound": "Account not found",
     "active": "Successfully activated",
+    "addressNotFound": "Address not found",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
+    "cantDeleteNotEmptyCategory": "You have to remove all children categories first",
+    "cantDeleteRootCategory": "Can't delete root category",
+    "cartNotFound": "Cart not found",
+    "categoryNotFound": "Category not found",
     "claimNotFound": "Claim not found",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
@@ -868,8 +958,11 @@
     "invite": "Successfully invited",
     "listNotFound": "Waitlist not found",
     "loaded": "Successfully loaded",
+    "merchantNotFound": "Merchant not found",
+    "orderNotFound": "Order not found",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
+    "productNotFound": "Product not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "saved": "Successfully saved",

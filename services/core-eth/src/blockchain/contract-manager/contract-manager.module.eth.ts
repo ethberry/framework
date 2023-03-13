@@ -1,6 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { ethersSignerProvider, ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";

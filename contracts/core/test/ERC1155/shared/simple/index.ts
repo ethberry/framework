@@ -5,14 +5,14 @@ import {
   shouldBalanceOf,
   shouldBalanceOfBatch,
   shouldBehaveLikeERC1155Burnable,
-  shouldMint,
-  shouldMintBatch,
-  shouldSetApprovalForAll,
-  shouldSafeTransferFrom,
-  shouldSafeBatchTransferFrom,
-  shouldCustomURI,
   shouldBehaveLikeERC1155Royalty,
   shouldBehaveLikeERC1155Supply,
+  shouldCustomURI,
+  shouldMint,
+  shouldMintBatch,
+  shouldSafeBatchTransferFrom,
+  shouldSafeTransferFrom,
+  shouldSetApprovalForAll,
 } from "@gemunion/contracts-erc1155";
 
 export function shouldBehaveLikeERC1155(factory: () => Promise<Contract>) {

@@ -1,9 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
-  Get,
   Param,
   ParseIntPipe,
   Post,

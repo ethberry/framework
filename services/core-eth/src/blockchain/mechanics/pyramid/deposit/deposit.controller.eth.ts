@@ -40,7 +40,10 @@ export class PyramidDepositControllerEth {
       eventName: PyramidEventType.FinalizedToken,
     },
   ])
-  public finishToken(@Payload() event: ILogEvent<IFinalizedTokenEvent | IPyramidFinishEvent>, @Ctx() context: Log): Promise<void> {
+  public finishToken(
+    @Payload() event: ILogEvent<IFinalizedTokenEvent | IPyramidFinishEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
     return this.pyramidServiceEth.finishToken(event, context);
   }
 

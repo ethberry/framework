@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { amount, tokenName, tokenSymbol, span } from "@gemunion/contracts-constants";
+import { amount, span, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 import { ContractManager } from "../../../../typechain-types";
 

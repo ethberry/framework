@@ -7,9 +7,9 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractManagerEventType,
   ContractType,
+  IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
-  IContractManagerCollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,

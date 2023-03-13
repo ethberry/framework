@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { baseTokenURI, royalty, tokenName } from "@gemunion/contracts-constants";

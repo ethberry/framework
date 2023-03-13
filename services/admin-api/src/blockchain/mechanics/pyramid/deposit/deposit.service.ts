@@ -10,27 +10,27 @@ import { PyramidDepositEntity } from "./deposit.entity";
 export class PyramidDepositService {
   constructor(
     @InjectRepository(PyramidDepositEntity)
-    private readonly stakesEntityRepository: Repository<PyramidDepositEntity>,
+    private readonly pyramidDepositEntityEntity: Repository<PyramidDepositEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<PyramidDepositEntity>,
     options?: FindOneOptions<PyramidDepositEntity>,
   ): Promise<PyramidDepositEntity | null> {
-    return this.stakesEntityRepository.findOne({ where, ...options });
+    return this.pyramidDepositEntityEntity.findOne({ where, ...options });
   }
 
   public findAll(
     where: FindOptionsWhere<PyramidDepositEntity>,
     options?: FindOneOptions<PyramidDepositEntity>,
   ): Promise<Array<PyramidDepositEntity>> {
-    return this.stakesEntityRepository.find({ where, ...options });
+    return this.pyramidDepositEntityEntity.find({ where, ...options });
   }
 
   public async search(dto: Partial<IPyramidDepositSearchDto>): Promise<[Array<PyramidDepositEntity>, number]> {
     const { query, account, pyramidDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
-    const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
+    const queryBuilder = this.pyramidDepositEntityEntity.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.pyramidRule", "rule");
 
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");

@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { Contract, BigNumber, utils } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { VRFCoordinatorMock } from "../../typechain-types";
 

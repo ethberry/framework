@@ -99,7 +99,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'MALE',
         '',
         'ACTIVE',
-        '{USER}',
+        '{CUSTOMER}',
         1,
         '0x02',
         '${chainId}',

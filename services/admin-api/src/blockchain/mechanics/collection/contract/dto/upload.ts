@@ -1,9 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsUrl, IsString, IsArray, ValidateNested, Allow } from "class-validator";
+import { Allow, IsArray, IsString, IsUrl, ValidateNested } from "class-validator";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { Type } from "class-transformer";
-
-import { TokenAttributesSearchDto } from "../../../../hierarchy/token/dto";
 import { ClaimItemCreateDto } from "../../../claim/dto";
 
 export class CollectionUploadDto {

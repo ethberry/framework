@@ -27,6 +27,7 @@ import { Breed } from "./mechanics/breed";
 import { Waitlist } from "./mechanics/waitlist";
 import { Wallet } from "./exchange/wallet";
 import { Collections } from "./mechanics/collection";
+import { Ecommerce } from "./ecommerce";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -64,6 +65,7 @@ export const Dashboard: FC = () => {
           <CoinMarketCap />
           <Marketplace />
           <Wallet />
+          <Ecommerce />
           <Admin />
         </Grid>
       </Grid>

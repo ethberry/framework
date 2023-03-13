@@ -1,6 +1,7 @@
 {
   "components": {
     "header": {
+      "checkout": "Checkout",
       "language": {
         "switch": "Switch Language"
       },
@@ -164,6 +165,18 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
+    "merchantStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "orderStatus": {
+      "CANCELED": "Canceled",
+      "CLOSED": "Closed",
+      "DELIVERED": "Delivered",
+      "NEW": "New",
+      "NOW_IN_DELIVERY": "Now in delivery",
+      "SCHEDULED": "Scheduled"
+    },
     "pyramidDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
@@ -192,8 +205,9 @@
     },
     "userRoles": {
       "ADMIN": "Admin",
-      "COLLECTION": "Collection",
-      "USER": "User"
+      "CUSTOMER": "Customer",
+      "MERCHANT": "Merchant",
+      "OWNER": "Owner"
     },
     "userStatus": {
       "ACTIVE": "Active",
@@ -209,12 +223,14 @@
   },
   "form": {
     "buttons": {
+      "GRADE": "Grade",
       "add": "Add",
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "checkout": "Checkout",
       "claim": "Claim Reward",
       "copy": "Copy",
       "craft": "Craft",
@@ -224,7 +240,6 @@
       "empty": "\uFEFF",
       "export": "Export",
       "forgot": "Forgot password?",
-      "GRADE": "Grade",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
       "login": "Login",
@@ -257,6 +272,8 @@
       "address": "Address",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
+      "categoryId": "categoryId",
+      "categoryIds": "Category",
       "chainId": "Chain",
       "claimStatus": "Status",
       "collectionId": "Collection",
@@ -289,16 +306,20 @@
       "gender": "Gender",
       "id": "ID",
       "imageUrl": "Avatar",
+      "isDefault": "Make default",
       "item": "Item",
       "language": "Language",
       "level": "Level",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
+      "merchantId": "Merchant",
       "minPrice": "Min. price",
       "mom": "Mom",
       "network": "Network",
       "numbers": "Numbers",
+      "order": "Order direction",
+      "orderStatus": "Status",
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
@@ -339,6 +360,8 @@
       "account": "0x...",
       "address": "0x...",
       "amount": "100",
+      "categoryId": "categoryId",
+      "categoryIds": "Root",
       "confirm": "******",
       "contractId": "Contract",
       "contractIds": "Contracts",
@@ -349,6 +372,7 @@
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
+      "merchantId": "Merchant",
       "minAmount": "0.01",
       "minPrice": "1",
       "password": "******",
@@ -484,6 +508,19 @@
       "sire": "Sire",
       "title": "Breed"
     },
+    "checkout": {
+      "address": "Delivery address",
+      "address-hint": "Select from the list below or add new address",
+      "addresses": {
+        "empty": "You don't have any addresses yet"
+      },
+      "empty": "You don't have selected products",
+      "pieces": "{amount} pieces",
+      "products": "Chosen products",
+      "products-hint": "Double check the amount",
+      "title": "Checkout",
+      "total": "Total: {amount}"
+    },
     "claim": {
       "connect": "Please connect your wallet first",
       "sorry": "Sorry, maybe you will get lucky next time",
@@ -524,6 +561,19 @@
         "erc721": "ERC721",
         "erc998": "ERC998"
       },
+      "infrastructure": {
+        "feedback": {
+          "form": "Feedback",
+          "title": "Feedback"
+        },
+        "pages": {
+          "about-us": "About us",
+          "faq": "FAQ",
+          "privacy-policy": "Privacy Policy",
+          "terms-of-services": "Terms of Services",
+          "title": "Pages"
+        }
+      },
       "integrations": {
         "1inch": "1inch",
         "coin-gecko": "CoinGecko",
@@ -544,19 +594,6 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist",
         "wrapper": "Token wrapper"
-      },
-      "infrastructure": {
-        "feedback": {
-          "form": "Feedback",
-          "title": "Feedback"
-        },
-        "pages": {
-          "privacy-policy": "Privacy Policy",
-          "terms-of-services": "Terms of Services",
-          "title": "Pages",
-          "about-us": "About us",
-          "faq": "FAQ"
-        }
       },
       "title": "Dashboard"
     },
@@ -712,15 +749,11 @@
       },
       "title": "Primary market"
     },
-    "transactions": {
-      "emptyText": "",
-      "title": "My transactions"
+    "merchant": {
+      "title": "Merchant: {title}"
     },
-    "wallet": {
-      "attach": "Attach",
-      "connectedWallet": "Connected wallet",
-      "detach": "Detach",
-      "title": "My wallet"
+    "merchants": {
+      "title": "Merchants"
     },
     "mystery": {
       "box": {
@@ -749,11 +782,38 @@
         "title": "Mystery Tokens"
       }
     },
+    "orders": {
+      "date": "Date",
+      "price": "Price",
+      "product": "Product",
+      "products": "Products",
+      "status": "Status",
+      "title": "Orders"
+    },
     "page": {
       "title": "{title}"
     },
+    "product": {
+      "price": "Price: {amount}",
+      "title": "{title}"
+    },
+    "products": {
+      "sort": {
+        "createdAt": "Date",
+        "price": "Price"
+      },
+      "title": "Products"
+    },
     "profile": {
-      "title": "Profile"
+      "addresses": {
+        "default": "Default",
+        "empty": "You don't have any addresses yet"
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "subscriptions": "Subscriptions"
+      }
     },
     "pyramid": {
       "deposit": {
@@ -801,6 +861,10 @@
     "token": {
       "priceTitle": "Base price:"
     },
+    "transactions": {
+      "emptyText": "",
+      "title": "My transactions"
+    },
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
@@ -810,6 +874,12 @@
         "title": "Waitlist"
       },
       "title": "Waitlist"
+    },
+    "wallet": {
+      "attach": "Attach",
+      "connectedWallet": "Connected wallet",
+      "detach": "Detach",
+      "title": "My wallet"
     },
     "wrapper": {
       "token": {

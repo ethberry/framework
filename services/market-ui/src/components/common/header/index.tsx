@@ -8,6 +8,7 @@ import { Theme } from "@gemunion/provider-theme";
 
 import { WalletButton } from "../../buttons/wallet";
 import { Referrer } from "./referrer";
+import { Cart } from "./cart";
 import { Sections } from "./sections";
 import { useStyles } from "./styles";
 
@@ -20,6 +21,7 @@ export const Header: FC = () => {
           <Hidden smDown>{companyName} - Marketplace</Hidden>
         </Link>
         <div className={classes.grow} />
+        <Cart />
         <Referrer />
         <WalletButton />
         <Theme />

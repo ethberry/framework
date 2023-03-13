@@ -1,71 +1,36 @@
-import { FC } from "react";
-import { Grid } from "@mui/material";
-import { useSnackbar } from "notistack";
+import { ChangeEvent, FC, Fragment, useState } from "react";
+import { Tab, Tabs } from "@mui/material";
+import { useIntl } from "react-intl";
+import { useNavigate, useParams } from "react-router";
 
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useUser } from "@gemunion/provider-user";
-import { useApiCall } from "@gemunion/react-hooks";
-import { FormWrapper } from "@gemunion/mui-form";
-import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { availableChains, EnabledLanguages } from "@framework/constants";
-import { IUser } from "@framework/types";
-import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
-
-import { validationSchema } from "./validation";
+import { ProfileTabs } from "./tabs";
+import { ProfileGeneral } from "./general";
+import { ProfileSubscriptions } from "./subscriptions";
+import { ProfileAddresses } from "./adresses";
 
 export const Profile: FC = () => {
-  const user = useUser<IUser>();
-  const { enqueueSnackbar } = useSnackbar();
+  const { tab = ProfileTabs.general } = useParams<{ tab: ProfileTabs }>();
+  const { formatMessage } = useIntl();
+  const navigate = useNavigate();
 
-  const { fn } = useApiCall((_api, values: Partial<IUser>) => {
-    return user.setProfile(values);
-  });
+  const [value, setValue] = useState(tab);
 
-  const onClick = (): void => {
-    enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
-      variant: "info",
-    });
-  };
-
-  const handleSubmit = async (values: Partial<IUser>, form: any): Promise<void> => {
-    await fn(form, values);
-  };
-
-  const { email, displayName, language, country, gender, imageUrl, chainId } = user.profile;
-  const fixedValues = {
-    email,
-    displayName,
-    language,
-    gender: gender ?? "",
-    country: country ?? "",
-    imageUrl,
-    chainId,
+  const handleChange = (_event: ChangeEvent<any>, newValue: ProfileTabs): void => {
+    setValue(newValue);
+    navigate(`/profile/${newValue === ProfileTabs.general ? "" : newValue}`);
   };
 
   return (
-    <Grid>
-      <Breadcrumbs path={["profile"]} />
-
-      <PageHeader message="pages.profile.title" />
-
-      <FormWrapper
-        initialValues={fixedValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        testId="Profile"
-      >
-        <TextInput name="email" autoComplete="username" onClick={onClick} />
-        <TextInput name="displayName" />
-        <SelectInput name="gender" options={EnabledGenders} />
-        <SelectInput name="country" options={EnabledCountries} />
-        <SelectInput name="language" options={EnabledLanguages} />
-        <AvatarInput name="imageUrl" />
-        <SelectInput
-          name="chainId"
-          options={availableChains.reduce((memo, current) => Object.assign(memo, { [current]: current }), {})}
-        />
-      </FormWrapper>
-    </Grid>
+    <Fragment>
+      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+        {Object.values(ProfileTabs).map(tab => (
+          <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
+        ))}
+      </Tabs>
+      <br />
+      <ProfileGeneral value={value} />
+      <ProfileSubscriptions value={value} />
+      <ProfileAddresses value={value} />
+    </Fragment>
   );
 };

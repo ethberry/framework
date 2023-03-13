@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -34,7 +34,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '${chainId}',
         'STAKING',
         '${simpleFormatting}',
-        '',
+        '${imageUrl}',
         'Staking',
         '',
         '',

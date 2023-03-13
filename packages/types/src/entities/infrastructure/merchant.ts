@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { IUser } from "./user";
+import { IOrder, IProduct } from "../ecommerce";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",
@@ -15,4 +16,6 @@ export interface IMerchant extends IIdDateBase {
   imageUrl: string;
   merchantStatus: MerchantStatus;
   users?: Array<IUser>;
+  products?: Array<IProduct>;
+  orders?: Array<IOrder>;
 }

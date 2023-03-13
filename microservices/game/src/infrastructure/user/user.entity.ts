@@ -24,6 +24,8 @@ export class UserEntity extends IdDateBaseEntity implements IUser {
   @Column({ type: "varchar" })
   public comment: string;
 
+  public addresses: Array<any>;
+
   @Column({ type: "varchar" })
   public wallet: string;
 

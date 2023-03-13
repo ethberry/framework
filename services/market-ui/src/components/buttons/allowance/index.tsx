@@ -10,9 +10,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
 // import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-
 import Allowance from "../../dialogs/deposit-allowance/allowance.json";
-import { IAllowanceDto, DepositAllowanceDialog } from "../../dialogs/deposit-allowance";
+import { DepositAllowanceDialog, IAllowanceDto } from "../../dialogs/deposit-allowance";
 
 export interface IStakingDepositAllowanceButtonProps {
   rule: IStakingRule | IPyramidRule;

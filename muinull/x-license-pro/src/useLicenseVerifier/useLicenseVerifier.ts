@@ -2,13 +2,13 @@ import * as React from "react";
 import { verifyLicense } from "../verifyLicense";
 import {
   LicenseInfo,
-  LicenseStatus,
   LicenseScope,
+  LicenseStatus,
   showExpiredLicenseKeyError,
-  showInvalidLicenseKeyError,
-  showMissingLicenseKeyError,
-  showLicenseKeyPlanMismatchError,
   showExpiredPackageVersionError,
+  showInvalidLicenseKeyError,
+  showLicenseKeyPlanMismatchError,
+  showMissingLicenseKeyError,
 } from "../utils";
 
 export type MuiCommercialPackageName = "x-data-grid-pro" | "x-data-grid-premium" | "x-date-pickers-pro";

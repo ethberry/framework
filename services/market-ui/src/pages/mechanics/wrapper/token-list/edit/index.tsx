@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TokenAssetInput, ITokenAsset } from "@gemunion/mui-inputs-asset";
+import { ITokenAsset, TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";

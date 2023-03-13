@@ -29,6 +29,14 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { OrderEntity } from "./ecommerce/order/order.entity";
+import { ProductEntity } from "./ecommerce/product/product.entity";
+import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { PhotoEntity } from "./ecommerce/photo/photo.entity";
+import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { AddressEntity } from "./ecommerce/address/address.entity";
+import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
+import { CategoryEntity } from "./ecommerce/category/category.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -63,6 +71,18 @@ const config: PostgresConnectionOptions = {
     PyramidRulesEntity,
     PyramidDepositEntity,
     BreedEntity,
+    /* ecommerce */
+    AddressEntity,
+    CategoryEntity,
+    MerchantEntity,
+    OrderEntity,
+    OrderItemEntity,
+    PhotoEntity,
+    ProductEntity,
+    PromoEntity,
+    OtpEntity,
+    UserEntity,
+    PageEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

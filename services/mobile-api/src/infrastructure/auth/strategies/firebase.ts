@@ -53,7 +53,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
         displayName: firebaseUser?.displayName,
         language: EnabledLanguages.EN,
         imageUrl: firebaseUser?.photoURL,
-        userRoles: [UserRole.USER],
+        userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
         sub: data.sub,
         chainId,

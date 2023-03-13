@@ -12,7 +12,7 @@ import { TokenType } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
-import { VestingAllowanceDialog, IVestingAllowanceDto } from "./dialog";
+import { IVestingAllowanceDto, VestingAllowanceDialog } from "./dialog";
 
 export interface IVestingAllowanceMenuProps {
   contract: IContract;

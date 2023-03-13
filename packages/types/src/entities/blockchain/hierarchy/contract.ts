@@ -5,7 +5,7 @@ import type { IEventHistory } from "../event-history";
 
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
-import { ModuleType } from "../common";
+import { ModuleType } from "../../common";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",

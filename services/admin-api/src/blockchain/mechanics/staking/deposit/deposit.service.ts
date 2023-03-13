@@ -10,27 +10,27 @@ import { StakingDepositEntity } from "./deposit.entity";
 export class StakingDepositService {
   constructor(
     @InjectRepository(StakingDepositEntity)
-    private readonly stakesEntityRepository: Repository<StakingDepositEntity>,
+    private readonly stakingDepositEntityRepository: Repository<StakingDepositEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<StakingDepositEntity>,
     options?: FindOneOptions<StakingDepositEntity>,
   ): Promise<StakingDepositEntity | null> {
-    return this.stakesEntityRepository.findOne({ where, ...options });
+    return this.stakingDepositEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
     where: FindOptionsWhere<StakingDepositEntity>,
     options?: FindOneOptions<StakingDepositEntity>,
   ): Promise<Array<StakingDepositEntity>> {
-    return this.stakesEntityRepository.find({ where, ...options });
+    return this.stakingDepositEntityRepository.find({ where, ...options });
   }
 
   public async search(dto: Partial<IStakingDepositSearchDto>): Promise<[Array<StakingDepositEntity>, number]> {
     const { query, account, stakingDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
-    const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
+    const queryBuilder = this.stakingDepositEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");

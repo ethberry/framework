@@ -1,9 +1,9 @@
-import { FC, Fragment, useState, useEffect } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { Savings } from "@mui/icons-material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { FormattedMessage } from "react-intl";
 

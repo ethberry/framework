@@ -58,7 +58,7 @@ describe("UserService", () => {
         displayName: "test_name",
         language: EnabledLanguages.EN,
         imageUrl: "test_url",
-        userRoles: [UserRole.USER],
+        userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
         sub: "test_user_id",
         chainId: testChainId,

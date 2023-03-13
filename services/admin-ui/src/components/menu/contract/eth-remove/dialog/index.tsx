@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { ListenerType } from "@framework/types";
 
 import { validationSchema } from "./validation";

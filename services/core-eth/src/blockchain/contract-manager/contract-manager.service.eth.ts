@@ -2,10 +2,10 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 import { DeepPartial } from "typeorm";
-import { Wallet, providers } from "ethers";
+import { providers, Wallet } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_SIGNER, ETHERS_RPC } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";

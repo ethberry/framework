@@ -2,7 +2,6 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { ContractStatus, IContract } from "@framework/types";
@@ -43,7 +42,7 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
       {...rest}
     >
       <TextInput name="title" />
-      {/*<RichTextEditor name="description" />*/}
+      {/* <RichTextEditor name="description" /> */}
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

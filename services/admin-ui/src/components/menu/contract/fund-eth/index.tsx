@@ -10,7 +10,7 @@ import type { IContract } from "@framework/types";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
-import { IFundEthDto, FundEthEditDialog } from "./dialog";
+import { FundEthEditDialog, IFundEthDto } from "./dialog";
 
 export interface IFundEthMenuItemProps {
   contract: IContract;
