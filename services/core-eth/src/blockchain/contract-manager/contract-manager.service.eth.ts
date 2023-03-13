@@ -11,6 +11,11 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
+  Erc1155ContractTemplates,
+  Erc20ContractTemplates,
+  Erc721CollectionTemplates,
+  Erc721ContractTemplates,
+  Erc998ContractTemplates,
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
@@ -19,6 +24,7 @@ import {
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
+  MysteryContractTemplates,
   TemplateStatus,
   TokenType,
 } from "@framework/types";
@@ -85,7 +91,10 @@ export class ContractManagerServiceEth {
       decimals: 18,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc20ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC20,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -130,7 +139,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc721ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       chainId,
       royalty: ~~royalty,
@@ -184,7 +196,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: JSON.stringify({ batchSize, owner }),
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc721CollectionTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId,
@@ -258,7 +273,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc998ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC998,
       chainId,
       royalty: ~~royalty,
@@ -311,7 +329,10 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -341,7 +362,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(MysteryContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId,

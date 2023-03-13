@@ -126,7 +126,13 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        args: {
+          // contractTemplate: 'SIMPLE',
+          contractTemplate: Object.values(Erc20ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          cap: dto.cap,
+        },
       },
     );
 
@@ -170,7 +176,15 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        // args: dto,
+        args: {
+          // contractTemplate: 'SIMPLE',
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
       },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };

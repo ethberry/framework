@@ -42,6 +42,7 @@ export enum Erc721ContractFeatures {
 }
 
 export enum Erc721ContractTemplates {
+  "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
   "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
@@ -50,7 +51,6 @@ export enum Erc721ContractTemplates {
   "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
-  "SIMPLE" = "SIMPLE",
   "SOULBOUND" = "SOULBOUND",
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
   "UPGRADEABLE" = "UPGRADEABLE",
@@ -68,6 +68,7 @@ export enum Erc998ContractFeatures {
 }
 
 export enum Erc998ContractTemplates {
+  "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
   "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
   "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
@@ -77,7 +78,6 @@ export enum Erc998ContractTemplates {
   "ERC1155OWNER_ERC20OWNER" = "ERC20OWNER",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
-  "SIMPLE" = "SIMPLE",
   "STATEHASH" = "STATEHASH",
   "UPGRADEABLE" = "UPGRADEABLE",
   "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
@@ -89,8 +89,8 @@ export enum Erc1155ContractFeatures {
 }
 
 export enum Erc1155ContractTemplates {
-  "BLACKLIST" = "BLACKLIST",
   "SIMPLE" = "SIMPLE",
+  "BLACKLIST" = "BLACKLIST",
   "SOULBOUND" = "SOULBOUND",
 }
 
@@ -100,10 +100,9 @@ export enum MysteryContractFeatures {
 }
 
 export enum MysteryContractTemplates {
-  "BLACKLIST" = "BLACKLIST",
+  "SIMPLE" = "SIMPLE",
   "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
   "PAUSABLE" = "PAUSABLE",
-  "SIMPLE" = "SIMPLE",
 }
 
 export enum Erc721CollectionFeatures {
@@ -111,8 +110,8 @@ export enum Erc721CollectionFeatures {
 }
 
 export enum Erc721CollectionTemplates {
-  "BLACKLIST" = "BLACKLIST",
   "SIMPLE" = "SIMPLE",
+  "BLACKLIST" = "BLACKLIST",
 }
 
 export enum PyramidContractFeatures {
