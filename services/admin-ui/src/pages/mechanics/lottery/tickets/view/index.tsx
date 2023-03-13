@@ -3,6 +3,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { ILotteryTicket } from "@framework/types";
 
 import { getNumbers } from "../../utils";
@@ -63,7 +64,9 @@ export const LotteryTicketViewDialog: FC<ILotteryTicketViewDialogProps> = props 
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
-              <TableCell align="right">{account}</TableCell>
+              <TableCell align="right">
+                <AddressLink address={account} />
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -24,8 +24,7 @@ export const StakingReport: FC = () => {
     isFiltersOpen,
     handleSearch,
     handleToggleFilters,
-    handleChangePage,
-    handleChangeRowsPerPage,
+    handleChangePaginationModel,
   } = useCollection<IStakingDeposit, IStakingReportSearchDto>({
     baseUrl: "/staking/report",
     empty: {
@@ -120,11 +119,8 @@ export const StakingReport: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
+        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+        onPaginationModelChange={handleChangePaginationModel}
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}

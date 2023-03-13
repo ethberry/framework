@@ -86,7 +86,7 @@ export class TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+  public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
     const {
       contractFeatures = [],
       templateStatus = [],
@@ -96,7 +96,9 @@ export class TemplateService {
     } = dto;
 
     const where = {
-      contract: {},
+      contract: {
+        chainId: userEntity.chainId,
+      },
     };
 
     if (contractType.length) {

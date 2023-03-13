@@ -1,11 +1,11 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet } from "ethers";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
+  ContractEventType,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
@@ -34,13 +34,8 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
   constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    @Inject(ETHERS_SIGNER)
-    protected readonly ethersSignerProvider: Wallet,
-    protected readonly configService: ConfigService,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
@@ -50,14 +45,14 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
+    super(tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     // Mint token create
     if (from === constants.AddressZero) {
@@ -78,6 +73,19 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
       await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
+
+      // if RANDOM token - update tokenId in exchange asset history
+      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
+        const historyEntity = await this.eventHistoryService.findOne({
+          transactionHash,
+          eventType: ContractEventType.MintRandom,
+        });
+        if (!historyEntity) {
+          throw new NotFoundException("historyNotFound");
+        }
+        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
+        await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
+      }
     }
 
     const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
@@ -86,7 +94,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, erc998TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc998TokenEntity.template.amount += 1;
@@ -152,8 +160,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.eventHistoryService.updateHistory(
       event,
       context,
-      erc998TokenEntity.template.contractId,
       erc998TokenEntity.id,
+      erc998TokenEntity.template.contractId,
     );
 
     childTokenIds.map(async (childTokenId, i) => {
@@ -182,7 +190,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token721NotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     const ownershipEntity = await this.ownershipService.findOne({ childId: erc721TokenEntity.id });
 
@@ -206,7 +214,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
           throw new NotFoundException("childTokenNotFound");
         }
 
-        await this.eventHistoryService.updateHistory(event, context, void 0, childTokenEntity.id);
+        await this.eventHistoryService.updateHistory(event, context, childTokenEntity.id);
 
         const ownershipEntity = await this.ownershipService.findOne({ childId: childTokenEntity.id });
 

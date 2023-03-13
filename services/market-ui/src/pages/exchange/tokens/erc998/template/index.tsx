@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ITemplate, TemplateStatus } from "@framework/types";
@@ -42,8 +42,13 @@ export const Erc998Template: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.imageUrl} alt="Gemunion template image" />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Box
+            component="img"
+            src={selected.imageUrl}
+            alt="Gemunion template image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
             <RichTextDisplay data={selected.description} />
           </Typography>
         </Grid>

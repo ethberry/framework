@@ -1,8 +1,7 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants, providers, Wallet } from "ethers";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
-import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
 import {
@@ -16,7 +15,6 @@ import {
 
 import { ABI } from "./log/interfaces";
 import { getMetadata } from "../../../../common/utils";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -30,14 +28,8 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
   constructor(
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    @Inject(ETHERS_SIGNER)
-    protected readonly ethersSignerProvider: Wallet,
-    protected readonly configService: ConfigService,
-    protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -45,7 +37,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
   ) {
-    super(loggerService, jsonRpcProvider, contractService, tokenService, eventHistoryService);
+    super(tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -101,7 +93,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, void 0, erc721TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;
@@ -135,7 +127,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
-      await this.eventHistoryService.updateHistory(event, context, templateEntity.contract.id, void 0);
+      await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
 
       const batchSize = JSON.parse(templateEntity.contract.description).batchSize
         ? JSON.parse(templateEntity.contract.description).batchSize

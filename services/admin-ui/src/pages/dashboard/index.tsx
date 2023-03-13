@@ -17,7 +17,7 @@ import { Claim } from "./mechanics/claim";
 import { Grade } from "./mechanics/grade";
 import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
-import { Admin } from "./infrastructure/admin";
+import { Admin } from "./infrastructure";
 import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";
@@ -53,10 +53,10 @@ export const Dashboard: FC = () => {
           <Drop />
           <Craft />
           <Grade />
+          <Breed />
           <Lottery />
           <Staking />
           <Pyramid />
-          <Breed />
         </Grid>
         <Grid item xs={12} md={4}>
           <ChainLink />

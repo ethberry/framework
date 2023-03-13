@@ -1,5 +1,5 @@
-import * as Yup from "yup";
+import { array, object } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  files: Yup.array().min(1, "form.validations.valueMissing"),
+export const validationSchema = object().shape({
+  files: array().min(1, "form.validations.valueMissing"),
 });

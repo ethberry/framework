@@ -10,10 +10,7 @@ import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerli.s
 
 import "../../ERC721BlacklistUpgradeableRentableRandom.sol";
 
-abstract contract ERC721BlacklistUpgradeableRentableRandomGoerli is
-  ERC721BlacklistUpgradeableRentableRandom,
-  ChainLinkGoerli
-{
+contract ERC721BlacklistUpgradeableRentableRandomGoerli is ERC721BlacklistUpgradeableRentableRandom, ChainLinkGoerli {
   constructor(
     string memory name,
     string memory symbol,

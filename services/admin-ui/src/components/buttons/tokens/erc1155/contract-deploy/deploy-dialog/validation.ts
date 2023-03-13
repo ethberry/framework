@@ -1,8 +1,8 @@
-import * as Yup from "yup";
+import { number, object, string } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  baseTokenURI: Yup.string().required("form.validations.valueMissing"),
-  royalty: Yup.number()
+export const validationSchema = object().shape({
+  baseTokenURI: string().required("form.validations.valueMissing"),
+  royalty: number()
     .typeError("form.validations.badInput")
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")

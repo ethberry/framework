@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -12,15 +12,15 @@ import type { ITemplate } from "@framework/types";
 import { ContractFeatures, GradeAttribute } from "@framework/types";
 
 import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
+import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";
 
 import { useStyles } from "./styles";
-import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 
 export const Erc721Token: FC = () => {
-  const { selected, isLoading, search, handleChangeRowsPerPage, handleChangePage } = useCollection<ITokenWithHistory>({
+  const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
     baseUrl: "/erc721-tokens",
     empty: {
       template: {
@@ -52,8 +52,13 @@ export const Erc721Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.template!.imageUrl} alt="Gemunion token image" />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Box
+            component="img"
+            src={selected.template!.imageUrl}
+            alt="Gemunion token image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ my: 1 }}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
@@ -100,8 +105,7 @@ export const Erc721Token: FC = () => {
           token={selected}
           isLoading={isLoading}
           search={search}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          handleChangePaginationModel={handleChangePaginationModel}
         />
       </Grid>
     </Fragment>

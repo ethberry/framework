@@ -10,7 +10,7 @@ import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion
 
 import "../../ERC721BlacklistUpgradeableRentableRandom.sol";
 
-abstract contract ERC721BlacklistUpgradeableRentableRandomGemunion is
+contract ERC721BlacklistUpgradeableRentableRandomGemunion is
   ERC721BlacklistUpgradeableRentableRandom,
   ChainLinkGemunion
 {

@@ -10,6 +10,7 @@ import { testChainId } from "@framework/constants";
 
 import { EventHistoryEntity } from "./event-history.entity";
 import { ContractService } from "../hierarchy/contract/contract.service";
+import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
 
 @Injectable()
 export class EventHistoryService {
@@ -37,9 +38,9 @@ export class EventHistoryService {
     const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("history");
     queryBuilder.select();
     queryBuilder.andWhere("history.eventType = :eventType", {
-      eventType: ContractEventType.RandomnessRequestId,
+      eventType: ChainLinkEventType.RandomWordsRequested,
     });
-    queryBuilder.andWhere(`history.event_data->>'_requestID' = :_requestID`, { _requestID: requestId });
+    queryBuilder.andWhere(`history.event_data->>'requestId' = :requestId`, { requestId });
     return await queryBuilder.getOne();
   }
 

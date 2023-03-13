@@ -1,9 +1,9 @@
 import type { IIdBase } from "@gemunion/types-collection";
 import type { TokenType } from "@gemunion/types-blockchain";
 
-import { IContract } from "../hierarchy/contract";
-import { ITemplate } from "../hierarchy/template";
-import { IAsset } from "./asset";
+import type { IContract } from "../hierarchy/contract";
+import type { ITemplate } from "../hierarchy/template";
+import type { IAsset } from "./asset";
 
 export interface IAssetComponent extends IIdBase {
   tokenType: TokenType;

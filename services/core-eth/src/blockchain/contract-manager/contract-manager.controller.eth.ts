@@ -93,6 +93,6 @@ export class ContractManagerControllerEth {
     @Payload() event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>,
     @Ctx() ctx: Log,
   ): Promise<void> {
-    return this.contractManagerServiceEth.mysterybox(event, ctx);
+    return this.contractManagerServiceEth.mysteryBox(event, ctx);
   }
 }

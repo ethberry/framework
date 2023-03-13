@@ -1,33 +1,41 @@
 import { FC } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridCellParams, useGridApiRef } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
 
+import { ExchangeType, IAsset, IAssetComponent, IBreed, IEventHistory, IToken } from "@framework/types";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { AddressLink, TxHashLink } from "@gemunion/mui-scanner";
-import { ExchangeType, IAsset, IBreed, IEventHistory, IToken } from "@framework/types";
+import { IHandleChangePaginationModelProps } from "@gemunion/react-hooks";
 
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
-
-import { useStyles } from "./styles";
 
 export interface ITokenWithHistory extends IToken {
   contractHistory?: Array<IEventHistory>;
   breeds?: Array<IBreed>;
 }
 
+export interface ITokenHistoryCombined {
+  price: { components: Array<IAssetComponent> };
+  from: string;
+  to: string;
+  type: string;
+  date: string;
+  tx: string;
+  id: number;
+}
+
 export interface ITokenHistoryProps {
   token: ITokenWithHistory;
   isLoading: boolean;
   search: any;
-  handleChangePage: (_e: React.ChangeEvent<unknown>, page: number) => void;
-  handleChangeRowsPerPage: any;
+  handleChangePaginationModel: (props: IHandleChangePaginationModelProps) => void;
 }
 
 export const TokenHistory: FC<ITokenHistoryProps> = props => {
-  const { token, isLoading, search, handleChangePage, handleChangeRowsPerPage } = props;
-  const classes = useStyles();
+  const { token, isLoading, search, handleChangePaginationModel } = props;
   const { formatMessage } = useIntl();
   const apiRef = useGridApiRef();
 
@@ -61,7 +69,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       }) || [];
 
   const contractHistory =
-    token.contractHistory?.map(history => {
+    token.history?.map(history => {
       return {
         price: {
           components: [] as Array<any>,
@@ -77,32 +85,11 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       };
     }) || [];
 
-  // const breedHistoryArr =
-  //   token.breeds?.map(breed => {
-  //     return breed.children!.map(child => {
-  //       return {
-  //         price: {
-  //           components: [] as Array<any>,
-  //         },
-  //         // @ts-ignore
-  //         from: (child.history.eventData.from as string) || (child.history.eventData.owner as string),
-  //         // @ts-ignore
-  //         to: child.history.eventData.to || child.history.eventData.approved || "",
-  //         type: child.history?.eventType as string,
-  //         date: child.history?.updatedAt || "",
-  //         tx: child.history?.transactionHash || "",
-  //         // quantity: 1,
-  //       };
-  //     });
-  //   }) || [];
-  //
-  // const breedHistory = breedHistoryArr?.flat();
-
-  const fullTokenHistory = contractHistory
-    ?.concat(exchangeHistory)
-    // .concat(breedHistory)
+  const fullTokenHistory: Array<ITokenHistoryCombined> = contractHistory
+    .concat(exchangeHistory)
     .sort(sorter("date"))
     .map((history, i: number) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return Object.assign(history, { id: i });
     });
 
@@ -131,11 +118,11 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
         }
         return (
           value ?
-            <ul className={classes.price}>
+            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
               {value.split(", ").map((item: string, index: number) => (
                 <li key={index}>{item}</li>
               ))}
-            </ul> : null
+            </Box> : null
         );
       },
       flex: 1.3,
@@ -193,27 +180,26 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
     }
   ];
 
-  return fullTokenHistory && fullTokenHistory.length ? (
-    <Grid item xs={12}>
-      <Typography variant="h5" className={classes.title}>
-        <FormattedMessage id="pages.history.token.title" />
-      </Typography>
-      <DataGrid
-        pagination
-        paginationMode="server"
-        rowCount={fullTokenHistory.length}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
-        pageSizeOptions={[5, 10, 25]}
-        loading={isLoading}
-        columns={columns}
-        rows={fullTokenHistory}
-        getRowId={row => row.id}
-        autoHeight
-      />
-    </Grid>
-  ) : null;
+  return (
+    <ProgressOverlay isLoading={isLoading} wrapperSx={{ width: "100%" }}>
+      <Grid item xs={12}>
+        <Typography variant="h5" sx={{ my: 1 }}>
+          <FormattedMessage id="pages.history.token.title" />
+        </Typography>
+        <DataGrid
+          pagination
+          paginationMode="server"
+          rowCount={fullTokenHistory.length}
+          paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+          onPaginationModelChange={handleChangePaginationModel}
+          pageSizeOptions={[5, 10, 25]}
+          loading={isLoading}
+          columns={columns}
+          rows={fullTokenHistory}
+          getRowId={row => row.id}
+          autoHeight
+        />
+      </Grid>
+    </ProgressOverlay>
+  );
 };

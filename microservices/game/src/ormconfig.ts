@@ -1,6 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
@@ -15,6 +16,7 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    MerchantEntity,
     UserEntity,
     AssetEntity,
     AssetComponentEntity,

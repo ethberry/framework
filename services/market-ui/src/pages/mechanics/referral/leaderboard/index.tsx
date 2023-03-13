@@ -12,7 +12,7 @@ import { IReferralLeaderboard } from "@framework/types";
 import { formatEther } from "../../../../utils/money";
 
 export const ReferralLeaderboard: FC = () => {
-  const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
+  const { rows, search, count, isLoading, handleSearch, handleChangePaginationModel } =
     useCollection<IReferralLeaderboard>({
       baseUrl: "/referral/leaderboard",
       empty: {
@@ -64,11 +64,8 @@ export const ReferralLeaderboard: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
+        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+        onPaginationModelChange={handleChangePaginationModel}
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}

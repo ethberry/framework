@@ -16,7 +16,7 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
-  IVestingDeployDto,
+  IVestingContractDeployDto,
   MysteryContractTemplates,
   VestingContractTemplate,
 } from "@framework/types";
@@ -30,7 +30,6 @@ import VestingGradedSol from "@framework/core-contracts/artifacts/contracts/Mech
 import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
 import ERC721BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistRandom.sol/ERC721BlacklistRandom.json";
 import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesGemunion.sol/ERC721GenesGoerli.json";
@@ -43,6 +42,7 @@ import ERC721BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/c
 import ERC721BlacklistUpgradeableRandom from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRandomGemunion.sol/ERC721BlacklistUpgradeableRandomGemunion.json";
 import ERC721BlacklistUpgradeableRentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRentable.sol/ERC721BlacklistUpgradeableRentable.json";
 import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
+// import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/besu/ERC721BlacklistUpgradeableRentableRandomBesu.sol/ERC721BlacklistUpgradeableRentableRandomBesu.json";
 
 import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
@@ -127,7 +127,6 @@ export class ContractManagerSignService {
   public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
-
     const params = {
       nonce,
       bytecode,
@@ -348,10 +347,10 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public async vesting(dto: IVestingDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
     const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
+    const bytecode = this.getBytecodeByVestingContractTemplate(dto);
     const params = {
       nonce,
       bytecode,
@@ -416,7 +415,6 @@ export class ContractManagerSignService {
 
   public getBytecodeByErc721ContractTemplates(dto: IErc721ContractDeployDto) {
     const { contractTemplate } = dto;
-
     switch (contractTemplate) {
       case Erc721ContractTemplates.BLACKLIST:
         return ERC721BlackListSol.bytecode;
@@ -500,7 +498,9 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(contractTemplate: VestingContractTemplate) {
+  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto) {
+    const { contractTemplate } = dto;
+
     switch (contractTemplate) {
       case VestingContractTemplate.LINEAR:
         return VestingLinearSol.bytecode;

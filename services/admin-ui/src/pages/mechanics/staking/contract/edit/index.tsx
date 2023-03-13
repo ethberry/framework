@@ -19,11 +19,12 @@ export interface IStakingEditDialogProps {
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, imageUrl, contractStatus, address, name, chainId, contractFeatures } = initialValues;
+  const { id, title, description, imageUrl, contractStatus, address, name, chainId, contractFeatures } = initialValues;
 
   const fixedValues = {
     id,
     title,
+    description,
     address,
     contractStatus,
     imageUrl,

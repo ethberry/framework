@@ -32,6 +32,10 @@ export class PaymentSplitterControllerEth {
       eventName: ExchangeEventType.PaymentReceived,
     },
     {
+      contractType: ContractType.EXCHANGE,
+      eventName: ExchangeEventType.PaymentEthReceived,
+    },
+    {
       contractType: ContractType.PYRAMID,
       eventName: ExchangeEventType.PaymentReceived,
     },

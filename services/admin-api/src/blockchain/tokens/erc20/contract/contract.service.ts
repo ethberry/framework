@@ -5,7 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
-import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -50,6 +50,7 @@ export class Erc20ContractService extends ContractService {
         royalty: 0,
         contractType: TokenType.ERC20,
         contractFeatures: [ContractFeatures.EXTERNAL],
+        contractStatus: ContractStatus.ACTIVE,
         name: title,
         title,
         description,

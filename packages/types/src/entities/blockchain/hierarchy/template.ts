@@ -1,8 +1,8 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import { IAsset } from "../exchange/asset";
-import { IContract } from "./contract";
-import { IToken } from "./token";
+import type { IAsset } from "../exchange/asset";
+import type { IContract } from "./contract";
+import type { IToken } from "./token";
 
 export enum TemplateStatus {
   ACTIVE = "ACTIVE",

@@ -15,12 +15,20 @@ export const Personal: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/my-wallet">
+        <ListItem button component={RouterLink} to="/wallet">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.my-wallet.title" />
+            <FormattedMessage id="pages.wallet.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/transactions">
+          <ListItemIcon>
+            <Storefront />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.transactions.title" />
           </ListItemText>
         </ListItem>
       </List>

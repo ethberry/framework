@@ -1,19 +1,19 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Logger } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { EnabledLanguages, testChainId } from "@framework/constants";
-import { UserRole, UserStatus } from "@framework/types";
+import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "../../ormconfig";
 import { UserService } from "./user.service";
-import { UserSeedService } from "./user.seed.service";
-import { UserSeedModule } from "./user.seed.module";
 import { UserEntity } from "./user.entity";
 import { AuthModule } from "../auth/auth.module";
-import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { UserSeedModule } from "./user.seed.module";
+import { UserSeedService } from "./user.seed.service";
+import { EnabledLanguages, testChainId } from "@framework/constants";
+import { UserRole, UserStatus } from "@framework/types";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -34,8 +34,8 @@ describe("UserService", () => {
         }),
         GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([UserEntity]),
-        UserSeedModule,
         AuthModule,
+        UserSeedModule,
       ],
       providers: [Logger, UserService, UserSeedService],
     }).compile();
@@ -44,12 +44,12 @@ describe("UserService", () => {
     userSeedService = module.get<UserSeedService>(UserSeedService);
   });
 
-  afterEach(async () => {
-    await userSeedService.tearDown();
-  });
-
-  it("should be defined", () => {
-    expect(userService).toBeDefined();
+  describe("findOne", () => {
+    it("should find user", async () => {
+      const entities = await userSeedService.setup();
+      const userEntity = await userService.findOne({ id: entities.users[0].id });
+      expect(userEntity?.email).toEqual(entities.users[0].email);
+    });
   });
 
   describe("import", () => {

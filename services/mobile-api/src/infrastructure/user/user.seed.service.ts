@@ -3,22 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { UserEntity } from "./user.entity";
-import { EnabledLanguages, imageUrl } from "@framework/constants";
-import { IUser, UserRole, UserStatus } from "@framework/types";
-
-export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
-  return Object.assign(
-    {
-      language: EnabledLanguages.EN,
-      userRoles: [UserRole.USER],
-      userStatus: UserStatus.ACTIVE,
-      displayName: "Trej",
-      imageUrl,
-      comment: "Fraud!",
-    },
-    data,
-  );
-};
+import { generateTestUser } from "../../test";
 
 @Injectable()
 export class UserSeedService {

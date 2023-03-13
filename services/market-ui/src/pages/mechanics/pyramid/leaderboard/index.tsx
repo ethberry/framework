@@ -21,8 +21,7 @@ export const PyramidLeaderboard: FC = () => {
     isLoading,
     isFiltersOpen,
     handleSearch,
-    handleChangeRowsPerPage,
-    handleChangePage,
+    handleChangePaginationModel,
     handleToggleFilters,
   } = useCollection<IPyramidLeaderboard, IPyramidLeaderboardSearchDto>({
     baseUrl: "/pyramid/leaderboard",
@@ -49,7 +48,7 @@ export const PyramidLeaderboard: FC = () => {
       renderCell: (params: GridCellParams) => {
         const row = params.row as IPyramidLeaderboard;
         // @ts-ignore
-        const index: number = params.api.getRowIndex(row.id);
+        const index: number = params.api.getRowIndexRelativeToVisibleRows(row.id);
         return (
           <Grid container direction="row" alignItems="center">
             {row.rank === PyramidLeaderboardRank.GOLD ? <Filter1 /> : null}
@@ -110,11 +109,8 @@ export const PyramidLeaderboard: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
+        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+        onPaginationModelChange={handleChangePaginationModel}
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}

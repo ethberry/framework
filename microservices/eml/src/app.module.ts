@@ -8,8 +8,7 @@ import { IMailjetOptions, MailjetModule } from "@gemunion/nest-js-module-mailjet
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { companyName } from "@framework/constants";
 
-import { EmailModule } from "./email/email.module";
-import { HealthModule } from "./health/health.module";
+import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 
 @Module({
   imports: [
@@ -40,8 +39,7 @@ import { HealthModule } from "./health/health.module";
       },
     }),
     RequestLoggerModule,
-    HealthModule,
-    EmailModule,
+    InfrastructureModule,
   ],
 })
 export class AppModule {}

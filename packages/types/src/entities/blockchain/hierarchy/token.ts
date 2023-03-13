@@ -1,10 +1,10 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { ITemplate } from "./template";
-import { IBalance } from "./balance";
-import { IOwnership } from "./ownership";
-import { IAssetComponentHistory } from "../exchange/asset-component-history";
-import { IEventHistory } from "../event-history";
+import type { ITemplate } from "./template";
+import type { IBalance } from "./balance";
+import type { IOwnership } from "./ownership";
+import type { IAssetComponentHistory } from "../exchange/asset-component-history";
+import type { IEventHistory } from "../event-history";
 
 export enum TokenStatus {
   MINTED = "MINTED",

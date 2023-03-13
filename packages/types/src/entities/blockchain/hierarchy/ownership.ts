@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IToken } from "./token";
+import type { IToken } from "./token";
 
 export interface IOwnership extends IIdDateBase {
   parentId: number;

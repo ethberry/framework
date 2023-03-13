@@ -1,8 +1,8 @@
-import * as Yup from "yup";
+import { object, string } from "yup";
 
 import { tokenAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
-export const validationSchema = Yup.object().shape({
+export const validationSchema = object().shape({
   token: tokenAssetValidationSchema,
-  address: Yup.string().required("form.validations.valueMissing"),
+  address: string().required("form.validations.valueMissing"),
 });

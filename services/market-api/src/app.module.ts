@@ -16,7 +16,6 @@ import { FirebaseModule } from "@gemunion/nest-js-module-firebase";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
-import { HealthModule } from "./health/health.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 
@@ -86,9 +85,8 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
     }),
     RequestLoggerModule,
     GemunionThrottlerModule,
-    HealthModule,
-    InfrastructureModule,
     BlockchainModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
 })

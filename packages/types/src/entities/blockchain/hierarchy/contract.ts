@@ -1,11 +1,11 @@
 import type { ISearchable } from "@gemunion/types-collection";
 import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
-import { IEventHistory } from "../event-history";
+import type { IEventHistory } from "../event-history";
 
-import { ITemplate } from "./template";
+import type { ITemplate } from "./template";
+import type { IComposition } from "./composition";
 import { ModuleType } from "../common";
-import { IComposition } from "./composition";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -172,7 +172,7 @@ export enum ContractFeatures {
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
   "PAUSABLE" = "PAUSABLE",
-  "USABLE" = "USABLE",
+  "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
   // MODULE:VESTING
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100

@@ -13,9 +13,9 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
-import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
-import { MetadataModule } from "./blockchain/metadata/metadata.module";
+import { InfrastructureModule } from "./infrastructure/infrastructure.module";
+import { BlockchainModule } from "./blockchain/blockchain.module";
 
 @Module({
   providers: [
@@ -59,8 +59,8 @@ import { MetadataModule } from "./blockchain/metadata/metadata.module";
       },
     }),
     RequestLoggerModule,
-    HealthModule,
-    MetadataModule,
+    BlockchainModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
 })

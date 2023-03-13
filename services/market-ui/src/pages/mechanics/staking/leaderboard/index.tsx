@@ -21,8 +21,7 @@ export const StakingLeaderboard: FC = () => {
     isLoading,
     isFiltersOpen,
     handleSearch,
-    handleChangeRowsPerPage,
-    handleChangePage,
+    handleChangePaginationModel,
     handleToggleFilters,
   } = useCollection<IStakingLeaderboard, IStakingLeaderboardSearchDto>({
     baseUrl: "/staking/leaderboard",
@@ -49,7 +48,7 @@ export const StakingLeaderboard: FC = () => {
       renderCell: (params: GridCellParams) => {
         const row = params.row as IStakingLeaderboard;
         // @ts-ignore
-        const index: number = params.api.getRowIndex(row.id);
+        const index: number = params.api.getRowIndexRelativeToVisibleRows(row.id);
         return (
           <Grid container direction="row" alignItems="center">
             {row.rank === StakingLeaderboardRank.GOLD ? <Filter1 /> : null}
@@ -110,11 +109,8 @@ export const StakingLeaderboard: FC = () => {
         pagination
         paginationMode="server"
         rowCount={count}
-        paginationModel={{ page: search.skip / search.take + 1, pageSize: search.take }}
-        onPaginationModelChange={({ page, pageSize }) => {
-          handleChangePage(null as any, page + 1);
-          handleChangeRowsPerPage(pageSize);
-        }}
+        paginationModel={{ page: search.skip / search.take, pageSize: search.take }}
+        onPaginationModelChange={handleChangePaginationModel}
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}

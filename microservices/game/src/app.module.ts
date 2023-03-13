@@ -14,7 +14,6 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
-import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
@@ -74,7 +73,6 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
       },
     }),
     RequestLoggerModule,
-    HealthModule,
     BlockchainModule,
     InfrastructureModule,
   ],

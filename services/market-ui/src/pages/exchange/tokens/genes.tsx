@@ -25,8 +25,12 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
         .slice(0, 6)
         .map(([key, value], i) => (
           <Grid key={i} container>
-            <Grid xs={6}>{key}</Grid>
-            <Grid xs={6}>{value}</Grid>
+            <Grid item xs={6}>
+              {key}
+            </Grid>
+            <Grid item xs={6}>
+              {value}
+            </Grid>
           </Grid>
         ))}
     </Grid>

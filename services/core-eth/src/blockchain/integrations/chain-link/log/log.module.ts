@@ -23,11 +23,14 @@ import { abiEncode, keccak256It } from "../utils";
 
         const randomTokens = await contractService.findAllTokensByType(void 0, [ContractFeatures.RANDOM]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
-
+        console.log("randomTokens", randomTokens);
         const topics = [
-          keccak256It(ChainLinkEventSignatures.RandomnessRequestId as string),
+          keccak256It(ChainLinkEventSignatures.RandomWordsRequested as string),
+          null,
+          null,
           [...new Set(randomTokens.address?.map(addr => abiEncode(addr, "address")))],
         ];
+        console.log("topics", topics);
         return {
           contract: {
             contractType: ChainLinkType.VRF,
@@ -35,7 +38,7 @@ import { abiEncode, keccak256It } from "../utils";
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [
-              ChainLinkEventType.RandomnessRequestId,
+              ChainLinkEventType.RandomWordsRequested,
             ],
             topics,
           },

@@ -21,9 +21,9 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
       case TokenAttributes.RARITY:
         Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
         break;
-      case TokenAttributes.TEMPLATE_ID:
-        Object.assign(memo, { [key]: ~~value });
-        break;
+      // case TokenAttributes.TEMPLATE_ID:
+      //   Object.assign(memo, { [key]: ~~value });
+      //   break;
       default:
         break;
     }
