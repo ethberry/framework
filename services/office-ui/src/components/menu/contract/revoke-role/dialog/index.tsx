@@ -12,7 +12,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import type { IAccessControl, IUser } from "@framework/types";
 
-import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
+import RevokeRoleABI from "./revokeRole.abi.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
@@ -38,7 +38,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   );
 
   const metaRevokeRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, IAccessControlSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, RevokeRoleABI, web3Context.provider?.getSigner());
     return contract.revokeRole(values.role, values.address) as Promise<void>;
   });
 

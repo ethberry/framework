@@ -8,7 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
 
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
+import SetRulesABI from "./setRules.abi.json";
+import UpdateRuleABI from "./updateRule.abi.json";
 
 export interface IStakingUploadButtonProps {
   rule: IStakingRule;
@@ -43,7 +44,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       active: true, // todo add var in interface
     };
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, SetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -62,7 +63,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       ruleStatus = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, UpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 

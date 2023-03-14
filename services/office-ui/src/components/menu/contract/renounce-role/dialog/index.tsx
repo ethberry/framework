@@ -12,7 +12,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import type { IAccessControl, IUser } from "@framework/types";
 
-import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
+import RenounceRoleABI from "./renounceRole.abi.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
@@ -38,7 +38,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
   );
 
   const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, IAccessControlSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, RenounceRoleABI, web3Context.provider?.getSigner());
     return contract.renounceRole(values.role, values.address) as Promise<void>;
   });
 

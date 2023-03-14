@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
+import TransferOwnershipABI from "./transferOwnership.abi.json";
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipMenuItemProps {
@@ -21,7 +21,7 @@ export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = pr
   const [isOwnershipDialogOpen, setIsOwnershipDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.address, VestingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.address, TransferOwnershipABI, web3Context.provider?.getSigner());
     return contract.transferOwnership(values.account) as Promise<any>;
   });
 
