@@ -10,6 +10,7 @@ import type { IPyramidContractDeployDto } from "@framework/types";
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
+import { PyramidContractTemplates } from "@framework/types";
 
 export interface IPyramidContractDeployButtonProps {
   className?: string;
@@ -32,7 +33,12 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
           nonce,
           bytecode: sign.bytecode,
         },
-        values,
+        // values,
+        {
+          payees: values.payees,
+          shares: values.shares,
+          contractTemplate: Object.values(PyramidContractTemplates).indexOf(values.contractTemplate).toString(),
+        },
         sign.signature,
       ) as Promise<void>;
     },

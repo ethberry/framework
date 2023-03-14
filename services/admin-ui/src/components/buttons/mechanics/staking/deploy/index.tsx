@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IStakingContractDeployDto } from "@framework/types";
+import { IStakingContractDeployDto, StakingContractTemplates } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
@@ -32,7 +32,11 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
           nonce,
           bytecode: sign.bytecode,
         },
-        values,
+        // values,
+        {
+          maxStake: values.maxStake,
+          contractTemplate: Object.values(StakingContractTemplates).indexOf(values.contractTemplate).toString(),
+        },
         sign.signature,
       ) as Promise<void>;
     },

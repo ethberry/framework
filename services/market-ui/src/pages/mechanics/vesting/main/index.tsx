@@ -10,7 +10,7 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import type { IContract, IVestingParams, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
-import { emptyVestingContract } from "../../../../components/common/interfaces/empty-contract";
+import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
 import { formatDistance } from "date-fns";

@@ -4,6 +4,8 @@ import { utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IPyramidContractDeployDto, IStakingContractDeployDto } from "@framework/types";
+
 import {
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
@@ -16,8 +18,6 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
-  IPyramidContractDeployDto,
-  IStakingContractDeployDto,
   IVestingContractDeployDto,
   MysteryContractTemplates,
   PyramidContractTemplates,
@@ -66,7 +66,7 @@ import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/E
 import ERC1155SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json";
 
 import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
-import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
+// import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
 
@@ -127,7 +127,6 @@ export class ContractManagerSignService {
       {
         params,
         args: {
-          // contractTemplate: 'SIMPLE',
           contractTemplate: Object.values(Erc20ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
@@ -176,9 +175,7 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        // args: dto,
         args: {
-          // contractTemplate: 'SIMPLE',
           contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
@@ -222,14 +219,21 @@ export class ContractManagerSignService {
           { name: "symbol", type: "string" },
           { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
-          { name: "contractTemplate", type: "string" },
           { name: "batchSize", type: "uint96" },
+          { name: "contractTemplate", type: "string" },
         ],
       },
       // Values
       {
         params,
-        args: dto,
+        args: {
+          name: dto.name,
+          symbol: dto.symbol,
+          royalty: dto.royalty,
+          baseTokenURI: dto.baseTokenURI,
+          batchSize: dto.batchSize,
+          contractTemplate: Object.values(Erc721CollectionTemplates).indexOf(dto.contractTemplate).toString(),
+        },
       },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -273,7 +277,13 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        args: {
+          contractTemplate: Object.values(Erc998ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
       },
     );
 
@@ -316,7 +326,11 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        args: {
+          contractTemplate: Object.values(Erc1155ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
       },
     );
 
@@ -362,7 +376,13 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        args: {
+          contractTemplate: Object.values(MysteryContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
       },
     );
 
@@ -383,7 +403,7 @@ export class ContractManagerSignService {
       account,
       startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
       duration: duration * 60 * 60 * 24, // in seconds
-      contractTemplate,
+      contractTemplate: Object.values(VestingContractTemplate).indexOf(contractTemplate).toString(),
     };
 
     const signature = await this.signer._signTypedData(
@@ -450,15 +470,19 @@ export class ContractManagerSignService {
           { name: "bytecode", type: "bytes" },
         ],
         PyramidArgs: [
-          { name: "contractTemplate", type: "string" },
           { name: "payees", type: "address[]" },
           { name: "shares", type: "uint256[]" },
+          { name: "contractTemplate", type: "string" },
         ],
       },
       // Values
       {
         params,
-        args: dto,
+        args: {
+          payees: dto.payees,
+          shares: dto.shares,
+          contractTemplate: Object.values(PyramidContractTemplates).indexOf(dto.contractTemplate).toString(),
+        },
       },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -493,14 +517,17 @@ export class ContractManagerSignService {
           { name: "bytecode", type: "bytes" },
         ],
         StakingArgs: [
-          { name: "contractTemplate", type: "string" },
           { name: "maxStake", type: "uint256" },
+          { name: "contractTemplate", type: "string" },
         ],
       },
       // Values
       {
         params,
-        args: dto,
+        args: {
+          maxStake: dto.maxStake,
+          contractTemplate: Object.values(StakingContractTemplates).indexOf(dto.contractTemplate).toString(),
+        },
       },
     );
 
@@ -629,8 +656,6 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case MysteryContractTemplates.SIMPLE:
         return MysteryboxSimpleSol.bytecode;
-      case MysteryContractTemplates.BLACKLIST:
-        return MysteryboxBlacklistSol.bytecode;
       case MysteryContractTemplates.PAUSABLE:
         return MysteryboxPausableSol.bytecode;
       case MysteryContractTemplates.BLACKLIST_PAUSABLE:
@@ -669,9 +694,11 @@ export class ContractManagerSignService {
 
   public getBytecodeByPyramidContractTemplate(dto: IPyramidContractDeployDto) {
     const { contractTemplate } = dto;
-
+    console.log("getBytecodeByPyramidContractTemplatedto", dto);
     switch (contractTemplate) {
       case PyramidContractTemplates.SIMPLE:
+        return PyramidSol.bytecode;
+      case PyramidContractTemplates.SPLITTER:
         return PyramidSol.bytecode;
       case PyramidContractTemplates.REFERRAL:
         return PyramidReferralSol.bytecode;

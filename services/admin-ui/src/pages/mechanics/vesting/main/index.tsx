@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Button,
   Grid,
@@ -10,7 +10,8 @@ import {
   Pagination,
   Tooltip,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { FilterList, Visibility, AccountBalanceWallet } from "@mui/icons-material";
+
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -25,6 +26,8 @@ import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/vesting";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
+
 import { format, parseISO } from "date-fns";
 
 export const Vesting: FC = () => {
@@ -52,6 +55,25 @@ export const Vesting: FC = () => {
   });
 
   const { formatMessage } = useIntl();
+
+  const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
+
+  const [contract, setContract] = useState<IContract>({} as IContract);
+
+  const handleWithdraw = (contract: IContract): (() => void) => {
+    return (): void => {
+      setContract(contract);
+      setIsWithdrawDialogOpen(true);
+    };
+  };
+
+  const handleWithdrawConfirm = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
+  const handleWithdrawCancel = () => {
+    setIsWithdrawDialogOpen(false);
+  };
 
   return (
     <Grid>
@@ -83,9 +105,12 @@ export const Vesting: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
+                <IconButton onClick={handleView(vesting)}>
+                  <Visibility />
+                </IconButton>
                 <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleView(vesting)}>
-                    <Visibility />
+                  <IconButton onClick={handleWithdraw(vesting)}>
+                    <AccountBalanceWallet />
                   </IconButton>
                 </Tooltip>
                 <VestingActionsMenu vesting={vesting} />
@@ -108,6 +133,13 @@ export const Vesting: FC = () => {
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
         initialValues={selected}
+      />
+
+      <BalanceWithdrawDialog
+        onConfirm={handleWithdrawConfirm}
+        onCancel={handleWithdrawCancel}
+        open={isWithdrawDialogOpen}
+        initialValues={contract}
       />
     </Grid>
   );

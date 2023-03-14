@@ -27,7 +27,11 @@ export const PyramidContractDeployDialog: FC<IPyramidContractDeployDialogProps> 
       testId="PyramidContractDeployForm"
       {...props}
     >
-      <SelectInput name="contractTemplate" options={PyramidContractTemplates} />
+      <SelectInput
+        name="contractTemplate"
+        options={PyramidContractTemplates}
+        disabledOptions={[PyramidContractTemplates.SPLITTER]}
+      />
       <TextInput name="payees" />
       <TextInput name="shares" />
     </FormDialog>
