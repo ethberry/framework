@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
-import { RmqProviderType, ILotteryOption } from "@framework/types";
+import { ILotteryOption, RmqProviderType } from "@framework/types";
 import { RoundServiceRmq } from "./round.service.rmq";
 
 @Controller()

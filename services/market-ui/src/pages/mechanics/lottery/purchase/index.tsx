@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 
-import { ILotteryOption, CronExpression } from "@framework/types";
+import { CronExpression, ILotteryOption } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";

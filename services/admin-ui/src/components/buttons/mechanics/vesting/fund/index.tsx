@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Contract, constants, BigNumber } from "ethers";
+import { BigNumber, constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";

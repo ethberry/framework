@@ -90,4 +90,6 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @IsOptional()
   @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
+
+  merchantId: number;
 }

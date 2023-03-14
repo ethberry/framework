@@ -54,14 +54,14 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
         email: firebaseUser?.email,
         language: EnabledLanguages.EN,
         imageUrl: firebaseUser?.photoURL,
-        userRoles: [UserRole.USER],
+        userRoles: [UserRole.CUSTOMER],
         userStatus: UserStatus.ACTIVE,
         sub: data.sub,
         chainId,
       });
     }
 
-    const roles = [UserRole.USER, UserRole.ADMIN];
+    const roles = [UserRole.ADMIN, UserRole.OWNER, UserRole.MANAGER, UserRole.CUSTOMER];
     if (!userEntity.userRoles.some(role => roles.includes(role))) {
       throw new UnauthorizedException("userHasWrongRole");
     }

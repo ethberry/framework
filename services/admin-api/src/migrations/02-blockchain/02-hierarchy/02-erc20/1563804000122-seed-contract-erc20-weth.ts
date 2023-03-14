@@ -28,6 +28,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         contract_type,
         contract_features,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -46,6 +47,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         'ERC20',
         '{EXTERNAL}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -64,6 +66,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         'ERC20',
         '{EXTERNAL}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -82,6 +85,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         'ERC20',
         '{EXTERNAL}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -100,6 +104,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         'ERC20',
         '{EXTERNAL}',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -139,12 +139,24 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: 0,
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
         },
       ],
     });

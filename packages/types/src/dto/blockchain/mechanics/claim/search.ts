@@ -6,4 +6,5 @@ export interface IClaimSearchDto extends IPaginationDto {
   account: string;
   claimStatus: Array<ClaimStatus>;
   templateIds: Array<number>;
+  merchantId: number;
 }

@@ -12,7 +12,7 @@ import { TokenType } from "@framework/types";
 
 import ApproveERC20ABI from "./approve.erc20.abi.json";
 
-import { VestingAllowanceDialog, IVestingAllowanceDto } from "./dialog";
+import { IVestingAllowanceDto, VestingAllowanceDialog } from "./dialog";
 
 export interface IVestingAllowanceMenuProps {
   contract: IContract;

@@ -12,7 +12,7 @@ import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
 
 import AllowanceERC20ABI from "./allowance.erc20.abi.json";
 
-import { IAllowanceDto, DepositAllowanceDialog } from "../../dialogs/deposit-allowance";
+import { DepositAllowanceDialog, IAllowanceDto } from "../../dialogs/deposit-allowance";
 
 export interface IStakingDepositAllowanceButtonProps {
   rule: IStakingRule | IPyramidRule;

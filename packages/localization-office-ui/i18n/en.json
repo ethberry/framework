@@ -1,0 +1,668 @@
+{
+  "components": {
+    "dropzone": {
+      "file-invalid-type": "You can't upload {type} only {accept} are allowed",
+      "file-too-large": "File is {size}, maximum file size is {maxSize}",
+      "file-too-small": "File is {size}, minimum file size is {minSize}",
+      "too-many-files": "Too many files"
+    },
+    "header": {
+      "language": {
+        "switch": "Switch Language"
+      },
+      "menu": {
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "logout": "Logout",
+        "profile": "Profile"
+      },
+      "theme": {
+        "switch": "Switch theme"
+      },
+      "wallet": {
+        "connect": "Connect wallet",
+        "menu": "Account"
+      }
+    }
+  },
+  "dialogs": {
+    "blacklist": "Add to blacklist",
+    "confirmation": "Please confirm",
+    "create": "Create",
+    "delete": "Delete `{title}`?",
+    "deploy": "Deploy",
+    "edit": "Edit",
+    "fund": "Fund",
+    "grantRole": "Grant role",
+    "mintToken": "Mint tokens",
+    "renounceRole": "Renounce role",
+    "revokeRole": "Revoke role",
+    "top-up": "Top up",
+    "unBlacklist": "Remove from blacklist",
+    "unWhitelist": "Remove from whitelist",
+    "upload": "Upload",
+    "view": "View",
+    "whitelist": "Add to whitelist",
+    "withdraw": "Withdraw balance"
+  },
+  "enums": {
+    "chainId": {
+      "1": "ETHEREUM",
+      "13377": "BESU (remote)",
+      "13378": "BESU (local)",
+      "137": "POLYGON",
+      "5": "GOERLI",
+      "56": "BINANCE",
+      "80001": "MUMBAI",
+      "97": "BINANCE (testnet)"
+    },
+    "claimStatus": {
+      "EXPIRED": "Expired",
+      "NEW": "New",
+      "REDEEMED": "Redeemed",
+      "UNPACKED": "Unpacked"
+    },
+    "contractFeatures": {
+      "BLACKLIST": "Blacklist",
+      "EXTERNAL": "External",
+      "NATIVE": "Native",
+      "REFERRAL": "Linear referral",
+      "SOULBOUND": "Soulbound",
+      "WHITELIST": "Whitelist"
+    },
+    "contractStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
+    "contractTemplate": {
+      "BLACKLIST": "Blacklist",
+      "EXTERNAL": "External",
+      "GRADED": "Graded",
+      "PAUSABLE": "Pausable",
+      "RANDOM": "Random",
+      "REFERRAL": "Referral",
+      "SIMPLE": "Simple",
+      "SOULBOUND": "Soulbound",
+      "WHITELIST": "Whitelist"
+    },
+    "durationUnit": {
+      "DAY": "Day",
+      "HOUR": "Hour",
+      "MINUTE": "Minute"
+    },
+    "emailType": {
+      "DUMMY": "Test email",
+      "EMAIL_VERIFICATION": "Email verification",
+      "FEEDBACK": "Feedback",
+      "FORGOT_PASSWORD": "Forgot password",
+      "LINK_TOKEN": "LINK notification",
+      "RESTORE_PASSWORD": "Restore password",
+      "WELCOME": "Welcome"
+    },
+    "language": {
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "merchantStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    },
+    "pageStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
+    "pyramidRuleStatus": {
+      "ACTIVE": "ACTIVE",
+      "NEW": "NEW"
+    },
+    "role": {
+      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
+      "MINTER_ROLE": "MINTER_ROLE",
+      "PAUSER_ROLE": "PAUSER_ROLE",
+      "PREDICATE_ROLE": "PREDICATE_ROLE",
+      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
+    "stakingDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
+    "stakingRuleStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
+    "templateStatus": {
+      "ACTIVE": "Active",
+      "HIDDEN": "Hidden",
+      "INACTIVE": "Inactive"
+    },
+    "tokenStatus": {
+      "ACTIVE": "Active",
+      "BURNED": "Burned",
+      "INACTIVE": "Inactive",
+      "MINTED": "Minted",
+      "NEW": "New",
+      "PENDING": "Pending"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "NATIVE": "Native"
+    },
+    "userRoles": {
+      "ADMIN": "Admin",
+      "CUSTOMER": "Customer",
+      "MERCHANT": "Merchant",
+      "USER": "User"
+    },
+    "userStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    }
+  },
+  "errors": {
+    "page-not-found": "Page Not Found"
+  },
+  "form": {
+    "adornment": {
+      "days": "days",
+      "percent": "%"
+    },
+    "buttons": {
+      "accept": "Accept",
+      "add": "Add",
+      "blacklist": "Blacklist",
+      "cancel": "Cancel",
+      "create": "Create",
+      "delete": "Delete",
+      "deploy": "Deploy",
+      "disconnect": "Disconnect",
+      "empty": "\uFEFF",
+      "export": "Export",
+      "finishRound": "Finish round",
+      "forgot": "Forgot password?",
+      "fund": "Fund",
+      "grantRole": "Grant Role",
+      "hideFilters": "Hide filters",
+      "load": "Load",
+      "loaded": "Done",
+      "login": "Login",
+      "logout": "Logout",
+      "mainPage": "Main Page",
+      "mint": "Mint",
+      "mintToken": "Mint Tokens",
+      "ok": "Ok",
+      "pause": "Pause",
+      "reject": "Reject",
+      "renounceRole": "Renounce Role",
+      "revokeRole": "Revoke Role",
+      "royalty": "Royalty",
+      "save": "Save",
+      "search": "Search",
+      "showFilters": "Show filters",
+      "signup": "Sign up",
+      "snapshot": "Snapshot",
+      "startRound": "Start round",
+      "submit": "Submit",
+      "unblacklist": "Un blacklist",
+      "unpause": "Unpause",
+      "upload": "Upload"
+    },
+    "hints": {
+      "editNotAllowed": "Editing of this rule is not allowed",
+      "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
+      "prompt": "You have unsaved information, are you sure you want to leave this page?",
+      "risk": "You are doing this at your own risk!"
+    },
+    "labels": {
+      "DUMMY": "Dummy",
+      "account": "Account",
+      "address": "Address",
+      "amount": "Amount",
+      "attributes": "Attributes",
+      "baseTokenURI": "Base token URI",
+      "cap": "Cap",
+      "chainId": "Chain",
+      "child": "Child",
+      "childId": "Child",
+      "childIds": "Child",
+      "claimStatus": "Status",
+      "collection": "Collection",
+      "collectionType": "Type",
+      "comment": "Comment",
+      "confirm": "Confirm",
+      "contract": "Contract",
+      "contractFeatures": "Features",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
+      "contractStatus": "Status",
+      "contractTemplate": "Template",
+      "craftStatus": "Status",
+      "createdAt": "Created",
+      "dateRangeEnd": "To",
+      "dateRangeStart": "From",
+      "dateTime": "Date time",
+      "decimals": "Decimals",
+      "deposit": "Deposit",
+      "description": "Description",
+      "displayName": "Display name",
+      "duration": "Duration",
+      "durationAmount": "Duration",
+      "durationUnit": "Duration unit",
+      "email": "Email",
+      "endTimestamp": "End date",
+      "growthRate": "Growth rate",
+      "id": "ID",
+      "imageUrl": "Avatar",
+      "item": "Item",
+      "items": "Items",
+      "language": "Language",
+      "maxBalance": "Max. Balance",
+      "maxCycles": "Max cycles count (0 - no limit)",
+      "merchantId": "Merchant",
+      "merchantStatus": "Status",
+      "minBalance": "Min. Balance",
+      "name": "Name",
+      "numbers": "Numbers",
+      "owner": "Owner",
+      "pageStatus": "Status",
+      "parent": "Parent",
+      "parentId": "Parent",
+      "parentIds": "Parent",
+      "password": "Password",
+      "payee": "Payee",
+      "payees": "Payees",
+      "penalty": "Penalty",
+      "price": "Price",
+      "pyramidDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
+      "random": "Random",
+      "recipient": "Recipient",
+      "recurrent": "Is recurrent?",
+      "reward": "Reward",
+      "role": "Role",
+      "roundId": "Round",
+      "roundIds": "Round",
+      "royalty": "Royalty",
+      "shares": "Shares",
+      "slug": "Slug",
+      "stakingDepositStatus": "Status",
+      "stakingRuleStatus": "Status",
+      "startTimestamp": "Start date",
+      "symbol": "Symbol",
+      "templateId": "Template",
+      "templateIds": "Templates",
+      "templateStatus": "Status",
+      "title": "Title",
+      "token": "Token",
+      "tokenId": "Token",
+      "tokenIds": "Tokens",
+      "tokenStatus": "Status",
+      "tokenType": "Type",
+      "type": "Type",
+      "updatedAt": "Updated",
+      "url": "Url",
+      "userId": "User",
+      "userIds": "Users",
+      "userRoles": "Roles",
+      "userStatus": "Status",
+      "year": "Year"
+    },
+    "placeholders": {
+      "DUMMY": "Dummy",
+      "account": "0x...",
+      "address": "0x...",
+      "amount": "10",
+      "attributes": "{}",
+      "baseTokenURI": "https://gemunion.io/",
+      "cap": "10",
+      "childId": "Contract",
+      "childIds": "Contract",
+      "comment": "Fraud",
+      "confirm": "******",
+      "contract": "Contract",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
+      "createdAt": "now",
+      "decimals": "18",
+      "definition": "10",
+      "description": "Description",
+      "displayName": "Gordon Freeman",
+      "duration": "30",
+      "durationAmount": "30",
+      "durationUnit": "Day",
+      "email": "me@google.com",
+      "growthRate": "2",
+      "item": "Bottle of water",
+      "maxBalance": "1000",
+      "maxCycles": "0",
+      "merchantId": "Gemunion",
+      "minBalance": "0",
+      "name": "Pink dust",
+      "number": "100500",
+      "owner": "0x...",
+      "parentId": "Contract",
+      "parentIds": "Contract",
+      "password": "******",
+      "payee": "0x...",
+      "payees": "0x...",
+      "penalty": "1",
+      "price": "1000",
+      "priceCorrection": "0",
+      "query": "Search...",
+      "rarity": "Legendary",
+      "recipient": "Recipient",
+      "roundIds": "Round",
+      "royalty": "1",
+      "search": "Search...",
+      "shares": "0",
+      "slug": "terms-and-conditions",
+      "symbol": "XXX",
+      "templateId": "Template",
+      "templateIds": "Template",
+      "text": "qwerty",
+      "title": "Title",
+      "token": "Bottle of water",
+      "tokenId": "Token",
+      "tokenIds": "Token",
+      "tokenStatus": "Status",
+      "url": "https://youtube.com",
+      "userId": "Gordon Freeman",
+      "userIds": "Gordon Freeman"
+    },
+    "tips": {
+      "create": "Create",
+      "delete": "Delete",
+      "edit": "Edit",
+      "fund": "Fund",
+      "view": "View"
+    },
+    "validations": {
+      "badInput": "{label} is invalid",
+      "customError": "???",
+      "duplicate": "{label} already in use",
+      "invalidJSON": "Invalid JSON",
+      "patternMismatch": "{label} does not match expected pattern",
+      "rangeOverflow": "{label} is too high",
+      "rangeUnderflow": "{label} is too low",
+      "stepMismatch": "{label} is invalid",
+      "tooLong": "{label} is too long",
+      "tooShort": "{label} is too short",
+      "typeMismatch": "{label} is invalid",
+      "unsupportedCombination": "{label} contains unsupported combination",
+      "valid": "??",
+      "valueMissing": "{label} is required",
+      "weak": "{label} is too weak",
+      "whitelistValidation": "Property should not exist"
+    }
+  },
+  "messages": {
+    "empty-list": "Nothing to display",
+    "page-not-found": "Page Not Found"
+  },
+  "pages": {
+    "blockchain": {
+      "title": "Blockchain Settings"
+    },
+    "claims": {
+      "defaultItemTitle": "{account}",
+      "title": "Claim"
+    },
+    "dashboard": {
+      "exchange": {
+        "marketplace": {
+          "chart": "Chart",
+          "grade": "Grade",
+          "report": "Report",
+          "title": "Marketplace"
+        },
+        "wallet": {
+          "balances": "Balances",
+          "payees": "Payees",
+          "title": "System Wallet"
+        }
+      },
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "native": "NATIVE"
+      },
+      "infrastructure": {
+        "admin": {
+          "balances": "System Balances",
+          "emails": "Emails",
+          "merchants": "Merchants",
+          "pages": "Pages",
+          "payees": "System Payees",
+          "settings": "Settings",
+          "title": "Admin",
+          "users": "Users"
+        }
+      },
+      "integrations": {
+        "admin": {
+          "emails": "Emails",
+          "pages": "Pages",
+          "settings": "Settings",
+          "title": "Admin",
+          "users": "Users"
+        },
+        "marketplace": {
+          "chart": "Chart",
+          "rarity": "Rarity",
+          "report": "Report",
+          "title": "Marketplace"
+        }
+      },
+      "mechanics": {
+        "claim": "Claim",
+        "drop": "Drop",
+        "pyramid": "Pyramid",
+        "staking": "Staking",
+        "title": "Mechanics"
+      },
+      "title": "Dashboard",
+      "wallet": {
+        "balances": "Balances",
+        "payees": "System Payees",
+        "title": "System Wallet"
+      }
+    },
+    "drop": {
+      "title": "Drops"
+    },
+    "emails": {
+      "title": "Emails"
+    },
+    "erc1155": {
+      "contracts": {
+        "title": "ERC1155 Contracts"
+      },
+      "templates": {
+        "title": "ERC1155 Templates"
+      }
+    },
+    "erc20": {
+      "contracts": {
+        "snapshot": "Make snapshot",
+        "title": "ERC20 Contracts"
+      }
+    },
+    "erc721": {
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC721 Contracts"
+      },
+      "templates": {
+        "title": "ERC721 Templates"
+      },
+      "tokens": {
+        "title": "ERC721 Tokens"
+      }
+    },
+    "guest": {
+      "confirmation": "Please check your inbox to verify your email.",
+      "forgotPassword": "Forgot password",
+      "login": "Login"
+    },
+    "marketplace": {
+      "chart": {
+        "title": "Chart"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "title": "Marketplace"
+    },
+    "merchants": {
+      "title": "Merchants"
+    },
+    "native": {
+      "contracts": {
+        "title": "Native Tokens"
+      }
+    },
+    "pages": {
+      "title": "Pages"
+    },
+    "payees": {
+      "attach": "Attach",
+      "balances": {
+        "title": "System Balances"
+      },
+      "detach": "Detach",
+      "title": "System Payees",
+      "withdraw": "Withdraw"
+    },
+    "profile": {
+      "addresses": {
+        "default": "default",
+        "empty": "You don't have any addresses yet",
+        "inactive": "inactive"
+      },
+      "tabs": {
+        "addresses": "Addresses",
+        "general": "General",
+        "subscriptions": "Subscriptions"
+      },
+      "title": "Profile"
+    },
+    "pyramid": {
+      "chart": {
+        "title": "Chart"
+      },
+      "contracts": {
+        "title": "Pyramid Contracts"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "finalizeByRule": "Finalize rule",
+        "finalizeByToken": "Finalize deposit token",
+        "title": "Pyramid rules",
+        "upload": "Upload rule"
+      },
+      "title": "Pyramid"
+    },
+    "settings": {
+      "title": "Settings"
+    },
+    "staking": {
+      "chart": {
+        "title": "Chart"
+      },
+      "contracts": {
+        "title": "Staking Contracts"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Staking rules",
+        "upload": "Upload rule"
+      },
+      "title": "Staking"
+    },
+    "users": {
+      "title": "Users"
+    },
+    "wallet": {
+      "balances": {
+        "title": "Balances"
+      },
+      "payees": {
+        "title": "System Payees",
+        "withdraw": "Withdraw"
+      },
+      "title": "System Wallet",
+      "withdraw": {
+        "dialog": "From address",
+        "payee": "Payee will receive: ",
+        "title": "Withdraw",
+        "token": "Token",
+        "total": "Total balance"
+      }
+    }
+  },
+  "snackbar": {
+    "active": "Successfully activated",
+    "approved": "Successfully approved",
+    "blockchainError": "Blockchain error",
+    "contractNotFound": "Contract not found",
+    "created": "Successfully created",
+    "declined": "Declined!",
+    "deleted": "Successfully deleted",
+    "deployed": "Successfully deployed",
+    "duplicateAccount": "Duplicate account",
+    "duplicateEmail": "User with this email already registered",
+    "email": "Email successfully sent.",
+    "error": "Unknown Error",
+    "inactive": "Successfully inactivated",
+    "insufficientPermissions": "Insufficient permissions",
+    "internalServerError": "Internal Server Error",
+    "invite": "Successfully invited",
+    "loaded": "Successfully loaded",
+    "pageNotFound": "API error",
+    "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
+    "recaptchaBadRequest": "The request is invalid or malformed.",
+    "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
+    "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
+    "recaptchaMissingInputResponse": "The response parameter is missing.",
+    "recaptchaMissingInputSecret": "The secret parameter is missing.",
+    "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
+    "registered": "Registration successful, please verify your email to proceed",
+    "rejectedByUser": "Rejected by user",
+    "saved": "Successfully saved",
+    "success": "Success",
+    "templateNotFound": "Template not found",
+    "tokenNotFound": "Product not found",
+    "tooManyRequests": "Too Many Requests.",
+    "unauthorized": "Incorrect login or password",
+    "unsupportedCombination": "Unsupported feature combination",
+    "updated": "Successfully updated",
+    "userHasWrongRole": "Insufficient permissions",
+    "userIsNotActive": "User is not active",
+    "userNotFound": "User not found",
+    "walletIsNotConnected": "Wallet is not connected",
+    "web3NotDetected": "Web3 not detected"
+  }
+}

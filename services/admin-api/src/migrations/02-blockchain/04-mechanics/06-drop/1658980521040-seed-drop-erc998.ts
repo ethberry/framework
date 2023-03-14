@@ -47,6 +47,7 @@ export class SeedDropErc998At1658980521040 implements MigrationInterface {
         price_id,
         start_timestamp,
         end_timestamp,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -54,6 +55,7 @@ export class SeedDropErc998At1658980521040 implements MigrationInterface {
         64111,
         '${subMonths(now, 1).toISOString()}',
         '${addMonths(now, 1).toISOString()}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { MINTER_ROLE, DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { deployContract } from "../../shared/fixture";

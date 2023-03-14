@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IVestingSearchDto } from "@framework/types";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { ModuleType } from "@framework/types";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class VestingService {

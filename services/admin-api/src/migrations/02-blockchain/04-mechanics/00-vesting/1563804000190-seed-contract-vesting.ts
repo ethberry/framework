@@ -28,6 +28,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         contract_features,
         contract_module,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -45,6 +46,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{LINEAR}',
         'VESTING',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -62,6 +64,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{GRADED}',
         'VESTING',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -79,6 +82,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '{CLIFF}',
         'VESTING',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

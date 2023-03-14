@@ -47,6 +47,7 @@ export class SeedDropErcMysteryboxAt1658980521050 implements MigrationInterface 
         price_id,
         start_timestamp,
         end_timestamp,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -54,6 +55,7 @@ export class SeedDropErcMysteryboxAt1658980521050 implements MigrationInterface 
         66111,
         '${subMonths(now, 1).toISOString()}',
         '${addMonths(now, 1).toISOString()}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

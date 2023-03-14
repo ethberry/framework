@@ -16,8 +16,12 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
+  IPyramidContractDeployDto,
+  IStakingContractDeployDto,
   IVestingContractDeployDto,
   MysteryContractTemplates,
+  PyramidContractTemplates,
+  StakingContractTemplates,
   VestingContractTemplate,
 } from "@framework/types";
 
@@ -43,7 +47,6 @@ import ERC721BlacklistUpgradeableRandom from "@framework/core-contracts/artifact
 import ERC721BlacklistUpgradeableRentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRentable.sol/ERC721BlacklistUpgradeableRentable.json";
 import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
 // import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/besu/ERC721BlacklistUpgradeableRentableRandomBesu.sol/ERC721BlacklistUpgradeableRentableRandomBesu.json";
-
 import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
 import ERC998ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155Simple.sol/ERC998ERC1155Simple.json";
@@ -69,6 +72,12 @@ import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/
 
 import ERC721CollectionSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionSimple.sol/ERC721CollectionSimple.json";
 import ERC721CollectionBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol/ERC721CollectionBlacklist.json";
+
+import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
+import StakingReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingRef.sol/StakingReferral.json";
+
+import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/LinearReferralPyramid.sol/LinearReferralPyramid.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -117,7 +126,13 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        args: {
+          // contractTemplate: 'SIMPLE',
+          contractTemplate: Object.values(Erc20ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          cap: dto.cap,
+        },
       },
     );
 
@@ -161,7 +176,15 @@ export class ContractManagerSignService {
       // Values
       {
         params,
-        args: dto,
+        // args: dto,
+        args: {
+          // contractTemplate: 'SIMPLE',
+          contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
+          name: dto.name,
+          symbol: dto.symbol,
+          baseTokenURI: dto.baseTokenURI,
+          royalty: dto.royalty,
+        },
       },
     );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
@@ -398,6 +421,92 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
+  // MODULE:PYRAMID
+  public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByPyramidContractTemplate(dto);
+
+    const params = {
+      nonce,
+      bytecode,
+    };
+
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "PyramidArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+        ],
+        PyramidArgs: [
+          { name: "contractTemplate", type: "string" },
+          { name: "payees", type: "address[]" },
+          { name: "shares", type: "uint256[]" },
+        ],
+      },
+      // Values
+      {
+        params,
+        args: dto,
+      },
+    );
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:STAKING
+  public async staking(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByStakingContractTemplate(dto);
+
+    const params = {
+      nonce,
+      bytecode,
+    };
+
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "StakingArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+        ],
+        StakingArgs: [
+          { name: "contractTemplate", type: "string" },
+          { name: "maxStake", type: "uint256" },
+        ],
+      },
+      // Values
+      {
+        params,
+        args: dto,
+      },
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
   public getBytecodeByErc20ContractTemplates(dto: IErc20TokenDeployDto) {
     const { contractTemplate } = dto;
 
@@ -540,6 +649,32 @@ export class ContractManagerSignService {
         return ERC721CollectionSol.bytecode;
       case Erc721CollectionTemplates.BLACKLIST:
         return ERC721CollectionBlacklistSol.bytecode;
+      default:
+        throw new NotFoundException("templateNotFound");
+    }
+  }
+
+  public getBytecodeByStakingContractTemplate(dto: IStakingContractDeployDto) {
+    const { contractTemplate } = dto;
+
+    switch (contractTemplate) {
+      case StakingContractTemplates.SIMPLE:
+        return StakingSol.bytecode;
+      case StakingContractTemplates.REFERRAL:
+        return StakingReferralSol.bytecode;
+      default:
+        throw new NotFoundException("templateNotFound");
+    }
+  }
+
+  public getBytecodeByPyramidContractTemplate(dto: IPyramidContractDeployDto) {
+    const { contractTemplate } = dto;
+
+    switch (contractTemplate) {
+      case PyramidContractTemplates.SIMPLE:
+        return PyramidSol.bytecode;
+      case PyramidContractTemplates.REFERRAL:
+        return PyramidReferralSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }

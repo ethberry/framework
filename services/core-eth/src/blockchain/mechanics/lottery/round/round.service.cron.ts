@@ -9,7 +9,7 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 
 import { blockAwait } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ModuleType, ILotteryOption } from "@framework/types";
+import { ILotteryOption, ModuleType } from "@framework/types";
 
 @Injectable()
 export class LotteryRoundServiceCron {

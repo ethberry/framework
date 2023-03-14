@@ -10,7 +10,7 @@ import type { IContract } from "@framework/types";
 
 import FundEthABI from "./fundEth.abi.json";
 
-import { IFundEthDto, FundEthEditDialog } from "./dialog";
+import { FundEthEditDialog, IFundEthDto } from "./dialog";
 
 export interface IFundEthMenuItemProps {
   contract: IContract;

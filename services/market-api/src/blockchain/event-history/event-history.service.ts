@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IEventHistorySearchDto, IErc1155TokenApprovalForAllEvent } from "@framework/types";
+import { ContractEventType, IErc1155TokenApprovalForAllEvent, IEventHistorySearchDto } from "@framework/types";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";

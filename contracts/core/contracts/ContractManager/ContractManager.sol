@@ -15,6 +15,8 @@ import "./ERC998Factory.sol";
 import "./ERC1155Factory.sol";
 import "./MysteryboxFactory.sol";
 import "./CollectionFactory.sol";
+import "./PyramidFactory.sol";
+import "./StakingFactory.sol";
 
 contract ContractManager is
   AccessControl,
@@ -24,7 +26,9 @@ contract ContractManager is
   ERC998Factory,
   ERC1155Factory,
   MysteryboxFactory,
-  CollectionFactory
+  CollectionFactory,
+  PyramidFactory,
+  StakingFactory
 {
   function destroy() public onlyRole(DEFAULT_ADMIN_ROLE) {
     selfdestruct(payable(_msgSender()));

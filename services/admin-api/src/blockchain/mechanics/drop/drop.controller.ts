@@ -14,12 +14,12 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { DropService } from "./drop.service";
 import { DropEntity } from "./drop.entity";
-import { DropCreateDto, DropUpdateDto } from "./dto";
+import { DropCreateDto, DropSearchDto, DropUpdateDto } from "./dto";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/drops")
@@ -28,13 +28,13 @@ export class DropController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: SearchDto): Promise<[Array<DropEntity>, number]> {
-    return this.dropService.search(dto);
+  public search(@Query() dto: DropSearchDto, @User() userEntity: UserEntity): Promise<[Array<DropEntity>, number]> {
+    return this.dropService.search(dto, userEntity);
   }
 
   @Post("/")
-  public create(@Body() dto: DropCreateDto): Promise<DropEntity> {
-    return this.dropService.create(dto);
+  public create(@Body() dto: DropCreateDto, @User() userEntity: UserEntity): Promise<DropEntity> {
+    return this.dropService.create(dto, userEntity);
   }
 
   @Put("/:id")
@@ -50,7 +50,7 @@ export class DropController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.dropService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.dropService.delete({ id }, userEntity);
   }
 }

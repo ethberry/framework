@@ -1,4 +1,4 @@
-import { forwardRef, Module, Logger } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AssetService } from "./asset.service";

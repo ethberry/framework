@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { IAsset } from "../../exchange/asset";
+import { IMerchant } from "../../../infrastructure";
 
 export enum ClaimStatus {
   NEW = "NEW",
@@ -16,4 +17,6 @@ export interface IClaim extends IIdDateBase {
   nonce: string;
   signature: string;
   endTimestamp: string;
+  merchantId: number;
+  merchant?: IMerchant;
 }

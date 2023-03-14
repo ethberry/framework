@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -26,6 +26,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         contract_features,
         contract_module,
         from_block,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -34,7 +35,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '${chainId}',
         'STAKING',
         '${simpleFormatting}',
-        '',
+        '${imageUrl}',
         'Staking',
         '',
         '',
@@ -42,6 +43,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '{ALLOWANCE,REFERRAL}',
         'STAKING',
         '${fromBlock}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -26,4 +26,8 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
 
   @OneToMany(_type => UserEntity, user => user.merchant)
   public users: Array<UserEntity>;
+
+  public products: Array<any>;
+
+  public orders: Array<any>;
 }

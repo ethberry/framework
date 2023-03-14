@@ -13,6 +13,7 @@ import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
 import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
+import { ecommerceRoutes } from "./ecommerce/routes";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       ...mechanicsRoutes,
       ...integrationsRoutes,
       ...exchangeRoutes,
+      ...ecommerceRoutes,
       {
         path: "/error/:error",
         element: <Error />,

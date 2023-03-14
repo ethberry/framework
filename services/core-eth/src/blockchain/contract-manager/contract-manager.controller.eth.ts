@@ -7,12 +7,14 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractManagerEventType,
   ContractType,
+  IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
-  IContractManagerCollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPyramidDeployedEvent,
+  IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
 
@@ -94,5 +96,21 @@ export class ContractManagerControllerEth {
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.mysteryBox(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.PyramidDeployed,
+  })
+  public pyramid(@Payload() event: ILogEvent<IContractManagerPyramidDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.pyramid(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.StakingDeployed,
+  })
+  public staking(@Payload() event: ILogEvent<IContractManagerStakingDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.staking(event, ctx);
   }
 }

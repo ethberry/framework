@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Contract, utils, BigNumber, constants } from "ethers";
+import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
 import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";

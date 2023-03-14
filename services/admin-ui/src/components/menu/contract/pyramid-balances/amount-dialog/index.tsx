@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 import { IBalance } from "@framework/types";
-import { emptyToken, emptyTemplate, emptyContract } from "../../../../common/interfaces";
+import { emptyContract, emptyTemplate, emptyToken } from "../../../../common/interfaces";
 
 // import { validationSchema } from "./validation";
 

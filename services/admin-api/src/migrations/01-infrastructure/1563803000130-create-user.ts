@@ -16,7 +16,7 @@ export class CreateUser1563803000130 implements MigrationInterface {
         'ADMIN',
         'OWNER',
         'MANAGER',
-        'USER'
+        'CUSTOMER'
       );
     `);
 

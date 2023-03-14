@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
 import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
-import { MINTER_ROLE, batchSize } from "@gemunion/contracts-constants";
+import { batchSize, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../constants";
 

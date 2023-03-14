@@ -4,10 +4,10 @@ import { BigNumber, constants } from "ethers";
 
 import {
   baseTokenURI,
+  batchSize,
   DEFAULT_ADMIN_ROLE,
   nonce,
   royalty,
-  batchSize,
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";

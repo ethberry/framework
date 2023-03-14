@@ -31,6 +31,10 @@ export class TemplateService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType,
     });
@@ -142,7 +146,8 @@ export class TemplateService {
         alias: "template",
         leftJoinAndSelect: {
           contract: "template.contract",
-          tokens: "template.tokens",
+          // TODO this is too heavy, do not uncomment without additional conditions
+          // tokens: "template.tokens",
         },
       },
     });

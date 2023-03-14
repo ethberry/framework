@@ -23,7 +23,7 @@ WORKDIR /home/node/framework
 
 COPY --chown=node:node . .
 
-RUN npm i --only=production
+RUN npm i --omit=dev
 
 RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent"}' >> /home/node/framework/lerna.json
 

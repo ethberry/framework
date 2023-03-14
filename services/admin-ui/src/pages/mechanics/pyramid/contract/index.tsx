@@ -21,6 +21,7 @@ import { ContractStatus, IContract, IContractSearchDto, PyramidContractFeatures 
 import { PyramidContractEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { PyramidDeployButton } from "../../../../components/buttons";
 
 export const PyramidContract: FC = () => {
   const {
@@ -53,9 +54,10 @@ export const PyramidContract: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, description, contractStatus }) => ({
+    filter: ({ title, description, imageUrl, contractStatus }) => ({
       title,
       description,
+      imageUrl,
       contractStatus,
     }),
   });
@@ -64,13 +66,14 @@ export const PyramidContract: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "pyramid", "pyramid.contracts"]} />
 
-      <PageHeader message="pages.pyramid.contracts.title">
+      <PageHeader message="pages.pyramid.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <PyramidDeployButton />
       </PageHeader>
 
       <ContractSearchForm
@@ -84,7 +87,7 @@ export const PyramidContract: FC = () => {
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

@@ -7,7 +7,7 @@ import {
   LoggerService,
   NotFoundException,
 } from "@nestjs/common";
-import { InjectRepository, InjectDataSource } from "@nestjs/typeorm";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";

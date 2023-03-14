@@ -2,24 +2,34 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 import { DeepPartial } from "typeorm";
-import { Wallet, providers } from "ethers";
+import { providers, Wallet } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_SIGNER, ETHERS_RPC } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
+  Erc1155ContractTemplates,
+  Erc20ContractTemplates,
+  Erc721CollectionTemplates,
+  Erc721ContractTemplates,
+  Erc998ContractTemplates,
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPyramidDeployedEvent,
+  IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
+  MysteryContractTemplates,
   TemplateStatus,
+  PyramidContractFeatures,
+  StakingContractFeatures,
   TokenType,
 } from "@framework/types";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
@@ -85,7 +95,10 @@ export class ContractManagerServiceEth {
       decimals: 18,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc20ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC20,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -130,7 +143,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc721ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       chainId,
       royalty: ~~royalty,
@@ -184,7 +200,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: JSON.stringify({ batchSize, owner }),
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc721CollectionTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId,
@@ -258,7 +277,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc998ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC998,
       chainId,
       royalty: ~~royalty,
@@ -311,7 +333,10 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -341,7 +366,10 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures: contractTemplate.split("_") as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(MysteryContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId,
@@ -384,6 +412,66 @@ export class ContractManagerServiceEth {
     });
 
     this.vestingLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, featureIds },
+    } = event;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const availableFeatures = Object.values(PyramidContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new PYRAMID contract",
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.PYRAMID,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.pyramidLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, args },
+    } = event;
+
+    const [maxStake, featureIds] = args;
+
+    const availableFeatures = Object.values(StakingContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new STAKING contract",
+      description: JSON.stringify({ maxStake }),
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.STAKING,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.stakingLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

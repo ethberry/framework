@@ -1,7 +1,6 @@
 export * from "./extensions/access-control";
 export * from "./extensions/access-list";
 
-export * from "./common";
 export * from "./event-history";
 export * from "./contract-manager";
 

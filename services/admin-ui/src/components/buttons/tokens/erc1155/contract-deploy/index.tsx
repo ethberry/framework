@@ -32,7 +32,12 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
           nonce,
           bytecode: sign.bytecode,
         },
-        values,
+        // values,
+        {
+          contractTemplate: Object.values(Erc1155ContractTemplates).indexOf(values.contractTemplate).toString(),
+          baseTokenURI: values.baseTokenURI,
+          royalty: values.royalty,
+        },
         sign.signature,
       ) as Promise<void>;
     },

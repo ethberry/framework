@@ -17,8 +17,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import { CraftStatus, TokenType } from "@framework/types";
 import type { ICraft, ICraftSearchDto } from "@framework/types";
+import { CraftStatus, TokenType } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";

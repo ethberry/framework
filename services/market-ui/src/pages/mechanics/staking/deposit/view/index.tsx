@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
-import { formatPenalty, formatComplexPrice } from "../../../../../utils/money";
+import { formatComplexPrice, formatPenalty } from "../../../../../utils/money";
 import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {

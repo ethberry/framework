@@ -7,4 +7,5 @@ export interface ITemplateSearchDto extends ISearchDto {
   contractIds: Array<number>;
   maxPrice: string;
   minPrice: string;
+  merchantId: number;
 }

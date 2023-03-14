@@ -9,9 +9,8 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, TokenType } from "@framework/types";
-
 import AllowanceABI from "./allowance.abi.json";
-import { IAllowanceDto, DepositAllowanceDialog } from "../../../../dialogs/deposit-allowance";
+import { DepositAllowanceDialog, IAllowanceDto } from "../../../../dialogs/deposit-allowance";
 
 export interface IDepositAllowanceButtonProps {
   rule: IPyramidRule;
