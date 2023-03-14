@@ -9,7 +9,7 @@ import { formatUnits } from "ethers/lib/utils";
 import { GovernanceTokenAddress, IOneInchContext, ISwap, IToken, SwapStatus } from "../provider";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import AllowanceApproveERC20ABI from "./allowance.erc20.abi.json";
+import AllowanceABI from "./allowance.abi.json";
 
 import { repeatOnFail } from "../helpers/repeatOnFail";
 import { safeParseUnits } from "../helpers/safeParseUnits";
@@ -33,7 +33,7 @@ export const approve = async (
   api: IOneInchContext,
 ): Promise<ContractTransaction | void> => {
   const signer = provider.getSigner();
-  const erc20Contract = new Contract(fromToken.address, AllowanceApproveERC20ABI, signer);
+  const erc20Contract = new Contract(fromToken.address, AllowanceABI, signer);
 
   const { address: spenderAddress } = await api.approveSpender();
 
