@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../../../components/buttons";
+import { TokenBorrowButton, TokenSellButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
 
 interface IErc721TokenListItemProps {
@@ -41,6 +41,7 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
             }}
           >
             <TokenSellButton token={token} />
+            <TokenBorrowButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

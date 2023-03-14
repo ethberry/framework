@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
@@ -8,11 +8,13 @@ import {
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
+  IErc4907UpdateUserEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
 
 import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { TokenService } from "../../hierarchy/token/token.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -20,6 +22,7 @@ export class AccessControlServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly accessControlService: AccessControlService,
+    private readonly tokenService: TokenService,
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
@@ -83,5 +86,20 @@ export class AccessControlServiceEth {
       account: newOwner.toLowerCase(),
       role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
     });
+  }
+
+  public async updateUser(event: ILogEvent<IErc4907UpdateUserEvent>, context: Log): Promise<void> {
+    const {
+      args: { tokenId },
+    } = event;
+    const { address } = context;
+    console.log("updateUser", event);
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!erc721TokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
   }
 }

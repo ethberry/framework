@@ -6,9 +6,11 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractType,
+  Erc4907EventType,
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
+  IErc4907UpdateUserEvent,
   IOwnershipTransferredEvent,
 } from "@framework/types";
 
@@ -107,5 +109,19 @@ export class AccessControlControllerEth {
   ])
   public ownership(@Payload() event: ILogEvent<IOwnershipTransferredEvent>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.ownershipChanged(event, context);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.ERC721_TOKEN,
+      eventName: Erc4907EventType.UpdateUser,
+    },
+    {
+      contractType: ContractType.ERC998_TOKEN,
+      eventName: Erc4907EventType.UpdateUser,
+    },
+  ])
+  public updateUser(@Payload() event: ILogEvent<IErc4907UpdateUserEvent>, @Ctx() context: Log): Promise<void> {
+    return this.accessControlServiceEth.updateUser(event, context);
   }
 }

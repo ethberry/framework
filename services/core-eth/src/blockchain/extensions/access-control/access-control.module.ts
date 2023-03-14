@@ -6,9 +6,10 @@ import { AccessControlEntity } from "./access-control.entity";
 import { AccessControlServiceEth } from "./access-control.service.eth";
 import { AccessControlControllerEth } from "./access-control.controller.eth";
 import { EventHistoryModule } from "../../event-history/event-history.module";
+import { TokenModule } from "../../hierarchy/token/token.module";
 
 @Module({
-  imports: [EventHistoryModule, TypeOrmModule.forFeature([AccessControlEntity])],
+  imports: [EventHistoryModule, TokenModule, TypeOrmModule.forFeature([AccessControlEntity])],
   providers: [Logger, AccessControlService, AccessControlServiceEth],
   controllers: [AccessControlControllerEth],
   exports: [AccessControlService, AccessControlServiceEth],

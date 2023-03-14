@@ -11,7 +11,12 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
 import { ContractFeatures, GradeAttribute } from "@framework/types";
 
-import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
+import {
+  GradeButton,
+  TokenSellButton,
+  TokenTransferButton,
+  TokenBorrowButton,
+} from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
@@ -36,7 +41,7 @@ export const Erc721Token: FC = () => {
     return <Spinner />;
   }
   // TODO better genes view;
-
+  console.log("selected attributes", selected.attributes);
   return (
     <Fragment>
       <Breadcrumbs
@@ -74,12 +79,16 @@ export const Erc721Token: FC = () => {
             </ul>
             <TokenSellButton token={selected} />
             <TokenTransferButton token={selected} />
+            <TokenBorrowButton token={selected} />
           </Paper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
-                <FormattedMessage id="pages.erc721.token.level" values={selected.attributes} />
+                <FormattedMessage
+                  id="pages.erc721.token.level"
+                  values={selected.attributes.GRADE ? selected.attributes : { GRADE: 0 }}
+                />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
             </Paper>
