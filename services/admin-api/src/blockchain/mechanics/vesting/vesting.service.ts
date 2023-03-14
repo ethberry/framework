@@ -29,7 +29,7 @@ export class VestingService {
           contractFeature: contractTemplate[0],
         });
       } else {
-        queryBuilder.andWhere("vesting.contractFeatures && :contractFeatures", { contractTemplate });
+        queryBuilder.andWhere("vesting.contractFeatures && :contractFeatures", { contractFeatures: contractTemplate });
       }
     }
 
