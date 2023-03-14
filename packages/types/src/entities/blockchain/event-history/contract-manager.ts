@@ -60,12 +60,14 @@ export interface IContractManagerERC1155TokenDeployedEvent {
   args: IERC1155TokenDeployedEventArgs;
 }
 
+export type IPyramidDeployedEventArgs = [Array<string>, Array<string>, string];
+
 export interface IContractManagerPyramidDeployedEvent {
   addr: string;
-  featureIds: Array<number>;
+  args: IPyramidDeployedEventArgs;
 }
 
-export type IStakingDeployedEventArgs = [string, Array<string>];
+export type IStakingDeployedEventArgs = [string, string];
 
 export interface IContractManagerStakingDeployedEvent {
   addr: string;

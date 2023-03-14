@@ -18,6 +18,8 @@ export * from "./mechanics/collection/contract-deploy";
 export * from "./mechanics/vesting/fund";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/allowance";
+export * from "./mechanics/vesting/release";
+export * from "./mechanics/vesting/releasable";
 
 export * from "./exchange/releasable";
 export * from "./exchange/release";

@@ -28,9 +28,10 @@ import {
   ModuleType,
   MysteryContractTemplates,
   TemplateStatus,
-  PyramidContractFeatures,
-  StakingContractFeatures,
+  PyramidContractTemplates,
+  StakingContractTemplates,
   TokenType,
+  VestingContractTemplate,
 } from "@framework/types";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
@@ -102,6 +103,7 @@ export class ContractManagerServiceEth {
       contractType: TokenType.ERC20,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     const templateEntity = await this.templateService.create({
@@ -152,6 +154,7 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
@@ -210,6 +213,7 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     const templateEntity = await this.templateService.create({
@@ -245,20 +249,6 @@ export class ContractManagerServiceEth {
     });
   }
 
-  private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
-    const currentDateTime = new Date().toISOString();
-
-    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
-      account: owner.toLowerCase(),
-      amount: "1",
-      tokenId: tokenArray[i].id,
-      createdAt: currentDateTime,
-      updatedAt: currentDateTime,
-    }));
-
-    await this.balanceService.createBatch(balanceArray);
-  }
-
   public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, args },
@@ -286,6 +276,7 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
@@ -340,6 +331,7 @@ export class ContractManagerServiceEth {
       contractType: TokenType.ERC1155,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     this.erc1155LogService.addListener({
@@ -376,6 +368,7 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     this.mysteryboxLogService.addListener({
@@ -405,10 +398,13 @@ export class ContractManagerServiceEth {
         startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
         duration: ~~duration * 1000,
       },
-      contractFeatures: [contractTemplate as ContractFeatures],
+      contractFeatures: Object.values(VestingContractTemplate)[~~contractTemplate].split(
+        "_",
+      ) as Array<ContractFeatures>,
       contractModule: ModuleType.VESTING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     this.vestingLogService.addListener({
@@ -419,13 +415,11 @@ export class ContractManagerServiceEth {
 
   public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { addr, featureIds },
+      args: { addr, args },
     } = event;
+    const [payees, shares, contractTemplate] = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
-
-    const availableFeatures = Object.values(PyramidContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
@@ -433,11 +427,19 @@ export class ContractManagerServiceEth {
       address: addr.toLowerCase(),
       title: "new PYRAMID contract",
       description: emptyStateString,
+      parameters: {
+        payees: payees.toString(),
+        shares: shares.toString(),
+      },
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(PyramidContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.PYRAMID,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     this.pyramidLogService.addListener({
@@ -451,10 +453,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [maxStake, featureIds] = args;
-
-    const availableFeatures = Object.values(StakingContractFeatures);
-    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
+    const [maxStake, contractTemplate] = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -463,17 +462,46 @@ export class ContractManagerServiceEth {
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: "new STAKING contract",
-      description: JSON.stringify({ maxStake }),
+      description: emptyStateString,
+      parameters: {
+        maxStake,
+      },
       imageUrl,
-      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractFeatures:
+        contractTemplate === "0"
+          ? []
+          : (Object.values(StakingContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
     this.stakingLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
+    const currentDateTime = new Date().toISOString();
+
+    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
+      account: owner.toLowerCase(),
+      amount: "1",
+      tokenId: tokenArray[i].id,
+      createdAt: currentDateTime,
+      updatedAt: currentDateTime,
+    }));
+
+    await this.balanceService.createBatch(balanceArray);
+  }
+
+  // TODO do find correct merchantId
+  public async getMerchant(addr: string): Promise<number> {
+    console.info("MerchantId for address", addr);
+    return new Promise(resolve => {
+      resolve(1);
     });
   }
 }

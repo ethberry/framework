@@ -10,6 +10,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'CollectionDeployed',
         'VestingDeployed',
         'MysteryboxDeployed',
+        'StakingDeployed',
+        'PyramidDeployed',
         'ERC20TokenDeployed',
         'ERC721TokenDeployed',
         'ERC998TokenDeployed',

@@ -37,6 +37,8 @@ import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { CategoryEntity } from "./ecommerce/category/category.entity";
+import { CartEntity } from "./ecommerce/cart/cart.entity";
+import { CartItemEntity } from "./ecommerce/cart-item/cart-item.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -50,6 +52,8 @@ const config: PostgresConnectionOptions = {
     EventHistoryEntity,
     UserEntity,
     CraftEntity,
+    CartEntity,
+    CartItemEntity,
     StakingDepositEntity,
     StakingRulesEntity,
     PageEntity,
