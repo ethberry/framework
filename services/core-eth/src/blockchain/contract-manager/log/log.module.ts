@@ -37,6 +37,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ContractManagerEventType.ERC1155TokenDeployed,
               ContractManagerEventType.MysteryboxDeployed,
               ContractManagerEventType.CollectionDeployed,
+              ContractManagerEventType.StakingDeployed,
+              ContractManagerEventType.PyramidDeployed,
               // MODULE:ACCESS_CONTROL
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,

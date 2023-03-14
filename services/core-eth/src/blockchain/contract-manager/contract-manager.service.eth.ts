@@ -22,10 +22,14 @@ import {
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPyramidDeployedEvent,
+  IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   TemplateStatus,
+  PyramidContractFeatures,
+  StakingContractFeatures,
   TokenType,
 } from "@framework/types";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
@@ -408,6 +412,66 @@ export class ContractManagerServiceEth {
     });
 
     this.vestingLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, featureIds },
+    } = event;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const availableFeatures = Object.values(PyramidContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new PYRAMID contract",
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.PYRAMID,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.pyramidLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, args },
+    } = event;
+
+    const [maxStake, featureIds] = args;
+
+    const availableFeatures = Object.values(StakingContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[~~featureId]);
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new STAKING contract",
+      description: JSON.stringify({ maxStake }),
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.STAKING,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.stakingLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

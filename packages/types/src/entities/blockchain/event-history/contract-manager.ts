@@ -6,6 +6,8 @@ export enum ContractManagerEventType {
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
   MysteryboxDeployed = "MysteryboxDeployed",
   CollectionDeployed = "CollectionDeployed",
+  PyramidDeployed = "PyramidDeployed",
+  StakingDeployed = "StakingDeployed",
 }
 
 export type ICollectionDeployedEventArgs = [string, string, string, string, string, string];
@@ -58,6 +60,18 @@ export interface IContractManagerERC1155TokenDeployedEvent {
   args: IERC1155TokenDeployedEventArgs;
 }
 
+export interface IContractManagerPyramidDeployedEvent {
+  addr: string;
+  featureIds: Array<number>;
+}
+
+export type IStakingDeployedEventArgs = [string, Array<string>];
+
+export interface IContractManagerStakingDeployedEvent {
+  addr: string;
+  args: IStakingDeployedEventArgs;
+}
+
 export type TContractManagerEventData =
   | IContractManagerVestingDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
@@ -65,4 +79,6 @@ export type TContractManagerEventData =
   | IContractManagerERC998TokenDeployedEvent
   | IContractManagerERC1155TokenDeployedEvent
   | IContractManagerMysteryTokenDeployedEvent
-  | IContractManagerCollectionDeployedEvent;
+  | IContractManagerCollectionDeployedEvent
+  | IContractManagerStakingDeployedEvent
+  | IContractManagerPyramidDeployedEvent;

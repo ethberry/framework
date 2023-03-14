@@ -21,6 +21,7 @@ import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures 
 import { StakingEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { StakingDeployButton } from "../../../../components/buttons";
 
 export const StakingContracts: FC = () => {
   const {
@@ -53,7 +54,7 @@ export const StakingContracts: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, imageUrl, description, contractStatus }) => ({
+    filter: ({ title, description, imageUrl, contractStatus }) => ({
       title,
       description,
       imageUrl,
@@ -72,6 +73,7 @@ export const StakingContracts: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <StakingDeployButton />
       </PageHeader>
 
       <ContractSearchForm
