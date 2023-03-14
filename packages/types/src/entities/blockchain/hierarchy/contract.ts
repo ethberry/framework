@@ -103,6 +103,7 @@ export enum MysteryContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
   "PAUSABLE" = "PAUSABLE",
+  "BLACKLIST" = "BLACKLIST",
 }
 
 export enum Erc721CollectionFeatures {
