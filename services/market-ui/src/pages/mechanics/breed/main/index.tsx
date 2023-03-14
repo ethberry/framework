@@ -14,7 +14,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import BreedABI from "./breed.abi.json";
 
 import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";
@@ -51,7 +51,7 @@ export const Breed: FC = () => {
 
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.EXCHANGE_ADDR, BreedABI, web3Context.provider?.getSigner());
 
       return contract.breed(
         {

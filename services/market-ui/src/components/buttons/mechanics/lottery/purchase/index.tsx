@@ -9,7 +9,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import PurchaseABI from "./purchase.abi.json";
 
 export interface ILotteryPurchaseButtonProps {
   ticketNumbers: Array<boolean>;
@@ -22,7 +22,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LOTTERY_ADDR, PurchaseABI, web3Context.provider?.getSigner());
     return contract
       .purchase(
         {

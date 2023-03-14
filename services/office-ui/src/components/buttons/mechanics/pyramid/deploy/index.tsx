@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import type { IPyramidContractDeployDto } from "@framework/types";
 
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import DeployPyramidABI from "./deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
 
@@ -23,7 +23,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ContractManagerSol.abi,
+        DeployPyramidABI,
         web3Context.provider?.getSigner(),
       );
 

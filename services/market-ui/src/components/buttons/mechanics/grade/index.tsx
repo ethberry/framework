@@ -6,12 +6,10 @@ import { Web3ContextType } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
-import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
-
+import UpgradeABI from "./upgrade.abi.json";
 import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {
@@ -23,7 +21,6 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const { token, attribute } = props;
 
   const api = useApi();
-  const settings = useSettings();
 
   const { contractFeatures } = token.template!.contract!;
 
@@ -47,7 +44,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
             amount: getMultiplier(level, component.amount, grade),
           })) || [];
 
-        const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+        const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
         return contract.upgrade(
           {
             nonce: utils.arrayify(sign.nonce),
@@ -71,15 +68,11 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/grade/sign",
         method: "POST",
         data: {
-          account,
-          referrer: settings.getReferrer(),
           tokenId: token.id,
           attribute,
         },

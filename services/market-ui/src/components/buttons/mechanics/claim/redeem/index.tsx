@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import ClaimABI from "./claim.abi.json";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;
@@ -20,7 +20,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaRedeem = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
     return contract.claim(
       {
         nonce: utils.arrayify(claim.nonce),

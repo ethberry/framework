@@ -7,8 +7,8 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { IPyramidDeposit, PyramidDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
+import ReceiveRewardABI from "../reward/receiveRewarc.abi.json";
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IPyramidRewardComplexButtonProps {
@@ -26,7 +26,7 @@ export const PyramidRewardComplexButton: FC<IPyramidRewardComplexButtonProps> = 
     async (stake: IPyramidDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
       const contract = new Contract(
         stake.pyramidRule!.contract.address,
-        PyramidSol.abi,
+        ReceiveRewardABI,
         web3Context.provider?.getSigner(),
       );
       // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction

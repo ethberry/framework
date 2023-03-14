@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
+import DepositABI from "../deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 import { IStakingDepositDto, StakingDepositDialog } from "./dialog";
@@ -25,7 +25,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, DepositABI, web3Context.provider?.getSigner());
     return contract.deposit(rule.externalId, values.token.tokenId, {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;

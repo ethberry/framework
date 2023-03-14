@@ -8,7 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import SetRulesABI from "./setRules.abi.json";
+import UpdateRuleABI from "./updateRule.abi.json";
 
 export interface IPyramidUploadButtonProps {
   rule: IPyramidRule;
@@ -42,7 +43,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
       active: true, // TODO new rules always ACTIVE ?
     };
 
-    const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, SetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -61,7 +62,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
       ruleStatus = rule.pyramidRuleStatus !== PyramidRuleStatus.ACTIVE;
     }
 
-    const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, UpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 

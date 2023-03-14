@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
-import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
+import GrantRoleABI from "./grantRole.abi.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
@@ -33,7 +33,7 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
   };
 
   const metaFn = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, IAccessControlSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, GrantRoleABI, web3Context.provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 

@@ -9,7 +9,7 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import ReleasableABI from "./releasable.abi.json";
 
 import { formatEther } from "../../../../../utils/money";
 
@@ -23,7 +23,7 @@ export const VestingReleasableButton: FC<IVestingReleasableButtonProps> = props 
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(balance.account, VestingSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, ReleasableABI, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address)"](balance.token.template.contract.address) as Promise<any>;
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {

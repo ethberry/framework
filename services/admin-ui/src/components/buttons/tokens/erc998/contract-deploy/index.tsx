@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc998ContractTemplates, IErc998ContractDeployDto } from "@framework/types";
 
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import DeployERC998TokenABI from "./deployERC998Token.abi.json";
 
 import { Erc998ContractDeployDialog } from "./deploy-dialog";
 
@@ -23,7 +23,7 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ContractManagerSol.abi,
+        DeployERC998TokenABI,
         web3Context.provider?.getSigner(),
       );
 

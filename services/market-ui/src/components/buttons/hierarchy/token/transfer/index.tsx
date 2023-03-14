@@ -7,7 +7,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
 
-import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import SafeTransferFromERC721ABI from "./safeTransferFrom.erc721.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
@@ -26,7 +26,7 @@ export const TokenTransferButton: FC<ITokenTransferButtonProps> = props => {
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
       token.template!.contract!.address,
-      ERC721SimpleSol.abi,
+      SafeTransferFromERC721ABI,
       web3Context.provider?.getSigner(),
     );
     return contract["safeTransferFrom(address,address,uint256,bytes)"](

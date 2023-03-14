@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IBalance } from "@framework/types";
 
-import IPyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import WithdrawTokenABI from "./withdrawToken.abi.json";
 import { formatEther } from "../../../../../utils/money";
 import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
 import { emptyBalance } from "../../../../common/interfaces";
@@ -40,7 +40,7 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
   );
 
   const metaWithdraw = useMetamask(async (values: IBalance, withdrawAmount: string, web3Context: Web3ContextType) => {
-    const contract = new Contract(data.address, IPyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(data.address, WithdrawTokenABI, web3Context.provider?.getSigner());
     // return contract.withdrawToken(values.token!.template!.contract!.address, values.amount) as Promise<void>;
     const token = values.token!.template!.contract!.address;
     // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction

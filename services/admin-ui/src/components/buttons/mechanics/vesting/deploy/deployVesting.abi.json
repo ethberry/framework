@@ -1,0 +1,65 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "nonce",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "bytecode",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct AbstractFactory.Params",
+        "name": "params",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "startTimestamp",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "duration",
+            "type": "uint64"
+          },
+          {
+            "internalType": "string",
+            "name": "contractTemplate",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct VestingFactory.VestingArgs",
+        "name": "args",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "deployVesting",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

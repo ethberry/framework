@@ -7,11 +7,11 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import StartRoundABI from "./startRound.abi.json";
 
 export const LotteryRoundStartButton: FC = () => {
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LOTTERY_ADDR, StartRoundABI, web3Context.provider?.getSigner());
     return contract.startRound() as Promise<void>;
   });
 

@@ -21,4 +21,5 @@ export const i18n: Record<EnabledLanguages, any> = {
   [EnabledLanguages.AR]: ar,
   [EnabledLanguages.EN]: en,
   [EnabledLanguages.RU]: ru,
+  [EnabledLanguages.AR]: ar,
 };

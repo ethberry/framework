@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import SetPregnancyLimitsABI from "./setPregnancyLimits.abi.json";
 
 import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
 
@@ -24,7 +24,7 @@ export const BreedLimitButton: FC = () => {
   };
 
   const metaFn = useMetamask((values: IBreedLimitDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, SetPregnancyLimitsABI, web3Context.provider?.getSigner());
     return contract.setPregnancyLimits(values.count, values.time, values.maxTime) as Promise<void>;
   });
 

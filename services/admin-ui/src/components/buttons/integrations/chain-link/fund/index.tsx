@@ -9,7 +9,8 @@ import { FormattedMessage } from "react-intl";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
+import BalanceOfABI from "./balanceOf.abi.json";
+import TransferAndCallABI from "./transferAndCall.abi.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import { formatEther } from "../../../../../utils/money";
@@ -20,7 +21,7 @@ export const ChainLinkFundButton: FC = () => {
 
   const metaFnTransfer = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LINK_ADDR, TransferAndCallABI, web3Context.provider?.getSigner());
     const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
     return contract.transferAndCall(process.env.VRF_ADDR, values.amount, subId) as Promise<void>;
   });
@@ -30,7 +31,7 @@ export const ChainLinkFundButton: FC = () => {
   const getAccountBalance = useMetamaskValue(
     async (_decimals: number, _symbol: string, web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.LINK_ADDR, BalanceOfABI, web3Context.provider?.getSigner());
       const value = await contract.callStatic.balanceOf(web3Context.account);
       return formatEther(value.sub(value.mod(1e14)), _decimals, _symbol);
     },

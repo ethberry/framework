@@ -9,7 +9,7 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
+import ReleasableABI from "./releasable.abi.json";
 
 import { formatEther } from "../../../../utils/money";
 
@@ -24,7 +24,7 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.EXCHANGE_ADDR, ReleasableABI, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address,address)"](
           balance.token.template.contract.address,

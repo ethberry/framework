@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
 
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import DeployVestingABI from "./deployVesting.abi.json";
 
 import { VestingDeployDialog } from "./dialog";
 
@@ -25,7 +25,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ContractManagerSol.abi,
+        DeployVestingABI,
         web3Context.provider?.getSigner(),
       );
 

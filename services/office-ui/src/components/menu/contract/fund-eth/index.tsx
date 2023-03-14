@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
+import FundEthABI from "./fundEth.abi.json";
 
 import { IFundEthDto, FundEthEditDialog } from "./dialog";
 
@@ -32,7 +32,7 @@ export const FundEthMenuItem: FC<IFundEthMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IFundEthDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, PyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, FundEthABI, web3Context.provider?.getSigner());
     return contract.fundEth({ value: values.amount }) as Promise<void>;
   });
 

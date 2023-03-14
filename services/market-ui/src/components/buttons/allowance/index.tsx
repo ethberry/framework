@@ -9,8 +9,9 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import Allowance from "../../dialogs/deposit-allowance/allowance.json";
+
+import AllowanceERC20ABI from "./allowance.erc20.abi.json";
+
 import { DepositAllowanceDialog, IAllowanceDto } from "../../dialogs/deposit-allowance";
 
 export interface IStakingDepositAllowanceButtonProps {
@@ -35,7 +36,7 @@ export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonPro
     if (rule.deposit?.components[0].tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         rule.deposit?.components[0].contract!.address,
-        Allowance.abi,
+        AllowanceERC20ABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.approve(process.env.STAKING_ADDR, values.amount) as Promise<any>;

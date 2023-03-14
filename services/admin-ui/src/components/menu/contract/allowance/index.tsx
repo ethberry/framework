@@ -9,8 +9,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC721BlacklistUpgradeableRentableRandomGemunionSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
+import ApproveERC20ABI from "./approve.erc20.abi.json";
+import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -35,14 +35,10 @@ export const AllowanceMenu: FC<IAllowanceMenuProps> = props => {
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(address, ApproveERC20ABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, values.amount) as Promise<any>;
     } else if (contractType === TokenType.ERC721) {
-      const contractErc721 = new Contract(
-        address,
-        ERC721BlacklistUpgradeableRentableRandomGemunionSol.abi,
-        web3Context.provider?.getSigner(),
-      );
+      const contractErc721 = new Contract(address, SetApprovalForAllERC721ABI, web3Context.provider?.getSigner());
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");

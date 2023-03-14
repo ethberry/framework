@@ -10,7 +10,7 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ApproveERC20ABI from "./approve.erc20.abi.json";
 
 import { VestingAllowanceDialog, IVestingAllowanceDto } from "./dialog";
 
@@ -36,7 +36,7 @@ export const VestingAllowanceMenu: FC<IVestingAllowanceMenuProps> = props => {
   const metaFn = useMetamask((values: IVestingAllowanceDto, web3Context: Web3ContextType) => {
     const asset = values.token.components[0];
     if (asset.tokenType === TokenType.ERC20) {
-      const contract = new Contract(asset.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(asset.contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
       return contract.approve(values.address, asset.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");

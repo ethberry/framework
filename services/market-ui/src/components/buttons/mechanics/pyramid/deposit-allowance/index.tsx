@@ -9,8 +9,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, TokenType } from "@framework/types";
-// import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import Allowance from "../../../../dialogs/deposit-allowance/allowance.json";
+import AllowanceABI from "./allowance.abi.json";
 import { DepositAllowanceDialog, IAllowanceDto } from "../../../../dialogs/deposit-allowance";
 
 export interface IDepositAllowanceButtonProps {
@@ -35,7 +34,7 @@ export const DepositAllowanceButton: FC<IDepositAllowanceButtonProps> = props =>
     if (rule.deposit?.components[0].tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         rule.deposit?.components[0].contract!.address,
-        Allowance.abi,
+        AllowanceABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.approve(rule.contract.address, values.amount) as Promise<any>;
