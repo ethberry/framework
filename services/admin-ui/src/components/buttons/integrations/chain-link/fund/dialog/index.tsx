@@ -6,7 +6,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import BalanceOfABI from "../balanceOf.abi.json";
+import BalanceOfABI from "./balanceOf.abi.json";
 
 import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";

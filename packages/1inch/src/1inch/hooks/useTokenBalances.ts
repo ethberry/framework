@@ -5,7 +5,7 @@ import { formatUnits } from "ethers/lib/utils";
 
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import BalanceOfERC20ABI from "./abi/balanceOf.erc20.abi.json";
+import BalanceOfERC20ABI from "./balanceOf.erc20.abi.json";
 
 import { GovernanceTokenAddress, IToken } from "../provider";
 

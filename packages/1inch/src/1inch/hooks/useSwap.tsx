@@ -9,7 +9,7 @@ import { formatUnits } from "ethers/lib/utils";
 import { GovernanceTokenAddress, IOneInchContext, ISwap, IToken, SwapStatus } from "../provider";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import AllowanceApproveERC20ABI from "./abi/allowance.approve.erc20.abi.json";
+import AllowanceApproveERC20ABI from "./allowance.approve.erc20.abi.json";
 
 import { repeatOnFail } from "../helpers/repeatOnFail";
 import { safeParseUnits } from "../helpers/safeParseUnits";
