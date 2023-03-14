@@ -15,7 +15,7 @@ export interface IMerchant extends IIdDateBase {
   email: string;
   imageUrl: string;
   merchantStatus: MerchantStatus;
-  users?: Array<IUser>;
-  products?: Array<IProduct>;
-  orders?: Array<IOrder>;
+  users: Array<IUser>;
+  products: Array<IProduct>;
+  orders: Array<IOrder>;
 }

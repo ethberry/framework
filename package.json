@@ -43,7 +43,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
-    "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth",
+    "build": "lerna run build --concurrency 1 --ignore \"@framework/admin-{api,ui}\" --ignore \"@framework/market-{api,ui}\" --ignore \"@framework/office-{api,ui}\" --ignore @framework/mobile-api --ignore @framework/core-eth",
     "clean": "sh scripts/clean.sh",
     "docker:bootstrap": "lerna bootstrap --hoist --ignore-scripts",
     "docker:build": "lerna run build --concurrency 1",
