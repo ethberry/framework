@@ -1,12 +1,10 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsEnum, IsInt, IsOptional, IsString, Matches, Min } from "class-validator";
+import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, Matches, Min } from "class-validator";
 
-import { OrderStatus } from "@framework/types";
+import { IOrderSearchDto, OrderStatus } from "@framework/types";
 import { reDateRange } from "@gemunion/constants";
 import { SearchDto } from "@gemunion/collection";
-
-import { IOrderSearchDto } from "../interfaces";
 
 export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @ApiPropertyOptional()
@@ -33,4 +31,12 @@ export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @Transform(({ value }) => value as Array<OrderStatus>)
   @IsEnum(OrderStatus, { each: true, message: "badInput" })
   public orderStatus: Array<OrderStatus>;
+
+  @ApiPropertyOptional()
+  // https://github.com/typestack/class-transformer/issues/626
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
+  })
+  @IsBoolean({ message: "typeMismatch" })
+  public isArchived: boolean;
 }

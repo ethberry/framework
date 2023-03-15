@@ -360,8 +360,6 @@
       "payee": "0x...",
       "payees": "0x...",
       "penalty": "1",
-      "price": "1000",
-      "priceCorrection": "0",
       "query": "Search...",
       "rarity": "Legendary",
       "recipient": "Recipient",
@@ -384,6 +382,7 @@
       "userIds": "Gordon Freeman"
     },
     "tips": {
+      "add": "Add",
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",

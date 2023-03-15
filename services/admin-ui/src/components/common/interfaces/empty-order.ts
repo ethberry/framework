@@ -7,7 +7,5 @@ export const emptyOrder = {
   addressId: 1,
   orderStatus: OrderStatus.NOW_IN_DELIVERY,
   items: [],
-  price: 0,
-  priceCorrection: 0,
   createdAt: date.toISOString(),
 } as unknown as IOrder;

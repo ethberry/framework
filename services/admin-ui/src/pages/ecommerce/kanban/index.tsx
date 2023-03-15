@@ -31,6 +31,7 @@ export const Kanban: FC = () => {
         url: "/orders",
         data: {
           orderStatus: [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED],
+          isArchived: false,
         },
       })
       .then((json: IPaginationResult<IOrder>) => {

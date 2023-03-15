@@ -140,9 +140,9 @@
       "RANDOM": "Random",
       "REFERRAL": "Referral",
       "SIMPLE": "Simple",
-      "SPLITTER": "Splitter",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
+      "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
       "UPGRADEABLE": "Upgradeable",
       "UPGRADEABLE_RANDOM": "Upgradeable + Random",
@@ -565,6 +565,7 @@
       "userIds": "Gordon Freeman"
     },
     "tips": {
+      "add": "Add",
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",

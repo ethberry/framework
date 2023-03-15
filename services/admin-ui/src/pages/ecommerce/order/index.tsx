@@ -103,6 +103,7 @@ export const Order: FC = () => {
         data: {
           ...rest,
           dateRange: stringifyDateRange(dateRange),
+          isArchived: true,
         },
       })
       .then((json: IPaginationResult<IOrder>) => {
