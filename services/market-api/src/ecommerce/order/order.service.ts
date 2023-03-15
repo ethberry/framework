@@ -86,8 +86,7 @@ export class OrderService {
         orderStatus: OrderStatus.NEW,
         items: cartEntity.items,
         address: addressEntity,
-        user: userEntity,
-        price: 100,
+        // price: 100,
       })
       .save();
 

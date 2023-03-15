@@ -63,6 +63,8 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
           data.tokenId,
           utils.hexZeroPad(BigNumber.from(token.tokenId).toHexString(), 32),
         ) as Promise<void>;
+      default:
+        return Promise.resolve("") as Promise<any>;
     }
   });
 
@@ -96,6 +98,8 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
           token.children![0].child!.template!.contract!.address,
           token.children![0].child?.tokenId,
         ) as Promise<void>;
+      default:
+        return Promise.resolve("") as Promise<any>;
     }
   });
 
