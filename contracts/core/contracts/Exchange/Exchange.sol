@@ -21,6 +21,7 @@ import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
 import "./referral/LinearReferral.sol";
+import "./ExchangeErc4907.sol";
 
 contract Exchange is
   ExchangeCore,
@@ -31,6 +32,7 @@ contract Exchange is
   ExchangeClaim,
   LinearReferral,
   PaymentSplitter,
+  ExchangeErc4907,
   ERC721Holder,
   ERC1155Holder,
   ERC1363Receiver
@@ -64,7 +66,7 @@ contract Exchange is
   function _afterPurchase(
     address referrer,
     Asset[] memory price
-  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
+  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral, ExchangeErc4907) {
     return super._afterPurchase(referrer, price);
   }
 }
