@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import { number, object, string } from "yup";
 
-export const validationSchema = Yup.object().shape({
-  title: Yup.string().required("form.validations.valueMissing"),
-  productId: Yup.number().required("form.validations.valueMissing"),
-  imageUrl: Yup.string().required("form.validations.valueMissing"),
+export const validationSchema = object().shape({
+  title: string().required("form.validations.valueMissing"),
+  productId: number().required("form.validations.valueMissing"),
+  imageUrl: string().required("form.validations.valueMissing"),
 });

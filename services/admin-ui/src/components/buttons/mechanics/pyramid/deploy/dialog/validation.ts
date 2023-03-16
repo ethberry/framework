@@ -1,3 +1,3 @@
-import * as Yup from "yup";
+import { object } from "yup";
 
-export const validationSchema = Yup.object().shape({});
+export const validationSchema = object().shape({});
