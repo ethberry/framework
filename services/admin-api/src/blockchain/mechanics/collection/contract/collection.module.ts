@@ -21,4 +21,4 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
   controllers: [Erc721CollectionController],
   exports: [Erc721CollectionService],
 })
-export class Erc721CollectionModule {}
+export class CollectionModule {}
