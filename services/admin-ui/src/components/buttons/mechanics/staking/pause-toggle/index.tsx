@@ -16,23 +16,26 @@ export interface IPauseToggleButton {
 export const PauseToggleButton: FC<IPauseToggleButton> = props => {
   const { className } = props;
 
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean | null>(null);
 
   const getPauseStatus = useMetamaskValue(
     async (web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(process.env.STAKING_ADDR, PauseABI, web3Context.provider?.getSigner());
-      return ((await contract.paused()) as boolean) || false;
+      if ((await contract.provider.getCode(contract.address)) !== "0x") {
+        return contract.paused() as boolean;
+      }
+      return null;
     },
     { success: false },
   );
 
   useEffect(() => {
-    if (isPaused) {
+    if (isPaused !== null) {
       return;
     }
 
-    void getPauseStatus().then((value: boolean) => {
+    void getPauseStatus().then((value: boolean | null) => {
       setIsPaused(value);
     });
   }, [isPaused]);
@@ -58,6 +61,7 @@ export const PauseToggleButton: FC<IPauseToggleButton> = props => {
       onClick={handleToggle}
       data-testid="ContractPauseToggleButton"
       className={className}
+      disabled={isPaused === null}
     >
       <FormattedMessage id={isPaused ? "form.buttons.unpause" : "form.buttons.pause"} />
     </Button>
