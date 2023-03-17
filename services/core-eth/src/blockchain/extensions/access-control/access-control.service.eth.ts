@@ -93,7 +93,6 @@ export class AccessControlServiceEth {
       args: { tokenId },
     } = event;
     const { address } = context;
-    console.log("updateUser", event);
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc721TokenEntity) {
