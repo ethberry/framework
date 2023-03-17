@@ -8,7 +8,7 @@ import { externalId, templateId, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 
-describe("ExchangeErc4907", function () {
+describe("ExchangeRentable", function () {
   describe("borrow", function () {
     describe("borrow purchase", function () {
       it("should borrow ERC721 to user for free", async function () {
@@ -74,6 +74,7 @@ describe("ExchangeErc4907", function () {
         const expires = await erc721Instance.userExpires(tokenId);
         expect(expires).to.equal(endTimestamp);
       });
+
       it("should borrow ERC721 to user for ERC20", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();

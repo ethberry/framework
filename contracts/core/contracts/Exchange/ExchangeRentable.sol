@@ -8,14 +8,13 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-
-import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
+import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
-abstract contract ExchangeErc4907 is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
   event Borrow(address from, address to, uint256 expires, Asset[] items, Asset[] price);
 
   function borrow(
@@ -31,7 +30,7 @@ abstract contract ExchangeErc4907 is SignatureValidator, ExchangeUtils, AccessCo
 
     address account = _msgSender();
 
-    if(price.length > 0) {
+    if (price.length > 0) {
       spendFrom(price, account, address(this));
     }
 
@@ -39,8 +38,11 @@ abstract contract ExchangeErc4907 is SignatureValidator, ExchangeUtils, AccessCo
 
     for (uint256 i = 0; i < items.length; i++) {
       // TODO check expiresAt is less max(uint64)
-      IERC4907(items[i].token).setUser(items[i].tokenId, /* to */ params.referrer, /* expires */ uint64(params.expiresAt));
-
+      IERC4907(items[i].token).setUser(
+        items[i].tokenId,
+        /* to */ params.referrer,
+        /* expires */ uint64(params.expiresAt)
+      );
     }
   }
 
