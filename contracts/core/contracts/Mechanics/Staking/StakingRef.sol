@@ -18,6 +18,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
+import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "./interfaces/IStaking.sol";
 import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
@@ -27,7 +28,7 @@ import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
 import "../../Exchange/referral/LinearReferral.sol";
 
-contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferral {
+contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferral {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
@@ -84,29 +85,22 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     uint256 stakeId = _stakeIdCounter.current();
     _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
-    Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, tokenId, rule.deposit.amount);
+    Asset memory depositItem = rule.deposit;
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
-    if (depositItem.tokenType == TokenType.NATIVE) {
-      require(msg.value == depositItem.amount, "Staking: wrong amount");
-    } else if (depositItem.tokenType == TokenType.ERC20) {
-      IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
-    } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
+    // Check templateId if ERC721 or ERC998
+    if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
       if (rule.deposit.tokenId != 0) {
         uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
         require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
       }
-      IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
-    } else if (depositItem.tokenType == TokenType.ERC1155) {
-      IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
 
-    Asset[] memory depositItems = new Asset[](1);
-    depositItems[0] = depositItem;
+    spendFrom(toArray(depositItem), _msgSender(), address(this));
 
-    _afterPurchase(referrer, depositItems);
+    _afterPurchase(referrer, toArray(depositItem));
   }
 
   function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
@@ -132,25 +126,9 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     if (withdrawDeposit) {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
-      uint256 withdrawAmount = multiplier == 0
-        ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100))
-        : stakeAmount;
+      depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
 
-      if (depositItem.tokenType == TokenType.NATIVE) {
-        Address.sendValue(payable(receiver), withdrawAmount);
-      } else if (depositItem.tokenType == TokenType.ERC20) {
-        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
-      } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-        IERC721Metadata(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
-      } else if (depositItem.tokenType == TokenType.ERC1155) {
-        IERC1155(depositItem.token).safeTransferFrom(
-          address(this),
-          receiver,
-          depositItem.tokenId,
-          withdrawAmount,
-          "0x"
-        );
-      }
+      spend(toArray(depositItem), receiver);
     } else {
       stake.startTimestamp = block.timestamp;
     }
@@ -159,32 +137,24 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
       Asset memory rewardItem = rule.reward;
-      uint256 rewardAmount;
+      rewardItem.amount = rewardItem.amount * multiplier;
 
-      if (rewardItem.tokenType == TokenType.NATIVE) {
-        rewardAmount = rewardItem.amount * multiplier;
-        Address.sendValue(payable(receiver), rewardAmount);
-      } else if (rewardItem.tokenType == TokenType.ERC20) {
-        rewardAmount = rewardItem.amount * multiplier;
-        SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
+      if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
+        // NATIVE, ERC20
+        spend(toArray(rewardItem), receiver);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
-        bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM_ID);
-        //        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID);
+        // ERC721, ERC998
         for (uint256 i = 0; i < multiplier; i++) {
-          if (randomInterface) {
-            IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
-            //          } else if (mysteryboxInterface) {
-            //            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId);
+          if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+            // If Support MysteryBox interface
+            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
           } else {
-            IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
+            acquire(toArray(rewardItem), receiver);
           }
         }
-      } else if (rewardItem.tokenType == TokenType.ERC1155) {
-        rewardAmount = rewardItem.amount * multiplier;
-        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardItem.tokenId, rewardAmount, "0x");
-        // todo batch mint reward
       } else {
-        revert("Exchange: unsupported token type");
+        // ERC1155
+        acquire(toArray(rewardItem), receiver);
       }
     }
     if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");
