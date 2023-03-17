@@ -331,7 +331,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, 1, { value: 100 });
-      await expect(tx1).to.be.revertedWith("Staking: wrong amount");
+      await expect(tx1).to.be.revertedWith("Exchange: Wrong amount");
     });
 
     it("should fail for limit exceed", async function () {
