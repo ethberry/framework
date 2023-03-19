@@ -22,15 +22,14 @@ export const Profile: FC = () => {
 
   return (
     <Fragment>
-      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} sx={{ mb: 2 }}>
         {Object.values(ProfileTabs).map(tab => (
           <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
         ))}
       </Tabs>
-      <br />
-      <ProfileGeneral value={value} />
-      <ProfileSubscriptions value={value} />
-      <ProfileAddresses value={value} />
+      <ProfileGeneral open={value === ProfileTabs.general} />
+      <ProfileAddresses open={value === ProfileTabs.addresses} />
+      <ProfileSubscriptions open={value === ProfileTabs.subscriptions} />
     </Fragment>
   );
 };

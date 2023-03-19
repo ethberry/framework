@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
 
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { useUser } from "@gemunion/provider-user";
@@ -11,27 +12,25 @@ import { EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ITabPanelProps, ProfileTabs } from "../tabs";
+import { ITabPanelProps } from "../tabs";
 
 export const ProfileGeneral: FC<ITabPanelProps> = props => {
-  const { value } = props;
+  const { open } = props;
 
   const { enqueueSnackbar } = useSnackbar();
-
+  const { formatMessage } = useIntl();
   const user = useUser<IUser>();
-
-  if (value !== ProfileTabs.general) {
-    return null;
-  }
 
   const { fn } = useApiCall((_api, values: Partial<IUser>) => {
     return user.setProfile(values);
   });
 
+  if (!open) {
+    return null;
+  }
+
   const onClick = (): void => {
-    enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
-      variant: "info",
-    });
+    enqueueSnackbar(formatMessage({ id: "form.hints.emailWarning" }), { variant: "info" });
   };
 
   const handleSubmit = async (values: Partial<IUser>, form: any): Promise<void> => {

@@ -1,6 +1,7 @@
 import { EnabledLanguages } from "@framework/constants";
 import { IUser, UserStatus } from "@framework/types";
-import { emptyAddr } from "./empty-address";
+
+import { emptyAddress } from "./empty-address";
 
 const date = new Date();
 
@@ -13,6 +14,6 @@ export const emptyUser = {
   imageUrl: "",
   userStatus: UserStatus.ACTIVE,
   userRoles: [],
-  addresses: [emptyAddr],
+  addresses: [emptyAddress],
   createdAt: date.toISOString(),
 } as unknown as IUser;

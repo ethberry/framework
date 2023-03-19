@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { FindManyOptions, FindOptionsWhere, Not, Repository, UpdateResult } from "typeorm";
 
 import { AddressStatus } from "@framework/types";
 
 import { AddressEntity } from "./address.entity";
-import { IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
+import { IAddressAutocompleteDto, IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AddressService {
@@ -13,6 +13,10 @@ export class AddressService {
     @InjectRepository(AddressEntity)
     private readonly addressEntityRepository: Repository<AddressEntity>,
   ) {}
+
+  public autocomplete(dto: IAddressAutocompleteDto): Promise<Array<AddressEntity>> {
+    return this.addressEntityRepository.find({ where: { userId: dto.userId, addressStatus: AddressStatus.ACTIVE } });
+  }
 
   public findAndCount(
     where: FindOptionsWhere<AddressEntity>,
@@ -25,21 +29,27 @@ export class AddressService {
     return this.addressEntityRepository.findOne({ where });
   }
 
-  public async create(data: IAddressCreateDto): Promise<AddressEntity> {
-    const count = await this.addressEntityRepository.count({ where: { userId: data.userId } });
+  public async create(dto: IAddressCreateDto): Promise<AddressEntity> {
+    const count = await this.addressEntityRepository.count({
+      where: { userId: dto.userId, isDefault: true, addressStatus: AddressStatus.ACTIVE },
+    });
+
+    if (dto.isDefault) {
+      await this.addressEntityRepository.update({ userId: dto.userId }, { isDefault: false });
+    }
 
     return this.addressEntityRepository
       .create({
-        ...data,
+        ...dto,
         addressStatus: AddressStatus.ACTIVE,
-        isDefault: !count ? true : data.isDefault,
+        isDefault: !count ? true : dto.isDefault,
       })
       .save();
   }
 
   public async update(
     where: FindOptionsWhere<AddressEntity>,
-    data: IAddressUpdateDto,
+    dto: IAddressUpdateDto,
   ): Promise<AddressEntity | undefined> {
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
@@ -47,16 +57,26 @@ export class AddressService {
       throw new NotFoundException("addressNotFound");
     }
 
-    if (data.isDefault) {
-      await this.addressEntityRepository.update({ userId: where.userId }, { isDefault: false });
+    if (dto.isDefault) {
+      await this.addressEntityRepository.update({ userId: dto.userId }, { isDefault: false });
     }
 
-    Object.assign(addressEntity, data);
+    Object.assign(addressEntity, dto);
 
     return addressEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<AddressEntity>): Promise<UpdateResult> {
-    return this.addressEntityRepository.update(where, { addressStatus: AddressStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<AddressEntity>): Promise<UpdateResult | void> {
+    const deletingAddress = await this.addressEntityRepository.findOne({ where });
+
+    if (deletingAddress?.isDefault) {
+      const address = await this.addressEntityRepository.findOne({
+        where: { id: Not(deletingAddress.id), userId: deletingAddress.userId, addressStatus: AddressStatus.ACTIVE },
+        order: { id: "DESC" },
+      });
+      await this.addressEntityRepository.update({ id: address?.id }, { isDefault: true });
+    }
+
+    return this.addressEntityRepository.update(where, { addressStatus: AddressStatus.INACTIVE, isDefault: false });
   }
 }

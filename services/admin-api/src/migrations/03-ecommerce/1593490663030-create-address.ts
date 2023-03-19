@@ -19,7 +19,31 @@ export class CreateAddress1593490663030 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "address_line1",
+          type: "varchar",
+        },
+        {
+          name: "address_line2",
+          type: "varchar",
+          isNullable: true,
+          default: "''",
+        },
+        {
+          name: "city",
+          type: "varchar",
+        },
+        {
+          name: "country",
+          type: "varchar",
+        },
+        {
+          name: "state",
+          type: "varchar",
+          isNullable: true,
+          default: "''",
+        },
+        {
+          name: "zip",
           type: "varchar",
         },
         {

@@ -1,5 +1,6 @@
 import { FC, Fragment } from "react";
 import {
+  Box,
   Button,
   Chip,
   IconButton,
@@ -14,16 +15,25 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { AddressStatus, IAddress } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { IPaginationDto } from "@gemunion/types-collection";
 
-import { emptyAddress } from "../../../../components/common/interfaces/empty-address";
-import { useFormatAddress } from "../../../../utils/address";
-import { ITabPanelProps } from "../tabs";
-import { EditAddressDialog } from "./edit";
+import { emptyAddress } from "../../../../../components/common/interfaces/empty-address";
+import { useFormatAddress } from "../../../../../utils/address";
+import { UserAddressForm } from "./edit";
 
-export const ProfileAddresses: FC<ITabPanelProps> = props => {
-  const { open } = props;
+export interface IUserAddressSearchDro extends IPaginationDto {
+  userId: number;
+}
+
+export interface IUserAddressesProps {
+  open: boolean;
+  userId: number;
+}
+
+export const UserAddresses: FC<IUserAddressesProps> = props => {
+  const { userId, open } = props;
 
   const {
     rows,
@@ -38,17 +48,19 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-  } = useCollection<IAddress>({
-    baseUrl: "/profile/address",
+  } = useCollection<IAddress, IUserAddressSearchDro>({
+    baseUrl: "/address",
     embedded: true,
-    empty: emptyAddress,
-    filter: ({ addressLine1, addressLine2, city, country, isDefault, state, zip }) => ({
+    empty: { ...emptyAddress, userId },
+    search: { userId },
+    filter: ({ addressLine1, addressLine2, city, country, isDefault, state, userId, zip }) => ({
       addressLine1,
       addressLine2,
       city,
       country,
       isDefault,
       state,
+      userId,
       zip,
     }),
   });
@@ -62,17 +74,17 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
 
   return (
     <Fragment>
-      <PageHeader message="pages.profile.tabs.addresses">
+      <Box sx={{ position: "absolute", top: 0, right: 0 }}>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
           <FormattedMessage id="form.buttons.create" />
         </Button>
-      </PageHeader>
+      </Box>
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {rows.length ? (
-            rows.map((address: IAddress) => (
-              <ListItem key={address.id} disableGutters={true}>
+            rows.map((address: IAddress, i: number) => (
+              <ListItem key={address.id || i} disableGutters={true}>
                 <ListItemText
                   primary={
                     <Fragment>
@@ -94,7 +106,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                       ) : null}
                     </Fragment>
                   }
-                  sx={{ pr: 3 }}
+                  sx={{ pr: 7 }}
                 />
                 <ListItemSecondaryAction>
                   <Tooltip title={formatMessage({ id: "form.tips.edit" })}>
@@ -118,7 +130,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
         </List>
       </ProgressOverlay>
 
-      <EditAddressDialog
+      <UserAddressForm
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
