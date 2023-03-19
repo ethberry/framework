@@ -54,10 +54,7 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
       <TextInput name="displayName" />
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
-      <br />
-      <br />
-      <Divider />
-      <br />
+      <Divider sx={{ my: 2 }} />
       <SelectInput multiple name="userRoles" options={UserRole} />
       <SelectInput name="userStatus" options={UserStatus} />
       <TextInput name="comment" multiline />

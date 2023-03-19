@@ -26,6 +26,7 @@
     }
   },
   "dialogs": {
+    "add": "Add",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -100,7 +101,12 @@
       "RESTORE_PASSWORD": "Restore password",
       "WELCOME": "Welcome"
     },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male"
+    },
     "language": {
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arabic",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
@@ -164,7 +170,9 @@
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
+      "MANAGER": "Manager",
       "MERCHANT": "Merchant",
+      "OWNER": "Owner",
       "USER": "User"
     },
     "userStatus": {
@@ -269,9 +277,11 @@
       "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
+      "gender": "Gender",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "isDefault": "Make default",
       "item": "Item",
       "items": "Items",
       "language": "Language",

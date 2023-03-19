@@ -10,7 +10,7 @@ import { ProfileUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/profile")
-export class ProfileController {
+export class ProfileGeneralController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Public()
