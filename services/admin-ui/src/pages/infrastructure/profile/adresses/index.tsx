@@ -17,7 +17,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { emptyAddress } from "../../../../components/common/interfaces/empty-address";
+import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";
 import { ITabPanelProps } from "../tabs";
 import { EditAddressDialog } from "./edit";

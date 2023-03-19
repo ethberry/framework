@@ -19,7 +19,7 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { IPaginationDto } from "@gemunion/types-collection";
 
-import { emptyAddress } from "../../../../../components/common/interfaces/empty-address";
+import { emptyAddress } from "../../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../../utils/address";
 import { UserAddressForm } from "./edit";
 
