@@ -19,8 +19,8 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { emptyAddress } from "../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../utils/address";
+import { AddressEditDialog } from "./edit";
 import { ITabPanelProps } from "../tabs";
-import { EditAddressDialog } from "./edit";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
   const { open } = props;
@@ -118,7 +118,7 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
         </List>
       </ProgressOverlay>
 
-      <EditAddressDialog
+      <AddressEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

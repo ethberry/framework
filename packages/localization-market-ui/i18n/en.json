@@ -830,7 +830,8 @@
         "addresses": "Addresses",
         "general": "General",
         "subscriptions": "Subscriptions"
-      }
+      },
+      "title": "Profile"
     },
     "pyramid": {
       "deposit": {

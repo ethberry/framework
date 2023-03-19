@@ -2,14 +2,17 @@ import { Module } from "@nestjs/common";
 
 import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
 
-import { ProfileService } from "./profile.service";
-import { ProfileController } from "./profile.controller";
+import { AddressModule } from "../../ecommerce/address/address.module";
 import { UserModule } from "../user/user.module";
+import { ProfileAddressController } from "./profile.address.controller";
+import { ProfileGeneralController } from "./profile.general.controller";
+import { ProfileService } from "./profile.service";
+import { ProfileWalletController } from "./profile.wallet.controller";
 
 @Module({
-  imports: [UserModule, MetamaskModule],
+  imports: [AddressModule, UserModule, MetamaskModule],
   providers: [ProfileService],
-  controllers: [ProfileController],
+  controllers: [ProfileAddressController, ProfileGeneralController, ProfileWalletController],
   exports: [ProfileService],
 })
 export class ProfileModule {}

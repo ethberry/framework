@@ -6,19 +6,25 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { AddressInput } from "../../../../../components/inputs/address";
 import { validationSchema } from "./validation";
 
-export interface IAddUserDialogProps {
+export interface IAddressEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (item: IAddress, form: any) => Promise<void>;
   initialValues: IAddress;
 }
 
-export const AddressEditDialog: FC<IAddUserDialogProps> = props => {
+export const AddressEditDialog: FC<IAddressEditDialogProps> = props => {
   const {
     initialValues: { id },
   } = props;
+
   return (
-    <FormDialog validationSchema={validationSchema} message={id ? "dialogs.edit" : "dialogs.create"} {...props}>
+    <FormDialog
+      validationSchema={validationSchema}
+      maxWidth="md"
+      message={id ? "dialogs.edit" : "dialogs.create"}
+      {...props}
+    >
       <AddressInput />
     </FormDialog>
   );
