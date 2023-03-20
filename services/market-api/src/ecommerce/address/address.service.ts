@@ -32,12 +32,12 @@ export class AddressService {
   }
 
   public async create(dto: IAddressCreateDto): Promise<AddressEntity> {
-    const { userId } = dto;
+    const { isDefault, userId } = dto;
     const count = await this.addressEntityRepository.count({
       where: { userId, isDefault: true, addressStatus: AddressStatus.ACTIVE },
     });
 
-    if (dto.isDefault) {
+    if (isDefault) {
       await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
@@ -45,7 +45,7 @@ export class AddressService {
       .create({
         ...dto,
         addressStatus: AddressStatus.ACTIVE,
-        isDefault: !count ? true : dto.isDefault,
+        isDefault: !count ? true : isDefault,
       })
       .save();
   }
@@ -54,14 +54,14 @@ export class AddressService {
     where: FindOptionsWhere<AddressEntity>,
     dto: IAddressUpdateDto,
   ): Promise<AddressEntity | undefined> {
-    const { userId } = dto;
+    const { isDefault, userId } = dto;
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
     if (!addressEntity) {
       throw new NotFoundException("addressNotFound");
     }
 
-    if (dto.isDefault) {
+    if (isDefault) {
       await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
