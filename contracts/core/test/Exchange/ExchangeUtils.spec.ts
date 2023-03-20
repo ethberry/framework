@@ -202,6 +202,36 @@ describe("ExchangeUtils", function () {
         await expect(tx).changeTokenBalances(erc20Instance, [owner, erc20ReceiverInstance], [-amount, amount]);
       });
 
+      it("should spendFrom: ERC20 => Self", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc20Instance = await deployERC20("ERC20Mock");
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(exchangeMockInstance.address, amount);
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: 0,
+              amount,
+            },
+          ],
+          owner.address,
+          exchangeMockInstance.address,
+        );
+
+        await expect(tx)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(owner.address, exchangeMockInstance.address, amount)
+          .not.to.emit(exchangeMockInstance, "TransferReceived");
+        await expect(tx).changeTokenBalances(erc20Instance, [owner, exchangeMockInstance], [-amount, amount]);
+      });
+
       it("should spendFrom: ERC20 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
@@ -342,6 +372,36 @@ describe("ExchangeUtils", function () {
           .withArgs(owner.address, erc20ReceiverInstance.address, amount)
           .to.emit(erc20ReceiverInstance, "TransferReceived");
         await expect(tx).changeTokenBalances(erc20Instance, [owner, erc20ReceiverInstance], [-amount, amount]);
+      });
+
+      it("should spendFrom: ERC1363 => Self", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc20Instance = await deployERC20("ERC20Simple");
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(exchangeMockInstance.address, amount);
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: 0,
+              amount,
+            },
+          ],
+          owner.address,
+          exchangeMockInstance.address,
+        );
+
+        await expect(tx)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(owner.address, exchangeMockInstance.address, amount)
+          .to.emit(exchangeMockInstance, "TransferReceived");
+        await expect(tx).changeTokenBalances(erc20Instance, [owner, exchangeMockInstance], [-amount, amount]);
       });
 
       it("should spendFrom: ERC1363 => EOA", async function () {
