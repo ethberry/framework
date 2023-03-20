@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { Typography } from "@mui/material";
-import { ITabPanelProps, ProfileTabs } from "../tabs";
+
+import { ITabPanelProps } from "../tabs";
 
 export const ProfileSubscriptions: FC<ITabPanelProps> = props => {
-  const { value } = props;
+  const { open } = props;
 
-  if (value !== ProfileTabs.subscriptions) {
+  if (!open) {
     return null;
   }
 

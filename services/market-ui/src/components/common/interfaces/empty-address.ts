@@ -1,6 +1,11 @@
 import { IAddress } from "@framework/types";
 
-export const emptyAddr = {
+export const emptyAddress = {
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  country: "ID",
+  state: "",
+  zip: "",
   isDefault: false,
-  address: "",
 } as unknown as IAddress;

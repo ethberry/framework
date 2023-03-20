@@ -9,7 +9,7 @@ import { validationSchema } from "./validation";
 import { AddressInput } from "./address-input";
 import { UserInput } from "./user-input";
 import { FormButtons } from "../form-buttons";
-import { emptyAddr, emptyUser } from "../../../../components/common/interfaces";
+import { emptyAddress, emptyUser } from "../../../../components/common/interfaces";
 
 export const GuestForm: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -36,7 +36,7 @@ export const GuestForm: FC = () => {
 
   const fixedValues = {
     user: emptyUser,
-    addresses: [emptyAddr],
+    addresses: [emptyAddress],
     captcha: "",
     save: false,
   };

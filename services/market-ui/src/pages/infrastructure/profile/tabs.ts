@@ -1,9 +1,9 @@
 export enum ProfileTabs {
   general = "general",
-  subscriptions = "subscriptions",
   addresses = "addresses",
+  subscriptions = "subscriptions",
 }
 
 export interface ITabPanelProps {
-  value: ProfileTabs;
+  open: boolean;
 }

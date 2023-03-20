@@ -20,9 +20,10 @@ import { IPaginationResult } from "@gemunion/types-collection";
 import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
 import { IAddress } from "@framework/types";
 
-import { AddAddressDialog } from "../../../../infrastructure/profile/adresses/add";
+import { AddressEditDialog } from "../../../../infrastructure/profile/adresses/edit";
 import { useStyles } from "./styles";
-import { emptyAddr } from "../../../../../components/common/interfaces";
+import { emptyAddress } from "../../../../../components/common/interfaces";
+import { useFormatAddress } from "../../../../../utils/address";
 
 interface IAddressInputProps {
   name?: string;
@@ -36,6 +37,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
 
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
+  const { formatAddress } = useFormatAddress();
   const classes = useStyles();
 
   const api = useContext(ApiContext);
@@ -44,10 +46,10 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   const [addresses, setAddresses] = useState<Array<IAddress>>([]);
 
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [selectedAddr, setSelectedAddr] = useState<IAddress>(emptyAddr);
+  const [selectedAddr, setSelectedAddr] = useState<IAddress>(emptyAddress);
 
   const handleAdd = () => {
-    setSelectedAddr(emptyAddr);
+    setSelectedAddr(emptyAddress);
     setIsAddDialogOpen(true);
   };
 
@@ -134,7 +136,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
               <ListItem key={i} disableGutters={true}>
                 <ListItemText>
                   <Typography component="pre">
-                    {addr.address} {addr.id}
+                    {formatAddress(addr)} {addr.id}
                   </Typography>
                 </ListItemText>
                 <ListItemSecondaryAction>
@@ -157,7 +159,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
         </List>
       </ProgressOverlay>
 
-      <AddAddressDialog
+      <AddressEditDialog
         onCancel={handleAddCancel}
         onConfirm={handleAddConfirmed}
         open={isAddDialogOpen}

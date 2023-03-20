@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useIntl } from "react-intl";
 
 import { ICategory } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -18,6 +19,8 @@ export interface IEditCategoryDialogProps {
 export const EditCategoryDialog: FC<IEditCategoryDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const { formatMessage } = useIntl();
+
   const { id, title, description, parentId } = initialValues;
   const fixedValues = { id, title, description, parentId };
 
@@ -27,7 +30,12 @@ export const EditCategoryDialog: FC<IEditCategoryDialogProps> = props => {
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <EntityInput name="parentId" controller="categories" />
+      <EntityInput
+        name="parentId"
+        controller="categories"
+        label={formatMessage({ id: "form.labels.parentCategoryId" })}
+        placeholder={formatMessage({ id: "form.placeholders.parentCategoryId" })}
+      />
     </FormDialog>
   );
 };

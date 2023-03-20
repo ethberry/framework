@@ -4,6 +4,7 @@ export * from "./hierarchy/token/borrow";
 export * from "./hierarchy/template/purchase";
 
 export * from "./allowance";
+export * from "./close-button";
 export * from "./mechanics/claim/redeem";
 export * from "./mechanics/craft";
 export * from "./mechanics/drop/purchase";

@@ -23,8 +23,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 
-import { EditPromoDialog } from "./edit";
 import { emptyPromo } from "../../../components/common/interfaces";
+import { EditPromoDialog } from "./edit";
 
 export const Promo: FC = () => {
   const location = useLocation();

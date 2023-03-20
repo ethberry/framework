@@ -12,8 +12,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         order_status,
         merchant_id,
         address_id,
-        price,
-        price_correction,
         created_at,
         updated_at
       ) VALUES (
@@ -21,8 +19,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'NEW',
         1,
         1,
-        125,
-        -25,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -30,8 +26,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'SCHEDULED',
         1,
         2,
-        125,
-        25,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -39,8 +33,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'NOW_IN_DELIVERY',
         1,
         3,
-        100,
-        0,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -48,8 +40,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'CLOSED',
         1,
         1,
-        100,
-        0,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -57,8 +47,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'CLOSED',
         1,
         1,
-        100,
-        0,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -66,8 +54,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'CLOSED',
         2,
         3,
-        100,
-        0,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -75,8 +61,6 @@ export class SeedOrders1593490663240 implements MigrationInterface {
         'CLOSED',
         2,
         3,
-        100,
-        0,
         '${currentDateTime}',
         '${currentDateTime}'
       );

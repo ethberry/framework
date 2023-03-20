@@ -349,6 +349,7 @@
     },
     "hints": {
       "editNotAllowed": "Editing of this rule is not allowed",
+      "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "maxValue": "Max {label}: {value}",
       "prompt": "You have unsaved information, are you sure you want to leave this page?",
@@ -362,6 +363,8 @@
       "active": "Active",
       "address": "Address",
       "addressId": "Address",
+      "addressLine1": "Address (line 1)",
+      "addressLine2": "Address (line 2)",
       "addresses": "Addresses",
       "amount": "Amount",
       "attribute": "Attribute",
@@ -375,6 +378,7 @@
       "child": "Child",
       "childId": "Child",
       "childIds": "Child",
+      "city": "City",
       "claimStatus": "Status",
       "comment": "Comment",
       "confirm": "Confirm",
@@ -435,6 +439,7 @@
       "parameterWithLabel": "Parameter{br}\"{label}\"",
       "parameters": "Parameters",
       "parent": "Parent",
+      "parentCategoryId": "Root",
       "parentId": "Parent",
       "parentIds": "Parent",
       "parents": "Parents",
@@ -464,6 +469,7 @@
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
+      "state": "State",
       "subscriptionId": "Subscription Id",
       "symbol": "Symbol",
       "template": "Template",
@@ -486,13 +492,15 @@
       "userRoles": "Roles",
       "userStatus": "Status",
       "winNumbers": "Win numbers",
-      "year": "Year"
+      "year": "Year",
+      "zip": "ZIP code"
     },
     "placeholders": {
       "DUMMY": "Dummy",
       "account": "0x...",
-      "address": "NY, Washington st., 1",
       "address": "0x...",
+      "addressLine1": "Melburb st. 24",
+      "addressLine2": "Additional info about address",
       "amount": "10",
       "attribute": "...",
       "attributes": "{}",
@@ -502,12 +510,14 @@
       "categoryIds": "Root",
       "childId": "Contract",
       "childIds": "Contract",
+      "city": "Hamburg",
       "comment": "Fraud",
       "confirm": "******",
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "count": "0",
+      "country": "Germany",
       "createdAt": "now",
       "decimals": "18",
       "definition": "10",
@@ -529,7 +539,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
-      "parentId": "Root",
+      "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
@@ -549,6 +559,7 @@
       "shares": "0",
       "slug": "terms-of-services",
       "stakingRuleStatus": "Status",
+      "state": "Hamburg",
       "subscriptionId": "2",
       "symbol": "XXX",
       "templateId": "Template",
@@ -562,10 +573,12 @@
       "tokenStatus": "Status",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
-      "userIds": "Gordon Freeman"
+      "userIds": "Gordon Freeman",
+      "zip": "80576"
     },
     "tips": {
       "add": "Add",
+      "cancel": "Cancel",
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
@@ -595,6 +608,7 @@
   },
   "messages": {
     "empty-list": "Nothing to display",
+    "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },
   "pages": {
@@ -776,6 +790,9 @@
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
+    "kanban": {
+      "title": "Orders"
+    },
     "lottery": {
       "kanban": {
         "title": "Orders"
@@ -826,6 +843,9 @@
         "title": "Native Tokens"
       }
     },
+    "orders": {
+      "title": "Orders archive"
+    },
     "pages": {
       "title": "Pages"
     },
@@ -837,6 +857,9 @@
       "detach": "Detach",
       "title": "System Payees",
       "withdraw": "Withdraw"
+    },
+    "photos": {
+      "title": "Photos"
     },
     "products": {
       "title": "Products"
@@ -897,6 +920,9 @@
         "upload": "Upload rule"
       },
       "title": "Staking"
+    },
+    "statistics": {
+      "title": "Statistics"
     },
     "users": {
       "addresses": {

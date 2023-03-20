@@ -1,12 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
+import { AddressStatus } from "@framework/types";
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
-import { AddressCreateDto, AddressUpdateDto } from "./dto";
 import { AddressService } from "./address.service";
 import { AddressEntity } from "./address.entity";
-import { AddressStatus } from "@framework/types";
+import { AddressCreateDto, AddressUpdateDto } from "./dto";
+import { IAddressAutocompleteDto } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/address")
@@ -15,16 +16,23 @@ export class AddressController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: { userId: number }): Promise<[Array<AddressEntity>, number]> {
+  public search(@Query() dto: IAddressAutocompleteDto): Promise<[Array<AddressEntity>, number]> {
+    const { userId } = dto;
+
     return this.addressService.findAndCount(
-      { userId: dto.userId, addressStatus: AddressStatus.ACTIVE },
-      { relations: ["user"] },
+      { userId, addressStatus: AddressStatus.ACTIVE },
+      { order: { id: "DESC" }, relations: ["user"] },
     );
   }
 
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: IAddressAutocompleteDto): Promise<Array<AddressEntity>> {
+    return this.addressService.autocomplete(dto);
+  }
+
   @Post("/")
-  public create(@Body() body: AddressCreateDto): Promise<AddressEntity> {
-    return this.addressService.create(body);
+  public create(@Body() dto: AddressCreateDto): Promise<AddressEntity> {
+    return this.addressService.create(dto);
   }
 
   @Put("/:id")

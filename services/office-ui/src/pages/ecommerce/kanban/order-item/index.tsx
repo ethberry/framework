@@ -2,6 +2,7 @@ import { memo } from "react";
 
 import { IOrder } from "@framework/types";
 
+import { useFormatAddress } from "../../../../utils/address";
 import { useStyles } from "./styles";
 
 export interface IOrderListItemProps {
@@ -15,6 +16,8 @@ export interface IOrderListItemProps {
 export const OrderListItem = memo<IOrderListItemProps>(props => {
   const { order, provided, onEdit } = props;
 
+  const { formatAddress } = useFormatAddress();
+
   const classes = useStyles();
 
   return (
@@ -26,7 +29,7 @@ export const OrderListItem = memo<IOrderListItemProps>(props => {
       {...provided.dragHandleProps}
     >
       <div className={classes.id}>#{order.id}</div>
-      <div className={classes.addr}>{order.address?.address}</div>
+      <div className={classes.addr}>{order.address ? formatAddress(order.address) : ""}</div>
     </div>
   );
 });
