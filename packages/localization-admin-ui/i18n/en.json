@@ -439,6 +439,7 @@
       "parameterWithLabel": "Parameter{br}\"{label}\"",
       "parameters": "Parameters",
       "parent": "Parent",
+      "parentCategoryId": "Root",
       "parentId": "Parent",
       "parentIds": "Parent",
       "parents": "Parents",
@@ -538,6 +539,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
@@ -606,6 +608,7 @@
   },
   "messages": {
     "empty-list": "Nothing to display",
+    "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },
   "pages": {

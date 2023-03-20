@@ -17,8 +17,10 @@ export class AddressController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: IAddressAutocompleteDto): Promise<[Array<AddressEntity>, number]> {
+    const { userId } = dto;
+
     return this.addressService.findAndCount(
-      { userId: dto.userId, addressStatus: AddressStatus.ACTIVE },
+      { userId, addressStatus: AddressStatus.ACTIVE },
       { order: { id: "DESC" }, relations: ["user"] },
     );
   }

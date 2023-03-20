@@ -17,11 +17,11 @@ export class SeedAddress1593490663040 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Gongadze ave. 6A, apt 82',
-        'Kiev',
-        'UA',
+        'Jl. Raya Ubud, Villa Harmony',
+        'Ubud',
+        'ID',
         '04208',
-        3,
+        1,
         true,
         'ACTIVE',
         '${currentDateTime}',

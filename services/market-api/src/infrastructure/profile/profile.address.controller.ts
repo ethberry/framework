@@ -17,8 +17,10 @@ export class ProfileAddressController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public searchAddresses(@User() userEntity: UserEntity): Promise<[AddressEntity[], number]> {
+    const { id: userId } = userEntity;
+
     return this.addressService.findAndCount(
-      { userId: userEntity.id, addressStatus: AddressStatus.ACTIVE },
+      { userId, addressStatus: AddressStatus.ACTIVE },
       { order: { id: "DESC" }, relations: ["user"] },
     );
   }
@@ -28,7 +30,9 @@ export class ProfileAddressController {
     @User() userEntity: UserEntity,
     @Body() dto: Omit<AddressCreateDto, "userId">,
   ): Promise<AddressEntity> {
-    return this.addressService.create({ ...dto, userId: userEntity.id });
+    const { id: userId } = userEntity;
+
+    return this.addressService.create({ ...dto, userId });
   }
 
   @Put("/:id")
@@ -37,7 +41,9 @@ export class ProfileAddressController {
     @User() userEntity: UserEntity,
     @Body() dto: Omit<AddressUpdateDto, "userId">,
   ): Promise<AddressEntity | undefined> {
-    return this.addressService.update({ id }, { ...dto, userId: userEntity.id });
+    const { id: userId } = userEntity;
+
+    return this.addressService.update({ id }, { ...dto, userId });
   }
 
   @Delete("/:id")

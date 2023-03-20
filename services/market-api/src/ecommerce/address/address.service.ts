@@ -15,7 +15,9 @@ export class AddressService {
   ) {}
 
   public autocomplete(dto: IAddressAutocompleteDto): Promise<Array<AddressEntity>> {
-    return this.addressEntityRepository.find({ where: { userId: dto.userId, addressStatus: AddressStatus.ACTIVE } });
+    const { userId } = dto;
+
+    return this.addressEntityRepository.find({ where: { userId, addressStatus: AddressStatus.ACTIVE } });
   }
 
   public findAndCount(
@@ -30,12 +32,13 @@ export class AddressService {
   }
 
   public async create(dto: IAddressCreateDto): Promise<AddressEntity> {
+    const { userId } = dto;
     const count = await this.addressEntityRepository.count({
-      where: { userId: dto.userId, isDefault: true, addressStatus: AddressStatus.ACTIVE },
+      where: { userId, isDefault: true, addressStatus: AddressStatus.ACTIVE },
     });
 
     if (dto.isDefault) {
-      await this.addressEntityRepository.update({ userId: dto.userId }, { isDefault: false });
+      await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
     return this.addressEntityRepository
@@ -51,6 +54,7 @@ export class AddressService {
     where: FindOptionsWhere<AddressEntity>,
     dto: IAddressUpdateDto,
   ): Promise<AddressEntity | undefined> {
+    const { userId } = dto;
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
     if (!addressEntity) {
@@ -58,7 +62,7 @@ export class AddressService {
     }
 
     if (dto.isDefault) {
-      await this.addressEntityRepository.update({ userId: dto.userId }, { isDefault: false });
+      await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
     Object.assign(addressEntity, dto);
@@ -70,11 +74,11 @@ export class AddressService {
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
     if (addressEntity?.isDefault) {
+      const { id, userId } = addressEntity;
       const newDefaultAddressEntity = await this.addressEntityRepository.findOne({
-        where: { id: Not(addressEntity.id), userId: addressEntity.userId, addressStatus: AddressStatus.ACTIVE },
+        where: { id: Not(id), userId, addressStatus: AddressStatus.ACTIVE },
         order: { id: "DESC" },
       });
-
       await this.addressEntityRepository.update({ id: newDefaultAddressEntity?.id }, { isDefault: true });
     }
 
