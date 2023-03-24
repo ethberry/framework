@@ -14,17 +14,19 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
+import "../../Exchange/ExchangeUtils.sol";
 import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
 
-abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
+// $$ PAYMANTS_SPLITTER
+abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator {
   using Address for address;
   using SafeERC20 for IERC20;
 
-  address private _ticketFactory;
-  address private _acceptedToken;
+  Asset private _ticketAsset;
+  Asset private _acceptedAsset;
 
   uint8 private _maxTicket = 2; // TODO change for 5000 in production or add to constructor
   uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days or add to constructor
@@ -44,20 +46,26 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
+    Asset acceptedAsset;
     bool[][] tickets; // all round tickets
     uint8[6] values; // prize numbers
     uint8[7] aggregation; // prize counts
     uint256 requestId;
   }
 
-  constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
+  Round[] internal _rounds;
+
+  // // TODO Exchange Lotter (price, ITEM)
+  constructor(string memory name, Asset memory item, Asset memory price) SignatureValidator(name) {
     address account = _msgSender();
     _setupRole(DEFAULT_ADMIN_ROLE, account);
     _setupRole(PAUSER_ROLE, account);
     _setupRole(MINTER_ROLE, account);
 
-    setTicketFactory(ticketFactory);
-    setAcceptedToken(acceptedToken);
+    _ticketAsset = item;
+    _acceptedAsset = price;
+    // setTicketFactory(ticketFactory); // $$ TODO DELETE
+    // setAcceptedToken(acceptedToken); // $$ TODO DELETE
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -65,17 +73,15 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     _rounds.push(rootRound);
   }
 
-  function setTicketFactory(address ticketFactory) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(ticketFactory.isContract(), "Lottery: the factory must be a deployed contract");
-    _ticketFactory = ticketFactory;
+  function setTicketFactory(Asset memory item) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(item.token.isContract(), "Lottery: the factory must be a deployed contract");
+    _ticketAsset = item; // $$ ITEM(ASSET) insted of TicketFactoru
   }
 
-  function setAcceptedToken(address acceptedToken) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(acceptedToken.isContract(), "Lottery: the factory must be a deployed contract");
-    _acceptedToken = acceptedToken;
+  function setAcceptedToken(Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(price.token.isContract(), "Lottery: the factory must be a deployed contract");
+    _acceptedAsset = price;
   }
-
-  Round[] internal _rounds;
 
   function startRound() public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
@@ -88,6 +94,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
     Round storage currentRound = _rounds[roundNumber];
     currentRound.roundId = roundNumber;
+    currentRound.acceptedAsset = _acceptedAsset;
     currentRound.startTimestamp = block.timestamp;
 
     emit RoundStarted(roundNumber, block.timestamp);
@@ -116,19 +123,31 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     currentRound.total -= commission;
 
     if (commission != 0) {
-      SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), commission);
+      Asset memory spendAsset = Asset(
+        currentRound.acceptedAsset.tokenType,
+        currentRound.acceptedAsset.token,
+        currentRound.acceptedAsset.tokenId,
+        commission
+      );
+      spend(toArray(spendAsset), _msgSender());
+      // SafeERC20.safeTransfer(IERC20(_acceptedAsset.token), _msgSender(), commission);
     }
 
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
   function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    Round memory currentRound = _rounds[roundNumber];
+    Round storage currentRound = _rounds[roundNumber];
     require(currentRound.endTimestamp + _timeLag < block.timestamp, "Round: is not releasable yet");
+    require(currentRound.balance != 0, "Round: Nothing to Release");
 
-    SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), currentRound.balance);
+    uint roundBalance = currentRound.balance;
+    currentRound.balance = 0;
 
-    emit Released(roundNumber, currentRound.balance);
+    spend(toArray(currentRound.acceptedAsset), _msgSender());
+    // SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), roundBalance);
+
+    emit Released(roundNumber, roundBalance);
   }
 
   // ROUND
@@ -170,11 +189,13 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
   function purchase(
     Params memory params,
     bool[36] calldata numbers,
-    uint256 price,
-    address signer,
+    Asset memory price,
     bytes calldata signature
   ) external whenNotPaused {
-    require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
+    // ! TODO returning incorrect signer.
+    // address signer = _verifySignature(params, numbers, price, signature);
+    // console.log("SIGNER",signer);
+    // require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
 
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
@@ -186,20 +207,19 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
     address account = _msgSender();
 
-    _verifySignature(params, numbers, price, signer, signature);
+    currentRound.balance += price.amount;
+    currentRound.total += price.amount;
 
-    currentRound.balance += price;
-    currentRound.total += price;
+    spendFrom(toArray(price), _msgSender(), address(this));
+    // SafeERC20.safeTransferFrom(IERC20(_acceptedAsset.token), _msgSender(), address(this), price);
 
-    SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
+    uint256 tokenId = IERC721Ticket(_ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
-    uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
-
-    emit Purchase(tokenId, account, price, roundNumber, numbers);
+    emit Purchase(tokenId, account, price.amount, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {
-    IERC721Ticket ticketFactory = IERC721Ticket(_ticketFactory);
+    IERC721Ticket ticketFactory = IERC721Ticket(_ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 
@@ -236,10 +256,18 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     }
 
     uint256 amount = point * coefficient[result];
-
     currentRound.balance -= amount;
 
-    SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), amount);
+    Asset[] memory price = new Asset[](1);
+    price[0] = Asset(
+      currentRound.acceptedAsset.tokenType, // _acceptedAsset.tokenType,
+      currentRound.acceptedAsset.token, // _acceptedAsset.token,
+      currentRound.acceptedAsset.tokenId, // _acceptedAsset.tokenId,
+      amount
+    );
+
+    spend(price, _msgSender());
+
     emit Prize(_msgSender(), tokenId, amount);
   }
 

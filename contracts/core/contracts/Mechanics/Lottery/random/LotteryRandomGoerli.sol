@@ -13,8 +13,8 @@ import "../LotteryRandom.sol";
 contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
   constructor(
     string memory name,
-    address ticketFactory,
-    address acceptedToken
+    Asset memory ticketFactory,
+    Asset memory acceptedToken
   )
     LotteryRandom(name, ticketFactory, acceptedToken)
     ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1))

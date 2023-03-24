@@ -13,8 +13,8 @@ import "../LotteryRandom.sol";
 contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunion {
   constructor(
     string memory name,
-    address ticketFactory,
-    address acceptedToken
+    Asset memory ticketFactory,
+    Asset memory acceptedToken
   )
     LotteryRandom(name, ticketFactory, acceptedToken)
     ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1))

@@ -13,8 +13,8 @@ import "../LotteryRandom.sol";
 contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
   constructor(
     string memory name,
-    address ticketFactory,
-    address acceptedToken
+    Asset memory ticketFactory,
+    Asset memory acceptedToken
   )
     LotteryRandom(name, ticketFactory, acceptedToken)
     ChainLinkHardhat(uint64(1), uint16(6), uint32(600000), uint32(1))
@@ -35,7 +35,8 @@ contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
     bool[] calldata ticket,
     uint8[6] calldata values,
     uint8[7] calldata aggregation,
-    uint256 requestId
+    uint256 requestId,
+    Asset memory price
   ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);
@@ -50,6 +51,7 @@ contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
     currentRound.total -= (currentRound.total * comm) / 100;
     currentRound.tickets.push(ticket);
     currentRound.values = values;
+    currentRound.acceptedAsset = price;
     // prize numbers
     currentRound.aggregation = aggregation;
     currentRound.requestId = requestId;
