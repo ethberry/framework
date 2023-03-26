@@ -13,10 +13,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
@@ -35,15 +34,7 @@ import "../../Exchange/referral/LinearReferral.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract StakingReferral is
-  IStaking,
-  ExchangeUtils,
-  AccessControl,
-  Pausable,
-  ERC1155Holder,
-  ERC721Holder,
-  LinearReferral
-{
+contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, LinearReferral, Wallet {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
@@ -140,10 +131,10 @@ contract StakingReferral is
     }
 
     // Transfer tokens from user to this contract.
-    spendFrom(toArray(depositItem), _msgSender(), address(this));
+    spendFrom(_toArray(depositItem), _msgSender(), address(this));
 
     // Do something after purchase with refferer
-    _afterPurchase(referrer, toArray(depositItem));
+    _afterPurchase(referrer, _toArray(depositItem));
   }
 
   function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
@@ -184,7 +175,7 @@ contract StakingReferral is
       depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
 
       // Transfer the deposit Asset to the receiver.
-      spend(toArray(depositItem), receiver);
+      spend(_toArray(depositItem), receiver);
     } else {
       // Update the start timestamp of the stake.
       stake.startTimestamp = block.timestamp;
@@ -206,7 +197,7 @@ contract StakingReferral is
       // Determine the token type of the reward and transfer the reward accordingly.
       if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
         // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
-        spend(toArray(rewardItem), receiver);
+        spend(_toArray(rewardItem), receiver);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
         for (uint256 i = 0; i < multiplier; i++) {
@@ -215,12 +206,12 @@ contract StakingReferral is
             IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
           } else {
             // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
-            acquire(toArray(rewardItem), receiver);
+            acquire(_toArray(rewardItem), receiver);
           }
         }
       } else {
         // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
-        acquire(toArray(rewardItem), receiver);
+        acquire(_toArray(rewardItem), receiver);
       }
     }
     // If the multiplier is zero and the withdrawDeposit and breakLastPeriod flags are also false
@@ -260,16 +251,14 @@ contract StakingReferral is
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
    * @dev Rejects any incoming ETH transfers to this contract address
    */
-  receive() external payable {
+  receive() external payable override {
     revert();
   }
 

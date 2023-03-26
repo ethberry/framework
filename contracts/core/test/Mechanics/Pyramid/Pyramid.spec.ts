@@ -374,8 +374,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -413,8 +413,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
     });
   });
 
@@ -804,8 +804,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount * cycles,
       );
-      let balance = await erc20Instance.balanceOf(pyramidInstance.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(pyramidInstance.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -818,8 +818,8 @@ describe("Pyramid", function () {
         .to.emit(pyramidInstance, "StakingWithdraw")
         .to.emit(pyramidInstance, "StakingFinish")
         .to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -880,8 +880,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -909,8 +909,8 @@ describe("Pyramid", function () {
         }.tokenId,
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart").to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
@@ -929,8 +929,8 @@ describe("Pyramid", function () {
             amount: 1000,
           }.amount * cycles,
         );
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance3 = await erc20Instance.balanceOf(owner.address);
+      expect(balance3).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -981,8 +981,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1011,8 +1011,8 @@ describe("Pyramid", function () {
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
@@ -1029,8 +1029,8 @@ describe("Pyramid", function () {
       const tx2 = await pyramidInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(pyramidInstance, "StakingWithdraw");
       await expect(tx2).to.emit(pyramidInstance, "StakingFinish");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance3 = await erc20Instance.balanceOf(owner.address);
+      expect(balance3).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1177,8 +1177,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1207,8 +1207,8 @@ describe("Pyramid", function () {
       );
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
 
       // FINALIZE 1
       const tx3 = pyramidInstance.finalizeByRuleId(1);
@@ -1330,8 +1330,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1360,8 +1360,8 @@ describe("Pyramid", function () {
       );
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
 
       // FINALIZE 1
       const tx3 = pyramidInstance.finalizeByToken(tokenZero);
@@ -1622,8 +1622,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1652,8 +1652,8 @@ describe("Pyramid", function () {
       );
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
 
       // WITHDRAW 1
       const tx3 = pyramidInstance.withdrawToken(
@@ -1791,8 +1791,8 @@ describe("Pyramid", function () {
           amount: 100,
         }.amount,
       );
-      let balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(
         {
           tokenType: 1, // ERC20
           token: erc20Instance.address,
@@ -1821,8 +1821,8 @@ describe("Pyramid", function () {
       );
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
-      balance = await erc20Instance.balanceOf(owner.address);
-      expect(balance).to.equal(0);
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
 
       // WITHDRAW 1
       const tx3 = pyramidInstance.withdrawToken(

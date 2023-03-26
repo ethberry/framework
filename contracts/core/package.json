@@ -15,6 +15,7 @@
     "@gemunion/contracts-chain-link-v2": "1.1.57",
     "@gemunion/contracts-constants": "1.1.53",
     "@gemunion/contracts-erc1155": "1.1.64",
+    "@gemunion/contracts-erc1363": "1.0.1",
     "@gemunion/contracts-erc20": "1.1.59",
     "@gemunion/contracts-erc721": "1.1.61",
     "@gemunion/contracts-erc721-enumerable": "1.1.61",
@@ -37,9 +38,9 @@
     "ethers": "5.7.2",
     "hardhat": "2.13.0",
     "hardhat-contract-sizer": "2.8.0",
-    "solidity-coverage": "0.8.2",
     "hardhat-deploy": "0.11.25",
     "hardhat-gas-reporter": "1.0.9",
+    "solidity-coverage": "0.8.2",
     "web3": "1.9.0"
   },
   "devDependencies": {

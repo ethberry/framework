@@ -13,10 +13,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
@@ -34,10 +33,9 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
+contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   using Address for address;
   using Counters for Counters.Counter;
-  using SafeERC20 for IERC20;
 
   Counters.Counter internal _ruleIdCounter;
   Counters.Counter internal _stakeIdCounter;
@@ -121,7 +119,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
     // Store the new stake in the _stakes mapping.
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
-    
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
     // Check templateId if ERC721 or ERC998
@@ -133,7 +130,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
     }
 
     // Transfer tokens from user to this contract.
-    spendFrom(toArray(depositItem), _msgSender(), address(this));
+    spendFrom(_toArray(depositItem), _msgSender(), address(this));
   }
 
   /**
@@ -170,7 +167,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
       depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
 
       // Transfer the deposit Asset to the receiver.
-      spend(toArray(depositItem), receiver);
+      spend(_toArray(depositItem), receiver);
     } else {
       // Update the start timestamp of the stake.
       stake.startTimestamp = block.timestamp;
@@ -192,7 +189,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
       // Determine the token type of the reward and transfer the reward accordingly.
       if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
         // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
-        spend(toArray(rewardItem), receiver);
+        spend(_toArray(rewardItem), receiver);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
         for (uint256 i = 0; i < multiplier; i++) {
@@ -201,12 +198,12 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
             IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
           } else {
             // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
-            acquire(toArray(rewardItem), receiver);
+            acquire(_toArray(rewardItem), receiver);
           }
         }
       } else {
         // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
-        acquire(toArray(rewardItem), receiver);
+        acquire(_toArray(rewardItem), receiver);
       }
     }
     // If the multiplier is zero and the withdrawDeposit and breakLastPeriod flags are also false
@@ -246,16 +243,14 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, ERC1155Hol
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
    * @dev Rejects any incoming ETH transfers to this contract address
    */
-  receive() external payable {
+  receive() external payable override {
     revert();
   }
 
