@@ -18,7 +18,7 @@
     "@gemunion/contracts-erc20": "1.1.59",
     "@gemunion/contracts-erc721": "1.1.61",
     "@gemunion/contracts-erc721-enumerable": "1.1.61",
-    "@gemunion/contracts-erc998td": "2.0.1",
+    "@gemunion/contracts-erc998td": "2.0.2",
     "@gemunion/contracts-misc": "1.1.52",
     "@gemunion/contracts-mocha": "1.1.54",
     "@gemunion/contracts-mocks": "1.1.56",
