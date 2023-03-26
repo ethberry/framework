@@ -4,7 +4,7 @@ import { Add, Delete } from "@mui/icons-material";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { emptyShare } from "./empty";
 
@@ -13,6 +13,7 @@ export { emptyShare } from "./empty";
 export interface IShareField {
   id: string;
   payee: string;
+  share: number;
 }
 
 export interface ISharesInputProps {
@@ -66,6 +67,7 @@ export const SharesInput: FC<ISharesInputProps> = props => {
           <Box key={o.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
             <Box flex={1}>
               <Paper sx={{ px: 2, py: 1, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>
+                <TextInput name={`${name}[${i}].payee`} />
                 <NumberInput name={`${name}[${i}].share`} inputProps={{ min: 1 }} />
               </Paper>
             </Box>

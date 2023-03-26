@@ -1,1 +1,1 @@
-export const emptyShare = { share: 0 };
+export const emptyShare = { payee: "", share: 1 };

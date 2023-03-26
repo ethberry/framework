@@ -4,7 +4,6 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { IContract, PyramidContractTemplates } from "@framework/types";
 
-import { emptyPayee, PayeesInput } from "./payees";
 import { emptyShare, SharesInput } from "./shares";
 import { validationSchema } from "./validation";
 
@@ -17,7 +16,6 @@ export interface IPyramidContractDeployDialogProps {
 export const PyramidContractDeployDialog: FC<IPyramidContractDeployDialogProps> = props => {
   const fixedValues: Record<string, any> = {
     contractTemplate: PyramidContractTemplates.SIMPLE,
-    payees: [emptyPayee],
     shares: [emptyShare],
   };
 
@@ -34,7 +32,6 @@ export const PyramidContractDeployDialog: FC<IPyramidContractDeployDialogProps> 
         options={PyramidContractTemplates}
         disabledOptions={[PyramidContractTemplates.SPLITTER]}
       />
-      <PayeesInput />
       <SharesInput />
     </FormDialog>
   );

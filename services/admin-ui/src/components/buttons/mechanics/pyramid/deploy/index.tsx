@@ -51,7 +51,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
         method: "POST",
         data: {
           contractTemplate: values.contractTemplate,
-          payees: values.payees.map(({ payee }: { payee: string }) => payee),
+          payees: values.shares.map(({ payee }: { payee: string }) => payee),
           shares: values.shares.map(({ share }: { share: number }) => share),
         },
       },
