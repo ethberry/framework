@@ -1,13 +1,13 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { format, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { IOrder, IUser, OrderStatus, UserRole } from "@framework/types";
+import { IOrder, IUser, OrderStatus } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, StaticInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IUserContext, UserContext } from "@gemunion/provider-user";
 
+import { AddressSelectInput } from "../../../../components/inputs/address-select";
 import { ItemsInput } from "./items-input";
 import { validationSchema } from "./validation";
 
@@ -21,19 +21,15 @@ export interface IEditOrderDialogProps {
 export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const user = useContext<IUserContext<IUser>>(UserContext);
+  const { id, addressId, createdAt, items, orderStatus, userId } = initialValues;
+  const fixedValues = { id, addressId, items, orderStatus, userId };
 
-  const { id, userId, merchantId, orderStatus, items, createdAt } = initialValues;
-  const fixedValues = { id, userId, merchantId, orderStatus, items };
-
-  const message = id ? "dialogs.add" : "dialogs.edit";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <EntityInput name="userId" controller="users" getTitle={(option: IUser) => option.displayName} />
-      {user.profile.userRoles.includes(UserRole.ADMIN) ? (
-        <EntityInput name="merchantId" controller="merchants" />
-      ) : null}
+      <AddressSelectInput />
       {id ? <SelectInput name="orderStatus" options={OrderStatus} /> : null}
       <ItemsInput name="items" />
       <StaticInput name="createdAt" value={format(parseISO(createdAt), humanReadableDateTimeFormat)} />

@@ -44,9 +44,6 @@ export class OrderEntity extends IdDateBaseEntity implements IOrder {
   @Column({ type: "int" })
   public addressId: number;
 
-  @Column({ type: "int" })
-  public price: number;
-
-  @Column({ type: "int" })
-  public priceCorrection: number;
+  @Column({ type: "boolean" })
+  public isArchived: boolean;
 }

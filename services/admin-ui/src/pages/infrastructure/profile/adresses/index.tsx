@@ -1,4 +1,4 @@
-import { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment } from "react";
 import {
   Button,
   Chip,
@@ -9,165 +9,83 @@ import {
   ListItemText,
   Tooltip,
 } from "@mui/material";
-import { Add, Delete } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
 
 import { AddressStatus, IAddress } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
-import { IPaginationResult } from "@gemunion/types-collection";
+import { useCollection } from "@gemunion/react-hooks";
 
-import { ITabPanelProps, ProfileTabs } from "../tabs";
-import { AddAddressDialog } from "./add";
-
-const emptyAddr = {
-  isDefault: false,
-  address: "",
-} as IAddress;
+import { emptyAddress } from "../../../../components/common/interfaces";
+import { useFormatAddress } from "../../../../utils/address";
+import { AddressEditDialog } from "./edit";
+import { ITabPanelProps } from "../tabs";
 
 export const ProfileAddresses: FC<ITabPanelProps> = props => {
-  const { value } = props;
+  const { open } = props;
+
+  const {
+    rows,
+    selected,
+    isLoading,
+    isDeleteDialogOpen,
+    isEditDialogOpen,
+    handleCreate,
+    handleDelete,
+    handleDeleteCancel,
+    handleDeleteConfirm,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+  } = useCollection<IAddress>({
+    baseUrl: "/profile/address",
+    embedded: true,
+    empty: emptyAddress,
+    filter: ({ addressLine1, addressLine2, city, country, isDefault, state, zip }) => ({
+      addressLine1,
+      addressLine2,
+      city,
+      country,
+      isDefault,
+      state,
+      zip,
+    }),
+  });
 
   const { formatMessage } = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
+  const { formatAddress } = useFormatAddress();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [addresses, setAddresses] = useState<Array<IAddress>>([]);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [selectedAddr, setSelectedAddr] = useState<IAddress>(emptyAddr);
-
-  const api = useContext(ApiContext);
-
-  const fetchAddresses = async (): Promise<void> => {
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        url: "/address",
-      })
-      .then((json: IPaginationResult<IAddress>) => {
-        setAddresses(json.rows);
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const handleDelete =
-    (addr: IAddress): (() => void) =>
-    (): void => {
-      setSelectedAddr(addr);
-      setIsDeleteDialogOpen(true);
-    };
-
-  const handleDeleteCancel = (): void => {
-    setIsDeleteDialogOpen(false);
-  };
-
-  const handleDeleteConfirmed = (addr: IAddress): Promise<void> => {
-    return api
-      .fetchJson({
-        url: `/address/${addr.id}`,
-        method: "DELETE",
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
-        return fetchAddresses();
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsDeleteDialogOpen(false);
-      });
-  };
-
-  const handleAdd = () => {
-    setSelectedAddr(emptyAddr);
-    setIsAddDialogOpen(true);
-  };
-
-  const handleAddCancel = (): void => {
-    setIsAddDialogOpen(false);
-  };
-
-  const handleAddConfirmed = (values: Partial<IAddress>, form: any): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/address",
-        method: "POST",
-        data: values,
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.created" }), { variant: "success" });
-        setIsAddDialogOpen(false);
-        return fetchAddresses();
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          const errors = e.getLocalizedValidationErrors();
-
-          Object.keys(errors).forEach(key => {
-            form?.setError(name, { type: "custom", message: errors[key] });
-          });
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-  };
-
-  useEffect(() => {
-    void fetchAddresses();
-  }, []);
-
-  if (value !== ProfileTabs.addresses) {
+  if (!open) {
     return null;
   }
 
   return (
     <Fragment>
       <PageHeader message="pages.profile.tabs.addresses">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd}>
-          <FormattedMessage id="form.buttons.add" />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
-          {addresses.length ? (
-            addresses.map((addr: IAddress, i: number) => (
-              <ListItem key={i} disableGutters={true}>
+          {rows.length ? (
+            rows.map((address: IAddress) => (
+              <ListItem key={address.id} disableGutters={true}>
                 <ListItemText
                   primary={
                     <Fragment>
-                      {addr.address}
+                      {formatAddress(address)}
                       &nbsp;
-                      {addr.isDefault ? (
+                      {address.isDefault ? (
                         <Chip
                           size="small"
                           color="primary"
                           label={formatMessage({ id: "pages.profile.addresses.default" })}
                         />
                       ) : null}
-                      {addr.addressStatus === AddressStatus.INACTIVE ? (
+                      {address.addressStatus === AddressStatus.INACTIVE ? (
                         <Chip
                           size="small"
                           color="secondary"
@@ -176,10 +94,16 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
                       ) : null}
                     </Fragment>
                   }
+                  sx={{ pr: 3 }}
                 />
                 <ListItemSecondaryAction>
+                  <Tooltip title={formatMessage({ id: "form.tips.edit" })}>
+                    <IconButton edge="end" aria-label="edit" onClick={handleEdit(address)} sx={{ mr: 0.5 }}>
+                      <Edit />
+                    </IconButton>
+                  </Tooltip>
                   <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                    <IconButton edge="end" aria-label="delete" onClick={handleDelete(addr)}>
+                    <IconButton edge="end" aria-label="delete" onClick={handleDelete(address)}>
                       <Delete />
                     </IconButton>
                   </Tooltip>
@@ -194,19 +118,19 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
         </List>
       </ProgressOverlay>
 
-      <AddAddressDialog
-        onCancel={handleAddCancel}
-        onConfirm={handleAddConfirmed}
-        open={isAddDialogOpen}
-        initialValues={selectedAddr}
+      <AddressEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={isEditDialogOpen}
+        initialValues={selected}
       />
 
       <DeleteDialog
         onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirmed}
+        onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={selectedAddr}
-        getTitle={(address: IAddress) => address.address}
+        initialValues={selected}
+        getTitle={formatAddress}
       />
     </Fragment>
   );

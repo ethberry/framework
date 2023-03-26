@@ -10,14 +10,13 @@ import {
   Pagination,
   Tooltip,
 } from "@mui/material";
-import { FilterList, Visibility, AccountBalanceWallet } from "@mui/icons-material";
+import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
 import { IContract, IVestingSearchDto } from "@framework/types";
 
@@ -27,8 +26,6 @@ import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/vesting";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
-
-import { format, parseISO } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -95,9 +92,6 @@ export const Vesting: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
-                {format(parseISO(vesting.parameters.startTimestamp.toString()), humanReadableDateTimeFormat)}
-              </ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
@@ -105,12 +99,12 @@ export const Vesting: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <IconButton onClick={handleView(vesting)}>
-                  <Visibility />
+                <IconButton onClick={handleWithdraw(vesting)}>
+                  <AccountBalanceWallet />
                 </IconButton>
                 <Tooltip title={formatMessage({ id: "form.tips.view" })}>
-                  <IconButton onClick={handleWithdraw(vesting)}>
-                    <AccountBalanceWallet />
+                  <IconButton onClick={handleView(vesting)}>
+                    <Visibility />
                   </IconButton>
                 </Tooltip>
                 <VestingActionsMenu vesting={vesting} />

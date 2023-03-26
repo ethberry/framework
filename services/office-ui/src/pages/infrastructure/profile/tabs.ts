@@ -5,5 +5,5 @@ export enum ProfileTabs {
 }
 
 export interface ITabPanelProps {
-  value: ProfileTabs;
+  open: boolean;
 }

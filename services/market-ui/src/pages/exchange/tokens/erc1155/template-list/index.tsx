@@ -29,7 +29,7 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
         query: "",
         contractIds: embedded ? [~~id!] : [],
         minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
       },
     });
 

@@ -33,7 +33,12 @@ contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Hold
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return
+      interfaceId == type(IERC1363Receiver).interfaceId ||
+      interfaceId == type(IERC1363Spender).interfaceId ||
+      interfaceId == type(IERC721Receiver).interfaceId ||
+      interfaceId == type(IERC1155Receiver).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 
   receive() external payable {}

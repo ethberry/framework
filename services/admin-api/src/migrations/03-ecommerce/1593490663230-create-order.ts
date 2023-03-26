@@ -40,12 +40,9 @@ export class CreateOrder1593490663230 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "price",
-          type: "int",
-        },
-        {
-          name: "price_correction",
-          type: "int",
+          name: "is_archived",
+          type: "boolean",
+          default: false,
         },
         {
           name: "created_at",

@@ -39,7 +39,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <EntityInput name="contractId" controller="contracts" readOnly data={{}} />
+      <EntityInput name="contractId" controller="contracts" readOnly />
       <TextInput name="attribute" readOnly />
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />

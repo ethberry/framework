@@ -25,6 +25,7 @@
     "add": "Add",
     "allowance": "Allowance",
     "auction": "Sell `{title}` on auction",
+    "borrow": "Borrow token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -228,6 +229,7 @@
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
+      "borrow": "Borrow token",
       "buy": "Buy now!",
       "cancel": "Cancel",
       "checkout": "Checkout",
@@ -262,6 +264,7 @@
       "withdraw": "Withdraw"
     },
     "hints": {
+      "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
@@ -270,11 +273,14 @@
       "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
+      "addressLine1": "Address (line 1)",
+      "addressLine2": "Address (line 2)",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
       "categoryId": "categoryId",
       "categoryIds": "Category",
       "chainId": "Chain",
+      "city": "City",
       "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
@@ -301,6 +307,7 @@
       "event": "Event",
       "eventData": "Event data",
       "eventType": "Event type",
+      "expires": "Borrow expires",
       "externalId": "External ID",
       "from": "From",
       "gender": "Gender",
@@ -340,6 +347,7 @@
       "stakingRuleStatus": "Status",
       "startDate": "Start date",
       "startTimestamp": "Start date",
+      "state": "State",
       "status": "Status",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -354,17 +362,22 @@
       "type": "Type",
       "updatedAt": "Updated",
       "winNumbers": "Win numbers",
-      "withdrawDeposit": "Withdraw deposit"
+      "withdrawDeposit": "Withdraw deposit",
+      "zip": "ZIP code"
     },
     "placeholders": {
       "account": "0x...",
       "address": "0x...",
+      "addressLine1": "Melburb st. 24",
+      "addressLine2": "Additional info about address",
       "amount": "100",
       "categoryId": "categoryId",
       "categoryIds": "Root",
+      "city": "Hamburg",
       "confirm": "******",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "country": "Germany",
       "createdAt": "Registered",
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
@@ -379,16 +392,20 @@
       "query": "Search...",
       "roundIds": "Round",
       "search": "Search...",
+      "state": "Hamburg",
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Type something",
       "token": "Token",
       "tokenId": "Token",
-      "tokenIds": "Tokens"
+      "tokenIds": "Tokens",
+      "zip": "80576"
     },
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
+      "borrow": "Borrow",
+      "cancel": "Cancel",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
@@ -420,6 +437,7 @@
     }
   },
   "messages": {
+    "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },
   "pages": {
@@ -813,7 +831,8 @@
         "addresses": "Addresses",
         "general": "General",
         "subscriptions": "Subscriptions"
-      }
+      },
+      "title": "Profile"
     },
     "pyramid": {
       "deposit": {

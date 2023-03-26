@@ -26,6 +26,7 @@
     }
   },
   "dialogs": {
+    "add": "Add",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -100,7 +101,12 @@
       "RESTORE_PASSWORD": "Restore password",
       "WELCOME": "Welcome"
     },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male"
+    },
     "language": {
+      "AR": "\uD83C\uDDE6\uD83C\uDDEA Arabic",
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
@@ -164,7 +170,9 @@
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
+      "MANAGER": "Manager",
       "MERCHANT": "Merchant",
+      "OWNER": "Owner",
       "USER": "User"
     },
     "userStatus": {
@@ -223,6 +231,7 @@
     },
     "hints": {
       "editNotAllowed": "Editing of this rule is not allowed",
+      "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?",
       "risk": "You are doing this at your own risk!"
@@ -231,6 +240,8 @@
       "DUMMY": "Dummy",
       "account": "Account",
       "address": "Address",
+      "addressLine1": "Address (line 1)",
+      "addressLine2": "Address (line 2)",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
@@ -239,6 +250,7 @@
       "child": "Child",
       "childId": "Child",
       "childIds": "Child",
+      "city": "City",
       "claimStatus": "Status",
       "collection": "Collection",
       "collectionType": "Type",
@@ -250,6 +262,7 @@
       "contractIds": "Contracts",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "country": "Country",
       "craftStatus": "Status",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -264,9 +277,11 @@
       "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
+      "gender": "Gender",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "isDefault": "Make default",
       "item": "Item",
       "items": "Items",
       "language": "Language",
@@ -280,6 +295,7 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
+      "parentCategoryId": "Root",
       "parentId": "Parent",
       "parentIds": "Parent",
       "password": "Password",
@@ -302,6 +318,7 @@
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
+      "state": "State",
       "symbol": "Symbol",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -319,23 +336,28 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "year": "Year"
+      "year": "Year",
+      "zip": "ZIP code"
     },
     "placeholders": {
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
+      "addressLine1": "Melburb st. 24",
+      "addressLine2": "Additional info about address",
       "amount": "10",
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
       "childId": "Contract",
       "childIds": "Contract",
+      "city": "Hamburg",
       "comment": "Fraud",
       "confirm": "******",
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "country": "Germany",
       "createdAt": "now",
       "decimals": "18",
       "definition": "10",
@@ -354,14 +376,13 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
       "payee": "0x...",
       "payees": "0x...",
       "penalty": "1",
-      "price": "1000",
-      "priceCorrection": "0",
       "query": "Search...",
       "rarity": "Legendary",
       "recipient": "Recipient",
@@ -370,6 +391,7 @@
       "search": "Search...",
       "shares": "0",
       "slug": "terms-and-conditions",
+      "state": "Hamburg",
       "symbol": "XXX",
       "templateId": "Template",
       "templateIds": "Template",
@@ -381,9 +403,12 @@
       "tokenStatus": "Status",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
-      "userIds": "Gordon Freeman"
+      "userIds": "Gordon Freeman",
+      "zip": "80576"
     },
     "tips": {
+      "add": "Add",
+      "cancel": "Cancel",
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
@@ -411,6 +436,7 @@
   },
   "messages": {
     "empty-list": "Nothing to display",
+    "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },
   "pages": {

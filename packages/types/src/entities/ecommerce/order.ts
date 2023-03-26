@@ -22,4 +22,5 @@ export interface IOrder extends IIdDateBase {
   user?: IUser;
   merchantId: number;
   merchant?: IMerchant;
+  isArchived: boolean;
 }

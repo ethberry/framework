@@ -34,30 +34,19 @@ contract ExchangeUtils {
 
     uint256 totalAmount;
     for (uint256 i = 0; i < length; ) {
-      Asset memory ingredient = price[i];
-      if (ingredient.tokenType == TokenType.NATIVE) {
-        totalAmount = totalAmount + ingredient.amount;
-      } else if (ingredient.tokenType == TokenType.ERC20) {
-        bool supported;
-        if (receiver.isContract()) {
-          try IERC165(ingredient.token).supportsInterface(IERC1363_ID) returns (bool isERC1363) {
-            if (isERC1363) {
-              try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
-                supported = isERC1363Receiver;
-              } catch (bytes memory) {}
-            }
-          } catch (bytes memory) {}
-        }
-
-        if (supported) {
-          IERC1363(ingredient.token).transferFromAndCall(account, receiver, ingredient.amount);
+      Asset memory item = price[i];
+      if (item.tokenType == TokenType.NATIVE) {
+        totalAmount = totalAmount + item.amount;
+      } else if (item.tokenType == TokenType.ERC20) {
+        if (_isERC1363Supported(receiver, item.token)) {
+          IERC1363(item.token).transferFromAndCall(account, receiver, item.amount);
         } else {
-          SafeERC20.safeTransferFrom(IERC20(ingredient.token), account, receiver, ingredient.amount);
+          SafeERC20.safeTransferFrom(IERC20(item.token), account, receiver, item.amount);
         }
-      } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
-        IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
-      } else if (ingredient.tokenType == TokenType.ERC1155) {
-        IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
+      } else if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+        IERC721(item.token).safeTransferFrom(account, receiver, item.tokenId);
+      } else if (item.tokenType == TokenType.ERC1155) {
+        IERC1155(item.token).safeTransferFrom(account, receiver, item.tokenId, item.amount, "0x");
       } else {
         // should never happen
         revert UnsupportedTokenType();
@@ -83,36 +72,19 @@ contract ExchangeUtils {
 
     uint256 totalAmount;
     for (uint256 i = 0; i < length; ) {
-      Asset memory ingredient = price[i];
-      if (ingredient.tokenType == TokenType.NATIVE) {
-        totalAmount = totalAmount + ingredient.amount;
-      } else if (ingredient.tokenType == TokenType.ERC20) {
-        bool supported;
-        if (receiver.isContract()) {
-          try IERC165(ingredient.token).supportsInterface(IERC1363_ID) returns (bool isERC1363) {
-            if (isERC1363) {
-              try IERC165(receiver).supportsInterface(IERC1363_RECEIVER_ID) returns (bool isERC1363Receiver) {
-                supported = isERC1363Receiver;
-              } catch (bytes memory) {}
-            }
-          } catch (bytes memory) {}
-        }
-
-        if (supported) {
-          IERC1363(ingredient.token).transferAndCall(receiver, ingredient.amount);
+      Asset memory item = price[i];
+      if (item.tokenType == TokenType.NATIVE) {
+        totalAmount = totalAmount + item.amount;
+      } else if (item.tokenType == TokenType.ERC20) {
+        if (_isERC1363Supported(receiver, item.token)) {
+          IERC1363(item.token).transferAndCall(receiver, item.amount);
         } else {
-          SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
+          SafeERC20.safeTransfer(IERC20(item.token), receiver, item.amount);
         }
-      } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
-        IERC721(ingredient.token).safeTransferFrom(address(this), receiver, ingredient.tokenId);
-      } else if (ingredient.tokenType == TokenType.ERC1155) {
-        IERC1155(ingredient.token).safeTransferFrom(
-          address(this),
-          receiver,
-          ingredient.tokenId,
-          ingredient.amount,
-          "0x"
-        );
+      } else if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+        IERC721(item.token).safeTransferFrom(address(this), receiver, item.tokenId);
+      } else if (item.tokenType == TokenType.ERC1155) {
+        IERC1155(item.token).safeTransferFrom(address(this), receiver, item.tokenId, item.amount, "0x");
       } else {
         // should never happen
         revert UnsupportedTokenType();
@@ -154,9 +126,24 @@ contract ExchangeUtils {
     }
   }
 
-  function toArray(Asset memory item) public pure returns (Asset[] memory) {
+  function _toArray(Asset memory item) internal pure returns (Asset[] memory) {
     Asset[] memory items = new Asset[](1);
     items[0] = item;
     return items;
+  }
+
+  function _isERC1363Supported(address receiver, address token) internal view returns (bool) {
+    return
+      (receiver == address(this) ||
+        (receiver.isContract() && _tryGetSupportedInterface(receiver, IERC1363_RECEIVER_ID))) &&
+      _tryGetSupportedInterface(token, IERC1363_ID);
+  }
+
+  function _tryGetSupportedInterface(address account, bytes4 interfaceId) internal view returns (bool) {
+    try IERC165(account).supportsInterface(interfaceId) returns (bool isSupported) {
+      return isSupported;
+    } catch (bytes memory) {
+      return false;
+    }
   }
 }

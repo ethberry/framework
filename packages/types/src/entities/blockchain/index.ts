@@ -1,12 +1,13 @@
-export * from "./extensions/access-control";
-export * from "./extensions/access-list";
-
 export * from "./event-history";
 export * from "./contract-manager";
+
+export * from "./extensions/access-control";
+export * from "./extensions/access-list";
 
 export * from "./exchange/asset";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
+export * from "./exchange/payee";
 
 export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
@@ -29,7 +30,6 @@ export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/waitlist/list";
 export * from "./mechanics/waitlist/item";
 export * from "./mechanics/breed/breed";
-export * from "./mechanics/wallet/payee";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

@@ -156,7 +156,7 @@ async function main() {
   //     : network.name === "gemunion"
   //     ? "ERC721RandomGemunionV2"
   //     : "ERC721Random";
-  const randomContractName = getContractName("ERC721Random", network.name);
+  const randomContractName = getContractName("ERC721UpgradeableRandom", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");

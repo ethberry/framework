@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOptionsWhere, Not, Repository, UpdateResult } from "typeorm";
 
 import { AddressStatus } from "@framework/types";
 
 import { AddressEntity } from "./address.entity";
-import { IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
-import { UserEntity } from "../../infrastructure/user/user.entity";
+import { IAddressAutocompleteDto, IAddressCreateDto, IAddressUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AddressService {
@@ -15,13 +14,10 @@ export class AddressService {
     private readonly addressEntityRepository: Repository<AddressEntity>,
   ) {}
 
-  public search(userEntity: UserEntity): Promise<[Array<AddressEntity>, number]> {
-    return this.addressEntityRepository.findAndCount({
-      where: {
-        userId: userEntity.id,
-        addressStatus: AddressStatus.ACTIVE,
-      },
-    });
+  public autocomplete(dto: IAddressAutocompleteDto): Promise<Array<AddressEntity>> {
+    const { userId } = dto;
+
+    return this.addressEntityRepository.find({ where: { userId, addressStatus: AddressStatus.ACTIVE } });
   }
 
   public findAndCount(
@@ -35,24 +31,19 @@ export class AddressService {
     return this.addressEntityRepository.findOne({ where });
   }
 
-  public async create(data: IAddressCreateDto, userEntity: UserEntity): Promise<AddressEntity> {
-    const { isDefault, ...rest } = data;
-
+  public async create(dto: IAddressCreateDto): Promise<AddressEntity> {
+    const { isDefault, userId } = dto;
     const count = await this.addressEntityRepository.count({
-      where: {
-        userId: userEntity.id,
-        addressStatus: AddressStatus.ACTIVE,
-      },
+      where: { userId, isDefault: true, addressStatus: AddressStatus.ACTIVE },
     });
 
     if (isDefault) {
-      await this.addressEntityRepository.update({ userId: userEntity.id }, { isDefault: false });
+      await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
     return this.addressEntityRepository
       .create({
-        ...rest,
-        user: userEntity,
+        ...dto,
         addressStatus: AddressStatus.ACTIVE,
         isDefault: !count ? true : isDefault,
       })
@@ -61,58 +52,36 @@ export class AddressService {
 
   public async update(
     where: FindOptionsWhere<AddressEntity>,
-    data: IAddressUpdateDto,
+    dto: IAddressUpdateDto,
   ): Promise<AddressEntity | undefined> {
+    const { isDefault, userId } = dto;
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
     if (!addressEntity) {
       throw new NotFoundException("addressNotFound");
     }
 
-    if (data.isDefault) {
-      await this.addressEntityRepository.update({ userId: where.userId }, { isDefault: false });
+    if (isDefault) {
+      await this.addressEntityRepository.update({ userId }, { isDefault: false });
     }
 
-    Object.assign(addressEntity, data);
+    Object.assign(addressEntity, dto);
+
     return addressEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<AddressEntity>): Promise<AddressEntity | null> {
+  public async delete(where: FindOptionsWhere<AddressEntity>): Promise<UpdateResult | void> {
     const addressEntity = await this.addressEntityRepository.findOne({ where });
 
-    if (!addressEntity) {
-      throw new NotFoundException("addressNotFound");
-    }
-
-    const { isDefault } = addressEntity;
-
-    Object.assign(addressEntity, {
-      isDefault: false,
-      addressStatus: AddressStatus.INACTIVE,
-    });
-    await addressEntity.save();
-
-    if (isDefault) {
-      // Postgres does not support update with limit
+    if (addressEntity?.isDefault) {
+      const { id, userId } = addressEntity;
       const newDefaultAddressEntity = await this.addressEntityRepository.findOne({
-        where: {
-          userId: where.userId,
-          isDefault: false,
-          addressStatus: AddressStatus.ACTIVE,
-        },
-        order: {
-          createdAt: "DESC",
-        },
+        where: { id: Not(id), userId, addressStatus: AddressStatus.ACTIVE },
+        order: { id: "DESC" },
       });
-
-      if (newDefaultAddressEntity) {
-        Object.assign(newDefaultAddressEntity, {
-          isDefault: true,
-        });
-        await newDefaultAddressEntity.save();
-      }
+      await this.addressEntityRepository.update({ id: newDefaultAddressEntity?.id }, { isDefault: true });
     }
 
-    return addressEntity;
+    return this.addressEntityRepository.update(where, { addressStatus: AddressStatus.INACTIVE, isDefault: false });
   }
 }

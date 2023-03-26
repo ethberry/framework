@@ -7,35 +7,50 @@ export class SeedAddress1593490663040 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.address (
-        address,
+        address_line1,
+        city,
+        country,
+        zip,
         user_id,
         is_default,
         address_status,
         created_at,
         updated_at
       ) VALUES (
-        'Ukraine, Kiev, Gongadze ave. 6A, apt 82',
-        3,
+        'Jl. Raya Ubud, Villa Harmony',
+        'Ubud',
+        'ID',
+        '04208',
+        1,
         true,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Indonesia, Ubud, Tirta Tawar ave. 888, j 2',
+        'Tirta Tawar ave. 888, j 2',
+        'Ubud',
+        'ID',
+        '80571',
         3,
         false,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Indonesia, Bedugul, Atas Awan',
+        'Atas Awan',
+        'Bedugul',
+        'ID',
+        '82191',
         5,
         true,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Indonesia, Bedugul, Atas Awan',
+        'Atas Awan',
+        'Bedugul',
+        'ID',
+        '82191',
         5,
         false,
         'INACTIVE',

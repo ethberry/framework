@@ -21,7 +21,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        120601,
+        121601,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -29,11 +29,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        1206,
+        1216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        220601,
+        221601,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -41,11 +41,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        2206,
+        2216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        320601,
+        321601,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -53,11 +53,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        3206,
+        3216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        420601,
+        421601,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -65,7 +65,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        4206,
+        4216,
         '${currentDateTime}',
         '${currentDateTime}'
       );

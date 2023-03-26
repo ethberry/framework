@@ -66,7 +66,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes: JSON.stringify(attributes),
+        attributes,
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });

@@ -21,7 +21,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        220701,
+        221701,
         'BUSD',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -29,7 +29,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         0,
         '31000000000000000000000000',
         'ACTIVE',
-        4207,
+        4217,
         '${currentDateTime}',
         '${currentDateTime}'
       );

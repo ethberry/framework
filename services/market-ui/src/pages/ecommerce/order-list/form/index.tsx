@@ -6,11 +6,11 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { DateRangeInput } from "@gemunion/mui-inputs-picker";
 import { OrderStatus } from "@framework/types";
 
-import { IOrderSearchDto } from "../index";
+import { TTransformedSearch } from "../index";
 
 interface IOrderSearchFormProps {
-  onSubmit: (values: IOrderSearchDto) => Promise<void>;
-  initialValues: IOrderSearchDto;
+  onSubmit: (values: TTransformedSearch) => Promise<void>;
+  initialValues: TTransformedSearch;
 }
 
 export const OrderSearchForm: FC<IOrderSearchFormProps> = props => {

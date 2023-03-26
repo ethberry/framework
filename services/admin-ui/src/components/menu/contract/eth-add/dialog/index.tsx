@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
 
 import { ListenerType } from "@framework/types";
 
@@ -32,7 +32,7 @@ export const EthListenerAddDialog: FC<IEthListenerAddDialogProps> = props => {
     >
       <TextInput name="address" />
       <SelectInput name="listenerType" options={ListenerType} />
-      <TextInput name="fromBlock" />
+      <NumberInput name="fromBlock" />
     </FormDialog>
   );
 };
