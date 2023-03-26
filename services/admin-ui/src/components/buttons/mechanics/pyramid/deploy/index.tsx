@@ -4,13 +4,13 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
-import { useDeploy } from "@gemunion/react-hooks-eth";
+import { PyramidContractTemplates } from "@framework/types";
 import type { IPyramidContractDeployDto } from "@framework/types";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 
 import DeployPyramidABI from "./deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
-import { PyramidContractTemplates } from "@framework/types";
 
 export interface IPyramidContractDeployButtonProps {
   className?: string;
@@ -51,8 +51,8 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
         method: "POST",
         data: {
           contractTemplate: values.contractTemplate,
-          payees: [values.payees],
-          shares: [values.shares],
+          payees: values.payees.map(({ payee }: { payee: string }) => payee),
+          shares: values.shares.map(({ share }: { share: number }) => share),
         },
       },
       form,
