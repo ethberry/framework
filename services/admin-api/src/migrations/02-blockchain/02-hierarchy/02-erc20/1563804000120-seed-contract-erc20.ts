@@ -11,6 +11,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
     const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
     const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
+    const erc20TokenWhiteListAddress = process.env.ERC20_WHITELIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -106,6 +107,25 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{BLACKLIST}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1205,
+        '${erc20TokenWhiteListAddress}',
+        '${chainId}',
+        'ERC20 (whitelist)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'ERC20 WHITELIST',
+        'WL20',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{WHITELIST}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

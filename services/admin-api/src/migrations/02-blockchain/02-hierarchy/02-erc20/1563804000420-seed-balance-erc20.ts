@@ -37,7 +37,7 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        12050101,
+        12150101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

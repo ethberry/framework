@@ -3,10 +3,10 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedAccessList1653616447340 implements MigrationInterface {
+export class SeedAccessListErc1155At1653616447350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc20TokenBlackListAddress = process.env.BLACKLIST_ADDR || wallet;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_list (
@@ -16,13 +16,19 @@ export class SeedAccessList1653616447340 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        '${erc20TokenBlackListAddress}',
+        '${erc1155ContractBlacklistAddress}',
+        '${wallets[0]}',
+        false,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc1155ContractBlacklistAddress}',
         '${wallets[1]}',
         false,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc20TokenBlackListAddress}',
+        '${erc1155ContractBlacklistAddress}',
         '${wallets[2]}',
         false,
         '${currentDateTime}',

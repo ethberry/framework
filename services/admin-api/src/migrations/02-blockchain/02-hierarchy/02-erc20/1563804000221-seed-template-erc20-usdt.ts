@@ -21,7 +21,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        120501,
+        121501,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -29,11 +29,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        1205,
+        1215,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        220501,
+        221501,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -41,11 +41,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        2205,
+        2215,
         '${currentDateTime}',
         '${currentDateTime}'
       ),(
-        320501,
+        321501,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -53,11 +53,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        3205,
+        3215,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        420501,
+        421501,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -65,7 +65,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        4205,
+        4215,
         '${currentDateTime}',
         '${currentDateTime}'
       );

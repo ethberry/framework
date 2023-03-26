@@ -27,13 +27,13 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
       ), (
         '${vestingGradedAddress}',
         '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
-        12050101,
+        12150101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${vestingCliffAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        22070101,
+        22170101,
         '${currentDateTime}',
         '${currentDateTime}'
       );
