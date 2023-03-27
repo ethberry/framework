@@ -914,6 +914,7 @@
     }
   },
   "snackbar": {
+    "addedToCart": "Added to cart",
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
@@ -925,6 +926,7 @@
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
+    "removedFromCart": "Removed from cart",
     "success": "Success",
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",

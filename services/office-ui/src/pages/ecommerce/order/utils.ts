@@ -1,5 +1,7 @@
-import { IOrder, OrderStatus } from "@framework/types";
+import { DateRange } from "@mui/x-date-pickers-pro";
 import { endOfDay, startOfDay } from "date-fns";
+
+import { IOrder, OrderStatus } from "@framework/types";
 
 type OrdersObject = Record<OrderStatus, Array<IOrder>>;
 
@@ -13,13 +15,13 @@ export const groupOrdersByStatus = (array: Array<IOrder>): OrdersObject => {
   }, {} as OrdersObject);
 };
 
-export const parseDateRange = (dateRange = ""): [Date, Date] => {
+export const parseDateRange = (dateRange = ""): DateRange<Date> => {
   const [start, end] = dateRange ? dateRange.split("/").map(date => new Date(date)) : [new Date(), new Date()];
   return [startOfDay(start), endOfDay(end)];
 };
 
-export const stringifyDateRange = (dateRange: [Date, Date] = parseDateRange()): string => {
-  return !dateRange.some((date: Date) => date === null)
-    ? dateRange.map((date: Date) => date.toISOString()).join("/")
+export const stringifyDateRange = (dateRange: DateRange<Date> = parseDateRange()): string => {
+  return !dateRange.some((date: Date | null) => date === null)
+    ? dateRange.map((date: Date | null) => date!.toISOString()).join("/")
     : "";
 };

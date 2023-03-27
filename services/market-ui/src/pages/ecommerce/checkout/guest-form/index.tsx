@@ -1,8 +1,5 @@
-import { FC, useContext } from "react";
-import { useSnackbar } from "notistack";
-import { useIntl } from "react-intl";
+import { FC } from "react";
 
-import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
 import { FormWrapper } from "@gemunion/mui-form";
 
 import { validationSchema } from "./validation";
@@ -10,28 +7,21 @@ import { AddressInput } from "./address-input";
 import { UserInput } from "./user-input";
 import { FormButtons } from "../form-buttons";
 import { emptyAddress, emptyUser } from "../../../../components/common/interfaces";
+import { useApiCall } from "@gemunion/react-hooks";
 
 export const GuestForm: FC = () => {
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
-
-  const api = useContext(ApiContext);
-
-  const handleSubmit = (values: any) => {
-    return api
-      .fetchJson({
+  const { fn: handleSubmitApi } = useApiCall(
+    (api, data: any) =>
+      api.fetchJson({
         url: "/orders/guest",
         method: "POST",
-        data: values,
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+        data,
+      }),
+    { success: false },
+  );
+
+  const handleSubmit = (values: any) => {
+    return handleSubmitApi(undefined, values);
   };
 
   const fixedValues = {
