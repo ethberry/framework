@@ -52,8 +52,6 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
     address account = _msgSender();
 
     return _recoverSigner(_hash(account, params, numbers, price), signature);
-    // bool isVerified = _verify(signer, _hash(account, params, numbers, price), signature);
-    // require(isVerified, "Lottery: Invalid signature");
   }
 
   function _hash(

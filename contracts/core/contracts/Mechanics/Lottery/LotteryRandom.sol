@@ -20,7 +20,6 @@ import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
-import "hardhat/console.sol";
 
 // Todo add PAYMANTS_SPLITTER
 abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator, Wallet {
@@ -55,7 +54,6 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
   Round[] internal _rounds;
 
-  // // TODO Exchange Lotter (price, ITEM)
   constructor(string memory name) SignatureValidator(name) {
     address account = _msgSender();
     _setupRole(DEFAULT_ADMIN_ROLE, account);
@@ -121,7 +119,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     require(currentRound.endTimestamp + _timeLag < block.timestamp, "Round: is not releasable yet");
     require(currentRound.balance != 0, "Round: Nothing to Release");
 
-    uint roundBalance = currentRound.balance;
+    uint256 roundBalance = currentRound.balance;
     currentRound.balance = 0;
 
     currentRound.acceptedAsset.amount = roundBalance;
