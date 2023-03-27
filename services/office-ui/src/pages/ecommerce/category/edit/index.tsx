@@ -24,7 +24,7 @@ export const EditCategoryDialog: FC<IEditCategoryDialogProps> = props => {
   const { id, title, description, parentId } = initialValues;
   const fixedValues = { id, title, description, parentId };
 
-  const message = id ? "dialogs.add" : "dialogs.edit";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>

@@ -27,7 +27,7 @@ export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
   const { id, userId, merchantId, orderStatus, items, createdAt } = initialValues;
   const fixedValues = { id, userId, merchantId, orderStatus, items };
 
-  const message = id ? "dialogs.add" : "dialogs.edit";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>

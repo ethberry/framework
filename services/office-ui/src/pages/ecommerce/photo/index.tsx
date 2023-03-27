@@ -1,6 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
-import { useIntl } from "react-intl";
+import { FC } from "react";
 import {
   Avatar,
   Grid,
@@ -13,47 +11,25 @@ import {
 } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
 
-import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
 import { IPhoto, PhotoStatus } from "@framework/types";
-import { IPaginationResult } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useApiCall, useCollection } from "@gemunion/react-hooks";
 
 export const Photo: FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [photos, setPhotos] = useState<Array<IPhoto>>([]);
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
+  const { rows, fetch, isLoading } = useCollection<IPhoto>({
+    baseUrl: "/photos",
+    empty: {
+      title: "",
+      imageUrl: "",
+      photoStatus: PhotoStatus.NEW,
+      priority: 0,
+      productId: 1,
+    },
+  });
 
-  const api = useContext(ApiContext);
-
-  const fetchPhotosByQuery = async (): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/photos",
-      })
-      .then((json: IPaginationResult<IPhoto>) => {
-        setPhotos(json.rows);
-      });
-  };
-
-  const fetchPhotos = async (): Promise<void> => {
-    setIsLoading(true);
-    return fetchPhotosByQuery()
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const handleClick = (photo: IPhoto, newStatus: PhotoStatus) => {
-    return () => {
+  const { fn: handleChangeStatusApi } = useApiCall(
+    (api, values: { photo: IPhoto; newStatus: PhotoStatus }) => {
+      const { photo, newStatus } = values;
       return api
         .fetchJson({
           url: `/photos/${photo.id}`,
@@ -62,23 +38,13 @@ export const Photo: FC = () => {
             photoStatus: newStatus,
           },
         })
-        .then(() => {
-          return fetchPhotos();
-        })
-        .catch((e: ApiError) => {
-          if (e.status) {
-            enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-          } else {
-            console.error(e);
-            enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-          }
-        });
-    };
-  };
+        .then(() => fetch());
+    },
+    { success: false },
+  );
 
-  useEffect(() => {
-    void fetchPhotos();
-  }, []);
+  const handleChangeStatus = (photo: IPhoto, newStatus: PhotoStatus) => () =>
+    handleChangeStatusApi(undefined, { photo, newStatus });
 
   return (
     <Grid>
@@ -88,17 +54,17 @@ export const Photo: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {photos.map(photo => (
+          {rows.map(photo => (
             <ListItem key={photo.id}>
               <ListItemAvatar>
                 <Avatar alt={photo.title} src={photo.imageUrl} />
               </ListItemAvatar>
               <ListItemText primary={photo.title} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="approve" onClick={handleClick(photo, PhotoStatus.APPROVED)}>
+                <IconButton edge="end" aria-label="approve" onClick={handleChangeStatus(photo, PhotoStatus.APPROVED)}>
                   <Done />
                 </IconButton>
-                <IconButton edge="end" aria-label="delete" onClick={handleClick(photo, PhotoStatus.DECLINED)}>
+                <IconButton edge="end" aria-label="delete" onClick={handleChangeStatus(photo, PhotoStatus.DECLINED)}>
                   <Clear />
                 </IconButton>
               </ListItemSecondaryAction>

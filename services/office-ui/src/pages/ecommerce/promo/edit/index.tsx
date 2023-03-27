@@ -21,7 +21,7 @@ export const EditPromoDialog: FC<IEditPromoDialogProps> = props => {
   const { id, title, productId, imageUrl } = initialValues;
   const fixedValues = { id, title, productId, imageUrl };
 
-  const message = id ? "dialogs.add" : "dialogs.edit";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog validationSchema={validationSchema} initialValues={fixedValues} message={message} {...rest}>
