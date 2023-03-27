@@ -12,13 +12,8 @@ import "../LotteryRandom.sol";
 
 contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunion {
   constructor(
-    string memory name,
-    Asset memory ticketFactory,
-    Asset memory acceptedToken
-  )
-    LotteryRandom(name, ticketFactory, acceptedToken)
-    ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1))
-  {}
+    string memory name
+  ) LotteryRandom(name) ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();

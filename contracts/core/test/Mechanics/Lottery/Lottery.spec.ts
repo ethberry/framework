@@ -14,8 +14,6 @@ import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
-import { deployERC721 } from "../../ERC721/shared/fixtures";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -48,107 +46,78 @@ describe("Lottery", function () {
     return lotteryInstance;
   });
 
-  describe("setTicketFactory", function () {
-    it("should set factory", async function () {
-      const { lotteryInstance } = await factory();
-      const newTicketInstance = await deployERC721("ERC721Ticket");
-      const tx = await lotteryInstance.setTicketFactory({
-        tokenType: 2,
-        token: newTicketInstance.address,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.not.be.reverted;
-    });
-
-    it("should fail: account is missing role", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-
-      const { lotteryInstance } = await factory();
-      const newTicketInstance = await deployERC721("ERC721Ticket");
-      const tx = lotteryInstance.connect(receiver).setTicketFactory({
-        tokenType: 2,
-        token: newTicketInstance.address,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
-    });
-
-    it("should fail: the factory must be a deployed contract", async function () {
-      const { lotteryInstance } = await factory();
-      const tx = lotteryInstance.setTicketFactory({
-        tokenType: 2,
-        token: constants.AddressZero,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.be.revertedWith("Lottery: the factory must be a deployed contract");
-    });
-  });
-
-  describe("setAcceptedToken", function () {
-    it("should set factory", async function () {
-      const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20();
-      const tx = await lotteryInstance.setAcceptedToken({
-        tokenType: 1,
-        token: newCoinInstance.address,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.not.be.reverted;
-    });
-
-    it("should fail: account is missing role", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-      const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20();
-      const tx = lotteryInstance.connect(receiver).setAcceptedToken({
-        tokenType: 1,
-        token: newCoinInstance.address,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
-    });
-
-    it("should fail: the factory must be a deployed contract", async function () {
-      const { lotteryInstance } = await factory();
-      const tx = lotteryInstance.setAcceptedToken({
-        tokenType: 1,
-        token: constants.AddressZero,
-        tokenId: 1,
-        amount: 1,
-      });
-      await expect(tx).to.be.revertedWith("Lottery: the factory must be a deployed contract");
-    });
-  });
-
   describe("startRound", function () {
     it("should start new round", async function () {
-      const { lotteryInstance } = await factory();
-      const tx = await lotteryInstance.startRound();
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+      const tx = await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
       const current: number = (await time.latest()).toNumber();
       await expect(tx).to.emit(lotteryInstance, "RoundStarted").withArgs(1, current);
     });
 
     it("should fail: paused", async function () {
-      const { lotteryInstance } = await factory();
-      lotteryInstance.startRound();
-      const tx = lotteryInstance.startRound();
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+      lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+      const tx = lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
       await expect(tx).to.be.revertedWith("Lottery: previous round is not yet finished");
     });
   });
 
   describe("finishRound", function () {
     it("should end current round", async function () {
-      const { lotteryInstance } = await factory();
-      await lotteryInstance.startRound();
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
 
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
@@ -202,8 +171,20 @@ describe("Lottery", function () {
         const tx02 = vrfInstance.addConsumer(1, lotteryInstance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
-
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -265,7 +246,20 @@ describe("Lottery", function () {
 
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -309,7 +303,21 @@ describe("Lottery", function () {
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -359,7 +367,21 @@ describe("Lottery", function () {
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -397,9 +419,23 @@ describe("Lottery", function () {
     it("should fail: wrong signer", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
 
-      const { lotteryInstance } = await factory();
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const generateSignature = wrapSignature(await ethers.provider.getNetwork(), lotteryInstance, stranger);
       const signature = await generateSignature({
         account: receiver.address,
@@ -430,9 +466,23 @@ describe("Lottery", function () {
     it("should fail: wrong signature", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const { lotteryInstance } = await factory();
+      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = utils.formatBytes32String("signature");
 
       const tx = lotteryInstance.connect(receiver).purchase(
@@ -446,7 +496,7 @@ describe("Lottery", function () {
         },
         signature,
       );
-      await expect(tx).to.be.revertedWith("Lottery: Invalid signature");
+      await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
 
     it("should fail: expired signature", async function () {
@@ -459,7 +509,21 @@ describe("Lottery", function () {
 
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.address);
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -502,9 +566,23 @@ describe("Lottery", function () {
     it("should fail: insufficient allowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const { lotteryInstance, generateSignature, erc20Instance } = await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -534,9 +612,23 @@ describe("Lottery", function () {
     it("should fail: transfer amount exceeds balance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const { lotteryInstance, generateSignature, erc20Instance } = await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const signature = await generateSignature({
         account: receiver.address,
         params,
@@ -584,7 +676,20 @@ describe("Lottery", function () {
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
 
       const params1 = {
         nonce: utils.randomBytes(32),
@@ -695,7 +800,21 @@ describe("Lottery", function () {
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, lotteryInstance.address);
       }
 
-      await lotteryInstance.startRound();
+      await lotteryInstance.startRound(
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
       const tx0 = await lotteryInstance.endRound();
 
       const current: number = (await time.latest()).toNumber();
@@ -741,12 +860,24 @@ describe("Lottery", function () {
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
       await erc20Instance.mint(lotteryInstance.address, utils.parseEther("20000"));
 
-      await lotteryInstance.setDummyRound(defaultNumbers, values, aggregation, nonce, {
-        tokenType: 1,
-        token: erc20Instance.address,
-        tokenId: 0,
-        amount,
-      });
+      await lotteryInstance.setDummyRound(
+        defaultNumbers,
+        values,
+        aggregation,
+        nonce,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 0,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
 
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
 
@@ -768,12 +899,24 @@ describe("Lottery", function () {
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
       await erc20Instance.mint(lotteryInstance.address, utils.parseEther("20000"));
 
-      await lotteryInstance.setDummyRound(defaultNumbers, values, aggregation, nonce, {
-        tokenType: 1,
-        token: erc20Instance.address,
-        tokenId: 1,
-        amount,
-      });
+      await lotteryInstance.setDummyRound(
+        defaultNumbers,
+        values,
+        aggregation,
+        nonce,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 0,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 1,
+          amount,
+        },
+      );
       // await lotteryInstance.setDummyTicket(defaultNumbers);
 
       const prizeAmount = constants.WeiPerEther.mul(3500).sub(200); // rounding error

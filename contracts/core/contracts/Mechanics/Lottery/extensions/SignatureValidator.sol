@@ -30,7 +30,9 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
   bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
 
   bytes32 private immutable PERMIT_SIGNATURE =
-    keccak256(bytes.concat("EIP712(address account,Params params,bool[36] numbers,Asset price)", PARAMS_SIGNATURE));
+    keccak256(
+      bytes.concat("EIP712(address account,Params params,bool[36] numbers,Asset price)", ASSET_SIGNATURE, PARAMS_SIGNATURE)
+    );
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 

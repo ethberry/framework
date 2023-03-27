@@ -19,14 +19,12 @@ import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
+import "hardhat/console.sol";
 
-// $$ PAYMANTS_SPLITTER
+// Todo add PAYMANTS_SPLITTER
 abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator {
   using Address for address;
   using SafeERC20 for IERC20;
-
-  Asset private _ticketAsset;
-  Asset private _acceptedAsset;
 
   uint8 private _maxTicket = 2; // TODO change for 5000 in production or add to constructor
   uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days or add to constructor
@@ -47,6 +45,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     uint256 balance; // left after get prize
     uint256 total; // max money before
     Asset acceptedAsset;
+    Asset ticketAsset;
     bool[][] tickets; // all round tickets
     uint8[6] values; // prize numbers
     uint8[7] aggregation; // prize counts
@@ -56,16 +55,11 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
   Round[] internal _rounds;
 
   // // TODO Exchange Lotter (price, ITEM)
-  constructor(string memory name, Asset memory item, Asset memory price) SignatureValidator(name) {
+  constructor(string memory name) SignatureValidator(name) {
     address account = _msgSender();
     _setupRole(DEFAULT_ADMIN_ROLE, account);
     _setupRole(PAUSER_ROLE, account);
     _setupRole(MINTER_ROLE, account);
-
-    _ticketAsset = item;
-    _acceptedAsset = price;
-    // setTicketFactory(ticketFactory); // $$ TODO DELETE
-    // setAcceptedToken(acceptedToken); // $$ TODO DELETE
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -73,17 +67,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     _rounds.push(rootRound);
   }
 
-  function setTicketFactory(Asset memory item) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(item.token.isContract(), "Lottery: the factory must be a deployed contract");
-    _ticketAsset = item; // $$ ITEM(ASSET) insted of TicketFactoru
-  }
-
-  function setAcceptedToken(Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(price.token.isContract(), "Lottery: the factory must be a deployed contract");
-    _acceptedAsset = price;
-  }
-
-  function startRound() public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function startRound(Asset memory ticket, Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
     require(prevRound.endTimestamp != 0, "Lottery: previous round is not yet finished");
 
@@ -94,8 +78,9 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
     Round storage currentRound = _rounds[roundNumber];
     currentRound.roundId = roundNumber;
-    currentRound.acceptedAsset = _acceptedAsset;
     currentRound.startTimestamp = block.timestamp;
+    currentRound.ticketAsset = ticket;
+    currentRound.acceptedAsset = price;
 
     emit RoundStarted(roundNumber, block.timestamp);
   }
@@ -123,14 +108,8 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.total -= commission;
 
     if (commission != 0) {
-      Asset memory spendAsset = Asset(
-        currentRound.acceptedAsset.tokenType,
-        currentRound.acceptedAsset.token,
-        currentRound.acceptedAsset.tokenId,
-        commission
-      );
-      spend(toArray(spendAsset), _msgSender());
-      // SafeERC20.safeTransfer(IERC20(_acceptedAsset.token), _msgSender(), commission);
+      currentRound.acceptedAsset.amount = commission;
+      spend(toArray(currentRound.acceptedAsset), _msgSender());
     }
 
     emit RoundEnded(roundNumber, block.timestamp);
@@ -144,8 +123,8 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     uint roundBalance = currentRound.balance;
     currentRound.balance = 0;
 
+    currentRound.acceptedAsset.amount = roundBalance;
     spend(toArray(currentRound.acceptedAsset), _msgSender());
-    // SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), roundBalance);
 
     emit Released(roundNumber, roundBalance);
   }
@@ -192,10 +171,10 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     Asset memory price,
     bytes calldata signature
   ) external whenNotPaused {
-    // ! TODO returning incorrect signer.
-    // address signer = _verifySignature(params, numbers, price, signature);
-    // console.log("SIGNER",signer);
-    // require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
+    // Verify signature and recover signer
+    address signer = _verifySignature(params, numbers, price, signature);
+    // chech signer for MINTER_ROLE
+    require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
 
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
@@ -211,15 +190,17 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.total += price.amount;
 
     spendFrom(toArray(price), _msgSender(), address(this));
-    // SafeERC20.safeTransferFrom(IERC20(_acceptedAsset.token), _msgSender(), address(this), price);
 
-    uint256 tokenId = IERC721Ticket(_ticketAsset.token).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
     emit Purchase(tokenId, account, price.amount, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {
-    IERC721Ticket ticketFactory = IERC721Ticket(_ticketAsset.token);
+    uint256 roundNumber = _rounds.length - 1;
+    Round storage currentRound = _rounds[roundNumber];
+
+    IERC721Ticket ticketFactory = IERC721Ticket(currentRound.ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 
@@ -233,9 +214,6 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     coefficient[4] = 110;
     coefficient[5] = 140;
     coefficient[6] = 220;
-
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
 
     uint8[7] memory aggregation = currentRound.aggregation;
 
@@ -258,15 +236,8 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     uint256 amount = point * coefficient[result];
     currentRound.balance -= amount;
 
-    Asset[] memory price = new Asset[](1);
-    price[0] = Asset(
-      currentRound.acceptedAsset.tokenType, // _acceptedAsset.tokenType,
-      currentRound.acceptedAsset.token, // _acceptedAsset.token,
-      currentRound.acceptedAsset.tokenId, // _acceptedAsset.tokenId,
-      amount
-    );
-
-    spend(price, _msgSender());
+    currentRound.acceptedAsset.amount = amount;
+    spend(toArray(currentRound.acceptedAsset), _msgSender());
 
     emit Prize(_msgSender(), tokenId, amount);
   }

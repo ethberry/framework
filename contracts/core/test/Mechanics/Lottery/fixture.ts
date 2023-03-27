@@ -22,21 +22,7 @@ export async function deployLottery(): Promise<{
   const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721TicketInstance = await deployERC721("ERC721Ticket");
 
-  const lotteryInstance = await factory.deploy(
-    tokenName,
-    {
-      tokenType: 2,
-      token: erc721TicketInstance.address,
-      tokenId: 1,
-      amount: 0,
-    },
-    {
-      tokenType: 1,
-      token: erc20Instance.address,
-      tokenId: 1,
-      amount: 0,
-    },
-  );
+  const lotteryInstance = await factory.deploy(tokenName);
 
   return {
     erc20Instance,
