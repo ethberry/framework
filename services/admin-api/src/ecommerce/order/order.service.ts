@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UserRole } from "@framework/types";
+import { IOrderSearchDto, UserRole } from "@framework/types";
 
 import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderMoveDto, IOrderSearchDto, IOrderUpdateDto } from "./interfaces";
+import { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
 import { OrderItemService } from "../order-item/order-item.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -18,7 +18,7 @@ export class OrderService {
   ) {}
 
   public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
-    const { orderStatus, dateRange, merchantId } = dto;
+    const { orderStatus, dateRange, merchantId, isArchived } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
     queryBuilder.select();
@@ -40,6 +40,10 @@ export class OrderService {
     if (dateRange) {
       const [begin, end] = dateRange.split("/");
       queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", { begin, end });
+    }
+
+    if (isArchived === true || isArchived === false) {
+      queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
     }
 
     queryBuilder.leftJoinAndSelect("order.items", "items");

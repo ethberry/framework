@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractEventType, ContractType, TokenType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, Erc4907EventType, TokenType } from "@framework/types";
 
 // custom contracts
 import { ABI } from "./interfaces";
@@ -43,7 +43,8 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.ConsecutiveTransfer,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged
+              AccessControlEventType.RoleAdminChanged,
+              Erc4907EventType.UpdateUser,
             ],
           },
           block: {

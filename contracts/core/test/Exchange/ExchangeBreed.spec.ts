@@ -140,8 +140,8 @@ describe("ExchangeBreed", function () {
         await erc721Instance.mintCommon(receiver.address, 1);
         await erc721Instance.mintCommon(receiver.address, 2);
 
-        let balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(2);
+        const balance1 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance1).to.equal(2);
 
         const signature = await generateOneToOneSignature({
           account: receiver.address,
@@ -182,8 +182,8 @@ describe("ExchangeBreed", function () {
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
-        balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(3);
+        const balance2 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance2).to.equal(3);
 
         await exchangeInstance.setPregnancyLimits(1, 10000, 60 * 2 ** 13);
 
@@ -288,8 +288,8 @@ describe("ExchangeBreed", function () {
         await erc721Instance.mintCommon(receiver.address, 1);
         await erc721Instance.mintCommon(receiver.address, 2);
 
-        let balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(2);
+        const balance1 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance1).to.equal(2);
 
         const signature = await generateOneToOneSignature({
           account: receiver.address,
@@ -329,8 +329,8 @@ describe("ExchangeBreed", function () {
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
-        balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(3);
+        const balance2 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance2).to.equal(3);
 
         await exchangeInstance.setPregnancyLimits(10, 10000, 60 * 2 ** 13);
 

@@ -60,11 +60,10 @@ import { PromoEntity } from "./ecommerce/promo/promo.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 
-// prettier-ignore
 import {
   AddProduct1591673187606,
-  CreateAccessControl1653616447230,
-  CreateAccessList1653616447330,
+  CreateAccessControl1653616447200,
+  CreateAccessList1653616447300,
   CreateAddress1593490663030,
   CreateAsset1563804000100,
   CreateAssetComponent1563804001220,
@@ -106,7 +105,14 @@ import {
   CreateWaitlistItem1663047650300,
   CreateWaitlistList1663047650200,
   CreateWalletPayees1663047650500,
-  SeedAccessList1653616447340,
+  SeedAccessControlErc1155At20At1653616447250,
+  SeedAccessControlErc20At1653616447220,
+  SeedAccessControlErc721At20At1653616447230,
+  SeedAccessControlErc998At20At1653616447240,
+  SeedAccessListErc1155At1653616447350,
+  SeedAccessListErc20At1653616447320,
+  SeedAccessListErc721At1653616447330,
+  SeedAccessListErc998At1653616447340,
   SeedAddress1593490663040,
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentHistoryErc721At1657846609030,
@@ -219,7 +225,7 @@ import {
   SeedUser1563803000140,
   SeedWaitlistItemAt1663047650310,
   SeedWaitlistListAt1663047650210,
-  SeedWrapperAt1563804000370
+  SeedWrapperAt1563804000370,
 } from "./migrations";
 
 // Check typeORM documentation for more information.
@@ -372,9 +378,17 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc20At1563804040320,
     SeedEventHistoryErc721At1563804040330,
 
-    CreateAccessControl1653616447230,
-    CreateAccessList1653616447330,
-    SeedAccessList1653616447340,
+    CreateAccessControl1653616447200,
+    SeedAccessControlErc20At1653616447220,
+    SeedAccessControlErc721At20At1653616447230,
+    SeedAccessControlErc998At20At1653616447240,
+    SeedAccessControlErc1155At20At1653616447250,
+
+    CreateAccessList1653616447300,
+    SeedAccessListErc20At1653616447320,
+    SeedAccessListErc721At1653616447330,
+    SeedAccessListErc998At1653616447340,
+    SeedAccessListErc1155At1653616447350,
 
     CreateClaim1653616447810,
     SeedClaimErc721At1653616447830,

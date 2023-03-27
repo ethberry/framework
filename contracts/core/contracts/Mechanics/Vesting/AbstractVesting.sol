@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
-import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 

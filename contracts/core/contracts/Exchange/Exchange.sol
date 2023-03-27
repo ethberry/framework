@@ -11,7 +11,8 @@ import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../utils/constants.sol";
 import "./ExchangeCore.sol";
@@ -21,6 +22,7 @@ import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
 import "./referral/LinearReferral.sol";
+import "./ExchangeRentable.sol";
 
 contract Exchange is
   ExchangeCore,
@@ -31,9 +33,8 @@ contract Exchange is
   ExchangeClaim,
   LinearReferral,
   PaymentSplitter,
-  ERC721Holder,
-  ERC1155Holder,
-  ERC1363Receiver
+  ExchangeRentable,
+  Wallet
 {
   using Address for address;
 
@@ -55,16 +56,21 @@ contract Exchange is
     _unpause();
   }
 
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
+  }
+
+  /**
+   * @dev Rejects any incoming ETH transfers to this contract address
+   */
+  receive() external payable override(PaymentSplitter, Wallet) {
+    revert();
   }
 
   function _afterPurchase(
     address referrer,
     Asset[] memory price
-  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
+  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral, ExchangeRentable) {
     return super._afterPurchase(referrer, price);
   }
 }

@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-import "@gemunion/contracts-erc20/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
 import "../Exchange/ExchangeUtils.sol";
 
@@ -33,7 +33,12 @@ contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Hold
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return
+      interfaceId == type(IERC1363Receiver).interfaceId ||
+      interfaceId == type(IERC1363Spender).interfaceId ||
+      interfaceId == type(IERC721Receiver).interfaceId ||
+      interfaceId == type(IERC1155Receiver).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 
   receive() external payable {}

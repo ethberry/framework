@@ -1,9 +1,8 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import { Button, Typography } from "@mui/material";
-
-import { Savings } from "@mui/icons-material";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract, utils } from "ethers";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Button, Typography } from "@mui/material";
+import { Savings } from "@mui/icons-material";
 
 import { FormattedMessage } from "react-intl";
 
@@ -29,11 +28,14 @@ export const ChainLinkFundButton: FC = () => {
   const [currentValue, setCurrentValue] = useState<string | null>(null);
 
   const getAccountBalance = useMetamaskValue(
-    async (_decimals: number, _symbol: string, web3Context: Web3ContextType) => {
+    async (decimals: number, symbol: string, web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(process.env.LINK_ADDR, BalanceOfABI, web3Context.provider?.getSigner());
-      const value = await contract.callStatic.balanceOf(web3Context.account);
-      return formatEther(value.sub(value.mod(1e14)), _decimals, _symbol);
+      if ((await contract.provider.getCode(contract.address)) !== "0x") {
+        const value = await contract.callStatic.balanceOf(web3Context.account);
+        return formatEther(value.toString(), decimals, symbol);
+      }
+      return Number.NaN.toString();
     },
     { success: false },
   );
@@ -43,9 +45,7 @@ export const ChainLinkFundButton: FC = () => {
       return;
     }
 
-    void getAccountBalance(18, "LINK").then((balance: string) => {
-      setCurrentValue(balance);
-    });
+    void getAccountBalance(18, "LINK").then(setCurrentValue);
   }, [account, currentValue]);
 
   const handleFund = (): void => {
@@ -67,7 +67,13 @@ export const ChainLinkFundButton: FC = () => {
       <Typography variant="body1">
         <FormattedMessage id="dialogs.currentBalance" values={{ value: currentValue }} />
       </Typography>
-      <Button variant="outlined" startIcon={<Savings />} onClick={handleFund} data-testid="ChainLinkFundButton">
+      <Button
+        variant="outlined"
+        startIcon={<Savings />}
+        onClick={handleFund}
+        data-testid="ChainLinkFundButton"
+        disabled={!account}
+      >
         <FormattedMessage id="form.buttons.fund" />
       </Button>
       <ChainLinkFundDialog
@@ -76,7 +82,7 @@ export const ChainLinkFundButton: FC = () => {
         open={isFundDialogOpen}
         initialValues={{
           amount: "0",
-          subscriptionId: "2",
+          subscriptionId: "1",
         }}
       />
     </Fragment>

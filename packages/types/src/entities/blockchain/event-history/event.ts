@@ -23,6 +23,7 @@ import type { TMysteryEvents } from "./mystery";
 import type { TWrapperEvents } from "./wrapper";
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
 import type { TErc1363Events } from "./erc1363";
+import type { TErc4907Events } from "./erc4907";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -148,6 +149,9 @@ export type TContractEventData =
 
   // erc1363
   | TErc1363Events
+
+  // erc4907
+  | TErc4907Events
 
   // exchange
   | TExchangeEvents

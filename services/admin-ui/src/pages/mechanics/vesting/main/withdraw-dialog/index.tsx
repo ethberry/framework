@@ -44,6 +44,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
       setRows(json.rows);
     });
   }, [initialValues.address]);
+
   return (
     <ConfirmationDialog message={"dialogs.withdraw"} {...rest}>
       <ProgressOverlay isLoading={isLoading}>

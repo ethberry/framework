@@ -25,7 +25,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
       search: {
         query: "",
         minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
       },
     });
 

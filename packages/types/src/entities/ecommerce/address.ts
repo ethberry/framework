@@ -1,3 +1,4 @@
+import { EnabledCountries } from "@gemunion/constants";
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IUser } from "../infrastructure";
@@ -8,9 +9,14 @@ export enum AddressStatus {
 }
 
 export interface IAddress extends IIdDateBase {
-  address: string;
-  userId: number;
-  user?: IUser;
-  isDefault: boolean;
+  addressLine1: string;
+  addressLine2?: string;
   addressStatus: AddressStatus;
+  city: string;
+  country: EnabledCountries;
+  isDefault: boolean;
+  state?: string;
+  user?: IUser;
+  userId: number;
+  zip: string;
 }

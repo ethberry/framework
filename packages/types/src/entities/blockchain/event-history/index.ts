@@ -19,5 +19,6 @@ export * from "./staking";
 export * from "./vesting";
 export * from "./wrapper";
 export * from "./erc1363";
+export * from "./erc4907";
 
 export * from "./event";

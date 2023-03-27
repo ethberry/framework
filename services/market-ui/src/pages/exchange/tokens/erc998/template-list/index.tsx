@@ -29,7 +29,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
         query: "",
         contractIds: embedded ? [~~id!] : [],
         minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.toString(),
+        maxPrice: constants.WeiPerEther.mul(1000).toString(),
       },
     });
 

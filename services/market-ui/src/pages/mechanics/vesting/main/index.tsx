@@ -7,13 +7,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 
-import type { IContract, IVestingParams, IVestingSearchDto } from "@framework/types";
+import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 import { VestingViewDialog } from "./view";
-import { formatDistance } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -33,9 +32,7 @@ export const Vesting: FC = () => {
   });
 
   const { formatMessage } = useIntl();
-
   const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
-
   const [contract, setContract] = useState<IContract>({} as IContract);
 
   const handleWithdraw = (contract: IContract): (() => void) => {
@@ -43,13 +40,6 @@ export const Vesting: FC = () => {
       setContract(contract);
       setIsWithdrawDialogOpen(true);
     };
-  };
-
-  const getDistance = (contract: IContract): string => {
-    const { duration, startTimestamp } = contract.parameters as IVestingParams;
-    const dateStart = new Date(startTimestamp);
-    const dateFinish = new Date(dateStart.getTime() + duration);
-    return formatDistance(dateFinish, Date.now(), { addSuffix: true });
   };
 
   const handleWithdrawConfirm = () => {
@@ -73,7 +63,6 @@ export const Vesting: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>{getDistance(vesting)}</ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
@@ -81,7 +70,6 @@ export const Vesting: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <VestingTransferOwnershipButton vesting={vesting} />
                 <IconButton onClick={handleWithdraw(vesting)}>
                   <AccountBalanceWallet />
                 </IconButton>
@@ -90,6 +78,7 @@ export const Vesting: FC = () => {
                     <Visibility />
                   </IconButton>
                 </Tooltip>
+                <VestingTransferOwnershipButton vesting={vesting} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

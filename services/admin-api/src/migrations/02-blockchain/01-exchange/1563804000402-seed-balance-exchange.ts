@@ -25,13 +25,13 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
-        42050101,
+        42150101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        22070101,
+        22170101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

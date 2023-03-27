@@ -1,9 +1,11 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+/* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { PageEntity } from "./infrastructure/page/page.entity";
+/* blockchain */
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
@@ -29,6 +31,7 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+/* ecommerce */
 import { OrderEntity } from "./ecommerce/order/order.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
 import { PromoEntity } from "./ecommerce/promo/promo.entity";
@@ -45,18 +48,17 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    /* infrastructure */
     OtpEntity,
     UserEntity,
     PageEntity,
     MerchantEntity,
-    EventHistoryEntity,
     UserEntity,
+    /* blockchain */
+    EventHistoryEntity,
     CraftEntity,
-    CartEntity,
-    CartItemEntity,
     StakingDepositEntity,
     StakingRulesEntity,
-    PageEntity,
     ClaimEntity,
     ContractEntity,
     TemplateEntity,
@@ -87,6 +89,8 @@ const config: PostgresConnectionOptions = {
     PhotoEntity,
     ProductEntity,
     PromoEntity,
+    CartEntity,
+    CartItemEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

@@ -10,7 +10,12 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
+import {
+  GradeButton,
+  TokenBorrowButton,
+  TokenSellButton,
+  TokenTransferButton,
+} from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { Erc998Composition } from "./composition";
 import { TokenAttributesView } from "../../genes";
@@ -73,12 +78,16 @@ export const Erc998Token: FC = () => {
             </ul>
             <TokenSellButton token={selected} />
             <TokenTransferButton token={selected} />
+            <TokenBorrowButton token={selected} />
           </Paper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
-                <FormattedMessage id="pages.erc998.token.level" values={selected.attributes} />
+                <FormattedMessage
+                  id="pages.erc998.token.level"
+                  values={selected.attributes.GRADE ? selected.attributes : { GRADE: 0 }}
+                />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
             </Paper>

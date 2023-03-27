@@ -59,8 +59,13 @@ export interface IStakingWithdrawEvent {
 export interface IStakingFinishEvent {
   stakingId: string;
   owner: string;
-  withdrawTimestamp: string;
+  finishTimestamp: string;
   multiplier: string;
 }
 
-export type TStakingEvents = IStakingCreateEvent | IStakingUpdateEvent | IStakingDepositEvent | IStakingWithdrawEvent;
+export type TStakingEvents =
+  | IStakingCreateEvent
+  | IStakingUpdateEvent
+  | IStakingDepositEvent
+  | IStakingWithdrawEvent
+  | IStakingFinishEvent;
