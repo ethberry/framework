@@ -57,18 +57,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount: 0,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -89,18 +93,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -121,18 +129,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -152,18 +164,22 @@ describe("Staking", function () {
 
       const stakeRule1: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount: 0,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -173,18 +189,22 @@ describe("Staking", function () {
 
       const stakeRule2: IRule = {
         externalId: 2,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: mysteryboxInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [
           {
             tokenType: 2, // ERC721
@@ -210,18 +230,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -244,18 +268,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -276,18 +304,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -308,18 +340,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -342,18 +378,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -380,18 +420,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -428,18 +472,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -475,18 +523,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -534,18 +586,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -576,6 +632,55 @@ describe("Staking", function () {
   });
 
   describe("Permutations", function () {
+    it("should stake NATIVE & receive NOTHING", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        externalId: 1,
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [],
+        content: [],
+        period, // 60 sec
+        penalty,
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(1, tokenId, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+      const current = await time.latestBlock();
+      await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
+      // REWARD NOTHING
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(stakingInstance, "StakingFinish")
+        .withArgs(1, owner.address, endTimestamp, cycles);
+    });
+
     it("should stake NATIVE & receive NATIVE", async function () {
       const [owner] = await ethers.getSigners();
 
@@ -583,18 +688,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -639,18 +748,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -709,18 +822,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -771,18 +888,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721SimpleInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -833,18 +954,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: mysteryboxInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [
           {
             tokenType: 2, // ERC721
@@ -901,18 +1026,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period, // 60 sec
         penalty,
@@ -960,18 +1089,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1030,18 +1163,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1109,18 +1246,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1184,18 +1325,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721SimpleInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1259,18 +1404,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: mysteryboxInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [
           {
             tokenType: 2, // ERC721
@@ -1340,18 +1489,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1414,18 +1567,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1483,18 +1640,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1561,18 +1722,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1632,18 +1797,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721SimpleInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1705,18 +1874,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount: 0,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: mysteryboxInstance.address,
-          tokenId,
-          amount: 0,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
         content: [
           {
             tokenType: 2, // ERC721
@@ -1784,18 +1957,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1853,18 +2030,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 0, // NATIVE
-          token: constants.AddressZero,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -1922,18 +2103,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 1, // ERC20
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -2001,18 +2186,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721RandomInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -2074,18 +2263,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: erc721SimpleInstance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,
@@ -2147,18 +2340,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 2, // ERC721
-          token: mysteryboxInstance.address,
-          tokenId,
-          amount: 0,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
         content: [
           {
             tokenType: 2, // ERC721
@@ -2225,18 +2422,22 @@ describe("Staking", function () {
 
       const stakeRule: IRule = {
         externalId: 1,
-        deposit: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
-        reward: {
-          tokenType: 4, // ERC1155
-          token: erc1155Instance.address,
-          tokenId,
-          amount,
-        },
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         content: [],
         period,
         penalty,

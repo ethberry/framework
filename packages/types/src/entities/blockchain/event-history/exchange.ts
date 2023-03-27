@@ -14,6 +14,8 @@ export enum ExchangeEventType {
   ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
+  // MODULE:ERC4907
+  Borrow = "Borrow",
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",
@@ -110,6 +112,17 @@ export interface IExchangeBreedEvent {
   sire: IExchangeItem;
 }
 
+// MODULE:ERC4907
+// event Borrow(address from, address to, uint256 expires, Asset[] items, Asset[] price);
+
+export interface IExchangeBorrowEvent {
+  from: string;
+  to: string;
+  expires: string;
+  items: Array<IExchangeItem>;
+  price: Array<IExchangeItem>;
+}
+
 export type TExchangeEvents =
   | IExchangePurchaseEvent
   | IExchangeClaimEvent
@@ -122,4 +135,5 @@ export type TExchangeEvents =
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent
   | IExchangePaymentReleasedEvent
-  | IExchangeErc20PaymentReleasedEvent;
+  | IExchangeErc20PaymentReleasedEvent
+  | IExchangeBorrowEvent;

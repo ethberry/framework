@@ -165,5 +165,7 @@ export interface IEventHistory extends IDeployable {
   contract?: IContract;
   tokenId: number | null;
   token?: IToken;
+  nestedId: number | null;
+  nested?: IEventHistory;
   assets?: Array<IAssetComponentHistory>;
 }

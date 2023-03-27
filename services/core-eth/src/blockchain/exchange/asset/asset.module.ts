@@ -1,4 +1,4 @@
-import { forwardRef, Module } from "@nestjs/common";
+import { forwardRef, Module, Logger } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AssetService } from "./asset.service";
@@ -14,7 +14,7 @@ import { EventHistoryModule } from "../../event-history/event-history.module";
     forwardRef(() => TemplateModule),
     TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity, AssetComponentHistoryEntity]),
   ],
-  providers: [AssetService],
+  providers: [Logger, AssetService],
   exports: [AssetService],
 })
 export class AssetModule {}

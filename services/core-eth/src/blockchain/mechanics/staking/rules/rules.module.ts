@@ -9,9 +9,13 @@ import { StakingRulesEntity } from "./rules.entity";
 import { StakingRulesService } from "./rules.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
   imports: [
+    AssetModule,
+    TokenModule,
     ContractModule,
     StakingDepositModule,
     StakingLogModule,

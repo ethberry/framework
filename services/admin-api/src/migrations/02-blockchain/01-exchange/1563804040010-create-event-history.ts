@@ -25,6 +25,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
 
         -- MODULE:ERC4907
         'UpdateUser',
+        'Borrow',
 
         -- MODULE:ERC721
         'Approval',
@@ -162,6 +163,11 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "nested_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -182,6 +188,12 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["nested_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.event_history`,
+          onDelete: "SET NULL",
         },
       ],
     });

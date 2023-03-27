@@ -1,6 +1,6 @@
 export interface IRule {
-  deposit: IAsset;
-  reward: IAsset;
+  deposit: IAsset[];
+  reward: IAsset[];
   content: IAsset[];
   period: number;
   penalty: number;

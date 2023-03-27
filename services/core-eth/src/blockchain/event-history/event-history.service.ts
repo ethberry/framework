@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, TContractEventData } from "@framework/types";
+import { ContractEventType, ExchangeEventType, TContractEventData } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { EventHistoryEntity } from "./event-history.entity";
@@ -100,6 +100,25 @@ export class EventHistoryService {
       contractId,
       chainId,
     });
+
+    // NESTED events
+    if ((name as ContractEventType) === "Transfer") {
+      const nestedEvent = await this.findOne({
+        transactionHash,
+        eventType: In([
+          ExchangeEventType.Purchase,
+          ExchangeEventType.Breed,
+          ExchangeEventType.Upgrade,
+          ExchangeEventType.Craft,
+          ExchangeEventType.Mysterybox,
+        ]),
+      });
+
+      if (nestedEvent) {
+        Object.assign(contractEventEntity, { nestedId: nestedEvent.id });
+      }
+      await contractEventEntity.save();
+    }
 
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
 

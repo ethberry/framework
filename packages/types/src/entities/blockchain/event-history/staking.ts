@@ -18,8 +18,8 @@ export interface IStakingUpdateEvent {
 }
 
 interface IStakingRule {
-  deposit: IStakingRuleItem;
-  reward: IStakingRuleItem;
+  deposit: Array<IStakingRuleItem>;
+  reward: Array<IStakingRuleItem>;
   period: string;
   penalty: string;
   recurrent: boolean;

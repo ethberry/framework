@@ -10,8 +10,8 @@ import "../../../Exchange/interfaces/IAsset.sol";
 
 interface IStaking {
   struct Rule {
-    Asset deposit;
-    Asset reward;
+    Asset[] deposit;
+    Asset[] reward;
     Asset[] content;
     uint256 period;
     uint256 penalty;
@@ -22,7 +22,7 @@ interface IStaking {
 
   struct Stake {
     address owner;
-    Asset deposit;
+    Asset[] deposit;
     uint256 ruleId;
     uint256 startTimestamp;
     uint256 cycles;
