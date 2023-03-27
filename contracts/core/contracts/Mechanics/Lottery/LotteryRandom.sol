@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
@@ -22,7 +23,7 @@ import "../../utils/constants.sol";
 import "hardhat/console.sol";
 
 // Todo add PAYMANTS_SPLITTER
-abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator {
+abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
 
@@ -109,7 +110,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
     if (commission != 0) {
       currentRound.acceptedAsset.amount = commission;
-      spend(toArray(currentRound.acceptedAsset), _msgSender());
+      spend(_toArray(currentRound.acceptedAsset), _msgSender());
     }
 
     emit RoundEnded(roundNumber, block.timestamp);
@@ -124,7 +125,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance = 0;
 
     currentRound.acceptedAsset.amount = roundBalance;
-    spend(toArray(currentRound.acceptedAsset), _msgSender());
+    spend(_toArray(currentRound.acceptedAsset), _msgSender());
 
     emit Released(roundNumber, roundBalance);
   }
@@ -189,7 +190,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance += price.amount;
     currentRound.total += price.amount;
 
-    spendFrom(toArray(price), _msgSender(), address(this));
+    spendFrom(_toArray(price), _msgSender(), address(this));
 
     uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
@@ -237,7 +238,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance -= amount;
 
     currentRound.acceptedAsset.amount = amount;
-    spend(toArray(currentRound.acceptedAsset), _msgSender());
+    spend(_toArray(currentRound.acceptedAsset), _msgSender());
 
     emit Prize(_msgSender(), tokenId, amount);
   }
@@ -254,7 +255,13 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
   // COMMON
 
-  receive() external payable {
+  receive() external override payable {
     revert();
+  }
+
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, Wallet) returns (bool) {
+    return super.supportsInterface(interfaceId);
   }
 }
