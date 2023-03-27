@@ -188,7 +188,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
          130601,
          '${subDays(now, 4).toISOString()}',
          '${currentDateTime}'
-     ), (
+      ), (
         13060201,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130602",
@@ -265,81 +265,6 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '1',
         'MINTED',
         130801,
-        '${subDays(now, 0).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        13090101,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
-          CLOTHES: "1",
-          EYES: "1",
-          MOUTH: "1",
-        })}',
-        '${imageUrl}',
-        100,
-        '1',
-        'MINTED',
-        130901,
-        '${subDays(now, 0).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        13090102,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
-          CLOTHES: "1",
-          EYES: "2",
-          MOUTH: "1",
-        })}',
-        '${imageUrl}',
-        100,
-        '1',
-        'MINTED',
-        130901,
-        '${subDays(now, 0).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        13090103,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
-          CLOTHES: "1",
-          EYES: "1",
-          MOUTH: "2",
-        })}',
-        '${imageUrl}',
-        100,
-        '1',
-        'MINTED',
-        130901,
-        '${subDays(now, 0).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        13090104,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
-          CLOTHES: "1",
-          EYES: "3",
-          MOUTH: "3",
-        })}',
-        '${imageUrl}',
-        100,
-        '1',
-        'MINTED',
-        130901,
-        '${subDays(now, 0).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        13090105,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
-          CLOTHES: "2",
-          EYES: "2",
-          MOUTH: "2",
-        })}',
-        '${imageUrl}',
-        100,
-        '1',
-        'MINTED',
-        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (

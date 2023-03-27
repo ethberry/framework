@@ -14,7 +14,6 @@ export class SeedAccessControlErc721At20At1653616447230 implements MigrationInte
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
-    const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (
@@ -163,24 +162,6 @@ export class SeedAccessControlErc721At20At1653616447230 implements MigrationInte
         '${currentDateTime}'
       ), (
         '${erc721ContractGenesAddress}',
-        '${wallet}',
-        'METADATA_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc721ContractGenerativeAddress}',
-        '${wallet}',
-        'DEFAULT_ADMIN_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc721ContractGenerativeAddress}',
-        '${wallet}',
-        'MINTER_ROLE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc721ContractGenerativeAddress}',
         '${wallet}',
         'METADATA_ROLE',
         '${currentDateTime}',

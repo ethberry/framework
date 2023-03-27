@@ -15,7 +15,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
-    const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -178,24 +177,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{SOULBOUND}',
-        '${fromBlock}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1309,
-        '${erc721ContractGenerativeAddress}',
-        '${chainId}',
-        'GENERATIVE',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'GENERATIVE',
-        'GEN721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        '{}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

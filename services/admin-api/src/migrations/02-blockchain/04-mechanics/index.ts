@@ -10,3 +10,4 @@ export * from "./08-pyramid";
 export * from "./09-waitlist";
 export * from "./10-breeding";
 export * from "./11-wrapper";
+export * from "./12-collection";
