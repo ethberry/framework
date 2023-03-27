@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "@gemunion/contracts-erc20/contracts/interfaces/IERC1363.sol";
+import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../ERC721/interfaces/IERC721Simple.sol";
