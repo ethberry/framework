@@ -39,6 +39,7 @@ export enum Erc721ContractFeatures {
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
+  "VOTES" = "VOTES",
 }
 
 export enum Erc721ContractTemplates {
@@ -165,21 +166,39 @@ export enum ContractTemplates {
 }
 
 export enum ContractFeatures {
+  // SYSTEM
   "WITHDRAW" = "WITHDRAW",
   "ALLOWANCE" = "ALLOWANCE",
-  "EXTERNAL" = "EXTERNAL",
+
+  // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
-  "SOULBOUND" = "SOULBOUND",
+  "EXTERNAL" = "EXTERNAL",
+
+  // EC721
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
-  "PAUSABLE" = "PAUSABLE",
   "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
+  "SOULBOUND" = "SOULBOUND",
+  "VOTES" = "VOTES",
+
+  // ERC998
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
+  "STATEHASH" = "STATEHASH",
+
+  // MODULE:MYSTERY
+  "PAUSABLE" = "PAUSABLE",
+
   // MODULE:VESTING
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
   "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
   "CLIFF" = "CLIFF", // 0 -> 100
+
+  // MODULE:PYRAMID
+  "REFERRAL" = "REFERRAL",
+  "SPLITTER" = "SPLITTER",
 }
 
 export interface IContract extends IDeployable, ISearchable {

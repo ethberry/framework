@@ -102,6 +102,7 @@
       "BLACKLIST": "Blacklist",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC20OWNER": "ERC20 Owner",
+      "STATEHASH": "State Hash",
       "EXTERNAL": "External",
       "GENES": "Genes",
       "MYSTERYBOX": "MysteryBox",
