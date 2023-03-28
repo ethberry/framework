@@ -30,7 +30,7 @@
     "@gemunion/nest-js-module-web3-storage-firebase": "1.1.12",
     "@gemunion/nest-js-module-winston-logdna": "2.0.26",
     "@gemunion/nest-js-utils": "2.1.12",
-    "@gemunion/nest-js-validators": "2.2.9",
+    "@gemunion/nest-js-validators": "2.2.10",
     "@gemunion/nestjs-ethers": "3.0.30",
     "@gemunion/types-blockchain": "1.2.0",
     "@gemunion/types-collection": "1.5.6",

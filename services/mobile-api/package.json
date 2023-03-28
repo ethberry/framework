@@ -26,7 +26,7 @@
     "@gemunion/nest-js-module-winston-logdna": "2.0.26",
     "@gemunion/nest-js-utils": "2.1.12",
     "@gemunion/nest-js-utils-ws": "2.0.21",
-    "@gemunion/nest-js-validators": "2.2.9",
+    "@gemunion/nest-js-validators": "2.2.10",
     "@gemunion/types-collection": "1.5.6",
     "@gemunion/types-jwt": "0.3.5",
     "@liaoliaots/nestjs-redis": "9.0.5",
