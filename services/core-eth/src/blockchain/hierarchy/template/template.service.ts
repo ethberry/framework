@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TemplateEntity } from "./template.entity";
+import { TokenEntity } from "../token/token.entity";
 
 @Injectable()
 export class TemplateService {

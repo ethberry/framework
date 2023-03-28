@@ -9,9 +9,9 @@ export interface IStakingDepositButtonProps {
   rule: IStakingRule;
 }
 
+// TODO deposit array
 export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
   const { rule } = props;
-
   if (
     rule.deposit?.components[0].tokenType === TokenType.ERC721 ||
     rule.deposit?.components[0].tokenType === TokenType.ERC998

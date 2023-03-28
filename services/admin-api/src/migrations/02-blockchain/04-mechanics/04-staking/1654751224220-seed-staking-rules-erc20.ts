@@ -20,10 +20,6 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         80222
       ), (
-        80231
-      ), (
-        80232
-      ), (
         80241
       ), (
         80242
@@ -65,18 +61,6 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         80222
-      ), (
-        'ERC20',
-        1201,
-        120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        80231
-      ), (
-        'ERC721',
-        1306,
-        130601, -- sword
-        1,
-        80232
       ), (
         'ERC20',
         1201,
@@ -139,18 +123,6 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         80222,
         22,
         'NEW',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'ERC20 > ERC721',
-        '${simpleFormatting}',
-        2592000,
-        1,
-        false,
-        80231,
-        80232,
-        23,
-        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

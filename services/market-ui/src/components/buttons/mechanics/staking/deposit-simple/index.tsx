@@ -17,7 +17,6 @@ export interface IStakingDepositSimpleButtonProps {
 
 export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = props => {
   const { rule } = props;
-
   const { formatMessage } = useIntl();
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
@@ -25,6 +24,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
     // TODO pass real tokenId of selected ERC721 or ERC998
     // const tokenId = 0;
     const tokenId = rule.deposit!.components[0].templateId; // for 1155
+    // console.log("rule.externalId", rule.externalId);
     return contract.deposit(rule.externalId, tokenId, {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;

@@ -32,6 +32,7 @@ export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonPro
     setIsAllowanceDialogOpen(false);
   };
 
+  // TODO deposit allowance array
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (rule.deposit?.components[0].tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(

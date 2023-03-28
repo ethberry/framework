@@ -102,7 +102,7 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
     // Retrieve the rule associated with the given rule ID.
     Rule memory rule = _rules[ruleId];
     // Ensure that the rule exists and is active
-    require(rule.externalId != 0, "Staking: rule doesn't exist");
+    require(rule.period != 0, "Staking: rule does not exist");
     require(rule.active, "Staking: rule doesn't active");
 
     // check if user reached the maximum number of stakes, if it is revert transaction.

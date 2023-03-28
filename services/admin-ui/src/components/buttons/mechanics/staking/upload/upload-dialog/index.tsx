@@ -1,40 +1,29 @@
 import { FC } from "react";
-import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
+import { Alert, Box, Grid, InputAdornment } from "@mui/material";
+
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
+import { IStakingRule } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
-
-import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
+import { DurationInput } from "../../../../../inputs/duration";
 
-export interface IStakingEditDialogProps {
+export interface IStakingRuleUploadDialogProps {
   open: boolean;
   readOnly?: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
-  initialValues: IStakingRule;
+  onConfirm: (values: Partial<IStakingRule>, form?: any) => Promise<void>;
+  initialValues: Partial<IStakingRule>;
 }
 
-export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
+export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    penalty,
-    recurrent,
-    deposit,
-    reward,
-    durationAmount,
-    durationUnit,
-    stakingRuleStatus,
-  } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -45,7 +34,6 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     recurrent,
     durationAmount,
     durationUnit,
-    stakingRuleStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -58,9 +46,8 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       testId="StakingEditForm"
       {...rest}
     >
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} disabledOptions={[StakingRuleStatus.NEW]} />
+      {id ? <TextInput name="title" /> : null}
+      {id ? <RichTextEditor name="description" /> : null}
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>
@@ -72,10 +59,10 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="deposit" readOnly={readOnly} />
+          <TemplateAssetInput prefix="deposit" readOnly={readOnly} multiple />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} />
+          <TemplateAssetInput prefix="reward" readOnly={readOnly} multiple nullable={true} />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

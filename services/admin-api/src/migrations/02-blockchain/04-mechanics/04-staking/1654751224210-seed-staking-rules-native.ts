@@ -12,10 +12,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        80111
-      ), (
-        80112
-      ), (
         80121
       ), (
         80122
@@ -42,18 +38,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         amount,
         asset_id
       ) VALUES (
-        'NATIVE',
-        1101,
-        110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
-        80111
-      ), (
-        'NATIVE',
-        1101,
-        110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
-        80112
-      ), (
         'NATIVE',
         1101,
         110101, -- ETH
@@ -118,18 +102,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        'NATIVE > NATIVE',
-        '${simpleFormatting}',
-        2592000,
-        1,
-        false,
-        80111,
-        80112,
-        11,
-        'ACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         'NATIVE > ERC20',
         '${simpleFormatting}',
         2592000,
