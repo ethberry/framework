@@ -26,7 +26,8 @@ export class Erc20ContractDeployDto implements IErc20TokenDeployDto {
 
   @ApiProperty({
     type: Number,
+    minimum: 1,
   })
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigNumber({ minimum: "1" }, { message: "typeMismatch" })
   public cap: string;
 }
