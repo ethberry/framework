@@ -90,7 +90,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
           <PausableMenuItem contract={contract} />
         ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.ALLOWANCE) ? <AllowanceMenu contract={contract} /> : null}
+        <AllowanceMenu contract={contract} />
 
         {contract.contractModule === ModuleType.PYRAMID ? <PyramidBalanceMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.PYRAMID ? <FundEthMenuItem contract={contract} /> : null}
