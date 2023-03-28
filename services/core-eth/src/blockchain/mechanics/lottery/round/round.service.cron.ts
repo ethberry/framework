@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
+import { Cron, CronExpression, SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
 import { ConfigService } from "@nestjs/config";
 import { Contract, providers, Wallet } from "ethers";
@@ -25,17 +25,34 @@ export class LotteryRoundServiceCron {
     private readonly contractService: ContractService,
   ) {}
 
-  // @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { name: "lotteryRound" })
+  @Cron(CronExpression.EVERY_MINUTE, { name: "lotteryRoundTest" })
   public async lotteryRound(): Promise<void> {
     const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
 
     const contract = new Contract(lotteryAddr, LotterySol.abi, this.signer);
+
     await contract.endRound();
 
+    const erc20Contract = await this.contractService.findOne({ id: 1201 }); // Space Credits
+    const erc721Contract = await this.contractService.findOne({ id: 1801 }); // LOTTERY TICKET
     // wait block
     await blockAwait(1, this.jsonRpcProvider);
 
-    await contract.startRound();
+    await contract.startRound(
+      {
+        tokenType: 2,
+        token: erc721Contract?.address,
+        tokenId: 1,
+        amount: 0,
+      },
+      {
+        tokenType: 1,
+        token: erc20Contract?.address,
+        tokenId: 0,
+        amount: 1,
+      },
+    );
+    this.loggerService.warn("ROUND STARTED");
   }
 
   public setRoundCronJob(dto: CronExpression): void {

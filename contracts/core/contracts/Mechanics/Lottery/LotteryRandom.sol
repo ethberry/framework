@@ -62,7 +62,8 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
-    rootRound.endTimestamp = block.timestamp;
+    rootRound.endTimestamp = 0;
+    // rootRound.endTimestamp = block.timestamp;
     _rounds.push(rootRound);
   }
 

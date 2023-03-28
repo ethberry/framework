@@ -400,11 +400,7 @@ async function main() {
   const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
-  contracts.lottery = await lotteryFactory.deploy(
-    "Lottery",
-    contracts.erc721Lottery.address,
-    contracts.erc20Simple.address,
-  );
+  contracts.lottery = await lotteryFactory.deploy("Lottery");
   await debug(contracts);
 
   // await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
@@ -473,7 +469,7 @@ async function main() {
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
-      contracts.lottery.address,
+      // contracts.lottery.address,
     ],
     [MINTER_ROLE],
   );
