@@ -41,7 +41,7 @@ export const Kanban: FC = () => {
   );
 
   const fetchOrders = (): Promise<void> => {
-    return fetchOrdersApi(undefined);
+    return fetchOrdersApi();
   };
 
   const { fn: updateOrderStatusApi } = useApiCall(

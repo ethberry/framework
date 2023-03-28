@@ -64,7 +64,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   );
 
   const fetchAddresses = (): Promise<void> => {
-    return fetchAddressesApi(undefined);
+    return fetchAddressesApi();
   };
 
   const { fn: handleAddConfirmedApi } = useApiCall((api, values: Partial<IAddress>) =>

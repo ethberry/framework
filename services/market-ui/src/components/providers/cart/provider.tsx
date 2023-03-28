@@ -31,7 +31,7 @@ export const CartProvider: FC<PropsWithChildren<ICartProviderProps>> = props => 
   );
 
   const fetchCart = async (): Promise<void> => {
-    return fetchCartApi(undefined);
+    return fetchCartApi();
   };
 
   const alterCart = (amount: number, product: IProduct): void => {
@@ -100,7 +100,7 @@ export const CartProvider: FC<PropsWithChildren<ICartProviderProps>> = props => 
 
   const reset = (): Promise<void> => {
     setCart([]);
-    return resetApi(undefined);
+    return resetApi();
   };
 
   return (
