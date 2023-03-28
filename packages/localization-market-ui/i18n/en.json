@@ -931,6 +931,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
+    "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",

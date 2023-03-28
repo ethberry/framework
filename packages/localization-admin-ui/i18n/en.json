@@ -999,6 +999,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
+    "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
     "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",
