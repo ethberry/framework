@@ -20,6 +20,8 @@ import { StakesMenuItem } from "./max-stakes";
 import { CollectionUploadMenuItem } from "./collection/upload";
 import { FundEthMenuItem } from "./fund-eth";
 import { AllowanceMenu } from "./allowance";
+import { WhitelistAddMenuItem } from "./whitelist-add";
+import { UnWhitelistMenuItem } from "./whitelist-remove";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -78,6 +80,12 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
           <UnBlacklistMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
+          <WhitelistAddMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
+          <UnWhitelistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
           <PausableMenuItem contract={contract} />

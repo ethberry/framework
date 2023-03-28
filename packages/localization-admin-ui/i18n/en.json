@@ -343,8 +343,10 @@
       "submit": "Submit",
       "transferOwnership": "Transfer Ownership",
       "unblacklist": "Un blacklist",
+      "unwhitelist": "Un whitelist",
       "unpause": "Unpause",
       "upload": "Upload",
+      "whitelist": "Whitelist",
       "withdraw": "Withdraw"
     },
     "hints": {
