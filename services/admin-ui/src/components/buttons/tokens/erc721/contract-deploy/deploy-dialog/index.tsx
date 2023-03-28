@@ -2,9 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { Erc721ContractTemplates, IContract, IErc721ContractDeployDto } from "@framework/types";
 
+import { RoyaltyInput } from "../../../../../inputs/royalty";
 import { validationSchema } from "./validation";
 
 export interface IErc721ContractDeployDialogProps {
@@ -29,7 +29,7 @@ export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = 
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <RoyaltyInput />
     </FormDialog>
   );
 };

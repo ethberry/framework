@@ -59,9 +59,15 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
           <MintMenuItem contract={contract} />
         ) : null}
         {contract.contractType === TokenType.ERC20 ? <Erc20TokenSnapshotMenuItem contract={contract} /> : null}
-        {contract.contractType === TokenType.ERC721 ? <RoyaltyMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC721 &&
+        !contract.contractFeatures.includes(ContractFeatures.SOULBOUND) ? (
+          <RoyaltyMenuItem contract={contract} />
+        ) : null}
         {contract.contractType === TokenType.ERC998 ? <RoyaltyMenuItem contract={contract} /> : null}
-        {contract.contractType === TokenType.ERC1155 ? <RoyaltyMenuItem contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC1155 &&
+        !contract.contractFeatures.includes(ContractFeatures.SOULBOUND) ? (
+          <RoyaltyMenuItem contract={contract} />
+        ) : null}
 
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
