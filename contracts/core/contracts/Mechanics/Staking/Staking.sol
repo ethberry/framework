@@ -15,9 +15,9 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "./interfaces/IStaking.sol";
+import "../TopUp.sol";
 import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
@@ -33,7 +33,7 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
+contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -71,11 +71,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   function updateRule(uint256 ruleId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _updateRule(ruleId, active);
   }
-
-  /**
-   * @dev Allows the contract to receive Ether
-   */
-  function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {}
 
   /**
    * @dev Sets maxStake
@@ -265,15 +260,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, TopUp) returns (bool) {
     return super.supportsInterface(interfaceId);
-  }
-
-  /**
-   * @dev Rejects any incoming ETH transfers to this contract address
-   */
-  receive() external payable override {
-    revert();
   }
 
   /**

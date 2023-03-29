@@ -463,8 +463,19 @@ describe("StakingRefferal", function () {
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.connect(receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
@@ -516,7 +527,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
@@ -568,7 +589,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -682,7 +713,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1082,8 +1123,19 @@ describe("StakingRefferal", function () {
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1536,11 +1588,23 @@ describe("StakingRefferal", function () {
 
       const balance2 = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance2).to.equal(0);
+
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1977,11 +2041,23 @@ describe("StakingRefferal", function () {
 
       const balance2 = await erc1155Instance.balanceOf(owner.address, 1);
       expect(balance2).to.equal(0);
+
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)

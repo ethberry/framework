@@ -17,10 +17,11 @@ import { deployStaking } from "./shared/fixture";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
+import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 
 use(solidity);
 
-describe.only("Staking", function () {
+describe("Staking", function () {
   const period = 300;
   const penalty = 0;
   const cycles = 2;
@@ -34,6 +35,7 @@ describe.only("Staking", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
   shouldBehaveLikePausable(factory);
+  shouldBehaveLikeTopUp(factory);
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -462,7 +464,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.connect(receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
@@ -512,8 +524,19 @@ describe.only("Staking", function () {
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
@@ -565,7 +588,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
 
       const tx2 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -730,7 +763,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -1144,7 +1187,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -1720,7 +1773,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
@@ -2185,7 +2248,17 @@ describe.only("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
