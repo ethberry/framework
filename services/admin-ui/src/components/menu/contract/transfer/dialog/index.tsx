@@ -3,37 +3,35 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
-import { TokenType } from "@framework/types";
+import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
-export interface IVestingFundDto {
+export interface ITransferDto {
   token: ITokenAsset;
   address: string;
 }
 
-export interface IVestingFundDialogProps {
+export interface ITransferDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IVestingFundDto, form: any) => Promise<void>;
-  initialValues: IVestingFundDto;
+  onConfirm: (values: ITransferDto, form: any) => Promise<void>;
+  initialValues: ITransferDto;
 }
 
-export const VestingFundDialog: FC<IVestingFundDialogProps> = props => {
+export const TransferDialog: FC<ITransferDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.top-up"
-      testId="VestingTopUpForm"
+      message="dialogs.transfer"
+      testId="ContractTransferForm"
       {...rest}
     >
-      <TokenAssetInput
-        prefix="token"
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
-      />
+      <TokenAssetInput prefix="token" />
+      <TextInput name="address" />
     </FormDialog>
   );
 };

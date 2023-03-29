@@ -4,16 +4,15 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
-import { FundMenuItem, VestingAllowanceMenu } from "../../buttons";
 import { EthListenerAddMenuItem } from "../contract/eth-add";
 import { EthListenerRemoveMenuItem } from "../contract/eth-remove";
-
-export enum VestingActions {}
+import { VestingAllowanceMenu } from "./allowance";
+import { FundMenuItem } from "./fund";
+import { TransferOwnershipMenuItem } from "./transfer-ownership";
 
 export interface IVestingActionsMenu {
   vesting: IContract;
   disabled?: boolean;
-  actions?: Array<VestingActions | null>;
 }
 
 export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
@@ -47,6 +46,7 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
       <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <VestingAllowanceMenu contract={vesting} />
         <FundMenuItem contract={vesting} />
+        <TransferOwnershipMenuItem vesting={vesting} />
         <EthListenerAddMenuItem contract={vesting} />
         <EthListenerRemoveMenuItem contract={vesting} />
       </Menu>

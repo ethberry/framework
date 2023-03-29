@@ -22,6 +22,7 @@ import { FundEthMenuItem } from "./fund-eth";
 import { AllowanceMenu } from "./allowance";
 import { WhitelistAddMenuItem } from "./whitelist-add";
 import { UnWhitelistMenuItem } from "./whitelist-remove";
+import { TransferMenuItem } from "./transfer";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -90,7 +91,12 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
           <PausableMenuItem contract={contract} />
         ) : null}
-        <AllowanceMenu contract={contract} />
+        {contract.contractType === TokenType.ERC20 ? <AllowanceMenu contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC721 ? <AllowanceMenu contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC998 ? <AllowanceMenu contract={contract} /> : null}
+        {contract.contractType === TokenType.ERC1155 ? <AllowanceMenu contract={contract} /> : null}
+
+        <TransferMenuItem contract={contract} />
 
         {contract.contractModule === ModuleType.PYRAMID ? <PyramidBalanceMenuItem contract={contract} /> : null}
         {contract.contractModule === ModuleType.PYRAMID ? <FundEthMenuItem contract={contract} /> : null}

@@ -19,6 +19,8 @@ import { PyramidBalanceMenuItem } from "./pyramid-balances";
 import { StakesMenuItem } from "./max-stakes";
 import { FundEthMenuItem } from "./fund-eth";
 import { AllowanceMenu } from "./allowance";
+import { UnWhitelistMenuItem } from "./whitelist-remove";
+import { WhitelistAddMenuItem } from "./whitelist-add";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -71,6 +73,12 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
           <UnBlacklistMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
+          <WhitelistAddMenuItem contract={contract} />
+        ) : null}
+        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
+          <UnWhitelistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
           <PausableMenuItem contract={contract} />

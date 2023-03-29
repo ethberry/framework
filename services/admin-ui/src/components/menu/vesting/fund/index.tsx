@@ -2,35 +2,54 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Contract } from "ethers";
+import { BigNumber, constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import TransferERC20ABI from "./transfer.erc20.abi.json";
+import TopUpABI from "./topUp.abi.json";
 
 import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
 export interface IFundMenuItemProps {
-  vesting: IContract;
+  contract: IContract;
 }
 
 export const FundMenuItem: FC<IFundMenuItemProps> = props => {
-  const { vesting } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
-    if (values.tokenType === TokenType.NATIVE) {
-      return web3Context.provider?.getSigner().sendTransaction({
-        to: vesting.address,
-        value: values.amount,
-      }) as Promise<any>;
-    } else if (values.tokenType === TokenType.ERC20) {
-      const contract = new Contract(values.contract.address, TransferERC20ABI, web3Context.provider?.getSigner());
-      return contract.transfer(vesting.address, values.amount) as Promise<any>;
+    const asset = values.token.components[0];
+    const contract = new Contract(address, TopUpABI, web3Context.provider?.getSigner());
+    if (asset.tokenType === TokenType.NATIVE) {
+      return contract.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: asset.amount,
+          },
+        ],
+        { value: BigNumber.from(asset.amount) },
+      ) as Promise<any>;
+    } else if (asset.tokenType === TokenType.ERC20) {
+      // const contract = new Contract(address, VestingSol.abi, web3Context.provider?.getSigner());
+      return contract.topUp([
+        {
+          tokenType: 1,
+          token: asset.contract.address,
+          tokenId: 0,
+          amount: asset.amount,
+        },
+      ]) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
@@ -64,13 +83,8 @@ export const FundMenuItem: FC<IFundMenuItemProps> = props => {
         onCancel={handleFundCancel}
         open={isFundDialogOpen}
         initialValues={{
-          tokenType: TokenType.NATIVE,
-          amount: "0",
-          contract: {
-            address: "",
-            decimals: 0,
-          },
-          contractId: 0,
+          token: getEmptyToken(),
+          address,
         }}
       />
     </Fragment>

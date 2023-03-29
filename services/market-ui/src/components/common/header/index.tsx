@@ -6,6 +6,7 @@ import { companyName, EnabledLanguages } from "@framework/constants";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
+import { NetworkButton } from "../../buttons/network";
 import { WalletButton } from "../../buttons/wallet";
 import { Referrer } from "./referrer";
 import { Cart } from "./cart";
@@ -21,9 +22,10 @@ export const Header: FC = () => {
           <Hidden smDown>{companyName} - Marketplace</Hidden>
         </Link>
         <div className={classes.grow} />
-        <Cart />
         <Referrer />
+        <NetworkButton />
         <WalletButton />
+        <Cart />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
         <Sections />

@@ -15,9 +15,7 @@ export * from "./mechanics/lottery/round/start";
 export * from "./mechanics/lottery/round/schedule";
 export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/collection/contract-deploy";
-export * from "./mechanics/vesting/fund";
 export * from "./mechanics/vesting/deploy";
-export * from "./mechanics/vesting/allowance";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
 

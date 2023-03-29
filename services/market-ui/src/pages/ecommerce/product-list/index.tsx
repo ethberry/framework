@@ -13,6 +13,7 @@ import { ProductSearchForm } from "./form";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
+  merchantId?: string;
 }
 
 export const ProductList: FC = () => {
@@ -21,6 +22,7 @@ export const ProductList: FC = () => {
       baseUrl: "/products",
       search: {
         categoryIds: [],
+        merchantId: "",
         query: "",
       },
     });
