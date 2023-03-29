@@ -23,7 +23,7 @@ import { Erc721CollectionDeployButton } from "../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
-export const Collection: FC = () => {
+export const CollectionContract: FC = () => {
   const {
     rows,
     count,

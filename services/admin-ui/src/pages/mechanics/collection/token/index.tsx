@@ -19,7 +19,7 @@ import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType 
 import { Erc721TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
-export const Erc721Token: FC = () => {
+export const CollectionToken: FC = () => {
   const {
     rows,
     count,
