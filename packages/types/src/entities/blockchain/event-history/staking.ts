@@ -60,7 +60,7 @@ export interface IStakingDepositEvent {
   ruleId: string;
   owner: string;
   startTimestamp: string;
-  tokenId: string;
+  tokenIds: Array<string>;
 }
 
 export interface IStakingWithdrawEvent {

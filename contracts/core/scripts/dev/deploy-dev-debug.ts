@@ -373,12 +373,14 @@ async function main() {
           },
         ],
         content: [
-          {
-            tokenType: 2,
-            token: contracts.erc721Random.address,
-            tokenId: 306001,
-            amount: 1,
-          },
+          [
+            {
+              tokenType: 2,
+              token: contracts.erc721Random.address,
+              tokenId: 306001,
+              amount: 1,
+            },
+          ],
         ],
         period: 1 * 84600,
         penalty: 0,
@@ -386,7 +388,7 @@ async function main() {
         active: true,
       },
     ]),
-    "takingInstance.setRules",
+    "stakingInstance.setRules",
   );
 
   await debug(

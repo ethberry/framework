@@ -7,10 +7,11 @@ import { Add } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { DurationUnit, IStakingRule, TokenType } from "@framework/types";
+import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
 
 import SetRulesABI from "./setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
@@ -32,9 +33,37 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     setIsUploadDialogOpen(false);
   };
 
-  // TODO use content for MysteryBoxes
-  const metaLoadRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
-    const content = [] as Array<any>;
+  // MODULE:MYSTERYBOX
+  const { fn } = useApiCall((api, data: { templateIds: Array<number> }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.fetchJson({
+      url: "/mystery-boxes",
+      data,
+    });
+  });
+
+  const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
+    // const content = [] as Array<any>;
+    // if (rule.reward) {
+    //   for (const rew of rule.reward.components) {
+    //     const {
+    //       rows: [mysteryBox],
+    //     } = fn(void 0, { templateIds: [rew.templateId] });
+    //     // MODULE:MYSTERYBOX
+    //     if (mysteryBox) {
+    //       content.push(
+    //         (mysteryBox as IMysterybox).item!.components.map(component => ({
+    //           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+    //           token: component.contract!.address,
+    //           tokenId: component.templateId || 0,
+    //           amount: component.amount,
+    //         })),
+    //       );
+    //     } else {
+    //       content.push([]);
+    //     }
+    //   }
+    // }
 
     const stakingRule = {
       externalId: rule.id || 0,
@@ -58,16 +87,67 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    // console.log("stakingRule", stakingRule);
+    console.log("stakingRule", stakingRule);
+    console.log("stakingRulecontent", content);
     const contract = new Contract(process.env.STAKING_ADDR, SetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
   const handleLoadRule = async (rule: Partial<IStakingRule>): Promise<void> => {
-    return await metaLoadRule(rule).finally(() => {
+    // MODULE:MYSTERYBOX
+    const content = [] as Array<any>;
+    if (rule.reward) {
+      for (const rew of rule.reward.components) {
+        const {
+          rows: [mysteryBox],
+        } = await fn(void 0, { templateIds: [rew.templateId] });
+        // MODULE:MYSTERYBOX
+        if (mysteryBox) {
+          content.push(
+            (mysteryBox as IMysterybox).item!.components.map(component => ({
+              tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.templateId || 0,
+              amount: component.amount,
+            })),
+          );
+        } else {
+          content.push([]);
+        }
+      }
+    }
+    return metaLoadRule(rule, content).finally(() => {
       setIsUploadDialogOpen(false);
     });
   };
+
+  // const handleLoadRule1 = (rule: Partial<IStakingRule>): (() => Promise<void>) => {
+  //   return async (): Promise<void> => {
+  //     // MODULE:MYSTERYBOX
+  //     const content = [] as Array<any>;
+  //     if (rule.reward) {
+  //       for (const rew of rule.reward.components) {
+  //         const {
+  //           rows: [mysteryBox],
+  //         } = await fn(void 0, { templateIds: [rew.templateId] });
+  //         // MODULE:MYSTERYBOX
+  //         if (mysteryBox) {
+  //           content.push(
+  //             (mysteryBox as IMysterybox).item!.components.map(component => ({
+  //               tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+  //               token: component.contract!.address,
+  //               tokenId: component.templateId || 0,
+  //               amount: component.amount,
+  //             })),
+  //           );
+  //         } else {
+  //           content.push([]);
+  //         }
+  //       }
+  //     }
+  //     return metaLoadRule(rule, content);
+  //   };
+  // };
 
   return (
     <Fragment>

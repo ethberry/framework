@@ -106,7 +106,20 @@ contract ExchangeUtils {
 
     for (uint256 i = 0; i < length; ) {
       Asset memory item = items[i];
-      if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+
+      if (item.tokenType == TokenType.NATIVE) {
+        // If the token is an NATIVE token, transfer tokens to the receiver.
+        spend(_toArray(item), account);
+        // If the `Asset` is an ERC20 token.
+      } else if (item.tokenType == TokenType.ERC20) {
+        if (_isERC1363Supported(account, item.token)) {
+          // Transfer the ERC20 token and emit event to notify server
+          IERC1363(item.token).transferAndCall(account, item.amount);
+        } else {
+          // Transfer the ERC20 token in a safe way
+          SafeERC20.safeTransfer(IERC20(item.token), account, item.amount);
+        }
+      } else if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM_ID);
         if (randomInterface) {
           IERC721Random(item.token).mintRandom(account, item.tokenId);

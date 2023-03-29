@@ -63,8 +63,9 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
           token: {
             tokenId: "0",
           },
-          templateId: rule.deposit!.components[0].templateId,
-          contractId: rule.deposit!.components[0].contractId,
+          // templateId: rule.deposit!.components[0].templateId,
+          // contractId: rule.deposit!.components[0].contractId,
+          deposit: rule.deposit!.components,
         }}
       />
     </Fragment>

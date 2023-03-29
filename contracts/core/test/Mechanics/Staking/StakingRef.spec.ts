@@ -206,12 +206,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount,
+            },
+          ],
         ],
         period,
         penalty,
@@ -917,12 +919,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period, // 60 sec
         penalty,
@@ -1349,12 +1353,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
@@ -1797,12 +1803,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
@@ -2237,12 +2245,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
