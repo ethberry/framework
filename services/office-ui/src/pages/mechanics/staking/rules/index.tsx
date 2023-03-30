@@ -11,7 +11,7 @@ import {
   Pagination,
 } from "@mui/material";
 
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -21,7 +21,11 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { PauseToggleButton, StakingUploadButton } from "../../../../components/buttons";
+import {
+  PauseToggleButton,
+  StakingToggleRuleButton,
+  StakingRuleUploadCreateButton,
+} from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
@@ -36,7 +40,7 @@ export const StakingRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
+    // handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -49,7 +53,7 @@ export const StakingRules: FC = () => {
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
-      title: "",
+      title: "new STAKING rule",
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
@@ -88,9 +92,7 @@ export const StakingRules: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="StakingCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        <StakingRuleUploadCreateButton />
       </PageHeader>
 
       <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
@@ -101,7 +103,7 @@ export const StakingRules: FC = () => {
             <ListItem key={i} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingUploadButton rule={rule} />
+                <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>

@@ -21,7 +21,11 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { PauseToggleButton, StakingUploadButton, StakingRuleUploadCreateButton } from "../../../../components/buttons";
+import {
+  PauseToggleButton,
+  StakingToggleRuleButton,
+  StakingRuleUploadCreateButton,
+} from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
@@ -99,7 +103,7 @@ export const StakingRules: FC = () => {
             <ListItem key={i} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingUploadButton rule={rule} />
+                <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>

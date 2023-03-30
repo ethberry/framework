@@ -13,9 +13,9 @@ import { RoyaltyMenuItem } from "../../common/royalty";
 import { TransferMenuItem } from "../../common/transfer";
 import { AllowanceMenuItem } from "../../hierarchy/contract/allowance";
 import { PausableMenuItem } from "../common/pausable";
-import { BlacklistAddMenuItem } from "../../extensions/blacklist-add";
+import { BlacklistMenuItem } from "../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
-import { WhitelistAddMenuItem } from "../../extensions/whitelist-add";
+import { WhitelistMenuItem } from "../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
 
 export interface IMysteryActionsMenu {
@@ -64,13 +64,13 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
           <PausableMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <BlacklistAddMenuItem contract={contract} />
+          <BlacklistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
           <UnBlacklistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <WhitelistAddMenuItem contract={contract} />
+          <WhitelistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
           <UnWhitelistMenuItem contract={contract} />

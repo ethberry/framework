@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ApproveERC20ABI from "./approve.erc20.abi.json";
+import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
 
 import { IAllowanceDto, AllowanceDialog } from "./dialog";
 
@@ -36,7 +36,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");

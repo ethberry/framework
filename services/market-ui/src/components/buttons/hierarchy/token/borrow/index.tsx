@@ -7,7 +7,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
 
-import ERC4907Abi from "./abi/erc4907.json";
+import ERC4907ABI from "./abi/erc4907.json";
 import { BorrowDialog, IBorrowDto } from "./dialog";
 
 interface ITokenBorrowButtonProps {
@@ -23,7 +23,7 @@ export const TokenBorrowButton: FC<ITokenBorrowButtonProps> = props => {
 
   // function setUser(uint256 tokenId, address user, uint64 expires) public virtual {
   const metaFn = useMetamask((dto: IBorrowDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(token.template!.contract!.address, ERC4907Abi.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(token.template!.contract!.address, ERC4907ABI.abi, web3Context.provider?.getSigner());
     const expires = Math.ceil(new Date(dto.expires).getTime() / 1000); // in seconds,
 
     return contract.setUser(token.tokenId, dto.account, expires) as Promise<any>;

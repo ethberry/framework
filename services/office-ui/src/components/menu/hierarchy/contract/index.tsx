@@ -11,9 +11,9 @@ import { TransferMenuItem } from "../../common/transfer";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { BlacklistAddMenuItem } from "../../extensions/blacklist-add";
+import { BlacklistMenuItem } from "../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
-import { WhitelistAddMenuItem } from "../../extensions/whitelist-add";
+import { WhitelistMenuItem } from "../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
 import { AllowanceMenuItem } from "./allowance";
 import { MintMenuItem } from "./mint";
@@ -66,13 +66,13 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {contract.contractType === TokenType.ERC1155 ? <RoyaltyMenuItem contract={contract} /> : null}
 
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <BlacklistAddMenuItem contract={contract} />
+          <BlacklistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
           <UnBlacklistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <WhitelistAddMenuItem contract={contract} />
+          <WhitelistMenuItem contract={contract} />
         ) : null}
         {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
           <UnWhitelistMenuItem contract={contract} />

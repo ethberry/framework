@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import SnapshotABI from "./snapshot.abi.json";
+import ERC20SnapshotABI from "../../../../../abis/components/menu/hierarchy/contract/snapshot/snapshot.abi.json";
 
 export interface IErc20TokenSnapshotMenuItemProps {
   contract: IContract;
@@ -20,7 +20,7 @@ export const Erc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = 
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, SnapshotABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC20SnapshotABI, web3Context.provider?.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

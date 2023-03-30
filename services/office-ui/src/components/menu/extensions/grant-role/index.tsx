@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
-import GrantRoleABI from "./grantRole.abi.json";
+import GrantRoleABI from "../../../../abis/components/menu/extensions/grant-role/grantRole.abi.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 

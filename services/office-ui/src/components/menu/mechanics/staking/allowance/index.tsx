@@ -9,9 +9,8 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ApproveERC20ABI from "./approve.erc20.abi.json";
-import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
-import SetApprovalForAllERC1155ABI from "./setApprovalForAll.erc1155.abi.json";
+import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc721.setApprovalForAll.abi.json";
 
 import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
@@ -38,22 +37,19 @@ export const AllowanceMenu: FC<IStakingAllowanceMenuProps> = props => {
     const { amount, contract } = values;
 
     if (contract.contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
-    } else if (contract.contractType === TokenType.ERC721 || contract.contractType === TokenType.ERC998) {
+    } else if (
+      contract.contractType === TokenType.ERC721 ||
+      contract.contractType === TokenType.ERC998 ||
+      contract.contractType === TokenType.ERC1155
+    ) {
       const contractErc721 = new Contract(
         contract.address,
-        SetApprovalForAllERC721ABI,
+        ERC721SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.setApprovalForAll(address, true) as Promise<any>;
-    } else if (contract.contractType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(
-        contract.address,
-        SetApprovalForAllERC1155ABI,
-        web3Context.provider?.getSigner(),
-      );
-      return contractErc1155.setApprovalForAll(address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

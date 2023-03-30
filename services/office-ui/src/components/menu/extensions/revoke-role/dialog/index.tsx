@@ -12,7 +12,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import type { IAccessControl, IUser } from "@framework/types";
 
-import RevokeRoleABI from "./revokeRole.abi.json";
+import RevokeRoleABI from "../../../../../abis/components/menu/extensions/revoke-role/revokeRole.abi.json";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;

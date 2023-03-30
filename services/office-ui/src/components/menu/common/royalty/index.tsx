@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import SetDefaultRoyaltyABI from "./setDefaultRoyalty.abi.json";
+import SetDefaultRoyaltyABI from "../../../../abis/components/menu/common/royalty/setDefaultRoyalty.abi.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 import { ContractFeatures } from "@framework/types";
