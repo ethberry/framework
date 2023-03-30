@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { Contract } from "ethers";
+import { Contract, utils, constants } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
@@ -26,7 +26,13 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, DepositABI, web3Context.provider?.getSigner());
-    return contract.deposit(rule.externalId, values.token.tokenId, {
+    const params = {
+      nonce: utils.formatBytes32String("nonce"),
+      externalId: rule.externalId,
+      expiresAt: 0,
+      referrer: constants.AddressZero,
+    };
+    return contract.deposit(params, values.tokenIds, {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
   });
@@ -59,10 +65,11 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         onCancel={handleDepositCancel}
         open={isDepositDialogOpen}
         initialValues={{
-          tokenId: 0,
-          token: {
-            tokenId: "0",
-          },
+          // tokenId: 0,
+          tokenIds: [0],
+          // token: {
+          //   tokenId: "0",
+          // },
           // templateId: rule.deposit!.components[0].templateId,
           // contractId: rule.deposit!.components[0].contractId,
           deposit: rule.deposit!.components,
