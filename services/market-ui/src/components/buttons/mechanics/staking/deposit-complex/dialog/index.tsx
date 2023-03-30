@@ -7,12 +7,13 @@ import { IAssetComponent } from "@framework/types";
 import { TokenDepositInput } from "../../../../../inputs/deposit-token-input";
 
 export interface IStakingDepositDto {
-  tokenId: number;
-  token: {
-    tokenId: string;
-  };
+  // tokenId: number;
+  // token: {
+  //   tokenId: string;
+  // };
   // templateId: number;
   // contractId: number;
+  tokenIds: Array<number>;
   deposit: IAssetComponent[];
 }
 

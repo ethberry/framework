@@ -18,13 +18,14 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "./interfaces/IStaking.sol";
 import "../TopUp.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../../Exchange/referral/LinearReferral.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -33,7 +34,7 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
+contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearReferral, TopUp {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -74,7 +75,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
 
   /**
    * @dev Sets maxStake
-   * TODO add change event?
    */
   function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _maxStake = maxStake;
@@ -82,10 +82,13 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
 
   /**
    * @dev Deposit function allows a user to stake a specified token with a given rule.
-   * @param ruleId - id of rule defined in _rules mapping.
+   * @param params Struct of Params that containing the ruleId and referrer parameters.
    * @param tokenIds - Array<id> of the tokens to be deposited.
    */
-  function deposit(uint256 ruleId, uint256[] calldata tokenIds) public payable whenNotPaused {
+  function deposit(Params memory params, uint256[] calldata tokenIds) public payable whenNotPaused {
+    // Retrieve the rule params.
+    uint256 ruleId = params.externalId;
+    address referrer = params.referrer;
     // Retrieve the rule associated with the given rule ID.
     Rule memory rule = _rules[ruleId];
     // Ensure that the rule exists and is active
@@ -138,7 +141,16 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
 
       // Transfer tokens from user to this contract.
       spendFrom(_toArray(depositItem), account, address(this));
+
+      // Do something after purchase with referrer
+      if (referrer != address(0)) {
+        _afterPurchase(referrer, _toArray(depositItem));
+      }
     }
+  }
+
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+    return super._afterPurchase(referrer, price);
   }
 
   /**
@@ -295,7 +307,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
     for (uint256 i = 0; i < lengthDeposit; i++) {
       p.deposit.push(rule.deposit[i]);
     }
-
     // p.reward = rule.reward;
     // Store each individual asset in the rule's deposit array
     uint256 lengthReward = rule.reward.length;
