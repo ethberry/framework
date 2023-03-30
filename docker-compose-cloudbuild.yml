@@ -3,6 +3,7 @@ version: "3.3"
 volumes:
   static-admin-ui:
   static-market-ui:
+  static-office-ui:
 
 services:
 
@@ -27,6 +28,17 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       BASE_MODE: "${BASE_MODE}"
       BASE_APP: "market-UI"
+
+  office-ui:
+    container_name: office-ui
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-office-ui:/home/node/framework/services/office-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "office-UI"
 
   admin-api:
     container_name: admin-api
@@ -177,6 +189,80 @@ services:
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
+
+  office-api:
+    container_name: office-api
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_OFFICE_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      OFFICE_FE_URL: "${OFFICE_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      ERC20_SIMPLE_ADDR: "${ERC20_SIMPLE_ADDR}"
+      ERC20_INACTIVE_ADDR: "${ERC20_INACTIVE_ADDR}"
+      ERC20_NEW_ADDR: "${ERC20_NEW_ADDR}"
+      ERC20_BLACKLIST_ADDR: "${ERC20_BLACKLIST_ADDR}"
+      ERC721_SIMPLE_ADDR: "${ERC721_SIMPLE_ADDR}"
+      ERC721_INACTIVE_ADDR: "${ERC721_INACTIVE_ADDR}"
+      ERC721_NEW_ADDR: "${ERC721_NEW_ADDR}"
+      ERC721_BLACKLIST_ADDR: "${ERC721_BLACKLIST_ADDR}"
+      ERC721_UPGRADEABLE_ADDR: "${ERC721_UPGRADEABLE_ADDR}"
+      ERC721_RANDOM_ADDR: "${ERC721_RANDOM_ADDR}"
+      ERC721_SOULBOUND_ADDR: "${ERC721_SOULBOUND_ADDR}"
+      ERC998_SIMPLE_ADDR: "${ERC998_SIMPLE_ADDR}"
+      ERC998_INACTIVE_ADDR: "${ERC998_INACTIVE_ADDR}"
+      ERC998_NEW_ADDR: "${ERC998_NEW_ADDR}"
+      ERC998_BLACKLIST_ADDR: "${ERC998_BLACKLIST_ADDR}"
+      ERC998_UPGRADEABLE_ADDR: "${ERC998_UPGRADEABLE_ADDR}"
+      ERC998_RANDOM_ADDR: "${ERC998_RANDOM_ADDR}"
+      ERC1155_SIMPLE_ADDR: "${ERC1155_SIMPLE_ADDR}"
+      ERC1155_INACTIVE_ADDR: "${ERC1155_INACTIVE_ADDR}"
+      ERC1155_NEW_ADDR: "${ERC1155_NEW_ADDR}"
+      ERC1155_BLACKLIST_ADDR: "${ERC1155_BLACKLIST_ADDR}"
+      VESTING_LINEAR_ADDR: "${VESTING_LINEAR_ADDR}"
+      VESTING_GRADED_ADDR: "${VESTING_GRADED_ADDR}"
+      VESTING_CLIFF_ADDR: "${VESTING_CLIFF_ADDR}"
+      ERC721_MYSTERYBOX_SIMPLE_ADDR: "${ERC721_MYSTERYBOX_SIMPLE_ADDR}"
+      ERC721_MYSTERYBOX_PAUSABLE_ADDR: "${ERC721_MYSTERYBOX_PAUSABLE_ADDR}"
+      ERC721_MYSTERYBOX_BLACKLIST_ADDR: "${ERC721_MYSTERYBOX_BLACKLIST_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
+      ERC721_LOTTERY_ADDR: "${ERC721_LOTTERY_ADDR}"
+      LOTTERY_ADDR: "${LOTTERY_ADDR}"
+      USDT_ADDR: "${USDT_ADDR}"
+      WAITLIST_ADDR: "${WAITLIST_ADDR}"
+      ERC721_WRAPPER_ADDR: "${ERC721_WRAPPER_ADDR}"
+      # DEV
+      LINK_ADDR: "${LINK_ADDR}"
+      VRF_ADDR: "${VRF_ADDR}"
+    ports:
+      # office-api
+      - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
 
   core-eth:
     container_name: core-eth

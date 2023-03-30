@@ -10,13 +10,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
-import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
+import "../TopUp.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
-
-contract AbstractVesting is ERC165, VestingWallet, Ownable, Multicall, ExchangeUtils, ERC1363Receiver {
+contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,
@@ -25,11 +22,7 @@ contract AbstractVesting is ERC165, VestingWallet, Ownable, Multicall, ExchangeU
     _transferOwnership(beneficiaryAddress);
   }
 
-  function topUp(Asset[] memory price) external payable {
-    spendFrom(price, _msgSender(), address(this));
-  }
-
-  receive() external payable override {
+  receive() external payable override(VestingWallet, TopUp) {
     revert();
   }
 
@@ -52,9 +45,6 @@ contract AbstractVesting is ERC165, VestingWallet, Ownable, Multicall, ExchangeU
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return
-      interfaceId == type(IERC1363Receiver).interfaceId ||
-      interfaceId == type(IERC1363Spender).interfaceId ||
-      super.supportsInterface(interfaceId);
+    return super.supportsInterface(interfaceId);
   }
 }

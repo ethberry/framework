@@ -80,9 +80,9 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct Asset[][]",
+            "internalType": "struct Asset[]",
             "name": "content",
-            "type": "tuple[][]"
+            "type": "tuple[]"
           },
           {
             "internalType": "uint256",
@@ -103,6 +103,11 @@
             "internalType": "bool",
             "name": "active",
             "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "externalId",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IStaking.Rule[]",

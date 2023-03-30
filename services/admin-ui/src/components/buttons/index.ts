@@ -6,6 +6,7 @@ export * from "./tokens/erc1155/contract-deploy";
 export * from "./mechanics/staking/deploy";
 export * from "./mechanics/staking/upload";
 export * from "./mechanics/staking/pause-toggle";
+export * from "./mechanics/staking/rule-toggle";
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
 

@@ -24,7 +24,7 @@ import { TemplateSearchForm } from "../../../../components/forms/template-search
 import { cleanUpAsset } from "../../../../utils/money";
 import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
 
-export const Erc721Template: FC = () => {
+export const CollectionTemplate: FC = () => {
   const {
     rows,
     count,

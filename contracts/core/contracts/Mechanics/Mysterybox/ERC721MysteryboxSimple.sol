@@ -43,9 +43,6 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     uint256 length = items.length;
     for (uint256 i = 0; i < length; i++) {
-      if (items[i].tokenType == TokenType.NATIVE || items[i].tokenType == TokenType.ERC20) {
-        revert UnsupportedTokenType();
-      }
       _itemData[tokenId].push(items[i]);
     }
   }
@@ -65,4 +62,7 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Mysterybox).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  // ETH FUND
+  function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {}
 }

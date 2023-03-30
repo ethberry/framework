@@ -17,6 +17,7 @@ import { StakingRulesService } from "./rules.service";
 import { StakingDepositService } from "../deposit/deposit.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { TemplateService } from "../../../hierarchy/template/template.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -25,6 +26,7 @@ export class StakingRulesServiceEth {
     private readonly loggerService: LoggerService,
     private readonly stakingRulesService: StakingRulesService,
     private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
     private readonly stakingDepositService: StakingDepositService,
     private readonly eventHistoryService: EventHistoryService,
   ) {}
@@ -35,7 +37,7 @@ export class StakingRulesServiceEth {
       args: { rule, ruleId },
     } = event;
 
-    const { deposit, reward, period, penalty, recurrent } = rule;
+    const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = {
@@ -43,17 +45,21 @@ export class StakingRulesServiceEth {
     };
 
     for (const dep of deposit) {
-      const depositToken = await this.tokenService.getToken(dep.tokenId, dep.address.toLowerCase());
+      const [_tokenType, _token, templateId, amount] = dep;
+      const depositTemplate = await this.templateService.findOne(
+        { id: ~~templateId },
+        { relations: { contract: true } },
+      );
 
-      if (!depositToken) {
-        throw new NotFoundException("depositTokenNotFound");
+      if (!depositTemplate) {
+        throw new NotFoundException("depositTemplateNotFound");
       }
 
       depositItem.components.push({
-        tokenType: depositToken.template.contract.contractType,
-        contractId: depositToken.template.contract.id,
-        templateId: depositToken.templateId,
-        amount: dep.amount,
+        tokenType: depositTemplate.contract.contractType,
+        contractId: depositTemplate.contract.id,
+        templateId: depositTemplate.id,
+        amount,
       });
     }
 
@@ -63,41 +69,37 @@ export class StakingRulesServiceEth {
     };
 
     for (const rew of reward) {
-      const rewardToken = await this.tokenService.getToken(rew.tokenId, rew.address.toLowerCase());
+      const [_tokenType, _token, templateId, amount] = rew;
 
-      if (!rewardToken) {
-        throw new NotFoundException("rewardTokenNotFound");
+      const rewardTemplate = await this.templateService.findOne(
+        { id: ~~templateId },
+        { relations: { contract: true } },
+      );
+
+      if (!rewardTemplate) {
+        throw new NotFoundException("rewardTemplateNotFound");
       }
 
       rewardItem.components.push({
-        tokenType: rewardToken.template.contract.contractType,
-        contractId: rewardToken.template.contract.id,
-        templateId: rewardToken.templateId,
-        amount: rew.amount,
+        tokenType: rewardTemplate.contract.contractType,
+        contractId: rewardTemplate.contract.id,
+        templateId: rewardTemplate.id,
+        amount,
       });
     }
 
-    const stakingEntity = await this.stakingRulesService.create({
+    await this.stakingRulesService.create({
       title: "new STAKING rule",
       description: emptyStateString,
       deposit: depositItem,
       reward: rewardItem,
-      durationAmount: Math.floor(~~period / (24 * 3600)),
-      durationUnit: DurationUnit.DAY,
+      durationAmount: ~~period,
+      durationUnit: DurationUnit.DAY, // TODO select correct unit depends on period
       penalty: ~~penalty,
       recurrent,
-    });
-
-    if (!stakingEntity) {
-      throw new NotFoundException("stakingRuleNotCreated");
-    }
-
-    Object.assign(stakingEntity, {
+      stakingRuleStatus: StakingRuleStatus.NEW,
       externalId: ruleId,
-      stakingRuleStatus: StakingRuleStatus.ACTIVE,
     });
-
-    await stakingEntity.save();
   }
 
   public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
@@ -120,7 +122,7 @@ export class StakingRulesServiceEth {
   }
 
   public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
-    // TODO fix it!    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { stakingId, ruleId, owner, startTimestamp },

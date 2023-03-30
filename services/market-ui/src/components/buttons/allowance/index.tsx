@@ -34,6 +34,7 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     setIsAllowanceDialogOpen(false);
   };
 
+  // TODO deposit allowance array
   const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
     const tokenType = rule.deposit?.components[0].tokenType;

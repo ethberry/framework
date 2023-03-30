@@ -1,15 +1,14 @@
 #!/bin/sh
 
 set -e # this will cause the shell to exit immediately if any command exits with a nonzero exit value.
-
+WMODE=$1
 if [ $1 == "clean" ]; then
 echo "\033[34m DELETE PRODuction env files in the services folders!\n\033[0m"
 
-rm ./services/public-api/.env.production
-rm ./services/public-ui/.env.production
-rm ./services/admin-api/.env.production
-rm ./services/admin-ui/.env.production
-rm ./services/emailer/.env.production
+rm ./services/market-api/.env.$WMODE
+rm ./services/market-ui/.env.$WMODE
+rm ./services/admin-api/.env.$WMODE
+rm ./services/admin-ui/.env.$WMODE
 
 echo "\033[34m Done!\n\033[0m"
 
@@ -18,86 +17,207 @@ fi;
 
 if [ -f .env ]
 then
-  export $(cat .env | sed 's/#.*//g' | xargs)
+  export $(cat ./.env | sed 's/#.*//g' | xargs)
 
+echo $STARTING_BLOCK
+echo $CONTRACT_MANAGER_ADDR
 echo "\033[34mSetting-Up env files in the services folders...\n\033[0m"
+echo STARTING_BLOCK=$STARTING_BLOCK
+touch ./services/admin-api/.env.$WMODE
+echo STARTING_BLOCK=$STARTING_BLOCK >>./services/admin-api/.env.$WMODE
+echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/admin-api/.env.$WMODE
+echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_BLACKLIST_ADDR=$ERC721_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_UPGRADEABLE_ADDR=$ERC721_UPGRADEABLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_RANDOM_ADDR=$ERC721_RANDOM_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_SOULBOUND_ADDR=$ERC721_SOULBOUND_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_SIMPLE_ADDR=$ERC998_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_INACTIVE_ADDR=$ERC998_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC1155_BLACKLIST_ADDR=$ERC1155_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo VESTING_LINEAR_ADDR=$VESTING_LINEAR_ADDR  >>./services/admin-api/.env.$WMODE
+echo VESTING_GRADED_ADDR=$VESTING_GRADED_ADDR  >>./services/admin-api/.env.$WMODE
+echo VESTING_CLIFF_ADDR=$VESTING_CLIFF_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_SIMPLE_ADDR=$ERC721_MYSTERYBOX_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_PAUSABLE_ADDR=$ERC721_MYSTERYBOX_PAUSABLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_BLACKLIST_ADDR=$ERC721_MYSTERYBOX_BLACKLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo STAKING_ADDR=$STAKING_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/admin-api/.env.$WMODE
+echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/admin-api/.env.$WMODE
+echo USDT_ADDR=$USDT_ADDR  >>./services/admin-api/.env.$WMODE
+echo BUSD_ADDR=$BUSD_ADDR  >>./services/admin-api/.env.$WMODE
+echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/admin-api/.env.$WMODE
 
-touch ./services/admin-api/.env.production
-  echo NODE_ENV=$NODE_ENV >>./services/admin-api/.env.production
-  echo HOST=$HOST >>./services/admin-api/.env.production
-  echo PORT=$PORT_ADMIN_API >>./services/admin-api/.env.production
-  echo ADMIN_FE_URL=$ADMIN_FE_URL >>./services/admin-api/.env.production
-  echo POSTGRES_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB >>./services/admin-api/.env.production
-  echo REDIS_THROTTLE_URL=$REDIS_THROTTLE_URL >>./services/admin-api/.env.production
-  echo THROTTLE_TTL=$THROTTLE_TTL >>./services/admin-api/.env.production
-  echo THROTTLE_LIMIT=$THROTTLE_LIMIT >>./services/admin-api/.env.production
-  echo RMQ_URL=$RMQ_URL >>./services/admin-api/.env.production
-  echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/admin-api/.env.production
-  echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/admin-api/.env.production
-  echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/admin-api/.env.production
-  echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/admin-api/.env.production
-  echo GOOGLE_CALLBACK_URL=$GOOGLE_CALLBACK_URL >>./services/admin-api/.env.production
-  echo FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID >>./services/admin-api/.env.production
-  echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/admin-api/.env.production
-  echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/admin-api/.env.production
-  echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/admin-api/.env.production
-  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/admin-api/.env.production
+touch ./services/admin-ui/.env.$WMODE
+echo STARTING_BLOCK=$STARTING_BLOCK >>./services/admin-ui/.env.$WMODE
+echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/admin-ui/.env.$WMODE
+echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_BLACKLIST_ADDR=$ERC721_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_UPGRADEABLE_ADDR=$ERC721_UPGRADEABLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_RANDOM_ADDR=$ERC721_RANDOM_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_SOULBOUND_ADDR=$ERC721_SOULBOUND_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_SIMPLE_ADDR=$ERC998_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_INACTIVE_ADDR=$ERC998_INACTIVE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC1155_BLACKLIST_ADDR=$ERC1155_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo VESTING_LINEAR_ADDR=$VESTING_LINEAR_ADDR  >>./services/admin-ui/.env.$WMODE
+echo VESTING_GRADED_ADDR=$VESTING_GRADED_ADDR  >>./services/admin-ui/.env.$WMODE
+echo VESTING_CLIFF_ADDR=$VESTING_CLIFF_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_SIMPLE_ADDR=$ERC721_MYSTERYBOX_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_PAUSABLE_ADDR=$ERC721_MYSTERYBOX_PAUSABLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_BLACKLIST_ADDR=$ERC721_MYSTERYBOX_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo STAKING_ADDR=$STAKING_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/admin-ui/.env.$WMODE
+echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/admin-ui/.env.$WMODE
+echo USDT_ADDR=$USDT_ADDR  >>./services/admin-ui/.env.$WMODE
+echo BUSD_ADDR=$BUSD_ADDR  >>./services/admin-ui/.env.$WMODE
+echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/admin-ui/.env.$WMODE
 
-touch ./services/admin-ui/.env.production
-  echo HOST=$HOST >>./services/admin-ui/.env.production
-  echo PORT=$PORT_ADMIN_UI >>./services/admin-ui/.env.production
-  echo BE_URL=$ADMIN_BE_URL >>./services/admin-ui/.env.production
-  echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/admin-ui/.env.production
-  echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/admin-ui/.env.production
-  echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/admin-ui/.env.production
-  echo FIREBASE_DB_URL=$FIREBASE_DB_URL >>./services/admin-ui/.env.production
-  echo FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID >>./services/admin-ui/.env.production
-  echo FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET >>./services/admin-ui/.env.production
-  echo FIREBASE_MESSAGE_SENDER_ID=$FIREBASE_MESSAGE_SENDER_ID >>./services/admin-ui/.env.production
-  echo FIREBASE_APP_ID=$FIREBASE_APP_ID >>./services/admin-ui/.env.production
-  echo FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID >>./services/admin-ui/.env.production
+touch ./services/market-ui/.env.$WMODE
+echo STARTING_BLOCK=$STARTING_BLOCK >>./services/market-ui/.env.$WMODE
+echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/market-ui/.env.$WMODE
+echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_BLACKLIST_ADDR=$ERC721_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_UPGRADEABLE_ADDR=$ERC721_UPGRADEABLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_RANDOM_ADDR=$ERC721_RANDOM_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_SOULBOUND_ADDR=$ERC721_SOULBOUND_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_SIMPLE_ADDR=$ERC998_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_INACTIVE_ADDR=$ERC998_INACTIVE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC1155_BLACKLIST_ADDR=$ERC1155_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo VESTING_LINEAR_ADDR=$VESTING_LINEAR_ADDR  >>./services/market-ui/.env.$WMODE
+echo VESTING_GRADED_ADDR=$VESTING_GRADED_ADDR  >>./services/market-ui/.env.$WMODE
+echo VESTING_CLIFF_ADDR=$VESTING_CLIFF_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_SIMPLE_ADDR=$ERC721_MYSTERYBOX_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_PAUSABLE_ADDR=$ERC721_MYSTERYBOX_PAUSABLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_MYSTERYBOX_BLACKLIST_ADDR=$ERC721_MYSTERYBOX_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo STAKING_ADDR=$STAKING_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/market-ui/.env.$WMODE
+echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/market-ui/.env.$WMODE
+echo USDT_ADDR=$USDT_ADDR  >>./services/market-ui/.env.$WMODE
+echo BUSD_ADDR=$BUSD_ADDR  >>./services/market-ui/.env.$WMODE
+echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/market-ui/.env.$WMODE
 
-touch ./services/public-api/.env.production
-  echo NODE_ENV=$NODE_ENV >>./services/public-api/.env.production
-  echo HOST=$HOST >>./services/public-api/.env.production
-  echo PORT=$PORT_PUBLIC_API >>./services/public-api/.env.production
-  echo PUBLIC_FE_URL=$PUBLIC_FE_URL >>./services/public-api/.env.production
-  echo POSTGRES_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB >>./services/public-api/.env.production
-  echo REDIS_THROTTLE_URL=$REDIS_THROTTLE_URL >>./services/public-api/.env.production
-  echo THROTTLE_TTL=$THROTTLE_TTL >>./services/public-api/.env.production
-  echo THROTTLE_LIMIT=$THROTTLE_LIMIT >>./services/public-api/.env.production
-  echo RMQ_URL=$RMQ_URL >>./services/public-api/.env.production
-  echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/public-api/.env.production
-  echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/public-api/.env.production
-  echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/public-api/.env.production
-  echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/public-api/.env.production
-  echo GOOGLE_CALLBACK_URL=$GOOGLE_CALLBACK_URL >>./services/public-api/.env.production
-  echo FACEBOOK_CLIENT_ID=$FACEBOOK_CLIENT_ID >>./services/public-api/.env.production
-  echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/public-api/.env.production
-  echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/public-api/.env.production
-  echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/public-api/.env.production
-  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/public-api/.env.production
+touch ./services/market-api/.env.$WMODE
+echo STARTING_BLOCK=$STARTING_BLOCK >>./services/market-api/.env.$WMODE
+echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/market-api/.env.$WMODE
+echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_BLACKLIST_ADDR=$ERC721_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_UPGRADEABLE_ADDR=$ERC721_UPGRADEABLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_RANDOM_ADDR=$ERC721_RANDOM_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_SOULBOUND_ADDR=$ERC721_SOULBOUND_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_SIMPLE_ADDR=$ERC998_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_INACTIVE_ADDR=$ERC998_INACTIVE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC1155_BLACKLIST_ADDR=$ERC1155_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo VESTING_LINEAR_ADDR=$VESTING_LINEAR_ADDR  >>./services/market-api/.env.$WMODE
+echo VESTING_GRADED_ADDR=$VESTING_GRADED_ADDR  >>./services/market-api/.env.$WMODE
+echo VESTING_CLIFF_ADDR=$VESTING_CLIFF_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_SIMPLE_ADDR=$ERC721_MYSTERYBOX_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_PAUSABLE_ADDR=$ERC721_MYSTERYBOX_PAUSABLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_MYSTERYBOX_BLACKLIST_ADDR=$ERC721_MYSTERYBOX_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo STAKING_ADDR=$STAKING_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/market-api/.env.$WMODE
+echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/market-api/.env.$WMODE
+echo USDT_ADDR=$USDT_ADDR  >>./services/market-api/.env.$WMODE
+echo BUSD_ADDR=$BUSD_ADDR  >>./services/market-api/.env.$WMODE
+echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/market-api/.env.$WMODE
 
-touch ./services/public-ui/.env.production
-  echo HOST=$HOST >>./services/public-ui/.env.production
-  echo PORT=$PORT_PUBLIC_UI >>./services/public-ui/.env.production
-  echo BE_URL=$PUBLIC_BE_URL >>./services/public-ui/.env.production
-  echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/public-ui/.env.production
-  echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/public-ui/.env.production
-  echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/public-ui/.env.production
-  echo FIREBASE_DB_URL=$FIREBASE_DB_URL >>./services/public-ui/.env.production
-  echo FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID >>./services/public-ui/.env.production
-  echo FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET >>./services/public-ui/.env.production
-  echo FIREBASE_MESSAGE_SENDER_ID=$FIREBASE_MESSAGE_SENDER_ID >>./services/public-ui/.env.production
-  echo FIREBASE_APP_ID=$FIREBASE_APP_ID >>./services/public-ui/.env.production
-  echo FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID >>./services/public-ui/.env.production
 
-touch ./services/emailer/.env.production
-  echo HOST=$HOST >>./services/emailer/.env.production
-  echo PORT=$PORT_EMAILER >>./services/emailer/.env.production
-  echo RMQ_URL=$RMQ_URL >>./services/emailer/.env.production
-  echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/emailer/.env.production
-  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/emailer/.env.production
+touch ./services/core-eth/.env.$WMODE
+echo STARTING_BLOCK=$STARTING_BLOCK >>./services/core-eth/.env.$WMODE
+echo CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR  >>./services/core-eth/.env.$WMODE
+echo EXCHANGE_ADDR=$EXCHANGE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC20_SIMPLE_ADDR=$ERC20_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC20_INACTIVE_ADDR=$ERC20_INACTIVE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC20_NEW_ADDR=$ERC20_NEW_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC20_BLACKLIST_ADDR=$ERC20_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_SIMPLE_ADDR=$ERC721_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_INACTIVE_ADDR=$ERC721_INACTIVE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_NEW_ADDR=$ERC721_NEW_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_BLACKLIST_ADDR=$ERC721_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_UPGRADEABLE_ADDR=$ERC721_UPGRADEABLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_RANDOM_ADDR=$ERC721_RANDOM_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_SOULBOUND_ADDR=$ERC721_SOULBOUND_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_SIMPLE_ADDR=$ERC998_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_INACTIVE_ADDR=$ERC998_INACTIVE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC1155_BLACKLIST_ADDR=$ERC1155_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo VESTING_LINEAR_ADDR=$VESTING_LINEAR_ADDR  >>./services/core-eth/.env.$WMODE
+echo VESTING_GRADED_ADDR=$VESTING_GRADED_ADDR  >>./services/core-eth/.env.$WMODE
+echo VESTING_CLIFF_ADDR=$VESTING_CLIFF_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_MYSTERYBOX_SIMPLE_ADDR=$ERC721_MYSTERYBOX_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_MYSTERYBOX_PAUSABLE_ADDR=$ERC721_MYSTERYBOX_PAUSABLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_MYSTERYBOX_BLACKLIST_ADDR=$ERC721_MYSTERYBOX_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo STAKING_ADDR=$STAKING_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/core-eth/.env.$WMODE
+echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/core-eth/.env.$WMODE
+echo USDT_ADDR=$USDT_ADDR  >>./services/core-eth/.env.$WMODE
+echo BUSD_ADDR=$BUSD_ADDR  >>./services/core-eth/.env.$WMODE
+echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/core-eth/.env.$WMODE
 
 
 echo "\033[34mAll done!\n\033[0m"

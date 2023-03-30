@@ -5,7 +5,9 @@ import { nonce } from "@gemunion/contracts-constants";
 import { getNumbers } from "./utils";
 
 export const tokenId = 1;
+export const tokenIds = [1];
 export const templateId = 1;
+export const templateIds = [1];
 export const cap = constants.WeiPerEther.mul(1000000000);
 
 export const amountWei = "10000000000000000";

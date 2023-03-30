@@ -23,7 +23,7 @@ import { CollectionActionsMenu } from "../../../../components/menu/mechanics/col
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc721CollectionEditDialog } from "./edit";
 
-export const Collection: FC = () => {
+export const CollectionContract: FC = () => {
   const {
     rows,
     count,
