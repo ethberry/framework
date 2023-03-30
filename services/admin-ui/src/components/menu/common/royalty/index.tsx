@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import SetDefaultRoyaltyABI from "./setDefaultRoyalty.abi.json";
+import RoyaltySetDefaultRoyaltyABI from "../../../../abis/components/menu/common/royalty/setDefaultRoyalty.abi.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 import { ContractFeatures } from "@framework/types";
@@ -33,7 +33,7 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, SetDefaultRoyaltyABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, RoyaltySetDefaultRoyaltyABI, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 

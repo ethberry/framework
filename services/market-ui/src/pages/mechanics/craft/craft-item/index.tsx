@@ -16,8 +16,8 @@ export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
     baseUrl: "/craft",
     empty: {
-      item: emptyItem as any,
-      price: emptyPrice as any,
+      item: emptyItem,
+      price: emptyPrice,
     },
   });
 

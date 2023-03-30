@@ -4,9 +4,11 @@ import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
+
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
-import UpdateRuleABI from "./updateRule.abi.json";
+
+import StakingUpdateRuleABI from "../../../../../abis/components/buttons/mechanics/staking/rule-toggle/updateRule.abi.json";
 
 export interface IStakingUploadButtonProps {
   rule: IStakingRule;
@@ -79,7 +81,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
-    const contract = new Contract(process.env.STAKING_ADDR, UpdateRuleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingUpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId || 0, ruleStatus) as Promise<void>;
   });
 

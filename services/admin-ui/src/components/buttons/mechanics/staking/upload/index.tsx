@@ -13,7 +13,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
 
-import SetRulesABI from "./setRules.abi.json";
+import StakingSetRulesABI from "../../../../../abis/components/buttons/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
 export interface IStakingRuleUploadCreateButtonProps {
@@ -64,7 +64,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    const contract = new Contract(process.env.STAKING_ADDR, SetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 

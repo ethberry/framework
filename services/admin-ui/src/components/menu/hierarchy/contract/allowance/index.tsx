@@ -9,9 +9,8 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ApproveERC20ABI from "./approve.erc20.abi.json";
-import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
-import SetApprovalForAllERC1155ABI from "./setApprovalForAll.erc1155.abi.json";
+import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc721.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -36,14 +35,15 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (contractType === TokenType.ERC20) {
-      const contractErc20 = new Contract(address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, values.amount) as Promise<any>;
-    } else if (contractType === TokenType.ERC721 || contractType === TokenType.ERC998) {
-      const contractErc721 = new Contract(address, SetApprovalForAllERC721ABI, web3Context.provider?.getSigner());
+    } else if (
+      contractType === TokenType.ERC721 ||
+      contractType === TokenType.ERC998 ||
+      contractType === TokenType.ERC1155
+    ) {
+      const contractErc721 = new Contract(address, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
-    } else if (contractType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(address, SetApprovalForAllERC1155ABI, web3Context.provider?.getSigner());
-      return contractErc1155.setApprovalForAll(values.address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import SetMaxStakeABI from "./setMaxStake.abi.json";
+import StakingSetMaxStakeABI from "../../../../../abis/components/menu/mechanics/staking/max-stakes/setMaxStake.abi.json";
 
 import { IStakesDto, StakesEditDialog } from "./dialog";
 
@@ -32,7 +32,7 @@ export const StakesMenuItem: FC<IStakesMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IStakesDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, SetMaxStakeABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, StakingSetMaxStakeABI, web3Context.provider?.getSigner());
     return contract.setMaxStake(values.maxStake) as Promise<void>;
   });
 

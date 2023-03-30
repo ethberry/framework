@@ -7,7 +7,8 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import blackListABI from "./blacklist.abi.json";
+
+import BlacklistABI from "../../../../abis/components/menu/extensions/blacklist-add/blacklist.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
@@ -15,7 +16,7 @@ export interface IBlacklistMenuItemProps {
   contract: IContract;
 }
 
-export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
+export const BlacklistMenuItem: FC<IBlacklistMenuItemProps> = props => {
   const {
     contract: { address },
   } = props;
@@ -31,7 +32,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, blackListABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, BlacklistABI, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 

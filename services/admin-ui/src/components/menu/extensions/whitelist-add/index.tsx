@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import whiteListABI from "./whitelist.abi.json";
+import WhitelistABI from "../../../../abis/components/menu/extensions/whitelist-add/whitelist.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
@@ -16,7 +16,7 @@ export interface IWhitelistMenuItemProps {
   contract: IContract;
 }
 
-export const WhitelistAddMenuItem: FC<IWhitelistMenuItemProps> = props => {
+export const WhitelistMenuItem: FC<IWhitelistMenuItemProps> = props => {
   const {
     contract: { address },
   } = props;
@@ -32,7 +32,7 @@ export const WhitelistAddMenuItem: FC<IWhitelistMenuItemProps> = props => {
   };
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, whiteListABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, WhitelistABI, web3Context.provider?.getSigner());
     return contract.whitelist(values.account) as Promise<void>;
   });
 

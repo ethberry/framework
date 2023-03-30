@@ -54,7 +54,7 @@ export const Product: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: getEmptyTemplate() as any,
+      price: getEmptyTemplate(),
       amount: 0,
       categories: [],
       photos: [],

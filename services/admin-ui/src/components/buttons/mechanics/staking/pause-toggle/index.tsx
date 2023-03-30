@@ -7,7 +7,7 @@ import { Contract } from "ethers";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import PauseABI from "./pause.abi.json";
+import StakingPauseABI from "../../../../../abis/components/buttons/mechanics/staking/pause-toggle/pause.abi.json";
 
 export interface IPauseToggleButton {
   className?: string;
@@ -21,7 +21,7 @@ export const PauseToggleButton: FC<IPauseToggleButton> = props => {
   const getPauseStatus = useMetamaskValue(
     async (web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(process.env.STAKING_ADDR, PauseABI, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.STAKING_ADDR, StakingPauseABI, web3Context.provider?.getSigner());
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         return contract.paused() as boolean;
       }
@@ -41,7 +41,7 @@ export const PauseToggleButton: FC<IPauseToggleButton> = props => {
   }, [isPaused]);
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, PauseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingPauseABI, web3Context.provider?.getSigner());
     if (isPaused) {
       return contract.unpause() as Promise<void>;
     } else {

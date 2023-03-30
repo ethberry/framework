@@ -3,16 +3,18 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "to",
+        "name": "token",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
       }
     ],
-    "name": "mint",
+    "name": "release",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "release",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

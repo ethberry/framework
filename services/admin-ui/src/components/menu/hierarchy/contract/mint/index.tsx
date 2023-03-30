@@ -11,9 +11,9 @@ import { ITokenAssetComponent } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import MintERC20ABI from "./mint.erc20.abi.json";
-import MintCommonERC721ABI from "./mintCommon.erc721.abi.json";
-import MintERC1155ABI from "./mint.erc1155.abi.json";
+import ERC20MintABI from "../../../../../abis/components/common/mint/erc20.mint.abi.json";
+import ERC721MintCommonABI from "../../../../../abis/components/common/mint/erc721.mintCommon.abi.json";
+import ERC1155MintABI from "../../../../../abis/components/common/mint/erc1155.mint.abi.json";
 
 import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
@@ -44,21 +44,21 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
         templateComponent.contract.address,
-        MintERC20ABI,
+        ERC20MintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc20.mint(values.account, templateComponent.amount) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC721 || templateComponent.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(
         templateComponent.contract.address,
-        MintCommonERC721ABI,
+        ERC721MintCommonABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         templateComponent.contract.address,
-        MintERC1155ABI,
+        ERC1155MintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(

@@ -27,7 +27,7 @@ export const Grade: FC = () => {
     baseUrl: "/grades",
     empty: {
       growthRate: 0,
-      price: emptyPrice as any,
+      price: emptyPrice,
       contract: {
         title: "",
       } as IContract,

@@ -50,8 +50,8 @@ export const Drop: FC = () => {
   } = useCollection<IDrop, IDropSearchDto>({
     baseUrl: "/drops",
     empty: {
-      item: emptyItem as any,
-      price: emptyPrice as any,
+      item: emptyItem,
+      price: emptyPrice,
       merchantId: user.profile.merchantId,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),

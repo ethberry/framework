@@ -48,9 +48,9 @@ export const MysteryBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyItem as any,
+      item: emptyItem,
       template: {
-        price: emptyPrice as any,
+        price: emptyPrice,
       } as ITemplate,
     },
     search: {
