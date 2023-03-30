@@ -12,12 +12,11 @@ interface IStaking {
   struct Rule {
     Asset[] deposit;
     Asset[] reward;
-    Asset[] content;
+    Asset[][] content;
     uint256 period;
     uint256 penalty;
     bool recurrent;
     bool active;
-    uint256 externalId;
   }
 
   struct Stake {
@@ -29,6 +28,6 @@ interface IStaking {
     bool activeDeposit;
   }
 
-  event RuleCreated(uint256 ruleId, Rule rule, uint256 externalId);
+  event RuleCreated(uint256 ruleId, Rule rule);
   event RuleUpdated(uint256 ruleId, bool active);
 }

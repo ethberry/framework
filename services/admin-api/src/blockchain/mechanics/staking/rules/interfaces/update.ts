@@ -1,4 +1,4 @@
-import { DurationUnit, IAssetDto } from "@framework/types";
+import { DurationUnit, IAssetDto, StakingRuleStatus } from "@framework/types";
 
 export interface IStakingUpdateDto {
   title: string;
@@ -9,4 +9,5 @@ export interface IStakingUpdateDto {
   durationUnit: DurationUnit;
   penalty: number;
   recurrent: boolean;
+  stakingRuleStatus: StakingRuleStatus;
 }

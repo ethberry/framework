@@ -16,7 +16,7 @@ async function bootstrap(): Promise<void> {
 
   const configService = app.get(ConfigService);
   const nodeEnv = configService.get<string>("NODE_ENV", "development");
-  const baseUrl = configService.get<string>("ADMIN_FE_URL", "http://localhost:3004");
+  const baseUrl = configService.get<string>("OFFICE_FE_URL", "http://localhost:3004");
 
   app.enableCors({
     origin:

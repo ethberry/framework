@@ -15,12 +15,12 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
+import "./interfaces/IStaking.sol";
+import "../TopUp.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
-import "./interfaces/IStaking.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
@@ -34,7 +34,7 @@ import "../../Exchange/referral/LinearReferral.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, LinearReferral, Wallet {
+contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, LinearReferral, TopUp {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -44,17 +44,10 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
-  struct Metadata {
-    bytes32 key;
-    uint256 value;
-  }
-
-  Metadata[] _meta;
-
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
-  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256 tokenId);
+  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
@@ -96,36 +89,38 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
   /**
    * @dev Deposit function allows a user to stake a specified token with a given rule.
    * @param ruleId - id of rule defined in _rules mapping.
-   * @param tokenId - id of the token to be deposited.
+   * @param tokenIds - Array<id> of the tokens to be deposited.
    */
-  function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
+  function deposit(address referrer, uint256 ruleId, uint256[] calldata tokenIds) public payable whenNotPaused {
     // Retrieve the rule associated with the given rule ID.
     Rule memory rule = _rules[ruleId];
     // Ensure that the rule exists and is active
-    require(rule.externalId != 0, "Staking: rule doesn't exist");
+    require(rule.period != 0, "Staking: rule does not exist");
     require(rule.active, "Staking: rule doesn't active");
+
+    address account = _msgSender();
 
     // check if user reached the maximum number of stakes, if it is revert transaction.
     if (_maxStake > 0) {
-      require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
+      require(_stakeCounter[account] < _maxStake, "Staking: stake limit exceeded");
     }
 
     // Increment counters and set a new stake.
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();
-    _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
+    _stakeCounter[account] = _stakeCounter[account] + 1;
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
-    // _stakes[stakeId] = Stake(_msgSender(), rule.deposit, ruleId, block.timestamp, 0, true);
+    // _stakes[stakeId] = Stake(account, rule.deposit, ruleId, block.timestamp, 0, true);
 
     // Store the new stake in the _stakes mapping.
-    _stakes[stakeId].owner = _msgSender();
+    _stakes[stakeId].owner = account;
     _stakes[stakeId].ruleId = ruleId;
     _stakes[stakeId].startTimestamp = block.timestamp;
     _stakes[stakeId].cycles = 0;
     _stakes[stakeId].activeDeposit = true;
 
-    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
     for (uint256 i = 0; i < length; i++) {
@@ -133,7 +128,7 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
       Asset memory depositItem = Asset(
         rule.deposit[i].tokenType,
         rule.deposit[i].token,
-        tokenId,
+        tokenIds[i],
         rule.deposit[i].amount
       );
 
@@ -142,13 +137,13 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
       // Check templateId if ERC721 or ERC998
       if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
         if (rule.deposit[i].tokenId != 0) {
-          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
+          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
           require(templateId == rule.deposit[i].tokenId, "Staking: wrong deposit token templateID");
         }
       }
 
       // Transfer tokens from user to this contract.
-      spendFrom(_toArray(depositItem), _msgSender(), address(this));
+      spendFrom(_toArray(depositItem), account, address(this));
 
       // Do something after purchase with refferer
       _afterPurchase(referrer, _toArray(depositItem));
@@ -170,9 +165,12 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
     Stake storage stake = _stakes[stakeId];
     address payable receiver = payable(stake.owner); // Set the receiver of the reward.
     Rule memory rule = _rules[stake.ruleId];
+
+    address account = _msgSender();
+
     // Verify that the stake exists and the caller is the owner of the stake.
     require(stake.owner != address(0), "Staking: wrong staking id");
-    require(stake.owner == _msgSender(), "Staking: not an owner");
+    require(stake.owner == account, "Staking: not an owner");
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
     // Calculate the multiplier
@@ -226,7 +224,7 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
           for (uint256 k = 0; k < multiplier; k++) {
             if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
               // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
-              IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
+              IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[j]);
             } else {
               // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
               acquire(_toArray(rewardItem), receiver);
@@ -275,15 +273,8 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, TopUp) returns (bool) {
     return super.supportsInterface(interfaceId);
-  }
-
-  /**
-   * @dev Rejects any incoming ETH transfers to this contract address
-   */
-  receive() external payable override {
-    revert();
   }
 
   /**
@@ -323,20 +314,24 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
     for (uint256 j = 0; j < lengthReward; j++) {
       p.reward.push(rule.reward[j]);
     }
+
     // p.content = rule.content;
+    // Store each individual asset in the rule's content array
+    uint256 len = rule.content.length;
+    for (uint256 k = 0; k < len; k++) {
+      p.content.push();
+      uint256 length = rule.content[k].length;
+      for (uint256 l = 0; l < length; l++) {
+        p.content[k].push(rule.content[k][l]);
+      }
+    }
+
     p.period = rule.period;
     p.penalty = rule.penalty;
     p.recurrent = rule.recurrent;
     p.active = rule.active;
-    p.externalId = rule.externalId;
 
-    // Store each individual asset in the rule's content array
-    uint256 length = rule.content.length;
-    for (uint256 i = 0; i < length; i++) {
-      p.content.push(rule.content[i]);
-    }
-
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreated(ruleId, rule);
   }
 
   /**

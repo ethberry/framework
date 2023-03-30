@@ -27,10 +27,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80441
       ), (
         80442
-      ), (
-        80451
-      ), (
-        80452
       );
     `);
 
@@ -89,18 +85,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         140601, -- warrior
         1,
         80442
-      ), (
-        'ERC998',
-        1406,
-        140601, -- warrior
-        1,
-        80451
-      ), (
-        'ERC1155',
-        1501,
-        150101, -- gold
-        1000,
-        80452
       );
     `);
 
@@ -113,7 +97,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         recurrent,
         deposit_id,
         reward_id,
-        external_id,
         staking_rule_status,
         created_at,
         updated_at
@@ -125,7 +108,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80411,
         80412,
-        41,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -137,7 +119,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80421,
         80422,
-        42,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -149,7 +130,6 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80431,
         80432,
-        43,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -161,20 +141,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80441,
         80442,
-        44,
         'NEW',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'ERC998 > ERC1155',
-        '${simpleFormatting}',
-        86400,
-        1,
-        true,
-        80451,
-        80452,
-        45,
-        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

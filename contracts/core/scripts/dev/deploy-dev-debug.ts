@@ -296,18 +296,22 @@ async function main() {
     await stakingInstance.setRules([
       {
         externalId: 11, // NATIVE > NATIVE
-        deposit: {
-          tokenType: 0,
-          token: constants.AddressZero,
-          tokenId: 0,
-          amount: constants.WeiPerEther,
-        },
-        reward: {
-          tokenType: 0,
-          token: constants.AddressZero,
-          tokenId: 0,
-          amount: constants.WeiPerEther.div(100).mul(5), // 5%
-        },
+        deposit: [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: constants.WeiPerEther,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: constants.WeiPerEther.div(100).mul(5), // 5%
+          },
+        ],
         content: [],
         period: 30 * 84600,
         penalty: 1,
@@ -322,18 +326,22 @@ async function main() {
     await stakingInstance.setRules([
       {
         externalId: 23, // ERC20 > ERC721
-        deposit: {
-          tokenType: 1,
-          token: contracts.erc20Simple.address,
-          tokenId: 0,
-          amount: constants.WeiPerEther,
-        },
-        reward: {
-          tokenType: 2,
-          token: contracts.erc721Random.address,
-          tokenId: 306001,
-          amount: 1,
-        },
+        deposit: [
+          {
+            tokenType: 1,
+            token: contracts.erc20Simple.address,
+            tokenId: 0,
+            amount: constants.WeiPerEther,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2,
+            token: contracts.erc721Random.address,
+            tokenId: 306001,
+            amount: 1,
+          },
+        ],
         content: [],
         period: 30 * 84600,
         penalty: 1,
@@ -348,25 +356,31 @@ async function main() {
     await stakingInstance.setRules([
       {
         externalId: 45, // ERC998 > ERC1155
-        deposit: {
-          tokenType: 3,
-          token: contracts.erc998Random.address,
-          tokenId: 0,
-          amount: 1,
-        },
-        reward: {
-          tokenType: 2,
-          token: contracts.erc721MysteryboxSimple.address,
-          tokenId: 601001,
-          amount: 1,
-        },
-        content: [
+        deposit: [
           {
-            tokenType: 2,
-            token: contracts.erc721Random.address,
-            tokenId: 306001,
+            tokenType: 3,
+            token: contracts.erc998Random.address,
+            tokenId: 0,
             amount: 1,
           },
+        ],
+        reward: [
+          {
+            tokenType: 2,
+            token: contracts.erc721MysteryboxSimple.address,
+            tokenId: 601001,
+            amount: 1,
+          },
+        ],
+        content: [
+          [
+            {
+              tokenType: 2,
+              token: contracts.erc721Random.address,
+              tokenId: 306001,
+              amount: 1,
+            },
+          ],
         ],
         period: 1 * 84600,
         penalty: 0,
@@ -374,7 +388,7 @@ async function main() {
         active: true,
       },
     ]),
-    "takingInstance.setRules",
+    "stakingInstance.setRules",
   );
 
   await debug(

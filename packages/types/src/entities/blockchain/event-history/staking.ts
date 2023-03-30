@@ -6,10 +6,13 @@ export enum StakingEventType {
   StakingFinish = "StakingFinish",
 }
 
+export type IAssetStruct = [string, string, string, string];
+
+export type IStakingRuleStruct = [[IAssetStruct], [IAssetStruct], [IAssetStruct], string, string, boolean, boolean];
+
 export interface IStakingCreateEvent {
   ruleId: string;
-  rule: IStakingRule;
-  externalId: string;
+  rule: IStakingRuleStruct;
 }
 
 export interface IStakingUpdateEvent {
@@ -17,24 +20,23 @@ export interface IStakingUpdateEvent {
   active: boolean;
 }
 
-interface IStakingRule {
+export interface IStakingRuleInterface {
   deposit: Array<IStakingRuleItem>;
   reward: Array<IStakingRuleItem>;
   period: string;
   penalty: string;
   recurrent: boolean;
   active: boolean;
-  externalId: string;
 }
 
-interface IStakingRuleItem {
+export interface IStakingRuleItem {
   itemType: StakingItemType;
   address: string;
   tokenId: string;
   amount: string;
 }
 
-enum StakingItemType {
+export enum StakingItemType {
   NATIVE = "0",
   ERC20 = "1",
   ERC721 = "2",
@@ -47,7 +49,7 @@ export interface IStakingDepositEvent {
   ruleId: string;
   owner: string;
   startTimestamp: string;
-  tokenId: string;
+  tokenIds: Array<string>;
 }
 
 export interface IStakingWithdrawEvent {

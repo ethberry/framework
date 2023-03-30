@@ -24,7 +24,7 @@ import { TemplateSearchForm } from "../../../../components/forms/template-search
 import { cleanUpAsset } from "../../../../utils/money";
 import { TemplateActionsMenu } from "../../../../components/menu/template";
 
-export const Erc721Template: FC = () => {
+export const CollectionTemplate: FC = () => {
   const {
     rows,
     count,
@@ -49,7 +49,7 @@ export const Erc721Template: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
       contractId: 3,
     },

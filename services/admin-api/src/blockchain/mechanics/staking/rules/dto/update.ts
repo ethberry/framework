@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsBoolean, IsEnum, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { DurationUnit } from "@framework/types";
+import { DurationUnit, StakingRuleStatus } from "@framework/types";
 
 import { IStakingUpdateDto } from "../interfaces";
 import { DepositDto } from "./deposit";
@@ -65,4 +65,11 @@ export class StakingUpdateDto implements IStakingUpdateDto {
   @IsOptional()
   @IsBoolean({ message: "typeMismatch" })
   public recurrent: boolean;
+
+  @ApiPropertyOptional({
+    enum: StakingRuleStatus,
+  })
+  @Transform(({ value }) => value as StakingRuleStatus)
+  @IsEnum(StakingRuleStatus, { message: "badInput" })
+  public stakingRuleStatus: StakingRuleStatus;
 }

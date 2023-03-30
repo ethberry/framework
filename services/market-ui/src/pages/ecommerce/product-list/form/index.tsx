@@ -19,8 +19,8 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, categoryIds, merchantId } = initialValues;
-  const fixedValues = { query, categoryIds, merchantId };
+  const { query, categoryIds } = initialValues;
+  const fixedValues = { query, categoryIds };
 
   return (
     <div className={classes.root}>
@@ -35,9 +35,9 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
             <Grid item xs={6}>
               <EntityInput multiple name="categoryIds" controller="categories" />
             </Grid>
-            <Grid item xs={6}>
-              <EntityInput name="merchantId" controller="merchants" />
-            </Grid>
+            {/* <Grid item xs={6}> */}
+            {/*  <EntityInput name="merchantId" controller="merchants" /> */}
+            {/* </Grid> */}
           </Grid>
         </Collapse>
         <AutoSave onSubmit={onSubmit} />

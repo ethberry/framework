@@ -9,7 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE, TEMPLATE_ID } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { templateId, tokenId } from "../../constants";
+import { templateId, tokenId, tokenIds } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -56,7 +56,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -92,7 +91,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -128,7 +126,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -163,7 +160,6 @@ describe("StakingRefferal", function () {
       const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
 
       const stakeRule1: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -188,7 +184,6 @@ describe("StakingRefferal", function () {
       };
 
       const stakeRule2: IRule = {
-        externalId: 2,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -206,12 +201,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount,
+            },
+          ],
         ],
         period,
         penalty,
@@ -229,7 +226,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -268,7 +264,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -295,8 +290,8 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(stranger.address, 2, tokenId, { value: 100 });
-      await expect(tx1).to.be.revertedWith("Staking: rule doesn't exist");
+      const tx1 = stakingInstance.deposit(stranger.address, 2, tokenIds, { value: 100 });
+      await expect(tx1).to.be.revertedWith("Staking: rule does not exist");
     });
 
     it("should fail for not active rule", async function () {
@@ -305,7 +300,6 @@ describe("StakingRefferal", function () {
       const [_owner, _receiver, stranger] = await ethers.getSigners();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -332,7 +326,7 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       await expect(tx1).to.be.revertedWith("Staking: rule doesn't active");
     });
 
@@ -342,7 +336,6 @@ describe("StakingRefferal", function () {
       const [_owner, _receiver, stranger] = await ethers.getSigners();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -369,7 +362,7 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenId, { value: 100 });
+      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenIds, { value: 100 });
       await expect(tx1).to.be.revertedWith("Exchange: Wrong amount");
     });
 
@@ -381,7 +374,6 @@ describe("StakingRefferal", function () {
       await stakingInstance.setMaxStake(1);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -408,10 +400,10 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       await expect(tx1).to.not.be.reverted;
 
-      const tx2 = stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx2 = stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       await expect(tx2).to.be.revertedWith("Staking: stake limit exceeded");
     });
   });
@@ -423,7 +415,6 @@ describe("StakingRefferal", function () {
       const stakingInstance = await factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -451,18 +442,29 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenId)
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.connect(receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
@@ -473,7 +475,6 @@ describe("StakingRefferal", function () {
       const stakingInstance = await factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -502,11 +503,11 @@ describe("StakingRefferal", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE
-      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenId)
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -514,7 +515,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
@@ -525,7 +536,6 @@ describe("StakingRefferal", function () {
       const stakingInstance = await factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -554,11 +564,11 @@ describe("StakingRefferal", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE
-      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.connect(receiver).deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenId)
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -566,7 +576,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -587,7 +607,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -628,7 +647,7 @@ describe("StakingRefferal", function () {
       await erc721RandomInstance.approve(stakingInstance.address, 2);
 
       // DEPOSIT
-      const tx1 = stakingInstance.deposit(stranger.address, 1, 1 + 1);
+      const tx1 = stakingInstance.deposit(stranger.address, 1, [1 + 1]);
       await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
   });
@@ -640,7 +659,6 @@ describe("StakingRefferal", function () {
       const stakingInstance = await factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -668,11 +686,11 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -680,7 +698,17 @@ describe("StakingRefferal", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
 
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -698,7 +726,6 @@ describe("StakingRefferal", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -727,11 +754,11 @@ describe("StakingRefferal", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -771,7 +798,6 @@ describe("StakingRefferal", function () {
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -799,11 +825,11 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -835,7 +861,6 @@ describe("StakingRefferal", function () {
       await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -863,11 +888,11 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -899,7 +924,6 @@ describe("StakingRefferal", function () {
       await mysteryboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -917,12 +941,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period, // 60 sec
         penalty,
@@ -934,11 +960,11 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -969,7 +995,6 @@ describe("StakingRefferal", function () {
       await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -997,11 +1022,11 @@ describe("StakingRefferal", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId, { value: amount });
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
@@ -1030,7 +1055,6 @@ describe("StakingRefferal", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1063,11 +1087,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1078,8 +1102,19 @@ describe("StakingRefferal", function () {
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1100,7 +1135,6 @@ describe("StakingRefferal", function () {
       const erc20Instance = await erc20Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1133,11 +1167,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1179,7 +1213,6 @@ describe("StakingRefferal", function () {
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1212,11 +1245,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1255,7 +1288,6 @@ describe("StakingRefferal", function () {
       await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1288,11 +1320,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1331,7 +1363,6 @@ describe("StakingRefferal", function () {
       await mysteryboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1349,12 +1380,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
@@ -1370,11 +1403,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1412,7 +1445,6 @@ describe("StakingRefferal", function () {
       await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 1, // ERC20
@@ -1445,11 +1477,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc20Instance.approve(stakingInstance.address, amount);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, owner.address, startTimestamp, tokenId)
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -1487,7 +1519,6 @@ describe("StakingRefferal", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1520,21 +1551,33 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
 
       const balance2 = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance2).to.equal(0);
+
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1556,7 +1599,6 @@ describe("StakingRefferal", function () {
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1589,11 +1631,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
 
@@ -1634,7 +1676,6 @@ describe("StakingRefferal", function () {
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1667,11 +1708,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
       const balance2 = await erc721RandomInstance.balanceOf(owner.address);
@@ -1705,7 +1746,6 @@ describe("StakingRefferal", function () {
       await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1738,11 +1778,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
 
@@ -1779,7 +1819,6 @@ describe("StakingRefferal", function () {
       await mysteryboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1797,12 +1836,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
@@ -1819,11 +1860,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
       const balance2 = await erc721RandomInstance.balanceOf(owner.address);
@@ -1857,7 +1898,6 @@ describe("StakingRefferal", function () {
       await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 2, // ERC721
@@ -1890,11 +1930,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, tokenId);
 
@@ -1927,7 +1967,6 @@ describe("StakingRefferal", function () {
       const erc1155Instance = await erc1155Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -1959,21 +1998,33 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 
       const balance2 = await erc1155Instance.balanceOf(owner.address, 1);
       expect(balance2).to.equal(0);
+
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
       // REWARD
-      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
@@ -1995,7 +2046,6 @@ describe("StakingRefferal", function () {
       const erc1155Instance = await erc1155Factory();
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -2027,11 +2077,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 
@@ -2073,7 +2123,6 @@ describe("StakingRefferal", function () {
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -2105,11 +2154,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 
@@ -2146,7 +2195,6 @@ describe("StakingRefferal", function () {
       await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -2178,11 +2226,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 
@@ -2219,7 +2267,6 @@ describe("StakingRefferal", function () {
       await mysteryboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -2237,12 +2284,14 @@ describe("StakingRefferal", function () {
           },
         ],
         content: [
-          {
-            tokenType: 2, // ERC721
-            token: erc721SimpleInstance.address,
-            tokenId,
-            amount: 0,
-          },
+          [
+            {
+              tokenType: 2, // ERC721
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
         ],
         period,
         penalty,
@@ -2258,11 +2307,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 
@@ -2296,7 +2345,6 @@ describe("StakingRefferal", function () {
       await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: [
           {
             tokenType: 4, // ERC1155
@@ -2328,11 +2376,11 @@ describe("StakingRefferal", function () {
       expect(balance1).to.equal(amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenId);
+      const tx1 = await stakingInstance.deposit(stranger.address, 1, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenId)
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
 

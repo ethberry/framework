@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants } from "ethers";
+import { constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
@@ -56,17 +56,25 @@ describe("ERC721MysteryboxSimple", function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
+        await mysteryboxInstance.fundEth({ value: utils.parseEther("1.0") });
 
         const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
           {
-            tokenType: 1,
+            tokenType: 0,
             token: constants.AddressZero,
             tokenId: templateId,
             amount,
           },
         ]);
+        await expect(tx1)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-        await expect(tx1).to.be.revertedWith("UnsupportedTokenType");
+        const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
+        await expect(tx2)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(receiver.address, constants.AddressZero, tokenId)
+          .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount]);
       });
     });
 
@@ -77,6 +85,7 @@ describe("ERC721MysteryboxSimple", function () {
         const mysteryboxInstance = await factory();
         const erc20SimpleInstance = await erc20Factory("ERC20Simple");
         await erc20SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+        await erc20SimpleInstance.mint(mysteryboxInstance.address, amount);
 
         const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
           {
@@ -86,8 +95,16 @@ describe("ERC721MysteryboxSimple", function () {
             amount,
           },
         ]);
+        await expect(tx1)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-        await expect(tx1).to.be.revertedWith("UnsupportedTokenType");
+        const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
+        await expect(tx2)
+          .to.emit(mysteryboxInstance, "Transfer")
+          .withArgs(receiver.address, constants.AddressZero, tokenId)
+          .to.emit(erc20SimpleInstance, "Transfer")
+          .withArgs(mysteryboxInstance.address, receiver.address, amount);
       });
     });
 
@@ -260,15 +277,34 @@ describe("ERC721MysteryboxSimple", function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
+
+        const erc20SimpleInstance = await erc20Factory("ERC20Simple");
+
         const erc721SimpleInstance = await erc721Factory("ERC721Simple");
         const erc998SimpleInstance = await erc721Factory("ERC998Simple");
         const erc1155SimpleInstance = await erc1155Factory("ERC1155Simple");
 
+        await erc20SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
         await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
         await erc998SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
         await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
 
+        await mysteryboxInstance.fundEth({ value: utils.parseEther("1.0") });
+        await erc20SimpleInstance.mint(mysteryboxInstance.address, amount);
+
         const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: templateId,
+            amount,
+          },
+          {
+            tokenType: 1,
+            token: erc20SimpleInstance.address,
+            tokenId: templateId,
+            amount,
+          },
           {
             tokenType: 2,
             token: erc721SimpleInstance.address,
@@ -297,6 +333,9 @@ describe("ERC721MysteryboxSimple", function () {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, constants.AddressZero, tokenId)
+          .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount])
+          .to.emit(erc20SimpleInstance, "Transfer")
+          .withArgs(mysteryboxInstance.address, receiver.address, amount)
           .to.emit(erc721SimpleInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId)
           .to.emit(erc998SimpleInstance, "Transfer")

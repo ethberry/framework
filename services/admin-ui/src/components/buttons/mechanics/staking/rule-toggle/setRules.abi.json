@@ -80,9 +80,9 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct Asset[][]",
+            "internalType": "struct Asset[]",
             "name": "content",
-            "type": "tuple[][]"
+            "type": "tuple[]"
           },
           {
             "internalType": "uint256",
