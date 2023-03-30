@@ -43,30 +43,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
   });
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
-    // const content = [] as Array<any>;
-    // if (rule.reward) {
-    //   for (const rew of rule.reward.components) {
-    //     const {
-    //       rows: [mysteryBox],
-    //     } = fn(void 0, { templateIds: [rew.templateId] });
-    //     // MODULE:MYSTERYBOX
-    //     if (mysteryBox) {
-    //       content.push(
-    //         (mysteryBox as IMysterybox).item!.components.map(component => ({
-    //           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-    //           token: component.contract!.address,
-    //           tokenId: component.templateId || 0,
-    //           amount: component.amount,
-    //         })),
-    //       );
-    //     } else {
-    //       content.push([]);
-    //     }
-    //   }
-    // }
-
     const stakingRule = {
-      externalId: rule.id || 0,
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
@@ -87,8 +64,6 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    console.log("stakingRule", stakingRule);
-    console.log("stakingRulecontent", content);
     const contract = new Contract(process.env.STAKING_ADDR, SetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
@@ -121,34 +96,6 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     });
   };
 
-  // const handleLoadRule1 = (rule: Partial<IStakingRule>): (() => Promise<void>) => {
-  //   return async (): Promise<void> => {
-  //     // MODULE:MYSTERYBOX
-  //     const content = [] as Array<any>;
-  //     if (rule.reward) {
-  //       for (const rew of rule.reward.components) {
-  //         const {
-  //           rows: [mysteryBox],
-  //         } = await fn(void 0, { templateIds: [rew.templateId] });
-  //         // MODULE:MYSTERYBOX
-  //         if (mysteryBox) {
-  //           content.push(
-  //             (mysteryBox as IMysterybox).item!.components.map(component => ({
-  //               tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-  //               token: component.contract!.address,
-  //               tokenId: component.templateId || 0,
-  //               amount: component.amount,
-  //             })),
-  //           );
-  //         } else {
-  //           content.push([]);
-  //         }
-  //       }
-  //     }
-  //     return metaLoadRule(rule, content);
-  //   };
-  // };
-
   return (
     <Fragment>
       <Button
@@ -158,7 +105,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
         data-testid="StakingRuleUploadButton"
         className={className}
       >
-        <FormattedMessage id="form.buttons.upload" />
+        <FormattedMessage id="form.buttons.create" />
       </Button>
       <StakingRuleUploadDialog
         onConfirm={handleLoadRule}

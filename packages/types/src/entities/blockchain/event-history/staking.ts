@@ -8,21 +8,11 @@ export enum StakingEventType {
 
 export type IAssetStruct = [string, string, string, string];
 
-export type IStakingRuleStruct = [
-  [IAssetStruct],
-  [IAssetStruct],
-  [IAssetStruct],
-  string,
-  string,
-  boolean,
-  boolean,
-  string,
-];
+export type IStakingRuleStruct = [[IAssetStruct], [IAssetStruct], [IAssetStruct], string, string, boolean, boolean];
 
 export interface IStakingCreateEvent {
   ruleId: string;
   rule: IStakingRuleStruct;
-  externalId: string;
 }
 
 export interface IStakingUpdateEvent {
@@ -37,7 +27,6 @@ export interface IStakingRuleInterface {
   penalty: string;
   recurrent: boolean;
   active: boolean;
-  externalId: string;
 }
 
 export interface IStakingRuleItem {

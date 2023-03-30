@@ -113,7 +113,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         recurrent,
         deposit_id,
         reward_id,
-        external_id,
         staking_rule_status,
         created_at,
         updated_at
@@ -125,7 +124,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         false,
         80611,
         80612,
-        31,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -137,7 +135,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         false,
         80621,
         80622,
-        32,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -149,7 +146,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         false,
         80631,
         80632,
-        33,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -161,7 +157,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         false,
         80641,
         80642,
-        34,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -173,7 +168,6 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         false,
         80651,
         80652,
-        35,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

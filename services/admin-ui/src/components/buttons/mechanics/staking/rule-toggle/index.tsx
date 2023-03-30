@@ -101,7 +101,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  if (rule.stakingRuleStatus === StakingRuleStatus.NEW) {
+  if (!rule.externalId) {
     return (
       <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
@@ -121,7 +121,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? <Close /> : <Check />}
+        {!rule.externalId ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

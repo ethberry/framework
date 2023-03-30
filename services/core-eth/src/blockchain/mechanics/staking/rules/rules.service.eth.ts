@@ -37,7 +37,7 @@ export class StakingRulesServiceEth {
       args: { rule, ruleId },
     } = event;
 
-    const [deposit, reward, _content, period, penalty, recurrent, _active, _externalId] = rule;
+    const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = {

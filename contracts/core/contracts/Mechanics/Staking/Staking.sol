@@ -303,6 +303,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
       p.reward.push(rule.reward[j]);
     }
 
+    // p.content = rule.content;
+    // Store each individual asset in the rule's content array
     uint256 len = rule.content.length;
     for (uint256 k = 0; k < len; k++) {
       p.content.push();
@@ -316,9 +318,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, TopUp {
     p.penalty = rule.penalty;
     p.recurrent = rule.recurrent;
     p.active = rule.active;
-    p.externalId = rule.externalId;
 
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreated(ruleId, rule);
   }
 
   /**

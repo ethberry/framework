@@ -314,13 +314,15 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
     for (uint256 j = 0; j < lengthReward; j++) {
       p.reward.push(rule.reward[j]);
     }
+
     // p.content = rule.content;
     // Store each individual asset in the rule's content array
-    uint256 length = rule.content.length;
-    for (uint256 l = 0; l < length; l++) {
-      uint256 len = rule.content[l].length;
-      for (uint256 m = 0; m < len; m++) {
-        p.content[l].push(rule.content[l][m]);
+    uint256 len = rule.content.length;
+    for (uint256 k = 0; k < len; k++) {
+      p.content.push();
+      uint256 length = rule.content[k].length;
+      for (uint256 l = 0; l < length; l++) {
+        p.content[k].push(rule.content[k][l]);
       }
     }
 
@@ -328,9 +330,8 @@ contract StakingReferral is IStaking, ExchangeUtils, AccessControl, Pausable, Li
     p.penalty = rule.penalty;
     p.recurrent = rule.recurrent;
     p.active = rule.active;
-    p.externalId = rule.externalId;
 
-    emit RuleCreated(ruleId, rule, rule.externalId);
+    emit RuleCreated(ruleId, rule);
   }
 
   /**

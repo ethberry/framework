@@ -97,7 +97,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         recurrent,
         deposit_id,
         reward_id,
-        external_id,
         staking_rule_status,
         created_at,
         updated_at
@@ -109,7 +108,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80121,
         80122,
-        12,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -121,7 +119,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80131,
         80132,
-        13,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -133,7 +130,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80141,
         80142,
-        14,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -145,7 +141,6 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80151,
         80152,
-        15,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

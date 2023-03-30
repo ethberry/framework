@@ -113,7 +113,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         recurrent,
         deposit_id,
         reward_id,
-        external_id,
         staking_rule_status,
         created_at,
         updated_at
@@ -125,7 +124,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         false,
         80511,
         80512,
-        51,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -137,7 +135,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         false,
         80521,
         80522,
-        52,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -149,7 +146,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         false,
         80531,
         80532,
-        53,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -161,7 +157,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         false,
         80541,
         80542,
-        54,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -173,7 +168,6 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         false,
         80551,
         80552,
-        55,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

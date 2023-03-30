@@ -62,7 +62,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
           <TemplateAssetInput prefix="deposit" readOnly={readOnly} multiple />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} multiple nullable={true} />
+          <TemplateAssetInput prefix="reward" readOnly={readOnly} multiple allowEmpty={true} />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

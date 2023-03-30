@@ -6,7 +6,6 @@ export interface IRule {
   penalty: number;
   recurrent: boolean;
   active: boolean;
-  externalId: number;
 }
 
 export interface IAsset {
