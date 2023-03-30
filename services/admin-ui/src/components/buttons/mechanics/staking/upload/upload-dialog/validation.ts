@@ -1,6 +1,8 @@
 import { object } from "yup";
+import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
 export const validationSchema = object().shape({
-  // title: string().required("form.validations.valueMissing"),
-  // description: draftValidationSchema,
+  deposit: templateAssetValidationSchema,
+  reward: templateAssetValidationSchema,
+  content: templateAssetValidationSchema,
 });

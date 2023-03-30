@@ -103,11 +103,6 @@
             "internalType": "bool",
             "name": "active",
             "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "externalId",
-            "type": "uint256"
           }
         ],
         "internalType": "struct IStaking.Rule[]",

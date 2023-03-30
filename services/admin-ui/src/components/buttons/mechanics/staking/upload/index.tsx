@@ -90,10 +90,11 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
           content.push([]);
         }
       }
+      if (!content.length) content.push([]);
+    } else {
+      content.push([]);
     }
-    return metaLoadRule(rule, content).finally(() => {
-      setIsUploadDialogOpen(false);
-    });
+    return await metaLoadRule(rule, content);
   };
 
   return (
