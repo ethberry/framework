@@ -432,6 +432,8 @@ services:
       - admin-ui
       - market-ui
       - market-api
+      - office-ui
+      - office-api
       - json-api
       - game-api
       - core-eth

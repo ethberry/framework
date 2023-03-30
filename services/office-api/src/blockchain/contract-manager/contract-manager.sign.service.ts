@@ -36,7 +36,6 @@ import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
-import StakingReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingRef.sol/StakingReferral.json";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/LinearReferralPyramid.sol/LinearReferralPyramid.json";
@@ -386,8 +385,6 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case StakingContractTemplates.SIMPLE:
         return StakingSol.bytecode;
-      case StakingContractTemplates.REFERRAL:
-        return StakingReferralSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }

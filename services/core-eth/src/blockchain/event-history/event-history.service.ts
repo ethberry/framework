@@ -5,7 +5,12 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, In } from "t
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, ExchangeEventType, TContractEventData } from "@framework/types";
+import {
+  ContractEventType,
+  ExchangeEventType,
+  IERC721TokenMintRandomEvent,
+  TContractEventData,
+} from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { EventHistoryEntity } from "./event-history.entity";
@@ -103,7 +108,7 @@ export class EventHistoryService {
 
     // NESTED events
     if ((name as ContractEventType) === "Transfer") {
-      const nestedEvent = await this.findOne({
+      const parentEvent = await this.findOne({
         transactionHash,
         eventType: In([
           ExchangeEventType.Purchase,
@@ -114,14 +119,67 @@ export class EventHistoryService {
         ]),
       });
 
-      if (nestedEvent) {
-        Object.assign(contractEventEntity, { nestedId: nestedEvent.id });
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
       }
       await contractEventEntity.save();
     }
 
+    // get PARENT events
+    await this.findParentHistory(contractEventEntity);
+
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
 
     return contractEventEntity;
+  }
+
+  // get PARENT events
+  public async findParentHistory(contractEventEntity: EventHistoryEntity) {
+    const { eventType, transactionHash, eventData } = contractEventEntity;
+
+    if (eventType === ContractEventType.RandomWordsRequested) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: ContractEventType.Purchase,
+      });
+
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+      }
+      await contractEventEntity.save();
+    }
+
+    if (eventType === ContractEventType.MintRandom) {
+      const data = eventData as IERC721TokenMintRandomEvent;
+      const requestId = data.requestId;
+
+      const parentEvent = await this.findByRandomRequest(requestId);
+
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+      }
+      await contractEventEntity.save();
+    }
+
+    if (eventType === ContractEventType.Transfer) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: In([
+          ExchangeEventType.Purchase,
+          ExchangeEventType.Upgrade,
+          ExchangeEventType.Breed,
+          ExchangeEventType.Craft,
+          ExchangeEventType.Mysterybox,
+          ExchangeEventType.Claim,
+          ExchangeEventType.Borrow,
+          ContractEventType.MintRandom,
+        ]),
+      });
+
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+      }
+      await contractEventEntity.save();
+    }
   }
 }

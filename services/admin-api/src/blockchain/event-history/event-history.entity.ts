@@ -40,11 +40,11 @@ export class EventHistoryEntity extends IdDateBaseEntity implements IEventHistor
   public contractId: number | null;
 
   @Column({ type: "int", nullable: true })
-  public nestedId: number | null;
+  public parentId: number | null;
 
   @JoinColumn()
   @OneToOne(_type => EventHistoryEntity)
-  public nested: EventHistoryEntity;
+  public parent: EventHistoryEntity;
 
   @JoinColumn()
   @ManyToOne(_type => ContractEntity, contract => contract.history)

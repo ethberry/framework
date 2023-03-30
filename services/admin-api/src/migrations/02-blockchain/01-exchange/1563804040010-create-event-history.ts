@@ -163,7 +163,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "nested_id",
+          name: "parent_id",
           type: "int",
           isNullable: true,
         },
@@ -190,7 +190,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["nested_id"],
+          columnNames: ["parent_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.event_history`,
           onDelete: "SET NULL",
