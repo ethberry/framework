@@ -118,6 +118,9 @@ export enum ContractEventType {
   // MODULE:CHAINLINK
   RandomnessRequest = "RandomnessRequest",
   RandomnessRequestId = "RandomnessRequestId",
+
+  // MODULE:CHAINLINKV2
+  RandomWordsRequested = "RandomWordsRequested",
 }
 
 export type TContractEventData =
@@ -165,7 +168,7 @@ export interface IEventHistory extends IDeployable {
   contract?: IContract;
   tokenId: number | null;
   token?: IToken;
-  nestedId: number | null;
-  nested?: IEventHistory;
+  parentId: number | null;
+  parent?: IEventHistory;
   assets?: Array<IAssetComponentHistory>;
 }
