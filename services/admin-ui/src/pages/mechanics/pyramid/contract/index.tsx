@@ -18,10 +18,10 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, PyramidContractFeatures } from "@framework/types";
 
-import { PyramidContractEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { PyramidDeployButton } from "../../../../components/buttons";
+import { PyramidActionsMenu } from "../../../../components/menu/mechanics/pyramid";
+import { PyramidContractEditDialog } from "./edit";
 
 export const PyramidContract: FC = () => {
   const {
@@ -98,7 +98,7 @@ export const PyramidContract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
+                <PyramidActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

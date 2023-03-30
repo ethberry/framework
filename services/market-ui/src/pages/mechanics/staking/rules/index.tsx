@@ -19,7 +19,7 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
-import { StakingDepositAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
+import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
 
@@ -43,8 +43,8 @@ export const StakingRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: emptyPrice as any,
-      reward: emptyPrice as any,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,
@@ -83,7 +83,7 @@ export const StakingRules: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingDepositAllowanceButton rule={rule} />
+                <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
                 <IconButton onClick={handleView(rule)}>
                   <Visibility />

@@ -8,7 +8,7 @@ export * from "./mechanics/staking/pause-toggle";
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
 
-export * from "./mechanics/vesting/fund";
+export * from "./mechanics/vesting/top-up";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/allowance";
 

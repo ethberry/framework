@@ -22,7 +22,7 @@ import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@frame
 import { Erc998TemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../../utils/money";
-import { TemplateActionsMenu } from "../../../../../components/menu/template";
+import { TemplateActionsMenu } from "../../../../../components/menu/hierarchy/template";
 
 export const Erc998Template: FC = () => {
   const {
@@ -49,7 +49,7 @@ export const Erc998Template: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
       contractId: 3,
     },

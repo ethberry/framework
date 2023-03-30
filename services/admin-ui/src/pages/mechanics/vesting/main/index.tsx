@@ -23,7 +23,7 @@ import { IContract, IVestingSearchDto } from "@framework/types";
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { VestingActionsMenu } from "../../../../components/menu/vesting";
+import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 

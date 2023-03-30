@@ -6,8 +6,8 @@ import { companyName, EnabledLanguages } from "@framework/constants";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
-import { NetworkButton } from "../../buttons/network";
-import { WalletButton } from "../../buttons/wallet";
+import { WalletButton } from "../../buttons";
+import { NetworkButton } from "./network";
 import { Referrer } from "./referrer";
 import { Cart } from "./cart";
 import { Sections } from "./sections";

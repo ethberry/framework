@@ -8,17 +8,19 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
+import { IStakingRule, TokenType } from "@framework/types";
 
-import AllowanceERC20ABI from "./allowance.erc20.abi.json";
+import ApproveERC20ABI from "./approve.erc20.abi.json";
+import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
+import SetApprovalForAllERC1155ABI from "./setApprovalForAll.erc1155.abi.json";
 
-import { DepositAllowanceDialog, IAllowanceDto } from "../../dialogs/deposit-allowance";
+import { StakingAllowanceDialog, IStakingAllowanceDto } from "./dialog";
 
-export interface IStakingDepositAllowanceButtonProps {
-  rule: IStakingRule | IPyramidRule;
+export interface IStakingAllowanceButtonProps {
+  rule: IStakingRule;
 }
 
-export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonProps> = props => {
+export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const { rule } = props;
   const { formatMessage } = useIntl();
 
@@ -32,20 +34,34 @@ export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonPro
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
-    if (rule.deposit?.components[0].tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(
-        rule.deposit?.components[0].contract!.address,
-        AllowanceERC20ABI,
+  const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
+    const { amount, contract } = values;
+    const tokenType = rule.deposit?.components[0].tokenType;
+    const address = rule.deposit?.components[0].contract!.address;
+
+    if (tokenType === TokenType.ERC20) {
+      const contractErc20 = new Contract(contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      return contractErc20.approve(address, amount) as Promise<any>;
+    } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
+      const contractErc721 = new Contract(
+        contract.address,
+        SetApprovalForAllERC721ABI,
         web3Context.provider?.getSigner(),
       );
-      return contractErc20.approve(process.env.STAKING_ADDR, values.amount) as Promise<any>;
+      return contractErc721.setApprovalForAll(address, true) as Promise<any>;
+    } else if (tokenType === TokenType.ERC1155) {
+      const contractErc1155 = new Contract(
+        contract.address,
+        SetApprovalForAllERC1155ABI,
+        web3Context.provider?.getSigner(),
+      );
+      return contractErc1155.setApprovalForAll(address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
   });
 
-  const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
+  const handleAllowanceConfirm = async (values: IStakingAllowanceDto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsAllowanceDialogOpen(false);
     });
@@ -58,13 +74,19 @@ export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonPro
           <HowToVote />
         </IconButton>
       </Tooltip>
-      <DepositAllowanceDialog
+      <StakingAllowanceDialog
         onCancel={handleAllowanceCancel}
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
           amount: rule.deposit?.components[0].amount || "0",
-          decimals: rule.deposit?.components[0].contract!.decimals || 18,
+          contract: {
+            address: "",
+            contractType: TokenType.ERC20,
+            tokenType: TokenType.ERC20,
+            decimals: rule.deposit?.components[0].contract!.decimals ?? 18,
+          },
+          contractId: 0,
         }}
       />
     </Fragment>

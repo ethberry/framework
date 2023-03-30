@@ -1,5 +1,8 @@
 {
   "components": {
+    "badges": {
+      "test": "Test"
+    },
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",
@@ -47,7 +50,7 @@
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
-    "top-up": "Top up",
+    "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
     "unBlacklist": "Remove from blacklist",
@@ -196,6 +199,7 @@
       "MYSTERYBOX": "MYSTERYBOX",
       "NATIVE": "Native",
       "PYRAMID": "PYRAMID",
+      "STAKING": "STAKING",
       "VESTING": "VESTING"
     },
     "merchantStatus": {
@@ -343,6 +347,7 @@
       "snapshot": "Snapshot",
       "startRound": "Start round",
       "submit": "Submit",
+      "topUp": "Top up",
       "transfer": "Transfer",
       "transferOwnership": "Transfer Ownership",
       "unblacklist": "Un blacklist",
@@ -353,6 +358,7 @@
       "withdraw": "Withdraw"
     },
     "hints": {
+      "allowanceWarning": "You are going to allow all tokens of the contract",
       "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
@@ -655,18 +661,18 @@
     },
     "collections": {
       "contract": {
-        "title": "Contracts"
+        "title": "Collection Contracts"
       },
-      "contracts": "Collection contracts",
+      "contracts": "Collection Contracts",
       "template": {
-        "title": "Templates"
+        "title": "Collection Templates"
       },
-      "templates": "Collection templates",
+      "templates": "Collection Templates",
       "title": "Collections",
       "token": {
-        "title": "Tokens"
+        "title": "Collection Tokens"
       },
-      "tokens": "Collection tokens"
+      "tokens": "Collection Tokens"
     },
     "craft": {
       "activate": "Activate rule",
@@ -936,6 +942,9 @@
       "title": "Users"
     },
     "vesting": {
+      "contracts": {
+        "title": "Vesting Contracts"
+      },
       "title": "Vesting"
     },
     "waitlist": {

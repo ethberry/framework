@@ -20,7 +20,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ContractStatus, IContract, IContractSearchDto, IUser, StakingContractFeatures } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { StakingDeployButton } from "../../../../components/buttons";
 

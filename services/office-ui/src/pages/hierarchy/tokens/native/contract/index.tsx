@@ -20,7 +20,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ContractStatus, IContract, IContractSearchDto, IUser, NativeContractFeatures } from "@framework/types";
 
 import { NativeTokenEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const NativeContract: FC = () => {

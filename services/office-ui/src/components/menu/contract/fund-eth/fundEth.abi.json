@@ -1,9 +1,0 @@
-[
-  {
-    "inputs": [],
-    "name": "fundEth",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  }
-]
