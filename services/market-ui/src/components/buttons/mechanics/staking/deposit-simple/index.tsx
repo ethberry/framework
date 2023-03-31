@@ -8,7 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import DepositABI from "../deposit/deposit.abi.json";
+import StakingDepositABI from "../../../../../abis/components/buttons/mechanics/staking/deposit/deposit.abi.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IStakingDepositSimpleButtonProps {
@@ -20,7 +21,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
   const { formatMessage } = useIntl();
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, DepositABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
     // const tokenId = 0;
     const tokenId = rule.deposit!.components[0].templateId; // for 1155

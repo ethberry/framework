@@ -18,10 +18,10 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, MysteryContractFeatures } from "@framework/types";
 
-import { MysteryContractEditDialog } from "./edit";
 import { MysteryContractDeployButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery";
+import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
   const {
@@ -97,7 +97,7 @@ export const MysteryContract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
+                <MysteryActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

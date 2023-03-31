@@ -8,9 +8,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
-import ApproveERC20ABI from "./approve.erc20.abi.json";
-import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
-import SetApprovalForAllERC1155ABI from "./setApprovalForAll.erc1155.abi.json";
+import ERC20ApproveABI from "../../../../abis/common/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalForAllABI from "../../../../abis/common/allowance/erc721.setApprovalForAll.abi.json";
+import ERC1155SetApprovalForAllABI from "../../../../abis/common/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./edit";
 
@@ -28,19 +28,19 @@ export const AllowanceButton: FC = () => {
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     const asset = values.token.components[0];
     if (asset.tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(asset.contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(asset.contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721) {
       const contractErc721 = new Contract(
         asset.contract.address,
-        SetApprovalForAllERC721ABI,
+        ERC721SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         asset.contract.address,
-        SetApprovalForAllERC1155ABI,
+        ERC1155SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.setApprovalForAll(values.address, true) as Promise<any>;

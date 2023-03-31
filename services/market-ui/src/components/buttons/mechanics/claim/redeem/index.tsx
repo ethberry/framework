@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";
 
-import ClaimABI from "./claim.abi.json";
+import ClaimABI from "../../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;

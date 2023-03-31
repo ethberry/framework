@@ -21,7 +21,7 @@ import { IComposition, ICompositionSearchDto } from "@framework/types";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import whitelistChildABI from "./whitelistChild.abi.json";
+import ERC998WhitelistChildABI from "../../../../../abis/pages/hierarchy/tokens/erc998/composition/whitelistChild.abi.json";
 
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionSearchForm } from "./form";
@@ -58,7 +58,11 @@ export const Erc998Composition: FC = () => {
   const { formatMessage } = useIntl();
 
   const metaFn1 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
-    const contract = new Contract(composition.parent!.address, whitelistChildABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      composition.parent!.address,
+      ERC998WhitelistChildABI,
+      web3Context.provider?.getSigner(),
+    );
     return contract.unWhitelistChild(composition.child!.address) as Promise<void>;
   });
 
@@ -75,7 +79,7 @@ export const Erc998Composition: FC = () => {
   const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
       composition.contract.parent.contract,
-      whitelistChildABI,
+      ERC998WhitelistChildABI,
       web3Context.provider?.getSigner(),
     );
     return contract.whiteListChild(composition.contract.child.contract, composition.amount) as Promise<void>;

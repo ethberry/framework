@@ -20,7 +20,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ContractStatus, IContract, IContractSearchDto, IUser, StakingContractFeatures } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
+import { StakingActionsMenu } from "../../../../components/menu/mechanics/staking";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { StakingDeployButton } from "../../../../components/buttons";
 
@@ -104,10 +104,7 @@ export const StakingContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
+                <StakingActionsMenu staking={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

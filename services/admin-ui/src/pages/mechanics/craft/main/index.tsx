@@ -47,8 +47,8 @@ export const Craft: FC = () => {
   } = useCollection<ICraft, ICraftSearchDto>({
     baseUrl: "/craft",
     empty: {
-      item: getEmptyTemplate(TokenType.ERC721) as any,
-      price: getEmptyTemplate(TokenType.ERC1155) as any,
+      item: getEmptyTemplate(TokenType.ERC721),
+      price: getEmptyTemplate(TokenType.ERC1155),
     },
     search: {
       query: "",

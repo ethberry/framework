@@ -38,7 +38,7 @@ export const Claim: FC = () => {
     baseUrl: "/claims",
     empty: {
       account: "",
-      item: emptyItem as any,
+      item: emptyItem,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {

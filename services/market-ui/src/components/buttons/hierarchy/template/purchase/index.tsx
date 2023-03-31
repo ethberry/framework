@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import PurchaseABI from "./purchase.abi.json";
+import TemplatePurchaseABI from "../../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 
@@ -23,7 +23,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, PurchaseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
     return contract.purchase(
       {
         nonce: utils.arrayify(sign.nonce),

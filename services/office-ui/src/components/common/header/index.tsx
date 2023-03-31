@@ -7,6 +7,7 @@ import { Wallet } from "@gemunion/provider-wallet";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
+import { NetworkButton } from "./network";
 import { Sections } from "./sections";
 
 import { useStyles } from "./styles";
@@ -20,6 +21,7 @@ export const Header: FC = () => {
           <Hidden smDown>{companyName} - Back-Office panel</Hidden>
         </Link>
         <div className={classes.grow} />
+        <NetworkButton />
         <Wallet />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />

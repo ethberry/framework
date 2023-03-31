@@ -51,7 +51,7 @@ export const Erc1155Template: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
     },
     search: {

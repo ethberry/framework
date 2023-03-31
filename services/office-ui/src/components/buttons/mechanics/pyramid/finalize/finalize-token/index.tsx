@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import FinalizeByTokenABI from "./finalizeByToken.abi.json";
+import PyramidFinalizeByTokenABI from "../../../../../../abis/components/buttons/mechanics/pyramid/finalize/finalize-token/finalizeByToken.abi.json";
 
 export interface IPyramidFinalizeRuleButtonProps {
   rule: IPyramidRule;
@@ -24,7 +24,7 @@ export const PyramidFinalizeTokenButton: FC<IPyramidFinalizeRuleButtonProps> = p
       return Promise.reject(new Error(":)"));
     }
 
-    const contract = new Contract(rule.contract.address, FinalizeByTokenABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PyramidFinalizeByTokenABI, web3Context.provider?.getSigner());
     // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
     const estGas = await contract.estimateGas.finalizeByToken(rule.deposit!.components[0].contract!.address);
     return contract.finalizeByToken(rule.deposit!.components[0].contract!.address, {

@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { CollectionContract } from "./collection";
+import { CollectionContract } from "./contract";
 import { CollectionTemplate } from "./template";
 import { CollectionToken } from "./token";
 import { IndexWrapper } from "../../index-wrapper";

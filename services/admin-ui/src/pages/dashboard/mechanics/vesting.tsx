@@ -20,7 +20,7 @@ export const Vesting: FC = () => {
             <AccountBalance />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.vesting.title" />
+            <FormattedMessage id="pages.vesting.contracts.title" />
           </ListItemText>
         </ListItem>
       </List>

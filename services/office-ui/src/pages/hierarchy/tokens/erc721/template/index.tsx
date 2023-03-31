@@ -51,7 +51,7 @@ export const Erc721Template: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
       contractId: 3,
     },

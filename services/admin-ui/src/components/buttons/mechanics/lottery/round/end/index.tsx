@@ -7,11 +7,11 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import EndRoundABI from "./endRound.abi.json";
+import LotteryEndRoundABI from "../../../../../../abis/components/buttons/mechanics/lottery/round/end/endRound.abi.json";
 
 export const LotteryRoundEndButton: FC = () => {
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, EndRoundABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LOTTERY_ADDR, LotteryEndRoundABI, web3Context.provider?.getSigner());
     return contract.endRound() as Promise<void>;
   });
 

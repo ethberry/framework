@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "../reward/receiveReward.abi.json";
+import StakingReceiveRewardABI from "../../../../../abis/components/buttons/mechanics/common/reward/receiveReward.abi.json";
 
 export interface IStakingRewardSimpleButtonProps {
   stake: IStakingDeposit;
@@ -20,7 +20,7 @@ export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = pr
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((stake: IStakingDeposit, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, ReceiveRewardABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingReceiveRewardABI, web3Context.provider?.getSigner());
     return contract.receiveReward(stake.externalId, false, false) as Promise<void>;
   });
 

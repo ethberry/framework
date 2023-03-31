@@ -19,7 +19,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, NativeContractFeatures } from "@framework/types";
 
 import { NativeTokenEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const NativeContract: FC = () => {

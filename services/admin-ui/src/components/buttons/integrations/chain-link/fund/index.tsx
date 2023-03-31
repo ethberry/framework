@@ -8,8 +8,8 @@ import { FormattedMessage } from "react-intl";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import BalanceOfABI from "./balanceOf.abi.json";
-import TransferAndCallABI from "./transferAndCall.abi.json";
+import LinkBalanceOfABI from "../../../../../abis/components/buttons/integrations/chain-link/fund/balanceOf.abi.json";
+import LinkTransferAndCallABI from "../../../../../abis/components/buttons/integrations/chain-link/fund/transferAndCall.abi.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import { formatEther } from "../../../../../utils/money";
@@ -20,7 +20,7 @@ export const ChainLinkFundButton: FC = () => {
 
   const metaFnTransfer = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
-    const contract = new Contract(process.env.LINK_ADDR, TransferAndCallABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LINK_ADDR, LinkTransferAndCallABI, web3Context.provider?.getSigner());
     const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(values.subscriptionId)), 32);
     return contract.transferAndCall(process.env.VRF_ADDR, values.amount, subId) as Promise<void>;
   });
@@ -30,7 +30,7 @@ export const ChainLinkFundButton: FC = () => {
   const getAccountBalance = useMetamaskValue(
     async (decimals: number, symbol: string, web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
-      const contract = new Contract(process.env.LINK_ADDR, BalanceOfABI, web3Context.provider?.getSigner());
+      const contract = new Contract(process.env.LINK_ADDR, LinkBalanceOfABI, web3Context.provider?.getSigner());
       if ((await contract.provider.getCode(contract.address)) !== "0x") {
         const value = await contract.callStatic.balanceOf(web3Context.account);
         return formatEther(value.toString(), decimals, symbol);

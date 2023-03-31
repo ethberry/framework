@@ -15,7 +15,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 
-import SetRewardABI from "./setReward.abi.json";
+import WaitlistSetRewardABI from "../../../../abis/pages/mechanisms/waitlist/list/setReward.abi.json";
 
 import { WaitlistSearchForm } from "./form";
 import { WaitlistListEditDialog } from "./edit";
@@ -70,7 +70,7 @@ export const WaitlistList: FC = () => {
   );
 
   const metaFn = useMetamask((values: IWaitlistGenerateDto, root: IRoot, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.WAITLIST_ADDR, SetRewardABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSetRewardABI, web3Context.provider?.getSigner());
 
     const asset = values.item.components.map(component => ({
       tokenType: Object.keys(TokenType).indexOf(component.tokenType),
@@ -167,7 +167,7 @@ export const WaitlistList: FC = () => {
         onConfirm={handleGenerateConfirm}
         open={isGenerateDialogOpen}
         initialValues={{
-          item: emptyItem as any,
+          item: emptyItem,
           listId: 1,
         }}
       />

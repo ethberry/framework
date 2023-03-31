@@ -19,7 +19,7 @@ import { ContractStatus, Erc998ContractFeatures, IContract, IContractSearchDto }
 
 import { Erc998ContractEditDialog } from "./edit";
 import { Erc998ContractDeployButton } from "../../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const Erc998Contract: FC = () => {
