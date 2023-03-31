@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { Contract } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
@@ -23,10 +23,14 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, StakingDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
-    // const tokenId = 0;
+    const params = {
+      nonce: utils.formatBytes32String("nonce"),
+      externalId: rule.externalId,
+      expiresAt: 0,
+      referrer: constants.AddressZero,
+    };
     const tokenId = rule.deposit!.components[0].templateId; // for 1155
-    // console.log("rule.externalId", rule.externalId);
-    return contract.deposit(rule.externalId, tokenId, {
+    return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
   });
