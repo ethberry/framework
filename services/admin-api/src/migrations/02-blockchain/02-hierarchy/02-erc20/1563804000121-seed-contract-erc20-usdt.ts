@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
+import { imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

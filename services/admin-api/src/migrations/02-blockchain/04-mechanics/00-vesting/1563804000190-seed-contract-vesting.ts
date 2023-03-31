@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
+import { wallet } from "@gemunion/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -36,7 +37,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${vestingLinearAddress}',
         '${chainId}',
         'LINEAR VESTING',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'Linear vesting',
         '',
@@ -54,7 +55,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${vestingGradedAddress}',
         '${chainId}',
         'GRADED VESTING',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'Graded vesting',
         '',
@@ -72,7 +73,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${vestingCliffAddress}',
         '${chainId}',
         'CLIFF VESTING',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'Cliff vesting',
         '',

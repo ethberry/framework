@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
