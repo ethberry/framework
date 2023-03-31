@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { get, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { Erc1155ContractTemplates, Erc721ContractTemplates } from "@framework/types";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
@@ -12,7 +12,7 @@ export const RoyaltyInput: FC<IRoyaltyInputProps> = props => {
   const { name = "royalty" } = props;
 
   const form = useFormContext();
-  const contractTemplate = get(useWatch(), "contractTemplate");
+  const contractTemplate = useWatch({ name: "contractTemplate" });
 
   useEffect(() => {
     if (

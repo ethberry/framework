@@ -7,9 +7,7 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { TokenType } from "@framework/types";
 
 export const AmountInput: FC = () => {
-  const {
-    contract: { contractType, decimals },
-  } = useWatch();
+  const [contractType, decimals] = useWatch({ name: ["contract.contractType", "contract.decimals"] });
 
   if (contractType !== TokenType.ERC20) {
     return (

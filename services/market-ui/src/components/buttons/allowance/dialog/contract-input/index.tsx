@@ -1,10 +1,10 @@
 import { ChangeEvent, FC } from "react";
-import { get, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 export const ContractInput: FC = () => {
-  const tokenType = get(useWatch(), "contract.tokenType");
+  const tokenType = useWatch({ name: "contract.tokenType" });
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
