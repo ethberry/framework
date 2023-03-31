@@ -11,6 +11,7 @@ import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc721.setApprovalForAll.abi.json";
+import ERC1155SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -37,13 +38,12 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
     if (contractType === TokenType.ERC20) {
       const contractErc20 = new Contract(address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(values.address, values.amount) as Promise<any>;
-    } else if (
-      contractType === TokenType.ERC721 ||
-      contractType === TokenType.ERC998 ||
-      contractType === TokenType.ERC1155
-    ) {
+    } else if (contractType === TokenType.ERC721 || contractType === TokenType.ERC998) {
       const contractErc721 = new Contract(address, ERC721SetApprovalForAllABI, web3Context.provider?.getSigner());
       return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
+    } else if (contractType === TokenType.ERC1155) {
+      const contractErc1155 = new Contract(address, ERC1155SetApprovalForAllABI, web3Context.provider?.getSigner());
+      return contractErc1155.setApprovalForAll(values.address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
