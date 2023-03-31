@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IDrop, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import PurchaseABI from "./purchase.abi.json";
+import DropPurchaseABI from "../../../../../abis/components/buttons/mechanics/drop/purchase/purchase.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 
@@ -23,7 +23,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, PurchaseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, DropPurchaseABI, web3Context.provider?.getSigner());
     return contract.purchase(
       {
         nonce: utils.arrayify(sign.nonce),

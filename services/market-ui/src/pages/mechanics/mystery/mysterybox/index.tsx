@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { MysteryBoxPurchaseButton } from "../../../../components/buttons";
+import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { useStyles } from "./styles";
 
@@ -54,7 +54,7 @@ export const MysteryBox: FC = () => {
                 values={{ amount: formatPrice(selected.template?.price) }}
               />
             </Typography>
-            <MysteryBoxPurchaseButton mysterybox={selected} />
+            <MysteryboxPurchaseButton mysterybox={selected} />
           </Paper>
         </Grid>
       </Grid>

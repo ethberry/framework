@@ -10,7 +10,8 @@ import { useSettings } from "@gemunion/provider-settings";
 
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import DepositABI from "./deposit.abi.json";
+import PyramidDepositABI from "../../../../../abis/components/buttons/mechanics/pyramid/deposit/deposit.abi.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IPyramidDepositButtonProps {
@@ -24,7 +25,7 @@ export const PyramidDepositButton: FC<IPyramidDepositButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaDeposit = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
-    const contract = new Contract(rule.contract.address, DepositABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PyramidDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
     // const tokenId = 0;
     const tokenId = rule.deposit!.components[0].templateId; // for 1155

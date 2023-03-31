@@ -11,7 +11,7 @@ import { StaticInput } from "@gemunion/mui-inputs-core";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import TransferABI from "./transfer.abi.json";
+import ERC998TransferABI from "../../../../../../abis/pages/exchange/tokens/erc998/token/composition/transfer.abi.json";
 
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
 
@@ -35,7 +35,11 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
   const metaComposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
 
-    const contract = new Contract(token.template!.contract!.address, TransferABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      token.template!.contract!.address,
+      ERC998TransferABI,
+      web3Context.provider?.getSigner(),
+    );
 
     switch (contractType) {
       case TokenType.ERC20: // ERC20
@@ -71,7 +75,11 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
   const metaDecomposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
 
-    const contract = new Contract(token.template!.contract!.address, TransferABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      token.template!.contract!.address,
+      ERC998TransferABI,
+      web3Context.provider?.getSigner(),
+    );
 
     switch (contractType) {
       case TokenType.ERC20: // ERC20

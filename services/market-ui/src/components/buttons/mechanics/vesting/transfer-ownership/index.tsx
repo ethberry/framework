@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { useIntl } from "react-intl";
 
-import TransferOwnershipABI from "./transferOwnership.abi.json";
+import VestingTransferOwnershipABI from "../../../../../abis/components/buttons/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
@@ -23,7 +23,7 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.address, TransferOwnershipABI, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.address, VestingTransferOwnershipABI, web3Context.provider?.getSigner());
     return contract.transferOwnership(dto.account) as Promise<any>;
   });
 

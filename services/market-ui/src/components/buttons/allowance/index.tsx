@@ -10,9 +10,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IStakingRule, TokenType } from "@framework/types";
 
-import ApproveERC20ABI from "./approve.erc20.abi.json";
-import SetApprovalForAllERC721ABI from "./setApprovalForAll.erc721.abi.json";
-import SetApprovalForAllERC1155ABI from "./setApprovalForAll.erc1155.abi.json";
+import ERC20ApproveABI from "../../../abis/common/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalForAllABI from "../../../abis/common/allowance/erc721.setApprovalForAll.abi.json";
 
 import { StakingAllowanceDialog, IStakingAllowanceDto } from "./dialog";
 
@@ -41,22 +40,15 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     const address = rule.deposit?.components[0].contract!.address;
 
     if (tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(contract.address, ApproveERC20ABI, web3Context.provider?.getSigner());
+      const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;
-    } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
+    } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998 || tokenType === TokenType.ERC1155) {
       const contractErc721 = new Contract(
         contract.address,
-        SetApprovalForAllERC721ABI,
+        ERC721SetApprovalForAllABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc721.setApprovalForAll(address, true) as Promise<any>;
-    } else if (tokenType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(
-        contract.address,
-        SetApprovalForAllERC1155ABI,
-        web3Context.provider?.getSigner(),
-      );
-      return contractErc1155.setApprovalForAll(address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

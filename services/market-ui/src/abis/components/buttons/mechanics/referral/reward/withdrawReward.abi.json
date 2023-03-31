@@ -3,20 +3,15 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "spender",
+        "name": "token",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
       }
     ],
-    "name": "approve",
+    "name": "withdrawReward",
     "outputs": [
       {
         "internalType": "bool",
-        "name": "",
+        "name": "success",
         "type": "bool"
       }
     ],

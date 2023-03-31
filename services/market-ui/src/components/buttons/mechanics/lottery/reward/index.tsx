@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { ILotteryTicket, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import GetPrizeABI from "./getPrize.abi.json";
+import LotteryGetPrizeABI from "../../../../../abis/components/buttons/mechanics/lottery/reward/getPrize.abi.json";
 
 export interface ILotteryRewardButtonProps {
   ticket: ILotteryTicket;
@@ -20,7 +20,7 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((ticket: ILotteryTicket, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, GetPrizeABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.LOTTERY_ADDR, LotteryGetPrizeABI, web3Context.provider?.getSigner());
     return contract.getPrize(ticket.token?.tokenId) as Promise<void>;
   });
 

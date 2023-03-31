@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "../reward/receiveReward.abi.json";
+import StakingReceiveRewardABI from "../../../../../abis/components/buttons/mechanics/common/reward/receiveReward.abi.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
@@ -25,7 +25,11 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
 
   const metaFn = useMetamask(
     async (stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
-      const contract = new Contract(process.env.STAKING_ADDR, ReceiveRewardABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        process.env.STAKING_ADDR,
+        StakingReceiveRewardABI,
+        web3Context.provider?.getSigner(),
+      );
       // https://ethereum.stackexchange.com/questions/132850/incorrect-gaslimit-estimation-for-transaction
       const estGas = await contract.estimateGas.receiveReward(
         stake.externalId,
