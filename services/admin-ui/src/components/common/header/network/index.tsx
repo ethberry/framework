@@ -11,16 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useWeb3React } from "@web3-react/core";
 
 import { availableChains } from "@framework/constants";
 import { IUser } from "@framework/types";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
-import { getIconByChainId, networks } from "@gemunion/provider-wallet";
+import { getIconByChainId, SANDBOX_CHAINS } from "@gemunion/provider-wallet";
 
 export const NetworkButton: FC = () => {
   const user = useUser<IUser>();
   const { formatMessage } = useIntl();
+  const { chainId: web3ChainId } = useWeb3React();
   const [anchor, setAnchor] = useState<Element | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,7 +46,7 @@ export const NetworkButton: FC = () => {
   }
 
   const { chainId } = user.profile;
-  const isSandbox = networks[chainId]?.isSandbox;
+  const isSandbox = SANDBOX_CHAINS.includes(chainId);
 
   return (
     <ProgressOverlay isLoading={isLoading} spinnerSx={{ svg: { color: "#FFFFFF" } }}>
@@ -59,7 +61,6 @@ export const NetworkButton: FC = () => {
             aria-haspopup="true"
             color="inherit"
             data-testid="OpenNetworkMenuButton"
-            disabled={isLoading}
             onClick={handleMenuOpen}
           >
             <SvgIcon component={getIconByChainId(chainId) as any} viewBox="0 0 60 60" sx={{ width: 24, height: 24 }} />
@@ -68,12 +69,17 @@ export const NetworkButton: FC = () => {
       </Tooltip>
       <Menu id="select-chainId" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
         {availableChains.map(chainId => (
-          <MenuItem key={chainId} onClick={handleSelectNetwork(chainId)} color="inherit">
+          <MenuItem
+            key={chainId}
+            selected={chainId === web3ChainId}
+            onClick={handleSelectNetwork(chainId)}
+            color="inherit"
+          >
             <ListItemIcon>
               <SvgIcon
                 component={getIconByChainId(chainId) as any}
                 viewBox="0 0 60 60"
-                sx={{ width: 20, height: 20 }}
+                sx={{ width: 24, height: 24 }}
               />
             </ListItemIcon>
             <ListItemText>
