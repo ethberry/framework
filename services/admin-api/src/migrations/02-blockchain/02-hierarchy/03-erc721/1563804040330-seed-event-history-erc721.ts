@@ -6,9 +6,6 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
 
     const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const currentDateTime = new Date().toISOString();

@@ -6,9 +6,6 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
 
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
