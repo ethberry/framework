@@ -191,4 +191,8 @@ export class TokenService {
   ): Promise<TokenEntity | null> {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
+
+  public count(where: FindOptionsWhere<TokenEntity>): Promise<number> {
+    return this.tokenEntityRepository.count({ where });
+  }
 }

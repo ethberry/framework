@@ -5,9 +5,10 @@ import { Erc998TemplateService } from "./template.service";
 import { Erc998TemplateController } from "./template.controller";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { AssetModule } from "../../../exchange/asset/asset.module";
+import { Erc998TokenModule } from "../token/token.module";
 
 @Module({
-  imports: [AssetModule, TypeOrmModule.forFeature([TemplateEntity])],
+  imports: [Erc998TokenModule, AssetModule, TypeOrmModule.forFeature([TemplateEntity])],
   providers: [Erc998TemplateService],
   controllers: [Erc998TemplateController],
   exports: [Erc998TemplateService],

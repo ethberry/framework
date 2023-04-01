@@ -5,9 +5,10 @@ import { TemplateEntity } from "./template.entity";
 import { TemplateService } from "./template.service";
 import { TemplateController } from "./template.controller";
 import { AssetModule } from "../../exchange/asset/asset.module";
+import { TokenModule } from "../token/token.module";
 
 @Module({
-  imports: [forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],
+  imports: [TokenModule, forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],
   providers: [TemplateService],
   controllers: [TemplateController],
   exports: [TemplateService],

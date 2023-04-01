@@ -20,7 +20,7 @@ export class Erc1155TemplateService extends TemplateService {
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc1155TokenService,
   ) {
-    super(templateEntityRepository, assetService);
+    super(templateEntityRepository, assetService, tokenService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

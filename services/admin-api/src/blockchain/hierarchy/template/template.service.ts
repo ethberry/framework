@@ -8,6 +8,7 @@ import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -16,6 +17,7 @@ export class TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
+    protected readonly tokenService: TokenService,
   ) {}
 
   public async search(
@@ -220,7 +222,12 @@ export class TemplateService {
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
-    return this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<void> {
+    const count = await this.tokenService.count({ templateId: where.id });
+    if (!count) {
+      await this.templateEntityRepository.delete(where);
+    } else {
+      await this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+    }
   }
 }
