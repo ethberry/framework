@@ -17,6 +17,7 @@ import { BlacklistMenuItem } from "../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
 import { WhitelistMenuItem } from "../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
+import { MintMenuItem } from "../../hierarchy/contract/mint";
 
 export interface IMysteryActionsMenu {
   contract: IContract;
@@ -55,7 +56,7 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
-
+        <MintMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
