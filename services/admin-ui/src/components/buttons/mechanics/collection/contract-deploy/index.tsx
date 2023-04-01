@@ -11,11 +11,11 @@ import CollectionDeployCollectionABI from "../../../../../abis/components/button
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
-export interface IErc721CollectionDeployButtonProps {
+export interface ICollectionContractDeployButtonProps {
   className?: string;
 }
 
-export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps> = props => {
+export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
@@ -63,7 +63,7 @@ export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="Erc721CollectionDeployButton"
+        data-testid="CollectionContractDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />

@@ -8,16 +8,16 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
 import { TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
-import { TokenGenesView } from "../../../../hierarchy/tokens/genes";
+import { TokenTraitsView } from "../../traits";
 
-export interface IErc721ViewDialogProps {
+export interface ICollectionTokenViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   initialValues: IToken;
 }
 
-export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
+export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
   const { template, tokenId, attributes, balance, imageUrl } = initialValues;
@@ -59,13 +59,13 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <TokenAttributesView attributes={attributes} />
               </TableCell>
             </TableRow>
-            {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+            {template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
                   <FormattedMessage id="form.labels.genes" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenGenesView attributes={JSON.parse(attributes)} />
+                  <TokenTraitsView attributes={attributes} />
                 </TableCell>
               </TableRow>
             ) : null}

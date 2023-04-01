@@ -54,6 +54,6 @@ export class StakingRulesController {
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return await this.stakingService.delete({ id });
+    return this.stakingService.delete({ id });
   }
 }

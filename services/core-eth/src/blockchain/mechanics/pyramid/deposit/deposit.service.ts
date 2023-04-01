@@ -30,7 +30,7 @@ export class PyramidDepositService {
   }
 
   public async findStake(externalId: string, contractId: number): Promise<PyramidDepositEntity | null> {
-    return await this.stakesEntityRepository.findOne({
+    return this.stakesEntityRepository.findOne({
       where: {
         externalId,
         pyramidRule: {

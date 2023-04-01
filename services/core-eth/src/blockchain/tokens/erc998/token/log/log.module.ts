@@ -67,6 +67,6 @@ export class Erc998TokenLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc998TokenLogService.updateBlock();
+    return this.erc998TokenLogService.updateBlock();
   }
 }

@@ -43,7 +43,7 @@ export const MysteryContract: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/mystery-contracts",
+    baseUrl: "/mystery/contracts",
     empty: {
       title: "",
       description: emptyStateString,

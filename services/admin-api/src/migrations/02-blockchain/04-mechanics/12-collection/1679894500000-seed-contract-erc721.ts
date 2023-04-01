@@ -44,7 +44,7 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{TRAITS}',
         'COLLECTION',
         '${fromBlock}',
         1,

@@ -8,27 +8,27 @@ import { MysteryToken } from "./token";
 
 export const mysteryRoutes: Array<RouteObject> = [
   {
-    path: "/mystery-contracts",
+    path: "/mystery/contracts",
     element: <Protected />,
     children: [
       { index: true, element: <MysteryContract /> },
-      { path: "/mystery-contracts/:id", element: <MysteryContract /> },
+      { path: "/mystery/contracts/:id", element: <MysteryContract /> },
     ],
   },
   {
-    path: "/mystery-boxes",
+    path: "/mystery/boxes",
     element: <Protected />,
     children: [
       { index: true, element: <MysteryBox /> },
-      { path: "/mystery-boxes/:id", element: <MysteryBox /> },
+      { path: "/mystery/boxes/:id", element: <MysteryBox /> },
     ],
   },
   {
-    path: "/mystery-tokens",
+    path: "/mystery/tokens",
     element: <Protected />,
     children: [
       { index: true, element: <MysteryToken /> },
-      { path: "/mystery-tokens/:id", element: <MysteryToken /> },
+      { path: "/mystery/tokens/:id", element: <MysteryToken /> },
     ],
   },
 ];

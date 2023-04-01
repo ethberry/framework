@@ -44,7 +44,7 @@ export const MysteryBox: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
-    baseUrl: "/mystery-boxes",
+    baseUrl: "/mystery/boxes",
     empty: {
       title: "",
       description: emptyStateString,

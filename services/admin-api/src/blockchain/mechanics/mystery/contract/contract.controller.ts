@@ -21,7 +21,7 @@ import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contrac
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/mystery-contracts")
+@Controller("/mystery/contracts")
 export class MysteryContractController {
   constructor(private readonly mysteryboxContractService: MysteryContractService) {}
 

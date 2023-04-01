@@ -94,7 +94,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     } else {
       content.push([]);
     }
-    return await metaLoadRule(rule, content);
+    return metaLoadRule(rule, content);
   };
 
   return (

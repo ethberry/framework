@@ -67,6 +67,6 @@ export class StakingLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.stakingLogService.updateBlock();
+    return this.stakingLogService.updateBlock();
   }
 }

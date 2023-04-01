@@ -104,7 +104,6 @@
       "BLACKLIST": "Blacklist",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC20OWNER": "ERC20 Owner",
-      "STATEHASH": "State Hash",
       "EXTERNAL": "External",
       "GENES": "Genes",
       "MYSTERYBOX": "MysteryBox",
@@ -115,6 +114,7 @@
       "RENTABLE": "Rentable",
       "SOULBOUND": "Soulbound",
       "SPLITTER": "Payment Splitter",
+      "STATEHASH": "State Hash",
       "UPGRADEABLE": "Upgradeable",
       "WHITELIST": "Whitelist"
     },
@@ -281,6 +281,11 @@
       "ERC998": "ERC998",
       "NATIVE": "Native"
     },
+    "traitName": {
+      "CLOTHES": "Clothes",
+      "EYES": "Eyes",
+      "MOUTH": "Mouth"
+    },
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
@@ -349,8 +354,8 @@
       "transfer": "Transfer",
       "transferOwnership": "Transfer Ownership",
       "unblacklist": "Un blacklist",
-      "unwhitelist": "Un whitelist",
       "unpause": "Unpause",
+      "unwhitelist": "Un whitelist",
       "upload": "Upload",
       "whitelist": "Whitelist",
       "withdraw": "Withdraw"
@@ -657,7 +662,7 @@
       "rates": "Rates",
       "title": "CoinMarketCap"
     },
-    "collections": {
+    "collection": {
       "contract": {
         "title": "Collection Contracts"
       },
@@ -666,7 +671,7 @@
         "title": "Collection Templates"
       },
       "templates": "Collection Templates",
-      "title": "Collections",
+      "title": "Collection",
       "token": {
         "title": "Collection Tokens"
       },

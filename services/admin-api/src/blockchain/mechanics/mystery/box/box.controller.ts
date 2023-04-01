@@ -9,7 +9,7 @@ import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from ".
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/mystery-boxes")
+@Controller("/mystery/boxes")
 export class MysteryBoxController {
   constructor(private readonly mysteryboxService: MysteryBoxService) {}
 

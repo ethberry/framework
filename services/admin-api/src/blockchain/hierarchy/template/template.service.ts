@@ -87,6 +87,7 @@ export class TemplateService {
 
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
+      "template.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();

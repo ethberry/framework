@@ -132,6 +132,7 @@ export class TokenService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
+      "token.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();

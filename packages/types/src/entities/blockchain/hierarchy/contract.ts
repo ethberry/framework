@@ -182,6 +182,7 @@ export enum ContractFeatures {
   "RANDOM" = "RANDOM",
   "SOULBOUND" = "SOULBOUND",
   "VOTES" = "VOTES",
+  "TRAITS" = "TRAITS",
 
   // ERC998
   "ERC20OWNER" = "ERC20OWNER",

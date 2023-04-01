@@ -47,6 +47,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'RENTABLE',
         'SOULBOUND',
         'VOTES',
+        'TRAITS',
         
         -- ERC998
         'ERC20OWNER',

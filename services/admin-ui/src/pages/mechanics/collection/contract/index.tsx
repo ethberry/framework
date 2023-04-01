@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, Erc721CollectionFeatures, IContract, IContractSearchDto } from "@framework/types";
 
-import { Erc721CollectionDeployButton } from "../../../../components/buttons";
+import { CollectionContractDeployButton } from "../../../../components/buttons";
 import { CollectionActionsMenu } from "../../../../components/menu/mechanics/collection";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { Erc721CollectionEditDialog } from "./edit";
@@ -43,7 +43,7 @@ export const CollectionContract: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/collections/contracts",
+    baseUrl: "/collection/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -64,16 +64,16 @@ export const CollectionContract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.contract"]} />
+      <Breadcrumbs path={["dashboard", "collection", "collection.contract"]} />
 
-      <PageHeader message="pages.collections.contracts">
+      <PageHeader message="pages.collection.contracts">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Erc721CollectionDeployButton />
+        <CollectionContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm

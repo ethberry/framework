@@ -23,6 +23,12 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       ), (
         140701
       ), (
+        141101
+      ), (
+        141201
+      ), (
+        141301
+      ), (
         240101
       );
     `);
@@ -110,6 +116,42 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         1,
         'ACTIVE',
         1407,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        141101,
+        'ERC20 Owner',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        141101,
+        0,
+        1,
+        'ACTIVE',
+        1411,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        141201,
+        'ERC1155 Owner',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        141101,
+        0,
+        1,
+        'ACTIVE',
+        1411,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        141301,
+        'ERC1155 + ERC20 Owner',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        141101,
+        0,
+        1,
+        'ACTIVE',
+        1411,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

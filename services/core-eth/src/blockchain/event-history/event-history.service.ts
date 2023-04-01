@@ -36,7 +36,7 @@ export class EventHistoryService {
     const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("history");
     queryBuilder.select();
     queryBuilder.andWhere(`history.event_data->>'${key}' = :${key}`, { [key]: value });
-    return await queryBuilder.getOne();
+    return queryBuilder.getOne();
   }
 
   public async findByRandomRequest(requestId: string): Promise<EventHistoryEntity | null> {
@@ -46,7 +46,7 @@ export class EventHistoryService {
       eventType: ChainLinkEventType.RandomWordsRequested,
     });
     queryBuilder.andWhere(`history.event_data->>'requestId' = :requestId`, { requestId });
-    return await queryBuilder.getOne();
+    return queryBuilder.getOne();
   }
 
   public findOne(

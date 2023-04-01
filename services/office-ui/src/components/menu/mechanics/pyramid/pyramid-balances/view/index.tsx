@@ -65,7 +65,7 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
   };
 
   const handleWithdraw = async (values: IBalance, withdrawAmount: string): Promise<void> => {
-    return await metaWithdraw(values, withdrawAmount);
+    return metaWithdraw(values, withdrawAmount);
   };
 
   const handleSetAmountCancel = () => {

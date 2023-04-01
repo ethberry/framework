@@ -10,38 +10,38 @@ import { Collections } from "../../dashboard/mechanics/collection";
 
 export const erc721CollectionRoutes: Array<RouteObject> = [
   {
-    path: "/collections",
+    path: "/collection",
     children: [
       {
         index: true,
         element: (
-          <IndexWrapper index="collections">
+          <IndexWrapper index="collection">
             <Collections />
           </IndexWrapper>
         ),
       },
       {
-        path: "/collections/contracts",
+        path: "/collection/contracts",
         element: <Protected />,
         children: [
           { index: true, element: <CollectionContract /> },
-          { path: "/collections/contracts/:id", element: <CollectionContract /> },
+          { path: "/collection/contracts/:id", element: <CollectionContract /> },
         ],
       },
       {
-        path: "/collections/templates",
+        path: "/collection/templates",
         element: <Protected />,
         children: [
           { index: true, element: <CollectionTemplate /> },
-          { path: "/collections/templates/:id", element: <CollectionTemplate /> },
+          { path: "/collection/templates/:id", element: <CollectionTemplate /> },
         ],
       },
       {
-        path: "/collections/tokens",
+        path: "/collection/tokens",
         element: <Protected />,
         children: [
           { index: true, element: <CollectionToken /> },
-          { path: "/collections/tokens/:id", element: <CollectionToken /> },
+          { path: "/collection/tokens/:id", element: <CollectionToken /> },
         ],
       },
     ],

@@ -57,6 +57,6 @@ export class VestingLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.vestingLogService.updateBlock();
+    return this.vestingLogService.updateBlock();
   }
 }

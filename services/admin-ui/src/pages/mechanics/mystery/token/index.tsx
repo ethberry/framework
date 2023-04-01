@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc721TokenViewDialog } from "./view";
+import { MysteryTokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export const MysteryToken: FC = () => {
@@ -35,7 +35,7 @@ export const MysteryToken: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/mystery-tokens",
+    baseUrl: "/mystery/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -93,7 +93,7 @@ export const MysteryToken: FC = () => {
         onChange={handleChangePage}
       />
 
-      <Erc721TokenViewDialog
+      <MysteryTokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
