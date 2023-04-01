@@ -295,7 +295,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 11, // NATIVE > NATIVE
+        // NATIVE > NATIVE
         deposit: [
           {
             tokenType: 0,
@@ -325,7 +325,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 23, // ERC20 > ERC721
+        // ERC20 > ERC721
         deposit: [
           {
             tokenType: 1,
@@ -355,7 +355,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 45, // ERC998 > ERC1155
+        // ERC998 > ERC1155
         deposit: [
           {
             tokenType: 3,
