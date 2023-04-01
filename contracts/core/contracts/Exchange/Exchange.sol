@@ -21,8 +21,8 @@ import "./ExchangeGrade.sol";
 import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
-import "./referral/LinearReferral.sol";
 import "./ExchangeRentable.sol";
+import "./referral/LinearReferral.sol";
 
 contract Exchange is
   ExchangeCore,
@@ -36,16 +36,16 @@ contract Exchange is
   ExchangeRentable,
   Wallet
 {
-  using Address for address;
-
   constructor(
     string memory name,
     address[] memory payees,
     uint256[] memory shares
   ) SignatureValidator(name) PaymentSplitter(payees, shares) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(MINTER_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    address account = _msgSender();
+    _setupRole(DEFAULT_ADMIN_ROLE, account);
+    _setupRole(MINTER_ROLE, account);
+    _setupRole(PAUSER_ROLE, account);
+    _setupRole(METADATA_ROLE, account);
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {
@@ -70,7 +70,7 @@ contract Exchange is
   function _afterPurchase(
     address referrer,
     Asset[] memory price
-  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral, ExchangeRentable) {
+  ) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
     return super._afterPurchase(referrer, price);
   }
 }

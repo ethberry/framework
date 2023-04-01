@@ -18,13 +18,13 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "./interfaces/IStaking.sol";
 import "../TopUp.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/referral/LinearReferral.sol";
 
 /**

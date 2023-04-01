@@ -45,6 +45,4 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
       );
     }
   }
-
-  function _afterPurchase(address referrer, Asset[] memory price) internal virtual;
 }
