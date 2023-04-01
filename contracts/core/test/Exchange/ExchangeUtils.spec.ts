@@ -1228,7 +1228,9 @@ describe("ExchangeUtils", function () {
           receiver.address,
         );
 
-        await expect(tx).to.be.revertedWith("UnsupportedTokenType");
+        await expect(tx).to.emit(exchangeMockInstance, "PaymentEthSent").withArgs(receiver.address, amount);
+
+        await expect(tx).changeEtherBalances([exchangeMockInstance, receiver], [-amount, amount]);
       });
     });
 
@@ -1254,7 +1256,11 @@ describe("ExchangeUtils", function () {
           receiver.address,
         );
 
-        await expect(tx).to.be.revertedWith("UnsupportedTokenType");
+        await expect(tx)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(exchangeMockInstance.address, receiver.address, amount);
+
+        await expect(tx).changeTokenBalances(erc20Instance, [exchangeMockInstance, receiver], [-amount, amount]);
       });
     });
 
