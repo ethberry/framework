@@ -8,7 +8,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
-  imports: [AssetModule, Erc1155TokenModule, TypeOrmModule.forFeature([TemplateEntity])],
+  imports: [Erc1155TokenModule, AssetModule, TypeOrmModule.forFeature([TemplateEntity])],
   providers: [Erc1155TemplateService],
   controllers: [Erc1155TemplateController],
   exports: [Erc1155TemplateService],

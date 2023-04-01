@@ -4,8 +4,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { TemplateEntity } from "./template.entity";
 import { TemplateService } from "./template.service";
 import { TemplateController } from "./template.controller";
-import { AssetModule } from "../../exchange/asset/asset.module";
 import { TokenModule } from "../token/token.module";
+import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
   imports: [TokenModule, forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],
