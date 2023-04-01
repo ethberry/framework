@@ -17,7 +17,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc1155TemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
@@ -84,6 +84,7 @@ export const Erc1155Template: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC1155]}
+        contractModule={[ModuleType.HIERARCHY]}
       />
 
       <ProgressOverlay isLoading={isLoading}>

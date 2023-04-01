@@ -56,6 +56,7 @@ export const MysteryBox: FC = () => {
     search: {
       query: "",
       mysteryboxStatus: [MysteryboxStatus.ACTIVE],
+      contractIds: [],
     },
     filter: ({ id, template, title, description, imageUrl, item, mysteryboxStatus }) =>
       id
