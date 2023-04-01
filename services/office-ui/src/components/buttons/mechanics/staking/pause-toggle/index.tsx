@@ -7,7 +7,7 @@ import { Contract } from "ethers";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import StakingPauseABI from "../../../../../abis/components/buttons/mechanics/staking/pause-toggle/pause.abi.json";
+import StakingPauseABI from "../../../../../abis/components/common/pause/pause.abi.json";
 
 export interface IPauseToggleButton {
   className?: string;
