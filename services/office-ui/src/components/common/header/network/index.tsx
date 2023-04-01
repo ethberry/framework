@@ -53,7 +53,7 @@ export const NetworkButton: FC = () => {
       <Tooltip title={formatMessage({ id: `enums.chainId.${chainId}` })} sx={{ mr: isSandbox ? 1 : 0 }}>
         <Badge
           color="primary"
-          badgeContent={<Typography fontSize={10}>{formatMessage({ id: "components.badges.test" })}</Typography>}
+          badgeContent={<Typography fontSize={10}>{formatMessage({ id: "components.header.wallet.test" })}</Typography>}
           invisible={!isSandbox}
         >
           <IconButton

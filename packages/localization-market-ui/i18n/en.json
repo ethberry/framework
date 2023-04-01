@@ -1,8 +1,5 @@
 {
   "components": {
-    "badges": {
-      "test": "Test"
-    },
     "header": {
       "checkout": "Checkout",
       "language": {
@@ -20,7 +17,8 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
-        "notValid": "Invalid network. Please switch to correct network according to your profile"
+        "notValid": "Invalid network. Please switch to correct network according to your profile",
+        "test": "Test"
       }
     }
   },

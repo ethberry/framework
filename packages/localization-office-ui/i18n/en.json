@@ -1,8 +1,5 @@
 {
   "components": {
-    "badges": {
-      "test": "Test"
-    },
     "dropzone": {
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",
@@ -24,7 +21,8 @@
       },
       "wallet": {
         "connect": "Connect wallet",
-        "menu": "Account"
+        "menu": "Account",
+        "test": "Test"
       }
     }
   },
