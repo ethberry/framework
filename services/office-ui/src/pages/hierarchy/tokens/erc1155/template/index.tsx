@@ -18,11 +18,12 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType, IUser } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType, IUser } from "@framework/types";
 
 import { Erc1155TemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../../utils/money";
+import { TemplateActionsMenu } from "../../../../../components/menu/hierarchy/template";
 
 export const Erc1155Template: FC = () => {
   const user = useUser<IUser>();
@@ -87,6 +88,7 @@ export const Erc1155Template: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC1155]}
+        contractModule={[ModuleType.HIERARCHY]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -110,6 +112,10 @@ export const Erc1155Template: FC = () => {
                 >
                   <Delete />
                 </IconButton>
+                <TemplateActionsMenu
+                  template={template}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

@@ -5,17 +5,18 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { ITemplateSearchDto } from "@framework/types";
-import { TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 interface ITemplateSearchFormProps {
   onSubmit: (values: ITemplateSearchDto) => Promise<void>;
   initialValues: ITemplateSearchDto;
   open: boolean;
-  contractType: Array<TokenType>;
+  contractType?: Array<TokenType>;
+  contractModule?: Array<ModuleType>;
 }
 
 export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType } = props;
+  const { onSubmit, initialValues, open, contractType = [], contractModule = [] } = props;
 
   const { query, templateStatus, contractIds, merchantId } = initialValues;
   const fixedValues = { query, templateStatus, contractIds, merchantId };
@@ -38,10 +39,10 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
           <Grid item xs={12}>
             <EntityInput name="merchantId" controller="merchants" disableClear />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
+          <Grid item xs={6}>
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={6}>
             <SelectInput multiple name="templateStatus" options={TemplateStatus} />
           </Grid>
         </Grid>
