@@ -59,7 +59,7 @@ steps:
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME-img']
 timeout: 3600s
 options:
-  machineType: 'N1_HIGHCPU_8'
+  machineType: 'E2-HIGHCPU-32'
 availableSecrets:
   secretManager:
     - versionName: projects/1011891726242/secrets/GITHUBTOKEN/versions/2
