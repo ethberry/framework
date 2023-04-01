@@ -3,7 +3,6 @@ export * from "./hierarchy/token/transfer";
 export * from "./hierarchy/token/borrow";
 export * from "./hierarchy/template/purchase";
 
-export * from "./allowance";
 export * from "./close-button";
 export * from "./wallet";
 
@@ -18,6 +17,7 @@ export * from "./mechanics/pyramid/allowance";
 export * from "./mechanics/pyramid/reward";
 export * from "./mechanics/pyramid/reward-complex";
 export * from "./mechanics/referral/reward";
+export * from "./mechanics/staking/allowance";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/staking/reward";
 export * from "./mechanics/staking/reward-complex";

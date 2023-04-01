@@ -11,11 +11,11 @@ import VestingTransferOwnershipABI from "../../../../../abis/components/buttons/
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
-interface IVestingSellButtonProps {
+interface IVestingTransferOwnershipButtonProps {
   vesting: IContract;
 }
 
-export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props => {
+export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonProps> = props => {
   const { vesting } = props;
 
   const [isTransferOwnershipDialogOpen, setIsTransferOwnershipDialogOpen] = useState(false);
@@ -27,30 +27,30 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
     return contract.transferOwnership(dto.account) as Promise<any>;
   });
 
-  const handleSell = (): void => {
+  const handleTransferOwnership = (): void => {
     setIsTransferOwnershipDialogOpen(true);
   };
 
-  const handleSellConfirm = async (dto: IAccountDto) => {
+  const handleTransferOwnershipConfirm = async (dto: IAccountDto) => {
     await metaFn(dto).finally(() => {
       setIsTransferOwnershipDialogOpen(false);
     });
   };
 
-  const handleSellCancel = () => {
+  const handleTransferOwnershipCancel = () => {
     setIsTransferOwnershipDialogOpen(false);
   };
 
   return (
     <Fragment>
       <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
-        <IconButton onClick={handleSell} data-testid="VestingTransferOwnershipButton">
+        <IconButton onClick={handleTransferOwnership} data-testid="VestingTransferOwnershipButton">
           <Send />
         </IconButton>
       </Tooltip>
       <AccountDialog
-        onConfirm={handleSellConfirm}
-        onCancel={handleSellCancel}
+        onConfirm={handleTransferOwnershipConfirm}
+        onCancel={handleTransferOwnershipCancel}
         open={isTransferOwnershipDialogOpen}
         message="dialogs.transfer"
         testId="VestingTransferOwnershipDialogForm"
