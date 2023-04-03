@@ -15,7 +15,7 @@ export const Rent: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/rents">
+        <ListItem button component={RouterLink} to="/rent">
           <ListItemIcon>
             <CarRental />
           </ListItemIcon>

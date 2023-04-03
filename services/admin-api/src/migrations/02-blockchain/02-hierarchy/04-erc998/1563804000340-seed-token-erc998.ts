@@ -110,6 +110,17 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
+        14090101,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "140901",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        140901,
+        '${subDays(now, 2).toISOString()}',
+        '${currentDateTime}'
+      ), (
         14110101,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "141101",

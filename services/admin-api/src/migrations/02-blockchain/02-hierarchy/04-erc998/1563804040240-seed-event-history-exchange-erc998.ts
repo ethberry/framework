@@ -57,6 +57,14 @@ export class SeedEventHistoryExchangeErc998At1563804040240 implements MigrationI
         '{}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        409001,
+        '${wallet}',
+        '${constants.HashZero}',
+        'Purchase',
+        '{}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

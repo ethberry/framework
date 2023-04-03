@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import {
+  ContractFeatures,
   ITokenAutocompleteDto,
   ITokenSearchDto,
   ModuleType,
@@ -25,8 +26,9 @@ export class TokenService {
   public async search(
     dto: ITokenSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
+    contractType: TokenType | Array<TokenType>,
     contractModule: ModuleType,
+    contractFeatures: Array<ContractFeatures> = [],
   ): Promise<[Array<TokenEntity>, number]> {
     const {
       query,
@@ -46,9 +48,24 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
+    if (Array.isArray(contractType)) {
+      queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
+    } else {
+      queryBuilder.andWhere("contract.contractType = :contractType", {
+        contractType,
+      });
+    }
+
+    if (contractFeatures) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
+      }
+    }
+
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
     });

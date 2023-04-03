@@ -2,15 +2,12 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { Rent } from "./main";
+import { Rent } from "./token-list";
 
 export const rentingRoutes: Array<RouteObject> = [
   {
-    path: "/rents",
+    path: "/rent",
     element: <Protected />,
-    children: [
-      { index: true, element: <Rent /> },
-      { path: "/rents/:id", element: <Rent /> },
-    ],
+    children: [{ index: true, element: <Rent /> }],
   },
 ];

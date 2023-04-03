@@ -47,7 +47,13 @@ export class SeedOwnershipAt1658980520110 implements MigrationInterface {
       ), (
         14060101, -- hero
         15010101, -- gold
-        '1000',
+        1000,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        14090101, -- c-shirt
+        13090101, -- t-shirt
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

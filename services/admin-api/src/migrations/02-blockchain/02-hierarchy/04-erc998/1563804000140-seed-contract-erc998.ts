@@ -14,6 +14,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
+    const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
     const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
     const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR || wallet;
     const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
@@ -161,6 +162,24 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,GENES}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1409,
+        '${erc998ContractRentableAddress}',
+        '${chainId}',
+        'C-SHIRT (rentable)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'RENTABLE',
+        'REN998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{RENTABLE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

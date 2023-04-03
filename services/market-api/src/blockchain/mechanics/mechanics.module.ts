@@ -1,34 +1,36 @@
 import { Module } from "@nestjs/common";
 
+import { BreedModule } from "./breed/breed.module";
 import { ClaimModule } from "./claim/claim.module";
+import { CraftModule } from "./craft/craft.module";
+import { DropModule } from "./drop/drop.module";
+import { GradeModule } from "./grade/grade.module";
+import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
+import { PyramidModule } from "./pyramid/pyramid.module";
+import { ReferralModule } from "./referral/referral.module";
+import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
-import { CraftModule } from "./craft/craft.module";
-import { GradeModule } from "./grade/grade.module";
-import { DropModule } from "./drop/drop.module";
-import { ReferralModule } from "./referral/referral.module";
-import { LotteryModule } from "./lottery/lottery.module";
-import { WrapperModule } from "./wrapper/wrapper.module";
-import { BreedModule } from "./breed/breed.module";
 import { WaitlistModule } from "./waitlist/waitlist.module";
-import { PyramidModule } from "./pyramid/pyramid.module";
+import { WrapperModule } from "./wrapper/wrapper.module";
 
 @Module({
   imports: [
+    BreedModule,
     ClaimModule,
-    MysteryModule,
     CraftModule,
+    DropModule,
+    GradeModule,
+    LotteryModule,
+    MysteryModule,
+    PyramidModule,
+    ReferralModule,
+    RentModule,
     StakingModule,
     VestingModule,
-    GradeModule,
-    BreedModule,
-    DropModule,
-    ReferralModule,
-    LotteryModule,
-    WrapperModule,
     WaitlistModule,
-    PyramidModule,
+    WrapperModule,
   ],
 })
 export class MechanicsModule {}

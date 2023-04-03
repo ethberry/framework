@@ -5,15 +5,15 @@ import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
+import { TokenBorrowButton } from "../../../../../components/buttons";
+import { RarityBadge } from "../../../../../components/common/badge";
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../../../components/buttons";
-import { RarityBadge } from "../../../../../../components/common/badge";
 
 interface IErc721TokenListItemProps {
   token: IToken;
 }
 
-export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
+export const RentTokenListItem: FC<IErc721TokenListItemProps> = props => {
   const { token } = props;
 
   const classes = useStyles(token);
@@ -32,15 +32,8 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Grid
-            item
-            xs={12}
-            sx={{
-              // MODULE:SOULBOUND
-              height: 37,
-            }}
-          >
-            <TokenSellButton token={token} />
+          <Grid item xs={12}>
+            <TokenBorrowButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

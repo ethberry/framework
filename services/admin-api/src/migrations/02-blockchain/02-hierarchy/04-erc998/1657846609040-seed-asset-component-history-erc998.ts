@@ -48,6 +48,18 @@ export class SeedAssetComponentHistoryErc998At1657846609040 implements Migration
         1201,
         12010101,
         '${constants.WeiPerEther.toString()}'
+      ), (
+        409001,
+        'ITEM',
+        1409,
+        14090101,
+        1
+      ), (
+        409001,
+        'PRICE',
+        1201,
+        12010101,
+        '${constants.WeiPerEther.toString()}'
       );
     `);
   }

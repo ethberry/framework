@@ -6,7 +6,6 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryExchangeErc721At1563804040230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
@@ -251,6 +250,32 @@ export class SeedEventHistoryExchangeErc721At1563804040230 implements MigrationI
           from: wallets[2],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        309001,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130901",
+          item: [2, erc721ContractSimpleAddress, "130901", "1"],
+          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+        })}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        309002,
+        '${exchangeAddress}',
+        '${constants.HashZero}',
+        'Purchase',
+        '${JSON.stringify({
+          from: wallets[1],
+          externalId: "130901",
+          item: [2, erc721ContractSimpleAddress, "130901", "1"],
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         '${currentDateTime}',
