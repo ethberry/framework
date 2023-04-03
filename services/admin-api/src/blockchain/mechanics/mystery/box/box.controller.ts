@@ -7,6 +7,7 @@ import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MysteryBoxAutocompleteDto } from "./dto/autocomplete";
 
 @ApiBearerAuth()
 @Controller("/mystery/boxes")
@@ -23,8 +24,11 @@ export class MysteryBoxController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryboxService.autocomplete();
+  public autocomplete(
+    @Query() dto: MysteryBoxAutocompleteDto,
+    @User() userEntity: UserEntity,
+  ): Promise<Array<MysteryBoxEntity>> {
+    return this.mysteryboxService.autocomplete(dto, userEntity);
   }
 
   @Put("/:id")
