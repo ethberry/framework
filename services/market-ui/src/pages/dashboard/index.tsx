@@ -26,6 +26,7 @@ import { Pyramid } from "./mechanics/pyramid";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { Waitlist } from "./mechanics/waitlist";
 import { Feedback } from "./infrastructure/feedback";
+import { Rent } from "./mechanics/rent";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -47,6 +48,7 @@ export const Dashboard: FC = () => {
           <Waitlist />
           <Claim />
           <Drop />
+          <Rent />
           <Craft />
           <Breed />
           <Lottery />

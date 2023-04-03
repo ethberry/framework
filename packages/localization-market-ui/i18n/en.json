@@ -610,6 +610,7 @@
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "pyramid": "Pyramid",
+        "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
         "waitlist": "Waitlist",
@@ -864,6 +865,9 @@
         "title": "Report"
       },
       "title": "Referral program"
+    },
+    "rent": {
+      "title": "Rent"
     },
     "staking": {
       "deposit": {
