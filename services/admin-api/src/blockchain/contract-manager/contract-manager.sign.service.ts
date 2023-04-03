@@ -35,6 +35,7 @@ import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mecha
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
+import ERC721RentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Rentable.sol/ERC721Rentable.json";
 import ERC721BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistRandomGemunion.sol/ERC721BlacklistRandomGemunion.json";
 import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesGemunion.sol/ERC721GenesGoerli.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
@@ -53,6 +54,7 @@ import ERC998ERC1155SimpleSol from "@framework/core-contracts/artifacts/contract
 import ERC998ERC1155ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
 import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Genes.sol/ERC998Genes.json";
 import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998RandomGemunion.sol/ERC998RandomGemunion.json";
+import ERC998RentableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Rentable.sol/ERC998Rentable.json";
 import ERC998BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998BlacklistRandomGemunion.sol/ERC998BlacklistRandomGemunion.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 import ERC998StateHashSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998StateHash.sol/ERC998StateHash.json";
@@ -66,7 +68,7 @@ import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/E
 import ERC1155SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json";
 
 import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
-// import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
+import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
 
@@ -557,6 +559,8 @@ export class ContractManagerSignService {
         return ERC721GenesSol.bytecode;
       case Erc721ContractTemplates.RANDOM:
         return ERC721RandomSol.bytecode;
+      case Erc721ContractTemplates.RENTABLE:
+        return ERC721RentableSol.bytecode;
       case Erc721ContractTemplates.BLACKLIST_RANDOM:
         return ERC721BlacklistRandomSol.bytecode;
       case Erc721ContractTemplates.SIMPLE:
@@ -598,6 +602,8 @@ export class ContractManagerSignService {
         return ERC998GenesSol.bytecode;
       case Erc998ContractTemplates.RANDOM:
         return ERC998RandomSol.bytecode;
+      case Erc998ContractTemplates.RENTABLE:
+        return ERC998RentableSol.bytecode;
       case Erc998ContractTemplates.BLACKLIST_RANDOM:
         return ERC998BlacklistRandomSol.bytecode;
       case Erc998ContractTemplates.SIMPLE:
@@ -657,6 +663,8 @@ export class ContractManagerSignService {
         return MysteryboxSimpleSol.bytecode;
       case MysteryContractTemplates.PAUSABLE:
         return MysteryboxPausableSol.bytecode;
+      case MysteryContractTemplates.BLACKLIST:
+        return MysteryboxBlacklistSol.bytecode;
       case MysteryContractTemplates.BLACKLIST_PAUSABLE:
         return MysteryboxBlacklistPausableSol.bytecode;
       default:
@@ -683,8 +691,6 @@ export class ContractManagerSignService {
 
     switch (contractTemplate) {
       case StakingContractTemplates.SIMPLE:
-        return StakingSol.bytecode;
-      case StakingContractTemplates.REFERRAL:
         return StakingSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");

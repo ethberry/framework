@@ -52,6 +52,7 @@ export enum Erc721ContractTemplates {
   "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "SOULBOUND" = "SOULBOUND",
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
   "UPGRADEABLE" = "UPGRADEABLE",
@@ -62,6 +63,7 @@ export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "GENES" = "GENES",
   "ERC20OWNER" = "ERC20OWNER",
   "ERC1155OWNER" = "ERC1155OWNER",
@@ -79,6 +81,7 @@ export enum Erc998ContractTemplates {
   "ERC1155OWNER_ERC20OWNER" = "ERC1155OWNER_ERC20OWNER",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "STATEHASH" = "STATEHASH",
   "UPGRADEABLE" = "UPGRADEABLE",
   "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
@@ -127,13 +130,10 @@ export enum PyramidContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
-export enum StakingContractFeatures {
-  "REFERRAL" = "REFERRAL",
-}
+export enum StakingContractFeatures {}
 
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
-  "REFERRAL" = "REFERRAL",
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
@@ -178,8 +178,8 @@ export enum ContractFeatures {
   // EC721
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
-  "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "SOULBOUND" = "SOULBOUND",
   "VOTES" = "VOTES",
   "TRAITS" = "TRAITS",
