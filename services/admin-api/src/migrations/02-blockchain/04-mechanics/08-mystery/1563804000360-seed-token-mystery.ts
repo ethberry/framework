@@ -63,6 +63,17 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
         160601,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
+      ), (
+        26010101,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "260101",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        260101,
+        '${subDays(now, 2).toISOString()}',
+        '${currentDateTime}'
       );
     `);
   }

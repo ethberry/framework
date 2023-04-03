@@ -14,6 +14,8 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         33101
       ), (
         33201
+      ), (
+        33301
       );
     `);
 
@@ -36,6 +38,12 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         130601, -- sword
         '1',
         33201
+      ), (
+        'ERC721',
+        2301,
+        230101, -- bep
+        '1',
+        33301
       );
     `);
 
@@ -59,12 +67,21 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Inactive Mysterybox',
+        'Sword Mysterybox (inactive)',
         '${simpleFormatting}',
         '${imageUrl}',
         33201,
         160102,
         'INACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Mysterybox (BEP)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        33301,
+        260101,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

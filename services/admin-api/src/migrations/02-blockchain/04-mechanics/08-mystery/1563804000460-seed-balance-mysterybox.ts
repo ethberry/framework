@@ -38,6 +38,12 @@ export class SeedBalanceErc721MysteryAt1563804020460 implements MigrationInterfa
         16060101,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        26010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }
