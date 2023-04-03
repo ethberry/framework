@@ -4,9 +4,10 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingLeaderboardSearchDto } from "@framework/types";
-import { ModuleType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+
+import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 
 interface IStakingLeaderboardSearchFormProps {
   onSubmit: (values: IStakingLeaderboardSearchDto) => Promise<void>;
@@ -47,24 +48,10 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
             />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="deposit.contractId"
-              controller="contracts"
-              data={{
-                contractType: [deposit.tokenType],
-                contractModule: [ModuleType.HIERARCHY],
-              }}
-            />
+            <SearchContractInput prefix="deposit" />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="reward.contractId"
-              controller="contracts"
-              data={{
-                contractType: [reward.tokenType],
-                contractModule: [ModuleType.HIERARCHY],
-              }}
-            />
+            <SearchContractInput prefix="reward" />
           </Grid>
         </Grid>
       </Collapse>

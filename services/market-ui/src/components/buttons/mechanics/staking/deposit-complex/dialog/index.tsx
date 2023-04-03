@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { validationSchema } from "./validation";
 import { IAssetComponent } from "@framework/types";
-import { TokenDepositInput } from "../../../../../inputs/deposit-token-input";
+import { TokenDepositInput } from "../../../../../inputs/deposit-token";
 
 export interface IStakingDepositDto {
   // tokenId: number;

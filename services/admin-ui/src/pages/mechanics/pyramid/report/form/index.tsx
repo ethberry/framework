@@ -4,10 +4,11 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import type { IPyramidReportSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, PyramidDepositStatus, TokenType } from "@framework/types";
+import { PyramidDepositStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+
+import { SearchContractInput } from "../../../../../components/inputs/search-contract";
 
 interface IPyramidReportSearchFormProps {
   onSubmit: (values: IPyramidReportSearchDto) => Promise<void>;
@@ -59,26 +60,10 @@ export const PyramidReportSearchForm: FC<IPyramidReportSearchFormProps> = props 
             />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="deposit.contractId"
-              controller="contracts"
-              data={{
-                contractType: [deposit.tokenType],
-                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-                contractModule: [ModuleType.HIERARCHY],
-              }}
-            />
+            <SearchContractInput prefix="deposit" />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="reward.contractId"
-              controller="contracts"
-              data={{
-                contractType: [reward.tokenType],
-                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-                contractModule: [ModuleType.HIERARCHY],
-              }}
-            />
+            <SearchContractInput prefix="reward" />
           </Grid>
           <Grid item xs={6}>
             <DateTimeInput name="startTimestamp" />
