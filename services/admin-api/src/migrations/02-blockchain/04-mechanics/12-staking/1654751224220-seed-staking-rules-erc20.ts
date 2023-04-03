@@ -20,6 +20,10 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         80222
       ), (
+        80231
+      ), (
+        80232
+      ), (
         80241
       ), (
         80242
@@ -27,6 +31,8 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         80251
       ), (
         80252
+      ), (
+        80299
       );
     `);
 
@@ -66,6 +72,18 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         1201,
         120101, -- space credit
         '${constants.WeiPerEther.toString()}',
+        80231
+      ), (
+        'ERC721',
+        1301,
+        130101, -- rune
+        '${constants.WeiPerEther.toString()}',
+        80232
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
         80241
       ), (
         'ERC998',
@@ -85,11 +103,18 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         150101, -- gold
         1000,
         80252
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        80299
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -101,6 +126,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
+        21,
         'ERC20 > NATIVE',
         '${simpleFormatting}',
         2592000,
@@ -108,10 +134,11 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         false,
         80211,
         80212,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        22,
         'ERC20 > ERC20',
         '${simpleFormatting}',
         2592000,
@@ -119,10 +146,23 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         false,
         80221,
         80222,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        23,
+        'ERC20 > ERC721',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80231,
+        80232,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        24,
         'ERC20 > ERC998',
         '${simpleFormatting}',
         2592000,
@@ -130,10 +170,11 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         false,
         80241,
         80242,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        25,
         'ERC20 > ERC1155',
         '${simpleFormatting}',
         2592000,
@@ -141,7 +182,19 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         false,
         80251,
         80252,
-        'NEW',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        29,
+        'ERC20 > NONE',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80299,
+        null,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

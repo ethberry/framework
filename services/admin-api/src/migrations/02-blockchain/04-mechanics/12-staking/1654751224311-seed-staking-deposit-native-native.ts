@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterface {
+export class SeedStakingDepositNativeNativeAt1654751224311 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const endDateTime = addDays(new Date(), 30).toISOString();
@@ -23,170 +23,170 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
       ) VALUES (
         '${wallets[0]}',
         'ACTIVE',
-        101,
+        1101,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'ACTIVE',
-        102,
+        1102,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'ACTIVE',
-        103,
+        1103,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'CANCELED',
-        104,
+        1104,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'COMPLETE',
-        105,
+        1105,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        111,
+        1106,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        112,
+        1107,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'CANCELED',
-        113,
+        1108,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        114,
+        1109,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        115,
+        1110,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        116,
+        1111,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        117,
+        1112,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        121,
+        1113,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        122,
+        1114,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        123,
+        1115,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        124,
+        1116,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        125,
+        1117,
         '${currentDateTime}',
         '${endDateTime}',
-        1, -- NATIVE > NATIVE
+        11, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
         '${currentDateTime}'

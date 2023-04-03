@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedStakingDepositErc20At1654751224320 implements MigrationInterface {
+export class SeedStakingDepositErc20Erc20At1654751224322 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const endDateTime = addDays(new Date(), 30).toISOString();
@@ -23,50 +23,50 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
       ) VALUES (
         '${wallets[0]}',
         'ACTIVE',
-        201,
+        2201,
         '${currentDateTime}',
         '${endDateTime}',
-        8, -- ERC20 > ERC721
+        22, -- ERC20 > ERC20
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'CANCELED',
-        202,
+        2202,
         '${currentDateTime}',
         '${endDateTime}',
-        8, -- ERC20 > ERC721
+        22, -- ERC20 > ERC20
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'COMPLETE',
-        203,
+        2203,
         '${currentDateTime}',
         '${endDateTime}',
-        8, -- ERC20 > ERC721
+        22, -- ERC20 > ERC20
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        211,
+        2204,
         '${currentDateTime}',
         '${endDateTime}',
-        8, -- ERC20 > ERC721
+        22, -- ERC20 > ERC20
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        221,
+        2205,
         '${currentDateTime}',
         '${endDateTime}',
-        8, -- ERC20 > ERC721
+        22, -- ERC20 > ERC20
         1,
         '${currentDateTime}',
         '${currentDateTime}'

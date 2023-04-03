@@ -1,25 +1,12 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { SearchableOptionalDto } from "@gemunion/collection";
 
 import { StakingRulesService } from "./rules.service";
-import { StakingCreateDto, StakingRuleSearchDto } from "./dto";
+import { StakingRuleSearchDto } from "./dto";
 import { StakingRulesEntity } from "./rules.entity";
-import { StakingUpdateDto } from "./dto/update";
 
 @ApiBearerAuth()
 @Controller("/staking/rules")
@@ -41,19 +28,8 @@ export class StakingRulesController {
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: StakingUpdateDto,
+    @Body() dto: SearchableOptionalDto,
   ): Promise<StakingRulesEntity | null> {
     return this.stakingService.update({ id }, dto);
-  }
-
-  @Post("/")
-  public create(@Body() dto: StakingCreateDto): Promise<StakingRulesEntity> {
-    return this.stakingService.create(dto);
-  }
-
-  @Delete("/:id")
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return this.stakingService.delete({ id });
   }
 }

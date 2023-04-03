@@ -31,6 +31,8 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         80651
       ), (
         80652
+      ), (
+        80699
       );
     `);
 
@@ -42,63 +44,63 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         amount,
         asset_id
       ) VALUES (
-        'ERC721',
-        1601,
-        160101, -- sword mysterybox
-        1,
-        80611
-      ), (
         'NATIVE',
         1101,
         110101, -- ETH
         '${constants.WeiPerEther.toString()}',
-        80612
+        80611
       ), (
         'ERC721',
         1601,
         160101, -- sword mysterybox
         1,
-        80621
+        80612
       ), (
         'ERC20',
         1201,
         120101, -- space credit
         '${constants.WeiPerEther.toString()}',
-        80622
+        80621
       ), (
         'ERC721',
         1601,
         160101, -- sword mysterybox
         1,
-        80631
+        80622
       ), (
         'ERC721',
         1306,
         130601, -- sword
         1,
-        80632
+        80631
       ), (
         'ERC721',
         1601,
         160101, -- sword mysterybox
         1,
-        80641
+        80632
       ), (
         'ERC998',
         1406,
         140601, -- warrior
         1,
-        80642
+        80641
       ), (
         'ERC721',
         1601,
         160101, -- sword mysterybox
         1,
-        80651
+        80642
       ), (
         'ERC1155',
         1501,
         150101, -- gold
+        1,
+        80651
+      ), (
+        'ERC721',
+        1601,
+        160101, -- sword mysterybox
         1,
         80652
       );
@@ -106,6 +108,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -117,58 +120,63 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         created_at,
         updated_at
       ) VALUES (
-        'MYSTERYBOX > NATIVE',
+        61,
+        'NATIVE > MYSTERYBOX',
         '${simpleFormatting}',
         2592000,
         1,
         false,
         80611,
         80612,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'MYSTERYBOX > ERC20',
+        62,
+        'ERC20 > MYSTERYBOX',
         '${simpleFormatting}',
         2592000,
         1,
         false,
         80621,
         80622,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'MYSTERYBOX > ERC721',
+        63,
+        'ERC721 > MYSTERYBOX',
         '${simpleFormatting}',
         2592000,
         1,
         false,
         80631,
         80632,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'MYSTERYBOX > ERC998',
+        64,
+        'ERC998 > MYSTERYBOX',
         '${simpleFormatting}',
         2592000,
         1,
         false,
         80641,
         80642,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'MYSTERYBOX > ERC1155',
+        65,
+        'ERC1155 > MYSTERYBOX',
         '${simpleFormatting}',
         2592000,
         1,
         false,
         80651,
         80652,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -27,6 +27,12 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80441
       ), (
         80442
+      ), (
+        80451
+      ), (
+        80452
+      ), (
+        80499
       );
     `);
 
@@ -85,11 +91,30 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         140601, -- warrior
         1,
         80442
+      ), (
+        'ERC998',
+        1406,
+        140601, -- warrior
+        1,
+        80451
+      ), (
+        'ERC1155',
+        1501,
+        150101, -- gold
+        1000,
+        80452
+      ), (
+        'ERC998',
+        1406,
+        140601, -- warrior
+        1,
+        80499
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -101,6 +126,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
+        41,
         'ERC998 > NATIVE',
         '${simpleFormatting}',
         2592000,
@@ -108,10 +134,11 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80411,
         80412,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        42,
         'ERC998 > ERC20',
         '${simpleFormatting}',
         2592000,
@@ -119,10 +146,11 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80421,
         80422,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        43,
         'ERC998 > ERC721',
         '${simpleFormatting}',
         2592000,
@@ -130,10 +158,11 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80431,
         80432,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        44,
         'ERC998 > ERC998',
         '${simpleFormatting}',
         2592000,
@@ -141,7 +170,31 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         false,
         80441,
         80442,
-        'NEW',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        45,
+        'ERC998 > ERC1155',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80451,
+        80452,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        49,
+        'ERC998 > NONE',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80499,
+        null,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

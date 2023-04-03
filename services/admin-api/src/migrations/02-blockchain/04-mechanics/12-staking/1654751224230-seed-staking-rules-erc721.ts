@@ -31,6 +31,8 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         80351
       ), (
         80352
+      ), (
+        80399
       );
     `);
 
@@ -101,11 +103,18 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         150101, -- gold
         1000,
         80352
+      ), (
+        'ERC721',
+        1306,
+        130601, -- sword
+        1,
+        80399
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -117,6 +126,7 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
+        31,
         'ERC721 > NATIVE',
         '${simpleFormatting}',
         2592000,
@@ -124,10 +134,11 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         false,
         80311,
         80312,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        32,
         'ERC721 > ERC20',
         '${simpleFormatting}',
         2592000,
@@ -135,10 +146,11 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         false,
         80321,
         80322,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        33,
         'ERC721 > ERC721',
         '${simpleFormatting}',
         2592000,
@@ -146,10 +158,11 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         false,
         80331,
         80332,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        34,
         'ERC721 > ERC998',
         '${simpleFormatting}',
         2592000,
@@ -157,10 +170,11 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         false,
         80341,
         80342,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        35,
         'ERC721 > ERC1155',
         '${simpleFormatting}',
         2592000,
@@ -168,7 +182,19 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         false,
         80351,
         80352,
-        'NEW',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        39,
+        'ERC721 > NONE',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80399,
+        null,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

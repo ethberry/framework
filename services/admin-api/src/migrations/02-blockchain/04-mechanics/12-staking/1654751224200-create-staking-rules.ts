@@ -60,6 +60,7 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         {
           name: "reward_id",
           type: "int",
+          isNullable: true,
         },
         {
           name: "external_id",

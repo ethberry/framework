@@ -12,6 +12,10 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
+        80111
+      ), (
+        80112
+      ), (
         80121
       ), (
         80122
@@ -27,6 +31,8 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80151
       ), (
         80152
+      ), (
+        80199
       );
     `);
 
@@ -38,6 +44,18 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         amount,
         asset_id
       ) VALUES (
+        'NATIVE',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
+        80111
+      ), (
+        'NATIVE',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
+        80112
+      ), (
         'NATIVE',
         1101,
         110101, -- ETH
@@ -85,11 +103,18 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         150101, -- gold
         10,
         80152
+      ), (
+        'NATIVE',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
+        80199
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -101,6 +126,19 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
+        11,
+        'NATIVE > NATIVE',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80121,
+        80122,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12,
         'NATIVE > ERC20',
         '${simpleFormatting}',
         2592000,
@@ -108,10 +146,11 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80121,
         80122,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        13,
         'NATIVE > ERC721',
         '${simpleFormatting}',
         2592000,
@@ -119,10 +158,11 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80131,
         80132,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        14,
         'NATIVE > ERC998',
         '${simpleFormatting}',
         2592000,
@@ -130,10 +170,11 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80141,
         80142,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        15,
         'NATIVE > ERC1155',
         '${simpleFormatting}',
         2592000,
@@ -141,7 +182,19 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         false,
         80151,
         80152,
-        'NEW',
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        19,
+        'NATIVE > NONE',
+        '${simpleFormatting}',
+        2592000,
+        1,
+        false,
+        80199,
+        null,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

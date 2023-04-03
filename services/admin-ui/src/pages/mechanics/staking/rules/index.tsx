@@ -11,7 +11,7 @@ import {
   Pagination,
 } from "@mui/material";
 
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -23,8 +23,8 @@ import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType }
 
 import {
   PauseToggleButton,
-  StakingToggleRuleButton,
   StakingRuleUploadCreateButton,
+  StakingToggleRuleButton,
 } from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
@@ -40,12 +40,10 @@ export const StakingRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    // handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-    handleDelete,
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
@@ -79,7 +77,6 @@ export const StakingRules: FC = () => {
     },
   });
 
-  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
@@ -106,9 +103,6 @@ export const StakingRules: FC = () => {
                 <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingRuleStatus !== StakingRuleStatus.NEW}>
-                  <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

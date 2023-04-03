@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedStakingDepositErc998At1654751224340 implements MigrationInterface {
+export class SeedStakingDepositErc20At1654751224329 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const endDateTime = addDays(new Date(), 30).toISOString();
@@ -23,50 +23,50 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
       ) VALUES (
         '${wallets[0]}',
         'ACTIVE',
-        301,
+        2901,
         '${currentDateTime}',
         '${endDateTime}',
-        20, -- ERC998 > ERC1155
+        29, -- ERC20 > NONE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'CANCELED',
-        302,
+        2902,
         '${currentDateTime}',
         '${endDateTime}',
-        20, -- ERC998 > ERC1155
+        29, -- ERC20 > NONE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'COMPLETE',
-        303,
+        2903,
         '${currentDateTime}',
         '${endDateTime}',
-        20, -- ERC998 > ERC1155
+        29, -- ERC20 > NONE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        311,
+        2904,
         '${currentDateTime}',
         '${endDateTime}',
-        20, -- ERC998 > ERC1155
+        29, -- ERC20 > NONE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        321,
+        2905,
         '${currentDateTime}',
-        '${addDays(new Date(), 1).toISOString()}',
-        20, -- ERC998 > ERC1155
+        '${endDateTime}',
+        29, -- ERC20 > NONE
         1,
         '${currentDateTime}',
         '${currentDateTime}'
