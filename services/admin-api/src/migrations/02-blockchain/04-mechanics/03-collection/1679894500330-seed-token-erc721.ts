@@ -21,9 +21,9 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        13090101,
+        16110101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
+          [TokenAttributes.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "1",
@@ -32,13 +32,13 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        130901,
+        161101,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        13090102,
+        16110102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
+          [TokenAttributes.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "2",
           MOUTH: "1",
@@ -47,13 +47,13 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        130901,
+        161101,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        13090103,
+        16110103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
+          [TokenAttributes.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "2",
@@ -62,13 +62,13 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        130901,
+        161101,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        13090104,
+        16110104,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
+          [TokenAttributes.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "3",
           MOUTH: "3",
@@ -77,13 +77,13 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        130901,
+        161101,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        13090105,
+        16110105,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "130901",
+          [TokenAttributes.TEMPLATE_ID]: "161101",
           CLOTHES: "2",
           EYES: "2",
           MOUTH: "2",
@@ -92,7 +92,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        130901,
+        161101,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       );

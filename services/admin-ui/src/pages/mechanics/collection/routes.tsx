@@ -8,7 +8,7 @@ import { CollectionToken } from "./token";
 import { IndexWrapper } from "../../index-wrapper";
 import { Collections } from "../../dashboard/mechanics/collection";
 
-export const erc721CollectionRoutes: Array<RouteObject> = [
+export const collectionRoutes: Array<RouteObject> = [
   {
     path: "/collection",
     children: [

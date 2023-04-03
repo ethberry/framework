@@ -3,7 +3,7 @@ import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedAssetComponentsCollectionAt1679894501230 implements MigrationInterface {
+export class SeedAssetComponentRent1678931845520 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -15,14 +15,14 @@ export class SeedAssetComponentsCollectionAt1679894501230 implements MigrationIn
       ) VALUES (
         'ERC20',
         1201,
-        120101, -- space credit
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
-        130901
+        220101
       );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.asset_component`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.asset_component RESTART IDENTITY CASCADE;`);
   }
 }

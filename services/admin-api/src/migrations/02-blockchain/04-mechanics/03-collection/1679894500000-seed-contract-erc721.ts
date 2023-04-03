@@ -32,7 +32,7 @@ export class SeedContractCollectionAt1679894500000 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        1309,
+        1611,
         '${erc721ContractGenerativeAddress}',
         '${chainId}',
         'GENERATIVE',

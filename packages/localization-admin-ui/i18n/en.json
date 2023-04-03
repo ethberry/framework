@@ -743,6 +743,7 @@
         "lottery": "Lottery",
         "mystery": "Mystery",
         "pyramid": "Pyramid",
+        "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
@@ -914,6 +915,9 @@
         "upload": "Upload rule"
       },
       "title": "Pyramid"
+    },
+    "rent": {
+      "title": "Rent"
     },
     "settings": {
       "title": "Settings"

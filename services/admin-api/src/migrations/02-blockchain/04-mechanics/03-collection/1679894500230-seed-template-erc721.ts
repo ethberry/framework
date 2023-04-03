@@ -11,7 +11,7 @@ export class SeedTemplateCollectionAt1679894500230 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        130901
+        161101
       );
     `);
 
@@ -29,15 +29,15 @@ export class SeedTemplateCollectionAt1679894500230 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        130901,
+        161101,
         'Generative (traits)',
         '${simpleFormatting}',
         '${imageUrl}',
-        130901,
+        161101,
         0,
         1,
         'ACTIVE',
-        1309,
+        1611,
         '${currentDateTime}',
         '${currentDateTime}'
       );

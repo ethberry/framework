@@ -51,6 +51,7 @@ import { EventHistoryEntity } from "./blockchain/event-history/event-history.ent
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */
 import { CategoryEntity } from "./ecommerce/category/category.entity";
 import { OrderEntity } from "./ecommerce/order/order.entity";
@@ -96,6 +97,7 @@ import {
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
   CreateReferralRewardAt1660103709900,
+  CreateRent1678931845500,
   CreateSettings1563803000010,
   CreateStakingDeposit1654751224300,
   CreateStakingRules1654751224200,
@@ -118,6 +120,7 @@ import {
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentHistoryErc721At1657846609030,
   SeedAssetComponentHistoryErc998At1657846609040,
+  SeedAssetComponentRent1678931845520,
   SeedAssetComponentsCollectionAt1679894501230,
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsErc721At1563804001230,
@@ -195,6 +198,7 @@ import {
   SeedPyramidRulesErc20At1660436477220,
   SeedPyramidRulesNativeAt1660436477210,
   SeedReferralRewardAt1660103709910,
+  SeedRent1678931845510,
   SeedSettings1563803000020,
   SeedStakingDepositErc20At1654751224320,
   SeedStakingDepositErc998At1654751224340,
@@ -246,33 +250,38 @@ const config: PostgresConnectionOptions = {
     SettingsEntity,
     PageEntity,
     /* blockchain */
-    AssetEntity,
-    AccessControlEntity,
-    AccessListEntity,
-    StakingRulesEntity,
-    StakingDepositEntity,
     ContractManagerEntity,
+    EventHistoryEntity,
+    // exchange
+    AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
+    PayeesEntity,
+    // extensions
+    AccessControlEntity,
+    AccessListEntity,
+    // hierarchy
     ContractEntity,
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
-    ClaimEntity,
-    MysteryBoxEntity,
-    CraftEntity,
-    GradeEntity,
     CompositionEntity,
+    // mechanics
+    BreedEntity,
+    ClaimEntity,
+    CraftEntity,
     DropEntity,
+    GradeEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
-    EventHistoryEntity,
+    MysteryBoxEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
+    RentEntity,
+    StakingRulesEntity,
+    StakingDepositEntity,
     WaitlistItemEntity,
     WaitlistListEntity,
-    BreedEntity,
-    PayeesEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -481,6 +490,10 @@ const config: PostgresConnectionOptions = {
     SeedExchangePayees1663047650510,
     SeedPyramidPayees1663047650520,
     SeedContractChainLinkAt1563804000105,
+
+    CreateRent1678931845500,
+    SeedAssetComponentRent1678931845520,
+    SeedRent1678931845510,
 
     /* ecommerce */
     AddProduct1591673187606,

@@ -28,6 +28,7 @@ import { Waitlist } from "./mechanics/waitlist";
 import { Wallet } from "./exchange/wallet";
 import { Collections } from "./mechanics/collection";
 import { Ecommerce } from "./ecommerce";
+import { Rent } from "./mechanics/rent";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -52,6 +53,7 @@ export const Dashboard: FC = () => {
           <Waitlist />
           <Claim />
           <Drop />
+          <Rent />
           <Craft />
           <Grade />
           <Breed />
