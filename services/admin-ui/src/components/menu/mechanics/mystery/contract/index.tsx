@@ -4,20 +4,20 @@ import { MoreVert } from "@mui/icons-material";
 
 import { ContractFeatures, IContract } from "@framework/types";
 
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { RoyaltyMenuItem } from "../../common/royalty";
-import { TransferMenuItem } from "../../common/transfer";
-import { AllowanceMenuItem } from "../../hierarchy/contract/allowance";
-import { PausableMenuItem } from "../common/pausable";
-import { BlacklistMenuItem } from "../../extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
-import { WhitelistMenuItem } from "../../extensions/whitelist-add";
-import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
-import { MintMenuItem } from "../../hierarchy/contract/mint";
+import { EthListenerAddMenuItem } from "../../../common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../common/eth-remove";
+import { ContractGrantRoleMenuItem } from "../../../extensions/grant-role";
+import { ContractRevokeRoleMenuItem } from "../../../extensions/revoke-role";
+import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role";
+import { RoyaltyMenuItem } from "../../../common/royalty";
+import { TransferMenuItem } from "../../../common/transfer";
+import { AllowanceMenuItem } from "../../../hierarchy/contract/allowance";
+import { PausableMenuItem } from "../../common/pausable";
+import { BlacklistMenuItem } from "../../../extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../extensions/blacklist-remove";
+import { WhitelistMenuItem } from "../../../extensions/whitelist-add";
+import { UnWhitelistMenuItem } from "../../../extensions/whitelist-remove";
+import { MintMenuItem } from "./mint";
 
 export interface IMysteryActionsMenu {
   contract: IContract;
