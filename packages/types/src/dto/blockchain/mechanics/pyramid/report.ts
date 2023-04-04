@@ -12,7 +12,7 @@ export interface IPyramidReportSearchDto extends ISearchDto {
   deposit: IPyramidReportItemSearchDto;
   reward: IPyramidReportItemSearchDto;
   account: string;
-  emptyReward: boolean;
+  emptyReward?: boolean;
   pyramidDepositStatus: Array<PyramidDepositStatus>;
   startTimestamp: string;
   endTimestamp: string;

@@ -43,6 +43,9 @@ export class PyramidChartSearchDto extends SearchDto implements IPyramidChartSea
   @Type(() => PyramidChartItemSearchDto)
   public reward: PyramidChartItemSearchDto;
 
+  @IsOptional()
+  public emptyReward: boolean;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

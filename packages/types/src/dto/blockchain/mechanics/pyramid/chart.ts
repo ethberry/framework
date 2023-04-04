@@ -9,7 +9,7 @@ export interface IPyramidChartItemSearchDto {
 export interface IPyramidChartSearchDto extends ISearchDto {
   deposit: IPyramidChartItemSearchDto;
   reward: IPyramidChartItemSearchDto;
-  emptyReward: boolean;
+  emptyReward?: boolean;
   startTimestamp: string;
   endTimestamp: string;
 }

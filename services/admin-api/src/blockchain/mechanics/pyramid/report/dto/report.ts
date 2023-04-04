@@ -57,6 +57,9 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
+  @IsOptional()
+  public emptyReward: boolean;
+
   @ApiProperty({
     type: PyramidReportItemSearchDto,
   })

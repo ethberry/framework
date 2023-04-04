@@ -16,9 +16,9 @@ export class StakingChartService {
   ) {}
 
   public async chart(dto: IStakingChartSearchDto): Promise<any> {
-    const { reward } = dto;
+    const { emptyReward } = dto;
 
-    return reward ? this.chartWithReward(dto) : this.chartWithoutReward(dto);
+    return emptyReward ? this.chartWithoutReward(dto) : this.chartWithReward(dto);
   }
 
   public async chartWithReward(dto: IStakingChartSearchDto): Promise<any> {

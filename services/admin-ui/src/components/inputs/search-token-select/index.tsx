@@ -14,12 +14,14 @@ export const SearchTokenSelectInput: FC<ISearchTokenSelectInputProps> = props =>
   const { formatMessage } = useIntl();
   const emptyReward = useWatch({ name: "emptyReward" });
 
+  const disabled = prefix === "reward" && emptyReward;
+
   return (
     <SelectInput
       name={`${prefix}.tokenType`}
       options={TokenType}
       label={formatMessage({ id: `form.labels.${prefix}` })}
-      disabled={prefix === "reward" && emptyReward}
+      disabled={disabled}
     />
   );
 };

@@ -28,7 +28,18 @@ export class PyramidDepositService {
   }
 
   public async search(dto: Partial<IPyramidDepositSearchDto>): Promise<[Array<PyramidDepositEntity>, number]> {
-    const { query, account, pyramidDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
+    const {
+      query,
+      account,
+      emptyReward,
+      pyramidDepositStatus,
+      deposit,
+      reward,
+      startTimestamp,
+      endTimestamp,
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.pyramidDepositEntityEntity.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.pyramidRule", "rule");
@@ -104,7 +115,7 @@ export class PyramidDepositService {
     }
 
     // reward is optional
-    if (reward) {
+    if (!emptyReward && reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {

@@ -9,7 +9,7 @@ export interface IStakingChartItemSearchDto {
 export interface IStakingChartSearchDto extends ISearchDto {
   deposit: IStakingChartItemSearchDto;
   reward: IStakingChartItemSearchDto;
-  emptyReward: boolean;
+  emptyReward?: boolean;
   startTimestamp: string;
   endTimestamp: string;
 }

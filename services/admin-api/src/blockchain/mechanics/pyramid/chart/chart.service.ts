@@ -16,9 +16,8 @@ export class PyramidChartService {
   ) {}
 
   public async chart(dto: IPyramidChartSearchDto): Promise<any> {
-    const { reward } = dto;
-
-    return reward ? this.chartWithReward(dto) : this.chartWithoutReward(dto);
+    const { emptyReward } = dto;
+    return emptyReward ? this.chartWithoutReward(dto) : this.chartWithReward(dto);
   }
 
   public async chartWithReward(dto: IPyramidChartSearchDto): Promise<any> {
@@ -97,9 +96,9 @@ export class PyramidChartService {
           AND
             deposit_contract.id = $2
           AND
-            staking_rules.reward_id IS NULL
+            pyramid_rules.reward_id IS NULL
           AND
-            (pyramid_deposit.created_at >= $5 AND pyramid_deposit.created_at < $6)
+            (pyramid_deposit.created_at >= $3 AND pyramid_deposit.created_at < $4)
         GROUP BY
             date
         ORDER BY

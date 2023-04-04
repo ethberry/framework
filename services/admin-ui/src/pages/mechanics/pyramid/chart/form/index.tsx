@@ -31,15 +31,15 @@ export const PyramidChartSearchForm: FC<IPyramidReportSearchFormProps> = props =
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6} />
+          <Grid item xs={6}>
+            <SwitchInput name="emptyReward" />
+          </Grid>
           <Grid item xs={6}>
             <SearchTokenSelectInput prefix="deposit" />
           </Grid>
           <Grid item xs={6}>
             <SearchTokenSelectInput prefix="reward" />
-          </Grid>
-          <Grid item xs={6} />
-          <Grid item xs={6}>
-            <SwitchInput name="emptyReward" />
           </Grid>
           <Grid item xs={6}>
             <SearchContractInput prefix="deposit" />
