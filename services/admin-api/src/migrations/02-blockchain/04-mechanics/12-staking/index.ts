@@ -11,4 +11,5 @@ export * from "./1654751224311-seed-staking-deposit-native-native";
 export * from "./1654751224322-seed-staking-deposit-erc20-erc20";
 export * from "./1654751224323-seed-staking-deposit-erc20-erc721";
 export * from "./1654751224329-seed-staking-deposit-erc20-none";
+export * from "./1654751224339-seed-staking-deposit-erc721-none";
 export * from "./1654751224345-seed-staking-deposit-erc998-erc1155";

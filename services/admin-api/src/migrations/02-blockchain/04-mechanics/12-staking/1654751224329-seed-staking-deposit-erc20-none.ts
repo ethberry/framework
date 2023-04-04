@@ -4,7 +4,7 @@ import { addDays, subDays } from "date-fns";
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedStakingDepositErc20At1654751224329 implements MigrationInterface {
+export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const now = new Date();
     const currentDateTime = now.toISOString();
