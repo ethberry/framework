@@ -76,6 +76,7 @@ export class StakingDepositService {
       }
     }
 
+    // deposit always exists
     if (deposit) {
       if (deposit.tokenType) {
         if (deposit.tokenType.length === 1) {
@@ -101,6 +102,7 @@ export class StakingDepositService {
       }
     }
 
+    // reward is optional
     if (reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
@@ -124,6 +126,8 @@ export class StakingDepositService {
           });
         }
       }
+    } else {
+      queryBuilder.andWhere("rule.reward IS NULL");
     }
 
     if (startTimestamp && endTimestamp) {
