@@ -418,6 +418,7 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
+      "emptyReward": "Empty reward",
       "endTimestamp": "End date",
       "files": "Files",
       "fromBlock": "Listen log from block №",

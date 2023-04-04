@@ -62,9 +62,29 @@ export class SeedStakingDepositErc998Erc1155At1654751224345 implements Migration
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        '${wallets[2]}',
+        '${wallets[0]}',
         'ACTIVE',
         4505,
+        '${currentDateTime}',
+        '${addDays(new Date(), 1).toISOString()}',
+        45, -- ERC998 > ERC1155
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        'ACTIVE',
+        4506,
+        '${currentDateTime}',
+        '${addDays(new Date(), 1).toISOString()}',
+        45, -- ERC998 > ERC1155
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        'ACTIVE',
+        4507,
         '${currentDateTime}',
         '${addDays(new Date(), 1).toISOString()}',
         45, -- ERC998 > ERC1155

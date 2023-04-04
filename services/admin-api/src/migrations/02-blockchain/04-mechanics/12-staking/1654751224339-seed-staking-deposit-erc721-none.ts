@@ -182,9 +182,29 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        '${wallets[2]}',
-        'COMPLETE',
+        '${wallets[0]}',
+        'ACTIVE',
         3917,
+        '${currentDateTime}',
+        '${endDateTime}',
+        29, -- ERC721 > NONE
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        'ACTIVE',
+        3918,
+        '${currentDateTime}',
+        '${endDateTime}',
+        29, -- ERC721 > NONE
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        'ACTIVE',
+        3919,
         '${currentDateTime}',
         '${endDateTime}',
         29, -- ERC721 > NONE

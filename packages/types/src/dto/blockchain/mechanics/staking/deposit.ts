@@ -10,6 +10,7 @@ export interface IStakingDepositItemSearchDto {
 
 export interface IStakingDepositSearchDto extends ISearchDto {
   account: string;
+  emptyReward?: boolean;
   stakingDepositStatus: Array<StakingDepositStatus>;
   deposit: IStakingDepositItemSearchDto;
   reward: IStakingDepositItemSearchDto;
