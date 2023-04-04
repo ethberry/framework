@@ -1,11 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedPyramidDepositNativeAt1660436477310 implements MigrationInterface {
+export class SeedPyramidDepositNativeNativeAt1660436477310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const currentDateTime = new Date().toISOString();
+    const now = new Date();
+    const currentDateTime = now.toISOString();
+    const endDateTime = addDays(now, 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.pyramid_deposit (
@@ -21,172 +24,172 @@ export class SeedPyramidDepositNativeAt1660436477310 implements MigrationInterfa
       ) VALUES (
         '${wallets[0]}',
         'ACTIVE',
-        101,
+        1101,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'ACTIVE',
-        102,
+        1102,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'ACTIVE',
-        103,
+        1103,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'CANCELED',
-        104,
+        1104,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'COMPLETE',
-        105,
+        1105,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        111,
+        1106,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        112,
+        1107,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'CANCELED',
-        113,
+        1108,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        114,
+        1109,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        115,
+        1110,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        116,
+        1111,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'COMPLETE',
-        117,
+        1112,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        121,
+        1113,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        122,
+        1114,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        123,
+        1115,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        124,
+        1116,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'COMPLETE',
-        125,
+        1117,
         '${currentDateTime}',
-        '${currentDateTime}',
-        1, -- NATIVE > NATIVE
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       );
     `);
