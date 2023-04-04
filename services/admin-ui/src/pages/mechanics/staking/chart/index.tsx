@@ -25,7 +25,7 @@ export const StakingChart: FC = () => {
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 1306,
+        contractId: 1301,
       },
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),

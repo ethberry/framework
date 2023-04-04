@@ -1,13 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { addDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
 export class SeedStakingDepositErc20At1654751224329 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const currentDateTime = new Date().toISOString();
-    const endDateTime = addDays(new Date(), 30).toISOString();
+    const now = new Date();
+    const currentDateTime = now.toISOString();
+    const endDateTime = addDays(now, 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -28,7 +29,7 @@ export class SeedStakingDepositErc20At1654751224329 implements MigrationInterfac
         '${endDateTime}',
         29, -- ERC20 > NONE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
@@ -38,7 +39,7 @@ export class SeedStakingDepositErc20At1654751224329 implements MigrationInterfac
         '${endDateTime}',
         29, -- ERC20 > NONE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
@@ -48,7 +49,7 @@ export class SeedStakingDepositErc20At1654751224329 implements MigrationInterfac
         '${endDateTime}',
         29, -- ERC20 > NONE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
@@ -58,7 +59,7 @@ export class SeedStakingDepositErc20At1654751224329 implements MigrationInterfac
         '${endDateTime}',
         29, -- ERC20 > NONE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
@@ -68,7 +69,7 @@ export class SeedStakingDepositErc20At1654751224329 implements MigrationInterfac
         '${endDateTime}',
         29, -- ERC20 > NONE
         1,
-        '${currentDateTime}',
+        '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       );
     `);
