@@ -55,9 +55,10 @@ export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto)
   @Type(() => StakingReportItemSearchDto)
   public deposit: StakingReportItemSearchDto;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: StakingReportItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => StakingReportItemSearchDto)
   public reward: StakingReportItemSearchDto;
