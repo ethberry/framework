@@ -19,7 +19,7 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
   @OneToOne(_type => AssetEntity)
   public deposit: AssetEntity;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   public rewardId: number;
 
   @JoinColumn()

@@ -77,6 +77,7 @@ export class PyramidDepositService {
       }
     }
 
+    // deposit always exists
     if (deposit) {
       if (deposit.tokenType) {
         if (deposit.tokenType.length === 1) {
@@ -102,6 +103,7 @@ export class PyramidDepositService {
       }
     }
 
+    // reward is optional
     if (reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
@@ -125,6 +127,8 @@ export class PyramidDepositService {
           });
         }
       }
+    } else {
+      queryBuilder.andWhere("rule.reward IS NULL");
     }
 
     if (startTimestamp && endTimestamp) {

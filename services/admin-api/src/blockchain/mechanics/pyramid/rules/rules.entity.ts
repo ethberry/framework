@@ -27,7 +27,7 @@ export class PyramidRulesEntity extends SearchableEntity implements IPyramidRule
   @OneToOne(_type => AssetEntity)
   public deposit: AssetEntity;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   public rewardId: number;
 
   @JoinColumn()

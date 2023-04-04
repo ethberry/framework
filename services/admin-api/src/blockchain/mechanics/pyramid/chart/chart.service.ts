@@ -16,6 +16,12 @@ export class PyramidChartService {
   ) {}
 
   public async chart(dto: IPyramidChartSearchDto): Promise<any> {
+    const { reward } = dto;
+
+    return reward ? this.chartWithReward(dto) : this.chartWithoutReward(dto);
+  }
+
+  public async chartWithReward(dto: IPyramidChartSearchDto): Promise<any> {
     const { deposit, reward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -61,6 +67,50 @@ export class PyramidChartService {
         deposit.contractId,
         reward.tokenType,
         reward.contractId,
+        startTimestamp,
+        endTimestamp,
+      ]),
+      0,
+    ]);
+  }
+
+  public async chartWithoutReward(dto: IPyramidChartSearchDto): Promise<any> {
+    const { deposit, startTimestamp, endTimestamp } = dto;
+
+    // prettier-ignore
+    const queryString = `
+        SELECT
+            COUNT(pyramid_deposit.id)::INTEGER AS count,
+            date_trunc('day', pyramid_deposit.created_at) as date
+        FROM
+            ${ns}.pyramid_deposit
+                LEFT JOIN
+            ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
+                LEFT JOIN
+            ${ns}.asset as asset_deposit ON pyramid_rules.deposit_id = asset_deposit.id
+                LEFT JOIN
+            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
+                LEFT JOIN
+            ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
+        WHERE
+            deposit_contract.contract_type = $1
+          AND
+            deposit_contract.id = $2
+          AND
+            staking_rules.reward_id IS NULL
+          AND
+            (pyramid_deposit.created_at >= $5 AND pyramid_deposit.created_at < $6)
+        GROUP BY
+            date
+        ORDER BY
+            date
+    `;
+
+    // prettier-ignore
+    return Promise.all([
+      this.entityManager.query(queryString, [
+        deposit.tokenType,
+        deposit.contractId,
         startTimestamp,
         endTimestamp,
       ]),
