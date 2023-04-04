@@ -62,9 +62,29 @@ export class SeedStakingDepositErc20Erc721At1654751224323 implements MigrationIn
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        '${wallets[2]}',
+        '${wallets[0]}',
         'ACTIVE',
         2305,
+        '${currentDateTime}',
+        '${endDateTime}',
+        23, -- ERC20 > ERC721
+        1,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        'ACTIVE',
+        2306,
+        '${currentDateTime}',
+        '${endDateTime}',
+        23, -- ERC20 > ERC721
+        1,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        'ACTIVE',
+        2307,
         '${currentDateTime}',
         '${endDateTime}',
         23, -- ERC20 > ERC721
