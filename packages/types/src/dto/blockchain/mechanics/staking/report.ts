@@ -12,6 +12,7 @@ export interface IStakingReportSearchDto extends ISearchDto {
   deposit: IStakingReportItemSearchDto;
   reward: IStakingReportItemSearchDto;
   account: string;
+  emptyReward: boolean;
   stakingDepositStatus: Array<StakingDepositStatus>;
   startTimestamp: string;
   endTimestamp: string;

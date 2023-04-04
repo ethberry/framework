@@ -42,6 +42,7 @@ export const PyramidReport: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: 1201,
       },
+      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
