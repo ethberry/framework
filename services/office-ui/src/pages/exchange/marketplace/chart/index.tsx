@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useRef } from "react";
+import { FC, Fragment, useCallback, useEffect, useRef } from "react";
 import { Box, Button } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -27,8 +27,20 @@ export const MarketplaceChart: FC = () => {
 
   const chartRef = useRef<HTMLDivElement>(null);
 
+  const clearChart = useCallback(() => {
+    while (chartRef.current?.lastChild) {
+      chartRef.current.removeChild(chartRef.current.lastChild);
+    }
+  }, [chartRef.current]);
+
   useEffect(() => {
-    if (rows.length && chartRef.current) {
+    if (!chartRef.current) {
+      return;
+    }
+
+    if (!rows.length) {
+      clearChart();
+    } else {
       const chart = Plot.plot({
         width: chartRef.current.clientWidth,
         style: {
@@ -49,9 +61,7 @@ export const MarketplaceChart: FC = () => {
         },
       });
 
-      while (chartRef.current.lastChild) {
-        chartRef.current.removeChild(chartRef.current.lastChild);
-      }
+      clearChart();
 
       chartRef.current.append(chart);
     }
