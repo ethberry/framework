@@ -43,6 +43,7 @@ export class StakingChartSearchDto extends SearchDto implements IStakingChartSea
   @Type(() => StakingChartItemSearchDto)
   public reward: StakingChartItemSearchDto;
 
+  @ApiPropertyOptional()
   @IsOptional()
   public emptyReward: boolean;
 

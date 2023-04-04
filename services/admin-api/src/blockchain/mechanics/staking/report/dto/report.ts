@@ -48,6 +48,7 @@ export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto)
   @IsEnum(StakingDepositStatus, { each: true, message: "badInput" })
   public stakingDepositStatus: Array<StakingDepositStatus>;
 
+  @ApiPropertyOptional()
   @IsOptional()
   public emptyReward: boolean;
 
