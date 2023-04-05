@@ -123,6 +123,10 @@ export class MysteryBoxService {
 
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "components");
+    queryBuilder.leftJoinAndSelect("components.contract", "boxContract");
+    queryBuilder.leftJoinAndSelect("components.template", "boxTemplate");
 
     if (contractIds) {
       if (contractIds.length === 1) {

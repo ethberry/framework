@@ -10,6 +10,7 @@ import { ISignMysteryboxDto } from "./interfaces";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
+import { sorter } from "../../../../common/utils/sorter";
 
 @Injectable()
 export class MysterySignService {
@@ -50,23 +51,24 @@ export class MysterySignService {
   }
 
   public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryBoxEntity): Promise<string> {
+    const items = ([] as Array<IAsset>).concat(
+      mysteryboxEntity.item.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        tokenId: component.templateId.toString(),
+        amount: component.amount,
+      })),
+      {
+        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+        token: mysteryboxEntity.template.contract.address,
+        tokenId: mysteryboxEntity.templateId.toString(),
+        amount: "1",
+      },
+    );
     return this.signerService.getManyToManySignature(
       account,
       params,
-      ([] as Array<IAsset>).concat(
-        mysteryboxEntity.item.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          tokenId: component.templateId.toString(),
-          amount: component.amount,
-        })),
-        {
-          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-          token: mysteryboxEntity.template.contract.address,
-          tokenId: mysteryboxEntity.id.toString(),
-          amount: "1",
-        },
-      ),
+      items,
       mysteryboxEntity.template.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

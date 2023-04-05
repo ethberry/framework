@@ -44,6 +44,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.PaymentEthSent,
               // MODULE:CLAIM
               ExchangeEventType.Claim,
+              // MODULE:MYSTERYBOX
+              ExchangeEventType.Mysterybox,
               // MODULE:REFERRAL
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralWithdraw,

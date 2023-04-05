@@ -42,6 +42,7 @@ import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { CategoryEntity } from "./ecommerce/category/category.entity";
 import { CartEntity } from "./ecommerce/cart/cart.entity";
 import { CartItemEntity } from "./ecommerce/cart-item/cart-item.entity";
+import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -80,6 +81,7 @@ const config: PostgresConnectionOptions = {
     PyramidRulesEntity,
     PyramidDepositEntity,
     BreedEntity,
+    RentEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

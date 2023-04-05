@@ -16,6 +16,7 @@ export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysterybox>({
     baseUrl: "/mystery-boxes",
     empty: {
+      title: "",
       description: emptyStateString,
     },
   });
