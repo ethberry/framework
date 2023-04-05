@@ -80,15 +80,7 @@ export async function factoryDeployErc20(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC20TokenDeployed")
-    .withNamedArgs({
-      addr: address,
-      args: {
-        name: tokenName,
-        symbol: tokenSymbol,
-        cap,
-        contractTemplate,
-      },
-    });
+    .withArgs(address, [tokenName, tokenSymbol, cap, contractTemplate]);
 
   const erc20Instance = erc20.attach(address);
 

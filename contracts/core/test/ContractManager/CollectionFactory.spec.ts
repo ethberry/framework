@@ -90,18 +90,11 @@ describe("CollectionFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "CollectionDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            name: tokenName,
-            symbol: tokenSymbol,
-            royalty: BigNumber.from(royalty),
-            baseTokenURI,
-            batchSize: BigNumber.from(batchSize),
-            contractTemplate,
-          },
-          owner: owner.address,
-        });
+        .withArgs(
+          address,
+          [tokenName, tokenSymbol, BigNumber.from(royalty), baseTokenURI, BigNumber.from(batchSize), contractTemplate],
+          owner.address,
+        );
 
       const erc721Instance = erc721.attach(address);
 
@@ -116,7 +109,7 @@ describe("CollectionFactory", function () {
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc721Instance.mint(receiver.address, templateId);
-      await expect(tx2).to.be.revertedWith("MethodNotSupported");
+      await expect(tx2).to.be.revertedWithCustomError(erc721Instance, "MethodNotSupported");
 
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(batchSize);

@@ -70,13 +70,7 @@ describe("StakingFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "StakingDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            maxStake: BigNumber.from(maxStake),
-            contractTemplate,
-          },
-        });
+        .withArgs(address, [BigNumber.from(maxStake), contractTemplate]);
     });
   });
 });

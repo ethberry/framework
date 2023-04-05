@@ -74,21 +74,9 @@ describe("ERC20Factory", function () {
 
       const [address] = await contractInstance.allERC20Tokens();
 
-      // await expect(tx)
-      //   .to.emit(contractInstance, "ERC20TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, cap, contractTemplate);
-
       await expect(tx)
         .to.emit(contractInstance, "ERC20TokenDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            name: tokenName,
-            symbol: tokenSymbol,
-            cap,
-            contractTemplate,
-          },
-        });
+        .withArgs(address, [tokenName, tokenSymbol, cap, contractTemplate]);
 
       const erc20Instance = erc20.attach(address);
 
