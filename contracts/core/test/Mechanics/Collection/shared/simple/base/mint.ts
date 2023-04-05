@@ -10,7 +10,7 @@ export function shouldMint(factory: () => Promise<Contract>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
       const tx = contractInstance.mint(receiver.address, tokenId);
-      await expect(tx).to.be.revertedWith("MethodNotSupported");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "MethodNotSupported");
     });
   });
 }

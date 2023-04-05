@@ -6,6 +6,7 @@ import { nonce } from "@gemunion/contracts-constants";
 
 import { deployContractManager } from "./fixture";
 import { contractTemplate } from "../constants";
+import { isEqualArray } from "../utils";
 
 describe("PyramidFactory", function () {
   const factory = () => deployContractManager(this.title);
@@ -73,14 +74,7 @@ describe("PyramidFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "PyramidDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            payees: [owner.address],
-            shares: [BigNumber.from(1)],
-            contractTemplate,
-          },
-        });
+        .withArgs(address, isEqualArray([owner.address], [BigNumber.from(1)], contractTemplate));
     });
   });
 });

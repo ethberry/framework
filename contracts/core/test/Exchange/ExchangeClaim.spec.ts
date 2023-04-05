@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants } from "ethers";
+import { BigNumber, constants } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
@@ -10,6 +10,7 @@ import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./sh
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
 import { randomRequest } from "../shared/randomRequest";
+import { isEqualArray } from "../utils";
 
 describe("ExchangeClaim", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -63,18 +64,11 @@ describe("ExchangeClaim", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Claim")
-          .withNamedArgs({
-            from: receiver.address,
+          .withArgs(
+            receiver.address,
             externalId,
-            // items: [
-            //   {
-            //     tokenType: 2,
-            //     token: erc721Instance.address,
-            //     tokenId,
-            //     amount,
-            //   },
-            // ],
-          })
+            isEqualArray([2, erc721Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+          )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
 
@@ -121,18 +115,11 @@ describe("ExchangeClaim", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Claim")
-          .withNamedArgs({
-            from: receiver.address,
+          .withArgs(
+            receiver.address,
             externalId,
-            // items: [
-            //   {
-            //     tokenType: 2,
-            //     token: erc721Instance.address,
-            //     tokenId,
-            //     amount,
-            //   },
-            // ],
-          })
+            isEqualArray([2, erc721Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+          )
           .to.not.emit(erc721Instance, "Transfer");
 
         await randomRequest(erc721Instance, vrfInstance);
@@ -222,18 +209,11 @@ describe("ExchangeClaim", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Claim")
-          .withNamedArgs({
-            from: receiver.address,
+          .withArgs(
+            receiver.address,
             externalId,
-            // items: [
-            //   {
-            //     tokenType: 4,
-            //     token: erc1155Instance.address,
-            //     tokenId,
-            //     amount,
-            //   },
-            // ],
-          })
+            isEqualArray([4, erc1155Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+          )
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
 
