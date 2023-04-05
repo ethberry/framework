@@ -20,7 +20,7 @@
     "@gemunion/contracts-erc20": "2.0.2",
     "@gemunion/contracts-erc721": "2.0.2",
     "@gemunion/contracts-erc721-enumerable": "2.0.2",
-    "@gemunion/contracts-erc998td": "2.0.3",
+    "@gemunion/contracts-erc998td": "3.0.1",
     "@gemunion/contracts-misc": "2.0.2",
     "@gemunion/contracts-mocha": "2.0.2",
     "@gemunion/contracts-mocks": "2.0.2",
