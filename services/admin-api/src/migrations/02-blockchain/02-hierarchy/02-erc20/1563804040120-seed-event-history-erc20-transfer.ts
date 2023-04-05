@@ -4,9 +4,9 @@ import { constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface {
+export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
+    const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -19,74 +19,74 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        501001,
-        '${erc721ContractSimpleAddress}',
+        1200001,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: wallets[1],
-          tokenId: "1",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501002,
-        '${erc721ContractSimpleAddress}',
+        1200002,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: wallets[2],
-          tokenId: "2",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501003,
-        '${erc721ContractSimpleAddress}',
+        1200003,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: wallets[0],
-          tokenId: "3",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501004,
-        '${erc721ContractSimpleAddress}',
+        1200004,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: wallets[2],
-          tokenId: "4",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501005,
-        '${erc721ContractSimpleAddress}',
+        1200005,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: wallets[0],
-          tokenId: "5",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501006,
-        '${erc721ContractSimpleAddress}',
+        1200006,
+        '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: wallets[1],
-          tokenId: "6",
+          value: constants.WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'

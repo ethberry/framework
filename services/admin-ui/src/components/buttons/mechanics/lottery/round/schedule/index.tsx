@@ -42,7 +42,6 @@ export const LotteryScheduleButton: FC = () => {
         startIcon={<ManageHistory />}
         onClick={handleSchedule}
         data-testid="LotteryScheduleButton"
-        // className={className}
       >
         <FormattedMessage id="form.buttons.schedule" />
       </Button>

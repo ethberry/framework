@@ -11,6 +11,8 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
+        140101
+      ), (
         140501
       ), (
         140502
@@ -49,6 +51,18 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        140101,
+        'Bag',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        140101,
+        0,
+        1,
+        'ACTIVE',
+        1401,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         140501,
         'Scroll',
         '${simpleFormatting}',

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   Button,
@@ -10,14 +10,15 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
+import { IContract, ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 
-import { Erc998TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
+import { Erc998TokenViewDialog } from "./view";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
 export const Erc998Token: FC = () => {
   const {
@@ -49,6 +50,25 @@ export const Erc998Token: FC = () => {
     },
   });
 
+  const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
+
+  const [contract, setContract] = useState<IContract>({} as IContract);
+
+  const handleWithdraw = (contract: IContract): (() => void) => {
+    return (): void => {
+      setContract(contract);
+      setIsWithdrawDialogOpen(true);
+    };
+  };
+
+  const handleWithdrawConfirm = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
+  const handleWithdrawCancel = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "erc998.tokens"]} />
@@ -78,6 +98,9 @@ export const Erc998Token: FC = () => {
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
               <ListItemSecondaryAction>
+                <IconButton onClick={handleWithdraw(token.template!.contract!)}>
+                  <AccountBalanceWallet />
+                </IconButton>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />
                 </IconButton>
@@ -100,6 +123,13 @@ export const Erc998Token: FC = () => {
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
         initialValues={selected}
+      />
+
+      <BalanceWithdrawDialog
+        onConfirm={handleWithdrawConfirm}
+        onCancel={handleWithdrawCancel}
+        open={isWithdrawDialogOpen}
+        initialValues={contract}
       />
     </Grid>
   );

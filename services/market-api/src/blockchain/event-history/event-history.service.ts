@@ -37,6 +37,8 @@ export class EventHistoryService {
 
     queryBuilder.select();
 
+    queryBuilder.andWhere("history.parent_id IS NULL");
+
     queryBuilder.andWhere(
       new Brackets(qb => {
         qb.andWhere(
@@ -56,6 +58,16 @@ export class EventHistoryService {
             qb1.andWhere(
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet3", { wallet3: wallet });
+              }),
+            );
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType3", { eventType3: ContractEventType.Claim });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'from') = :wallet4", { wallet4: wallet });
               }),
             );
           }),
