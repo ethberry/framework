@@ -1,6 +1,5 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
-import { ethers, waffle, web3 } from "hardhat";
+import { expect } from "chai";
+import { ethers, web3 } from "hardhat";
 import { constants, utils } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
@@ -10,8 +9,6 @@ import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { deployPyramid } from "./fixture";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
-
-use(solidity);
 
 describe("Pyramid", function () {
   const period = 300;
@@ -470,7 +467,7 @@ describe("Pyramid", function () {
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
 
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -538,7 +535,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -606,7 +603,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -695,7 +692,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -782,7 +779,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -1157,7 +1154,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -1310,7 +1307,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -1602,7 +1599,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -1771,7 +1768,7 @@ describe("Pyramid", function () {
         },
       );
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance).to.equal(
         {
           tokenType: 0, // NATIVE
@@ -1915,7 +1912,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx11).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance1 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance1 = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance1).to.equal(stakeRule1.deposit.amount);
       await expect(tx11)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -1934,7 +1931,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx12).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance2 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance2 = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance2).to.equal(stakeRule1.deposit.amount.mul(2));
       await expect(tx12)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -1964,7 +1961,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx13).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance3 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance3 = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance3).to.equal(stakeRule1.deposit.amount.mul(3));
       await expect(tx13)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -2109,7 +2106,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx11).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance1 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance1 = await ethers.provider.getBalance(pyramidInstance.address);
 
       expect(stakeBalance1).to.equal(stakeRule1.deposit.amount.sub(refReward0));
       await expect(tx11)
@@ -2123,7 +2120,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx12).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance2 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance2 = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance2).to.equal(stakeRule1.deposit.amount.mul(2).sub(refReward0.mul(2)));
       await expect(tx12)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -2139,7 +2136,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx13).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance3 = await waffle.provider.getBalance(pyramidInstance.address);
+      const stakeBalance3 = await ethers.provider.getBalance(pyramidInstance.address);
       expect(stakeBalance3).to.equal(stakeRule1.deposit.amount.mul(3).sub(refReward0.mul(3)));
       await expect(tx13)
         .to.emit(pyramidInstance, "ReferralReward")

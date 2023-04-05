@@ -1,5 +1,4 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
 
@@ -10,8 +9,6 @@ import { amountWei, amountWeiEth, templateId, tokenZero } from "../constants";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
 import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
 import { deployContractManager, deployExchangeFixture } from "./shared/fixture";
-
-use(solidity);
 
 describe("Factory Exchange Referral", function () {
   const refProgram = {

@@ -58,7 +58,7 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       await linkInstance.transfer(contractInstance.address, constants.WeiPerEther);
 
       const tx = contractInstance.mintRandom(receiver.address, 0);
-      await expect(tx).to.be.revertedWith("TemplateZero");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "TemplateZero");
     });
   });
 }
