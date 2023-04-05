@@ -24,7 +24,7 @@
     "@gemunion/contracts-mocks": "1.1.57",
     "@gemunion/contracts-utils": "1.1.51",
     "@gemunion/utils": "1.3.0",
-    "@gemunion/utils-eth": "0.1.0",
+    "@gemunion/utils-eth": "0.1.1",
     "@nomicfoundation/hardhat-network-helpers": "1.0.8",
     "@nomiclabs/hardhat-ethers": "2.2.2",
     "@nomiclabs/hardhat-etherscan": "3.1.7",
