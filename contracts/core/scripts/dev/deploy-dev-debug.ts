@@ -26,8 +26,8 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   }
 };
 
-let idx = 1;
 const grantRoles = async (contracts: Array<string>, grantee: Array<string>, roles: Array<string>) => {
+  let idx = 1;
   for (let i = 0; i < contracts.length; i++) {
     for (let j = 0; j < grantee.length; j++) {
       for (let k = 0; k < roles.length; k++) {

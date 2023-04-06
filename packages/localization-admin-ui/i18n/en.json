@@ -504,6 +504,7 @@
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
+      "user": "User",
       "userId": "User",
       "userIds": "Users",
       "userRoles": "Roles",

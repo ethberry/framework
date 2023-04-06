@@ -42,7 +42,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.Purchase,
               ExchangeEventType.PaymentEthReceived,
               ExchangeEventType.PaymentEthSent,
-              // MODULE:ERC4907 RENT
+              // MODULE:RENTABLE
               ExchangeEventType.Lend,
               // MODULE:CLAIM
               ExchangeEventType.Claim,

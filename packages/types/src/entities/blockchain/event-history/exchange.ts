@@ -14,7 +14,7 @@ export enum ExchangeEventType {
   ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
-  // MODULE:ERC4907 RENT
+  // MODULE:RENTABLE
   Lend = "Lend",
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
@@ -112,7 +112,7 @@ export interface IExchangeBreedEvent {
   sire: IExchangeItem;
 }
 
-// MODULE:ERC4907 RENT
+// MODULE:RENTABLE
 // event Lend(address from, address to, uint256 expires, Asset[] items, Asset[] price);
 
 export interface IExchangeLendEvent {

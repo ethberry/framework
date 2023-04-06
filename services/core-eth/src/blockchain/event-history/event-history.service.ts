@@ -203,7 +203,7 @@ export class EventHistoryService {
       await contractEventEntity.save();
     }
 
-    // MODULE:ERC4907 RENT
+    // MODULE:RENTABLE
     if (eventType === ContractEventType.UpdateUser) {
       const parentEvent = await this.findOne({
         transactionHash,

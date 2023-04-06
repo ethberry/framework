@@ -7,17 +7,12 @@ import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 
 import { ISignRentTokenDto } from "./interfaces";
-import { TemplateService } from "../../hierarchy/template/template.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 
 @Injectable()
 export class RentSignService {
-  constructor(
-    private readonly signerService: SignerService,
-    private readonly templateService: TemplateService,
-    private readonly tokenService: TokenService,
-  ) {}
+  constructor(private readonly signerService: SignerService, private readonly tokenService: TokenService) {}
 
   public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
     const { tokenId, account, referrer, externalId } = dto;
@@ -60,7 +55,6 @@ export class RentSignService {
       tokenEntity.template.contract.rent[0].price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        // pass templateId instead of tokenId = 0
         tokenId:
           component.template.tokens[0].tokenId === "0"
             ? component.template.tokens[0].templateId.toString()
