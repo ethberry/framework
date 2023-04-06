@@ -18,7 +18,7 @@ export interface ITokenUserView {
 export const TokenUserView: FC<ITokenUserView> = props => {
   const { tokenId, address } = props;
 
-  const [tokenUser, setTokenUser] = useState<string | null>(null);
+  const [tokenUser, setTokenUser] = useState<string>("");
 
   const getCurrentUser = useMetamaskValue(
     async (_a: null, web3Context: Web3ContextType) => {
@@ -49,7 +49,7 @@ export const TokenUserView: FC<ITokenUserView> = props => {
         <FormattedMessage id="form.labels.user" />
       </TableCell>
       <TableCell align="right">
-        <AddressLink address={tokenUser || ""} length={42} />
+        <AddressLink address={tokenUser.toLowerCase()} length={42} />
       </TableCell>
     </TableRow>
   );
