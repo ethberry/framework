@@ -133,6 +133,7 @@ export class MysteryBoxService {
           price_tokens: "price_template.tokens",
         },
       },
+      order: { createdAt: "DESC" },
     });
   }
 

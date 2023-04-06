@@ -56,6 +56,13 @@ export class EventHistoryService {
     return this.contractEventEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<EventHistoryEntity>,
+    options?: FindOneOptions<EventHistoryEntity>,
+  ): Promise<Array<EventHistoryEntity>> {
+    return this.contractEventEntityRepository.find({ where, ...options });
+  }
+
   public async update(
     where: FindOptionsWhere<EventHistoryEntity>,
     dto: DeepPartial<EventHistoryEntity>,
@@ -171,14 +178,28 @@ export class EventHistoryService {
           ExchangeEventType.Craft,
           ExchangeEventType.Mysterybox,
           ExchangeEventType.Claim,
-          ExchangeEventType.Borrow,
+          ExchangeEventType.Lend,
           ContractEventType.MintRandom,
         ]),
       });
-
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
+
+        const nestedEvents = await this.findAll({
+          transactionHash,
+          parentId: undefined,
+        });
+        // TODO nested ?== parent
+        if (nestedEvents) {
+          nestedEvents.map(async nested => {
+            if (nested.id !== parentEvent.id) {
+              Object.assign(nested, { parentId: parentEvent.id });
+              await nested.save();
+            }
+          });
+        }
       }
+
       await contractEventEntity.save();
     }
   }

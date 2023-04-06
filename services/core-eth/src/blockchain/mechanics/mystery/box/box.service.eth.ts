@@ -48,7 +48,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
-      const mysteryboxEntity = await this.mysteryboxService.findOne({ id: templateId });
+      const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
 
       if (!mysteryboxEntity) {
         throw new NotFoundException("mysteryboxNotFound");

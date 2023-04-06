@@ -20,6 +20,8 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         160501
       ), (
         160601
+      ), (
+        260101
       );
     `);
 
@@ -94,6 +96,18 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         1,
         'ACTIVE',
         1606,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        260101,
+        'Mysterybox (BEP)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        260101,
+        0,
+        1,
+        'ACTIVE',
+        2601,
         '${currentDateTime}',
         '${currentDateTime}'
       );

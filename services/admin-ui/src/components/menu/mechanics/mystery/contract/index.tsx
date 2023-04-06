@@ -4,20 +4,20 @@ import { MoreVert } from "@mui/icons-material";
 
 import { ContractFeatures, IContract } from "@framework/types";
 
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { RoyaltyMenuItem } from "../../common/royalty";
-import { TransferMenuItem } from "../../common/transfer";
-import { AllowanceMenuItem } from "../../hierarchy/contract/allowance";
-import { PausableMenuItem } from "../common/pausable";
-import { BlacklistMenuItem } from "../../extensions/blacklist-add";
-import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
-import { WhitelistMenuItem } from "../../extensions/whitelist-add";
-import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
-import { MintBoxMenuItem } from "./mint-box";
+import { EthListenerAddMenuItem } from "../../../common/eth-add";
+import { EthListenerRemoveMenuItem } from "../../../common/eth-remove";
+import { ContractGrantRoleMenuItem } from "../../../extensions/grant-role";
+import { ContractRevokeRoleMenuItem } from "../../../extensions/revoke-role";
+import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role";
+import { RoyaltyMenuItem } from "../../../common/royalty";
+import { TransferMenuItem } from "../../../common/transfer";
+import { AllowanceMenuItem } from "../../../hierarchy/contract/allowance";
+import { PausableMenuItem } from "../../common/pausable";
+import { BlacklistMenuItem } from "../../../extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../../extensions/blacklist-remove";
+import { WhitelistMenuItem } from "../../../extensions/whitelist-add";
+import { UnWhitelistMenuItem } from "../../../extensions/whitelist-remove";
+import { MintMenuItem } from "./mint";
 
 export interface IMysteryActionsMenu {
   contract: IContract;
@@ -56,7 +56,7 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
-        <MintBoxMenuItem contract={contract} />
+        <MintMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />

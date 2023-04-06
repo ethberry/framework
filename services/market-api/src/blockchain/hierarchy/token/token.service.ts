@@ -56,7 +56,7 @@ export class TokenService {
       });
     }
 
-    if (contractFeatures) {
+    if (contractFeatures.length > 0) {
       if (contractFeatures.length === 1) {
         queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
           contractFeature: contractFeatures[0],

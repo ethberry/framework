@@ -147,6 +147,25 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        2601,
+        '${erc721ContractMysteryboxSimpleAddress}',
+        '56',
+        'MYSTERY BOX (BEP)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERY BOX',
+        'MB-BEP721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{}',
+        'MYSTERY',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       )
     `);
   }

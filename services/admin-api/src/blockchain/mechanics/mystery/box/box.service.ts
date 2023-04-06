@@ -11,6 +11,7 @@ import { MysteryBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
 
 @Injectable()
 export class MysteryBoxService {
@@ -116,13 +117,36 @@ export class MysteryBoxService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryBoxEntityRepository.find({
-      select: {
-        id: true,
-        title: true,
-      },
+  public async autocomplete(dto: IMysteryBoxAutocompleteDto, userEntity: UserEntity): Promise<Array<MysteryBoxEntity>> {
+    const { contractIds } = dto;
+    const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
+
+    queryBuilder.leftJoinAndSelect("box.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "components");
+    queryBuilder.leftJoinAndSelect("components.contract", "boxContract");
+    queryBuilder.leftJoinAndSelect("components.template", "boxTemplate");
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
+
+    queryBuilder.orderBy({
+      "box.title": "ASC",
+    });
+
+    return queryBuilder.getMany();
   }
 
   public findOne(

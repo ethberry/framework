@@ -15,7 +15,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 
-import WaitlistSetRewardABI from "../../../../abis/pages/mechanisms/waitlist/list/setReward.abi.json";
+import WaitlistSetRewardABI from "../../../../abis/pages/mechanics/waitlist/list/setReward.abi.json";
 
 import { WaitlistSearchForm } from "./form";
 import { WaitlistListEditDialog } from "./edit";

@@ -20,7 +20,7 @@ import { ContractStatus, IContract, IContractSearchDto, MysteryContractFeatures 
 
 import { MysteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery";
+import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/contract";
 import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {

@@ -12,6 +12,7 @@ import { IMysterybox, TokenType } from "@framework/types";
 import MysteryboxPurchaseABI from "../../../../../abis/components/buttons/mechanics/mysterybox/purchase/mysterybox.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 interface IMysteryboxBuyButtonProps {
   mysterybox: IMysterybox;
@@ -24,6 +25,23 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, MysteryboxPurchaseABI, web3Context.provider?.getSigner());
+
+    const items = ([] as Array<any>).concat(
+      mysterybox.item?.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract!.address,
+        tokenId: component.templateId,
+        amount: component.amount,
+      })),
+      {
+        id: mysterybox.id,
+        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+        token: mysterybox.template!.contract!.address,
+        tokenId: mysterybox.templateId,
+        amount: "1",
+      },
+    );
+
     return contract.mysterybox(
       {
         nonce: utils.arrayify(sign.nonce),
@@ -31,20 +49,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         expiresAt: sign.expiresAt,
         referrer: constants.AddressZero,
       },
-      ([] as Array<any>).concat(
-        mysterybox.item?.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.templateId,
-          amount: component.amount,
-        })),
-        {
-          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-          token: mysterybox.template!.contract!.address,
-          tokenId: mysterybox.id.toString(),
-          amount: "1",
-        },
-      ),
+      items,
       mysterybox.template?.price?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
