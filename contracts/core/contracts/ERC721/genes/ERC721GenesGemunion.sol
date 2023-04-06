@@ -10,7 +10,7 @@ import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion
 
 import "../ERC721Genes.sol";
 
-contract ERC721GenesGoerli is ERC721Genes, ChainLinkGemunion {
+contract ERC721GenesGemunion is ERC721Genes, ChainLinkGemunion {
   constructor(
     string memory name,
     string memory symbol,

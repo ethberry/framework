@@ -44,7 +44,7 @@ export class RentService {
 
   public async update(where: FindOptionsWhere<RentEntity>, dto: Partial<IRentUpdateDto>): Promise<RentEntity> {
     const { price, ...rest } = dto;
-    const templateEntity = await this.findOne(where, {
+    const rentEntity = await this.findOne(where, {
       join: {
         alias: "rent",
         leftJoinAndSelect: {
@@ -54,17 +54,17 @@ export class RentService {
       },
     });
 
-    if (!templateEntity) {
+    if (!rentEntity) {
       throw new NotFoundException("rentNotFound");
     }
 
     if (price) {
-      await this.assetService.update(templateEntity.price, price);
+      await this.assetService.update(rentEntity.price, price);
     }
 
-    Object.assign(templateEntity, rest);
+    Object.assign(rentEntity, rest);
 
-    return templateEntity.save();
+    return rentEntity.save();
   }
 
   public findOneWithRelations(where: FindOptionsWhere<RentEntity>): Promise<RentEntity | null> {
