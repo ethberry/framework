@@ -11,3 +11,16 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 export const getContractName = (base: string, network: string) => {
   return base.endsWith("Random") || base.endsWith("Genes") ? snakeToCamelCase(`${base}_${network}`) : base;
 };
+
+export const isEqualArray = (...args: any[]): any => {
+  return (eventValues: any[]): boolean => {
+    for (let i = 0; i < eventValues.length; i++) {
+      if (JSON.stringify(eventValues[i]) !== JSON.stringify(args[i])) {
+        console.error("eventValues[i]", JSON.stringify(eventValues[i]));
+        console.error("args[i]", JSON.stringify(args[i]));
+        return false;
+      }
+    }
+    return true;
+  };
+};

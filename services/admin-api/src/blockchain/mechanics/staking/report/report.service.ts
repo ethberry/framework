@@ -3,7 +3,7 @@ import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
 
-import type { IStakingDepositItemSearchDto, IStakingReportSearchDto } from "@framework/types";
+import type { IStakingReportSearchDto } from "@framework/types";
 
 import { StakingDepositEntity } from "../deposit/deposit.entity";
 import { StakingDepositService } from "../deposit/deposit.service";
@@ -23,11 +23,11 @@ export class StakingReportService {
       deposit: {
         tokenType: [deposit.tokenType],
         contractIds: [deposit.contractId],
-      } as IStakingDepositItemSearchDto,
+      },
       reward: {
         tokenType: [reward.tokenType],
         contractIds: [reward.contractId],
-      } as IStakingDepositItemSearchDto,
+      },
     });
   }
 

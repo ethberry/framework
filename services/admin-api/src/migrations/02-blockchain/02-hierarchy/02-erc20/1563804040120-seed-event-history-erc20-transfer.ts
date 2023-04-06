@@ -4,9 +4,8 @@ import { constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface {
+export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
@@ -20,7 +19,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        401001,
+        1200001,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -32,7 +31,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401002,
+        1200002,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -44,7 +43,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401003,
+        1200003,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -56,7 +55,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401004,
+        1200004,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -68,7 +67,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401005,
+        1200005,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -80,7 +79,7 @@ export class SeedEventHistoryErc20At1563804040320 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401006,
+        1200006,
         '${erc20TokenSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',

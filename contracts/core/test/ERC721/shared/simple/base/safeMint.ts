@@ -8,7 +8,7 @@ export function shouldSafeMint(factory: () => Promise<Contract>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
       const tx = contractInstance.safeMint(receiver.address);
-      await expect(tx).to.be.revertedWith("MethodNotSupported");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "MethodNotSupported");
     });
   });
 }

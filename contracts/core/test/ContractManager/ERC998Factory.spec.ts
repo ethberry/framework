@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { constants } from "ethers";
 
 import {
   baseTokenURI,
@@ -84,22 +84,9 @@ describe("ERC998Factory", function () {
 
       const [address] = await contractInstance.allERC998Tokens();
 
-      // await expect(tx)
-      //   .to.emit(contractInstance, "ERC998TokenDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate);
-
       await expect(tx)
         .to.emit(contractInstance, "ERC998TokenDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            name: tokenName,
-            symbol: tokenSymbol,
-            royalty: BigNumber.from(royalty),
-            baseTokenURI,
-            contractTemplate,
-          },
-        });
+        .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc998Instance = erc998.attach(address);
 

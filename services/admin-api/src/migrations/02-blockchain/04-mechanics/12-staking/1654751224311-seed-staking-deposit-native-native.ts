@@ -182,9 +182,29 @@ export class SeedStakingDepositNativeNativeAt1654751224311 implements MigrationI
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        '${wallets[2]}',
-        'COMPLETE',
+        '${wallets[0]}',
+        'ACTIVE',
         1117,
+        '${currentDateTime}',
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        'ACTIVE',
+        1118,
+        '${currentDateTime}',
+        '${endDateTime}',
+        11, -- NATIVE > NATIVE
+        1,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        'ACTIVE',
+        1119,
         '${currentDateTime}',
         '${endDateTime}',
         11, -- NATIVE > NATIVE

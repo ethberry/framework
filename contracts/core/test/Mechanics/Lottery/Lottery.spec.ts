@@ -1,5 +1,4 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
 import { constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
@@ -20,8 +19,6 @@ import { deployERC20 } from "../../ERC20/shared/fixtures";
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
-
-use(solidity);
 
 describe("Lottery", function () {
   let vrfInstance: VRFCoordinatorMock;

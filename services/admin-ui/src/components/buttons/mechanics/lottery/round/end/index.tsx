@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
-import { Casino } from "@mui/icons-material";
+import { StopCircleOutlined } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
@@ -15,12 +15,16 @@ export const LotteryRoundEndButton: FC = () => {
     return contract.endRound() as Promise<void>;
   });
 
-  const handleRound = () => {
+  const handleEndRound = () => {
     return metaFn();
   };
 
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
+
   return (
-    <Button startIcon={<Casino />} onClick={handleRound} data-testid="LotteryRoundEndButton">
+    <Button startIcon={<StopCircleOutlined />} onClick={handleEndRound} data-testid="LotteryRoundEndButton">
       <FormattedMessage id="pages.lottery.rounds.end" />
     </Button>
   );

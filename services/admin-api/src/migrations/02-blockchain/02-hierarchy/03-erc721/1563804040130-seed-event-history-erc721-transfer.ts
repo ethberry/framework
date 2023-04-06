@@ -4,9 +4,8 @@ import { constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface {
+export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-
     const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
@@ -20,7 +19,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        501001,
+        1300001,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -32,7 +31,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501002,
+        1300002,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -44,7 +43,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501003,
+        1300003,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -56,7 +55,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501004,
+        1300004,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -68,7 +67,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501005,
+        1300005,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
@@ -80,7 +79,7 @@ export class SeedEventHistoryErc721At1563804040330 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501006,
+        1300006,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',

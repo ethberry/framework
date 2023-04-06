@@ -10,6 +10,7 @@ export interface IPyramidDepositItemSearchDto {
 
 export interface IPyramidDepositSearchDto extends ISearchDto {
   account: string;
+  emptyReward?: boolean;
   pyramidDepositStatus: Array<PyramidDepositStatus>;
   deposit: IPyramidDepositItemSearchDto;
   reward: IPyramidDepositItemSearchDto;

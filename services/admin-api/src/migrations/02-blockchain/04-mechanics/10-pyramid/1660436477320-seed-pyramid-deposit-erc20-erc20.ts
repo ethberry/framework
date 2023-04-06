@@ -1,11 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedPyramidDepositErc20At1660436477320 implements MigrationInterface {
+export class SeedPyramidDepositErc20Erc20At1660436477320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const currentDateTime = new Date().toISOString();
+    const now = new Date();
+    const currentDateTime = now.toISOString();
+    const endDateTime = addDays(now, 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.pyramid_deposit (
@@ -21,52 +24,52 @@ export class SeedPyramidDepositErc20At1660436477320 implements MigrationInterfac
       ) VALUES (
         '${wallets[0]}',
         'ACTIVE',
-        201,
+        2201,
         '${currentDateTime}',
-        '${currentDateTime}',
-        4, -- ERC20 > ERC20
+        '${endDateTime}',
+        22, -- ERC20 > ERC20
         1,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'CANCELED',
-        202,
+        2202,
         '${currentDateTime}',
-        '${currentDateTime}',
-        4, -- ERC20 > ERC20
+        '${endDateTime}',
+        22, -- ERC20 > ERC20
         1,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         'COMPLETE',
-        203,
+        2203,
         '${currentDateTime}',
-        '${currentDateTime}',
-        4, -- ERC20 > ERC20
+        '${endDateTime}',
+        22, -- ERC20 > ERC20
         1,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         'ACTIVE',
-        211,
+        2204,
         '${currentDateTime}',
-        '${currentDateTime}',
-        4, -- ERC20 > ERC20
+        '${endDateTime}',
+        22, -- ERC20 > ERC20
         1,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         'ACTIVE',
-        221,
+        2205,
         '${currentDateTime}',
-        '${currentDateTime}',
-        4, -- ERC20 > ERC20
+        '${endDateTime}',
+        22, -- ERC20 > ERC20
         1,
-        '${currentDateTime}',
+        '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       );
     `);

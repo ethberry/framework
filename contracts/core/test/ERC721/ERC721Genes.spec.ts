@@ -22,7 +22,7 @@ describe("ERC721Genes", function () {
       const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mint(receiver.address);
-      await expect(tx).to.be.revertedWith("MethodNotSupported");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "MethodNotSupported");
     });
   });
 

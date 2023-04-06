@@ -31,20 +31,20 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         asset_id
       ) VALUES (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        4101,
+        410101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90111
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        4101,
+        410101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90112
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        4101,
+        410101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90121
       ), (
@@ -58,6 +58,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
 
     await queryRunner.query(`
       INSERT INTO ${ns}.pyramid_rules (
+        id,
         title,
         description,
         duration_amount,
@@ -70,6 +71,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
+        11,
         'NATIVE > NATIVE',
         '${simpleFormatting}',
         2592000,
@@ -82,6 +84,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        12,
         'NATIVE > ERC20',
         '${simpleFormatting}',
         2592000,

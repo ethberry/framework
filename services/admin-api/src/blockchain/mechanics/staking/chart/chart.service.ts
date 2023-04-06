@@ -16,6 +16,12 @@ export class StakingChartService {
   ) {}
 
   public async chart(dto: IStakingChartSearchDto): Promise<any> {
+    const { emptyReward } = dto;
+
+    return emptyReward ? this.chartWithoutReward(dto) : this.chartWithReward(dto);
+  }
+
+  public async chartWithReward(dto: IStakingChartSearchDto): Promise<any> {
     const { deposit, reward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -61,6 +67,50 @@ export class StakingChartService {
         deposit.contractId,
         reward.tokenType,
         reward.contractId,
+        startTimestamp,
+        endTimestamp,
+      ]),
+      0,
+    ]);
+  }
+
+  public async chartWithoutReward(dto: IStakingChartSearchDto): Promise<any> {
+    const { deposit, startTimestamp, endTimestamp } = dto;
+
+    // prettier-ignore
+    const queryString = `
+        SELECT
+            COUNT(staking_deposit.id)::INTEGER AS count,
+            date_trunc('day', staking_deposit.created_at) as date
+        FROM
+            ${ns}.staking_deposit
+                LEFT JOIN
+            ${ns}.staking_rules ON staking_rules.id = staking_deposit.staking_rule_id
+                LEFT JOIN
+            ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
+                LEFT JOIN
+            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
+                LEFT JOIN
+            ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
+        WHERE
+            deposit_contract.contract_type = $1
+          AND
+            deposit_contract.id = $2
+          AND
+            staking_rules.reward_id IS NULL
+          AND
+            (staking_deposit.created_at >= $3 AND staking_deposit.created_at < $4)
+        GROUP BY
+            date
+        ORDER BY
+            date
+    `;
+
+    // prettier-ignore
+    return Promise.all([
+      this.entityManager.query(queryString, [
+        deposit.tokenType,
+        deposit.contractId,
         startTimestamp,
         endTimestamp,
       ]),

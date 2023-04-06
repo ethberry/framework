@@ -28,7 +28,18 @@ export class StakingDepositService {
   }
 
   public async search(dto: Partial<IStakingDepositSearchDto>): Promise<[Array<StakingDepositEntity>, number]> {
-    const { query, account, stakingDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
+    const {
+      query,
+      account,
+      emptyReward,
+      stakingDepositStatus,
+      deposit,
+      reward,
+      startTimestamp,
+      endTimestamp,
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.stakingDepositEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
@@ -76,6 +87,7 @@ export class StakingDepositService {
       }
     }
 
+    // deposit always exists
     if (deposit) {
       if (deposit.tokenType) {
         if (deposit.tokenType.length === 1) {
@@ -101,7 +113,8 @@ export class StakingDepositService {
       }
     }
 
-    if (reward) {
+    // reward is optional
+    if (!emptyReward && reward) {
       if (reward.tokenType) {
         if (reward.tokenType.length === 1) {
           queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
@@ -124,6 +137,8 @@ export class StakingDepositService {
           });
         }
       }
+    } else {
+      queryBuilder.andWhere("rule.reward IS NULL");
     }
 
     if (startTimestamp && endTimestamp) {

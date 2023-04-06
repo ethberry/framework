@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { constants } from "ethers";
 
 import {
   amount,
@@ -85,22 +85,9 @@ describe("MysteryboxFactory", function () {
 
       const [address] = await contractInstance.allMysteryboxes();
 
-      // await expect(tx)
-      //   .to.emit(contractInstance, "MysteryboxDeployed")
-      //   .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate);
-
       await expect(tx)
         .to.emit(contractInstance, "MysteryboxDeployed")
-        .withNamedArgs({
-          addr: address,
-          args: {
-            name: tokenName,
-            symbol: tokenSymbol,
-            royalty: BigNumber.from(royalty),
-            baseTokenURI,
-            contractTemplate,
-          },
-        });
+        .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc721Instance = erc721.attach(address);
 
@@ -111,7 +98,7 @@ describe("MysteryboxFactory", function () {
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx2).to.be.revertedWith("MethodNotSupported");
+      await expect(tx2).to.be.revertedWithCustomError(erc721Instance, "MethodNotSupported");
 
       const tx3 = erc721Instance.mintBox(receiver.address, templateId, [
         {

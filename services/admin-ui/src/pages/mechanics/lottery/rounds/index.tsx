@@ -35,8 +35,8 @@ export const LotteryRounds: FC = () => {
       <Breadcrumbs path={["dashboard", "lottery", "lottery.rounds"]} />
 
       <PageHeader message="pages.lottery.rounds.title">
-        <LotteryRoundEndButton />
         <LotteryRoundStartButton />
+        <LotteryRoundEndButton />
         <LotteryScheduleButton />
       </PageHeader>
 
