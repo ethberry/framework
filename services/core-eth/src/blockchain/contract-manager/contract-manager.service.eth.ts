@@ -50,6 +50,7 @@ import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { addConsumer } from "../integrations/chain-link/utils";
+import { RentService } from "../mechanics/rent/rent.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -74,6 +75,7 @@ export class ContractManagerServiceEth {
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
+    private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
   ) {}
 
@@ -166,6 +168,10 @@ export class ContractManagerServiceEth {
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
+    }
+
+    if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
+      await this.rentService.create({ contract: contractEntity });
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
