@@ -23,6 +23,7 @@ import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
+import { RentModule } from "../mechanics/rent/rent.module";
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { EventHistoryModule } from "../event-history/event-history.module";
     TemplateModule,
     TokenModule,
     GradeModule,
+    RentModule,
     BalanceModule,
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
