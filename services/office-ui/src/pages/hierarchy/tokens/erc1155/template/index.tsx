@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType, IUser } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, IUser, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc1155TemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";

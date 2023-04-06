@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 
-import { amount, tokenName, tokenSymbol, tokenId } from "@gemunion/contracts-constants";
+import { amount, tokenId, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
   describe("topUp", function () {

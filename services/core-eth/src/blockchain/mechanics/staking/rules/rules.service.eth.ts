@@ -4,14 +4,14 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  DurationUnit,
+  IAssetDto,
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
   IStakingUpdateEvent,
   IStakingWithdrawEvent,
   StakingRuleStatus,
-  DurationUnit,
-  IAssetDto,
 } from "@framework/types";
 import { StakingRulesService } from "./rules.service";
 import { StakingDepositService } from "../deposit/deposit.service";

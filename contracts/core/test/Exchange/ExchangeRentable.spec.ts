@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
-import { nonce, amount } from "@gemunion/contracts-constants";
+import { amount, nonce } from "@gemunion/contracts-constants";
 
 import { externalId, templateId, tokenId } from "../constants";
 

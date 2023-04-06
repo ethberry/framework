@@ -23,8 +23,8 @@ import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType }
 
 import {
   PauseToggleButton,
-  StakingToggleRuleButton,
   StakingRuleUploadCreateButton,
+  StakingToggleRuleButton,
 } from "../../../../components/buttons";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";

@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
 
-import { IAllowanceDto, AllowanceDialog } from "./dialog";
+import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
 export interface IAllowanceMenuItemProps {
   contract: IContract;

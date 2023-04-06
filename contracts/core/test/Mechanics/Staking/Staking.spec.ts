@@ -7,9 +7,9 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 import {
   amount,
-  nonce,
   DEFAULT_ADMIN_ROLE,
   MINTER_ROLE,
+  nonce,
   PAUSER_ROLE,
   TEMPLATE_ID,
 } from "@gemunion/contracts-constants";

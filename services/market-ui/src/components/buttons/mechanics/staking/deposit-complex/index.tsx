@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
-import { Contract, utils, constants } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { IStakingRule, StakingRuleStatus } from "@framework/types";

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { ListenerType } from "@framework/types";
 

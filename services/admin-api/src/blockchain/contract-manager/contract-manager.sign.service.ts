@@ -5,7 +5,6 @@ import { utils, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IPyramidContractDeployDto, IStakingContractDeployDto } from "@framework/types";
-
 import {
   Erc1155ContractTemplates,
   Erc20ContractTemplates,

@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { PARAMETER_TYPE } from "../type/interface";

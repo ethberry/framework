@@ -11,9 +11,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import type { IAccessControl, IUser } from "@framework/types";
+import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "../../../../../abis/components/menu/extensions/revoke-role/revokeRole.abi.json";
-import { AccessControlRoleHash } from "@framework/types";
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
