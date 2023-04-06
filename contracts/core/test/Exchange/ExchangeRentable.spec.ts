@@ -9,9 +9,9 @@ import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 
 describe("ExchangeRentable", function () {
-  describe("borrow", function () {
-    describe("borrow purchase", function () {
-      it("should borrow ERC721 to user for free", async function () {
+  describe("lend", function () {
+    describe("lend purchase", function () {
+      it("should lend ERC721 to user for free", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
@@ -21,7 +21,7 @@ describe("ExchangeRentable", function () {
 
         await erc721Instance.approve(exchangeInstance.address, tokenId);
 
-        // borrow TIME
+        // lend TIME
         const date = new Date();
         date.setDate(date.getDate() + 1);
         const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
@@ -45,7 +45,7 @@ describe("ExchangeRentable", function () {
           price: [],
         });
 
-        const tx1 = exchangeInstance.borrow(
+        const tx1 = exchangeInstance.lend(
           {
             nonce,
             externalId,
@@ -65,7 +65,7 @@ describe("ExchangeRentable", function () {
         );
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "Borrow")
+          .to.emit(exchangeInstance, "Lend")
           .to.emit(erc721Instance, "UpdateUser")
           .withArgs(tokenId, receiver.address, endTimestamp);
 
@@ -75,7 +75,7 @@ describe("ExchangeRentable", function () {
         expect(expires).to.equal(endTimestamp);
       });
 
-      it("should borrow ERC721 to user for ERC20", async function () {
+      it("should lend ERC721 to user for ERC20", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
@@ -88,7 +88,7 @@ describe("ExchangeRentable", function () {
         await erc20Instance.approve(exchangeInstance.address, amount);
         await erc721Instance.approve(exchangeInstance.address, tokenId);
 
-        // borrow TIME
+        // lend TIME
         const date = new Date();
         date.setDate(date.getDate() + 1);
         const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
@@ -119,7 +119,7 @@ describe("ExchangeRentable", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.borrow(
+        const tx1 = exchangeInstance.lend(
           {
             nonce,
             externalId,
@@ -147,7 +147,7 @@ describe("ExchangeRentable", function () {
 
         await expect(tx1)
           .to.changeTokenBalances(erc20Instance, [_owner, exchangeInstance], [-amount, amount])
-          .to.emit(exchangeInstance, "Borrow")
+          .to.emit(exchangeInstance, "Lend")
           .to.emit(erc721Instance, "UpdateUser")
           .withArgs(tokenId, receiver.address, endTimestamp);
 

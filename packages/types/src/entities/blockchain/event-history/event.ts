@@ -98,6 +98,9 @@ export enum ContractEventType {
   Claim = "Claim",
   // MODULE:CRAFT
   Craft = "Craft",
+  // MODULE:ERC4907 RENT
+  UpdateUser = "UpdateUser",
+  Lend = "Lend",
   // MODULE:MYSTERY
   Mysterybox = "Mysterybox",
   // MODULE:GRADE

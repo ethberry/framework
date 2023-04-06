@@ -15,9 +15,9 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
 abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Borrow(address from, address to, uint256 expires, Asset[] items, Asset[] price);
+  event Lend(address from, address to, uint256 expires, Asset[] items, Asset[] price);
 
-  function borrow(
+  function lend(
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
@@ -34,14 +34,14 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
       spendFrom(price, account, address(this));
     }
 
-    emit Borrow(account, params.referrer, /* to */ params.externalId, /* expires */ items, price);
+    emit Lend(account, params.referrer /* to */, params.externalId /* expires */, items, price);
 
     for (uint256 i = 0; i < items.length; i++) {
-      // TODO check expiresAt is less max(uint64)
+      // TODO check externalId=expiresAt is less max(uint64)
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         /* to */ params.referrer,
-        /* expires */ uint64(params.expiresAt)
+        /* rent expires */ uint64(params.externalId)
       );
     }
   }

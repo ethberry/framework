@@ -47,6 +47,12 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.rent", "rent");
+    queryBuilder.leftJoinAndSelect("rent.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_template_tokens");
 
     if (Array.isArray(contractType)) {
       queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
@@ -222,6 +228,12 @@ export class TokenService {
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",
+          rent: "contract.rent",
+          rent_price: "rent.price",
+          rent_price_components: "rent_price.components",
+          rent_price_components_contract: "rent_price_components.contract",
+          rent_price_components_template: "rent_price_components.template",
+          rent_price_components_template_tokens: "rent_price_components_template.tokens",
           // breeds: "token.breeds",
           // breed_childs: "breeds.children",
           // breed_history: "breed_childs.history",

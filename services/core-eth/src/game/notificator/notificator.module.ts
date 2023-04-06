@@ -31,5 +31,6 @@ import { NotificatorService } from "./notificator.service";
     ]),
   ],
   providers: [NotificatorService],
+  exports: [NotificatorService],
 })
 export class NotificatorModule {}

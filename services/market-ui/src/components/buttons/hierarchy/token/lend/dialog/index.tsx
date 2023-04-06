@@ -6,22 +6,22 @@ import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
 
-export interface IBorrowDto {
+export interface ILendDto {
   account: string;
   expires: string;
 }
 
-export interface IBorrowDialogProps {
+export interface ILendDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IBorrowDto, form: any) => Promise<void>;
-  initialValues: IBorrowDto;
+  onConfirm: (values: ILendDto, form: any) => Promise<void>;
+  initialValues: ILendDto;
   message: string;
   testId: string;
 }
 
-export const BorrowDialog: FC<IBorrowDialogProps> = props => {
-  const { initialValues, message, testId = "BorrowDialogForm", ...rest } = props;
+export const LendDialog: FC<ILendDialogProps> = props => {
+  const { initialValues, message, testId = "LendDialogForm", ...rest } = props;
 
   return (
     <FormDialog

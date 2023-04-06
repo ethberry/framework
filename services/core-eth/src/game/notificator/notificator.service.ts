@@ -8,12 +8,15 @@ import { GameEventType, RmqProviderType } from "@framework/types";
 export class NotificatorService {
   constructor(@Inject(RmqProviderType.MOBILE_SERVICE) private mobileClient: ClientProxy) {}
 
-  public dummy(): void {
-    this.mobileClient.emit(GameEventType.DUMMY, {
-      from: constants.AddressZero,
-      to: constants.AddressZero,
-      value: constants.WeiPerEther,
-      transactionHash: constants.HashZero,
-    });
+  public dummy(data?: any): void {
+    this.mobileClient.emit(
+      GameEventType.DUMMY,
+      data || {
+        from: constants.AddressZero,
+        to: constants.AddressZero,
+        value: constants.WeiPerEther,
+        transactionHash: constants.HashZero,
+      },
+    );
   }
 }

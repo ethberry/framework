@@ -6,6 +6,7 @@ import type { IEventHistory } from "../event-history";
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
 import { ModuleType } from "../../common";
+import { IRent } from "../mechanics/rent/rent";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -221,4 +222,5 @@ export interface IContract extends IDeployable, ISearchable {
   history?: Array<IEventHistory>;
   parent?: Array<IComposition>;
   children?: Array<IComposition>;
+  rent?: Array<IRent>;
 }

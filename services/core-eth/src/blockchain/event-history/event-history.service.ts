@@ -202,5 +202,32 @@ export class EventHistoryService {
 
       await contractEventEntity.save();
     }
+
+    // MODULE:ERC4907 RENT
+    if (eventType === ContractEventType.UpdateUser) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: In([ExchangeEventType.Lend]),
+      });
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+
+        const nestedEvents = await this.findAll({
+          transactionHash,
+          parentId: undefined,
+        });
+        // TODO nested ?== parent
+        if (nestedEvents) {
+          nestedEvents.map(async nested => {
+            if (nested.id !== parentEvent.id) {
+              Object.assign(nested, { parentId: parentEvent.id });
+              await nested.save();
+            }
+          });
+        }
+      }
+
+      await contractEventEntity.save();
+    }
   }
 }
