@@ -15,12 +15,12 @@ export class PyramidChartService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async chart(dto: IPyramidChartSearchDto): Promise<any> {
+  public async amountChart(dto: IPyramidChartSearchDto): Promise<any> {
     const { emptyReward } = dto;
-    return emptyReward ? this.chartWithoutReward(dto) : this.chartWithReward(dto);
+    return emptyReward ? this.amountChartWithoutReward(dto) : this.amountChartWithReward(dto);
   }
 
-  public async chartWithReward(dto: IPyramidChartSearchDto): Promise<any> {
+  public async amountChartWithReward(dto: IPyramidChartSearchDto): Promise<any> {
     const { deposit, reward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -33,15 +33,11 @@ export class PyramidChartService {
                 LEFT JOIN
             ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
                 LEFT JOIN
-            ${ns}.asset as asset_deposit ON pyramid_rules.deposit_id = asset_deposit.id
-                LEFT JOIN
-            ${ns}.asset as asset_reward ON pyramid_rules.reward_id = asset_reward.id
-                LEFT JOIN
-            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
+            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
                 LEFT JOIN
             ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
                 LEFT JOIN
-            ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
+            ${ns}.asset_component as reward_component ON reward_component.asset_id = pyramid_rules.reward_id
                 LEFT JOIN
             ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
         WHERE
@@ -73,7 +69,7 @@ export class PyramidChartService {
     ]);
   }
 
-  public async chartWithoutReward(dto: IPyramidChartSearchDto): Promise<any> {
+  public async amountChartWithoutReward(dto: IPyramidChartSearchDto): Promise<any> {
     const { deposit, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -86,9 +82,7 @@ export class PyramidChartService {
                 LEFT JOIN
             ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
                 LEFT JOIN
-            ${ns}.asset as asset_deposit ON pyramid_rules.deposit_id = asset_deposit.id
-                LEFT JOIN
-            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
+            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
                 LEFT JOIN
             ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
         WHERE
