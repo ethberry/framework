@@ -16,12 +16,10 @@ export class PyramidChartService {
   ) {}
 
   public async amountChart(dto: IPyramidChartSearchDto): Promise<any> {
-    const { emptyReward } = dto;
-    return emptyReward ? this.amountChartWithoutReward(dto) : this.amountChartWithReward(dto);
-  }
-
-  public async amountChartWithReward(dto: IPyramidChartSearchDto): Promise<any> {
     const { deposit, reward, startTimestamp, endTimestamp } = dto;
+
+    const depositCondition = `AND deposit_contract.contract_type = $3 AND  deposit_contract.id = $4`;
+    const rewardCondition = `AND reward_contract.contract_type = $5  AND  reward_contract.id = $6`;
 
     // prettier-ignore
     const queryString = `
@@ -41,15 +39,9 @@ export class PyramidChartService {
                 LEFT JOIN
             ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
         WHERE
-            deposit_contract.contract_type = $1
-          AND
-            deposit_contract.id = $2
-          AND
-            reward_contract.contract_type = $3
-          AND
-            reward_contract.id = $4
-          AND
-            (pyramid_deposit.created_at >= $5 AND pyramid_deposit.created_at < $6)
+            (pyramid_deposit.created_at >= $1 AND pyramid_deposit.created_at < $2)
+             ${deposit.tokenType ? depositCondition : ""}
+             ${reward.tokenType ? rewardCondition : ""}
         GROUP BY
             date
         ORDER BY
@@ -58,54 +50,12 @@ export class PyramidChartService {
 
     return Promise.all([
       this.entityManager.query(queryString, [
+        startTimestamp,
+        endTimestamp,
         deposit.tokenType,
         deposit.contractId,
         reward.tokenType,
         reward.contractId,
-        startTimestamp,
-        endTimestamp,
-      ]),
-      0,
-    ]);
-  }
-
-  public async amountChartWithoutReward(dto: IPyramidChartSearchDto): Promise<any> {
-    const { deposit, startTimestamp, endTimestamp } = dto;
-
-    // prettier-ignore
-    const queryString = `
-        SELECT
-            COUNT(pyramid_deposit.id)::INTEGER AS count,
-            date_trunc('day', pyramid_deposit.created_at) as date
-        FROM
-            ${ns}.pyramid_deposit
-                LEFT JOIN
-            ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
-                LEFT JOIN
-            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
-                LEFT JOIN
-            ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
-        WHERE
-            deposit_contract.contract_type = $1
-          AND
-            deposit_contract.id = $2
-          AND
-            pyramid_rules.reward_id IS NULL
-          AND
-            (pyramid_deposit.created_at >= $3 AND pyramid_deposit.created_at < $4)
-        GROUP BY
-            date
-        ORDER BY
-            date
-    `;
-
-    // prettier-ignore
-    return Promise.all([
-      this.entityManager.query(queryString, [
-        deposit.tokenType,
-        deposit.contractId,
-        startTimestamp,
-        endTimestamp,
       ]),
       0,
     ]);
