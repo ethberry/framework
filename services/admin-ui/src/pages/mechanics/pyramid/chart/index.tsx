@@ -17,7 +17,7 @@ export const PyramidChart: FC = () => {
     IToken,
     IPyramidChartSearchDto
   >({
-    baseUrl: "/pyramid/chart",
+    baseUrl: "/pyramid/chart/amount",
     search: {
       deposit: {
         tokenType: TokenType.ERC20,

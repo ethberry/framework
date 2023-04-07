@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { addDays, subDays } from "date-fns";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
@@ -8,7 +8,6 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
   public async up(queryRunner: QueryRunner): Promise<any> {
     const now = new Date();
     const currentDateTime = now.toISOString();
-    const endDateTime = addDays(now, 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -25,8 +24,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'ACTIVE',
         3901,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 9).toISOString()}',
+        '${subDays(now, 9 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 9).toISOString()}',
@@ -35,8 +34,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'ACTIVE',
         3902,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 9).toISOString()}',
+        '${subDays(now, 9 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 9).toISOString()}',
@@ -45,8 +44,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'ACTIVE',
         3903,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 8).toISOString()}',
+        '${subDays(now, 8 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 8).toISOString()}',
@@ -55,8 +54,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'CANCELED',
         3904,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 7).toISOString()}',
+        '${subDays(now, 7 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 7).toISOString()}',
@@ -65,8 +64,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'COMPLETE',
         3905,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 7).toISOString()}',
+        '${subDays(now, 7 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 7).toISOString()}',
@@ -75,8 +74,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'ACTIVE',
         3906,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 5).toISOString()}',
+        '${subDays(now, 5 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
@@ -85,8 +84,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'ACTIVE',
         3907,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 5).toISOString()}',
+        '${subDays(now, 5 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
@@ -95,8 +94,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'CANCELED',
         3908,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 5).toISOString()}',
+        '${subDays(now, 5 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
@@ -105,8 +104,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'COMPLETE',
         3909,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 4).toISOString()}',
+        '${subDays(now, 4 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
@@ -115,8 +114,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'COMPLETE',
         3910,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 4).toISOString()}',
+        '${subDays(now, 4 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
@@ -125,8 +124,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'COMPLETE',
         3911,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 3).toISOString()}',
+        '${subDays(now, 3 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
@@ -135,8 +134,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'COMPLETE',
         3912,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 3).toISOString()}',
+        '${subDays(now, 3 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
@@ -145,8 +144,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[2]}',
         'ACTIVE',
         3913,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 3).toISOString()}',
+        '${subDays(now, 3 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
@@ -155,8 +154,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[2]}',
         'ACTIVE',
         3914,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 2).toISOString()}',
+        '${subDays(now, 2 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 2).toISOString()}',
@@ -165,8 +164,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[2]}',
         'COMPLETE',
         3915,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 1).toISOString()}',
+        '${subDays(now, 1 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 1).toISOString()}',
@@ -175,8 +174,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[2]}',
         'COMPLETE',
         3916,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 1).toISOString()}',
+        '${subDays(now, 1 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 1).toISOString()}',
@@ -185,8 +184,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[0]}',
         'ACTIVE',
         3917,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 0).toISOString()}',
+        '${subDays(now, 0 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
@@ -195,8 +194,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[1]}',
         'ACTIVE',
         3918,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 0).toISOString()}',
+        '${subDays(now, 0 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',
@@ -205,8 +204,8 @@ export class SeedStakingDepositErc721NoneAt1654751224339 implements MigrationInt
         '${wallets[2]}',
         'ACTIVE',
         3919,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 0).toISOString()}',
+        '${subDays(now, 0 - 7).toISOString()}',
         29, -- ERC721 > NONE
         1,
         '${subDays(now, 0).toISOString()}',

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { addDays, subDays } from "date-fns";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
@@ -8,7 +8,6 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
   public async up(queryRunner: QueryRunner): Promise<any> {
     const now = new Date();
     const currentDateTime = now.toISOString();
-    const endDateTime = addDays(now, 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -25,8 +24,8 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         '${wallets[0]}',
         'ACTIVE',
         2901,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 5).toISOString()}',
+        '${subDays(now, 5 - 7).toISOString()}',
         29, -- ERC20 > NONE
         1,
         '${subDays(now, 5).toISOString()}',
@@ -35,8 +34,8 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         '${wallets[0]}',
         'CANCELED',
         2902,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 4).toISOString()}',
+        '${subDays(now, 4 - 7).toISOString()}',
         29, -- ERC20 > NONE
         1,
         '${subDays(now, 4).toISOString()}',
@@ -45,8 +44,8 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         '${wallets[0]}',
         'COMPLETE',
         2903,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 3).toISOString()}',
+        '${subDays(now, 3 - 7).toISOString()}',
         29, -- ERC20 > NONE
         1,
         '${subDays(now, 3).toISOString()}',
@@ -55,8 +54,8 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         '${wallets[1]}',
         'ACTIVE',
         2904,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 2).toISOString()}',
+        '${subDays(now, 2 - 7).toISOString()}',
         29, -- ERC20 > NONE
         1,
         '${subDays(now, 2).toISOString()}',
@@ -65,8 +64,8 @@ export class SeedStakingDepositErc20NoneAt1654751224329 implements MigrationInte
         '${wallets[2]}',
         'ACTIVE',
         2905,
-        '${currentDateTime}',
-        '${endDateTime}',
+        '${subDays(now, 0).toISOString()}',
+        '${subDays(now, 0 - 7).toISOString()}',
         29, -- ERC20 > NONE
         1,
         '${subDays(now, 0).toISOString()}',

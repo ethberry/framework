@@ -11,9 +11,9 @@ import { PyramidChartSearchDto } from "./dto";
 export class PyramidChartController {
   constructor(private readonly pyramidReportService: PyramidChartService) {}
 
-  @Get("/")
+  @Get("/amount")
   @UseInterceptors(PaginationInterceptor)
-  public chart(@Query() dto: PyramidChartSearchDto): Promise<any> {
-    return this.pyramidReportService.chart(dto);
+  public amountChart(@Query() dto: PyramidChartSearchDto): Promise<any> {
+    return this.pyramidReportService.amountChart(dto);
   }
 }
