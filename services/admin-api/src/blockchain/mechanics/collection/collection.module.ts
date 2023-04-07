@@ -7,4 +7,4 @@ import { CollectionTokenModule } from "./token/token.module";
 @Module({
   imports: [CollectionContractModule, CollectionTemplateModule, CollectionTokenModule],
 })
-export class MysteryModule {}
+export class CollectionModule {}
