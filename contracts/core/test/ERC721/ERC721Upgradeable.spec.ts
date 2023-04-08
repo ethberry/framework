@@ -5,6 +5,7 @@ import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enume
 import { shouldMintCommon } from "./shared/mintCommon";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
+import { shouldGrade } from "./shared/grade";
 
 describe("ERC721Upgradeable", function () {
   const factory = () => deployERC721(this.title);
@@ -14,6 +15,7 @@ describe("ERC721Upgradeable", function () {
 
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
+  shouldGrade(factory);
 
   shouldSupportsInterface(factory)(
     InterfaceId.IERC165,
