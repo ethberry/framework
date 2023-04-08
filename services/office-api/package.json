@@ -55,7 +55,7 @@
     "dotenv": "16.0.3",
     "ethers": "5.7.2",
     "express": "4.18.2",
-    "firebase-admin": "11.5.0",
+    "firebase-admin": "11.6.0",
     "ioredis": "5.3.1",
     "json2csv": "5.0.7",
     "nest-winston": "1.9.1",
@@ -88,7 +88,7 @@
     "@types/zxcvbn": "4.4.1",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
-    "eslint": "8.37.0",
+    "eslint": "8.38.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-standard": "17.0.0",
     "eslint-import-resolver-typescript": "3.5.5",
@@ -102,7 +102,7 @@
     "ts-jest": "29.1.0",
     "ts-node": "10.9.1",
     "tsc-watch": "6.0.0",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "engines": {
     "node": ">=12.13"
