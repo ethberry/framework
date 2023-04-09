@@ -4,7 +4,7 @@ import { Protected } from "@gemunion/common-pages";
 
 import { BreedBreeds } from "./breeds";
 import { IndexWrapper } from "../../index-wrapper";
-import { Breed } from "../../dashboard/mechanics/breed";
+import { BreedSection } from "../../dashboard/mechanics/breed";
 
 export const breedRoutes: Array<RouteObject> = [
   {
@@ -14,7 +14,7 @@ export const breedRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="breed">
-            <Breed />
+            <BreedSection />
           </IndexWrapper>
         ),
       },

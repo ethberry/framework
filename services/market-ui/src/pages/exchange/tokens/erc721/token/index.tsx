@@ -21,7 +21,7 @@ import { useStyles } from "./styles";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/erc721/tokens",
     empty: {
       template: {
         title: "",
@@ -38,14 +38,7 @@ export const Erc721Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc721.tokens": "erc721-tokens",
-          "erc721.token": "erc721.token",
-        }}
-        data={[{}, {}, selected.template]}
-      />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.erc721.token.title" data={selected.template} />
 

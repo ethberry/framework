@@ -4,7 +4,7 @@ import { PyramidRules } from "./rules";
 import { PyramidLeaderboard } from "./leaderboard";
 import { PyramidDeposit } from "./deposit";
 import { IndexWrapper } from "../../index-wrapper";
-import { Pyramid } from "../../dashboard/mechanics/pyramid";
+import { PyramidSection } from "../../dashboard/mechanics/pyramid";
 
 export const pyramidRoutes: Array<RouteObject> = [
   {
@@ -14,7 +14,7 @@ export const pyramidRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="pyramid">
-            <Pyramid />
+            <PyramidSection />
           </IndexWrapper>
         ),
       },

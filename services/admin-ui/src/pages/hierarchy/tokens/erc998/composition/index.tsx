@@ -43,7 +43,7 @@ export const Erc998Composition: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IComposition, ICompositionSearchDto>({
-    baseUrl: "/erc998-composition",
+    baseUrl: "/erc998/composition",
     empty: {
       amount: 0,
     },
@@ -97,7 +97,7 @@ export const Erc998Composition: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998.composition"]} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.composition"]} />
 
       <PageHeader message="pages.erc998.composition.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

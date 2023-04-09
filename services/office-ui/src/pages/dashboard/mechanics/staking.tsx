@@ -4,7 +4,7 @@ import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Staking: FC = () => {
+export const StakingSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

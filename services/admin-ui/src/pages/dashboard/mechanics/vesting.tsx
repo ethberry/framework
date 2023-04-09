@@ -4,7 +4,7 @@ import { AccountBalance } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Vesting: FC = () => {
+export const VestingSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -15,7 +15,7 @@ export const Vesting: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/vesting">
+        <ListItem button component={RouterLink} to="/vesting/contracts">
           <ListItemIcon>
             <AccountBalance />
           </ListItemIcon>

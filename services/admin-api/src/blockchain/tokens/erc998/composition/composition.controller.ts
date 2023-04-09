@@ -8,7 +8,7 @@ import { CompositionEntity } from "./composition.entity";
 import { CompositionSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/erc998-composition")
+@Controller("/erc998/composition")
 export class Erc998CompositionController {
   constructor(private readonly erc998CompositionService: Erc998CompositionService) {}
 

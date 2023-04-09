@@ -23,7 +23,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<ITemplate, ITemplateSearchDto>({
-      baseUrl: "/erc998-templates",
+      baseUrl: "/erc998/templates",
       embedded,
       search: {
         query: "",
@@ -35,7 +35,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998.templates"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.templates"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc998.templates.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

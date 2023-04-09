@@ -4,7 +4,7 @@ import { Paid } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const ChainLink: FC = () => {
+export const ChainLinkSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

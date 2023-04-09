@@ -15,7 +15,7 @@ import { TokenHistory } from "../../../../../components/common/token-history";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
-    baseUrl: "/erc1155-tokens",
+    baseUrl: "/erc1155/tokens",
     empty: {
       template: {
         title: "",
@@ -32,14 +32,7 @@ export const Erc1155Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc1155.tokens": "erc1155-tokens",
-          "erc1155.token": "erc1155.token",
-        }}
-        data={[{}, {}, selected.template]}
-      />
+      <Breadcrumbs path={["dashboard", "erc1155", "erc1155.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.erc1155.token.title" data={selected.template} />
 

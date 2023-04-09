@@ -18,7 +18,7 @@ export const Erc721ContractListItem: FC<IErc721ContractListItemProps> = props =>
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721-contracts/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc721/contracts/${contract.id}`}>
         <CardHeader title={contract.title} />
         <CardMedia className={classes.media} image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>

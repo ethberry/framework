@@ -20,7 +20,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IMysterybox, IMysteryBoxSearchDto>({
-      baseUrl: "/mystery-boxes",
+      baseUrl: "/mystery/boxes",
       embedded,
       search: {
         query: "",
@@ -31,7 +31,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.boxes"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} isHidden={embedded} />
 
       <PageHeader message="pages.mystery.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
