@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 
 import { ns } from "@framework/constants";
 
@@ -24,7 +24,7 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
         {
           name: "template_id",
           type: "int",
-          isNullable: true,
+          // isNullable: true,
         },
         {
           name: "amount",
@@ -58,6 +58,12 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    const index = new TableIndex({
+      columnNames: ["contract_id"],
+    });
+
+    await queryRunner.createIndex(`${ns}.asset_component`, index);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -15,37 +15,53 @@ export class PyramidChartService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async amountChart(dto: IPyramidChartSearchDto): Promise<any> {
-    const { deposit, reward, startTimestamp, endTimestamp } = dto;
-
-    const depositCondition = `AND deposit_contract.contract_type = $3 AND  deposit_contract.id = $4`;
-    const rewardCondition = `AND reward_contract.contract_type = $5  AND  reward_contract.id = $6`;
+  public async chart(dto: IPyramidChartSearchDto): Promise<any> {
+    const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
     const queryString = `
-        SELECT
-            COUNT(pyramid_deposit.id)::INTEGER AS count,
-            date_trunc('day', pyramid_deposit.created_at) as date
-        FROM
-            ${ns}.pyramid_deposit
-                LEFT JOIN
-            ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
-                LEFT JOIN
-            ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
-                LEFT JOIN
-            ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
-                LEFT JOIN
-            ${ns}.asset_component as reward_component ON reward_component.asset_id = pyramid_rules.reward_id
-                LEFT JOIN
-            ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-        WHERE
-            (pyramid_deposit.created_at >= $1 AND pyramid_deposit.created_at < $2)
-             ${deposit.tokenType ? depositCondition : ""}
-             ${reward.tokenType ? rewardCondition : ""}
-        GROUP BY
-            date
-        ORDER BY
-            date
+      WITH cte AS (SELECT
+                          start_date::DATE,
+                          pyramid_deposit.id as pyramid_deposit_id,
+                          deposit_component.amount as deposit_component_amount,
+                          CASE
+                            WHEN start_date::DATE = pyramid_deposit.start_timestamp::DATE THEN deposit_component.id
+                            ELSE NULL
+                          END AS new_deposit_id,
+                          CASE
+                            WHEN start_date::DATE = pyramid_deposit.start_timestamp::DATE THEN deposit_component.amount
+                            ELSE NULL
+                          END AS new_deposit_amount
+                   FROM ${ns}.pyramid_deposit
+                            INNER JOIN
+                        ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
+                            INNER JOIN
+                        ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
+                            INNER JOIN
+                        ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
+                                                              AND deposit_contract.contract_type = $3 
+                                                              AND  deposit_contract.id = $4
+                        ${emptyReward ? "" : `
+                            INNER JOIN
+                        ${ns}.asset_component as reward_component ON reward_component.asset_id = pyramid_rules.reward_id
+                            INNER JOIN
+                        ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
+                                                              AND reward_contract.contract_type = $5
+                                                              AND reward_contract.id = $6
+                        `}
+                            CROSS JOIN generate_series(pyramid_deposit.start_timestamp, (pyramid_deposit.start_timestamp +  (pyramid_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
+                   WHERE pyramid_deposit.start_timestamp <= $2
+                     AND (pyramid_deposit.start_timestamp + (pyramid_rules.duration_amount || 'second')::INTERVAL) >= $1
+                   )
+      SELECT start_date::timestamptz,
+             COUNT(pyramid_deposit_id) as current_deposit_count,
+             SUM(deposit_component_amount) as current_deposit_amount,
+             COUNT(new_deposit_id) as new_deposit_count,
+             SUM(new_deposit_amount) as new_deposit_amount
+      FROM cte
+      WHERE start_date BETWEEN $1 AND $2
+      GROUP BY start_date
+      ORDER BY start_date;
     `;
 
     return Promise.all([

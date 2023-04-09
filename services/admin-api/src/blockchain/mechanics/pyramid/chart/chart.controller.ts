@@ -14,6 +14,6 @@ export class PyramidChartController {
   @Get("/amount")
   @UseInterceptors(PaginationInterceptor)
   public amountChart(@Query() dto: PyramidChartSearchDto): Promise<any> {
-    return this.pyramidReportService.amountChart(dto);
+    return this.pyramidReportService.chart(dto);
   }
 }

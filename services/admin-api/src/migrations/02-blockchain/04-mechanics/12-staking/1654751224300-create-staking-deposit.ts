@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 
 import { ns } from "@framework/constants";
 
@@ -71,6 +71,12 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    const index = new TableIndex({
+      columnNames: ["start_timestamp"],
+    });
+
+    await queryRunner.createIndex(`${ns}.staking_deposit`, index);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
