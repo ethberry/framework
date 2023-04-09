@@ -7,10 +7,10 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/nest-js-module-license": "2.0.31",
-    "@gemunion/nest-js-module-mailjet": "2.2.14",
-    "@gemunion/nest-js-module-request-logger": "2.0.23",
-    "@gemunion/nest-js-module-winston-logdna": "2.0.27",
+    "@gemunion/nest-js-module-license": "2.0.32",
+    "@gemunion/nest-js-module-mailjet": "2.2.15",
+    "@gemunion/nest-js-module-request-logger": "2.0.24",
+    "@gemunion/nest-js-module-winston-logdna": "2.0.28",
     "@nestjs/axios": "2.0.0",
     "@nestjs/common": "9.4.0",
     "@nestjs/config": "2.3.1",
@@ -23,7 +23,7 @@
     "express": "4.18.2",
     "nest-winston": "1.9.1",
     "reflect-metadata": "0.1.13",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "description": "EML engine",
   "devDependencies": {
@@ -33,7 +33,7 @@
     "@types/node": "18.15.11",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
-    "eslint": "8.37.0",
+    "eslint": "8.38.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-standard": "17.0.0",
     "eslint-import-resolver-typescript": "3.5.5",
