@@ -11,15 +11,9 @@ import { StakingChartSearchDto } from "./dto";
 export class StakingChartController {
   constructor(private readonly stakingReportService: StakingChartService) {}
 
-  @Get("/amount")
+  @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public amountChart(@Query() dto: StakingChartSearchDto): Promise<any> {
-    return this.stakingReportService.amountChart(dto);
-  }
-
-  @Get("/volume")
-  @UseInterceptors(PaginationInterceptor)
-  public volumeChart(@Query() dto: StakingChartSearchDto): Promise<any> {
-    return this.stakingReportService.volumeChart(dto);
+    return this.stakingReportService.chart(dto);
   }
 }
