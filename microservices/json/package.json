@@ -48,7 +48,7 @@
     "@types/node": "18.15.11",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
-    "eslint": "8.37.0",
+    "eslint": "8.38.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-standard": "17.0.0",
     "eslint-import-resolver-typescript": "3.5.5",
@@ -58,7 +58,7 @@
     "eslint-plugin-promise": "6.1.1",
     "rimraf": "4.4.1",
     "tsc-watch": "6.0.0",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "engines": {
     "node": ">=12.13"
