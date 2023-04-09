@@ -6,7 +6,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, IMysterybox, ModuleType, MysteryboxStatus, TokenType } from "@framework/types";
+import { ContractStatus, IMysterybox, ModuleType, MysteryboxStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -53,11 +53,8 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
-      <TemplateAssetInput
-        prefix="template.price"
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
-      />
+      <TemplateAssetInput prefix="item" />
+      <TemplateAssetInput prefix="template.price" />
       {id ? <SelectInput name="mysteryboxStatus" options={MysteryboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
