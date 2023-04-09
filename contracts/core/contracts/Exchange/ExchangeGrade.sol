@@ -24,7 +24,7 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    require(hasRole(METADATA_ROLE, signer), "Exchange: Wrong signer");
 
     address account = _msgSender();
 

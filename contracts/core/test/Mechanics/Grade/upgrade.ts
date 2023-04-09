@@ -6,9 +6,9 @@ import { METADATA_ROLE } from "@gemunion/contracts-constants";
 import { templateId, tokenId } from "../../constants";
 import { TokenAttributes } from "@framework/types";
 
-export function shouldGrade(factory: () => Promise<Contract>) {
-  describe("mintCommon", function () {
-    it("should: upgrade earn", async function () {
+export function shouldBehaveLikeUpgradeable(factory: () => Promise<Contract>) {
+  describe("upgrade", function () {
+    it("should: upgrade level", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const contractInstance = await factory();

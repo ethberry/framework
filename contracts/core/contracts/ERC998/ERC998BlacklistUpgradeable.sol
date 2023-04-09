@@ -39,10 +39,12 @@ contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
     _safeMint(to, tokenId);
   }
 
-  function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId) external virtual onlyRole(METADATA_ROLE) returns (bool) {
+    _requireMinted(tokenId);
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
+    emit MetadataUpdate(tokenId);
     return true;
   }
 
