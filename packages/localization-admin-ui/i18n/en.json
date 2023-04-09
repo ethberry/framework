@@ -858,6 +858,9 @@
       "boxes": {
         "title": "Mystery Boxes"
       },
+      "boxContent": {
+        "title": "Mysterybox content"
+      },
       "contracts": {
         "title": "Mystery Contracts"
       },
