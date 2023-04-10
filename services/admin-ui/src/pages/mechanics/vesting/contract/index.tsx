@@ -27,7 +27,7 @@ import { VestingActionsMenu } from "../../../../components/menu/mechanics/vestin
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
-export const Vesting: FC = () => {
+export const VestingContracts: FC = () => {
   const {
     rows,
     count,
@@ -43,7 +43,7 @@ export const Vesting: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IContract, IVestingSearchDto>({
-    baseUrl: "/vesting",
+    baseUrl: "/vesting/contracts",
     search: {
       account: "",
       contractTemplate: [],
@@ -74,7 +74,7 @@ export const Vesting: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "vesting"]} />
+      <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
 
       <PageHeader message="pages.vesting.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

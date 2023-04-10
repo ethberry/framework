@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 
 export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysterybox>({
-    baseUrl: "/mystery-boxes",
+    baseUrl: "/mystery/boxes",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,14 +29,7 @@ export const MysteryBox: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "mystery.boxes": "mystery-boxes",
-          "mystery.box": "mystery.box",
-        }}
-        data={[{}, {}, selected]}
-      />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.box"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.mystery.box.title" data={selected} />
 

@@ -6,7 +6,7 @@ import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
 import { ReferralChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
-import { Referral } from "../../dashboard/exchange/referral";
+import { ReferralSection } from "../../dashboard/exchange/referral";
 
 export const referralRoutes: Array<RouteObject> = [
   {
@@ -16,7 +16,7 @@ export const referralRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="referral">
-            <Referral />
+            <ReferralSection />
           </IndexWrapper>
         ),
       },

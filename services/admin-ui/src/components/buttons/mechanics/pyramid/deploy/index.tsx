@@ -4,8 +4,8 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
-import { PyramidContractTemplates } from "@framework/types";
 import type { IPyramidContractDeployDto } from "@framework/types";
+import { PyramidContractTemplates } from "@framework/types";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 
 import PyramidDeployPyramidABI from "../../../../../abis/components/buttons/mechanics/pyramid/deploy/deployPyramid.abi.json";

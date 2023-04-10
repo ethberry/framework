@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IDropSearchDto } from "@framework/types";
 

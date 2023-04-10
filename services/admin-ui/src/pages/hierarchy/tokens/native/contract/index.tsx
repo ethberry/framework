@@ -43,7 +43,7 @@ export const NativeContract: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/native-contracts",
+    baseUrl: "/native/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -59,7 +59,7 @@ export const NativeContract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "native.contracts"]} />
+      <Breadcrumbs path={["dashboard", "native", "native.contracts"]} />
 
       <PageHeader message="pages.native.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

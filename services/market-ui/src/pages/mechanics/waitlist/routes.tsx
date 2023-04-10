@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { WaitlistItem } from "./item";
 import { IndexWrapper } from "../../index-wrapper";
-import { Waitlist } from "../../dashboard/mechanics/waitlist";
+import { WaitlistSection } from "../../dashboard/mechanics/waitlist";
 import { WalletWrapper } from "../../wallet-wrapper";
 
 export const waitlistRoutes: Array<RouteObject> = [
@@ -13,7 +13,7 @@ export const waitlistRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="waitlist">
-            <Waitlist />
+            <WaitlistSection />
           </IndexWrapper>
         ),
       },

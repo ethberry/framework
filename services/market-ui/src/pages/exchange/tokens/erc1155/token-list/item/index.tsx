@@ -20,7 +20,7 @@ export const Erc1155TokenListItem: FC<IErc1155TokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc1155-tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc1155/tokens/${token.id}`}>
         <CardHeader title={token.template!.title} />
         <CardMedia className={classes.media} image={token.template!.imageUrl} />
         <CardContent>

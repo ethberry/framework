@@ -17,7 +17,7 @@ export const Erc998: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, handleChangePage } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/erc998-templates",
+    baseUrl: "/erc998/templates",
     search: {
       contractIds: [],
     },

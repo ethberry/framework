@@ -39,7 +39,6 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
       <TextInput name="account" />
       <TemplateAssetInput
         prefix="item"
-        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
         contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
         multiple
       />

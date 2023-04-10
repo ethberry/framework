@@ -10,7 +10,7 @@ import { TemplateSearchDto } from "../../../hierarchy/template/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Public()
-@Controller("/erc998-templates")
+@Controller("/erc998/templates")
 export class Erc998TemplateController {
   constructor(
     private readonly erc998TemplateService: Erc998TemplateService,

@@ -7,7 +7,7 @@ import { IMysterybox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { MysteryboxListItem } from "../../../mechanics/mystery/mysterybox-list/item";
+import { MysteryboxListItem } from "../../../mechanics/mystery/box-list/item";
 
 export const Mystery: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -17,7 +17,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
-    baseUrl: "/mystery-boxes",
+    baseUrl: "/mystery/boxes",
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });
 

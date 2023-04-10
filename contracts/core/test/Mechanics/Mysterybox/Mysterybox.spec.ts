@@ -3,11 +3,11 @@ import { ethers, network } from "hardhat";
 import { constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, InterfaceId } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { templateId, tokenId } from "../../constants";
+import { FrameworkInterfaceId, templateId, tokenId } from "../../constants";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
@@ -37,6 +37,12 @@ describe("ERC721MysteryboxSimple", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeERC721Simple(factory);
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    FrameworkInterfaceId.Mystery,
+  );
 
   describe("mint", function () {
     it("should fail: No content", async function () {

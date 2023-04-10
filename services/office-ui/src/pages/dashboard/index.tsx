@@ -4,17 +4,17 @@ import { Grid } from "@mui/material";
 import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { useStyles } from "./styles";
-import { Erc20Sections } from "./hierarchy/erc20";
+import { Erc20Section } from "./hierarchy/erc20";
 import { Erc1155Section } from "./hierarchy/erc1155";
 import { Erc721Section } from "./hierarchy/erc721";
-import { NativeSections } from "./hierarchy/native";
-import { Claim } from "./mechanics/claim";
-import { Drop } from "./mechanics/drop";
-import { Admin } from "./infrastructure";
-import { Marketplace } from "./exchange/marketplace";
-import { Wallet } from "./exchange/wallet";
-import { Pyramid } from "./mechanics/pyramid";
-import { Staking } from "./mechanics/staking";
+import { NativeSection } from "./hierarchy/native";
+import { ClaimSection } from "./mechanics/claim";
+import { DropSection } from "./mechanics/drop";
+import { AdminSection } from "./infrastructure";
+import { MarketplaceSection } from "./exchange/marketplace";
+import { WalletSection } from "./exchange/wallet";
+import { PyramidSection } from "./mechanics/pyramid";
+import { StakingSection } from "./mechanics/staking";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -25,21 +25,21 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          <NativeSections />
-          <Erc20Sections />
+          <NativeSection />
+          <Erc20Section />
           <Erc721Section />
           <Erc1155Section />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Claim />
-          <Drop />
-          <Staking />
-          <Pyramid />
+          <ClaimSection />
+          <DropSection />
+          <StakingSection />
+          <PyramidSection />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Marketplace />
-          <Wallet />
-          <Admin />
+          <MarketplaceSection />
+          <WalletSection />
+          <AdminSection />
         </Grid>
       </Grid>
     </div>

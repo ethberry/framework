@@ -8,7 +8,7 @@ export interface ITemplateInputProps {
   name?: string;
 }
 
-export const TemplateInput: FC<ITemplateInputProps> = (props) => {
+export const TemplateInput: FC<ITemplateInputProps> = props => {
   const { name = "templateId" } = props;
 
   const contractId = useWatch({ name: "contractId" });

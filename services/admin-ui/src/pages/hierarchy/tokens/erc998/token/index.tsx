@@ -36,7 +36,7 @@ export const Erc998Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc998-tokens",
+    baseUrl: "/erc998/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -71,7 +71,7 @@ export const Erc998Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998.tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.tokens"]} />
 
       <PageHeader message="pages.erc998.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

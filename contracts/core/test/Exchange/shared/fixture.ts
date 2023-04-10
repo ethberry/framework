@@ -1,7 +1,15 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import {
+  amount,
+  baseTokenURI,
+  METADATA_ROLE,
+  MINTER_ROLE,
+  royalty,
+  tokenName,
+  tokenSymbol,
+} from "@gemunion/contracts-constants";
 
 import { Exchange } from "../../../typechain-types";
 import {
@@ -45,6 +53,7 @@ export async function deployErc721Base(name: string, exchangeInstance: Contract)
   const erc721Factory = await ethers.getContractFactory(name);
   const erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
   await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
+  await erc721Instance.grantRole(METADATA_ROLE, exchangeInstance.address);
 
   return erc721Instance;
 }

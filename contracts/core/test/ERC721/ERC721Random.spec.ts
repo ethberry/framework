@@ -5,6 +5,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721Random", function () {
   const factory = () => deployERC721(this.title);
@@ -15,5 +16,10 @@ describe("ERC721Random", function () {
   shouldMintCommon(factory);
   shouldMintRandom(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    FrameworkInterfaceId.ERC721Randmon,
+  );
 });

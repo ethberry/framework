@@ -1,16 +1,16 @@
 import {
   forwardRef,
-  Logger,
-  LoggerService,
   Inject,
   Injectable,
-  NotFoundException,
   InternalServerErrorException,
+  Logger,
+  LoggerService,
+  NotFoundException,
 } from "@nestjs/common";
-import { InjectRepository, InjectDataSource } from "@nestjs/typeorm";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, IsNull, Repository } from "typeorm";
 
-import { ExchangeType, TokenType, IAssetDto, IExchangeItem, IExchangePurchaseEvent } from "@framework/types";
+import { ExchangeType, IAssetDto, IExchangeItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";

@@ -14,7 +14,7 @@ import { formatPrice } from "../../../../utils/money";
 
 export const MysteryboxToken: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
-    baseUrl: "/mystery-tokens",
+    baseUrl: "/mystery/tokens",
     empty: {
       template: {
         title: "",
@@ -31,14 +31,7 @@ export const MysteryboxToken: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "mystery.tokens": "mystery-tokens",
-          "mystery.token": "mystery.token",
-        }}
-        data={[{}, {}, selected.template]}
-      />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.mystery.token.title" data={selected.template} />
 

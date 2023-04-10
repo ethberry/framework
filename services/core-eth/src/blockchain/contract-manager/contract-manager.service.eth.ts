@@ -27,9 +27,9 @@ import {
   IContractManagerVestingDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
-  TemplateStatus,
   PyramidContractTemplates,
   StakingContractTemplates,
+  TemplateStatus,
   TokenType,
   VestingContractTemplate,
 } from "@framework/types";

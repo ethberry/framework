@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { IMysterybox } from "@framework/types";
-import { IUser } from "@framework/types";
+import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
@@ -20,7 +20,7 @@ export interface IMintMenuItemProps {
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
-    mystery: { id: mysteryId, template },
+    mystery: { template },
   } = props;
 
   const user = useUser<IUser>();
@@ -41,11 +41,13 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       MysteryMintBoxABI,
       web3Context.provider?.getSigner(),
     );
-    return contractMysterybox.mintBox(
-      values.account,
-      values.mysterybox!.templateId,
-      values.mysterybox!.item,
-    ) as Promise<any>;
+    const items = values.mysterybox!.item!.components.map(item => ({
+      tokenType: Object.keys(TokenType).indexOf(item.tokenType),
+      token: item.contract!.address,
+      tokenId: item.templateId,
+      amount: item.amount,
+    }));
+    return contractMysterybox.mintBox(values.account, values.mysterybox!.templateId, items) as Promise<any>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintMysteryboxDto): Promise<void> => {
@@ -70,7 +72,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
         open={isMintTokenDialogOpen}
         initialValues={{
           contractId: template!.contractId,
-          mysteryId,
+          mysteryId: 0,
           account: user.profile.wallet,
         }}
       />

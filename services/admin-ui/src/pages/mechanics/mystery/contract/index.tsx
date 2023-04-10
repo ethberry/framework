@@ -63,7 +63,7 @@ export const MysteryContract: FC = () => {
   });
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery.contracts"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.contracts"]} />
 
       <PageHeader message="pages.mystery.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

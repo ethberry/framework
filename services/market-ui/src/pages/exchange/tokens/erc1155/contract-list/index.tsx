@@ -10,12 +10,12 @@ import { Erc1155ContractListItem } from "./item";
 
 export const Erc1155ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
-    baseUrl: "/erc1155-contracts",
+    baseUrl: "/erc1155/contracts",
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc1155.contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc1155", "erc1155.contracts"]} />
 
       <PageHeader message="pages.erc1155.contracts.title" />
 

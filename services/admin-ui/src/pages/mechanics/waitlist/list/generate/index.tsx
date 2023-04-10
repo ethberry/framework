@@ -37,7 +37,7 @@ export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
       testId="WaitlistGenerateDialog"
       {...rest}
     >
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} multiple />
+      <TemplateAssetInput prefix="item" multiple />
       <EntityInput name="listId" controller="waitlist/list" />
     </FormDialog>
   );

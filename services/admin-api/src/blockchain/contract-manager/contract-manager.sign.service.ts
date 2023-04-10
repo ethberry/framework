@@ -5,7 +5,6 @@ import { utils, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IPyramidContractDeployDto, IStakingContractDeployDto } from "@framework/types";
-
 import {
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
@@ -37,8 +36,8 @@ import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ER
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
 import ERC721RentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Rentable.sol/ERC721Rentable.json";
 import ERC721BlacklistRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistRandomGemunion.sol/ERC721BlacklistRandomGemunion.json";
-// import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesGemunion.sol/ERC721GenesGemunion.json";
-import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesBesu.sol/ERC721GenesBesu.json";
+
+import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721GenesGemunion.sol/ERC721GenesGemunion.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";

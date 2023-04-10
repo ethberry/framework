@@ -81,7 +81,7 @@ export const MysteryBox: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery.boxes"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
 
       <PageHeader message="pages.mystery.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

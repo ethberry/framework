@@ -9,7 +9,7 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/mystery-contracts")
+@Controller("/mystery/contracts")
 export class MysteryContractController {
   constructor(private readonly mysteryboxContractService: MysteryContractService) {}
 

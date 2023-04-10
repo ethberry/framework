@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
+
 import { amount, nonce } from "@gemunion/contracts-constants";
 
 import { templateId, tokenId, externalId, expiresAt } from "../constants";

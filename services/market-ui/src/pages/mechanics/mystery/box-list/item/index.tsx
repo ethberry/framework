@@ -19,7 +19,7 @@ export const MysteryboxListItem: FC<IMysteryboxListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/mystery-boxes/${mysterybox.id}`}>
+      <CardActionArea component={RouterLink} to={`/mystery/boxes/${mysterybox.id}`}>
         <CardHeader title={mysterybox.title} />
         <CardMedia className={classes.media} image={mysterybox.imageUrl} />
         <CardContent>

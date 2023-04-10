@@ -40,7 +40,7 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
       <TextInput name="account" />
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} multiple />
+      <TemplateAssetInput prefix="item" multiple />
       <DateTimeInput name="endTimestamp" />
     </FormDialog>
   );

@@ -3,9 +3,9 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
-  HttpStatus,
   HttpCode,
+  HttpStatus,
+  Param,
   ParseIntPipe,
   Post,
   Put,
@@ -22,7 +22,7 @@ import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../.
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc998-templates")
+@Controller("/erc998/templates")
 export class Erc998TemplateController {
   constructor(private readonly erc998TemplateService: Erc998TemplateService) {}
 

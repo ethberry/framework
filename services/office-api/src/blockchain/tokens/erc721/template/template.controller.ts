@@ -1,10 +1,10 @@
 import {
   Body,
-  HttpCode,
-  HttpStatus,
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -22,7 +22,7 @@ import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../.
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc721-templates")
+@Controller("/erc721/templates")
 export class Erc721TemplateController {
   constructor(private readonly erc721TemplateService: Erc721TemplateService) {}
 

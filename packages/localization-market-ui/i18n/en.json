@@ -628,6 +628,7 @@
       "title": "Drops"
     },
     "erc1155": {
+      "title": "ERC1155",
       "contract": {
         "title": "ERC1155 Contract: {title}"
       },
@@ -650,6 +651,7 @@
       }
     },
     "erc721": {
+      "title": "ERC721",
       "contract": {
         "title": "ERC721 Contract: {title}"
       },
@@ -679,6 +681,7 @@
       }
     },
     "erc998": {
+      "title": "ERC998",
       "contract": {
         "title": "ERC998 Contract: {title}"
       },
@@ -783,6 +786,7 @@
       "title": "Merchants"
     },
     "mystery": {
+      "title": "Mystery",
       "box": {
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"

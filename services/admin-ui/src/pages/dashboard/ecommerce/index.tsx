@@ -4,7 +4,7 @@ import { BarChart, Bookmark, Category, Email, Photo, Storage } from "@mui/icons-
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Ecommerce: FC = () => {
+export const EcommerceSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

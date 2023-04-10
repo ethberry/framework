@@ -6,8 +6,8 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Tooltip,
   SvgIcon,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";

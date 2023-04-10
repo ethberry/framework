@@ -14,7 +14,7 @@ import ERC20ApproveABI from "../../../../../abis/common/allowance/erc20.approve.
 import ERC721SetApprovalForAllABI from "../../../../../abis/common/allowance/erc721.setApprovalForAll.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../../abis/common/allowance/erc1155.setApprovalForAll.abi.json";
 
-import { StakingAllowanceDialog, IStakingAllowanceDto } from "./dialog";
+import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 
 export interface IStakingAllowanceButtonProps {
   rule: IStakingRule;

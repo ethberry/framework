@@ -15,7 +15,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenType, IUser } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, IUser, ModuleType, TokenType } from "@framework/types";
 
 import { Erc721TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
@@ -38,7 +38,7 @@ export const Erc721Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/erc721/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -50,7 +50,7 @@ export const Erc721Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.tokens"]} />
 
       <PageHeader message="pages.erc721.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
