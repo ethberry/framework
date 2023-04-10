@@ -75,11 +75,11 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         url: "/rent/tokens/sign",
         method: "POST",
         data: {
-          tokenId: token.id, // token.id to lend
-          account, // user owner
+          account, // user token owner
           referrer: dto.account, // borrower
-          externalId: Object.values(RentStrategy).indexOf(dto.lendType),
-          expires,
+          tokenId: token.id, // token.id to lend
+          externalId: Object.values(RentStrategy).indexOf(dto.lendType), // lendType
+          expires, // lend time
         },
       },
       dto,
