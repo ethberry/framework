@@ -34,7 +34,7 @@ export const params = {
 export const contractTemplate = "SIMPLE";
 export const subscriptionId = 1;
 
-export enum interfaceId {
+export enum FrameworkInterfaceId {
   ERC721Randmon = "0x32034d27",
   ERC721Upgradable = "0x45977d03",
   Grade = "0x381b3743",

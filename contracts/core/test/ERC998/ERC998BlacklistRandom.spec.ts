@@ -6,7 +6,7 @@ import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { interfaceId } from "../constants";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC998BlacklistRandom", function () {
   const factory = () => deployERC721(this.title);
@@ -22,6 +22,6 @@ describe("ERC998BlacklistRandom", function () {
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
-    interfaceId.ERC721Randmon,
+    FrameworkInterfaceId.ERC721Randmon,
   );
 });

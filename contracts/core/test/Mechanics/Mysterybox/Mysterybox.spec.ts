@@ -7,7 +7,7 @@ import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, InterfaceId } from "@gemunion/
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { interfaceId, templateId, tokenId } from "../../constants";
+import { FrameworkInterfaceId, templateId, tokenId } from "../../constants";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
@@ -41,7 +41,7 @@ describe("ERC721MysteryboxSimple", function () {
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
-    interfaceId.Mystery,
+    FrameworkInterfaceId.Mystery,
   );
 
   describe("mint", function () {

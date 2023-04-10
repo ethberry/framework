@@ -7,7 +7,7 @@ import { shouldMintRandom } from "./shared/random/mintRandom";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { interfaceId } from "../constants";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721UpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
@@ -25,7 +25,7 @@ describe("ERC721UpgradeableRandom", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
-    interfaceId.ERC721Randmon,
-    interfaceId.Grade,
+    FrameworkInterfaceId.ERC721Randmon,
+    FrameworkInterfaceId.Grade,
   );
 });
