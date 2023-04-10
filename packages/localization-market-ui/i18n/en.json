@@ -106,6 +106,7 @@
       "childTokenIds": "Child token IDs",
       "claimId": "Claim ID",
       "collection": "Collection",
+      "contract": "Contract",
       "data": "Data",
       "endTimestamp": "End date",
       "externalId": "External ID",
