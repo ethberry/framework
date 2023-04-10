@@ -3,13 +3,12 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ContractFeatures, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
-
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { TokenService } from "../../../hierarchy/token/token.service";
+import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenService } from "../../hierarchy/token/token.service";
 
 @Injectable()
-export class MysteryTokenService extends TokenService {
+export class RentTokenService extends TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
@@ -18,8 +17,13 @@ export class MysteryTokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, [TokenType.ERC721, TokenType.ERC998], ModuleType.HIERARCHY, [
-      ContractFeatures.RENTABLE,
-    ]);
+    const tokenEntity = await super.search(
+      dto,
+      userEntity,
+      [TokenType.ERC721, TokenType.ERC998],
+      ModuleType.HIERARCHY,
+      [ContractFeatures.RENTABLE],
+    );
+    return tokenEntity;
   }
 }

@@ -5,6 +5,7 @@ import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC998Upgradeable", function () {
   const factory = () => deployERC721(this.title);
@@ -20,5 +21,6 @@ describe("ERC998Upgradeable", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
+    FrameworkInterfaceId.Grade,
   );
 });

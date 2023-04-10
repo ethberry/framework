@@ -4,6 +4,11 @@ import { constants } from "ethers";
 
 import { GameEventType, RmqProviderType } from "@framework/types";
 
+interface IDummyData {
+  eventType: any;
+  data: Record<string, any>;
+}
+
 @Injectable()
 export class NotificatorService {
   constructor(@Inject(RmqProviderType.MOBILE_SERVICE) private mobileClient: ClientProxy) {}
@@ -15,5 +20,9 @@ export class NotificatorService {
       value: constants.WeiPerEther,
       transactionHash: constants.HashZero,
     });
+  }
+
+  public dummyUser(data: any): void {
+    this.mobileClient.emit(GameEventType.DUMMY, data);
   }
 }

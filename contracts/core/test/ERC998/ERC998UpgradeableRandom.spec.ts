@@ -6,6 +6,7 @@ import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC998UpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
@@ -22,5 +23,7 @@ describe("ERC998UpgradeableRandom", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
+    FrameworkInterfaceId.ERC721Randmon,
+    FrameworkInterfaceId.Grade,
   );
 });

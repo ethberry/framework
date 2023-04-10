@@ -10,6 +10,7 @@ import { TemplateEntity } from "../template/template.entity";
 import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { RentEntity } from "../../mechanics/rent/rent.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -83,4 +84,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @OneToMany(_type => CompositionEntity, composition => composition.parent)
   public children: Array<CompositionEntity>;
+
+  @OneToMany(_type => RentEntity, rent => rent.contract)
+  public rent: Array<RentEntity>;
 }

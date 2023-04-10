@@ -9,7 +9,7 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../abis/common/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalForAllABI from "../../../../abis/common/allowance/erc721.setApprovalForAll.abi.json";
+import ERC721SetApprovalABI from "../../../../abis/common/allowance/erc721.setApproval.abi.json";
 import ERC1155SetApprovalForAllABI from "../../../../abis/common/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./edit";
@@ -33,10 +33,10 @@ export const AllowanceButton: FC = () => {
     } else if (asset.tokenType === TokenType.ERC721) {
       const contractErc721 = new Contract(
         asset.contract.address,
-        ERC721SetApprovalForAllABI,
+        ERC721SetApprovalABI,
         web3Context.provider?.getSigner(),
       );
-      return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
+      return contractErc721.approve(values.address, asset.token.tokenId) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
         asset.contract.address,
