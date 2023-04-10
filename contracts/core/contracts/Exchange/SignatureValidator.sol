@@ -43,6 +43,14 @@ contract SignatureValidator is EIP712, Context {
         PARAMS_SIGNATURE
       )
     );
+  bytes32 private immutable MANY_TO_MANY_EXTRA_TYPEHASH =
+    keccak256(
+      bytes.concat(
+        "EIP712(address account,bytes32 extra,Params params,Asset[] items,Asset[] price)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE
+      )
+    );
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 
@@ -98,6 +106,25 @@ contract SignatureValidator is EIP712, Context {
     address account = _msgSender();
 
     return _recoverSigner(_hashManyToMany(account, params, items, price), signature);
+  }
+
+  function _recoverManyToManyExtraSignature(
+    Params memory params,
+    Asset[] memory items,
+    Asset[] memory price,
+    bytes32 extra,
+    bytes calldata signature
+  ) internal returns (address) {
+    require(!_expired[params.nonce], "Exchange: Expired signature");
+    _expired[params.nonce] = true;
+
+    if (params.expiresAt != 0) {
+      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+    }
+
+    address account = _msgSender();
+
+    return _recoverSigner(_hashManyToManyExtra(account, extra, params, items, price), signature);
   }
 
   function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {
@@ -156,6 +183,28 @@ contract SignatureValidator is EIP712, Context {
           abi.encode(
             MANY_TO_MANY_TYPEHASH,
             account,
+            _hashParamsStruct(params),
+            _hashAssetStructArray(items),
+            _hashAssetStructArray(price)
+          )
+        )
+      );
+  }
+
+  function _hashManyToManyExtra(
+    address account,
+    bytes32 extra,
+    Params memory params,
+    Asset[] memory items,
+    Asset[] memory price
+  ) private view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(
+          abi.encode(
+            MANY_TO_MANY_EXTRA_TYPEHASH,
+            account,
+            extra,
             _hashParamsStruct(params),
             _hashAssetStructArray(items),
             _hashAssetStructArray(price)

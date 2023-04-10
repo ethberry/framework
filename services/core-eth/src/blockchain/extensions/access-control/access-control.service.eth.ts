@@ -15,6 +15,7 @@ import {
 import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -24,6 +25,7 @@ export class AccessControlServiceEth {
     private readonly accessControlService: AccessControlService,
     private readonly tokenService: TokenService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGrantedEvent>, context: Log): Promise<void> {
@@ -90,7 +92,7 @@ export class AccessControlServiceEth {
 
   public async updateUser(event: ILogEvent<IErc4907UpdateUserEvent>, context: Log): Promise<void> {
     const {
-      args: { tokenId },
+      args: { tokenId, user, expires },
     } = event;
     const { address } = context;
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
@@ -100,5 +102,7 @@ export class AccessControlServiceEth {
     }
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
+
+    this.notificatorService.dummyUser({ tokenId, user, expires });
   }
 }

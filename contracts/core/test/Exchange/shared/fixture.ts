@@ -12,7 +12,12 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { Exchange } from "../../../typechain-types";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
+import {
+  wrapManyToManyExtraSignature,
+  wrapManyToManySignature,
+  wrapOneToManySignature,
+  wrapOneToOneSignature,
+} from "./utils";
 
 export async function deployExchangeFixture() {
   const [owner] = await ethers.getSigners();
@@ -25,12 +30,14 @@ export async function deployExchangeFixture() {
   const generateOneToOneSignature = wrapOneToOneSignature(network, exchangeInstance, owner);
   const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, owner);
   const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, owner);
+  const generateManyToManyExtraSignature = wrapManyToManyExtraSignature(network, exchangeInstance, owner);
 
   return {
     contractInstance: exchangeInstance,
     generateOneToOneSignature,
     generateOneToManySignature,
     generateManyToManySignature,
+    generateManyToManyExtraSignature,
   };
 }
 

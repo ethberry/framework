@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { BreedModule } from "./breed/breed.module";
 import { ClaimModule } from "./claim/claim.module";
-import { CollectionContractModule } from "./collection/contract/contract.module";
+import { CollectionModule } from "./collection/collection.module";
 import { CraftModule } from "./craft/craft.module";
 import { DropModule } from "./drop/drop.module";
 import { GradeModule } from "./grade/grade.module";
@@ -18,7 +18,7 @@ import { WaitlistModule } from "./waitlist/waitlist.module";
   imports: [
     BreedModule,
     ClaimModule,
-    CollectionContractModule,
+    CollectionModule,
     CraftModule,
     DropModule,
     GradeModule,

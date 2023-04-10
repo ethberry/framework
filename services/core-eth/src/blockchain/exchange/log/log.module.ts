@@ -42,6 +42,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.Purchase,
               ExchangeEventType.PaymentEthReceived,
               ExchangeEventType.PaymentEthSent,
+              // MODULE:RENTABLE
+              ExchangeEventType.Lend,
               // MODULE:CLAIM
               ExchangeEventType.Claim,
               // MODULE:MYSTERYBOX

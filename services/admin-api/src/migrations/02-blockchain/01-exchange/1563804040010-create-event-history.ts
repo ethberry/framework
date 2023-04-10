@@ -23,9 +23,9 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         -- MODULE:ERC1363
         'TransferReceived',
 
-        -- MODULE:ERC4907
+        -- MODULE:ERC4907 RENT
         'UpdateUser',
-        'Borrow',
+        'Lend',
 
         -- MODULE:ERC721
         'Approval',

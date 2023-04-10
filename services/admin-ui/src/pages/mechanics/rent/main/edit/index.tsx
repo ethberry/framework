@@ -35,7 +35,11 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput name="contractId" controller="contracts" readOnly />
-      <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
+      <TemplateAssetInput
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        multiple
+      />
     </FormDialog>
   );
 };
