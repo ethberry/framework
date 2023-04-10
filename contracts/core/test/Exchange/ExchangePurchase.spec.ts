@@ -3,13 +3,15 @@ import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount } from "@gemunion/contracts-constants";
-import { params, tokenId } from "../constants";
+import { externalId, params, tokenId } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
+import { BigNumber } from "ethers";
+import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
 describe("ExchangePurchaseV2", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -79,7 +81,24 @@ describe("ExchangePurchaseV2", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Purchase");
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Purchase")
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: BigNumber.from(0),
+              amount: BigNumber.from(amount),
+            }),
+          );
 
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
 
