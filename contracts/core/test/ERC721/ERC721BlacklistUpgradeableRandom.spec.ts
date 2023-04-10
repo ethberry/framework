@@ -6,6 +6,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { interfaceId } from "../constants";
 
 describe("ERC721BlacklistUpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
@@ -22,5 +23,7 @@ describe("ERC721BlacklistUpgradeableRandom", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
+    interfaceId.ERC721Upgradable,
+    interfaceId.ERC721Randmon,
   );
 });
