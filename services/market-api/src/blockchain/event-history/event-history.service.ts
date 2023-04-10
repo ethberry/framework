@@ -7,6 +7,7 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "./event-history.entity";
+import { ContractEntity } from "../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class EventHistoryService {
@@ -36,6 +37,18 @@ export class EventHistoryService {
     const queryBuilder = this.eventHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("history.assets", "assets");
+    queryBuilder.leftJoinAndSelect("assets.token", "asset_token");
+    queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
+    queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
+
+    queryBuilder.innerJoinAndMapOne(
+      "history.contract",
+      ContractEntity,
+      "contract",
+      "history.address = contract.address",
+    );
 
     queryBuilder.andWhere("history.parent_id IS NULL");
 
