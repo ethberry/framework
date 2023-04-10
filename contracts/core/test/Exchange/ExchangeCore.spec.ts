@@ -9,6 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 import { externalId, params, tokenId } from "../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
+import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
 describe("ExchangeCore", function () {
   const factory = async () => {
@@ -67,7 +68,24 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx1).to.emit(exchangeInstance, "Purchase");
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+        );
     });
 
     it("should purchase, spend ETH", async function () {
@@ -114,7 +132,24 @@ describe("ExchangeCore", function () {
         { value: BigNumber.from("123000000000000000") },
       );
 
-      await expect(tx1).to.emit(exchangeInstance, "Purchase");
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: BigNumber.from("0"),
+            amount: BigNumber.from("123000000000000000"),
+          }),
+        );
     });
 
     it("should fail: duplicate mint", async function () {

@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { params, templateId, tokenId } from "../constants";
+import { externalId, params, templateId, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
+import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
 describe("ExchangeGrade", function () {
   describe("upgrade", function () {
@@ -62,12 +63,22 @@ describe("ExchangeGrade", function () {
 
       await expect(tx2)
         .to.emit(exchangeInstance, "Upgrade")
-        // .withArgs(
-        //   receiver.address,
-        //   externalId,
-        //   [2, erc721Instance.address, tokenId, amount],
-        //   [[1, erc20Instance.address, tokenId, amount]],
-        // )
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+        )
         .to.emit(erc721Instance, "LevelUp")
         .withArgs(exchangeInstance.address, tokenId, 1);
     });

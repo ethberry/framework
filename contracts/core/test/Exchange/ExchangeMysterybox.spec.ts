@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { params, tokenId } from "../constants";
+import { externalId, params, tokenId } from "../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
+import { isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeMysterybox", function () {
   describe("mysterybox", function () {
@@ -76,11 +77,30 @@ describe("ExchangeMysterybox", function () {
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Mysterybox")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[0, constants.AddressZero, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj(
+              {
+                tokenType: 2,
+                token: erc721Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+              {
+                tokenType: 2,
+                token: mysteryboxInstance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+            ),
+            isEqualEventArgArrObj({
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
@@ -153,11 +173,30 @@ describe("ExchangeMysterybox", function () {
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Mysterybox")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[0, constants.AddressZero, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj(
+              {
+                tokenType: 4,
+                token: erc1155Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+              {
+                tokenType: 2,
+                token: mysteryboxInstance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+            ),
+            isEqualEventArgArrObj({
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
@@ -285,11 +324,56 @@ describe("ExchangeMysterybox", function () {
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Mysterybox")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[0, constants.AddressZero, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj(
+              {
+                tokenType: 1,
+                token: erc20Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(amount),
+              },
+              {
+                tokenType: 2,
+                token: erc721Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+              {
+                tokenType: 3,
+                token: erc998Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+              {
+                tokenType: 4,
+                token: erc1155Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+              {
+                tokenType: 2,
+                token: mysteryboxInstance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(1),
+              },
+            ),
+            isEqualEventArgArrObj(
+              {
+                tokenType: 0,
+                token: constants.AddressZero,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(amount),
+              },
+              {
+                tokenType: 1,
+                token: erc20Instance.address,
+                tokenId: BigNumber.from(tokenId),
+                amount: BigNumber.from(amount),
+              },
+            ),
+          )
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")

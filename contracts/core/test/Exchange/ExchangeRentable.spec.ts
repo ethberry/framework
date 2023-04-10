@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
 
@@ -8,6 +8,7 @@ import { templateId, tokenId, externalId, expiresAt } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
+import { isEqualArray, isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeRentable", function () {
   describe("lend", function () {
@@ -69,14 +70,19 @@ describe("ExchangeRentable", function () {
         // event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
         await expect(tx1)
           .to.emit(exchangeInstance, "Lend")
-          // .withArgs(
-          //   _owner.address,
-          //   receiver.address,
-          //   endTimestamp,
-          //   externalId,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[]],
-          // )
+          .withArgs(
+            _owner.address,
+            receiver.address,
+            endTimestamp,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(1),
+            }),
+            isEqualArray([[]]),
+          )
           .to.emit(erc721Instance, "UpdateUser")
           .withArgs(tokenId, receiver.address, endTimestamp);
 
@@ -162,13 +168,24 @@ describe("ExchangeRentable", function () {
         await expect(tx1)
           .to.changeTokenBalances(erc20Instance, [_owner, exchangeInstance], [-amount, amount])
           .to.emit(exchangeInstance, "Lend")
-          // .withArgs(
-          //   _owner.address,
-          //   receiver.address,
-          //   endTimestamp,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[1, erc20Instance.address, tokenId, amount]],
-          // )
+          .withArgs(
+            _owner.address,
+            receiver.address,
+            endTimestamp,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(erc721Instance, "UpdateUser")
           .withArgs(tokenId, receiver.address, endTimestamp);
 
