@@ -29,7 +29,6 @@ describe("ExchangeRentable", function () {
 
         const signature = await generateManyToManyExtraSignature({
           account: _owner.address,
-          extra: expires,
           params: {
             nonce,
             externalId /* lendType */,
@@ -45,6 +44,7 @@ describe("ExchangeRentable", function () {
             },
           ],
           price: [],
+          extra: expires,
         });
         const tx1 = exchangeInstance.lend(
           {
@@ -106,7 +106,6 @@ describe("ExchangeRentable", function () {
 
         const signature = await generateManyToManyExtraSignature({
           account: _owner.address,
-          extra: expires,
           params: {
             nonce,
             externalId /* lendType */,
@@ -129,6 +128,7 @@ describe("ExchangeRentable", function () {
               amount,
             },
           ],
+          extra: expires,
         });
 
         const tx1 = exchangeInstance.lend(
@@ -198,7 +198,6 @@ describe("ExchangeRentable", function () {
 
         const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
-          extra: expires,
           params: {
             nonce,
             externalId /* lendType */,
@@ -221,6 +220,7 @@ describe("ExchangeRentable", function () {
               amount,
             },
           ],
+          extra: expires,
         });
 
         const tx1 = exchangeInstance.lend(
@@ -274,7 +274,6 @@ describe("ExchangeRentable", function () {
 
         const signature = await generateManyToManyExtraSignature({
           account: _owner.address,
-          extra: expires,
           params: {
             nonce,
             externalId /* lendType */,
@@ -290,6 +289,7 @@ describe("ExchangeRentable", function () {
               amount,
             },
           ],
+          extra: expires,
         });
 
         const tx1 = exchangeInstance.lend(
@@ -337,7 +337,6 @@ describe("ExchangeRentable", function () {
 
         const signature = await generateManyToManyExtraSignature({
           account: _owner.address,
-          extra: expires,
           params: {
             nonce,
             externalId /* lendType */,
@@ -360,6 +359,7 @@ describe("ExchangeRentable", function () {
               amount,
             },
           ],
+          extra: expires,
         });
 
         const tx1 = exchangeInstance.lend(

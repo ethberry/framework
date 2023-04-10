@@ -51,7 +51,6 @@ export class RentSignService {
   ): Promise<string> {
     return this.signerService.getManyToManyExtraSignature(
       account,
-      expires,
       params,
       [
         {
@@ -70,6 +69,7 @@ export class RentSignService {
             : component.template.tokens[0].tokenId,
         amount: component.amount,
       })),
+      expires,
     );
   }
 }

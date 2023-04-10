@@ -129,10 +129,10 @@ export const wrapManyToManyExtraSignature = (network: Network, contract: Contrac
       {
         EIP712: [
           { name: "account", type: "address" },
-          { name: "extra", type: "bytes32" },
           { name: "params", type: "Params" },
           { name: "items", type: "Asset[]" },
           { name: "price", type: "Asset[]" },
+          { name: "extra", type: "bytes32" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
