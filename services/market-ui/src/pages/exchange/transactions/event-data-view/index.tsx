@@ -112,7 +112,7 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
           {contract?.title && (
             <Box sx={{ display: "flex", alignItems: "center", mb: 1, "&:last-of-type": { mb: 0 } }}>
               <Typography fontWeight={500}>
-                <FormattedMessage id="enums.eventDataLabel.contractTitle" />:
+                <FormattedMessage id="enums.eventDataLabel.contract" />:
               </Typography>
               <Box sx={{ ml: 1 }}>
                 <Typography variant="body1">{contract?.title}</Typography>
