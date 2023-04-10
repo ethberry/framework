@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { params, tokenId } from "../constants";
+import { externalId, params, tokenId } from "../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
+import { isEqualArray, isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeCraft", function () {
   describe("craft", function () {
@@ -23,9 +24,10 @@ describe("ExchangeCraft", function () {
 
         const tx1 = exchangeInstance.connect(receiver).craft(params, [], [], signature);
 
-        await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          .withArgs(receiver.address, externalId, isEqualArray([]), isEqualArray([]));
       });
     });
 
@@ -63,9 +65,19 @@ describe("ExchangeCraft", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Craft");
-        // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+            isEqualArray([]),
+          );
       });
     });
 
@@ -103,9 +115,19 @@ describe("ExchangeCraft", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Craft");
-        // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+            isEqualArray([]),
+          );
       });
     });
 
@@ -163,11 +185,22 @@ describe("ExchangeCraft", function () {
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[0, constants.AddressZero, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
@@ -280,11 +313,22 @@ describe("ExchangeCraft", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Craft")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[1, erc20Instance.address, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
@@ -452,9 +496,25 @@ describe("ExchangeCraft", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Craft");
-        // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          // https://github.com/TrueFiEng/Waffle/pull/751
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          );
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
@@ -620,11 +680,22 @@ describe("ExchangeCraft", function () {
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
-          // .withArgs(
-          //   receiver.address,
-          //   [[4, erc1155Instance.address, tokenId, amount]],
-          //   [[0, constants.AddressZero, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
       });
@@ -737,11 +808,22 @@ describe("ExchangeCraft", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Craft")
-          // .withArgs(
-          //   receiver.address,
-          //   [[2, erc1155Instance.address, tokenId, amount]],
-          //   [[1, erc20Instance.address, tokenId, amount]],
-          // )
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          )
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount)
           .to.emit(erc20Instance, "Transfer")
@@ -908,9 +990,24 @@ describe("ExchangeCraft", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Craft");
-        // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
+          );
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
