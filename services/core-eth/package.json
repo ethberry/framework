@@ -46,7 +46,7 @@
     "rxjs": "7.8.0",
     "ts-mixer": "6.0.3",
     "typedi": "0.10.0",
-    "typeorm": "0.3.13",
+    "typeorm": "0.3.14",
     "typeorm-naming-strategies": "4.1.0",
     "@types/cron": "2.0.1",
     "web3-core": "1.9.0",
