@@ -24,7 +24,6 @@ export class RentTokenService extends TokenService {
       ModuleType.HIERARCHY,
       [ContractFeatures.RENTABLE],
     );
-    // const rentEntity = await;
     return tokenEntity;
   }
 }

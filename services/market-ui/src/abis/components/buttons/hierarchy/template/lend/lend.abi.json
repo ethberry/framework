@@ -83,6 +83,11 @@
         "type": "tuple[]"
       },
       {
+        "internalType": "bytes32",
+        "name": "expires",
+        "type": "bytes32"
+      },
+      {
         "internalType": "bytes",
         "name": "signature",
         "type": "bytes"

@@ -113,12 +113,13 @@ export interface IExchangeBreedEvent {
 }
 
 // MODULE:RENTABLE
-// event Lend(address from, address to, uint256 expires, Asset[] items, Asset[] price);
+// event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
 
 export interface IExchangeLendEvent {
   from: string;
   to: string;
   expires: string;
+  lendType: string;
   items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }

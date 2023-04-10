@@ -17,7 +17,6 @@ export interface ITokenUserView {
 
 export const TokenUserView: FC<ITokenUserView> = props => {
   const { tokenId, address } = props;
-
   const [tokenUser, setTokenUser] = useState<string>("");
 
   const getCurrentUser = useMetamaskValue(

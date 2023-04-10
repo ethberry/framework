@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, Min } from "class-validator";
+import { IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
+import { Transform } from "class-transformer";
+
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
@@ -19,7 +21,24 @@ export class SignRentTokenDto extends Mixin(ReferrerOptionalDto, AccountDto) imp
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
+  public expires: number;
+
+  @ApiProperty({
+    minimum: 0,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
   public externalId: number;
 
-  // TODO add account & referrer
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public account: string;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public referrer: string;
 }

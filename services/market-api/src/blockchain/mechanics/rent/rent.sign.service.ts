@@ -15,7 +15,7 @@ export class RentSignService {
   constructor(private readonly signerService: SignerService, private readonly tokenService: TokenService) {}
 
   public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
-    const { tokenId, account, referrer, externalId } = dto;
+    const { tokenId, account, referrer, expires, externalId } = dto;
 
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
@@ -26,13 +26,16 @@ export class RentSignService {
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
 
+    const lendExpires = utils.hexZeroPad(utils.hexlify(expires), 32);
+
     const signature = await this.getSignature(
-      account,
+      account, // from
+      lendExpires,
       {
         nonce,
-        externalId,
-        expiresAt,
-        referrer,
+        externalId, // type
+        expiresAt, // sign expires
+        referrer, // to
       },
       tokenEntity,
     );
@@ -40,9 +43,15 @@ export class RentSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, tokenEntity: TokenEntity): Promise<string> {
-    return this.signerService.getManyToManySignature(
+  public async getSignature(
+    account: string,
+    expires: string,
+    params: IParams,
+    tokenEntity: TokenEntity,
+  ): Promise<string> {
+    return this.signerService.getManyToManyExtraSignature(
       account,
+      expires,
       params,
       [
         {

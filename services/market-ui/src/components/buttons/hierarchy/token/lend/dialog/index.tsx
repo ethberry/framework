@@ -1,14 +1,16 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
+import { RentStrategy } from "@framework/types";
 
 export interface ILendDto {
   account: string;
   expires: string;
+  lendType: RentStrategy;
 }
 
 export interface ILendDialogProps {
@@ -33,7 +35,7 @@ export const LendDialog: FC<ILendDialogProps> = props => {
     >
       <TextInput name="account" />
       <DateTimeInput name="expires" />
-      {/* <DateInput name="expires" /> */}
+      <SelectInput name="lendType" options={RentStrategy} />
     </FormDialog>
   );
 };

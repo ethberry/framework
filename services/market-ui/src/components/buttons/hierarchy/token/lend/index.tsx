@@ -8,7 +8,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import type { IToken } from "@framework/types";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, RentStrategy, TokenType } from "@framework/types";
 import { ILendDto, LendDialog } from "./dialog";
 import TemplateLendABI from "../../../../../abis/components/buttons/hierarchy/template/lend/lend.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
@@ -26,12 +26,14 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
 
   const metaFnWithSign = useServerSignature(
     (values: ILendDto, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const expires = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
+      const timeEnd = Math.ceil(new Date(values.expires).getTime() / 1000); // in seconds,
+      const expires = utils.hexZeroPad(utils.hexlify(timeEnd), 32);
+
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplateLendABI, web3Context.provider?.getSigner());
 
       const params = {
         nonce: utils.arrayify(sign.nonce),
-        externalId: expires,
+        externalId: Object.values(RentStrategy).indexOf(values.lendType),
         expiresAt: sign.expiresAt,
         referrer: values.account,
       };
@@ -56,7 +58,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
             amount: component.amount,
           }))
         : [];
-      return contract.lend(params, items, price, sign.signature, {
+      return contract.lend(params, items, price, expires, sign.signature, {
         value: token.template?.contract?.rent
           ? getEthPrice(token.template?.contract?.rent[0].price)
           : BigNumber.from(0),
@@ -76,21 +78,14 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
           tokenId: token.id, // token.id to lend
           account, // user owner
           referrer: dto.account, // borrower
-          externalId: expires,
+          externalId: Object.values(RentStrategy).indexOf(dto.lendType),
+          expires,
         },
       },
       dto,
       web3Context,
     );
   });
-
-  // function setUser(uint256 tokenId, address user, uint64 expires) public virtual {
-  // const metaFn1 = useMetamask((dto: ILendDto, web3Context: Web3ContextType) => {
-  //   const contract = new Contract(token.template!.contract!.address, ERC4907ABI, web3Context.provider?.getSigner());
-  //   const expires = Math.ceil(new Date(dto.expires).getTime() / 1000); // in seconds,
-  //   console.log("dto", dto);
-  //   return contract.setUser(token.tokenId, dto.account, expires) as Promise<any>;
-  // });
 
   const handleLend = (): void => {
     setIsLendTokenDialogOpen(true);
@@ -126,6 +121,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         initialValues={{
           account: "",
           expires: new Date().toISOString(),
+          lendType: RentStrategy.SHARE50,
         }}
       />
     </Fragment>

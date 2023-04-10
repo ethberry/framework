@@ -1,6 +1,7 @@
 export interface ISignRentTokenDto {
   tokenId: number; // tokenEntity.id
-  account: string; // rent to
-  referrer: string; // account borrower
-  externalId: number; // EXPIRED time in sec
+  account: string; // account from
+  referrer: string; // account to
+  expires: number; // EXPIRED time in sec
+  externalId: number; // Lend type
 }
