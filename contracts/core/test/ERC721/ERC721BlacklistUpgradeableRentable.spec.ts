@@ -6,6 +6,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721BlacklistUpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
@@ -23,5 +24,6 @@ describe("ERC721BlacklistUpgradeableRentable", function () {
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     InterfaceId.IERC4907,
+    FrameworkInterfaceId.ERC721Upgradable,
   );
 });

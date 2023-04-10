@@ -6,6 +6,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721Upgradeable", function () {
   const factory = () => deployERC721(this.title);
@@ -22,5 +23,6 @@ describe("ERC721Upgradeable", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
+    FrameworkInterfaceId.Grade,
   );
 });
