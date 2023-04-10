@@ -46,7 +46,7 @@ contract SignatureValidator is EIP712, Context {
   bytes32 private immutable MANY_TO_MANY_EXTRA_TYPEHASH =
     keccak256(
       bytes.concat(
-        "EIP712(address account,bytes32 extra,Params params,Asset[] items,Asset[] price)",
+        "EIP712(address account,Params params,Asset[] items,Asset[] price,bytes32 extra)",
         ASSET_SIGNATURE,
         PARAMS_SIGNATURE
       )
@@ -124,7 +124,7 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    return _recoverSigner(_hashManyToManyExtra(account, extra, params, items, price), signature);
+    return _recoverSigner(_hashManyToManyExtra(account, params, items, price, extra), signature);
   }
 
   function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {
@@ -193,10 +193,10 @@ contract SignatureValidator is EIP712, Context {
 
   function _hashManyToManyExtra(
     address account,
-    bytes32 extra,
     Params memory params,
     Asset[] memory items,
-    Asset[] memory price
+    Asset[] memory price,
+    bytes32 extra
   ) private view returns (bytes32) {
     return
       _hashTypedDataV4(
@@ -204,10 +204,10 @@ contract SignatureValidator is EIP712, Context {
           abi.encode(
             MANY_TO_MANY_EXTRA_TYPEHASH,
             account,
-            extra,
             _hashParamsStruct(params),
             _hashAssetStructArray(items),
-            _hashAssetStructArray(price)
+            _hashAssetStructArray(price),
+            extra
           )
         )
       );
