@@ -40,7 +40,7 @@ export class StakingChartService {
                             INNER JOIN
                         ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
                                                               AND deposit_contract.contract_type = $3 
-                                                              AND  deposit_contract.id = $4
+                                                              AND deposit_contract.id = $4
                         ${emptyReward ? "" : `
                             INNER JOIN
                         ${ns}.asset_component as reward_component ON reward_component.asset_id = staking_rules.reward_id
