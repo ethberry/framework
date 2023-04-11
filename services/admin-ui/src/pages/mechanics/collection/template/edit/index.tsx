@@ -56,7 +56,7 @@ export const CollectionTemplateEditDialog: FC<ICollectionTemplateEditDialogProps
         controller="contracts"
         data={{
           contractType: [TokenType.ERC721],
-          contractModule: [ModuleType.HIERARCHY],
+          contractModule: [ModuleType.COLLECTION],
         }}
         readOnly={!!id}
       />
