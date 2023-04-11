@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { CollectionTemplateService } from "./template.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -25,11 +25,5 @@ export class Erc721CollectionController {
   @Put("/:id")
   public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
     return this.erc721CollectionService.update({ id }, dto);
-  }
-
-  @Get("/templates/:id")
-  @UseInterceptors(NotFoundInterceptor)
-  public findOneTemplate(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc721CollectionService.findOne({ id });
   }
 }
