@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { constants } from "ethers";
+import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -9,7 +10,9 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc998ContractSimpleAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const currentDateTime = new Date().toISOString();
+
+    const now = new Date();
+    const currentDateTime = now.toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.event_history (
@@ -33,7 +36,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401011,
@@ -46,7 +49,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010101",
         })}',
         1401010,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401012,
@@ -59,7 +62,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401010,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401020,
@@ -73,7 +76,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401021,
@@ -86,7 +89,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010102",
         })}',
         1401020,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401022,
@@ -99,7 +102,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401020,
-        '${currentDateTime}',
+        '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
         1401030,
@@ -113,7 +116,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
         1401031,
@@ -126,7 +129,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010103",
         })}',
         1401030,
-        '${currentDateTime}',
+        '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
         1401032,
@@ -139,7 +142,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401030,
-        '${currentDateTime}',
+        '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
         1401040,
@@ -153,7 +156,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401041,
@@ -166,7 +169,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010104",
         })}',
         1401040,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401042,
@@ -179,7 +182,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401040,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401050,
@@ -193,7 +196,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401051,
@@ -206,7 +209,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010105",
         })}',
         1401050,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401052,
@@ -219,7 +222,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401050,
-        '${currentDateTime}',
+        '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
         1401060,
@@ -233,7 +236,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401061,
@@ -246,7 +249,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010106",
         })}',
         1401060,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401062,
@@ -259,7 +262,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401060,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401070,
@@ -273,7 +276,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401071,
@@ -286,7 +289,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010107",
         })}',
         1401070,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401072,
@@ -299,7 +302,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401070,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401080,
@@ -313,7 +316,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401081,
@@ -326,7 +329,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010108",
         })}',
         1401080,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401082,
@@ -339,7 +342,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401080,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         1401090,
@@ -353,7 +356,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         1401091,
@@ -366,7 +369,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010109",
         })}',
         1401090,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         1401092,
@@ -379,7 +382,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401090,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         1401100,
@@ -393,7 +396,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
         })}',
         null,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         1401101,
@@ -406,7 +409,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           tokenId: "14010110",
         })}',
         1401100,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         1401102,
@@ -419,7 +422,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           value: constants.WeiPerEther.toString(),
         })}',
         1401100,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       );
     `);
