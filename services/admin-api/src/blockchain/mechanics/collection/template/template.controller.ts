@@ -1,4 +1,14 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -26,5 +36,11 @@ export class Erc721CollectionController {
   @UseInterceptors(NotFoundInterceptor)
   public findOneTemplate(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc721CollectionService.findOne({ id });
+  }
+
+  @Delete("/:id")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
+    return this.erc721CollectionService.delete({ id });
   }
 }
