@@ -11,7 +11,7 @@ import { shouldMintRandom } from "./shared/random/mintRandom";
 import { shouldBehaveLikeERC721BlackList } from "./shared/blacklist";
 
 describe("ERC721BlacklistUpgradeableRentableRandom", function () {
-  const factory = () => deployERC721(this.title + "Hardhat");
+  const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
   shouldBehaveLikeBlackList(factory);
