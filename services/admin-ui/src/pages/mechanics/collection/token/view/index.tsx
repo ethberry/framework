@@ -62,7 +62,7 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
             {template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  <FormattedMessage id="form.labels.genes" />
+                  <FormattedMessage id="form.labels.traits" />
                 </TableCell>
                 <TableCell align="right">
                   <TokenTraitsView attributes={attributes} />

@@ -42,8 +42,8 @@
     "grantRole": "Grant role",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
-    "mintToken": "Mint tokens",
     "mintBox": "Mint Mysterybox",
+    "mintToken": "Mint tokens",
     "pyramidBalance": "Pyramid Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
@@ -241,8 +241,8 @@
       "withdrawTimestamp": "Withdraw date"
     },
     "eventType": {
-      "Transfer": "Transfer",
-      "Purchase": "Purchase"
+      "Purchase": "Purchase",
+      "Transfer": "Transfer"
     },
     "gender": {
       "FEMALE": "Female",
@@ -412,8 +412,8 @@
       "mainPage": "Main Page",
       "maxStakes": "Max stakes count",
       "mint": "Mint",
-      "mintToken": "Mint Tokens",
       "mintBox": "Mint Mystery Box",
+      "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
       "pyramidBalance": "Pyramid balance",
@@ -451,6 +451,7 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
@@ -497,7 +498,6 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
-      "EXCHANGE": "EXCHANGE",
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
       "files": "Files",
@@ -580,6 +580,7 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "traits": "Traits",
       "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
@@ -842,23 +843,22 @@
       "title": "Emails"
     },
     "erc1155": {
-      "title": "ERC1155",
       "contracts": {
         "title": "ERC1155 Contracts"
       },
       "templates": {
         "title": "ERC1155 Templates"
-      }
+      },
+      "title": "ERC1155"
     },
     "erc20": {
-      "title": "ERC20",
       "contracts": {
         "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
-      }
+      },
+      "title": "ERC20"
     },
     "erc721": {
-      "title": "ERC721",
       "contracts": {
         "royalty": "Royalty",
         "title": "ERC721 Contracts"
@@ -866,12 +866,12 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "tokens": {
         "title": "ERC721 Tokens"
       }
     },
     "erc998": {
-      "title": "ERC998",
       "composition": {
         "title": "ERC998 Composition"
       },
@@ -882,6 +882,7 @@
       "templates": {
         "title": "ERC998 Templates"
       },
+      "title": "ERC998",
       "tokens": {
         "title": "ERC998 Tokens"
       }
@@ -932,25 +933,25 @@
       "title": "Marketplace"
     },
     "mystery": {
-      "title": "Mystery",
-      "boxes": {
-        "title": "Mystery Boxes"
-      },
       "boxContent": {
         "title": "Mysterybox content"
+      },
+      "boxes": {
+        "title": "Mystery Boxes"
       },
       "contracts": {
         "title": "Mystery Contracts"
       },
+      "title": "Mystery",
       "tokens": {
         "title": "Mystery Tokens"
       }
     },
     "native": {
-      "title": "Native",
       "contracts": {
         "title": "Native Tokens"
-      }
+      },
+      "title": "Native"
     },
     "orders": {
       "title": "Orders archive"
