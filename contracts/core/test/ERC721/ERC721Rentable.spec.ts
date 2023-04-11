@@ -3,6 +3,7 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
+import { shouldBehaveLikeERC721Rentable } from "./shared/simple/user";
 
 describe("ERC721Rentable", function () {
   const factory = () => deployERC721(this.title);
@@ -10,6 +11,7 @@ describe("ERC721Rentable", function () {
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   shouldBehaveLikeERC721Simple(factory);
+  shouldBehaveLikeERC721Rentable(factory);
 
   shouldSupportsInterface(factory)(
     InterfaceId.IERC165,

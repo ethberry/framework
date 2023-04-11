@@ -6,6 +6,7 @@ import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
+import { shouldBehaveLikeERC721Rentable } from "./shared/simple/user";
 
 describe("ERC721UpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
@@ -15,6 +16,8 @@ describe("ERC721UpgradeableRentable", function () {
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);
+
+  shouldBehaveLikeERC721Rentable(factory);
 
   shouldSupportsInterface(factory)(
     InterfaceId.IERC165, // ! Contract don't see this Interface
