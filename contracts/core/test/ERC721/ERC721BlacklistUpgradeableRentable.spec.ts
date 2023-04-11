@@ -8,6 +8,7 @@ import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC721BlackList } from "./shared/blacklist";
+import { shouldBehaveLikeERC721Rentable } from "./shared/simple/user";
 
 describe("ERC721BlacklistUpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
@@ -19,6 +20,8 @@ describe("ERC721BlacklistUpgradeableRentable", function () {
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);
+
+  shouldBehaveLikeERC721Rentable(factory);
 
   shouldSupportsInterface(factory)(
     InterfaceId.IERC165,
