@@ -1,7 +1,7 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useCallback } from "react";
 import { Button } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGridPremium, DataGridPremiumProps, gridClasses, GridRowParams } from "@mui/x-data-grid-premium";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
@@ -12,6 +12,7 @@ import type { IAssetComponent, IMarketplaceReportSearchDto, IToken } from "@fram
 
 import { formatPrice } from "../../../../utils/money";
 import { MarketplaceReportSearchForm } from "./form";
+import { ReportDataView } from "./report-data-view";
 
 export const MarketplaceReport: FC = () => {
   const {
@@ -33,7 +34,6 @@ export const MarketplaceReport: FC = () => {
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
   });
-
   const { formatMessage } = useIntl();
 
   const { fn } = useApiCall(async (api, values) => {
@@ -46,6 +46,16 @@ export const MarketplaceReport: FC = () => {
   const handleExport = (): Promise<void> => {
     return fn(void 0, search);
   };
+
+  const getDetailPanelContent = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelContent"]>>(
+    ({ row }: GridRowParams<IToken>) => <ReportDataView row={row} />,
+    [],
+  );
+
+  const getDetailPanelHeight = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelHeight"]>>(
+    () => "auto" as const,
+    [],
+  );
 
   // prettier-ignore
   const columns = [
@@ -77,7 +87,7 @@ export const MarketplaceReport: FC = () => {
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1,
       minWidth: 160
-    }
+    },
   ];
 
   return (
@@ -98,7 +108,7 @@ export const MarketplaceReport: FC = () => {
 
       <MarketplaceReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
-      <DataGrid
+      <DataGridPremium
         pagination
         paginationMode="server"
         rowCount={count}
@@ -107,12 +117,23 @@ export const MarketplaceReport: FC = () => {
         pageSizeOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
+        rowThreshold={0}
+        getDetailPanelHeight={getDetailPanelHeight}
+        getDetailPanelContent={getDetailPanelContent}
         rows={rows.map((token: IToken) => ({
           id: token.id,
           title: token.template?.title,
           price: token.exchange![0].history?.assets,
           createdAt: token.createdAt,
+          exchange: token.exchange!,
         }))}
+        // rows={rows}
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            p: 1.5,
+          },
+        }}
         autoHeight
       />
     </Fragment>
