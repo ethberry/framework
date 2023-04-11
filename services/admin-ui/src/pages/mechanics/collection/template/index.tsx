@@ -94,6 +94,7 @@ export const CollectionTemplate: FC = () => {
           startIcon={<Add />}
           onClick={handleCreate}
           data-testid="CollectionTemplateCreateButton"
+          disabled
         >
           <FormattedMessage id="form.buttons.create" />
         </Button>
@@ -119,7 +120,8 @@ export const CollectionTemplate: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  // disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  disabled
                 >
                   <Delete />
                 </IconButton>
