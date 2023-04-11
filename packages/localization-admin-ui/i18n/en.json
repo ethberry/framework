@@ -385,6 +385,7 @@
       "percent": "%"
     },
     "buttons": {
+      "archive": "Archive",
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
@@ -598,6 +599,7 @@
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
+      "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
