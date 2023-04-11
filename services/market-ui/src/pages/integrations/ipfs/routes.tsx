@@ -6,7 +6,7 @@ import { Web3Storage } from "./web3-storage";
 import { NftStorage } from "./nft-storage";
 
 import { IndexWrapper } from "../../index-wrapper";
-import { Ipfs } from "../../dashboard/integrations/ipfs";
+import { IpfsSection } from "../../dashboard/integrations/ipfs";
 
 export const ipfsRoutes: Array<RouteObject> = [
   {
@@ -16,7 +16,7 @@ export const ipfsRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="ipfs">
-            <Ipfs />
+            <IpfsSection />
           </IndexWrapper>
         ),
       },

@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../index-wrapper";
-import { Wallet } from "../../dashboard/exchange/wallet";
+import { WalletSection } from "../../dashboard/exchange/wallet";
 import { SystemContracts } from "./balances";
 import { SystemPayees } from "./payees";
 
@@ -14,7 +14,7 @@ export const walletRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="wallet">
-            <Wallet />
+            <WalletSection />
           </IndexWrapper>
         ),
       },

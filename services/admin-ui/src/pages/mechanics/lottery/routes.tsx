@@ -5,7 +5,7 @@ import { Protected } from "@gemunion/common-pages";
 import { LotteryRounds } from "./rounds";
 import { LotteryTickets } from "./tickets";
 import { IndexWrapper } from "../../index-wrapper";
-import { Lottery } from "../../dashboard/mechanics/lottery";
+import { LotterySection } from "../../dashboard/mechanics/lottery";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -15,7 +15,7 @@ export const lotteryRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="lottery">
-            <Lottery />
+            <LotterySection />
           </IndexWrapper>
         ),
       },

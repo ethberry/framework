@@ -7,6 +7,7 @@ import { ExchangeGradeModule } from "./grade/grade.module";
 import { ExchangeMysteryModule } from "./mystery/mystery.module";
 import { ExchangeBreedModule } from "./breed/breed.module";
 import { ExchangeLogModule } from "./log/log.module";
+import { ExchangeRentModule } from "./rent/rent.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ExchangeLogModule } from "./log/log.module";
     ExchangeCraftModule,
     ExchangeGradeModule,
     ExchangeMysteryModule,
+    ExchangeRentModule,
   ],
 })
 export class ExchangeModule {}

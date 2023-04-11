@@ -8,7 +8,7 @@ import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
-const delayMs = 500; // block delay ms
+const delayMs = 1500; // block delay ms
 // const linkAmountInEth = ethers.utils.parseEther("1");
 
 interface IObj {
@@ -26,15 +26,17 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   }
 };
 
-// TODO add count and remaining numbers in  log
 const grantRoles = async (contracts: Array<string>, grantee: Array<string>, roles: Array<string>) => {
+  let idx = 1;
   for (let i = 0; i < contracts.length; i++) {
     for (let j = 0; j < grantee.length; j++) {
       for (let k = 0; k < roles.length; k++) {
         if (contracts[i] !== grantee[j]) {
+          const max = contracts.length * grantee.length * roles.length;
           const accessFabric = await ethers.getContractFactory("ERC721Simple");
           const accessInstance = accessFabric.attach(contracts[i]);
-          console.info("grantRole", contracts[i], grantee[j]);
+          console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
+          idx++;
           await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
@@ -176,6 +178,17 @@ async function main() {
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
   await debug(contracts);
 
+  const genesContractName = getContractName("ERC721Genes", network.name);
+  const erc721GenesFactory = await ethers.getContractFactory(genesContractName);
+  contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 BREED", "BR721", royalty, baseTokenURI);
+  await debug(contracts);
+
+  const erc721RentableFactory = await ethers.getContractFactory("ERC721Rentable");
+  contracts.erc721Rentable = await erc721RentableFactory.deploy("T-SHIRT (rentable)", "TS721", royalty, baseTokenURI);
+  await debug(contracts);
+
+  // ERC998
+
   const erc998SimpleFactory = await ethers.getContractFactory("ERC998Simple");
   contracts.erc998Simple = await erc998SimpleFactory.deploy("ERC998 SIMPLE", "GEM998", royalty, baseTokenURI);
   await debug(contracts);
@@ -223,6 +236,33 @@ async function main() {
     await erc998RandomInstance.whiteListChild(contracts.erc721Random.address, 5),
     "erc998RandomInstance.whiteListChild",
   );
+
+  const genes998ContractName = getContractName("ERC998Genes", network.name);
+  const erc998GenesFactory = await ethers.getContractFactory(genes998ContractName);
+  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (genes)", "DNA998", royalty, baseTokenURI);
+  await debug(contracts);
+
+  const erc998RentableFactory = await ethers.getContractFactory("ERC998Rentable");
+  contracts.erc998Rentable = await erc998RentableFactory.deploy("C-SHIRT (rentable)", "REN998", royalty, baseTokenURI);
+  await debug(contracts);
+
+  // TODO contracts are too big
+  // const erc998Owner20Factory = await ethers.getContractFactory("ERC998ERC20Simple");
+  // contracts.erc998OwnerErc20 = await erc998Owner20Factory.deploy("OWNER ERC20", "OWN20", royalty, baseTokenURI);
+  // await debug(contracts);
+  //
+  // const erc998Owner1155Factory = await ethers.getContractFactory("ERC998ERC1155Simple");
+  // contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
+  // await debug(contracts);
+  //
+  // const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
+  // contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
+  //   "OWNER FULL",
+  //   "OWNFULL",
+  //   royalty,
+  //   baseTokenURI,
+  // );
+  // await debug(contracts);
 
   const erc1155SimpleFactory = await ethers.getContractFactory("ERC1155Simple");
   contracts.erc1155Simple = await erc1155SimpleFactory.deploy(royalty, baseTokenURI);
@@ -469,11 +509,15 @@ async function main() {
       contracts.erc721Random.address,
       contracts.erc721Simple.address,
       contracts.erc721Upgradeable.address,
+      contracts.erc721Rentable.address,
+      contracts.erc721Genes.address,
       contracts.erc998Blacklist.address,
       contracts.erc998New.address,
       contracts.erc998Random.address,
       contracts.erc998Simple.address,
       contracts.erc998Upgradeable.address,
+      contracts.erc998Genes.address,
+      contracts.erc998Rentable.address,
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,

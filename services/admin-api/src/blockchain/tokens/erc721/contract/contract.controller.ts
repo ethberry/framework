@@ -21,7 +21,7 @@ import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contrac
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc721-contracts")
+@Controller("/erc721/contracts")
 export class Erc721ContractController {
   constructor(private readonly erc721ContractService: Erc721ContractService) {}
 

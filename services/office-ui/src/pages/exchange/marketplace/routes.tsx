@@ -6,7 +6,7 @@ import { Protected } from "@gemunion/common-pages";
 import { MarketplaceReport } from "./report";
 import { MarketplaceChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
-import { Marketplace } from "../../dashboard/exchange/marketplace";
+import { MarketplaceSection } from "../../dashboard/exchange/marketplace";
 
 export const marketRoutes: Array<RouteObject> = [
   {
@@ -24,7 +24,7 @@ export const marketRoutes: Array<RouteObject> = [
             index: true,
             element: (
               <IndexWrapper index="marketplace">
-                <Marketplace />
+                <MarketplaceSection />
               </IndexWrapper>
             ),
           },

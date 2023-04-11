@@ -22,7 +22,7 @@ import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../.
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc1155-templates")
+@Controller("/erc1155/templates")
 export class Erc1155TemplateController {
   constructor(private readonly erc1155TemplateService: Erc1155TemplateService) {}
 

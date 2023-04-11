@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { useUser } from "@gemunion/provider-user";
 import { IUser, UserRole } from "@framework/types";
 
-export const Marketplace: FC = () => {
+export const MarketplaceSection: FC = () => {
   const user = useUser<IUser>();
 
   if (!user.profile.userRoles.includes(UserRole.ADMIN)) {

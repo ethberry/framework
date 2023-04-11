@@ -4,7 +4,7 @@ import { Construction } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Craft: FC = () => {
+export const CraftSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

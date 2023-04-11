@@ -4,7 +4,7 @@ import { Pets } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Breed: FC = () => {
+export const BreedSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

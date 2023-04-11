@@ -4,7 +4,7 @@ import { Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Erc20Sections: FC = () => {
+export const Erc20Section: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -15,7 +15,7 @@ export const Erc20Sections: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc20-contracts">
+        <ListItem button component={RouterLink} to="/erc20/contracts">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

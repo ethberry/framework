@@ -43,6 +43,14 @@ contract SignatureValidator is EIP712, Context {
         PARAMS_SIGNATURE
       )
     );
+  bytes32 private immutable MANY_TO_MANY_EXTRA_TYPEHASH =
+    keccak256(
+      bytes.concat(
+        "EIP712(address account,Params params,Asset[] items,Asset[] price,bytes32 extra)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE
+      )
+    );
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 
@@ -98,6 +106,25 @@ contract SignatureValidator is EIP712, Context {
     address account = _msgSender();
 
     return _recoverSigner(_hashManyToMany(account, params, items, price), signature);
+  }
+
+  function _recoverManyToManyExtraSignature(
+    Params memory params,
+    Asset[] memory items,
+    Asset[] memory price,
+    bytes32 extra,
+    bytes calldata signature
+  ) internal returns (address) {
+    require(!_expired[params.nonce], "Exchange: Expired signature");
+    _expired[params.nonce] = true;
+
+    if (params.expiresAt != 0) {
+      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+    }
+
+    address account = _msgSender();
+
+    return _recoverSigner(_hashManyToManyExtra(account, params, items, price, extra), signature);
   }
 
   function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {
@@ -159,6 +186,28 @@ contract SignatureValidator is EIP712, Context {
             _hashParamsStruct(params),
             _hashAssetStructArray(items),
             _hashAssetStructArray(price)
+          )
+        )
+      );
+  }
+
+  function _hashManyToManyExtra(
+    address account,
+    Params memory params,
+    Asset[] memory items,
+    Asset[] memory price,
+    bytes32 extra
+  ) private view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(
+          abi.encode(
+            MANY_TO_MANY_EXTRA_TYPEHASH,
+            account,
+            _hashParamsStruct(params),
+            _hashAssetStructArray(items),
+            _hashAssetStructArray(price),
+            extra
           )
         )
       );

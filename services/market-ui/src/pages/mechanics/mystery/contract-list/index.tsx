@@ -10,12 +10,12 @@ import { MysteryContractListItem } from "./item";
 
 export const MysteryContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
-    baseUrl: "/mystery-contracts",
+    baseUrl: "/mystery/contracts",
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.contracts"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.contracts"]} />
 
       <PageHeader message="pages.mystery.contracts.title" />
 

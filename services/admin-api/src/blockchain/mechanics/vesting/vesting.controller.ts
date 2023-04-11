@@ -8,7 +8,7 @@ import { VestingSearchDto } from "./dto";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @ApiBearerAuth()
-@Controller("/vesting")
+@Controller("/vesting/contracts")
 export class VestingController {
   constructor(private readonly vestingService: VestingService) {}
 

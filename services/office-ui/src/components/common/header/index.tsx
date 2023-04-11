@@ -9,7 +9,6 @@ import { Theme } from "@gemunion/provider-theme";
 
 import { NetworkButton } from "./network";
 import { Sections } from "./sections";
-
 import { useStyles } from "./styles";
 
 export const Header: FC = () => {

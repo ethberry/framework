@@ -33,7 +33,7 @@ contract ERC721BlacklistUpgradeable is IERC721Upgradeable, ERC721Blacklist {
     _upsertRecordField(tokenId, GRADE, 0);
   }
 
-  function upgrade(uint256 tokenId) public virtual onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId) external virtual onlyRole(METADATA_ROLE) returns (bool) {
     _requireMinted(tokenId);
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);

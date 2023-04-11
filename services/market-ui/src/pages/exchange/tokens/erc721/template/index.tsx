@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 
 export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
-    baseUrl: "/erc721-templates",
+    baseUrl: "/erc721/templates",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,14 +29,7 @@ export const Erc721Template: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc721.templates": "erc721-templates",
-          "erc721.template": "erc721.template",
-        }}
-        data={[{}, {}, selected]}
-      />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.template"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.erc721.template.title" data={selected} />
 

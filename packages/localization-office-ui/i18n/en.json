@@ -547,6 +547,7 @@
       "title": "Emails"
     },
     "erc1155": {
+      "title": "ERC1155",
       "contracts": {
         "title": "ERC1155 Contracts"
       },
@@ -555,12 +556,14 @@
       }
     },
     "erc20": {
+      "title": "ERC20",
       "contracts": {
         "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
       }
     },
     "erc721": {
+      "title": "ERC721",
       "contracts": {
         "royalty": "Royalty",
         "title": "ERC721 Contracts"
@@ -590,6 +593,7 @@
       "title": "Merchants"
     },
     "native": {
+      "title": "Native",
       "contracts": {
         "title": "Native Tokens"
       }

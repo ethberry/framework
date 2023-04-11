@@ -9,6 +9,7 @@ import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
+import { isEqualEventArgObj } from "../utils";
 
 describe("ExchangeBreed", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -108,8 +109,18 @@ describe("ExchangeBreed", function () {
           .withArgs(
             receiver.address,
             encodedExternalId,
-            [2, erc721Instance.address, 1, 1],
-            [2, erc721Instance.address, 2, 1],
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
           );
 
         // RANDOM
@@ -178,7 +189,22 @@ describe("ExchangeBreed", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
-          .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
+          );
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
@@ -325,7 +351,22 @@ describe("ExchangeBreed", function () {
         );
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
-          .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
+          );
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);

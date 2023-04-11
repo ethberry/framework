@@ -14,7 +14,7 @@ import { TemplatePurchaseButton } from "../../../../../components/buttons";
 
 export const Erc998Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
-    baseUrl: "/erc998-templates",
+    baseUrl: "/erc998/templates",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,14 +29,7 @@ export const Erc998Template: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc998.templates": "erc998-templates",
-          "erc998.template": "erc998.template",
-        }}
-        data={[{}, {}, selected]}
-      />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.template"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.erc998.template.title" data={selected} />
 

@@ -51,7 +51,7 @@ export const MysteryToken: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery.tokens"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.tokens"]} />
 
       <PageHeader message="pages.mystery.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

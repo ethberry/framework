@@ -30,12 +30,16 @@ export class LotteryRoundServiceCron {
     const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
 
     const contract = new Contract(lotteryAddr, LotterySol.abi, this.signer);
-    await contract.endRound();
+    try {
+      await contract.endRound();
+    } catch (e) {
+      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+    } finally {
+      // wait block
+      await blockAwait(1, this.jsonRpcProvider);
 
-    // wait block
-    await blockAwait(1, this.jsonRpcProvider);
-
-    await contract.startRound();
+      await contract.startRound();
+    }
   }
 
   public setRoundCronJob(dto: CronExpression): void {

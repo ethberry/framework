@@ -45,7 +45,7 @@ export const Erc721Contract: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/erc721-contracts",
+    baseUrl: "/erc721/contracts",
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
@@ -63,7 +63,7 @@ export const Erc721Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.contracts"]} />
 
       <PageHeader message="pages.erc721.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

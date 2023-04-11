@@ -4,7 +4,7 @@ import { CarRental } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Rent: FC = () => {
+export const RentSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

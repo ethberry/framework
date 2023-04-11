@@ -39,7 +39,7 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
+      <TemplateAssetInput prefix="item" />
       <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721] }} />
       <DateTimeInput name="startTimestamp" />
       <DateTimeInput name="endTimestamp" />

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
@@ -10,7 +10,7 @@ import { TemplateModule } from "../../hierarchy/template/template.module";
 
 @Module({
   imports: [SignerModule, TemplateModule, TypeOrmModule.forFeature([DropEntity])],
-  providers: [DropService],
+  providers: [Logger, DropService],
   controllers: [DropController],
   exports: [DropService],
 })

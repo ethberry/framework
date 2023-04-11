@@ -15,7 +15,7 @@ export const Erc998Section: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc998-contracts">
+        <ListItem button component={RouterLink} to="/erc998/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
@@ -23,7 +23,7 @@ export const Erc998Section: FC = () => {
             <FormattedMessage id="pages.erc998.contracts.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc998-templates">
+        <ListItem button component={RouterLink} to="/erc998/templates">
           <ListItemIcon>
             <AutoAwesomeMotion />
           </ListItemIcon>
@@ -31,7 +31,7 @@ export const Erc998Section: FC = () => {
             <FormattedMessage id="pages.erc998.templates.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc998-tokens">
+        <ListItem button component={RouterLink} to="/erc998/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
@@ -39,7 +39,7 @@ export const Erc998Section: FC = () => {
             <FormattedMessage id="pages.erc998.tokens.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc998-composition">
+        <ListItem button component={RouterLink} to="/erc998/composition">
           <ListItemIcon>
             <Extension />
           </ListItemIcon>

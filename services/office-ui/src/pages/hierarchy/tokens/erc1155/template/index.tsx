@@ -48,7 +48,7 @@ export const Erc1155Template: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/erc1155-templates",
+    baseUrl: "/erc1155/templates",
     empty: {
       title: "",
       description: emptyStateString,
@@ -69,7 +69,7 @@ export const Erc1155Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc1155.templates"]} />
+      <Breadcrumbs path={["dashboard", "erc1155", "erc1155.templates"]} />
 
       <PageHeader message="pages.erc1155.templates.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

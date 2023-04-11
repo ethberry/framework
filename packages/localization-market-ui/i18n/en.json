@@ -26,7 +26,7 @@
     "add": "Add",
     "allowance": "Allowance",
     "auction": "Sell `{title}` on auction",
-    "borrow": "Borrow token",
+    "lend": "Lend token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -80,6 +80,11 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "lendType": {
+      "SHARE25": "Share 25/75",
+      "SHARE50": "Share 50/50",
+      "SHARE75": "Share 75/25"
+    },
     "durationUnit": {
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
       "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
@@ -101,6 +106,7 @@
       "childTokenIds": "Child token IDs",
       "claimId": "Claim ID",
       "collection": "Collection",
+      "contract": "Contract",
       "data": "Data",
       "endTimestamp": "End date",
       "externalId": "External ID",
@@ -230,7 +236,7 @@
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
-      "borrow": "Borrow token",
+      "lend": "Lend token",
       "buy": "Buy now!",
       "cancel": "Cancel",
       "checkout": "Checkout",
@@ -309,7 +315,7 @@
       "event": "Event",
       "eventData": "Event data",
       "eventType": "Event type",
-      "expires": "Borrow expires",
+      "expires": "Lend expires",
       "externalId": "External ID",
       "from": "From",
       "gender": "Gender",
@@ -319,6 +325,7 @@
       "item": "Item",
       "language": "Language",
       "level": "Level",
+      "lendType": "Lend Type",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -406,7 +413,7 @@
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
-      "borrow": "Borrow",
+      "lend": "Lend",
       "cancel": "Cancel",
       "clear": "Clear",
       "create": "Create",
@@ -622,6 +629,7 @@
       "title": "Drops"
     },
     "erc1155": {
+      "title": "ERC1155",
       "contract": {
         "title": "ERC1155 Contract: {title}"
       },
@@ -644,6 +652,7 @@
       }
     },
     "erc721": {
+      "title": "ERC721",
       "contract": {
         "title": "ERC721 Contract: {title}"
       },
@@ -673,6 +682,7 @@
       }
     },
     "erc998": {
+      "title": "ERC998",
       "contract": {
         "title": "ERC998 Contract: {title}"
       },
@@ -777,6 +787,7 @@
       "title": "Merchants"
     },
     "mystery": {
+      "title": "Mystery",
       "box": {
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"

@@ -8,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { useUser } from "@gemunion/provider-user";
 import { IUser, UserRole } from "@framework/types";
 
-export const Admin: FC = () => {
+export const AdminSection: FC = () => {
   const user = useUser<IUser>();
 
   if (!user.profile.userRoles.includes(UserRole.ADMIN)) {

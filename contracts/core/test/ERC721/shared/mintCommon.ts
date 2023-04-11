@@ -50,5 +50,13 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
       const tx = contractInstance.mintCommon(erc721NonReceiverInstance.address, templateId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
     });
+
+    it("should fail: TemplateZero", async function () {
+      const contractInstance = await factory();
+      const [owner] = await ethers.getSigners();
+
+      const tx = contractInstance.mintCommon(owner.address, 0);
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, `TemplateZero`);
+    });
   });
 }

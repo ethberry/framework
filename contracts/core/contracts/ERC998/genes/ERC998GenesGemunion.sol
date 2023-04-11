@@ -10,7 +10,7 @@ import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion
 
 import "../ERC998Genes.sol";
 
-contract ERC998GenesGoerli is ERC998Genes, ChainLinkGemunion {
+contract ERC998GenesGemunion is ERC998Genes, ChainLinkGemunion {
   constructor(
     string memory name,
     string memory symbol,

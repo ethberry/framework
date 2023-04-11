@@ -12,6 +12,7 @@ export enum TemplateStatus {
 
 export interface ITemplate extends ISearchable {
   imageUrl: string;
+  title: string;
   price?: IAsset;
   priceId: number;
   cap: string;

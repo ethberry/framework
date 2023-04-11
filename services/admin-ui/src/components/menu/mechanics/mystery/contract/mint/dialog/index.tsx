@@ -5,8 +5,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
+import { MysteryboxInput } from "../../../../../../inputs/mysterybox";
+import { BoxContent } from "../../../box-content";
 import { validationSchema } from "./validation";
-import { MysteryboxInput } from "./mysterybox-input";
 
 export interface IMintMysteryboxDto {
   account: string;
@@ -45,6 +46,7 @@ export const MintMysteryboxDialog: FC<IMintMysteryboxDialogProps> = props => {
       />
       <MysteryboxInput />
       <TextInput name="account" />
+      <BoxContent />
     </FormDialog>
   );
 };

@@ -9,7 +9,7 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenAutocompleteDto, TokenSearchDto } from "../../../hierarchy/token/dto";
 
 @ApiBearerAuth()
-@Controller("/mystery-tokens")
+@Controller("/mystery/tokens")
 export class MysteryTokenController {
   constructor(private readonly mysteryboxTokenService: MysteryTokenService) {}
 

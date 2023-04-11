@@ -10,7 +10,7 @@ import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contrac
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc20-contracts")
+@Controller("/erc20/contracts")
 export class Erc20TokenController {
   constructor(private readonly erc20ContractService: Erc20ContractService) {}
 

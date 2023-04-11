@@ -4,7 +4,7 @@ import { Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Wallet: FC = () => {
+export const WalletSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

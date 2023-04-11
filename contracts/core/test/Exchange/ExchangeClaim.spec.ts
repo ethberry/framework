@@ -10,7 +10,7 @@ import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./sh
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
 import { randomRequest } from "../shared/randomRequest";
-import { isEqualArray } from "../utils";
+import { isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeClaim", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -67,7 +67,12 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            isEqualArray([2, erc721Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
           )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -118,7 +123,12 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            isEqualArray([2, erc721Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+            isEqualEventArgArrObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
           )
           .to.not.emit(erc721Instance, "Transfer");
 
@@ -212,7 +222,12 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            isEqualArray([4, erc1155Instance.address, BigNumber.from(tokenId), BigNumber.from(amount)]),
+            isEqualEventArgArrObj({
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: BigNumber.from(tokenId),
+              amount: BigNumber.from(amount),
+            }),
           )
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);

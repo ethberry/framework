@@ -4,7 +4,7 @@ import { HourglassBottom, Person } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Waitlist: FC = () => {
+export const WaitlistSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
