@@ -31,7 +31,7 @@ export class RentSignService {
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
     const nonce = utils.randomBytes(32);
-    const expiresAt = ttl && ttl + Date.now();
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const lendExpires = utils.hexZeroPad(utils.hexlify(expires), 32);
 
     const signature = await this.getSignature(
