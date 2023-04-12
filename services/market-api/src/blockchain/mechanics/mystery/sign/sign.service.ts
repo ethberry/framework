@@ -4,13 +4,14 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IAsset, IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignMysteryboxDto } from "./interfaces";
+import { sorter } from "../../../../common/utils/sorter";
+import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
-import { sorter } from "../../../../common/utils/sorter";
+import { ISignMysteryboxDto } from "./interfaces";
 
 @Injectable()
 export class MysterySignService {
@@ -18,6 +19,7 @@ export class MysterySignService {
     private readonly mysteryBoxService: MysteryBoxService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
@@ -34,8 +36,10 @@ export class MysterySignService {
       throw new BadRequestException("limitExceeded");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now();
     const signature = await this.getSignature(
       account,
       {

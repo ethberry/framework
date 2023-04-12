@@ -15,7 +15,7 @@ export class CreateSettings1563803000010 implements MigrationInterface {
         },
         {
           name: "value",
-          type: "varchar",
+          type: "json",
         },
       ],
     });

@@ -43,6 +43,7 @@ import { CategoryEntity } from "./ecommerce/category/category.entity";
 import { CartEntity } from "./ecommerce/cart/cart.entity";
 import { CartItemEntity } from "./ecommerce/cart-item/cart-item.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
+import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -51,9 +52,9 @@ const config: PostgresConnectionOptions = {
   entities: [
     /* infrastructure */
     OtpEntity,
-    UserEntity,
     PageEntity,
     MerchantEntity,
+    SettingsEntity,
     UserEntity,
     /* blockchain */
     EventHistoryEntity,

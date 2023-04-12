@@ -3,12 +3,14 @@ import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { useApiCall } from "@gemunion/react-hooks";
+import { loremIpsum } from "@gemunion/constants";
 import { SettingsKeys } from "@framework/types";
 
 const emptySettings = {
-  [SettingsKeys.DUMMY]: "DUMMY",
+  [SettingsKeys.DUMMY]: JSON.stringify(loremIpsum),
+  [SettingsKeys.SIGNATURE_TTL]: JSON.stringify(0),
 };
 
 export const Settings: FC = () => {
@@ -58,6 +60,7 @@ export const Settings: FC = () => {
       <ProgressOverlay isLoading={call1.isLoading || call2.isLoading}>
         <FormWrapper initialValues={settings} onSubmit={onSubmit} testId="Settings">
           <TextInput name={SettingsKeys.DUMMY} />
+          <NumberInput name={SettingsKeys.SIGNATURE_TTL} />
         </FormWrapper>
       </ProgressOverlay>
     </Grid>

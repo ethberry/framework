@@ -7,12 +7,13 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
 import { ISignDropDto } from "./interfaces";
 import { DropEntity } from "./drop.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 
 @Injectable()
 export class DropService {
@@ -21,6 +22,7 @@ export class DropService {
     private readonly dropEntityRepository: Repository<DropEntity>,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public async search(dto: Partial<IPaginationDto>): Promise<[Array<DropEntity>, number]> {
@@ -109,8 +111,10 @@ export class DropService {
       throw new BadRequestException("limitExceeded");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = Math.ceil(new Date(dropEntity.endTimestamp).getTime() / 1000);
+    const expiresAt = ttl && ttl + Date.now();
     const signature = await this.getSignature(
       account,
       {

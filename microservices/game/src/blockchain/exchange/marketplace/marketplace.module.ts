@@ -2,12 +2,13 @@ import { Logger, Module } from "@nestjs/common";
 
 import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
 
-import { MarketplaceService } from "./marketplace.service";
-import { MarketplaceController } from "./marketplace.controller";
+import { SettingsModule } from "../../../infrastructure/settings/settings.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
+import { MarketplaceController } from "./marketplace.controller";
+import { MarketplaceService } from "./marketplace.service";
 
 @Module({
-  imports: [SignerModule, TemplateModule],
+  imports: [SettingsModule, SignerModule, TemplateModule],
   providers: [Logger, MarketplaceService],
   controllers: [MarketplaceController],
   exports: [MarketplaceService],

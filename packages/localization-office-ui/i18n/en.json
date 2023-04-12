@@ -260,6 +260,7 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "SIGNATURE_TTL": "Signature TTL",
       "DUMMY": "Dummy",
       "account": "Account",
       "address": "Address",
@@ -369,6 +370,7 @@
       "zip": "ZIP code"
     },
     "placeholders": {
+      "SIGNATURE_TTL": "0",
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
