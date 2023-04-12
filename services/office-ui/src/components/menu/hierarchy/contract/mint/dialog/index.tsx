@@ -23,7 +23,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const contractType = initialValues.template.components[0].tokenType;
-  const disabledOptions = Object.keys(TokenType).filter(tokenType => tokenType !== contractType) as TokenType[];
+  const disabledOptions = Object.values(TokenType).filter(tokenType => tokenType !== contractType);
 
   return (
     <FormDialog

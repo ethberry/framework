@@ -39,7 +39,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       };
       const items = [
         {
-          tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
+          tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
           token: token.template!.contract?.address,
           tokenId: token.tokenId,
           amount: 1,

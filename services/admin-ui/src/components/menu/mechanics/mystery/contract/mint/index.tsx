@@ -37,7 +37,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const metaFn = useMetamask((values: IMintMysteryboxDto, web3Context: Web3ContextType) => {
     const contractMysterybox = new Contract(address, MysteryMintBoxABI, web3Context.provider?.getSigner());
     const items = values.mysterybox!.item!.components.map(item => ({
-      tokenType: Object.keys(TokenType).indexOf(item.tokenType),
+      tokenType: Object.values(TokenType).indexOf(item.tokenType),
       token: item.contract!.address,
       tokenId: item.templateId,
       amount: item.amount,

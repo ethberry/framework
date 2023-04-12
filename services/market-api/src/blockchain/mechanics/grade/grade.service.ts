@@ -112,7 +112,7 @@ export class GradeService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",

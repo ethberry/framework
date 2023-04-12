@@ -33,13 +33,15 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         tokenId: component.templateId,
         amount: component.amount,
       })),
-      {
-        id: mysterybox.id,
-        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-        token: mysterybox.template!.contract!.address,
-        tokenId: mysterybox.templateId,
-        amount: "1",
-      },
+      [
+        {
+          id: mysterybox.id,
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: mysterybox.template!.contract!.address,
+          tokenId: mysterybox.templateId,
+          amount: "1",
+        },
+      ],
     );
 
     return contract.mysterybox(

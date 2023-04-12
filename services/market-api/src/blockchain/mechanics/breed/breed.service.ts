@@ -106,13 +106,13 @@ export class BreedService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(momTokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(momTokenEntity.template.contract.contractType),
         token: momTokenEntity.template.contract.address,
         tokenId: momTokenEntity.tokenId.toString(),
         amount: "1",
       },
       {
-        tokenType: Object.keys(TokenType).indexOf(dadTokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(dadTokenEntity.template.contract.contractType),
         token: dadTokenEntity.template.contract.address,
         tokenId: dadTokenEntity.tokenId.toString(),
         amount: "1",

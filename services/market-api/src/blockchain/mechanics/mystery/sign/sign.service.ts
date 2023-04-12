@@ -58,12 +58,14 @@ export class MysterySignService {
         tokenId: component.templateId.toString(),
         amount: component.amount,
       })),
-      {
-        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-        token: mysteryboxEntity.template.contract.address,
-        tokenId: mysteryboxEntity.templateId.toString(),
-        amount: "1",
-      },
+      [
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: mysteryboxEntity.template.contract.address,
+          tokenId: mysteryboxEntity.templateId.toString(),
+          amount: "1",
+        },
+      ],
     );
     return this.signerService.getManyToManySignature(
       account,

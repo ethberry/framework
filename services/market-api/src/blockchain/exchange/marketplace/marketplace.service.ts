@@ -64,7 +64,7 @@ export class MarketplaceService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,
         tokenId:
           templateEntity.contract.contractType === TokenType.ERC1155

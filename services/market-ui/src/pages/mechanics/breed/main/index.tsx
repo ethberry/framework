@@ -61,13 +61,13 @@ export const Breed: FC = () => {
           referrer: constants.AddressZero,
         },
         {
-          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
+          tokenType: Object.values(TokenType).indexOf(values.tokenType),
           token: values.mom.address,
           tokenId: values.mom.token.tokenId,
           amount: 1,
         },
         {
-          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
+          tokenType: Object.values(TokenType).indexOf(values.tokenType),
           token: values.dad.address,
           tokenId: values.dad.token.tokenId,
           amount: 1,
