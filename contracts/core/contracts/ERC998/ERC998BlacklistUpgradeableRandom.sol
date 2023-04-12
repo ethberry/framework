@@ -34,7 +34,9 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     address account,
     uint256 templateId
   ) external override(ERC998BlacklistUpgradeable) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
