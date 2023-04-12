@@ -6,12 +6,13 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
+import { ContractFeatures, GradeAttribute, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
 import { ISearchGradeDto, ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 
 @Injectable()
 export class GradeService {
@@ -20,6 +21,7 @@ export class GradeService {
     private readonly gradeEntityRepository: Repository<GradeEntity>,
     private readonly tokenService: TokenService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public findOne(
@@ -81,8 +83,10 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {

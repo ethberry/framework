@@ -1,30 +1,32 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
-import { UserEntity } from "./infrastructure/user/user.entity";
-import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
-import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
-import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
-import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
+import { SettingsEntity } from "./infrastructure/settings/settings.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { UserEntity } from "./infrastructure/user/user.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    MerchantEntity,
-    UserEntity,
-    AssetEntity,
     AssetComponentEntity,
-    ContractEntity,
-    TemplateEntity,
-    TokenEntity,
+    AssetEntity,
     BalanceEntity,
     ClaimEntity,
+    ContractEntity,
+    MerchantEntity,
+    SettingsEntity,
+    TemplateEntity,
+    TokenEntity,
+    UserEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

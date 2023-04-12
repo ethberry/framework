@@ -7,8 +7,9 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { CraftStatus, TokenType } from "@framework/types";
+import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
 
@@ -18,6 +19,7 @@ export class CraftService {
     @InjectRepository(CraftEntity)
     private readonly craftEntityRepository: Repository<CraftEntity>,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public search(dto: ISearchDto): Promise<[Array<CraftEntity>, number]> {
@@ -100,8 +102,10 @@ export class CraftService {
       throw new NotFoundException("craftNotFound");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {

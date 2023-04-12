@@ -4,15 +4,20 @@ import { utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignRentTokenDto } from "./interfaces";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { ISignRentTokenDto } from "./interfaces";
 
 @Injectable()
 export class RentSignService {
-  constructor(private readonly signerService: SignerService, private readonly tokenService: TokenService) {}
+  constructor(
+    private readonly signerService: SignerService,
+    private readonly tokenService: TokenService,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
     const { tokenId, account, referrer, expires, externalId } = dto;
@@ -23,9 +28,10 @@ export class RentSignService {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
+    const nonce = utils.randomBytes(32);
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const lendExpires = utils.hexZeroPad(utils.hexlify(expires), 32);
 
     const signature = await this.getSignature(
@@ -43,12 +49,7 @@ export class RentSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public getSignature(
-    account: string,
-    expires: string,
-    params: IParams,
-    tokenEntity: TokenEntity,
-  ): Promise<string> {
+  public getSignature(account: string, expires: string, params: IParams, tokenEntity: TokenEntity): Promise<string> {
     return this.signerService.getManyToManyExtraSignature(
       account,
       params,

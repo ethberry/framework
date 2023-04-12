@@ -7,13 +7,14 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignBreedDto } from "./interfaces";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { BreedEntity } from "./breed.entity";
+import { ISignBreedDto } from "./interfaces";
 
 @Injectable()
 export class BreedService {
@@ -23,6 +24,7 @@ export class BreedService {
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public async getToken(tokenId: number): Promise<TokenEntity> {
@@ -79,8 +81,10 @@ export class BreedService {
       ),
     );
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {

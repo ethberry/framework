@@ -8,6 +8,6 @@ export class SettingsEntity extends BaseEntity implements ISettings {
   @PrimaryColumn({ type: "varchar" })
   public key: SettingsKeys;
 
-  @Column({ type: "varchar" })
-  public value: string;
+  @Column({ type: "json" })
+  public value: any;
 }

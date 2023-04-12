@@ -4,15 +4,20 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignTemplateDto } from "./interfaces";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { ISignTemplateDto } from "./interfaces";
 
 @Injectable()
 export class MarketplaceService {
-  constructor(private readonly templateService: TemplateService, private readonly signerService: SignerService) {}
+  constructor(
+    private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
     const { account, referrer = constants.AddressZero, templateId } = dto;
@@ -43,8 +48,10 @@ export class MarketplaceService {
       throw new BadRequestException("limitExceeded");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {
