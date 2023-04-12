@@ -42,7 +42,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       web3Context.provider?.getSigner(),
     );
     const items = values.mysterybox!.item!.components.map(item => ({
-      tokenType: Object.keys(TokenType).indexOf(item.tokenType),
+      tokenType: Object.values(TokenType).indexOf(item.tokenType),
       token: item.contract!.address,
       tokenId: item.templateId,
       amount: item.amount,

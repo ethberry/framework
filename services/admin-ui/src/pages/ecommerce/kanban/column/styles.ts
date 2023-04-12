@@ -9,6 +9,7 @@ export const useStyles = makeStyles<Theme>(
       flexDirection: "column",
       flex: 1,
       minWidth: 165,
+      backgroundColor: theme.palette.grey[100],
       [theme.breakpoints.down("sm")]: {
         "min-width": "calc(100% - 16px)",
       },
@@ -18,6 +19,9 @@ export const useStyles = makeStyles<Theme>(
       lineHeight: "28px",
       textTransform: "uppercase",
       fontWeight: 600,
+      textAlign: "center",
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(0.5),
     },
   }),
   { name: "BoardColumn" },

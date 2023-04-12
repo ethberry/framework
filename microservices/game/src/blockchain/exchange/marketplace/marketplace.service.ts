@@ -64,7 +64,7 @@ export class MarketplaceService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,
         tokenId:
           templateEntity.contract.contractType === TokenType.ERC1155
@@ -73,7 +73,7 @@ export class MarketplaceService {
         amount: "1",
       },
       templateEntity.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         // pass templateId instead of tokenId = 0
         tokenId:

@@ -42,8 +42,8 @@
     "grantRole": "Grant role",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
-    "mintToken": "Mint tokens",
     "mintBox": "Mint Mysterybox",
+    "mintToken": "Mint tokens",
     "pyramidBalance": "Pyramid Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
@@ -166,6 +166,83 @@
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
       "LINK_TOKEN": "LINK notification"
+    },
+    "eventDataLabel": {
+      "_requestID": "Request ID",
+      "_sender": "Sender",
+      "account": "Account",
+      "active": "Active",
+      "addr": "Address",
+      "amount": "Amount",
+      "amounts": "Amounts",
+      "approved": "Approved",
+      "args": "Arguments",
+      "callbackGasLimit": "Callback gas limit",
+      "childContract": "Child contract",
+      "childTokenId": "Child token ID",
+      "childTokenIds": "Child token IDs",
+      "claimId": "Claim ID",
+      "collection": "Collection",
+      "contract": "Contract",
+      "data": "Data",
+      "endTimestamp": "End date",
+      "externalId": "External ID",
+      "from": "From",
+      "fromAddress": "From address",
+      "fromTokenId": "From token ID",
+      "id": "ID",
+      "ids": "IDs",
+      "item": "Item",
+      "items": "Items",
+      "keyHash": "Key hash",
+      "level": "Level",
+      "matron": "Matron",
+      "maxCount": "Max count",
+      "minimumRequestConfirmations": "Minimum request confirmations",
+      "multiplier": "Multiplier",
+      "newAdminRole": "New admin role",
+      "newOwner": "New owner",
+      "numWords": "Num words",
+      "numbers": "Numbers",
+      "operator": "Operator",
+      "owner": "Owner",
+      "preSeed": "Pre seed",
+      "previousAdminRole": "Previous admin role",
+      "previousOwner": "Previous owner",
+      "price": "Price",
+      "randomness": "Randomness",
+      "refProgram": "Referral program",
+      "referrer": "Referrer",
+      "requestId": "Request ID",
+      "role": "Role",
+      "round": "Round",
+      "royaltyNumerator": "Royalty numerator",
+      "royaltyReceiver": "Royalty receiver",
+      "rule": "Rule",
+      "ruleId": "Rule ID",
+      "seed": "Seed",
+      "sender": "Sender",
+      "shares": "Shares",
+      "sire": "Sire",
+      "spender": "Spender",
+      "stakingId": "Staking ID",
+      "startTimestamp": "Start date",
+      "subId": "Sub ID",
+      "templateId": "Template ID",
+      "ticketId": "Ticket ID",
+      "to": "To",
+      "toAddress": "To address",
+      "toTokenId": "To token ID",
+      "token": "Token",
+      "tokenId": "Token ID",
+      "value": "Value",
+      "values": "Values",
+      "winValues": "Win values",
+      "withdrawTimestamp": "Withdraw date"
+    },
+    "eventType": {
+      "Purchase": "Purchase",
+      "Transfer": "Transfer"
     },
     "gender": {
       "FEMALE": "Female",
@@ -308,6 +385,7 @@
       "percent": "%"
     },
     "buttons": {
+      "archive": "Archive",
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
@@ -335,8 +413,8 @@
       "mainPage": "Main Page",
       "maxStakes": "Max stakes count",
       "mint": "Mint",
-      "mintToken": "Mint Tokens",
       "mintBox": "Mint Mystery Box",
+      "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
       "pyramidBalance": "Pyramid balance",
@@ -374,6 +452,7 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
@@ -421,7 +500,6 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
-      "EXCHANGE": "EXCHANGE",
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
       "files": "Files",
@@ -505,6 +583,7 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "traits": "Traits",
       "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
@@ -522,6 +601,7 @@
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
+      "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
@@ -767,23 +847,22 @@
       "title": "Emails"
     },
     "erc1155": {
-      "title": "ERC1155",
       "contracts": {
         "title": "ERC1155 Contracts"
       },
       "templates": {
         "title": "ERC1155 Templates"
-      }
+      },
+      "title": "ERC1155"
     },
     "erc20": {
-      "title": "ERC20",
       "contracts": {
         "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
-      }
+      },
+      "title": "ERC20"
     },
     "erc721": {
-      "title": "ERC721",
       "contracts": {
         "royalty": "Royalty",
         "title": "ERC721 Contracts"
@@ -791,12 +870,12 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "tokens": {
         "title": "ERC721 Tokens"
       }
     },
     "erc998": {
-      "title": "ERC998",
       "composition": {
         "title": "ERC998 Composition"
       },
@@ -807,6 +886,7 @@
       "templates": {
         "title": "ERC998 Templates"
       },
+      "title": "ERC998",
       "tokens": {
         "title": "ERC998 Tokens"
       }
@@ -857,25 +937,25 @@
       "title": "Marketplace"
     },
     "mystery": {
-      "title": "Mystery",
-      "boxes": {
-        "title": "Mystery Boxes"
-      },
       "boxContent": {
         "title": "Mysterybox content"
+      },
+      "boxes": {
+        "title": "Mystery Boxes"
       },
       "contracts": {
         "title": "Mystery Contracts"
       },
+      "title": "Mystery",
       "tokens": {
         "title": "Mystery Tokens"
       }
     },
     "native": {
-      "title": "Native",
       "contracts": {
         "title": "Native Tokens"
-      }
+      },
+      "title": "Native"
     },
     "orders": {
       "title": "Orders archive"

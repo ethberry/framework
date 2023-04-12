@@ -130,13 +130,13 @@ export class DropService {
       account,
       params,
       dropEntity.item.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.templateId.toString(),
         amount: component.amount,
       })),
       dropEntity.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
         amount: component.amount,

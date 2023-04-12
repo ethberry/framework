@@ -73,7 +73,7 @@ export const WaitlistList: FC = () => {
     const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSetRewardABI, web3Context.provider?.getSigner());
 
     const asset = values.item.components.map(component => ({
-      tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      tokenType: Object.values(TokenType).indexOf(component.tokenType),
       token: component.contract!.address,
       tokenId: component.templateId || 0,
       amount: component.amount,

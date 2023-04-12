@@ -8,6 +8,7 @@ import { shouldSafeTransferFrom } from "./safeTransferFrom";
 import { shouldSetApprovalForAll } from "./setApprovalForAll";
 import { shouldMint } from "./mint";
 import { shouldSafeMint } from "./safeMint";
+import { shouldRevertETH } from "./revertETH";
 
 export function shouldBehaveLikeERC721(factory: () => Promise<Contract>) {
   shouldApprove(factory);
@@ -19,4 +20,6 @@ export function shouldBehaveLikeERC721(factory: () => Promise<Contract>) {
 
   shouldMint(factory);
   shouldSafeMint(factory);
+
+  shouldRevertETH(factory);
 }

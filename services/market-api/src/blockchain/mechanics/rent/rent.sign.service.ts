@@ -43,7 +43,7 @@ export class RentSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(
+  public getSignature(
     account: string,
     expires: string,
     params: IParams,
@@ -54,14 +54,14 @@ export class RentSignService {
       params,
       [
         {
-          tokenType: Object.keys(TokenType).indexOf(<string>tokenEntity.template.contract.contractType),
+          tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
           token: tokenEntity.template.contract.address,
           tokenId: tokenEntity.tokenId,
           amount: "1", // todo get from DTO? (for 1155)
         },
       ],
       tokenEntity.template.contract.rent[0].price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(<string>component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:
           component.template.tokens[0].tokenId === "0"

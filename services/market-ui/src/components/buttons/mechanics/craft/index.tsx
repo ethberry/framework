@@ -33,13 +33,13 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         referrer: constants.AddressZero,
       },
       craft.item?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId.toString(),
         amount: component.amount,
       })),
       craft.price?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,

@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 
@@ -25,12 +25,5 @@ export class CollectionTemplateService extends TemplateService {
 
   public search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
     return super.search(dto, userEntity, TokenType.ERC721, ModuleType.COLLECTION);
-  }
-
-  public findOne(
-    where: FindOptionsWhere<TemplateEntity>,
-    options?: FindOneOptions<TemplateEntity>,
-  ): Promise<TemplateEntity | null> {
-    return this.templateEntityRepository.findOne({ where, ...options });
   }
 }

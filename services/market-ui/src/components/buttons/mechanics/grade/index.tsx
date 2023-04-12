@@ -39,7 +39,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
         const price =
           grade.price?.components.map(component => ({
-            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             tokenId: component.template!.tokens![0].tokenId,
             amount: getMultiplier(level, component.amount, grade),
@@ -54,7 +54,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
             referrer: constants.AddressZero,
           },
           {
-            tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
+            tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
             token: token.template!.contract!.address,
             tokenId: token.tokenId.toString(),
             amount: "1",

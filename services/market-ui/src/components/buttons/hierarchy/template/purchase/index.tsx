@@ -32,13 +32,13 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         referrer: settings.getReferrer(),
       },
       {
-        tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
+        tokenType: Object.values(TokenType).indexOf(template.contract!.contractType),
         token: template.contract?.address,
         tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
         amount: 1,
       },
       template.price?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         // pass templateId instead of tokenId = 0
         tokenId:
