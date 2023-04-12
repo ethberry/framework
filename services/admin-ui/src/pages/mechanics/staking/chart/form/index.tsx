@@ -10,13 +10,15 @@ import { SearchContractInput } from "../../../../../components/inputs/search-con
 import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
 
 interface IStakingReportSearchFormProps {
+  recentDeposits: boolean;
+  handleSwitchDeposit: () => void;
   onSubmit: (values: IStakingChartSearchDto) => Promise<void>;
   initialValues: IStakingChartSearchDto;
   open: boolean;
 }
 
 export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { recentDeposits, handleSwitchDeposit, onSubmit, initialValues, open } = props;
 
   const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { deposit, reward, emptyReward, startTimestamp, endTimestamp };
@@ -31,7 +33,9 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6} />
+          <Grid item xs={6}>
+            <SwitchInput name={recentDeposits ? "recentDeposits" : "allDeposits"} onChange={handleSwitchDeposit} />
+          </Grid>
           <Grid item xs={6}>
             <SwitchInput name="emptyReward" />
           </Grid>

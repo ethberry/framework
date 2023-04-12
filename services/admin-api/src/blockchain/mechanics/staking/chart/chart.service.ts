@@ -5,6 +5,7 @@ import { EntityManager } from "typeorm";
 import { ns } from "@framework/constants";
 import type { IStakingChartSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { StakingDepositService } from "../deposit/deposit.service";
 
 @Injectable()
@@ -15,7 +16,7 @@ export class StakingChartService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async chart(dto: IStakingChartSearchDto): Promise<any> {
+  public async chart(dto: IStakingChartSearchDto, userEntity: UserEntity): Promise<any> {
     const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -39,15 +40,17 @@ export class StakingChartService {
                         ${ns}.asset_component as deposit_component ON deposit_component.asset_id = staking_rules.deposit_id
                             INNER JOIN
                         ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
-                                                              AND deposit_contract.contract_type = $3 
-                                                              AND deposit_contract.id = $4
+                                                              AND deposit_contract.chain_id = $3
+                                                              AND deposit_contract.contract_type = $4
+                                                              AND deposit_contract.id = $5
                         ${emptyReward ? "" : `
                             INNER JOIN
                         ${ns}.asset_component as reward_component ON reward_component.asset_id = staking_rules.reward_id
                             INNER JOIN
                         ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-                                                              AND reward_contract.contract_type = $5
-                                                              AND reward_contract.id = $6
+                                                              AND reward_contract.chain_id = $3
+                                                              AND reward_contract.contract_type = $6
+                                                              AND reward_contract.id = $7
                         `}
                             CROSS JOIN generate_series(staking_deposit.start_timestamp, (staking_deposit.start_timestamp +  (staking_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
                    WHERE staking_deposit.start_timestamp <= $2
@@ -68,8 +71,16 @@ export class StakingChartService {
       this.entityManager.query(
         queryString,
         emptyReward
-          ? [startTimestamp, endTimestamp, deposit.tokenType, deposit.contractId]
-          : [startTimestamp, endTimestamp, deposit.tokenType, deposit.contractId, reward.tokenType, reward.contractId],
+          ? [startTimestamp, endTimestamp, userEntity.chainId, deposit.tokenType, deposit.contractId]
+          : [
+              startTimestamp,
+              endTimestamp,
+              userEntity.chainId,
+              deposit.tokenType,
+              deposit.contractId,
+              reward.tokenType,
+              reward.contractId,
+            ],
       ),
       0,
     ]);

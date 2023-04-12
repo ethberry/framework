@@ -26,6 +26,7 @@ export const SearchContractInput: FC<IContractInputProps> = props => {
         contractModule: [ModuleType.HIERARCHY],
       }}
       autoselect
+      disableClear
     />
   );
 };
