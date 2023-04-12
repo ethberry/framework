@@ -31,7 +31,9 @@ abstract contract ERC998BlacklistRandom is IERC721Random, ERC998Blacklist, Rarit
   ) ERC998Blacklist(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

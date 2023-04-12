@@ -40,4 +40,5 @@ export enum FrameworkInterfaceId {
   Grade = "0x381b3743",
   Mystery = "0xf0f47261",
   ERC1155Receiver = "0x4e2312e0",
+  ERC998ERC721TopDown = "0xd8e93edb",
 }
