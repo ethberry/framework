@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateCategory1593408358850 implements MigrationInterface {
+export class CreateAchievementLevel1681273013030 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.category`,
+      name: `${ns}.achievement_level`,
       columns: [
         {
           name: "id",
@@ -20,7 +20,11 @@ export class CreateCategory1593408358850 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "parent_id",
+          name: "achievement_rule_id",
+          type: "int",
+        },
+        {
+          name: "amount",
           type: "int",
         },
         {
@@ -34,9 +38,9 @@ export class CreateCategory1593408358850 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["parent_id"],
+          columnNames: ["achievement_rule_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
+          referencedTableName: `${ns}.achievement_rule`,
           onDelete: "CASCADE",
         },
       ],
@@ -46,6 +50,6 @@ export class CreateCategory1593408358850 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.category`);
+    await queryRunner.dropTable(`${ns}.achievement_level`);
   }
 }

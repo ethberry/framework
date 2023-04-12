@@ -1,10 +1,19 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateCategory1593408358850 implements MigrationInterface {
+export class CreateAchievementRule1681273013010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.achievement_rule_enum AS ENUM (
+        'MARKETPLACE',
+        'CRAFT',
+        'COLLECTION',
+        'ECOMMERCE'
+      );
+    `);
+
     const table = new Table({
-      name: `${ns}.category`,
+      name: `${ns}.achievement_rule`,
       columns: [
         {
           name: "id",
@@ -20,8 +29,8 @@ export class CreateCategory1593408358850 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "parent_id",
-          type: "int",
+          name: "key",
+          type: `${ns}.achievement_rule_enum`,
         },
         {
           name: "created_at",
@@ -32,20 +41,12 @@ export class CreateCategory1593408358850 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
-      foreignKeys: [
-        {
-          columnNames: ["parent_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
-          onDelete: "CASCADE",
-        },
-      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.category`);
+    await queryRunner.dropTable(`${ns}.achievement_rule`);
   }
 }
