@@ -28,7 +28,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
 
     const items = ([] as Array<any>).concat(
       mysterybox.item?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId,
         amount: component.amount,
@@ -51,7 +51,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
       },
       items,
       mysterybox.template?.price?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,

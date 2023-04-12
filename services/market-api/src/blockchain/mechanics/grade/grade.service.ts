@@ -118,7 +118,7 @@ export class GradeService {
         amount: "1",
       },
       gradeEntity.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
         amount: this.getMultiplier(level, component.amount, gradeEntity).toString(),

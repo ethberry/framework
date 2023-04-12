@@ -43,7 +43,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
     const items = values.item.components.map(component => ({
-      tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      tokenType: Object.values(TokenType).indexOf(component.tokenType),
       token: component.contract.address,
       tokenId: component.token.tokenId || 0,
       amount: component.amount,

@@ -53,7 +53,7 @@ export class MysterySignService {
   public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryBoxEntity): Promise<string> {
     const items = ([] as Array<IAsset>).concat(
       mysteryboxEntity.item.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.templateId.toString(),
         amount: component.amount,
@@ -70,7 +70,7 @@ export class MysterySignService {
       params,
       items,
       mysteryboxEntity.template.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
         amount: component.amount,

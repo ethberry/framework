@@ -28,7 +28,7 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
   //   // MODULE:MYSTERYBOX
   //   if (mysteryBox) {
   //     content = mysteryBox.item!.components.map(component => ({
-  //       tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+  //       tokenType: Object.values(TokenType).indexOf(component.tokenType),
   //       token: component.contract!.address,
   //       tokenId: component.templateId || 0,
   //       amount: component.amount,
@@ -38,14 +38,14 @@ export const StakingToggleRuleButton: FC<IStakingToggleRuleButtonProps> = props 
   //   const stakingRule = {
   //     externalId: rule.id,
   //     deposit: rule.deposit?.components.map(component => ({
-  //       tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+  //       tokenType: Object.values(TokenType).indexOf(component.tokenType),
   //       token: component.contract!.address,
   //       tokenId: component.templateId || 0,
   //       amount: component.amount,
   //     })),
   //     reward: rule.reward
   //       ? rule.reward.components.map(component => ({
-  //           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+  //           tokenType: Object.values(TokenType).indexOf(component.tokenType),
   //           token: component.contract!.address,
   //           tokenId: component.templateId,
   //           amount: component.amount,

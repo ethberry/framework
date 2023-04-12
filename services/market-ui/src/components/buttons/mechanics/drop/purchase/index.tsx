@@ -32,13 +32,13 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         referrer: settings.getReferrer(),
       },
       drop.item?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId,
         amount: component.amount,
       }))[0],
       drop.price?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,

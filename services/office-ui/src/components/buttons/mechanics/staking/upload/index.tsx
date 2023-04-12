@@ -45,14 +45,14 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
       deposit: rule.deposit?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
       })),
       reward: rule.reward
         ? rule.reward.components.map(component => ({
-            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             tokenId: component.templateId,
             amount: component.amount,
@@ -80,7 +80,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
         if (mysteryBox) {
           content.push(
             (mysteryBox as IMysterybox).item!.components.map(component => ({
-              tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
               tokenId: component.templateId || 0,
               amount: component.amount,
