@@ -51,7 +51,7 @@ export class MarketplaceService {
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
     const nonce = utils.randomBytes(32);
-    const expiresAt = ttl && ttl + Date.now();
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {
