@@ -5,6 +5,7 @@ import { EntityManager } from "typeorm";
 import { ns } from "@framework/constants";
 import type { IPyramidChartSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PyramidDepositService } from "../deposit/deposit.service";
 
 @Injectable()
@@ -15,7 +16,7 @@ export class PyramidChartService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async chart(dto: IPyramidChartSearchDto): Promise<any> {
+  public async chart(dto: IPyramidChartSearchDto, userEntity: UserEntity): Promise<any> {
     const { deposit, reward, emptyReward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -39,15 +40,17 @@ export class PyramidChartService {
                         ${ns}.asset_component as deposit_component ON deposit_component.asset_id = pyramid_rules.deposit_id
                             INNER JOIN
                         ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
-                                                              AND deposit_contract.contract_type = $3 
-                                                              AND deposit_contract.id = $4
+                                                              AND deposit_contract.chain_id = $3
+                                                              AND deposit_contract.contract_type = $4
+                                                              AND deposit_contract.id = $5
                         ${emptyReward ? "" : `
                             INNER JOIN
                         ${ns}.asset_component as reward_component ON reward_component.asset_id = pyramid_rules.reward_id
                             INNER JOIN
                         ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-                                                              AND reward_contract.contract_type = $5
-                                                              AND reward_contract.id = $6
+                                                              AND reward_contract.chain_id = $3
+                                                              AND reward_contract.contract_type = $6
+                                                              AND reward_contract.id = $7
                         `}
                             CROSS JOIN generate_series(pyramid_deposit.start_timestamp, (pyramid_deposit.start_timestamp +  (pyramid_rules.duration_amount || 'second')::INTERVAL), '1 day') AS series (start_date)
                    WHERE pyramid_deposit.start_timestamp <= $2
@@ -65,14 +68,20 @@ export class PyramidChartService {
     `;
 
     return Promise.all([
-      this.entityManager.query(queryString, [
-        startTimestamp,
-        endTimestamp,
-        deposit.tokenType,
-        deposit.contractId,
-        reward.tokenType,
-        reward.contractId,
-      ]),
+      this.entityManager.query(
+        queryString,
+        emptyReward
+          ? [startTimestamp, endTimestamp, userEntity.chainId, deposit.tokenType, deposit.contractId]
+          : [
+              startTimestamp,
+              endTimestamp,
+              userEntity.chainId,
+              deposit.tokenType,
+              deposit.contractId,
+              reward.tokenType,
+              reward.contractId,
+            ],
+      ),
       0,
     ]);
   }

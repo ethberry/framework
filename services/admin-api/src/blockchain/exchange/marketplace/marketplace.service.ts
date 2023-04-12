@@ -132,7 +132,7 @@ export class MarketplaceService {
 
     // prettier-ignore
     const queryString = `
-        SELECT 
+        SELECT
             COUNT(token.id)::INTEGER AS count,
             (token.attributes->>$1)::INTEGER as attribute
         FROM
@@ -179,43 +179,38 @@ export class MarketplaceService {
     // prettier-ignore
     const queryString = `
         SELECT
-             item_token.id as item_token_id,
-             item_contract.title as item_contract_title,
-             price_token.id as price_token_id,
-             price_contract.title as price_contract_title,
              SUM(c2.amount) as sum,
              COUNT(item_token.id)::INTEGER AS count,
              date_trunc('day', event_history.created_at) as date
         FROM
-            ${ns}.token as item_token
+            gemunion.token as item_token
           INNER JOIN
-            ${ns}.asset_component_history c1 ON c1.token_id = item_token.id AND c1.exchange_type = 'ITEM'
+            gemunion.asset_component_history c1 ON c1.token_id = item_token.id AND c1.exchange_type = 'ITEM'
           INNER JOIN
-            ${ns}.event_history ON event_history.id = c1.history_id AND event_history.event_type = 'Purchase'
+            gemunion.event_history ON event_history.id = c1.history_id AND event_history.event_type = 'Purchase'
           INNER JOIN
-            ${ns}.asset_component_history c2 ON c2.history_id = event_history.id AND c2.exchange_type = 'PRICE'
+            gemunion.asset_component_history c2 ON c2.history_id = event_history.id AND c2.exchange_type = 'PRICE'
           INNER JOIN
-            ${ns}.token price_token ON c2.token_id = price_token.id
+            gemunion.token price_token ON c2.token_id = price_token.id
           LEFT JOIN
-            ${ns}.template as item_template ON item_template.id = item_token.template_id
+            gemunion.template as item_template ON item_template.id = item_token.template_id
           LEFT JOIN
-            ${ns}.contract as item_contract ON item_contract.id = item_template.contract_id
+            gemunion.contract as item_contract ON item_contract.id = item_template.contract_id
           LEFT JOIN
-            ${ns}.template as price_template ON price_template.id = price_token.template_id
+            gemunion.template as price_template ON price_template.id = price_token.template_id
           LEFT JOIN
-            ${ns}.contract as price_contract ON price_contract.id = price_template.contract_id
+            gemunion.contract as price_contract ON price_contract.id = price_template.contract_id
           WHERE
-                (item_token.template_id = ANY($1) OR cardinality($1) = 0)
-              AND
-                (item_template.contract_id = ANY($2) OR cardinality($2) = 0)
-              AND
-                (event_history.created_at >= $3 AND event_history.created_at < $4)
-              AND
-                item_contract.chain_id = $5
-        GROUP BY
-           item_token.id, item_contract.title, price_token.id, price_contract.title, date
-        ORDER BY
-            date
+              (item_token.template_id = ANY($1) OR cardinality($1) = 0)
+            AND
+              (item_template.contract_id = ANY($2) OR cardinality($2) = 0)
+            AND
+              (event_history.created_at >= $3 AND event_history.created_at < $4)
+            AND
+              item_contract.chain_id = $5
+          GROUP BY
+              date
+          ORDER BY date
     `;
 
     return Promise.all([
