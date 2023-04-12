@@ -244,6 +244,8 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedEventHistoryErc721LendAt1678931845530 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845530-seed-event-history-erc721-lend";
+import { SeedEventHistoryErc721LendComponentsAt1678931845540 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845540-seed-event-history-erc721-lend-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -508,6 +510,8 @@ const config: PostgresConnectionOptions = {
     CreateRent1678931845500,
     SeedAssetComponentRent1678931845520,
     SeedRent1678931845510,
+    SeedEventHistoryErc721LendAt1678931845530,
+    SeedEventHistoryErc721LendComponentsAt1678931845540,
 
     /* ecommerce */
     AddProduct1591673187606,
