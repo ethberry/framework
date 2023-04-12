@@ -62,7 +62,7 @@ import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 
 import {
-  AddProduct1591673187606,
+  CreateCategory1593408358850,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAddress1593490663030,
@@ -243,6 +243,12 @@ import {
   SeedWaitlistItemAt1663047650310,
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
+  CreateAchievementItem1681273013050,
+  SeedAchievementItem1681273013060,
+  CreateAchievementRule1681273013010,
+  SeedAchievementRule1681273013020,
+  CreateAchievementLevel1681273013030,
+  SeedAchievementLevel1681273013040,
 } from "./migrations";
 
 // Check typeORM documentation for more information.
@@ -510,7 +516,7 @@ const config: PostgresConnectionOptions = {
     SeedRent1678931845510,
 
     /* ecommerce */
-    AddProduct1591673187606,
+    CreateCategory1593408358850,
     SeedCategories1593408358860,
     CreateProduct1593408358900,
     SeedProducts1593408358910,
@@ -529,6 +535,14 @@ const config: PostgresConnectionOptions = {
     SeedPromo1600996093694,
     CreateProductToCategory1624084124220,
     SeedProductToCategory1624084124260,
+
+    /* achievements */
+    CreateAchievementRule1681273013010,
+    SeedAchievementRule1681273013020,
+    CreateAchievementLevel1681273013030,
+    SeedAchievementLevel1681273013040,
+    CreateAchievementItem1681273013050,
+    SeedAchievementItem1681273013060,
   ],
 };
 

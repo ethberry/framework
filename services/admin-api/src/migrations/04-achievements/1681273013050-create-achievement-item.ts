@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateCategory1593408358850 implements MigrationInterface {
+export class CreateAchievementItem1681273013050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.category`,
+      name: `${ns}.achievement_item`,
       columns: [
         {
           name: "id",
@@ -12,15 +12,11 @@ export class CreateCategory1593408358850 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "title",
-          type: "varchar",
+          name: "user_id",
+          type: "int",
         },
         {
-          name: "description",
-          type: "json",
-        },
-        {
-          name: "parent_id",
+          name: "achievement_rule_id",
           type: "int",
         },
         {
@@ -34,9 +30,15 @@ export class CreateCategory1593408358850 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["parent_id"],
+          columnNames: ["user_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
+          referencedTableName: `${ns}.user`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["achievement_rule_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.achievement_rule`,
           onDelete: "CASCADE",
         },
       ],
@@ -46,6 +48,6 @@ export class CreateCategory1593408358850 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.category`);
+    await queryRunner.dropTable(`${ns}.achievement_item`);
   }
 }

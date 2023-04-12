@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { rawStateString } from "@gemunion/draft-js-utils";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 
 export class SeedProducts1593408358910 implements MigrationInterface {
@@ -38,7 +38,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         updated_at
       ) VALUES (
         'Bottle of water',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([])}',
         190101,
         10,
@@ -48,7 +48,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Jar of water',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([])}',
         190102,
         10,
@@ -58,7 +58,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Barrel of water',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([])}',
         190103,
         10,
@@ -68,7 +68,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'T-Shirt',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([
           {
             parameterName: "SIZE",
@@ -89,7 +89,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'T-Shirt',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([
           {
             parameterName: "SIZE",
@@ -110,7 +110,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'T-Shirt',
-        '${rawStateString}',
+        '${simpleFormatting}',
         '${JSON.stringify([
           {
             parameterName: "SIZE",
