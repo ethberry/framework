@@ -183,23 +183,23 @@ export class MarketplaceService {
              COUNT(item_token.id)::INTEGER AS count,
              date_trunc('day', event_history.created_at) as date
         FROM
-            gemunion.token as item_token
+            ${ns}.token as item_token
           INNER JOIN
-            gemunion.asset_component_history c1 ON c1.token_id = item_token.id AND c1.exchange_type = 'ITEM'
+            ${ns}.asset_component_history c1 ON c1.token_id = item_token.id AND c1.exchange_type = 'ITEM'
           INNER JOIN
-            gemunion.event_history ON event_history.id = c1.history_id AND event_history.event_type = 'Purchase'
+            ${ns}.event_history ON event_history.id = c1.history_id AND event_history.event_type = 'Purchase'
           INNER JOIN
-            gemunion.asset_component_history c2 ON c2.history_id = event_history.id AND c2.exchange_type = 'PRICE'
+            ${ns}.asset_component_history c2 ON c2.history_id = event_history.id AND c2.exchange_type = 'PRICE'
           INNER JOIN
-            gemunion.token price_token ON c2.token_id = price_token.id
+            ${ns}.token price_token ON c2.token_id = price_token.id
           LEFT JOIN
-            gemunion.template as item_template ON item_template.id = item_token.template_id
+            ${ns}.template as item_template ON item_template.id = item_token.template_id
           LEFT JOIN
-            gemunion.contract as item_contract ON item_contract.id = item_template.contract_id
+            ${ns}.contract as item_contract ON item_contract.id = item_template.contract_id
           LEFT JOIN
-            gemunion.template as price_template ON price_template.id = price_token.template_id
+            ${ns}.template as price_template ON price_template.id = price_token.template_id
           LEFT JOIN
-            gemunion.contract as price_contract ON price_contract.id = price_template.contract_id
+            ${ns}.contract as price_contract ON price_contract.id = price_template.contract_id
           WHERE
               (item_token.template_id = ANY($1) OR cardinality($1) = 0)
             AND
