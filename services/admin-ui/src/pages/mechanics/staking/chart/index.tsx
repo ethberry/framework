@@ -102,7 +102,7 @@ export const StakingChart: FC = () => {
               height,
               marginLeft: 70,
               marginRight: 50,
-              marginBottom: 40,
+              marginBottom: 60,
               style: {
                 background: "inherit",
               },
