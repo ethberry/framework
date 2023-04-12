@@ -56,14 +56,14 @@ export const PyramidChart: FC = () => {
       clearChart();
     } else {
       const width = chartRef.current.clientWidth;
-      const height = 400;
+      const height = 440;
 
       const chart = Plot.plot({
         width: Math.min(width, 900),
         height,
         marginLeft: 70,
         marginRight: 50,
-        marginBottom: 40,
+        marginBottom: 60,
         style: {
           background: "inherit",
         },
@@ -82,9 +82,11 @@ export const PyramidChart: FC = () => {
           type: "band",
           line: true,
           nice: true,
-          thresholds: 100,
+          thresholds: 1,
           labelAnchor: "center",
           transform: (d: string) => new Date(d),
+          labelOffset: 60,
+          tickRotate: -45,
           tickFormat: "%m/%d",
         },
         marks: [
@@ -164,7 +166,7 @@ export const PyramidChart: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <Box mt={4} width="100%" ref={chartRef} />
+        <Box sx={{ mt: 4, mb: 2 }} width="100%" ref={chartRef} />
       </ProgressOverlay>
     </Fragment>
   );
