@@ -47,6 +47,7 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
           })}
         </Box>
       );
+    case ContractEventType.Lend:
     case ContractEventType.Purchase:
       return (
         <Box sx={{ p: 2.5 }}>
@@ -76,8 +77,8 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
                         {priceAsset?.token?.template?.title} -{" "}
                         {formatEther(
                           priceAsset?.amount,
-                          priceAsset?.token?.template?.contract!.decimals,
-                          priceAsset?.token?.template?.contract!.symbol,
+                          priceAsset?.token?.template?.contract?.decimals,
+                          priceAsset?.token?.template?.contract?.symbol,
                         )}
                       </Typography>
                     </Box>

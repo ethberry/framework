@@ -110,6 +110,7 @@
       "data": "Data",
       "endTimestamp": "End date",
       "externalId": "External ID",
+      "expires": "Expires",
       "from": "From",
       "fromAddress": "From address",
       "fromTokenId": "From token ID",
