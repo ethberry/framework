@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-erc998td/contracts/extensions/ERC998ERC721.sol";
 import "@gemunion/contracts-erc998td/contracts/extensions/WhiteListChild.sol";
+import "@gemunion/contracts-erc998td/contracts/interfaces/IWhiteListChild.sol";
 
 import "../ERC721/ERC721Simple.sol";
 
@@ -51,7 +52,7 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721Simple, ERC998ERC721) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return type(IWhiteListChild).interfaceId == interfaceId || super.supportsInterface(interfaceId);
   }
 
   function removeChild(
