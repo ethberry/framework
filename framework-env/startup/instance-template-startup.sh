@@ -8,7 +8,7 @@ sudo docker run -v /home/app:/home/app \
   cp -r gs://framework-env/app/* /home/app/
 
 sudo -H -u app docker-credential-gcr configure-docker
-sudo sleep 242;
+sudo sleep 90;
 
 #image_time=$((($(date -d "now" +%s) - $(date --date=$(docker inspect --format='{{.Created}}' gcr.io/halogen-framing-335807/framework-img:latest) +%s)) / (60)))
 #
