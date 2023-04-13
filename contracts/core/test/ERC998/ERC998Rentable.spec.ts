@@ -5,12 +5,14 @@ import { deployERC721 } from "../ERC721/shared/fixtures";
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/simple/user";
+import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 
 describe("ERC998Rentable", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
+  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldBehaveLikeERC721Rentable(factory);
 
