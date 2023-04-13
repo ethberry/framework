@@ -71,16 +71,6 @@ export class MysteryBoxService {
       }
     }
 
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere("box.contractId = :contractId", {
-          contractId: contractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("box.contractId IN(:...contractIds)", { contractIds });
-      }
-    }
-
     if (templateIds) {
       if (templateIds.length === 1) {
         queryBuilder.andWhere("box.templateId = :templateId", {
@@ -88,6 +78,16 @@ export class MysteryBoxService {
         });
       } else {
         queryBuilder.andWhere("box.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
