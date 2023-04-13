@@ -100,7 +100,7 @@
       "amounts": "Amounts",
       "approved": "Approved",
       "args": "Arguments",
-      "borrow": "Is borrow",
+      "borrow": "Borrow",
       "callbackGasLimit": "Callback gas limit",
       "childContract": "Child contract",
       "childTokenId": "Child token ID",
