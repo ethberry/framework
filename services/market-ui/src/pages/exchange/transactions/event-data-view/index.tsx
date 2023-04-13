@@ -3,9 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 import { formatDistance } from "date-fns";
 
-import { ContractEventType, ExchangeType, IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
+import { ContractEventType, ExchangeType, IEventHistory } from "@framework/types";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { useUser } from "@gemunion/provider-user";
 
 import { formatEther } from "../../../../utils/money";
 
@@ -17,8 +16,6 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
   const {
     row: { assets, contract, createdAt, eventData, eventType },
   } = props;
-
-  const { profile } = useUser<IUser>();
 
   switch (eventType) {
     case ContractEventType.Claim:
@@ -60,22 +57,9 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
         </Box>
       );
     case ContractEventType.Lend:
-    case ContractEventType.Purchase: {
-      const isBorrow =
-        eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
-
+    case ContractEventType.Purchase:
       return (
         <Box sx={{ p: 2.5 }}>
-          {isBorrow && (
-            <Box sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
-              <Typography fontWeight={500}>
-                <FormattedMessage id="enums.eventDataLabel.borrow" />:
-              </Typography>
-              <Box sx={{ ml: 1 }}>
-                <Typography variant="body1">{JSON.stringify(isBorrow)}</Typography>
-              </Box>
-            </Box>
-          )}
           {Object.keys(eventData).map((key: string) => {
             // @ts-ignore
             let value = eventData[key];
@@ -128,7 +112,6 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
           })}
         </Box>
       );
-    }
     case ContractEventType.Transfer:
       return (
         <Box sx={{ p: 2.5 }}>

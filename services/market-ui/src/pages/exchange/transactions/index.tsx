@@ -11,10 +11,11 @@ import {
 import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
 
-import { IEventHistory } from "@framework/types";
+import { ContractEventType, IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { TxHashLink } from "@gemunion/mui-scanner";
+import { useUser } from "@gemunion/provider-user";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { EventDataView } from "./event-data-view";
@@ -26,6 +27,7 @@ export const MyTransactions: FC = () => {
   });
 
   const { formatMessage } = useIntl();
+  const { profile } = useUser<IUser>();
 
   const columns = [
     {
@@ -40,6 +42,12 @@ export const MyTransactions: FC = () => {
       headerName: formatMessage({ id: "form.labels.eventType" }),
       sortable: false,
       flex: 1,
+      renderCell: (params: GridCellParams<IEventHistory>) => {
+        const { eventData, eventType } = params.row;
+        const isBorrow =
+          eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
+        return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
+      },
       minWidth: 120,
     },
     {
