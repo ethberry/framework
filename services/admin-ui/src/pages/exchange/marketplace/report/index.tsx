@@ -126,6 +126,7 @@ export const MarketplaceReport: FC = () => {
           price: token.exchange![0].history?.assets,
           createdAt: token.createdAt,
           exchange: token.exchange!,
+          template: token.template,
         }))}
         // rows={rows}
         getRowHeight={() => "auto"}

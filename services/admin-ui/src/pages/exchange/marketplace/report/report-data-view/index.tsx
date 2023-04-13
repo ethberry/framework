@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 
 import { IToken, ContractEventType, ExchangeType } from "@framework/types";
 import { formatEther } from "../../../../../utils/money";
+import { AddressLink } from "@gemunion/mui-scanner";
 
 export interface IEventDataViewProps {
   row: IToken;
@@ -12,7 +13,7 @@ export interface IEventDataViewProps {
 // TODO add transactionHash ScannerLink
 export const ReportDataView: FC<IEventDataViewProps> = props => {
   const {
-    row: { exchange },
+    row: { exchange, template },
   } = props;
   const { assets, eventData, eventType } = exchange![0].history!;
 
@@ -25,6 +26,7 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
             const value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
 
+            const itemAsset = exchange?.find(({ exchangeType }) => exchangeType === ExchangeType.ITEM);
             const priceAsset = assets?.find(({ exchangeType }) => exchangeType === ExchangeType.PRICE);
 
             return (
@@ -33,12 +35,22 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
                   <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
                 </Typography>
                 <Box sx={{ ml: 1 }}>
-                  {key === "price" ? (
+                  {key === "item" ? (
+                    <Box>
+                      <Typography variant="body1">
+                        {template?.title} - {itemAsset?.amount}
+                      </Typography>
+                    </Box>
+                  ) : key === "price" ? (
                     <Box>
                       <Typography variant="body1">
                         {priceAsset?.token?.template?.title} -{" "}
-                        {formatEther(priceAsset?.amount, priceAsset?.contract!.decimals, priceAsset?.contract!.symbol)}
+                        {formatEther(priceAsset?.amount, priceAsset?.contract?.decimals, priceAsset?.contract?.symbol)}
                       </Typography>
+                    </Box>
+                  ) : key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
                     </Box>
                   ) : (
                     <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
@@ -63,7 +75,13 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
                   <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
                 </Typography>
                 <Box sx={{ ml: 1 }}>
-                  <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                  {key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
+                  ) : (
+                    <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                  )}
                 </Box>
               </Box>
             );
