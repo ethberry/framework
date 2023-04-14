@@ -1,6 +1,6 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-export enum AchievementRulesType {
+export enum AchievementType {
   MARKETPLACE = "MARKETPLACE",
   CRAFT = "CRAFT",
   COLLECTION = "COLLECTION",
@@ -8,5 +8,5 @@ export enum AchievementRulesType {
 }
 
 export interface IAchievementRule extends ISearchable {
-  key: AchievementRulesType;
+  achievementType: AchievementType;
 }

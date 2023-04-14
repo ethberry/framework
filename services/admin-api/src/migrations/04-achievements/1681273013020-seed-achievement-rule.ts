@@ -11,7 +11,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
       INSERT INTO ${ns}.achievement_rule (
         title,
         description,
-        key,
+        achievement_type,
         created_at,
         updated_at
       ) VALUES (

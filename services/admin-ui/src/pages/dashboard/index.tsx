@@ -29,6 +29,7 @@ import { WalletSection } from "./exchange/wallet";
 import { Collections } from "./mechanics/collection";
 import { EcommerceSection } from "./ecommerce";
 import { RentSection } from "./mechanics/rent";
+import { AchievementsSection } from "./achievements";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -68,6 +69,7 @@ export const Dashboard: FC = () => {
           <MarketplaceSection />
           <WalletSection />
           <EcommerceSection />
+          <AchievementsSection />
           <AdminSection />
         </Grid>
       </Grid>

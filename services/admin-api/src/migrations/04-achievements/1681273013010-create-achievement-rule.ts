@@ -29,7 +29,7 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "key",
+          name: "achievement_type",
           type: `${ns}.achievement_rule_enum`,
         },
         {
