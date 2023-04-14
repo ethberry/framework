@@ -25,7 +25,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingDepositABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
       nonce: utils.formatBytes32String("nonce"),
       externalId: rule.externalId,

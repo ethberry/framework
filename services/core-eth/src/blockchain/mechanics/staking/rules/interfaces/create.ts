@@ -18,4 +18,5 @@ export interface IStakingCreateDto {
   penalty: number;
   recurrent: boolean;
   stakingRuleStatus?: StakingRuleStatus;
+  contractId: number;
 }

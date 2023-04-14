@@ -57,7 +57,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
 
-        {contract.contractType !== TokenType.NATIVE && contract.contractModule === ModuleType.HIERARCHY ? (
+        {contract.contractType !== TokenType.NATIVE &&
+        contract.contractModule === ModuleType.HIERARCHY &&
+        !contract.contractFeatures.includes(ContractFeatures.RANDOM) ? (
           <MintMenuItem contract={contract} />
         ) : null}
         {contract.contractType === TokenType.ERC20 ? <Erc20TokenSnapshotMenuItem contract={contract} /> : null}

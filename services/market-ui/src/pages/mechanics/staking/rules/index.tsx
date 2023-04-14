@@ -22,6 +22,7 @@ import { DurationUnit, TokenType } from "@framework/types";
 import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
+import { emptyContract } from "../../../../components/common/interfaces";
 
 export const StakingRules: FC = () => {
   const {
@@ -42,6 +43,7 @@ export const StakingRules: FC = () => {
     baseUrl: "/staking/rules",
     empty: {
       title: "",
+      contract: emptyContract,
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
@@ -52,6 +54,7 @@ export const StakingRules: FC = () => {
     },
     search: {
       query: "",
+      contractIds: [],
       deposit: {
         tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
@@ -59,7 +62,15 @@ export const StakingRules: FC = () => {
         tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
     },
-    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
+    filter: ({ id, title, contract, description, ...rest }) =>
+      id
+        ? { title, description, contract }
+        : {
+            title,
+            description,
+            contract,
+            ...rest,
+          },
   });
 
   return (

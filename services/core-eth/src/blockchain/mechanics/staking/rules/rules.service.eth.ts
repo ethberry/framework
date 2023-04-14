@@ -18,6 +18,7 @@ import { StakingDepositService } from "../deposit/deposit.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -27,6 +28,7 @@ export class StakingRulesServiceEth {
     private readonly stakingRulesService: StakingRulesService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
+    private readonly contractService: ContractService,
     private readonly stakingDepositService: StakingDepositService,
     private readonly eventHistoryService: EventHistoryService,
   ) {}
@@ -36,6 +38,7 @@ export class StakingRulesServiceEth {
     const {
       args: { rule, ruleId },
     } = event;
+    const { address } = context;
 
     const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
 
@@ -88,6 +91,12 @@ export class StakingRulesServiceEth {
       });
     }
 
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
     await this.stakingRulesService.create({
       title: "new STAKING rule",
       description: emptyStateString,
@@ -99,6 +108,7 @@ export class StakingRulesServiceEth {
       recurrent,
       stakingRuleStatus: StakingRuleStatus.NEW,
       externalId: ruleId,
+      contractId: contractEntity.id,
     });
   }
 

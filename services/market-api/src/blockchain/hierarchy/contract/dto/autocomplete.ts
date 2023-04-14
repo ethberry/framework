@@ -40,5 +40,12 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  // @IsInt({ message: "typeMismatch" })
+  // @Min(0, { message: "rangeUnderflow" })
+  // @Type(() => Number)
+  public contractId: number;
+
   public merchantId: number;
 }

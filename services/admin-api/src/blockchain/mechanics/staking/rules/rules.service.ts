@@ -17,7 +17,7 @@ export class StakingRulesService {
   ) {}
 
   public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
-    const { query, deposit, reward, stakingRuleStatus, skip, take } = dto;
+    const { query, deposit, reward, stakingRuleStatus, contractIds, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
@@ -47,6 +47,16 @@ export class StakingRulesService {
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
     if (stakingRuleStatus) {
@@ -106,6 +116,7 @@ export class StakingRulesService {
       join: {
         alias: "rule",
         leftJoinAndSelect: {
+          contract: "rule.contract",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",
