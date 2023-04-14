@@ -19,7 +19,8 @@ import { IStakingAllowanceDto, StakingAllowanceDialog } from "./dialog";
 export interface IStakingAllowanceButtonProps {
   rule: IStakingRule;
 }
-
+// TODO allowance for deposit array
+// TODO allowance for exact 721 or 998 token
 export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props => {
   const { rule } = props;
   const { formatMessage } = useIntl();
@@ -34,11 +35,10 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
     setIsAllowanceDialogOpen(false);
   };
 
-  // TODO deposit allowance array
   const metaFn = useMetamask((values: IStakingAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
     const tokenType = rule.deposit?.components[0].tokenType;
-    const address = rule.deposit?.components[0].contract!.address;
+    const address = rule.contract!.address;
 
     if (tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
@@ -58,7 +58,9 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
       );
       return contractErc1155.setApprovalForAll(address, true) as Promise<any>;
     } else {
-      throw new Error("unsupported token type");
+      alert("NATIVE token!");
+      return Promise.resolve(undefined);
+      // throw new Error("unsupported token type");
     }
   });
 
@@ -82,12 +84,12 @@ export const StakingAllowanceButton: FC<IStakingAllowanceButtonProps> = props =>
         initialValues={{
           amount: rule.deposit?.components[0].amount || "0",
           contract: {
-            address: "",
-            contractType: TokenType.ERC20,
-            tokenType: TokenType.ERC20,
+            contractId: rule.deposit?.components[0].contract!.id,
+            address: rule.deposit?.components[0].contract!.address || "",
+            contractType: rule.deposit?.components[0].contract!.contractType || TokenType.ERC20,
+            tokenType: rule.deposit?.components[0].contract!.contractType || TokenType.ERC20,
             decimals: rule.deposit?.components[0].contract!.decimals ?? 18,
           },
-          contractId: 0,
         }}
       />
     </Fragment>

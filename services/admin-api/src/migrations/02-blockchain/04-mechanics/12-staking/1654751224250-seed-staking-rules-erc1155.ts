@@ -123,6 +123,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         deposit_id,
         reward_id,
         staking_rule_status,
+        contract_id,                               
         created_at,
         updated_at
       ) VALUES (
@@ -135,6 +136,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80511,
         80512,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -147,6 +149,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80521,
         80522,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -159,6 +162,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80531,
         80532,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -171,6 +175,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80541,
         80542,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -183,6 +188,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80551,
         80552,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -195,6 +201,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80599,
         null,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       );

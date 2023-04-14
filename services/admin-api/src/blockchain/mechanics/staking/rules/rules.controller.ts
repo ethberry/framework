@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { SearchableOptionalDto } from "@gemunion/collection";
+import { SearchableDto } from "@gemunion/collection";
 
 import { StakingRulesService } from "./rules.service";
 import { StakingRuleSearchDto } from "./dto";
@@ -26,10 +26,7 @@ export class StakingRulesController {
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: SearchableOptionalDto,
-  ): Promise<StakingRulesEntity | null> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: SearchableDto): Promise<StakingRulesEntity | null> {
     return this.stakingService.update({ id }, dto);
   }
 }

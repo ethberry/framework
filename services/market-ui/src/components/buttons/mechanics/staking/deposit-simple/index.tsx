@@ -21,7 +21,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
   const { formatMessage } = useIntl();
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingDepositABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
     const params = {
       nonce: utils.formatBytes32String("nonce"),

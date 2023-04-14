@@ -287,6 +287,7 @@
       "addressLine2": "Address (line 2)",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
+      "contract": "Contract",
       "categoryId": "categoryId",
       "categoryIds": "Category",
       "chainId": "Chain",

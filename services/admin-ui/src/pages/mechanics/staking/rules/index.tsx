@@ -26,7 +26,6 @@ import {
   StakingRuleUploadCreateButton,
   StakingToggleRuleButton,
 } from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
@@ -60,13 +59,13 @@ export const StakingRules: FC = () => {
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ deposit, reward, ...rest }) => ({
-      ...rest,
-      deposit: cleanUpAsset(deposit),
-      reward: cleanUpAsset(reward),
+    filter: ({ title, description }) => ({
+      title,
+      description,
     }),
     search: {
       query: "",
+      contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,

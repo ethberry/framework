@@ -4,10 +4,11 @@ import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { IStakingRule, ModuleType, StakingRuleStatus } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
@@ -34,6 +35,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     durationAmount,
     durationUnit,
     stakingRuleStatus,
+    contractId,
   } = initialValues;
   const fixedValues = {
     id,
@@ -46,6 +48,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     durationAmount,
     durationUnit,
     stakingRuleStatus,
+    contractId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -60,6 +63,14 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.STAKING],
+        }}
+        readOnly={!!id}
+      />
       <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} disabledOptions={[StakingRuleStatus.NEW]} />
       <Grid container spacing={2}>
         {readOnly ? (

@@ -68,6 +68,10 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "contract_id",
+          type: "int",
+        },
+        {
           name: "staking_rule_status",
           type: `${ns}.staking_rule_status_enum`,
           default: "'NEW'",
@@ -82,6 +86,12 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         },
       ],
       foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
         {
           columnNames: ["deposit_id"],
           referencedColumnNames: ["id"],

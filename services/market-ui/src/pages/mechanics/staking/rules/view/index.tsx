@@ -18,15 +18,14 @@ export interface IStakingViewDialogProps {
 
 export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { title, description, deposit, reward, durationAmount, durationUnit, penalty, recurrent } = initialValues;
+  const { title, description, deposit, reward, durationAmount, durationUnit, penalty, recurrent, contract } =
+    initialValues;
 
   const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
   };
-
-  // TODO i18n
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
@@ -81,6 +80,12 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.recurrent" />
               </TableCell>
               <TableCell align="right">{recurrent ? "yes" : "no"}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{contract ? contract.address : "STAKING"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

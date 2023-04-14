@@ -4,8 +4,9 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingRuleSearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 interface IStakingRuleSearchFormProps {
   onSubmit: (values: IStakingRuleSearchDto) => Promise<void>;
@@ -18,8 +19,8 @@ export const StakingRuleSearchForm: FC<IStakingRuleSearchFormProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const { query, deposit, reward } = initialValues;
-  const fixedValues = { query, deposit, reward };
+  const { query, contractIds, deposit, reward } = initialValues;
+  const fixedValues = { query, contractIds, deposit, reward };
 
   return (
     <FormWrapper
@@ -36,6 +37,14 @@ export const StakingRuleSearchForm: FC<IStakingRuleSearchFormProps> = props => {
       </Grid>
       <Collapse in={open}>
         <Grid container columnSpacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractModule: [ModuleType.STAKING] }}
+            />
+          </Grid>
           <Grid item xs={6}>
             <SelectInput
               multiple
