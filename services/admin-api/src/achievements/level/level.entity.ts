@@ -4,9 +4,9 @@ import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementLevel } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { AchievementRuleEntity } from "./achievement-rule.entity";
+import { AchievementRuleEntity } from "../rule/rule.entity";
 
-@Entity({ schema: ns, name: "achievement_item" })
+@Entity({ schema: ns, name: "achievement_level" })
 export class AchievementLevelEntity extends SearchableEntity implements IAchievementLevel {
   @Column({ type: "int" })
   public achievementRuleId: number;

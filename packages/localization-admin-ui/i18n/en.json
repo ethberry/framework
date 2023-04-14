@@ -84,6 +84,12 @@
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
     },
+    "achievementType": {
+      "MARKETPLACE": "Marketplace",
+      "CRAFT": "Craft",
+      "COLLECTION": "Collection",
+      "ECOMMERCE": "Ecommerce"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "GEMUNION",
@@ -451,6 +457,9 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
+      "achievementType": "Achievement type",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "SIGNATURE_TTL": "Signature TTL",
@@ -603,6 +612,8 @@
       "SIGNATURE_TTL": "0",
       "account": "0x...",
       "address": "0x...",
+      "achievementRuleIds": "Achievement",
+      "achievementRuleId": "Achievement",
       "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
@@ -774,6 +785,12 @@
       "deactivate": "Deactivate rule",
       "title": "Craft recipes"
     },
+    "achievements": {
+      "title": "Achievements",
+      "levels": {
+        "title": "Levels"
+      }
+    },
     "dashboard": {
       "ecommerce": {
         "store": {
@@ -786,6 +803,10 @@
           "statistics": "Statistics",
           "title": "Ecommerce"
         }
+      },
+      "achievements": {
+        "title": "Achievements",
+        "levels": "Levels"
       },
       "exchange": {
         "marketplace": {

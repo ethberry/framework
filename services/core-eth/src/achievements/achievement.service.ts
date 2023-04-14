@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { AchievementItemEntity } from "./achievement-item.entity";
+import { AchievementItemEntity } from "./item/item.entity";
 import { UserEntity } from "../infrastructure/user/user.entity";
 
 @Injectable()
