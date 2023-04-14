@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOptionsWhere, Not, Repository, UpdateResult } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Not, Repository, UpdateResult } from "typeorm";
 
 import { AddressStatus } from "@framework/types";
 
@@ -27,8 +27,11 @@ export class AddressService {
     return this.addressEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<AddressEntity>): Promise<AddressEntity | null> {
-    return this.addressEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<AddressEntity>,
+    options?: FindOneOptions<AddressEntity>,
+  ): Promise<AddressEntity | null> {
+    return this.addressEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IAddressCreateDto): Promise<AddressEntity> {

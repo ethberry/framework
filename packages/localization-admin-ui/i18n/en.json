@@ -79,16 +79,16 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "achievementType": {
+      "COLLECTION": "Collection",
+      "CRAFT": "Craft",
+      "ECOMMERCE": "Ecommerce",
+      "MARKETPLACE": "Marketplace"
+    },
     "attributeName": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
-    },
-    "achievementType": {
-      "MARKETPLACE": "Marketplace",
-      "CRAFT": "Craft",
-      "COLLECTION": "Collection",
-      "ECOMMERCE": "Ecommerce"
     },
     "chainId": {
       "1": "ETHEREUM",
@@ -391,11 +391,11 @@
       "percent": "%"
     },
     "buttons": {
-      "archive": "Archive",
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
+      "archive": "Archive",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -457,15 +457,15 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
+      "GRADE": "Grade",
+      "RARITY": "Rarity",
+      "SIGNATURE_TTL": "Signature TTL",
+      "account": "Account",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
       "achievementType": "Achievement type",
-      "DUMMY": "Dummy",
-      "EXCHANGE": "EXCHANGE",
-      "SIGNATURE_TTL": "Signature TTL",
-      "GRADE": "Grade",
-      "RARITY": "Rarity",
-      "account": "Account",
       "active": "Active",
       "address": "Address",
       "addressId": "Address",
@@ -611,9 +611,9 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
-      "address": "0x...",
-      "achievementRuleIds": "Achievement",
       "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
+      "address": "0x...",
       "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
@@ -729,6 +729,15 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "achievements": {
+      "levels": {
+        "title": "Achievements levels"
+      },
+      "rules": {
+        "title": "Achievements types"
+      },
+      "title": "Achievements"
+    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -785,13 +794,12 @@
       "deactivate": "Deactivate rule",
       "title": "Craft recipes"
     },
-    "achievements": {
-      "title": "Achievements",
-      "levels": {
-        "title": "Levels"
-      }
-    },
     "dashboard": {
+      "achievements": {
+        "levels": "Levels",
+        "rules": "Types",
+        "title": "Achievements"
+      },
       "ecommerce": {
         "store": {
           "categories": "Categories",
@@ -803,10 +811,6 @@
           "statistics": "Statistics",
           "title": "Ecommerce"
         }
-      },
-      "achievements": {
-        "title": "Achievements",
-        "levels": "Levels"
       },
       "exchange": {
         "marketplace": {

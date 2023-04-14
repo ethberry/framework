@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { AchievementItemEntity } from "./item/item.entity";
+import { AchievementItemModule } from "./item/item.module";
+import { AchievementRuleModule } from "./rule/rule.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AchievementItemEntity])],
+  imports: [AchievementRuleModule, AchievementItemModule],
 })
 export class AchievementModule {}

@@ -5,6 +5,7 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../index-wrapper";
 import { AchievementsSection } from "../dashboard/achievements";
 import { AchievementLevels } from "./levels";
+import { AchievementRules } from "./rule";
 
 export const achievementsRoutes: Array<RouteObject> = [
   {
@@ -17,6 +18,14 @@ export const achievementsRoutes: Array<RouteObject> = [
             <AchievementsSection />
           </IndexWrapper>
         ),
+      },
+      {
+        path: "/achievements/rules",
+        element: <Protected />,
+        children: [
+          { index: true, element: <AchievementRules /> },
+          { path: "/achievements/rules/:id", element: <AchievementRules /> },
+        ],
       },
       {
         path: "/achievements/levels",

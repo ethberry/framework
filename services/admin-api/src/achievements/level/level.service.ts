@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IAchievementLevelSearchDto } from "@framework/types";
 
@@ -60,8 +60,11 @@ export class AchievementLevelService {
     return this.achievementLevelEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<AchievementLevelEntity>): Promise<AchievementLevelEntity | null> {
-    return this.achievementLevelEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<AchievementLevelEntity>,
+    options?: FindOneOptions<AchievementLevelEntity>,
+  ): Promise<AchievementLevelEntity | null> {
+    return this.achievementLevelEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {

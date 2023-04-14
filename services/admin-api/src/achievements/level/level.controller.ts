@@ -22,33 +22,33 @@ import { AchievementLevelCreateDto, AchievementLevelSearchDto, AddressUpdateDto 
 @ApiBearerAuth()
 @Controller("/achievements/levels")
 export class AchievementLevelController {
-  constructor(private readonly levelService: AchievementLevelService) {}
+  constructor(private readonly achievementLevelService: AchievementLevelService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: AchievementLevelSearchDto): Promise<[Array<AchievementLevelEntity>, number]> {
-    return this.levelService.search(dto);
+    return this.achievementLevelService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<AchievementLevelEntity | null> {
-    return this.levelService.findOne({ id });
+    return this.achievementLevelService.findOne({ id });
   }
 
   @Post("/")
   public create(@Body() dto: AchievementLevelCreateDto): Promise<AchievementLevelEntity> {
-    return this.levelService.create(dto);
+    return this.achievementLevelService.create(dto);
   }
 
   @Put("/:id")
   public update(@Param("id") id: number, @Body() dto: AddressUpdateDto): Promise<AchievementLevelEntity | undefined> {
-    return this.levelService.update({ id }, dto);
+    return this.achievementLevelService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(204)
   public async delete(@Param("id") id: number): Promise<void> {
-    await this.levelService.delete({ id });
+    await this.achievementLevelService.delete({ id });
   }
 }
