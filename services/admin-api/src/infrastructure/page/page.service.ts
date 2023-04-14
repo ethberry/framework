@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IPageSearchDto } from "@framework/types";
 
@@ -56,8 +56,11 @@ export class PageService {
     return queryBuilder.getManyAndCount();
   }
 
-  public findOne(where: FindOptionsWhere<PageEntity>): Promise<PageEntity | null> {
-    return this.pageEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<PageEntity>,
+    options?: FindOneOptions<PageEntity>,
+  ): Promise<PageEntity | null> {
+    return this.pageEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IPageCreateDto): Promise<PageEntity> {

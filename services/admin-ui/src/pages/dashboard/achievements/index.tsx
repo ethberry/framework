@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { FormatListNumberedRtl } from "@mui/icons-material";
+import { FormatListNumberedRtl, SportsScore } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,6 +15,14 @@ export const AchievementsSection: FC = () => {
           </ListSubheader>
         }
       >
+        <ListItem button component={RouterLink} to="/achievements/rules">
+          <ListItemIcon>
+            <SportsScore />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.achievements.rules" />
+          </ListItemText>
+        </ListItem>
         <ListItem button component={RouterLink} to="/achievements/levels">
           <ListItemIcon>
             <FormatListNumberedRtl />

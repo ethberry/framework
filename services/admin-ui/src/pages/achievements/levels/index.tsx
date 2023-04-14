@@ -94,7 +94,8 @@ export const AchievementLevels: FC = () => {
         <List>
           {rows.map((level, i) => (
             <ListItem key={i}>
-              <ListItemText>{level.title}</ListItemText>
+              <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{level.amount}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(level)}>
                   <Create />

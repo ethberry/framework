@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 
 import { OrderStatus } from "@framework/types";
 
@@ -56,8 +56,11 @@ export class OrderService {
     return queryBuilder.getManyAndCount();
   }
 
-  public findOne(where: FindOptionsWhere<OrderEntity>): Promise<OrderEntity | null> {
-    return this.orderEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<OrderEntity>,
+    options?: FindOneOptions<OrderEntity>,
+  ): Promise<OrderEntity | null> {
+    return this.orderEntityRepository.findOne({ where, ...options });
   }
 
   public async createForUser(
