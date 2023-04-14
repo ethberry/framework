@@ -60,10 +60,12 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
             contractModule: [ModuleType.HIERARCHY],
           },
         }}
+        multiple
       />
       <TemplateAssetInput
         prefix="template.price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        multiple
       />
       {id ? <SelectInput name="mysteryboxStatus" options={MysteryboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
