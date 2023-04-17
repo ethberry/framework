@@ -33,7 +33,7 @@ export class AchievementLevelController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<AchievementLevelEntity | null> {
-    return this.achievementLevelService.findOne({ id });
+    return this.achievementLevelService.findOneWithRelations({ id });
   }
 
   @Post("/")

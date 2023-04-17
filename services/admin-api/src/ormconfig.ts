@@ -129,6 +129,7 @@ import {
   SeedAddress1593490663040,
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentRent1678931845520,
+  SeedAssetComponentsAchievementAt1681273013045,
   SeedAssetComponentsCollectionAt1679894501230,
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsErc721At1563804001230,
@@ -184,6 +185,8 @@ import {
   SeedEventHistoryErc20TransferAt1563804040120,
   SeedEventHistoryErc721ClaimAt1563804040330,
   SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc721LendAt1678931845530,
+  SeedEventHistoryErc721LendComponentsAt1678931845540,
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
@@ -254,8 +257,6 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedEventHistoryErc721LendAt1678931845530 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845530-seed-event-history-erc721-lend";
-import { SeedEventHistoryErc721LendComponentsAt1678931845540 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845540-seed-event-history-erc721-lend-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -553,6 +554,7 @@ const config: PostgresConnectionOptions = {
     SeedAchievementRule1681273013020,
     CreateAchievementLevel1681273013030,
     SeedAchievementLevel1681273013040,
+    SeedAssetComponentsAchievementAt1681273013045,
     CreateAchievementItem1681273013050,
     SeedAchievementItem1681273013060,
   ],

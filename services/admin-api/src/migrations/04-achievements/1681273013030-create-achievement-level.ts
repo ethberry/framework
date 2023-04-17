@@ -20,6 +20,10 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           type: "json",
         },
         {
+          name: "item_id",
+          type: "int",
+        },
+        {
           name: "achievement_rule_id",
           type: "int",
         },
@@ -37,6 +41,12 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
         },
       ],
       foreignKeys: [
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
         {
           columnNames: ["achievement_rule_id"],
           referencedColumnNames: ["id"],

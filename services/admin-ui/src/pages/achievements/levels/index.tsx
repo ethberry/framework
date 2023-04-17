@@ -52,17 +52,19 @@ export const AchievementLevels: FC = () => {
       query: "",
       achievementRuleIds: [],
     },
-    filter: ({ id, title, description, amount, achievementRuleId }) =>
+    filter: ({ id, title, description, item, amount, achievementRuleId }) =>
       id
         ? {
             title,
             description,
+            item,
             amount,
           }
         : {
             title,
             description,
             amount,
+            item,
             achievementRuleId,
           },
   });
