@@ -44,6 +44,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
+  mapping(address => uint256) internal _penalties;
+
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
@@ -140,7 +142,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       }
 
       // Transfer tokens from user to this contract.
-      spendFrom(_toArray(depositItem), account, address(this));
+      spendFrom(_toArray(depositItem), account, address(this), DisabledTokenTypes(false, false, false, false, false));
 
       // Do something after purchase with referrer
       if (referrer != address(0)) {
@@ -173,6 +175,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
     // Calculate the multiplier
+    // counts only FULL stake cycles
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
@@ -189,7 +192,10 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         stake.activeDeposit = false;
 
         // Deduct the penalty from the stake amount if the multiplier is 0.
+        // ERC721\ERC998 deposit penalty not applicable (always 0%)
         depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
+
+        _penalties[depositItem.token] = multiplier == 0 ? (stakeAmount / 100) * (rule.penalty / 100) : 0;
 
         // Transfer the deposit Asset to the receiver.
         spend(_toArray(depositItem), receiver);
@@ -343,5 +349,23 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     require(rule.period != 0, "Staking: rule does not exist");
     _rules[ruleId].active = active;
     emit RuleUpdated(ruleId, active);
+  }
+
+  // WITHDRAW
+  event WithdrawToken(address token, uint256 amount);
+
+  function withdrawToken(address token) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    address account = _msgSender();
+    uint256 totalBalance = _penalties[token];
+    if (totalBalance > 0) {
+      if (token == address(0)) {
+        Address.sendValue(payable(account), amount);
+      } else {
+        totalBalance = IERC20(token).balanceOf(address(this));
+        require(totalBalance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
+        SafeERC20.safeTransfer(IERC20(token), account, totalBalance);
+      }
+      emit WithdrawToken(token, totalBalance);
+    }
   }
 }

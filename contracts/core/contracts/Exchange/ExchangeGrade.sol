@@ -28,7 +28,7 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this));
+    spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
 
     emit Upgrade(account, params.externalId, item, price);
 
