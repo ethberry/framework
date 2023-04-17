@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IAchievementLevel } from "@framework/types";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { IAchievementLevel, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -18,12 +19,13 @@ export interface IAchievementLevelEditDialogProps {
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, amount } = initialValues;
+  const { id, title, description, item, amount } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
+    item,
     amount,
   };
 
@@ -40,6 +42,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <TemplateAssetInput multiple prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
       <NumberInput name="amount" />
     </FormDialog>
   );

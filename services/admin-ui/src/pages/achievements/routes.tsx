@@ -6,6 +6,7 @@ import { IndexWrapper } from "../index-wrapper";
 import { AchievementsSection } from "../dashboard/achievements";
 import { AchievementLevels } from "./levels";
 import { AchievementRules } from "./rule";
+import { AchievementReport } from "./report";
 
 export const achievementsRoutes: Array<RouteObject> = [
   {
@@ -34,6 +35,11 @@ export const achievementsRoutes: Array<RouteObject> = [
           { index: true, element: <AchievementLevels /> },
           { path: "/achievements/levels/:id", element: <AchievementLevels /> },
         ],
+      },
+      {
+        path: "/achievements/report",
+        element: <Protected />,
+        children: [{ index: true, element: <AchievementReport /> }],
       },
     ],
   },

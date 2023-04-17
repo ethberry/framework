@@ -64,6 +64,31 @@ export class SeedAchievementItem1681273013060 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1,
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
         4,
         '${currentDateTime}',
         '${currentDateTime}'
