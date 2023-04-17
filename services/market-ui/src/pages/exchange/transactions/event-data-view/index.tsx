@@ -1,8 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
+import { formatDistance } from "date-fns";
 
 import { ContractEventType, ExchangeType, IEventHistory } from "@framework/types";
+import { AddressLink } from "@gemunion/mui-scanner";
 
 import { formatEther } from "../../../../utils/money";
 
@@ -12,7 +14,7 @@ export interface IEventDataViewProps {
 
 export const EventDataView: FC<IEventDataViewProps> = props => {
   const {
-    row: { assets, contract, eventData, eventType },
+    row: { assets, contract, createdAt, eventData, eventType },
   } = props;
 
   switch (eventType) {
@@ -21,8 +23,11 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
         <Box sx={{ p: 2.5 }}>
           {Object.keys(eventData).map((key: string) => {
             // @ts-ignore
-            const value = eventData[key];
+            let value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
+            if (!showRaw) {
+              value = JSON.stringify(value);
+            }
 
             return (
               <Box key={key} sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
@@ -38,8 +43,12 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
                         </Typography>
                       </Box>
                     ))
+                  ) : key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
                   ) : (
-                    <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                    <Typography variant="body1">{value}</Typography>
                   )}
                 </Box>
               </Box>
@@ -47,13 +56,22 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
           })}
         </Box>
       );
+    case ContractEventType.Lend:
     case ContractEventType.Purchase:
       return (
         <Box sx={{ p: 2.5 }}>
           {Object.keys(eventData).map((key: string) => {
             // @ts-ignore
-            const value = eventData[key];
+            let value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
+            if (!showRaw) {
+              value = JSON.stringify(value);
+            }
+
+            if (key === "expires") {
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+              value = formatDistance(new Date(createdAt).getTime() + value, Date.now(), { addSuffix: true });
+            }
 
             const itemAsset = assets?.find(({ exchangeType }) => exchangeType === ExchangeType.ITEM);
             const priceAsset = assets?.find(({ exchangeType }) => exchangeType === ExchangeType.PRICE);
@@ -76,13 +94,17 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
                         {priceAsset?.token?.template?.title} -{" "}
                         {formatEther(
                           priceAsset?.amount,
-                          priceAsset?.token?.template?.contract!.decimals,
-                          priceAsset?.token?.template?.contract!.symbol,
+                          priceAsset?.token?.template?.contract?.decimals,
+                          priceAsset?.token?.template?.contract?.symbol,
                         )}
                       </Typography>
                     </Box>
+                  ) : key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
                   ) : (
-                    <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                    <Typography variant="body1">{value}</Typography>
                   )}
                 </Box>
               </Box>
@@ -95,8 +117,11 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
         <Box sx={{ p: 2.5 }}>
           {Object.keys(eventData).map((key: string) => {
             // @ts-ignore
-            const value = eventData[key];
+            let value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
+            if (!showRaw) {
+              value = JSON.stringify(value);
+            }
 
             return (
               <Box key={key} sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
@@ -104,7 +129,13 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
                   <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
                 </Typography>
                 <Box sx={{ ml: 1 }}>
-                  <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                  {key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
+                  ) : (
+                    <Typography variant="body1">{value}</Typography>
+                  )}
                 </Box>
               </Box>
             );
@@ -126,8 +157,11 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
         <Box sx={{ p: 2.5 }}>
           {Object.keys(eventData).map((key: string) => {
             // @ts-ignore
-            const value = eventData[key];
+            let value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
+            if (!showRaw) {
+              value = JSON.stringify(value);
+            }
 
             return (
               <Box key={key} sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
@@ -135,7 +169,13 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
                   <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
                 </Typography>
                 <Box sx={{ ml: 1 }}>
-                  <Typography variant="body1">{showRaw ? value : JSON.stringify(value)}</Typography>
+                  {key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
+                  ) : (
+                    <Typography variant="body1">{value}</Typography>
+                  )}
                 </Box>
               </Box>
             );

@@ -40,35 +40,35 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
       ), (
         1406, -- hero
         1501, -- resources
-        1000,
+        3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1411, -- 20 owner
         1201, -- space credit
-        3,
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1412, -- 1155 owner
         1501, -- resources
-        1000,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1411, -- 1155 + 20 owner
-        1201, -- space credit
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406, -- 1155 + 20 owner
-        1501, -- resources
-        1000,
+        1413, -- 1155 + 20 owner
+        1201, -- space credit
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1409, -- c-shirt
+        1413, -- 1155 + 20 owner
+        1501, -- resources
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1413, -- c-shirt
         1309, -- t-shirt
         1,
         '${currentDateTime}',

@@ -37,7 +37,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
   const { fn } = useApiCall((api, data: { templateIds: Array<number> }) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return api.fetchJson({
-      url: "/mystery-boxes",
+      url: "/mystery/boxes",
       data,
     });
   });
@@ -64,7 +64,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -72,10 +72,10 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     // MODULE:MYSTERYBOX
     const content = [] as Array<any>;
     if (rule.reward) {
-      for (const rew of rule.reward.components) {
+      for (const row of rule.reward.components) {
         const {
           rows: [mysteryBox],
-        } = await fn(void 0, { templateIds: [rew.templateId] });
+        } = await fn(void 0, { templateIds: [row.templateId] });
         // MODULE:MYSTERYBOX
         if (mysteryBox) {
           content.push(
@@ -121,6 +121,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
           durationUnit: DurationUnit.DAY,
           penalty: 100,
           recurrent: false,
+          // contractId: 3, // STAKING
         }}
       />
     </Fragment>

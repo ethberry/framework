@@ -53,9 +53,10 @@ export interface IContractManagerERC998TokenDeployedEvent {
   args: IERC998TokenDeployedEventArgs;
 }
 
-export type IERC1155TokenDeployedEventArgs = [string, string];
+export type IERC1155TokenDeployedEventArgs = [string, string, string];
 
 export interface IContractManagerERC1155TokenDeployedEvent {
+  royalty: string;
   addr: string;
   args: IERC1155TokenDeployedEventArgs;
 }

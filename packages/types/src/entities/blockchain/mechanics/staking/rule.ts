@@ -1,7 +1,8 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import { DurationUnit } from "../../../common";
 import type { IAsset } from "../../exchange/asset";
+import { DurationUnit } from "../../../common";
+import { IContract } from "../../hierarchy/contract";
 
 export enum StakingRuleStatus {
   NEW = "NEW",
@@ -20,4 +21,6 @@ export interface IStakingRule extends ISearchable {
   recurrent: boolean;
   stakingRuleStatus: StakingRuleStatus;
   externalId: string;
+  contractId: number;
+  contract?: IContract;
 }

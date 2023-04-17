@@ -5,12 +5,14 @@ import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
+import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 
 describe("ERC998Random", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
+  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);

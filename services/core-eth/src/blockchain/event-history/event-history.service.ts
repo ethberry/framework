@@ -113,25 +113,6 @@ export class EventHistoryService {
       chainId,
     });
 
-    // NESTED events
-    if ((name as ContractEventType) === "Transfer") {
-      const parentEvent = await this.findOne({
-        transactionHash,
-        eventType: In([
-          ExchangeEventType.Purchase,
-          ExchangeEventType.Breed,
-          ExchangeEventType.Upgrade,
-          ExchangeEventType.Craft,
-          ExchangeEventType.Mysterybox,
-        ]),
-      });
-
-      if (parentEvent) {
-        Object.assign(contractEventEntity, { parentId: parentEvent.id });
-      }
-      await contractEventEntity.save();
-    }
-
     // get PARENT events
     await this.findParentHistory(contractEventEntity);
 

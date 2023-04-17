@@ -5,10 +5,12 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 export const ContractInput: FC = () => {
   const tokenType = useWatch({ name: "contract.tokenType" });
+  const contractId = useWatch({ name: "contract.contractId" });
   const form = useFormContext<any>();
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
     form.setValue("contractId", option?.id ?? 0);
+    form.setValue("contract.contractId", option?.id ?? 0);
     form.setValue("contract.address", option?.address ?? "0x");
     form.setValue("contract.contractType", option?.contractType ?? "0x");
     form.setValue("contract.decimals", option?.decimals ?? 0);
@@ -18,9 +20,10 @@ export const ContractInput: FC = () => {
     <EntityInput
       name="contractId"
       controller="contracts"
-      data={{ contractType: [tokenType] }}
+      data={{ contractId, contractType: [tokenType] }}
       onChange={handleChange}
       autoselect
+      disableClear
     />
   );
 };

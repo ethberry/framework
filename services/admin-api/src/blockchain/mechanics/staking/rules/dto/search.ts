@@ -38,6 +38,18 @@ export class StakingRuleItemSearchDto implements IStakingRuleItemSearchDto {
 
 export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
     enum: StakingRuleStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706

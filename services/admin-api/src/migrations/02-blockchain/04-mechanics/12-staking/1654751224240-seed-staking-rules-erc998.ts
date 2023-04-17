@@ -123,6 +123,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         deposit_id,
         reward_id,
         staking_rule_status,
+        contract_id,                               
         created_at,
         updated_at
       ) VALUES (
@@ -135,6 +136,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80411,
         80412,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -147,6 +149,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80421,
         80422,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -159,6 +162,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80431,
         80432,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -171,6 +175,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80441,
         80442,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -183,6 +188,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80451,
         80452,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -195,6 +201,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         80499,
         null,
         'ACTIVE',
+        3,       
         '${currentDateTime}',
         '${currentDateTime}'
       );

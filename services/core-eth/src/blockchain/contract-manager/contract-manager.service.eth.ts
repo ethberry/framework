@@ -318,7 +318,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [baseTokenURI, contractTemplate] = args;
+    const [royalty, baseTokenURI, contractTemplate] = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -336,6 +336,7 @@ export class ContractManagerServiceEth {
           : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
+      royalty: ~~royalty,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });

@@ -11,12 +11,12 @@ import { validationSchema } from "./validation";
 export interface IStakingAllowanceDto {
   amount: string;
   contract: {
+    contractId?: number;
     address: string;
     contractType: TokenType;
     tokenType: TokenType;
     decimals: number;
   };
-  contractId: number;
 }
 
 export interface IStakingAllowanceDialogProps {

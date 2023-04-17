@@ -14,10 +14,11 @@ export class StakingRulesService {
   ) {}
 
   public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
-    const { query, deposit, reward, skip, take } = dto;
+    const { query, deposit, reward, contractIds, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
 
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -51,6 +52,16 @@ export class StakingRulesService {
       stakingRuleStatus: StakingRuleStatus.ACTIVE,
     });
 
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
     if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {
         queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
@@ -79,7 +90,8 @@ export class StakingRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "rule.id": "DESC",
+      "rule.createdAt": "DESC",
+      "rule.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -97,6 +109,7 @@ export class StakingRulesService {
       join: {
         alias: "rule",
         leftJoinAndSelect: {
+          contract: "rule.contract",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",
