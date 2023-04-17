@@ -120,7 +120,7 @@ export const MarketplaceReport: FC = () => {
         rowThreshold={0}
         getDetailPanelHeight={getDetailPanelHeight}
         getDetailPanelContent={getDetailPanelContent}
-        rows={rows.map((token: IToken) => ({
+        rows={[].map((token: IToken) => ({
           id: token.id,
           title: token.template?.title,
           price: token.exchange![0].history?.assets,
