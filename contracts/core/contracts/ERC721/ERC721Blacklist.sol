@@ -6,8 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
 import "./ERC721Simple.sol";
