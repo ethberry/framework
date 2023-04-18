@@ -553,6 +553,7 @@
       "productId": "Product",
       "productStatus": "Status",
       "pyramidDepositStatus": "Status",
+      "pyramidRule": "Pyramid rule",
       "pyramidRuleStatus": "Status",
       "random": "Random",
       "recentDeposits": "Recent deposits",
