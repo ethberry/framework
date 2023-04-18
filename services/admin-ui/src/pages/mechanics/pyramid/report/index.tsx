@@ -83,7 +83,7 @@ export const PyramidReport: FC = () => {
     },
     {
       field: "contract",
-      headerName: formatMessage({ id: "form.labels.contract" }),
+      headerName: formatMessage({ id: "form.labels.pyramidRule" }),
       sortable: true,
       flex: 1,
       minWidth: 100
@@ -135,7 +135,7 @@ export const PyramidReport: FC = () => {
         rows={rows.map((stake: IPyramidDeposit) => ({
           id: stake.id,
           account: stake.account,
-          contract: stake.pyramidRule!.contract.title,
+          contract: stake.pyramidRule!.title,
           deposit: formatPrice(stake.pyramidRule?.deposit),
           createdAt: stake.createdAt,
         }))}
