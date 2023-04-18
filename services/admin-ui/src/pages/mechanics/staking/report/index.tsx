@@ -89,6 +89,13 @@ export const StakingReport: FC = () => {
       minWidth: 100
     },
     {
+      field: "stakingRule",
+      headerName: formatMessage({ id: "form.labels.stakingRule" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100
+    },
+    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
@@ -129,6 +136,7 @@ export const StakingReport: FC = () => {
           id: stake.id,
           account: stake.account,
           deposit: formatPrice(stake.stakingRule?.deposit),
+          stakingRule: stake.stakingRule?.title,
           createdAt: stake.createdAt,
         }))}
         autoHeight

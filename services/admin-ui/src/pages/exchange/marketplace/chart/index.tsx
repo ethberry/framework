@@ -4,13 +4,13 @@ import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
+import { utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
 import { MarketplaceChartSearchForm } from "./form";
-import { formatEther } from "../../../../utils/money";
 
 export const MarketplaceChart: FC = () => {
   const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
@@ -58,8 +58,10 @@ export const MarketplaceChart: FC = () => {
           axis: "left",
           grid: true,
           label: "Sold items",
+          line: true,
           nice: true,
           labelAnchor: "top",
+          transform: (d: string | number) => Number(d),
           labelOffset: 40,
         },
         x: {
@@ -93,10 +95,12 @@ export const MarketplaceChart: FC = () => {
               y: {
                 axis: "right",
                 label: "Gained profit",
+                grid: true,
                 line: true,
                 nice: true,
-                transform: (d: string) => formatEther(String(d)),
-                reverse: true,
+                transform: (d: string | null) => (d ? Number(utils.formatUnits(d, 18)) : 0),
+                tickFormat: (d: string) => `Ξ ${d}`,
+                zero: true,
               },
               marks: [
                 Plot.line(rows, {
