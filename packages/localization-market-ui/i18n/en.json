@@ -574,17 +574,10 @@
     },
     "dashboard": {
       "ecommerce": {
-        "feedback": {
-          "form": "Feedback",
-          "title": "Feedback"
-        },
-        "pages": {
-          "about-us": "About us",
-          "faq": "FAQ",
-          "privacy-policy": "Privacy Policy",
-          "terms-of-services": "Terms of Services",
-          "title": "Pages"
-        }
+        "checkout": "Checkout",
+        "orders": "Orders",
+        "products": "Products",
+        "title": "Ecommerce"
       },
       "hierarchy": {
         "erc1155": "ERC1155",
@@ -630,6 +623,9 @@
     },
     "drop-list": {
       "title": "Drops"
+    },
+    "ecommerce": {
+      "title": "Ecommerce"
     },
     "erc1155": {
       "title": "ERC1155",

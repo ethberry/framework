@@ -44,7 +44,7 @@ export const OrderItem: FC<IOrderItemProps> = props => {
             <ul>
               {order.items.map(item => (
                 <li key={item.id}>
-                  <Link component={RouterLink} to={`/products/${item.product!.id}`}>
+                  <Link component={RouterLink} to={`/ecommerce/products/${item.product!.id}`}>
                     {item.product!.title}
                   </Link>
                 </li>
