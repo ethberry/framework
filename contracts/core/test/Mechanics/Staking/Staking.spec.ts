@@ -2736,6 +2736,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount)
+        .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, constants.AddressZero, owner.address, tokenId, amount * cycles);
 
       const balance3 = await erc1155Instance.balanceOf(owner.address, 1);
@@ -2743,5 +2745,1098 @@ describe("Staking", function () {
     });
   });
 
+  describe("Permutations with penalty", function () {
+    it("should stake NATIVE & receive DEPOSIT with 50% penalty", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+
+      // REWARD
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+    });
+
+    it("should stake ERC20 & receive DEPOSIT with 50% penalty", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      await erc20Instance.mint(owner.address, amount);
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      const tx1 = await stakingInstance.deposit(params, tokenIds);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x");
+
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      await erc20Instance.mint(stakingInstance.address, amount * cycles);
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2)
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, amount / 2);
+
+      const balance3 = await erc20Instance.balanceOf(owner.address);
+      expect(balance3).to.equal(amount / 2);
+    });
+
+    it("should stake ERC721 & receive DEPOSIT with 0% penalty", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId: 2,
+            amount: 1,
+          },
+        ],
+        content: [],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance1 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance1).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      const tx1 = await stakingInstance.deposit(params, tokenIds);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId);
+
+      const balance2 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, tokenId);
+
+      const balance4 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance4).to.equal(1);
+    });
+
+    it("should stake ERC721 & DO NOT receive DEPOSIT ( 100% penalty )", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId: 2,
+            amount: 1,
+          },
+        ],
+        content: [],
+        period,
+        penalty: 10000, // 100%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance1 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance1).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      const tx1 = await stakingInstance.deposit(params, tokenIds);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId);
+
+      const balance2 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      const balance4 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance4).to.equal(0);
+    });
+
+    it("should stake ERC1155 & receive DEPOSIT with 50% penalty", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc1155Instance = await erc1155Factory();
+
+      await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      await erc1155Instance.mint(owner.address, 1, amount, "0x");
+      const balance1 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance1).to.equal(amount);
+      await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
+
+      const tx1 = await stakingInstance.deposit(params, tokenIds);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
+
+      const balance2 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance2).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      await expect(tx2)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
+
+      const balance3 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance3).to.equal(amount / 2);
+    });
+
+    it("should stake MIXED (NATIVE + ERC20 + ERC721 + ERC1155) & receive MIXED DEPOSIT with 50% penalty (ERC721 0% penalty)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+      const erc1155Instance = await erc1155Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+      await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        content: [[], [], [], []],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc20Instance.mint(owner.address, amount);
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance11 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance11).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      await erc1155Instance.mint(owner.address, 1, amount, "0x");
+      const balance12 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance12).to.equal(amount);
+      await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
+
+      const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x")
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+      const balance21 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance21).to.equal(0);
+      const balance22 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance22).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      await erc20Instance.mint(stakingInstance.address, amount * cycles);
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, amount / 2)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      const balance4 = await erc20Instance.balanceOf(owner.address);
+      expect(balance4).to.equal(amount / 2 /* deposit */);
+      const balance41 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance41).to.equal(1);
+      const balance42 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance42).to.equal(amount / 2);
+    });
+
+    it("should stake MIXED (NATIVE + ERC20 + ERC721 + ERC1155) & receive MIXED DEPOSIT with 100% penalty", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+      const erc1155Instance = await erc1155Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+      await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        content: [[], [], [], []],
+        period,
+        penalty: 10000, // 100%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc20Instance.mint(owner.address, amount);
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance11 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance11).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      await erc1155Instance.mint(owner.address, 1, amount, "0x");
+      const balance12 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance12).to.equal(amount);
+      await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
+
+      const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x")
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+      const balance21 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance21).to.equal(0);
+      const balance22 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance22).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      await erc20Instance.mint(stakingInstance.address, amount * cycles);
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      const balance4 = await erc20Instance.balanceOf(owner.address);
+      expect(balance4).to.equal(0);
+      const balance41 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance41).to.equal(0);
+      const balance42 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance42).to.equal(0);
+    });
+  });
+
+  describe("Withdraw penalty", function () {
+    it("should stake mixed (NATIVE + ERC20 + ERC721 + ERC1155) & withdraw 50 % mixed PENALTIES (ERC721 0% penalty)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+      const erc1155Instance = await erc1155Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+      await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        content: [[], [], [], []],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc20Instance.mint(owner.address, amount);
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance11 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance11).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      await erc1155Instance.mint(owner.address, 1, amount, "0x");
+      const balance12 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance12).to.equal(amount);
+      await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
+
+      const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x")
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+      const balance21 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance21).to.equal(0);
+      const balance22 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance22).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      await erc20Instance.mint(stakingInstance.address, amount * cycles);
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, amount / 2)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      const balance4 = await erc20Instance.balanceOf(owner.address);
+      expect(balance4).to.equal(amount / 2 /* deposit */);
+      const balance41 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance41).to.equal(1);
+      const balance42 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance42).to.equal(amount / 2);
+
+      // WITHDRAW PENALTY
+      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      await expect(tx3)
+        .to.emit(stakingInstance, "WithdrawToken")
+        .withArgs(constants.AddressZero, 0, amount / 2);
+      await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      const tx4 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
+      await expect(tx4)
+        .to.emit(stakingInstance, "WithdrawToken")
+        .withArgs(erc20Instance.address, 0, amount / 2);
+
+      const tx5 = stakingInstance.withdrawToken(erc721SimpleInstance.address, tokenId, 2);
+      await expect(tx5).to.be.revertedWith("Staking: zero balance");
+
+      const tx6 = stakingInstance.withdrawToken(erc1155Instance.address, tokenId, 4);
+      await expect(tx6)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
+    });
+
+    it("should stake mixed (NATIVE + ERC20 + ERC721 + ERC1155) & withdraw 1000 % mixed PENALTIES", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+      const erc721SimpleInstance = await erc721Factory("ERC721Simple");
+      const erc1155Instance = await erc1155Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+      await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4, // ERC1155
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721SimpleInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        content: [[], [], [], []],
+        period,
+        penalty: 10000, // 100%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc20Instance.mint(owner.address, amount);
+      const balance1 = await erc20Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      await erc721SimpleInstance.mintCommon(owner.address, templateId);
+      const balance11 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance11).to.equal(1);
+      await erc721SimpleInstance.approve(stakingInstance.address, 1);
+
+      await erc1155Instance.mint(owner.address, 1, amount, "0x");
+      const balance12 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance12).to.equal(amount);
+      await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
+
+      const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x")
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, owner.address, stakingInstance.address, tokenId, amount);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      const balance2 = await erc20Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+      const balance21 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance21).to.equal(0);
+      const balance22 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance22).to.equal(0);
+
+      // TIME
+
+      // REWARD
+      await erc20Instance.mint(stakingInstance.address, amount * cycles);
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      const balance4 = await erc20Instance.balanceOf(owner.address);
+      expect(balance4).to.equal(0);
+      const balance41 = await erc721SimpleInstance.balanceOf(owner.address);
+      expect(balance41).to.equal(0);
+      const balance42 = await erc1155Instance.balanceOf(owner.address, 1);
+      expect(balance42).to.equal(0);
+
+      // WITHDRAW PENALTY
+      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      await expect(tx3).to.emit(stakingInstance, "WithdrawToken").withArgs(constants.AddressZero, 0, amount);
+      await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      const tx4 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
+      await expect(tx4).to.emit(stakingInstance, "WithdrawToken").withArgs(erc20Instance.address, 0, amount);
+
+      const tx5 = stakingInstance.withdrawToken(erc721SimpleInstance.address, tokenId, 2);
+      await expect(tx5)
+        .to.emit(erc721SimpleInstance, "Transfer")
+        .withArgs(stakingInstance.address, owner.address, tokenId);
+
+      const tx6 = stakingInstance.withdrawToken(erc1155Instance.address, tokenId, 4);
+      await expect(tx6)
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount);
+    });
+
+    it("should fail withdraw: zero balance", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const tx0 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      await expect(tx0).to.be.revertedWith("Staking: zero balance");
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, [0], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+      // REWARD
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      // WITHDRAW PENALTY
+      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      await expect(tx3)
+        .to.emit(stakingInstance, "WithdrawToken")
+        .withArgs(constants.AddressZero, 0, amount / 2);
+      await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      const tx4 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      await expect(tx4).to.be.revertedWith("Staking: zero balance");
+    });
+
+    it("should fail withdraw: UnsupportedTokenType", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, [0], { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+      // REWARD
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
+
+      // WITHDRAW PENALTY
+      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 5);
+      await expect(tx3).to.be.reverted;
+    });
+
+    it("should fail withdraw: balance exceeded", async function () {
+      const [owner, reciever] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc20Instance = await erc20Factory();
+
+      // SET RULE 1
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty: 5000, // 50%
+        recurrent: false,
+        active: true,
+      };
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE 1
+      await erc20Instance.mint(reciever.address, amount);
+      const balance1 = await erc20Instance.balanceOf(reciever.address);
+      expect(balance1).to.equal(amount);
+      await erc20Instance.connect(reciever).approve(stakingInstance.address, amount);
+
+      // DEPOSIT 1
+      const tx1 = await stakingInstance.connect(reciever).deposit(params, [0]);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, 1, reciever.address, startTimestamp, [0])
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(reciever.address, stakingInstance.address, amount)
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, reciever.address, amount, "0x");
+
+      const balance2 = await erc20Instance.balanceOf(reciever.address);
+      expect(balance2).to.equal(0);
+
+      // SET RULE 2
+      const stakeRule1: IRule = {
+        deposit: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 1, // ERC20
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty: 10000, // 100%
+        recurrent: false,
+        active: true,
+      };
+      const tx10 = stakingInstance.setRules([stakeRule1]);
+      await expect(tx10).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE 2
+      await erc20Instance.mint(owner.address, amount);
+      const balance10 = await erc20Instance.balanceOf(owner.address);
+      expect(balance10).to.equal(amount);
+      await erc20Instance.approve(stakingInstance.address, amount);
+
+      // TIME 1
+      const current = await time.latestBlock();
+      await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
+      // DEPOSIT 2
+      const tx11 = await stakingInstance.deposit(
+        {
+          nonce,
+          externalId: 2, // ruleId
+          expiresAt,
+          referrer: constants.AddressZero,
+        },
+        [0],
+      );
+      const startTimestamp1: number = (await time.latest()).toNumber();
+      await expect(tx11)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(2, 2, owner.address, startTimestamp1, [0])
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, amount)
+        .to.emit(stakingInstance, "TransferReceived")
+        .withArgs(stakingInstance.address, owner.address, amount, "0x");
+
+      const balance21 = await erc20Instance.balanceOf(owner.address);
+      expect(balance21).to.equal(0);
+
+      // REWARD 1
+      await erc20Instance.mint(stakingInstance.address, amount * (cycles - 1)); // not enough for penalty after
+      const tx21 = await stakingInstance.connect(reciever).receiveReward(1, true, true);
+      const endTimestamp1: number = (await time.latest()).toNumber();
+      await expect(tx21)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, reciever.address, endTimestamp1)
+        .to.emit(stakingInstance, "StakingFinish")
+        .withArgs(1, reciever.address, endTimestamp1, cycles)
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(stakingInstance.address, reciever.address, amount * cycles);
+
+      const balance3 = await erc20Instance.balanceOf(reciever.address);
+      expect(balance3).to.equal(amount * cycles + amount);
+
+      // REWARD 2
+      // await erc20Instance.mint(stakingInstance.address, amount * (cycles - 1)); // not enough for penalty
+      const tx22 = await stakingInstance.receiveReward(2, true, true);
+      const endTimestamp2: number = (await time.latest()).toNumber();
+      await expect(tx22).to.emit(stakingInstance, "StakingWithdraw").withArgs(2, owner.address, endTimestamp2);
+
+      const balance32 = await erc20Instance.balanceOf(owner.address);
+      expect(balance32).to.equal(0);
+
+      // WITHDRAW PENALTY
+      const tx3 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
+      await expect(tx3).to.be.revertedWith("Staking: balance exceeded");
+    });
+  });
   // todo test recurrent
 });

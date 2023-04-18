@@ -16,16 +16,18 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "./interfaces/IStaking.sol";
-import "../TopUp.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../utils/constants.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
 import "../../Exchange/referral/LinearReferral.sol";
+import "../../Exchange/ExchangeUtils.sol";
+import "../../utils/constants.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../TopUp.sol";
+
+import "./interfaces/IStaking.sol";
+import "../../utils/errors.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -44,7 +46,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
-  mapping(address => uint256) internal _penalties;
+  mapping(address /* contract */ => mapping(uint256 /* tokenId */ => uint256 /* amount */)) internal _penalties;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
@@ -192,13 +194,25 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         stake.activeDeposit = false;
 
         // Deduct the penalty from the stake amount if the multiplier is 0.
-        // ERC721\ERC998 deposit penalty not applicable (always 0%)
         depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
 
-        _penalties[depositItem.token] = multiplier == 0 ? (stakeAmount / 100) * (rule.penalty / 100) : 0;
+        // Store penalties
+        _penalties[depositItem.token][depositItem.tokenId] += multiplier == 0
+          ? (stakeAmount / 100) * (rule.penalty / 100)
+          : 0;
 
-        // Transfer the deposit Asset to the receiver.
-        spend(_toArray(depositItem), receiver);
+        // Penalty for ERC721\ERC998 deposit either 0% or 100%
+        if (
+          multiplier == 0 &&
+          rule.penalty == 10000 &&
+          (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998)
+        ) {
+          depositItem.amount = 0;
+          _penalties[depositItem.token][depositItem.tokenId] = 1;
+        } else {
+          // Transfer the deposit Asset to the receiver.
+          spend(_toArray(depositItem), receiver);
+        }
       } else {
         // Update the start timestamp of the stake.
         stake.startTimestamp = block.timestamp;
@@ -352,20 +366,31 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   }
 
   // WITHDRAW
-  event WithdrawToken(address token, uint256 amount);
+  event WithdrawToken(address token, uint256 tokenId, uint256 amount);
 
-  function withdrawToken(address token) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function withdrawToken(address token, uint256 tokenId, TokenType tokenType) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    uint256 totalBalance = _penalties[token][tokenId];
+    require(totalBalance != 0, "Staking: zero balance");
     address account = _msgSender();
-    uint256 totalBalance = _penalties[token];
-    if (totalBalance > 0) {
-      if (token == address(0)) {
-        Address.sendValue(payable(account), amount);
-      } else {
-        totalBalance = IERC20(token).balanceOf(address(this));
-        require(totalBalance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
-        SafeERC20.safeTransfer(IERC20(token), account, totalBalance);
-      }
-      emit WithdrawToken(token, totalBalance);
+
+    if (tokenType == TokenType.NATIVE) {
+      require(totalBalance <= address(this).balance, "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+    } else if (tokenType == TokenType.ERC20) {
+      require(totalBalance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+    } else if (tokenType == TokenType.ERC721 || tokenType == TokenType.ERC998) {
+      require(address(this) == IERC721(token).ownerOf(tokenId), "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+    } else if (tokenType == TokenType.ERC1155) {
+      require(totalBalance <= IERC1155(token).balanceOf(address(this), tokenId), "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+    } else {
+      // should never happen
+      revert UnsupportedTokenType();
     }
+    _penalties[token][tokenId] = 0;
+
+    emit WithdrawToken(token, tokenId, totalBalance);
   }
 }
