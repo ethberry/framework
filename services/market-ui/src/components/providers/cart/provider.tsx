@@ -2,7 +2,8 @@ import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { IProduct } from "@framework/types";
+import { IProduct, IUser } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { CartContext, ICartItem } from "./context";
@@ -17,6 +18,7 @@ export const CartProvider: FC<PropsWithChildren<ICartProviderProps>> = props => 
 
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
+  const user = useUser<IUser>();
 
   const { fn: fetchCartApi } = useApiCall(
     api =>
@@ -47,8 +49,10 @@ export const CartProvider: FC<PropsWithChildren<ICartProviderProps>> = props => 
   };
 
   useEffect(() => {
-    void fetchCart();
-  }, []);
+    if (user.isAuthenticated()) {
+      void fetchCart();
+    }
+  }, [user.isAuthenticated()]);
 
   const { fn: alterApi } = useApiCall(
     (api, values: { amount: number; product: IProduct }) => {
