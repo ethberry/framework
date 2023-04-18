@@ -2,20 +2,19 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 
-import { IToken, ContractEventType, ExchangeType } from "@framework/types";
+import { ContractEventType, IEventHistoryReport } from "@framework/types";
 import { formatEther } from "../../../../../utils/money";
 import { AddressLink } from "@gemunion/mui-scanner";
 
 export interface IEventDataViewProps {
-  row: IToken;
+  row: IEventHistoryReport;
 }
 
 // TODO add transactionHash ScannerLink
 export const ReportDataView: FC<IEventDataViewProps> = props => {
   const {
-    row: { exchange, template },
+    row: { eventData, eventType, items, price },
   } = props;
-  const { assets, eventData, eventType } = exchange![0].history!;
 
   switch (eventType) {
     case ContractEventType.Purchase:
@@ -26,8 +25,8 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
             const value = eventData[key];
             const showRaw = typeof value === "number" || typeof value === "string";
 
-            const itemAsset = exchange?.find(({ exchangeType }) => exchangeType === ExchangeType.ITEM);
-            const priceAsset = assets?.find(({ exchangeType }) => exchangeType === ExchangeType.PRICE);
+            const itemAsset = items[0];
+            const priceAsset = price[0];
 
             return (
               <Box key={key} sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
@@ -38,7 +37,7 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
                   {key === "item" ? (
                     <Box>
                       <Typography variant="body1">
-                        {template?.title} - {itemAsset?.amount}
+                        {itemAsset?.token?.template?.title} - {itemAsset?.amount}
                       </Typography>
                     </Box>
                   ) : key === "price" ? (
