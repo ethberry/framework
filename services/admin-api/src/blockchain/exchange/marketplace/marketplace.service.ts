@@ -43,7 +43,8 @@ export class MarketplaceService {
     );
     queryBuilder.leftJoinAndSelect("item.token", "item_token");
     queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_template.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.contract", "item_template_contract");
+    queryBuilder.leftJoinAndSelect("item.contract", "item_contract");
 
     queryBuilder.leftJoinAndMapMany(
       "history.price",
@@ -56,7 +57,8 @@ export class MarketplaceService {
     );
     queryBuilder.leftJoinAndSelect("price.token", "price_token");
     queryBuilder.leftJoinAndSelect("price_token.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_template.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.contract", "price_template_contract");
+    queryBuilder.leftJoinAndSelect("price.contract", "price_contract");
 
     queryBuilder.innerJoinAndMapOne(
       "history.contract",
