@@ -1,18 +1,25 @@
 import { FC, Fragment, useCallback } from "react";
 import { Button } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
-import { DataGridPremium, DataGridPremiumProps, gridClasses, GridRowParams } from "@mui/x-data-grid-premium";
+import {
+  DataGridPremium,
+  DataGridPremiumProps,
+  GridCellParams,
+  gridClasses,
+  GridRowParams,
+} from "@mui/x-data-grid-premium";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import type { IAssetComponent, IMarketplaceReportSearchDto, IToken } from "@framework/types";
+import type { IAssetComponent, IEventHistoryReport, IMarketplaceReportSearchDto } from "@framework/types";
 
 import { formatPrice } from "../../../../utils/money";
 import { MarketplaceReportSearchForm } from "./form";
 import { ReportDataView } from "./report-data-view";
+import { AddressLink } from "@gemunion/mui-scanner";
 
 export const MarketplaceReport: FC = () => {
   const {
@@ -24,7 +31,7 @@ export const MarketplaceReport: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePaginationModel,
-  } = useCollection<IToken, IMarketplaceReportSearchDto>({
+  } = useCollection<IEventHistoryReport, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
       query: "",
@@ -48,7 +55,7 @@ export const MarketplaceReport: FC = () => {
   };
 
   const getDetailPanelContent = useCallback<NonNullable<DataGridPremiumProps["getDetailPanelContent"]>>(
-    ({ row }: GridRowParams<IToken>) => <ReportDataView row={row} />,
+    ({ row }: GridRowParams<IEventHistoryReport>) => <ReportDataView row={row} />,
     [],
   );
 
@@ -69,6 +76,18 @@ export const MarketplaceReport: FC = () => {
       field: "title",
       headerName: formatMessage({ id: "form.labels.title" }),
       sortable: false,
+      flex: 1,
+      minWidth: 200
+    },
+    {
+      field: "from",
+      headerName: formatMessage({ id: "form.labels.from" }),
+      sortable: false,
+      renderCell: (params: GridCellParams<any, string>) => {
+        return (
+          <AddressLink address={params.value} length={18} />
+        );
+      },
       flex: 1,
       minWidth: 200
     },
@@ -120,13 +139,15 @@ export const MarketplaceReport: FC = () => {
         rowThreshold={0}
         getDetailPanelHeight={getDetailPanelHeight}
         getDetailPanelContent={getDetailPanelContent}
-        rows={rows.map((token: IToken) => ({
-          id: token.id,
-          title: token.template?.title,
-          price: token.exchange![0].history?.assets,
-          createdAt: token.createdAt,
-          exchange: token.exchange!,
-          template: token.template,
+        rows={rows.map((event: IEventHistoryReport) => ({
+          id: event.id,
+          title: event.items[0]?.token?.template?.title,
+          from: (event.eventData as any).from,
+          eventData: event.eventData,
+          eventType: event.eventType,
+          price: event.price,
+          createdAt: event.createdAt,
+          items: event.items,
         }))}
         // rows={rows}
         getRowHeight={() => "auto"}
