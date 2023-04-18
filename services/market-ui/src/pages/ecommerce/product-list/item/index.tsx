@@ -20,7 +20,7 @@ export const ProductItem: FC<IProductItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/products/${product.id}`}>
+      <CardActionArea component={RouterLink} to={`/ecommerce/products/${product.id}`}>
         <CardMedia className={classes.media} image={product.photos[0].imageUrl} title={product.photos[0].title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
