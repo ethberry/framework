@@ -68,7 +68,7 @@ export const MarketplaceReport: FC = () => {
   const columns = [
     {
       field: "tokenId",
-      headerName: formatMessage({ id: "form.labels.tokenId" }),
+      headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
       flex: 0
     },
@@ -141,7 +141,7 @@ export const MarketplaceReport: FC = () => {
         getDetailPanelContent={getDetailPanelContent}
         rows={rows.map((event: IEventHistoryReport) => ({
           id: event.id,
-          tokenId: event.items[0]?.token?.tokenId,
+          tokenId: event.items[0]?.token?.id,
           title: event.items[0]?.token?.template?.title,
           from: (event.eventData as any).from,
           eventData: event.eventData,
