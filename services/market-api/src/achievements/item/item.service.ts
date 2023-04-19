@@ -1,24 +1,23 @@
 import { Injectable } from "@nestjs/common";
-import { InjectEntityManager } from "@nestjs/typeorm";
-import { EntityManager } from "typeorm";
+import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
+import { EntityManager, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
-
-type AchievementItemReport = Array<{
-  achievementRuleId: number;
-  count: number;
-}>;
+import { AchievementItemEntity } from "./item.entity";
+import { AchievementItemReport, IAchievementsItemCountDto } from "./interfaces";
 
 @Injectable()
 export class AchievementItemService {
   constructor(
+    @InjectRepository(AchievementItemEntity)
+    private readonly achievementItemEntityRepository: Repository<AchievementItemReport>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async count(userEntity: UserEntity): Promise<AchievementItemReport> {
+  public async countByRule(userEntity: UserEntity): Promise<AchievementItemReport> {
     const queryString = `
       SELECT achievement_rule_id as achievementRuleId, count(*) as count
       FROM ${ns}.achievement_item item
@@ -27,5 +26,22 @@ export class AchievementItemService {
     `;
 
     return this.entityManager.query(queryString, [userEntity.id]) as Promise<AchievementItemReport>;
+  }
+
+  public async count(dto: IAchievementsItemCountDto, userEntity: UserEntity): Promise<number> {
+    const { achievementRuleId } = dto;
+    const queryBuilder = this.achievementItemEntityRepository.createQueryBuilder("item");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("item.userId = :userId", {
+      userId: userEntity.id,
+    });
+
+    queryBuilder.andWhere("item.achievementRuleId = :achievementRuleId", {
+      achievementRuleId,
+    });
+
+    return queryBuilder.getCount();
   }
 }
