@@ -259,6 +259,7 @@
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
+      "redeem": "Redeem",
       "release": "Release",
       "save": "Save",
       "search": "Search",
@@ -534,10 +535,10 @@
       }
     },
     "achievements": {
-      "title": "Achievements",
       "report": {
         "title": "Achievements report"
-      }
+      },
+      "title": "Achievements"
     },
     "breed": {
       "matron": "Matron",

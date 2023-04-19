@@ -6,18 +6,19 @@ import { ns } from "@framework/constants";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementItemEntity } from "./item.entity";
-import { AchievementItemReport, IAchievementsItemCountDto } from "./interfaces";
+import { IAchievementsItemCountDto } from "./interfaces";
+import { IAchievementItemReport } from "@framework/types";
 
 @Injectable()
 export class AchievementItemService {
   constructor(
     @InjectRepository(AchievementItemEntity)
-    private readonly achievementItemEntityRepository: Repository<AchievementItemReport>,
+    private readonly achievementItemEntityRepository: Repository<AchievementItemEntity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async countByRule(userEntity: UserEntity): Promise<AchievementItemReport> {
+  public async countByRule(userEntity: UserEntity): Promise<Array<IAchievementItemReport>> {
     const queryString = `
       SELECT achievement_rule_id as achievementRuleId, count(*) as count
       FROM ${ns}.achievement_item item
@@ -25,7 +26,7 @@ export class AchievementItemService {
       GROUP BY achievement_rule_id
     `;
 
-    return this.entityManager.query(queryString, [userEntity.id]) as Promise<AchievementItemReport>;
+    return this.entityManager.query(queryString, [userEntity.id]) as Promise<Array<IAchievementItemReport>>;
   }
 
   public async count(dto: IAchievementsItemCountDto, userEntity: UserEntity): Promise<number> {

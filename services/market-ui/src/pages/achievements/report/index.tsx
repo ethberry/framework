@@ -1,12 +1,15 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { AchievementRedeemButton } from "../../../components/buttons/achievements/redeem";
-import { IAchievementLevel } from "@framework/types";
+import { IAchievementRule, IAchievementItemReport } from "@framework/types";
 
 export const AchievementReport: FC = () => {
+  const [rules, setRules] = useState<Array<IAchievementRule>>([]);
+  const [count, setCount] = useState<Array<IAchievementItemReport>>([]);
+
   const { fn: getAchievementsRules } = useApiCall(async api => {
     return api.fetchJson({
       url: "/achievements/rules",
@@ -20,8 +23,12 @@ export const AchievementReport: FC = () => {
   });
 
   useEffect(() => {
-    void getAchievementsRules().then(console.info);
-    void getAchievementsItemCount().then(console.info);
+    void getAchievementsRules().then(({ rows }) => {
+      setRules(rows);
+    });
+    void getAchievementsItemCount().then(rows => {
+      setCount(rows);
+    });
   }, []);
 
   return (
@@ -31,9 +38,14 @@ export const AchievementReport: FC = () => {
       <PageHeader message="pages.achievements.report.title" />
 
       <Grid container>
-        <Grid item>
-          <AchievementRedeemButton achievementLevel={{} as IAchievementLevel} />
-        </Grid>
+        {rules.map(rule => (
+          <Grid item xs={6} key={rule.id}>
+            <AchievementRedeemButton
+              achievementRule={rule}
+              count={count.find(item => item.achievementRuleId === rule.id)!}
+            />
+          </Grid>
+        ))}
       </Grid>
     </Grid>
   );
