@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { IAchievementsItemSearchDto } from "@framework/types";
+import { IAchievementsReportSearchDto } from "@framework/types";
 import { AchievementItemEntity } from "./item.entity";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class AchievementItemService {
     private readonly achievementItemEntityRepository: Repository<AchievementItemEntity>,
   ) {}
 
-  public async search(dto: IAchievementsItemSearchDto): Promise<[Array<AchievementItemEntity>, number]> {
+  public async search(dto: IAchievementsReportSearchDto): Promise<[Array<AchievementItemEntity>, number]> {
     const { account, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.achievementItemEntityRepository.createQueryBuilder("item");

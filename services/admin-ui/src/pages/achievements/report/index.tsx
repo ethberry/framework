@@ -77,9 +77,9 @@ export const AchievementReport: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.report"]} />
+      <Breadcrumbs path={["dashboard", "achievements", "achievements.report"]} />
 
-      <PageHeader message="pages.staking.report.title">
+      <PageHeader message="pages.achievements.report.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
