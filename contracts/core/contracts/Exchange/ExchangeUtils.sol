@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
@@ -23,7 +24,7 @@ import "../utils/errors.sol";
 
 import "./interfaces/IAsset.sol";
 
-contract ExchangeUtils {
+contract ExchangeUtils is ReentrancyGuard {
   using Address for address;
   using SafeERC20 for IERC20;
 
@@ -37,7 +38,7 @@ contract ExchangeUtils {
     address account,
     address receiver,
     DisabledTokenTypes memory disabled
-  ) internal {
+  ) internal nonReentrant {
     uint256 length = price.length;
 
     uint256 totalAmount;
@@ -78,7 +79,7 @@ contract ExchangeUtils {
     }
   }
 
-  function spend(Asset[] memory price, address receiver) internal {
+  function spend(Asset[] memory price, address receiver) internal nonReentrant {
     uint256 length = price.length;
 
     uint256 totalAmount;
@@ -120,7 +121,10 @@ contract ExchangeUtils {
 
       if (item.tokenType == TokenType.NATIVE) {
         // If the token is an NATIVE token, transfer tokens to the receiver.
-        spend(_toArray(item), account);
+        Address.sendValue(payable(account), item.amount);
+        emit PaymentEthSent(account, item.amount);
+        // Calling a `nonReentrant` function from another "nonReentrant" function is not supported.
+        // spend(_toArray(item), account);
         // If the `Asset` is an ERC20 token.
       } else if (item.tokenType == TokenType.ERC20) {
         if (_isERC1363Supported(account, item.token)) {
