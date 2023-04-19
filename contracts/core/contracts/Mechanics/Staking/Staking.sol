@@ -55,6 +55,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
+  event WithdrawBalance(address token, uint256 tokenId, uint256 amount);
 
   constructor(uint256 maxStake) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -180,21 +181,27 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // counts only FULL stake cycles
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
 
+    // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
     for (uint256 i = 0; i < lengthDeposit; i++) {
       Asset memory depositItem = _stakes[stakeId].deposit[i];
 
       uint256 stakeAmount = depositItem.amount;
 
-      // If withdrawDeposit is true, withdraw the deposit.
-      if (withdrawDeposit) {
+      // If withdrawDeposit flag is true OR
+      // If Reward multiplier > 0 AND Rule is not recurrent OR
+      // If Stake cycles > 0 AND breakLastPeriod flag is true
+      // Withdraw initial Deposit
+      if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
         emit StakingWithdraw(stakeId, receiver, block.timestamp);
         stake.activeDeposit = false;
 
         // Deduct the penalty from the stake amount if the multiplier is 0.
-        depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
+        depositItem.amount = (multiplier == 0 && stake.cycles == 0)
+          ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100))
+          : stakeAmount;
 
         // Store penalties
         _penalties[depositItem.token][depositItem.tokenId] += multiplier == 0
@@ -219,11 +226,14 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       }
     }
 
-    if (multiplier != 0) {
-      // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    if (multiplier > 0) {
+      // Increment stake's cycle count
+      stake.cycles++;
       // Emit an event indicating that staking has finished.
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
+      // Iterate by Array<reward>
       uint256 length = rule.reward.length;
       for (uint256 j = 0; j < length; j++) {
         // Create a new Asset object representing the reward.
@@ -249,15 +259,22 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
               acquire(_toArray(rewardItem), receiver);
             }
           }
-        } else {
+        } else if (rewardItem.tokenType == TokenType.ERC1155) {
           // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
           acquire(_toArray(rewardItem), receiver);
+        } else {
+          // should never happen
+          revert UnsupportedTokenType();
         }
       }
     }
-    // If the multiplier is zero and the withdrawDeposit and breakLastPeriod flags are also false
+    // IF the multiplier is zero
+    // AND
+    // withdrawDeposit and breakLastPeriod flags are false
+    // AND staking rule is recurrent
     // revert the transaction.
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");
+    if (multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod)
+      revert("Staking: first period not yet finished");
   }
 
   /**
@@ -270,9 +287,15 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   function _calculateRewardMultiplier(
     uint256 startTimestamp,
     uint256 finishTimestamp,
-    uint256 period
+    uint256 period,
+    bool recurrent
   ) internal pure virtual returns (uint256) {
-    return (finishTimestamp - startTimestamp) / period;
+    uint256 multiplier = (finishTimestamp - startTimestamp) / period;
+    // If staking rule is not recurrent, limit reward to 1 cycle
+    if (!recurrent && multiplier > 1) {
+      return 1;
+    }
+    return multiplier;
   }
 
   /**
@@ -366,31 +389,40 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   }
 
   // WITHDRAW
-  event WithdrawToken(address token, uint256 tokenId, uint256 amount);
 
-  function withdrawToken(address token, uint256 tokenId, TokenType tokenType) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    uint256 totalBalance = _penalties[token][tokenId];
-    require(totalBalance != 0, "Staking: zero balance");
+  /**
+   * @dev Withdraw the penalty balance for given token address and tokenId
+   * @param token The address of token contract.
+   * @param tokenId The ID of the token to withdraw.
+   * @param tokenType The type of token to withdraw.
+   */
+  function withdrawBalance(address token, uint256 tokenId, TokenType tokenType) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    // Retrieve balance from storage.
+
+    uint256 balance = _penalties[token][tokenId];
+    require(balance != 0, "Staking: zero balance");
     address account = _msgSender();
 
+    // Emit an event indicating that penalty balance has withdrawn.
+    emit WithdrawBalance(token, tokenId, balance);
+    // clean penalty balance in _penalties mapping storage
+    _penalties[token][tokenId] = 0;
+
     if (tokenType == TokenType.NATIVE) {
-      require(totalBalance <= address(this).balance, "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+      require(balance <= address(this).balance, "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC20) {
-      require(totalBalance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+      require(balance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC721 || tokenType == TokenType.ERC998) {
       require(address(this) == IERC721(token).ownerOf(tokenId), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC1155) {
-      require(totalBalance <= IERC1155(token).balanceOf(address(this), tokenId), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, totalBalance)), account);
+      require(balance <= IERC1155(token).balanceOf(address(this), tokenId), "Staking: balance exceeded");
+      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else {
       // should never happen
       revert UnsupportedTokenType();
     }
-    _penalties[token][tokenId] = 0;
-
-    emit WithdrawToken(token, tokenId, totalBalance);
   }
 }

@@ -15,7 +15,7 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, templateId, tokenId, tokenIds } from "../../constants";
+import { expiresAt, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -24,6 +24,50 @@ import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
+
+/*
+receiveReward(stakeId, withdrawDeposit, breakLastPeriod)
+Rule { deposit reward content period penalty recurrent active }
+
+1. Calculate multiplier (count full periods)
+
+2. Deposit withdraw
+  2.1 If withdrawDeposit || ( !rule.recurrent && multiplier > 0 ) || ( multiplier > 0 AND breakLastPeriod )
+
+    2.1.1 If multiplier == 0                       -> deduct penalty from deposit
+    2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
+
+  2.2 If !withdrawDeposit && rule.recurrent && multiplier > 0 && !breakLastPeriod
+                                                   -> update stake.startTimestamp = block.timestamp
+
+3. Reward transfer
+  3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
+
+4. If multiplier == 0 && !withdrawDeposit AND !breakLastPeriod AND rule.recurrent
+                                                   -> revert with Error ( nothing to do here )
+
+*/
+/*
+MULTIPLIER - RECURRENT - WITHDRAW_DEPOSIT - BREAK_LAST_PERIOD === DECISION
+   0            0             0                   0           === WITHDRAW DEPOSIT
+
+   1            0             0                   0           === WITHDRAW DEPOSIT AND REWARD
+   0            1             0                   0           === REVERT (NOTHING TO DO)
+   0            0             1                   0           === WITHDRAW DEPOSIT
+   0            0             0                   1           === WITHDRAW DEPOSIT
+
+   1            1             0                   0           === WITHDRAW REWARD AND SET NEW TIME
+   0            1             1                   0           === WITHDRAW DEPOSIT
+   0            0             1                   1           === WITHDRAW DEPOSIT
+   1            0             0                   1           === WITHDRAW DEPOSIT
+
+   1            1             1                   0           === WITHDRAW DEPOSIT AND REWARD
+   0            1             1                   1           === WITHDRAW DEPOSIT
+   1            0             1                   1           === WITHDRAW DEPOSIT AND REWARD
+   1            1             0                   1           === WITHDRAW DEPOSIT AND REWARD
+
+   1            1             1                   1           === WITHDRAW DEPOSIT AND REWARD
+*/
 
 describe("Staking", function () {
   const period = 300;
@@ -87,7 +131,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -122,7 +166,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -157,7 +201,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -191,7 +235,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -224,7 +268,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -257,7 +301,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -294,7 +338,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -338,7 +382,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: false,
       };
 
@@ -373,7 +417,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -410,7 +454,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -451,7 +495,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -464,8 +508,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -512,7 +556,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -525,8 +569,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -573,7 +617,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -586,8 +630,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -612,8 +656,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .withArgs(1, receiver.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, receiver.address, endTimestamp, cycles)
-        .to.changeEtherBalance(receiver, amount * cycles + amount);
+        .withArgs(1, receiver.address, endTimestamp, cycles);
+      await expect(tx2).to.changeEtherBalance(receiver, amount * cycles + amount);
 
       const tx3 = stakingInstance.connect(receiver).receiveReward(1, true, true);
       await expect(tx3).to.be.revertedWith("Staking: deposit withdrawn already");
@@ -645,7 +689,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -669,6 +713,54 @@ describe("Staking", function () {
       const tx1 = stakingInstance.deposit(params, [2]);
       await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
+
+    it("should fail first period not yet finished", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty,
+        recurrent: true,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+      // REWARD
+
+      const tx2 = stakingInstance.receiveReward(1, false, false);
+      await expect(tx2).to.be.revertedWith("Staking: first period not yet finished");
+    });
   });
 
   describe("Permutations", function () {
@@ -690,7 +782,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -703,8 +795,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -745,7 +837,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -758,8 +850,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -784,8 +876,162 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, owner.address, endTimestamp, cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount * cycles + amount, -amount * cycles - amount]);
+        .withArgs(1, owner.address, endTimestamp, cycles);
+      await expect(tx2).to.changeEtherBalances(
+        [owner, stakingInstance],
+        [amount * cycles + amount, -amount * cycles - amount],
+      );
+    });
+
+    it("should stake NATIVE & receive NATIVE (not recurrent)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty,
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // TIME
+      const current = await time.latestBlock();
+      await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
+      // REWARD
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
+
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(stakingInstance, "StakingFinish")
+        .withArgs(1, owner.address, endTimestamp, 1);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount + amount, -amount - amount]);
+    });
+
+    it("should stake NATIVE & receive NATIVE (recurrent)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty: 5000, // 50%
+        recurrent: true,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      // FUND REWARD
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
+
+      // TIME 1
+      const current1 = await time.latestBlock();
+      await time.advanceBlockTo(current1.add(web3.utils.toBN(period + 1)));
+
+      // REWARD 1
+      const tx2 = await stakingInstance.receiveReward(1, false, false);
+      const endTimestamp: number = (await time.latest()).toNumber();
+
+      await expect(tx2).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp, 1);
+
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      // TIME 2
+      const current2 = await time.latestBlock();
+      await time.advanceBlockTo(current2.add(web3.utils.toBN(period + 1)));
+
+      // REWARD 2
+      const tx3 = await stakingInstance.receiveReward(1, false, false);
+      const endTimestamp2: number = (await time.latest()).toNumber();
+      await expect(tx3).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp2, 1);
+      await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      // REWARD 3
+      const tx4 = await stakingInstance.receiveReward(1, false, true);
+      const endTimestamp3: number = (await time.latest()).toNumber();
+      await expect(tx4).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp3);
+      await expect(tx4).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
     });
 
     it("should stake NATIVE & receive ERC20", async function () {
@@ -814,7 +1060,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -827,8 +1073,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -847,8 +1093,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
-        .withArgs(stakingInstance.address, owner.address, amount * cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .withArgs(stakingInstance.address, owner.address, amount * cycles);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       const balance2 = await erc20Instance.balanceOf(owner.address);
       expect(balance2).to.equal(amount * cycles);
@@ -863,7 +1109,7 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      // Add Consumer to VRFV2
+      // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
@@ -887,7 +1133,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -900,8 +1146,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -915,8 +1161,8 @@ describe("Staking", function () {
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
-        .to.emit(vrfInstance, "RandomWordsRequested")
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .to.emit(vrfInstance, "RandomWordsRequested");
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // RANDOM
       await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
@@ -952,7 +1198,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -965,8 +1211,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -981,8 +1227,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
-        .withArgs(constants.AddressZero, owner.address, tokenId)
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .withArgs(constants.AddressZero, owner.address, tokenId);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       const balance = await erc721SimpleInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
@@ -1026,7 +1272,7 @@ describe("Staking", function () {
         ],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1039,8 +1285,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -1055,8 +1301,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(constants.AddressZero, owner.address, tokenId)
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .withArgs(constants.AddressZero, owner.address, tokenId);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       const balance = await mysteryboxInstance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
@@ -1090,7 +1336,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1103,8 +1349,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       const current = await time.latestBlock();
@@ -1119,8 +1365,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
-        .withArgs(stakingInstance.address, constants.AddressZero, owner.address, tokenId, amount * cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .withArgs(stakingInstance.address, constants.AddressZero, owner.address, tokenId, amount * cycles);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       const balance = await erc1155Instance.balanceOf(owner.address, 1);
       expect(balance).to.equal(amount * cycles);
@@ -1152,7 +1398,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1202,8 +1448,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, owner.address, endTimestamp, cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
+        .withArgs(1, owner.address, endTimestamp, cycles);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
 
       const balance3 = await erc20Instance.balanceOf(owner.address);
       expect(balance3).to.equal(amount);
@@ -1235,7 +1481,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1293,7 +1539,7 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      // Add Consumer to VRFV2
+      // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
@@ -1317,7 +1563,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1395,7 +1641,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1482,7 +1728,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1576,7 +1822,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1671,7 +1917,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1691,9 +1937,9 @@ describe("Staking", function () {
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(stakingInstance.address, owner.address, amount, "0x");
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       const balance2 = await erc20Instance.balanceOf(owner.address);
       expect(balance2).to.equal(0);
@@ -1715,8 +1961,8 @@ describe("Staking", function () {
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(constants.AddressZero, owner.address, tokenId)
         .to.emit(erc20Instance, "Transfer")
-        .withArgs(stakingInstance.address, owner.address, amount)
-        .to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+        .withArgs(stakingInstance.address, owner.address, amount);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       const balance3 = await erc721SimpleInstance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles);
@@ -1753,7 +1999,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1830,7 +2076,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1878,8 +2124,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, owner.address, endTimestamp, cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
+        .withArgs(1, owner.address, endTimestamp, cycles);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
 
       const balance3 = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance3).to.equal(1);
@@ -1912,7 +2158,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -1969,7 +2215,7 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      // Add Consumer to VRFV2
+      // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
@@ -1993,7 +2239,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2067,7 +2313,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2152,7 +2398,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2227,7 +2473,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2299,7 +2545,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2347,8 +2593,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, owner.address, endTimestamp, cycles)
-        .to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
+        .withArgs(1, owner.address, endTimestamp, cycles);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount * cycles, -amount * cycles]);
 
       const balance3 = await erc1155Instance.balanceOf(owner.address, 1);
       expect(balance3).to.equal(amount);
@@ -2381,7 +2627,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2439,7 +2685,7 @@ describe("Staking", function () {
       await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
       await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
 
-      // Add Consumer to VRFV2
+      // Add Consumer to VRF_V2
       const tx02 = vrfInstance.addConsumer(1, erc721RandomInstance.address);
       await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721RandomInstance.address);
 
@@ -2463,7 +2709,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2539,7 +2785,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2624,7 +2870,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2698,7 +2944,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2771,7 +3017,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2784,8 +3030,8 @@ describe("Staking", function () {
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
 
@@ -2835,7 +3081,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2906,7 +3152,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -2973,7 +3219,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 10000, // 100%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3037,7 +3283,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3126,7 +3372,7 @@ describe("Staking", function () {
         content: [[], [], [], []],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3246,7 +3492,7 @@ describe("Staking", function () {
         content: [[], [], [], []],
         period,
         penalty: 10000, // 100%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3359,7 +3605,7 @@ describe("Staking", function () {
         content: [[], [], [], []],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3430,21 +3676,21 @@ describe("Staking", function () {
       expect(balance42).to.equal(amount / 2);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
       await expect(tx3)
-        .to.emit(stakingInstance, "WithdrawToken")
+        .to.emit(stakingInstance, "WithdrawBalance")
         .withArgs(constants.AddressZero, 0, amount / 2);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
-      const tx4 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
+      const tx4 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
       await expect(tx4)
-        .to.emit(stakingInstance, "WithdrawToken")
+        .to.emit(stakingInstance, "WithdrawBalance")
         .withArgs(erc20Instance.address, 0, amount / 2);
 
-      const tx5 = stakingInstance.withdrawToken(erc721SimpleInstance.address, tokenId, 2);
+      const tx5 = stakingInstance.withdrawBalance(erc721SimpleInstance.address, tokenId, 2);
       await expect(tx5).to.be.revertedWith("Staking: zero balance");
 
-      const tx6 = stakingInstance.withdrawToken(erc1155Instance.address, tokenId, 4);
+      const tx6 = stakingInstance.withdrawBalance(erc1155Instance.address, tokenId, 4);
       await expect(tx6)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
@@ -3499,7 +3745,7 @@ describe("Staking", function () {
         content: [[], [], [], []],
         period,
         penalty: 10000, // 100%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3561,19 +3807,19 @@ describe("Staking", function () {
       expect(balance42).to.equal(0);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
-      await expect(tx3).to.emit(stakingInstance, "WithdrawToken").withArgs(constants.AddressZero, 0, amount);
+      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
+      await expect(tx3).to.emit(stakingInstance, "WithdrawBalance").withArgs(constants.AddressZero, 0, amount);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
-      const tx4 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
-      await expect(tx4).to.emit(stakingInstance, "WithdrawToken").withArgs(erc20Instance.address, 0, amount);
+      const tx4 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
+      await expect(tx4).to.emit(stakingInstance, "WithdrawBalance").withArgs(erc20Instance.address, 0, amount);
 
-      const tx5 = stakingInstance.withdrawToken(erc721SimpleInstance.address, tokenId, 2);
+      const tx5 = stakingInstance.withdrawBalance(erc721SimpleInstance.address, tokenId, 2);
       await expect(tx5)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(stakingInstance.address, owner.address, tokenId);
 
-      const tx6 = stakingInstance.withdrawToken(erc1155Instance.address, tokenId, 4);
+      const tx6 = stakingInstance.withdrawBalance(erc1155Instance.address, tokenId, 4);
       await expect(tx6)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount);
@@ -3583,7 +3829,7 @@ describe("Staking", function () {
       const [owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
-      const tx0 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      const tx0 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
       await expect(tx0).to.be.revertedWith("Staking: zero balance");
 
       const stakeRule: IRule = {
@@ -3599,14 +3845,14 @@ describe("Staking", function () {
           {
             tokenType: 0, // NATIVE
             token: constants.AddressZero,
-            tokenId,
+            tokenId: 0,
             amount,
           },
         ],
         content: [[]],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3615,12 +3861,12 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE
-      const tx1 = await stakingInstance.deposit(params, [0], { value: amount });
+      const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       // REWARD
@@ -3632,13 +3878,13 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
       await expect(tx3)
-        .to.emit(stakingInstance, "WithdrawToken")
+        .to.emit(stakingInstance, "WithdrawBalance")
         .withArgs(constants.AddressZero, 0, amount / 2);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
-      const tx4 = stakingInstance.withdrawToken(constants.AddressZero, 0, 0);
+      const tx4 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
       await expect(tx4).to.be.revertedWith("Staking: zero balance");
     });
 
@@ -3660,14 +3906,14 @@ describe("Staking", function () {
           {
             tokenType: 0, // NATIVE
             token: constants.AddressZero,
-            tokenId,
+            tokenId: 0,
             amount,
           },
         ],
         content: [[]],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
 
@@ -3676,12 +3922,12 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE
-      const tx1 = await stakingInstance.deposit(params, [0], { value: amount });
+      const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
-        .to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
       // TIME
       // REWARD
@@ -3689,16 +3935,15 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
-
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawToken(constants.AddressZero, 0, 5);
+      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 5);
       await expect(tx3).to.be.reverted;
     });
 
     it("should fail withdraw: balance exceeded", async function () {
-      const [owner, reciever] = await ethers.getSigners();
+      const [owner, receiver] = await ethers.getSigners();
 
       const stakingInstance = await factory();
       const erc20Instance = await erc20Factory();
@@ -3724,30 +3969,30 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 5000, // 50%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       // STAKE 1
-      await erc20Instance.mint(reciever.address, amount);
-      const balance1 = await erc20Instance.balanceOf(reciever.address);
+      await erc20Instance.mint(receiver.address, amount);
+      const balance1 = await erc20Instance.balanceOf(receiver.address);
       expect(balance1).to.equal(amount);
-      await erc20Instance.connect(reciever).approve(stakingInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(stakingInstance.address, amount);
 
       // DEPOSIT 1
-      const tx1 = await stakingInstance.connect(reciever).deposit(params, [0]);
+      const tx1 = await stakingInstance.connect(receiver).deposit(params, tokenIdsZero);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(1, 1, reciever.address, startTimestamp, [0])
+        .withArgs(1, 1, receiver.address, startTimestamp, tokenIdsZero)
         .to.emit(erc20Instance, "Transfer")
-        .withArgs(reciever.address, stakingInstance.address, amount)
+        .withArgs(receiver.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
-        .withArgs(stakingInstance.address, reciever.address, amount, "0x");
+        .withArgs(stakingInstance.address, receiver.address, amount, "0x");
 
-      const balance2 = await erc20Instance.balanceOf(reciever.address);
+      const balance2 = await erc20Instance.balanceOf(receiver.address);
       expect(balance2).to.equal(0);
 
       // SET RULE 2
@@ -3771,7 +4016,7 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 10000, // 100%
-        recurrent: false,
+        recurrent: true,
         active: true,
       };
       const tx10 = stakingInstance.setRules([stakeRule1]);
@@ -3795,12 +4040,12 @@ describe("Staking", function () {
           expiresAt,
           referrer: constants.AddressZero,
         },
-        [0],
+        tokenIdsZero,
       );
       const startTimestamp1: number = (await time.latest()).toNumber();
       await expect(tx11)
         .to.emit(stakingInstance, "StakingStart")
-        .withArgs(2, 2, owner.address, startTimestamp1, [0])
+        .withArgs(2, 2, owner.address, startTimestamp1, tokenIdsZero)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, stakingInstance.address, amount)
         .to.emit(stakingInstance, "TransferReceived")
@@ -3811,17 +4056,17 @@ describe("Staking", function () {
 
       // REWARD 1
       await erc20Instance.mint(stakingInstance.address, amount * (cycles - 1)); // not enough for penalty after
-      const tx21 = await stakingInstance.connect(reciever).receiveReward(1, true, true);
+      const tx21 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp1: number = (await time.latest()).toNumber();
       await expect(tx21)
         .to.emit(stakingInstance, "StakingWithdraw")
-        .withArgs(1, reciever.address, endTimestamp1)
+        .withArgs(1, receiver.address, endTimestamp1)
         .to.emit(stakingInstance, "StakingFinish")
-        .withArgs(1, reciever.address, endTimestamp1, cycles)
+        .withArgs(1, receiver.address, endTimestamp1, cycles)
         .to.emit(erc20Instance, "Transfer")
-        .withArgs(stakingInstance.address, reciever.address, amount * cycles);
+        .withArgs(stakingInstance.address, receiver.address, amount * cycles);
 
-      const balance3 = await erc20Instance.balanceOf(reciever.address);
+      const balance3 = await erc20Instance.balanceOf(receiver.address);
       expect(balance3).to.equal(amount * cycles + amount);
 
       // REWARD 2
@@ -3834,9 +4079,8 @@ describe("Staking", function () {
       expect(balance32).to.equal(0);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawToken(erc20Instance.address, 0, 1);
+      const tx3 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
       await expect(tx3).to.be.revertedWith("Staking: balance exceeded");
     });
   });
-  // todo test recurrent
 });
