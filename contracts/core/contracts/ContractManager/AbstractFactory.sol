@@ -6,6 +6,8 @@
 
 pragma solidity ^0.8.13;
 
+import "@gemunion/contracts-misc/contracts/constants.sol";
+
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
@@ -15,11 +17,6 @@ import "@openzeppelin/contracts/utils/Create2.sol";
 import "../utils/constants.sol";
 
 abstract contract AbstractFactory is EIP712, AccessControl {
-  bytes32 constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 constant MINTER_ROLE = keccak256("MINTER_ROLE");
-  bytes32 constant SNAPSHOT_ROLE = keccak256("SNAPSHOT_ROLE");
-  bytes32 constant METADATA_ROLE = keccak256("METADATA_ROLE");
-
   using ECDSA for bytes32;
   using EnumerableSet for EnumerableSet.AddressSet;
 
