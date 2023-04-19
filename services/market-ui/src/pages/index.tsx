@@ -14,6 +14,7 @@ import { integrationsRoutes } from "./integrations/routes";
 import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
+import { achievementsRoutes } from "./achievements/routes";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       ...integrationsRoutes,
       ...exchangeRoutes,
       ...ecommerceRoutes,
+      ...achievementsRoutes,
       {
         path: "/error/:error",
         element: <Error />,

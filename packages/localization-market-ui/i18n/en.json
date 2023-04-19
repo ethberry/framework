@@ -27,7 +27,6 @@
     "allowance": "Allowance",
     "amount": "Set token amount",
     "auction": "Sell `{title}` on auction",
-    "lend": "Lend token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -38,6 +37,7 @@
     "fund": "Fund",
     "get-reward": "Receive reward",
     "join": "Join",
+    "lend": "Lend token",
     "penalty": "Penalty: {item}% of deposit {description}",
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
@@ -81,11 +81,6 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "lendType": {
-      "SHARE25": "Share 25/75",
-      "SHARE50": "Share 50/50",
-      "SHARE75": "Share 75/25"
-    },
     "durationUnit": {
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
       "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
@@ -111,8 +106,8 @@
       "contract": "Contract",
       "data": "Data",
       "endTimestamp": "End date",
-      "externalId": "External ID",
       "expires": "Lend expires",
+      "externalId": "External ID",
       "from": "From",
       "fromAddress": "From address",
       "fromTokenId": "From token ID",
@@ -175,6 +170,11 @@
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "lendType": {
+      "SHARE25": "Share 25/75",
+      "SHARE50": "Share 50/50",
+      "SHARE75": "Share 75/25"
     },
     "merchantStatus": {
       "ACTIVE": "Active",
@@ -239,7 +239,6 @@
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
-      "lend": "Lend token",
       "buy": "Buy now!",
       "cancel": "Cancel",
       "checkout": "Checkout",
@@ -254,6 +253,7 @@
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
+      "lend": "Lend token",
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
@@ -288,7 +288,6 @@
       "addressLine2": "Address (line 2)",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
-      "contract": "Contract",
       "categoryId": "categoryId",
       "categoryIds": "Category",
       "chainId": "Chain",
@@ -296,6 +295,7 @@
       "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
+      "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractTemplate": "Template",
@@ -328,9 +328,9 @@
       "isDefault": "Make default",
       "item": "Item",
       "language": "Language",
-      "level": "Level",
       "lendType": "Lend Type",
       "rentRule": "Rent Rule",
+      "level": "Level",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -419,13 +419,13 @@
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
-      "lend": "Lend",
       "cancel": "Cancel",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",
+      "lend": "Lend",
       "redeem": "Redeem",
       "releasable": "Check releasable amount",
       "release": "Release",
@@ -536,6 +536,12 @@
         "insufficient": "Insufficient {symbol} balance"
       }
     },
+    "achievements": {
+      "title": "Achievements",
+      "report": {
+        "title": "Achievements report"
+      }
+    },
     "breed": {
       "matron": "Matron",
       "sire": "Sire",
@@ -576,6 +582,10 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "achievements": {
+        "report": "Report",
+        "title": "Achievements"
+      },
       "ecommerce": {
         "checkout": "Checkout",
         "orders": "Orders",
@@ -631,7 +641,6 @@
       "title": "Ecommerce"
     },
     "erc1155": {
-      "title": "ERC1155",
       "contract": {
         "title": "ERC1155 Contract: {title}"
       },
@@ -645,6 +654,7 @@
       "templates": {
         "title": "ERC1155 Templates"
       },
+      "title": "ERC1155",
       "token": {
         "price": "Base price: {amount}",
         "title": "ERC1155 Token: {title}"
@@ -654,7 +664,6 @@
       }
     },
     "erc721": {
-      "title": "ERC721",
       "contract": {
         "title": "ERC721 Contract: {title}"
       },
@@ -668,6 +677,7 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "token": {
         "genes": "Genes",
         "genesis": "Genesis",
@@ -685,7 +695,6 @@
       }
     },
     "erc998": {
-      "title": "ERC998",
       "contract": {
         "title": "ERC998 Contract: {title}"
       },
@@ -699,6 +708,7 @@
       "templates": {
         "title": "ERC998 Templates"
       },
+      "title": "ERC998",
       "token": {
         "genesis": "Genesis",
         "genes": "Genes",
@@ -792,7 +802,6 @@
       "title": "Merchants"
     },
     "mystery": {
-      "title": "Mystery",
       "box": {
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"
@@ -806,6 +815,7 @@
       "contracts": {
         "title": "Mystery Contracts"
       },
+      "title": "Mystery",
       "token": {
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",

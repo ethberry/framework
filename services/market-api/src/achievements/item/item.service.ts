@@ -1,43 +1,31 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { InjectEntityManager } from "@nestjs/typeorm";
+import { EntityManager } from "typeorm";
 
-import { AchievementItemEntity } from "./item.entity";
+import { ns } from "@framework/constants";
+
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { IAchievementsItemCountDto } from "./interfaces";
+
+type AchievementItemReport = Array<{
+  achievementRuleId: number;
+  count: number;
+}>;
 
 @Injectable()
 export class AchievementItemService {
   constructor(
-    @InjectRepository(AchievementItemEntity)
-    private readonly achievementItemEntityRepository: Repository<AchievementItemEntity>,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
-  public async count(dto: IAchievementsItemCountDto, userEntity: UserEntity): Promise<number> {
-    const { achievementType } = dto;
+  public async count(userEntity: UserEntity): Promise<AchievementItemReport> {
+    const queryString = `
+      SELECT achievement_rule_id as achievementRuleId, count(*) as count
+      FROM ${ns}.achievement_item item
+      WHERE item.user_id = $1
+      GROUP BY achievement_rule_id
+    `;
 
-    const queryBuilder = this.achievementItemEntityRepository.createQueryBuilder("item");
-
-    queryBuilder.leftJoin("item.achievementRule", "rule");
-
-    queryBuilder.select();
-
-    queryBuilder.andWhere("item.userId = :userId", {
-      userId: userEntity.id,
-    });
-
-    if (achievementType) {
-      queryBuilder.andWhere("rule.achievementType = :achievementType", {
-        achievementType,
-      });
-    }
-
-    // if (achievementRuleId) {
-    //   queryBuilder.andWhere("item.achievementRuleId = :achievementRuleId", {
-    //     achievementRuleId,
-    //   });
-    // }
-
-    return queryBuilder.getCount();
+    return this.entityManager.query(queryString, [userEntity.id]) as Promise<AchievementItemReport>;
   }
 }

@@ -1,20 +1,18 @@
-import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { User } from "@gemunion/nest-js-utils";
 
-import { AchievementsItemCountDto } from "./dto";
 import { AchievementItemService } from "./item.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/achievements/item")
-export class AchievementRuleController {
+@Controller("/achievements/items")
+export class AchievementItemController {
   constructor(private readonly achievementItemService: AchievementItemService) {}
 
   @Get("/count")
-  @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: AchievementsItemCountDto, @User() userEntity: UserEntity): Promise<number> {
-    return this.achievementItemService.count(dto, userEntity);
+  public search(@User() userEntity: UserEntity): Promise<number> {
+    return this.achievementItemService.count(userEntity);
   }
 }

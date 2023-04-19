@@ -14,7 +14,92 @@ export class SeedAchievementItem1681273013060 implements MigrationInterface {
         updated_at
       ) VALUES (
         1,
-        3,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -40,66 +125,6 @@ export class SeedAchievementItem1681273013060 implements MigrationInterface {
       ), (
         1,
         3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        4,
         '${currentDateTime}',
         '${currentDateTime}'
       );
