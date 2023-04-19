@@ -5,3 +5,5 @@ export * from "./1681273013040-seed-achievement-level";
 export * from "./1681273013045-seed-asset-component-achievement-level";
 export * from "./1681273013050-create-achievement-item";
 export * from "./1681273013060-seed-achievement-item";
+export * from "./1681273013070-create-achievement-redemption";
+export * from "./1681273013080-seed-achievement-redemption";

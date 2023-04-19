@@ -64,12 +64,14 @@ import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 import {
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAchievementItem1681273013050,
   CreateAchievementLevel1681273013030,
+  CreateAchievementRedemption1681273013070,
   CreateAchievementRule1681273013010,
   CreateAddress1593490663030,
   CreateAsset1563804000100,
@@ -125,6 +127,7 @@ import {
   SeedAccessListErc998At1653616447340,
   SeedAchievementItem1681273013060,
   SeedAchievementLevel1681273013040,
+  SeedAchievementRedemption1681273013080,
   SeedAchievementRule1681273013020,
   SeedAddress1593490663040,
   SeedAssetComponentGrade1657846587020,
@@ -316,6 +319,7 @@ const config: PostgresConnectionOptions = {
     AchievementItemEntity,
     AchievementLevelEntity,
     AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -559,6 +563,8 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsAchievementAt1681273013045,
     CreateAchievementItem1681273013050,
     SeedAchievementItem1681273013060,
+    CreateAchievementRedemption1681273013070,
+    SeedAchievementRedemption1681273013080,
   ],
 };
 

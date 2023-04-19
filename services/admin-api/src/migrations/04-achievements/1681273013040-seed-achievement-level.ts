@@ -29,6 +29,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.achievement_level (
+        id,
         title,
         description,
         achievement_rule_id,
@@ -37,6 +38,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        1,
         'Rookie',
         '${simpleFormatting}',
         1,
@@ -45,6 +47,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        2,
         'Veteran',
         '${simpleFormatting}',
         1,
@@ -53,6 +56,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        3,
         'Pro',
         '${simpleFormatting}',
         1,
@@ -61,6 +65,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        4,
         'Craftsman',
         '${simpleFormatting}',
         2,
@@ -69,6 +74,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        5,
         'Artisan',
         '${simpleFormatting}',
         2,
@@ -77,6 +83,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        6,
         'Collector',
         '${simpleFormatting}',
         3,
@@ -85,6 +92,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        7,
         'Commersant',
         '${simpleFormatting}',
         4,
