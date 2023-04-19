@@ -2,11 +2,12 @@ import { FC } from "react";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
+import { Error, Message, Protected } from "@gemunion/common-pages";
 import { routes as loginRoutes } from "@gemunion/firebase-login";
 
 import { Layout } from "../components/common/layout";
 import { Dashboard } from "./dashboard";
+import { Landing } from "./landing";
 import { Providers } from "./providers";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
