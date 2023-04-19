@@ -35,7 +35,7 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
     address account = _msgSender();
 
     if (price.length > 0) {
-      spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+      spendFrom(price, account, address(this), _disabledTypes);
     }
 
     emit Lend(

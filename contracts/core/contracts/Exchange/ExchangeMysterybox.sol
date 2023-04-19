@@ -29,7 +29,7 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+    spendFrom(price, account, address(this), _disabledTypes);
 
     emit Mysterybox(account, params.externalId, items, price);
 

@@ -144,7 +144,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       }
 
       // Transfer tokens from user to this contract.
-      spendFrom(_toArray(depositItem), account, address(this), DisabledTokenTypes(false, false, false, false, false));
+      spendFrom(_toArray(depositItem), account, address(this), _disabledTypes);
 
       // Do something after purchase with referrer
       if (referrer != address(0)) {

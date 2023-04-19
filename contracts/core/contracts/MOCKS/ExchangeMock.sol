@@ -15,14 +15,9 @@ import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 import "../Exchange/ExchangeUtils.sol";
 
 contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
-  function testSpendFrom(
-    Asset[] memory price,
-    address spender,
-    address receiver,
-    DisabledTokenTypes memory disabled
-  ) external payable {
+  function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
     // Transfer tokens to self or other address
-    spendFrom(price, spender, receiver, disabled);
+    spendFrom(price, spender, receiver, _disabledTypes);
   }
 
   function testSpend(Asset[] memory price, address receiver) external payable {

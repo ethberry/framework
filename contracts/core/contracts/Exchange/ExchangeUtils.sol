@@ -30,6 +30,8 @@ contract ExchangeUtils {
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
 
+  DisabledTokenTypes _disabledTypes = _disabledTypes;
+
   function spendFrom(
     Asset[] memory price,
     address account,
