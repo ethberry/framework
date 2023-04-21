@@ -158,6 +158,24 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     return super._afterPurchase(referrer, price);
   }
 
+  /* Receive Staking Reward logic:
+
+  1. Calculate multiplier (count full periods since stake start)
+
+  2. Deposit withdraw
+    2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+
+      2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
+      2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
+
+    2.2 Else -> update stake.startTimestamp = block.timestamp
+
+  3. Reward transfer
+    3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
+
+  4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+                                                     -> revert with Error ( first period not yet finished )
+  */
   /**
    * @dev Allows the owner of the specified stake to receive the reward.
    * @param stakeId The ID of the stake.

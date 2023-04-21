@@ -26,26 +26,21 @@ import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 
 /*
-receiveReward(stakeId, withdrawDeposit, breakLastPeriod)
-Rule { deposit reward content period penalty recurrent active }
-
-1. Calculate multiplier (count full periods)
+1. Calculate multiplier (count full periods since stake start)
 
 2. Deposit withdraw
-  2.1 If withdrawDeposit || ( !rule.recurrent && multiplier > 0 ) || ( multiplier > 0 AND breakLastPeriod )
+  2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
 
-    2.1.1 If multiplier == 0                       -> deduct penalty from deposit
+    2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
     2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
 
-  2.2 If !withdrawDeposit && rule.recurrent && multiplier > 0 && !breakLastPeriod
-                                                   -> update stake.startTimestamp = block.timestamp
+  2.2 Else -> update stake.startTimestamp = block.timestamp
 
 3. Reward transfer
   3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
 
-4. If multiplier == 0 && !withdrawDeposit AND !breakLastPeriod AND rule.recurrent
-                                                   -> revert with Error ( nothing to do here )
-
+4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+                                                   -> revert with Error ( first period not yet finished )
 */
 /*
 MULTIPLIER - RECURRENT - WITHDRAW_DEPOSIT - BREAK_LAST_PERIOD === DECISION
