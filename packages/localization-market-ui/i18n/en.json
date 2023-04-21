@@ -668,7 +668,8 @@
       "token": {
         "genes": "Genes",
         "genesis": "Genesis",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
       },
@@ -696,8 +697,10 @@
         "title": "ERC998 Templates"
       },
       "token": {
+        "genesis": "Genesis",
         "genes": "Genes",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"
       },
