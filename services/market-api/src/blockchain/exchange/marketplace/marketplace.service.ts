@@ -10,6 +10,7 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ISignTemplateDto } from "./interfaces";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class MarketplaceService {
@@ -79,14 +80,15 @@ export class MarketplaceService {
             : templateEntity.id.toString(),
         amount: "1",
       },
-      templateEntity.price.components.map(component => ({
+      templateEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         // pass templateId instead of tokenId = 0
-        tokenId:
-          component.template.tokens[0].tokenId === "0"
-            ? component.template.tokens[0].templateId.toString()
-            : component.template.tokens[0].tokenId,
+        // tokenId:
+        //   component.template.tokens[0].tokenId === "0"
+        //     ? component.template.tokens[0].templateId.toString()
+        //     : component.template.tokens[0].tokenId,
+        tokenId: component.template.tokens[0].tokenId,
         amount: component.amount,
       })),
     );

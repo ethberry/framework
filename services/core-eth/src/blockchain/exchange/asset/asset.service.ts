@@ -19,6 +19,7 @@ import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { TokenService } from "../../hierarchy/token/token.service";
 
 @Injectable()
 export class AssetService {
@@ -33,6 +34,7 @@ export class AssetService {
     private readonly assetComponentHistoryEntityRepository: Repository<AssetComponentHistoryEntity>,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    private readonly tokenService: TokenService,
     protected readonly eventHistoryService: EventHistoryService,
     @InjectDataSource()
     private dataSource: DataSource,
@@ -179,9 +181,9 @@ export class AssetService {
           { relations: { tokens: true } },
         );
         if (!templateEntity) {
+          this.loggerService.error(new NotFoundException("templateNotFound"), AssetService.name);
           throw new NotFoundException("templateNotFound");
         }
-
         Object.assign(assetComponentHistoryItem, {
           tokenId: itemType === 0 || itemType === 1 || itemType === 4 ? templateEntity.tokens[0].id : null,
           contractId: templateEntity.contractId,
@@ -192,24 +194,21 @@ export class AssetService {
     );
 
     await Promise.allSettled(
-      price.map(async ([_priceType, _priceTokenAddr, priceTokenId, priceAmount]) => {
+      price.map(async ([_priceType, priceTokenAddr, priceTokenId, priceAmount]) => {
         const assetComponentHistoryPrice = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.PRICE,
           amount: priceAmount,
         };
 
-        // find price item template
-        const templateEntity = await this.templateService.findOne(
-          { id: ~~priceTokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
+        const tokenEntity = await this.tokenService.getToken(priceTokenId, priceTokenAddr.toLowerCase());
+        if (!tokenEntity) {
+          this.loggerService.error(new NotFoundException("tokenNotFound"), AssetService.name);
+          throw new NotFoundException("tokenNotFound");
         }
         Object.assign(assetComponentHistoryPrice, {
-          tokenId: templateEntity.tokens[0].id,
-          contractId: templateEntity.contractId,
+          tokenId: tokenEntity.id,
+          contractId: tokenEntity.template.contractId,
         });
 
         return this.createAssetHistory(assetComponentHistoryPrice);

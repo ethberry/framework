@@ -12,6 +12,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import DropPurchaseABI from "../../../../../abis/components/buttons/mechanics/drop/purchase/purchase.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 interface IDropPurchaseButtonProps {
   drop: IDrop;
@@ -31,13 +32,13 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         expiresAt: sign.expiresAt,
         referrer: settings.getReferrer(),
       },
-      drop.item?.components.map(component => ({
+      drop.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId,
         amount: component.amount,
       }))[0],
-      drop.price?.components.map(component => ({
+      drop.price?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,

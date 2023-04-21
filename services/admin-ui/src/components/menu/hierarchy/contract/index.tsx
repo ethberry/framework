@@ -59,7 +59,8 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
 
         {contract.contractType !== TokenType.NATIVE &&
         contract.contractModule === ModuleType.HIERARCHY &&
-        !contract.contractFeatures.includes(ContractFeatures.RANDOM) ? (
+        !contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
+        !contract.contractFeatures.includes(ContractFeatures.GENES) ? (
           <MintMenuItem contract={contract} />
         ) : null}
         {contract.contractType === TokenType.ERC20 ? <Erc20TokenSnapshotMenuItem contract={contract} /> : null}
@@ -81,7 +82,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         ) : null}
 
         <AllowanceMenuItem contract={contract} />
-        <TransferMenuItem contract={contract} />
+        {!contract.contractFeatures.includes(ContractFeatures.SOULBOUND) ? (
+          <TransferMenuItem contract={contract} />
+        ) : null}
 
         <EthListenerAddMenuItem contract={contract} />
         <EthListenerRemoveMenuItem contract={contract} />

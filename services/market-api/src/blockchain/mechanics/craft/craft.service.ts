@@ -12,6 +12,7 @@ import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class CraftService {
@@ -124,13 +125,13 @@ export class CraftService {
     return this.signerService.getManyToManySignature(
       account,
       params,
-      craftEntity.item.components.map(component => ({
+      craftEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.id.toString(),
         amount: component.amount,
       })),
-      craftEntity.price.components.map(component => ({
+      craftEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

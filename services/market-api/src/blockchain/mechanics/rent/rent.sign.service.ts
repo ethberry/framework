@@ -10,6 +10,7 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { ISignRentTokenDto } from "./interfaces";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class RentSignService {
@@ -61,7 +62,7 @@ export class RentSignService {
           amount: "1", // todo get from DTO? (for 1155)
         },
       ],
-      tokenEntity.template.contract.rent[0].price.components.map(component => ({
+      tokenEntity.template.contract.rent[0].price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:

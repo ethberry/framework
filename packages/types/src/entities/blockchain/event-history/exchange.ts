@@ -61,7 +61,7 @@ export interface IExchangeGradeEvent {
 export interface IExchangeMysteryEvent {
   from: string;
   externalId: string;
-  items: IExchangeItem; // TODO array
+  items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }
 

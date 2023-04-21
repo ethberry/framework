@@ -13,6 +13,7 @@ import { GradeEntity } from "./grade.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class GradeService {
@@ -121,7 +122,7 @@ export class GradeService {
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",
       },
-      gradeEntity.price.components.map(component => ({
+      gradeEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

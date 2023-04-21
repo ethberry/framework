@@ -12,6 +12,7 @@ import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@fr
 import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
 
 import { getEthPrice, getMultiplier } from "./utils";
+import { sorter } from "../../../../utils/sorter";
 
 interface IUpgradeButtonProps {
   token: IToken;
@@ -38,7 +39,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         const level = token.attributes[attribute];
 
         const price =
-          grade.price?.components.map(component => ({
+          grade.price?.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             tokenId: component.template!.tokens![0].tokenId,

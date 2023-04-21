@@ -14,6 +14,7 @@ import { DropEntity } from "./drop.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class DropService {
@@ -133,13 +134,13 @@ export class DropService {
     return this.signerService.getManyToManySignature(
       account,
       params,
-      dropEntity.item.components.map(component => ({
+      dropEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.templateId.toString(),
         amount: component.amount,
       })),
-      dropEntity.price.components.map(component => ({
+      dropEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

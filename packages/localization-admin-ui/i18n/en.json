@@ -52,6 +52,7 @@
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
+    "unsupported": "Unsupported",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",

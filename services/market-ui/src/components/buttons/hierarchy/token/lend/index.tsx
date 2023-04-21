@@ -12,6 +12,7 @@ import { ContractFeatures, RentStrategy, TokenType } from "@framework/types";
 import { ILendDto, LendDialog } from "./dialog";
 import TemplateLendABI from "../../../../../abis/components/buttons/mechanics/lend/lend.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 interface ITokenLendButtonProps {
   token: IToken;
@@ -47,7 +48,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       ];
 
       const price = token.template?.contract?.rent
-        ? token.template?.contract?.rent[0]?.price?.components.map(component => ({
+        ? token.template?.contract?.rent[0]?.price?.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             // pass templateId instead of tokenId = 0

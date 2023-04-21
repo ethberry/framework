@@ -16,7 +16,7 @@ export class ItemComponentDto implements IAssetComponentDto {
     enum: TokenType,
   })
   @Transform(({ value }) => value as TokenType)
-  @Validate(ForbidEnumValues, [TokenType.NATIVE, TokenType.ERC20])
+  // @Validate(ForbidEnumValues, [TokenType.NATIVE, TokenType.ERC20])
   @IsEnum(TokenType, { message: "badInput" })
   public tokenType: TokenType;
 

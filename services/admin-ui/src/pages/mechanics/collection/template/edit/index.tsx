@@ -19,13 +19,14 @@ export interface ICollectionTemplateEditDialogProps {
 
 export const CollectionTemplateEditDialog: FC<ICollectionTemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
-
   const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
+
   const fixedValues = {
     id,
     title,
     description,
     price,
+    // price: price || { components: [] },
     amount,
     templateStatus,
     contractId,
