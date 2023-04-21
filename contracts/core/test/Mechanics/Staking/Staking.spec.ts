@@ -3675,21 +3675,41 @@ describe("Staking", function () {
       expect(balance42).to.equal(amount / 2);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
+      const tx3 = stakingInstance.withdrawBalance({
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx3)
         .to.emit(stakingInstance, "WithdrawBalance")
-        .withArgs(constants.AddressZero, 0, amount / 2);
+        .withArgs(owner.address, [0, constants.AddressZero, 0, amount / 2]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
-      const tx4 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
+      const tx4 = stakingInstance.withdrawBalance({
+        tokenType: 1,
+        token: erc20Instance.address,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx4)
         .to.emit(stakingInstance, "WithdrawBalance")
-        .withArgs(erc20Instance.address, 0, amount / 2);
+        .withArgs(owner.address, [1, erc20Instance.address, 0, amount / 2]);
 
-      const tx5 = stakingInstance.withdrawBalance(erc721SimpleInstance.address, tokenId, 2);
+      const tx5 = stakingInstance.withdrawBalance({
+        tokenType: 2,
+        token: erc721SimpleInstance.address,
+        tokenId,
+        amount,
+      });
       await expect(tx5).to.be.revertedWith("Staking: zero balance");
 
-      const tx6 = stakingInstance.withdrawBalance(erc1155Instance.address, tokenId, 4);
+      const tx6 = stakingInstance.withdrawBalance({
+        tokenType: 4,
+        token: erc1155Instance.address,
+        tokenId,
+        amount,
+      });
       await expect(tx6)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
@@ -3810,19 +3830,43 @@ describe("Staking", function () {
       expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
-      await expect(tx3).to.emit(stakingInstance, "WithdrawBalance").withArgs(constants.AddressZero, 0, amount);
+      const tx3 = stakingInstance.withdrawBalance({
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount,
+      });
+      await expect(tx3)
+        .to.emit(stakingInstance, "WithdrawBalance")
+        .withArgs(owner.address, [0, constants.AddressZero, 0, amount]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
-      const tx4 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
-      await expect(tx4).to.emit(stakingInstance, "WithdrawBalance").withArgs(erc20Instance.address, 0, amount);
+      const tx4 = stakingInstance.withdrawBalance({
+        tokenType: 1,
+        token: erc20Instance.address,
+        tokenId: 0,
+        amount,
+      });
+      await expect(tx4)
+        .to.emit(stakingInstance, "WithdrawBalance")
+        .withArgs(owner.address, [1, erc20Instance.address, 0, amount]);
 
-      const tx5 = stakingInstance.withdrawBalance(erc721SimpleInstance.address, tokenId, 2);
+      const tx5 = stakingInstance.withdrawBalance({
+        tokenType: 2,
+        token: erc721SimpleInstance.address,
+        tokenId,
+        amount,
+      });
       await expect(tx5)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(stakingInstance.address, owner.address, tokenId);
 
-      const tx6 = stakingInstance.withdrawBalance(erc1155Instance.address, tokenId, 4);
+      const tx6 = stakingInstance.withdrawBalance({
+        tokenType: 4,
+        token: erc1155Instance.address,
+        tokenId,
+        amount,
+      });
       await expect(tx6)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount);
@@ -3832,7 +3876,12 @@ describe("Staking", function () {
       const [owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
-      const tx0 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
+      const tx0 = stakingInstance.withdrawBalance({
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx0).to.be.revertedWith("Staking: zero balance");
 
       const stakeRule: IRule = {
@@ -3881,13 +3930,23 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
+      const tx3 = stakingInstance.withdrawBalance({
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx3)
         .to.emit(stakingInstance, "WithdrawBalance")
-        .withArgs(constants.AddressZero, 0, amount / 2);
+        .withArgs(owner.address, [0, constants.AddressZero, 0, amount / 2]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
-      const tx4 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 0);
+      const tx4 = stakingInstance.withdrawBalance({
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx4).to.be.revertedWith("Staking: zero balance");
     });
 
@@ -3941,11 +4000,16 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2, -amount / 2]);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawBalance(constants.AddressZero, 0, 5);
+      const tx3 = stakingInstance.withdrawBalance({
+        tokenType: 1,
+        token: constants.AddressZero,
+        tokenId,
+        amount,
+      });
       await expect(tx3).to.be.reverted;
     });
 
-    it.only("should fail withdraw: balance exceeded", async function () {
+    it("should fail withdraw: balance exceeded", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const stakingInstance = await factory();
@@ -4082,7 +4146,12 @@ describe("Staking", function () {
       expect(balance32).to.equal(0);
 
       // WITHDRAW PENALTY
-      const tx3 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
+      const tx3 = stakingInstance.withdrawBalance({
+        tokenType: 1,
+        token: erc20Instance.address,
+        tokenId: 0,
+        amount,
+      });
       await expect(tx3).to.be.revertedWith("ERC20: transfer amount exceeds balance");
     });
   });
