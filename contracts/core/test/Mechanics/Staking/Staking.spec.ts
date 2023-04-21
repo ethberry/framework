@@ -3695,7 +3695,7 @@ describe("Staking", function () {
         .withArgs(stakingInstance.address, stakingInstance.address, owner.address, tokenId, amount / 2);
     });
 
-    it.only("should stake mixed (NATIVE + ERC20 + ERC721 + ERC1155) & withdraw 100 % mixed PENALTIES", async function () {
+    it("should stake mixed (NATIVE + ERC20 + ERC721 + ERC1155) & withdraw 100 % mixed PENALTIES", async function () {
       const [owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
@@ -3806,7 +3806,7 @@ describe("Staking", function () {
       expect(balance42).to.equal(0);
 
       const stake = await stakingInstance.getStake(1);
-      expect(stake).to.have.deep.nested.property("cycles", 0);
+      expect(stake).to.have.deep.nested.property("cycles", BigNumber.from(0));
       expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
       // WITHDRAW PENALTY
