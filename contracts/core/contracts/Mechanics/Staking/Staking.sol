@@ -209,7 +209,9 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
 
     // Increment stake's cycle count
-    if (multiplier != 0) stake.cycles += multiplier;
+    if (multiplier != 0) {
+      stake.cycles += multiplier;
+    }
 
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
@@ -435,16 +437,12 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     _penalties[token][tokenId] = 0;
 
     if (tokenType == TokenType.NATIVE) {
-      require(balance <= address(this).balance, "Staking: balance exceeded");
       spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC20) {
-      require(balance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
       spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC721 || tokenType == TokenType.ERC998) {
-      require(address(this) == IERC721(token).ownerOf(tokenId), "Staking: balance exceeded");
       spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else if (tokenType == TokenType.ERC1155) {
-      require(balance <= IERC1155(token).balanceOf(address(this), tokenId), "Staking: balance exceeded");
       spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
     } else {
       // should never happen

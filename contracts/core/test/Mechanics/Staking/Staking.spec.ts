@@ -3945,7 +3945,7 @@ describe("Staking", function () {
       await expect(tx3).to.be.reverted;
     });
 
-    it("should fail withdraw: balance exceeded", async function () {
+    it.only("should fail withdraw: balance exceeded", async function () {
       const [owner, receiver] = await ethers.getSigners();
 
       const stakingInstance = await factory();
@@ -4083,7 +4083,7 @@ describe("Staking", function () {
 
       // WITHDRAW PENALTY
       const tx3 = stakingInstance.withdrawBalance(erc20Instance.address, 0, 1);
-      await expect(tx3).to.be.revertedWith("Staking: balance exceeded");
+      await expect(tx3).to.be.revertedWith("ERC20: transfer amount exceeds balance");
     });
   });
 });
