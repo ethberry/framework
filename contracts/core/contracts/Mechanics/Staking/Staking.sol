@@ -86,6 +86,13 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   }
 
   /**
+   * @dev Get Stake
+   */
+  function getStake(uint256 stakeId) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Stake memory stake) {
+    return _stakes[stakeId];
+  }
+
+  /**
    * @dev Deposit function allows a user to stake a specified token with a given rule.
    * @param params Struct of Params that containing the ruleId and referrer parameters.
    * @param tokenIds - Array<id> of the tokens to be deposited.
@@ -195,11 +202,14 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     require(stake.owner == account, "Staking: not an owner");
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
-    // Calculate the multiplier
-    // counts only FULL stake cycles
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
+    // Calculate the multiplier
+    // counts only FULL stake cycles
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
+
+    // Increment stake's cycle count
+    if (multiplier != 0) stake.cycles += multiplier;
 
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
@@ -246,8 +256,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
     // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
     if (multiplier > 0) {
-      // Increment stake's cycle count
-      stake.cycles++;
       // Emit an event indicating that staking has finished.
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
