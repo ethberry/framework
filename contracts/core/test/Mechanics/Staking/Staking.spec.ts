@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { constants, utils } from "ethers";
+import { constants, utils, BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -1027,6 +1027,10 @@ describe("Staking", function () {
       const endTimestamp3: number = (await time.latest()).toNumber();
       await expect(tx4).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp3);
       await expect(tx4).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      const stake = await stakingInstance.getStake(1);
+      expect(stake).to.have.deep.nested.property("cycles", BigNumber.from(2));
+      expect(stake).to.have.deep.nested.property("activeDeposit", false);
     });
 
     it("should stake NATIVE & receive ERC20", async function () {
