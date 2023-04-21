@@ -13,6 +13,15 @@ export class CreateRent1678931845500 implements MigrationInterface {
           isPrimary: true,
         },
         {
+          name: "title",
+          type: "varchar",
+        },
+        {
+          name: "parameters",
+          type: "json",
+          default: "'{}'",
+        },
+        {
           name: "price_id",
           type: "int",
         },

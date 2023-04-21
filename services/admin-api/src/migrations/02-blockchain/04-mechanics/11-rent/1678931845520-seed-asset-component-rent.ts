@@ -18,6 +18,12 @@ export class SeedAssetComponentRent1678931845520 implements MigrationInterface {
         120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         220101
+      ), (
+        'NATIVE',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
+        220102
       );
     `);
   }
