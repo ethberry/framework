@@ -20,7 +20,7 @@ export class AchievementItemService {
 
   public async countByRule(userEntity: UserEntity): Promise<Array<IAchievementItemReport>> {
     const queryString = `
-      SELECT achievement_rule_id as achievementRuleId, count(*) as count
+      SELECT achievement_rule_id as "achievementRuleId", count(*) as count
       FROM ${ns}.achievement_item item
       WHERE item.user_id = $1
       GROUP BY achievement_rule_id

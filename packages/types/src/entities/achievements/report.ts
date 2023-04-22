@@ -1,4 +1,4 @@
 export type IAchievementItemReport = {
-  achievementruleid: number;
+  achievementRuleId: number;
   count: number;
 };

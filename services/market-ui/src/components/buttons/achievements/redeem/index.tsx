@@ -17,12 +17,23 @@ interface IAchievementRedeemButtonProps {
 }
 
 export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props => {
-  const { achievementRule } = props;
+  const { achievementRule, count = { count: 0 } } = props;
 
   const settings = useSettings();
 
-  // TODO find by count
-  const achievementLevel = achievementRule.levels[0];
+  const achievementLevel = achievementRule.levels.reduce((foundLevel, nextLevel) => {
+    if (nextLevel.amount > count.count && nextLevel.id > foundLevel.id) {
+      return nextLevel;
+    }
+    return foundLevel;
+  }, achievementRule.levels[0]);
+
+  const previousLevels = achievementRule.levels.filter(({ amount }) => amount < achievementLevel.amount);
+
+  const previousLevelsNotRedeemed = previousLevels.some(({ redemptions }) => !redemptions?.length);
+
+  const disabled =
+    !previousLevelsNotRedeemed && (!!achievementLevel.redemptions?.length || count.count !== achievementLevel.amount);
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
@@ -71,7 +82,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   };
 
   return (
-    <Button onClick={handleRedeem} data-testid="AchievementRedeemButton">
+    <Button onClick={handleRedeem} data-testid="AchievementRedeemButton" disabled={disabled}>
       <FormattedMessage id="form.buttons.redeem" />
     </Button>
   );
