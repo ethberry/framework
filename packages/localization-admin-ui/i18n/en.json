@@ -744,6 +744,9 @@
       "levels": {
         "title": "Achievements levels"
       },
+      "report": {
+        "title": "Report"
+      },
       "rules": {
         "title": "Achievements types"
       },

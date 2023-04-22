@@ -88,7 +88,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${simpleFormatting}',
         3,
         40100106,
-        10,
+        5,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
