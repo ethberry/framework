@@ -540,6 +540,13 @@ async function main() {
     ],
     [MINTER_ROLE],
   );
+
+  // GRANT METADATA ROLES
+  await grantRoles(
+    [contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
+    [contracts.exchange.address],
+    [MINTER_ROLE],
+  );
 }
 
 main()
