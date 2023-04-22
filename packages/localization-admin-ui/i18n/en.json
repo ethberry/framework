@@ -125,6 +125,11 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "rentStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
       "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
@@ -555,6 +560,7 @@
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "random": "Random",
+      "rentStatus": "Status",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -646,6 +652,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameters": "Parameters",
       "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",

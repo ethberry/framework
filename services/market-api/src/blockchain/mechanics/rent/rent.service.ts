@@ -5,6 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { RentEntity } from "./rent.entity";
+import { IRentAutocompleteDto } from "./interfaces/autocomplete";
 
 @Injectable()
 export class RentService {
@@ -32,6 +33,32 @@ export class RentService {
     return queryBuilder.getManyAndCount();
   }
 
+  public async autocomplete(dto: IRentAutocompleteDto): Promise<Array<RentEntity>> {
+    const { contractId, rentStatus } = dto;
+    const where = {};
+
+    // TODO add rentStatus here
+    if (contractId) {
+      Object.assign(where, {
+        contractId,
+      });
+    }
+
+    if (rentStatus) {
+      Object.assign(where, {
+        rentStatus,
+      });
+    }
+
+    return this.rentEntityRepository.find({
+      where,
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+  }
+
   public findOne(
     where: FindOptionsWhere<RentEntity>,
     options?: FindOneOptions<RentEntity>,
@@ -49,6 +76,7 @@ export class RentService {
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",
+          price_tokens: "price_template.tokens",
         },
       },
     });

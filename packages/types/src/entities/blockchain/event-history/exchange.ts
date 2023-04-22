@@ -119,7 +119,7 @@ export interface IExchangeLendEvent {
   from: string;
   to: string;
   expires: string;
-  lendType: string;
+  externalId: string;
   items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }

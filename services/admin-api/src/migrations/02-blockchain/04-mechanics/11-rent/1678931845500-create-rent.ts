@@ -4,6 +4,14 @@ import { ns } from "@framework/constants";
 
 export class CreateRent1678931845500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.rent_status_enum AS ENUM (
+        'NEW',
+        'ACTIVE',
+        'INACTIVE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.rent`,
       columns: [
@@ -17,17 +25,17 @@ export class CreateRent1678931845500 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "parameters",
-          type: "json",
-          default: "'{}'",
-        },
-        {
           name: "price_id",
           type: "int",
         },
         {
           name: "contract_id",
           type: "int",
+        },
+        {
+          name: "rent_status",
+          type: `${ns}.rent_status_enum`,
+          default: "'NEW'",
         },
         {
           name: "created_at",

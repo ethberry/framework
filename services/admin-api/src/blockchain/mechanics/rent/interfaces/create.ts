@@ -1,6 +1,6 @@
 import { IAssetDto, RentRuleStatus } from "@framework/types";
 
-export interface IRentUpdateDto {
+export interface IRentCreateDto {
   title: string;
   contractId: number;
   price: IAssetDto;
