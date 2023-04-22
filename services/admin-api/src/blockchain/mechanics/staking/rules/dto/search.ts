@@ -74,4 +74,6 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   @ValidateNested()
   @Type(() => StakingRuleItemSearchDto)
   public reward: StakingRuleItemSearchDto;
+
+  public merchantId: number;
 }
