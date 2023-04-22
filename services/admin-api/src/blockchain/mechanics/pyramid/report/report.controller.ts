@@ -10,18 +10,18 @@ import { PyramidDepositEntity } from "../deposit/deposit.entity";
 import { PyramidReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/pyramid/report")
+@Controller("/pyramid")
 export class PyramidDepositController {
   constructor(private readonly pyramidReportService: PyramidReportService) {}
 
-  @Get("/")
+  @Get("/report")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: PyramidReportSearchDto): Promise<[Array<PyramidDepositEntity>, number]> {
     return this.pyramidReportService.search(dto);
   }
 
   @ApiProduces("application/zip")
-  @Get("/export")
+  @Get("/report/export")
   public async export(@Query() query: PyramidReportSearchDto, @Res() res: Response): Promise<void> {
     const csv = await this.pyramidReportService.export(query);
 

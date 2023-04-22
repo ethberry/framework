@@ -7,11 +7,11 @@ import { PyramidChartService } from "./chart.service";
 import { PyramidChartSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/pyramid/chart")
+@Controller("/pyramid")
 export class PyramidChartController {
   constructor(private readonly pyramidReportService: PyramidChartService) {}
 
-  @Get("/")
+  @Get("/chart")
   @UseInterceptors(PaginationInterceptor)
   public chart(@Query() dto: PyramidChartSearchDto): Promise<any> {
     return this.pyramidReportService.chart(dto);

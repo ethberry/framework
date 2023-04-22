@@ -385,11 +385,11 @@
       "percent": "%"
     },
     "buttons": {
-      "archive": "Archive",
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
+      "archive": "Archive",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -453,9 +453,9 @@
     "labels": {
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
-      "SIGNATURE_TTL": "Signature TTL",
       "GRADE": "Grade",
       "RARITY": "Rarity",
+      "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
       "active": "Active",
       "address": "Address",

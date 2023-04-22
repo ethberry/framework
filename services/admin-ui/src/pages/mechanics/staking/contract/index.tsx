@@ -16,7 +16,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
 import { StakingDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
