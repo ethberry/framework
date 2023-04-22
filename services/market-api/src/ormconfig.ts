@@ -47,6 +47,7 @@ import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -101,6 +102,7 @@ const config: PostgresConnectionOptions = {
     AchievementItemEntity,
     AchievementLevelEntity,
     AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

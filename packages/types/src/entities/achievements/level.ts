@@ -1,7 +1,8 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import { IAchievementRule } from "./rule";
 import { IAsset } from "../blockchain";
+import { IAchievementRedemption } from "./redemption";
+import { IAchievementRule } from "./rule";
 
 export interface IAchievementLevel extends ISearchable {
   achievementRuleId: number;
@@ -9,4 +10,5 @@ export interface IAchievementLevel extends ISearchable {
   item?: IAsset;
   itemId: number;
   amount: number;
+  redemptions?: Array<IAchievementRedemption>;
 }

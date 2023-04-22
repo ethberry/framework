@@ -52,10 +52,10 @@ export const AchievementReport: FC = () => {
             key={rule.id}
             sx={{ display: "flex", alignItems: "center", flexDirection: "column", my: 2 }}
           >
-            <ReportChart count={count.find(item => item.achievementruleid === rule.id)!} achievementRule={rule} />
+            <ReportChart count={count.find(item => item.achievementRuleId === rule.id)!} achievementRule={rule} />
             <AchievementRedeemButton
               achievementRule={rule}
-              count={count.find(item => item.achievementruleid === rule.id)!}
+              count={count.find(item => item.achievementRuleId === rule.id)!}
             />
           </Grid>
         ))}

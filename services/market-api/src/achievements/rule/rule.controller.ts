@@ -1,8 +1,9 @@
 import { Controller, Get, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleService } from "./rule.service";
 import { AchievementRuleEntity } from "./rule.entity";
 
@@ -13,7 +14,7 @@ export class AchievementRuleController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(): Promise<[Array<AchievementRuleEntity>, number]> {
-    return this.achievementRuleService.search();
+  public search(@User() userEntity: UserEntity): Promise<[Array<AchievementRuleEntity>, number]> {
+    return this.achievementRuleService.search(userEntity);
   }
 }

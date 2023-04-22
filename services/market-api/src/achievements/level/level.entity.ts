@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementLevel } from "@framework/types";
@@ -6,6 +6,7 @@ import { ns } from "@framework/constants";
 
 import { AchievementRuleEntity } from "../rule/rule.entity";
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { AchievementRedemptionEntity } from "../redemption/redemption.entity";
 
 @Entity({ schema: ns, name: "achievement_level" })
 export class AchievementLevelEntity extends SearchableEntity implements IAchievementLevel {
@@ -25,4 +26,8 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
 
   @Column({ type: "int" })
   public amount: number;
+
+  @JoinColumn()
+  @OneToMany(_type => AchievementRedemptionEntity, component => component.achievementLevel)
+  public redemptions: AchievementRedemptionEntity[];
 }
