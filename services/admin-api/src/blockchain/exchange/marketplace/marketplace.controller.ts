@@ -6,7 +6,7 @@ import archiver from "archiver";
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { MarketplaceService } from "./marketplace.service";
-import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { MarketplaceReportSearchDto, MarketplaceSupplySearchDto } from "./dto";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 
@@ -20,7 +20,7 @@ export class MarketplaceController {
   public search(
     @Query() dto: MarketplaceReportSearchDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<TokenEntity>, number]> {
+  ): Promise<[Array<EventHistoryEntity>, number]> {
     return this.marketplaceService.search(dto, userEntity);
   }
 

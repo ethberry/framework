@@ -40,8 +40,9 @@ export const StakingReport: FC = () => {
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 1306,
+        contractId: 1301,
       },
+      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
@@ -88,6 +89,13 @@ export const StakingReport: FC = () => {
       minWidth: 100
     },
     {
+      field: "stakingRule",
+      headerName: formatMessage({ id: "form.labels.stakingRule" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100
+    },
+    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
@@ -128,6 +136,7 @@ export const StakingReport: FC = () => {
           id: stake.id,
           account: stake.account,
           deposit: formatPrice(stake.stakingRule?.deposit),
+          stakingRule: stake.stakingRule?.title,
           createdAt: stake.createdAt,
         }))}
         autoHeight

@@ -11,26 +11,24 @@ import {
   Pagination,
 } from "@mui/material";
 
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IStakingRule, IStakingRuleSearchDto, IUser } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import {
-  PauseToggleButton,
-  StakingRuleUploadCreateButton,
-  StakingToggleRuleButton,
-} from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
+import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
+  const user = useUser<IUser>();
+
   const {
     rows,
     count,
@@ -40,12 +38,10 @@ export const StakingRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    // handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-    handleDelete,
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
@@ -62,13 +58,14 @@ export const StakingRules: FC = () => {
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ deposit, reward, ...rest }) => ({
-      ...rest,
-      deposit: cleanUpAsset(deposit),
-      reward: cleanUpAsset(reward),
+    filter: ({ title, description }) => ({
+      title,
+      description,
     }),
     search: {
       query: "",
+      merchantId: user.profile.merchantId,
+      contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
@@ -79,13 +76,11 @@ export const StakingRules: FC = () => {
     },
   });
 
-  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
-        <PauseToggleButton />
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -106,9 +101,6 @@ export const StakingRules: FC = () => {
                 <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingRuleStatus !== StakingRuleStatus.NEW}>
-                  <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -136,7 +128,7 @@ export const StakingRules: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.stakingRuleStatus === StakingRuleStatus.ACTIVE}
+        readOnly={true}
       />
     </Grid>
   );

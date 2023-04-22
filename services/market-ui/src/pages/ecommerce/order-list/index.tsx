@@ -3,13 +3,14 @@ import { Grid, Pagination } from "@mui/material";
 import { DateRange } from "@mui/x-date-pickers-pro";
 
 import { IOrder, OrderStatus } from "@framework/types";
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { IPaginationDto } from "@gemunion/types-collection";
 
 import { OrderItem } from "./item";
 import { OrderSearchForm } from "./form";
 import { parseDateRange, stringifyDateRange } from "./utils";
+import { stringify } from "qs";
 
 export type TTransformedSearch = Omit<IOrderSearchDto, "dateRange"> & { dateRange: DateRange<Date> };
 
@@ -21,6 +22,7 @@ export interface IOrderSearchDto extends IPaginationDto {
 export const OrderList: FC = () => {
   const { count, rows, isLoading, handleChangePage, handleSearch, search } = useCollection<IOrder, IOrderSearchDto>({
     baseUrl: "/orders",
+    redirect: (_, search) => `/ecommerce/orders/?${stringify(search)}`,
     search: {
       take: 10,
       orderStatus: [OrderStatus.NEW, OrderStatus.NOW_IN_DELIVERY, OrderStatus.SCHEDULED],
@@ -47,6 +49,8 @@ export const OrderList: FC = () => {
 
   return (
     <Fragment>
+      <Breadcrumbs path={["dashboard", "ecommerce", "orders"]} />
+
       <PageHeader message="pages.orders.title" />
 
       <OrderSearchForm onSubmit={handleTransformedSearch} initialValues={transformSearch(search)} />
@@ -61,6 +65,7 @@ export const OrderList: FC = () => {
 
       <Pagination
         shape="rounded"
+        sx={{ my: 2 }}
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}

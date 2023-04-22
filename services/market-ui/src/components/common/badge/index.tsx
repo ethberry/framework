@@ -22,7 +22,8 @@ export const RarityBadge: FC<IRarityBadgeProps> = props => {
   }
   console.log("itemClass", itemClass);
   return (
-    <div className={itemClass ? classes.item : classes.root}>
+
+    <div className={itemClass ? classes.item : classes.root} data-testid="RarityBadge">
       <FormattedMessage id={`enums.RARITY.${rarity as string}`} />
     </div>
   );

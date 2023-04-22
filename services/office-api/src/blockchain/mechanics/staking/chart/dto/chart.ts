@@ -35,12 +35,20 @@ export class StakingChartSearchDto extends SearchDto implements IStakingChartSea
   @Type(() => StakingChartItemSearchDto)
   public deposit: StakingChartItemSearchDto;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: StakingChartItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => StakingChartItemSearchDto)
   public reward: StakingChartItemSearchDto;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
+  })
+  public emptyReward: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()

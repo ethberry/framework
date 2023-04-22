@@ -576,17 +576,10 @@
     },
     "dashboard": {
       "ecommerce": {
-        "feedback": {
-          "form": "Feedback",
-          "title": "Feedback"
-        },
-        "pages": {
-          "about-us": "About us",
-          "faq": "FAQ",
-          "privacy-policy": "Privacy Policy",
-          "terms-of-services": "Terms of Services",
-          "title": "Pages"
-        }
+        "checkout": "Checkout",
+        "orders": "Orders",
+        "products": "Products",
+        "title": "Ecommerce"
       },
       "hierarchy": {
         "erc1155": "ERC1155",
@@ -633,6 +626,9 @@
     "drop-list": {
       "title": "Drops"
     },
+    "ecommerce": {
+      "title": "Ecommerce"
+    },
     "erc1155": {
       "title": "ERC1155",
       "contract": {
@@ -674,7 +670,8 @@
       "token": {
         "genes": "Genes",
         "genesis": "Genesis",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
       },
@@ -702,8 +699,10 @@
         "title": "ERC998 Templates"
       },
       "token": {
+        "genesis": "Genesis",
         "genes": "Genes",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"
       },

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Box, Grid, Hidden, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
-import { PageHeader, Spinner } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api-firebase";
 import { IProduct } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -61,6 +61,8 @@ export const Product: FC = () => {
 
   return (
     <Fragment>
+      <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
+
       <PageHeader message="pages.product.title" data={product} />
 
       <Grid container>
