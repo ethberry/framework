@@ -7,10 +7,11 @@ import { useStyles } from "./styles";
 
 interface IRarityBadgeProps {
   token: IToken;
+  itemClass?: boolean;
 }
 
 export const RarityBadge: FC<IRarityBadgeProps> = props => {
-  const { token } = props;
+  const { token, itemClass } = props;
 
   const rarity = Object.values(TokenRarity)[token.attributes[TokenAttributes.RARITY]];
 
@@ -19,9 +20,9 @@ export const RarityBadge: FC<IRarityBadgeProps> = props => {
   if (!rarity) {
     return null;
   }
-
+  console.log("itemClass", itemClass);
   return (
-    <div className={classes.root}>
+    <div className={itemClass ? classes.item : classes.root}>
       <FormattedMessage id={`enums.RARITY.${rarity as string}`} />
     </div>
   );

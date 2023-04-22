@@ -30,6 +30,33 @@ export const useStyles = makeStyles<Theme>(
         }
       },
     },
+    item: {
+      position: "relative",
+      top: -10,
+      left: 0,
+      borderRadius: 4,
+      paddingLeft: 5,
+      paddingRight: 5,
+      marginLeft: 5,
+      marginRight: 5,
+      color: "white",
+      backgroundColor: ({ rarity }: any) => {
+        switch (rarity) {
+          case TokenRarity.COMMON:
+            return "grey";
+          case TokenRarity.UNCOMMON:
+            return "green";
+          case TokenRarity.RARE:
+            return "blue";
+          case TokenRarity.EPIC:
+            return "purple";
+          case TokenRarity.LEGENDARY:
+            return "orange";
+          default:
+            return "transparent";
+        }
+      },
+    },
   }),
   { name: "RarityBadge" },
 );
