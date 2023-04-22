@@ -7,7 +7,6 @@ import { Web3ContextType } from "@web3-react/core";
 
 import type { ITemplate } from "@framework/types";
 import { IUser, TokenType } from "@framework/types";
-import { ITokenAssetComponent } from "@gemunion/mui-inputs-asset";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
@@ -15,7 +14,7 @@ import ERC20MintABI from "../../../../../abis/components/common/mint/erc20.mint.
 import ERC721MintCommonABI from "../../../../../abis/components/common/mint/erc721.mintCommon.abi.json";
 import ERC1155MintABI from "../../../../../abis/components/common/mint/erc1155.mint.abi.json";
 
-import { IMintTokenDto, MintTokenDialog } from "./dialog";
+import { IMintTokenDto, MintTokenDialog, ITokenAssetComponent } from "./dialog";
 
 export interface IMintMenuItemProps {
   template: ITemplate;
@@ -42,6 +41,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
 
   const metaFn = useMetamask((values: IMintTokenDto, web3Context: Web3ContextType) => {
     const templateComponent = values.template.components[0];
+    const tokenComponent = values.token.components[0];
 
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
@@ -59,14 +59,14 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
-        templateComponent.contract.address,
+        tokenComponent.contract.address,
         ERC1155MintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(
         values.account,
-        templateComponent.templateId,
-        templateComponent.amount,
+        tokenComponent.token.tokenId,
+        tokenComponent.amount,
         "0x",
       ) as Promise<any>;
     } else {
@@ -109,6 +109,24 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
               } as ITokenAssetComponent,
             ],
           } as any,
+          token: {
+            components: [
+              {
+                tokenType: contractType,
+                contractId,
+                contract: {
+                  decimals,
+                  address,
+                },
+                token: {
+                  tokenId: "0",
+                },
+                tokenId: 0,
+                templateId: 0,
+                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.mul(1).toString() : "1", // default amount for ERC721-998-1155
+              } as ITokenAssetComponent,
+            ],
+          },
           account: user.profile.wallet,
         }}
       />
