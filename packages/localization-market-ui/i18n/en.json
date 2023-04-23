@@ -563,7 +563,7 @@
       "title": "CoinGecko"
     },
     "craft": {
-      "price": "price",
+      "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",

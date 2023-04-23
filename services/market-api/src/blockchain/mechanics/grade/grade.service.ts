@@ -48,18 +48,40 @@ export class GradeService {
   }
 
   public async findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "grade",
-        leftJoinAndSelect: {
-          price: "grade.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
-        },
-      },
+    const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
+
+    queryBuilder.leftJoinAndSelect("grade.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      `price_contract.contractType IN(${tokenTypes})`,
+    );
+
+    queryBuilder.andWhere("grade.contractId = :contractId", {
+      contractId: where.contractId,
     });
+    queryBuilder.andWhere("grade.attribute = :attribute", {
+      attribute: where.attribute,
+    });
+
+    return queryBuilder.getOne();
+    // return this.findOne(where, {
+    //   join: {
+    //     alias: "grade",
+    //     leftJoinAndSelect: {
+    //       price: "grade.price",
+    //       price_components: "price.components",
+    //       price_contract: "price_components.contract",
+    //       price_template: "price_components.template",
+    //       price_tokens: "price_template.tokens",
+    //     },
+    //   },
+    // });
   }
 
   public async sign(dto: ISignGradeDto): Promise<IServerSignature> {

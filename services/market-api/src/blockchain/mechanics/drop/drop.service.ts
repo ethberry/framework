@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, In, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, constants, utils } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
@@ -41,7 +41,13 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      `price_contract.contractType IN(${tokenTypes})`,
+    );
 
     queryBuilder.select();
 
@@ -66,22 +72,44 @@ export class DropService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<DropEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "drop",
-        leftJoinAndSelect: {
-          item: "drop.item",
-          item_components: "item.components",
-          item_contract: "item_components.contract",
-          item_template: "item_components.template",
-          price: "drop.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
-        },
-      },
+    const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
+
+    queryBuilder.leftJoinAndSelect("drop.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("drop.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      `price_contract.contractType IN(${tokenTypes})`,
+    );
+    queryBuilder.andWhere("drop.id = :id", {
+      id: where.id,
     });
+    return queryBuilder.getOne();
+    // return this.findOne(where, {
+    //   join: {
+    //     alias: "drop",
+    //     leftJoinAndSelect: {
+    //       item: "drop.item",
+    //       item_components: "item.components",
+    //       item_contract: "item_components.contract",
+    //       item_template: "item_components.template",
+    //       price: "drop.price",
+    //       price_components: "price.components",
+    //       price_contract: "price_components.contract",
+    //       price_template: "price_components.template",
+    //       price_tokens: "price_template.tokens",
+    //     },
+    //   },
+    // });
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {

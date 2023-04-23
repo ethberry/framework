@@ -24,7 +24,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   const api = useApi();
   const { account } = useWeb3React();
-  console.log("GRADEaccount", account);
+
   const { contractFeatures } = token.template!.contract!;
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {

@@ -22,23 +22,25 @@ export class MarketplaceService {
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
     const { account, referrer = constants.AddressZero, templateId } = dto;
-    const templateEntity = await this.templateService.findOne(
-      { id: templateId },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            contract: "template.contract",
-            tokens: "template.tokens",
-            price: "template.price",
-            price_components: "price.components",
-            price_template: "price_components.template",
-            price_contract: "price_components.contract",
-            price_tokens: "price_template.tokens",
-          },
-        },
-      },
-    );
+
+    // const templateEntity = await this.templateService.findOne(
+    //   { id: templateId },
+    //   {
+    //     join: {
+    //       alias: "template",
+    //       leftJoinAndSelect: {
+    //         contract: "template.contract",
+    //         tokens: "template.tokens",
+    //         price: "template.price",
+    //         price_components: "price.components",
+    //         price_template: "price_components.template",
+    //         price_contract: "price_components.contract",
+    //         price_tokens: "price_template.tokens",
+    //       },
+    //     },
+    //   },
+    // );
+    const templateEntity = await this.templateService.findOneWithRelations({ id: templateId });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");

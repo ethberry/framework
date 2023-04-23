@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { IClaimSearchDto } from "@framework/types";
+import { IClaimSearchDto, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
 
@@ -26,7 +26,13 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_template.tokens", "item_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      `item_contract.contractType IN(${tokenTypes})`,
+    );
 
     if (claimStatus) {
       if (claimStatus.length === 1) {

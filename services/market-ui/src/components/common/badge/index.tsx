@@ -20,7 +20,7 @@ export const RarityBadge: FC<IRarityBadgeProps> = props => {
   if (!rarity) {
     return null;
   }
-  console.log("itemClass", itemClass);
+
   return (
 
     <div className={itemClass ? classes.item : classes.root} data-testid="RarityBadge">

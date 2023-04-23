@@ -39,7 +39,13 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      `price_contract.contractType IN(${tokenTypes})`,
+    );
 
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
@@ -76,23 +82,46 @@ export class CraftService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "craft",
-        leftJoinAndSelect: {
-          item: "craft.item",
-          item_components: "item.components",
-          item_template: "item_components.template",
-          item_contract: "item_components.contract",
-          item_tokens: "item_template.tokens",
-          price: "craft.price",
-          price_components: "price.components",
-          price_template: "price_components.template",
-          price_contract: "price_components.contract",
-          price_tokens: "price_template.tokens",
-        },
-      },
+    const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
+
+    queryBuilder.leftJoinAndSelect("craft.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("craft.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      `price_contract.contractType IN(${tokenTypes})`,
+    );
+
+    queryBuilder.andWhere("craft.id = :id", {
+      id: where.id,
     });
+    return queryBuilder.getOne();
+    // return this.findOne(where, {
+    //   join: {
+    //     alias: "craft",
+    //     leftJoinAndSelect: {
+    //       item: "craft.item",
+    //       item_components: "item.components",
+    //       item_template: "item_components.template",
+    //       item_contract: "item_components.contract",
+    //       item_tokens: "item_template.tokens",
+    //       price: "craft.price",
+    //       price_components: "price.components",
+    //       price_contract: "price_components.contract",
+    //       price_template: "price_components.template",
+    //       price_tokens: "price_template.tokens",
+    //     },
+    //   },
+    // });
   }
 
   public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
