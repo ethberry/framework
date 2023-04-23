@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 
-export class SeedCategories1593408358860 implements MigrationInterface {
+export class SeedCategory1593408358860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 

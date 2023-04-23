@@ -62,7 +62,6 @@ import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 
 import {
-  AddProduct1591673187606,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAddress1593490663030,
@@ -73,6 +72,7 @@ import {
   CreateBreed1663047650400,
   CreateCart1595580536588,
   CreateCartItem1595580653399,
+  CreateCategory1593408358850,
   CreateClaim1653616447810,
   CreateCompositionAt1658980520000,
   CreateContract1563804000100,
@@ -90,9 +90,11 @@ import {
   CreateOtp1563803000160,
   CreateOwnershipAt1658980520100,
   CreatePage1563803000210,
-  CreatePhoto1593408358920,
+  CreateParameter1593408358870,
+  CreatePhoto1593408359000,
   CreateProduct1593408358900,
-  CreateProductToCategory1624084124220,
+  CreateProductToCategory1593408358930,
+  CreateProductToParameter1593408358950,
   CreatePromo1600996093684,
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
@@ -124,7 +126,7 @@ import {
   SeedAssetComponentsErc721At1563804001230,
   SeedAssetComponentsErc998At1563804001240,
   SeedAssetComponentsMysteryboxAt1563804001260,
-  SeedAssetComponentsProductAt1593408358915,
+  SeedAssetComponentsProductAt1593408358920,
   SeedBalanceCollectionAt1679894500430,
   SeedBalanceErc1155At1563804020450,
   SeedBalanceErc20At1563804020420,
@@ -136,7 +138,7 @@ import {
   SeedBalanceExchangeAt1563804020402,
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
-  SeedCategories1593408358860,
+  SeedCategory1593408358860,
   SeedClaimErc1155At1653616447850,
   SeedClaimErc721At1653616447830,
   SeedClaimErc998At1653616447840,
@@ -174,6 +176,8 @@ import {
   SeedEventHistoryErc20TransferAt1563804040120,
   SeedEventHistoryErc721ClaimAt1563804040330,
   SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc721LendAt1678931845530,
+  SeedEventHistoryErc721LendComponentsAt1678931845540,
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
@@ -192,9 +196,11 @@ import {
   SeedOrders1593490663240,
   SeedOwnershipAt1658980520110,
   SeedPages1563803000220,
-  SeedPhoto1593408358930,
+  SeedParameter1593408358880,
+  SeedPhoto1593408359010,
   SeedProducts1593408358910,
-  SeedProductToCategory1624084124260,
+  SeedProductToCategory1593408358940,
+  SeedProductToParameter1593408358960,
   SeedPromo1600996093694,
   SeedPyramidDepositErc20Erc20At1660436477320,
   SeedPyramidDepositNativeNativeAt1660436477310,
@@ -244,8 +250,6 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedEventHistoryErc721LendAt1678931845530 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845530-seed-event-history-erc721-lend";
-import { SeedEventHistoryErc721LendComponentsAt1678931845540 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845540-seed-event-history-erc721-lend-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -514,13 +518,19 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721LendComponentsAt1678931845540,
 
     /* ecommerce */
-    AddProduct1591673187606,
-    SeedCategories1593408358860,
+    CreateCategory1593408358850,
+    SeedCategory1593408358860,
+    CreateParameter1593408358870,
+    SeedParameter1593408358880,
     CreateProduct1593408358900,
     SeedProducts1593408358910,
-    SeedAssetComponentsProductAt1593408358915,
-    CreatePhoto1593408358920,
-    SeedPhoto1593408358930,
+    SeedAssetComponentsProductAt1593408358920,
+    CreateProductToCategory1593408358930,
+    SeedProductToCategory1593408358940,
+    CreateProductToParameter1593408358950,
+    SeedProductToParameter1593408358960,
+    CreatePhoto1593408359000,
+    SeedPhoto1593408359010,
     CreateAddress1593490663030,
     SeedAddress1593490663040,
     CreateOrder1593490663230,
@@ -531,8 +541,6 @@ const config: PostgresConnectionOptions = {
     CreateCartItem1595580653399,
     CreatePromo1600996093684,
     SeedPromo1600996093694,
-    CreateProductToCategory1624084124220,
-    SeedProductToCategory1624084124260,
   ],
 };
 

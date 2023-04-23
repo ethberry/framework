@@ -125,7 +125,7 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const { categoryIds, photos, price, ...rest } = dto;
+    const { categoryIds, photos, price, parameters: _parameters, ...rest } = dto;
 
     const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
 

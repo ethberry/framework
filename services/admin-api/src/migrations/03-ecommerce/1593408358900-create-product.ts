@@ -27,11 +27,6 @@ export class CreateProduct1593408358900 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "parameters",
-          type: "json",
-          default: "'[]'",
-        },
-        {
           name: "price_id",
           type: "int",
           isNullable: true,

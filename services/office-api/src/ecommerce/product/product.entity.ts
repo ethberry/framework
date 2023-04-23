@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
-import { IParameter, IProduct, ProductStatus } from "@framework/types";
+import { IProduct, ProductStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
@@ -12,9 +12,6 @@ import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "product" })
 export class ProductEntity extends SearchableEntity implements IProduct {
-  @Column({ type: "json" })
-  public parameters: Array<IParameter>;
-
   @ManyToMany(_type => CategoryEntity, category => category.products)
   @JoinTable({ name: "product_to_category" })
   public categories: Array<CategoryEntity>;

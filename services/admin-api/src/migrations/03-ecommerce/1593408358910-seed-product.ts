@@ -29,7 +29,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       INSERT INTO ${ns}.product (
         title,
         description,
-        parameters,
         price_id,
         amount,
         product_status,
@@ -39,7 +38,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ) VALUES (
         'Bottle of water',
         '${rawStateString}',
-        '${JSON.stringify([])}',
         190101,
         10,
         'ACTIVE',
@@ -49,7 +47,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ), (
         'Jar of water',
         '${rawStateString}',
-        '${JSON.stringify([])}',
         190102,
         10,
         'ACTIVE',
@@ -59,7 +56,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ), (
         'Barrel of water',
         '${rawStateString}',
-        '${JSON.stringify([])}',
         190103,
         10,
         'INACTIVE',
@@ -69,18 +65,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ), (
         'T-Shirt',
         '${rawStateString}',
-        '${JSON.stringify([
-          {
-            parameterName: "SIZE",
-            parameterType: "string",
-            parameterValue: "M",
-          },
-          {
-            parameterName: "COLOR",
-            parameterType: "string",
-            parameterValue: "BLUE",
-          },
-        ])}',
         190104,
         10,
         'ACTIVE',
@@ -90,18 +74,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ), (
         'T-Shirt',
         '${rawStateString}',
-        '${JSON.stringify([
-          {
-            parameterName: "SIZE",
-            parameterType: "string",
-            parameterValue: "M",
-          },
-          {
-            parameterName: "COLOR",
-            parameterType: "string",
-            parameterValue: "RED",
-          },
-        ])}',
         190105,
         10,
         'INACTIVE',
@@ -111,18 +83,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
       ), (
         'T-Shirt',
         '${rawStateString}',
-        '${JSON.stringify([
-          {
-            parameterName: "SIZE",
-            parameterType: "string",
-            parameterValue: "XL",
-          },
-          {
-            parameterName: "COLOR",
-            parameterType: "string",
-            parameterValue: "RED",
-          },
-        ])}',
         190106,
         10,
         'ACTIVE',

@@ -3,7 +3,7 @@ import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedAssetComponentsProductAt1593408358915 implements MigrationInterface {
+export class SeedAssetComponentsProductAt1593408358920 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (

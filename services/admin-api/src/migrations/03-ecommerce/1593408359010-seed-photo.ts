@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedPhoto1593408358930 implements MigrationInterface {
+export class SeedPhoto1593408359010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
