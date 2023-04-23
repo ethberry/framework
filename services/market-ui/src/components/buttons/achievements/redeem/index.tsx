@@ -82,7 +82,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   };
 
   return (
-    <Button onClick={handleRedeem} data-testid="AchievementRedeemButton" disabled={disabled}>
+    <Button variant="contained" onClick={handleRedeem} data-testid="AchievementRedeemButton" disabled={disabled}>
       <FormattedMessage id="form.buttons.redeem" />
     </Button>
   );
