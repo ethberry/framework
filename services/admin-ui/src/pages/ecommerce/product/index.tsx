@@ -58,7 +58,6 @@ export const Product: FC = () => {
       amount: 0,
       categories: [],
       photos: [],
-      parameters: [],
     },
     search: {
       query: "",

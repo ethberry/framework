@@ -60,6 +60,7 @@ import { ProductEntity } from "./ecommerce/product/product.entity";
 import { PromoEntity } from "./ecommerce/promo/promo.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
+import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 
 import {
   CreateAccessControl1653616447200,
@@ -302,6 +303,7 @@ const config: PostgresConnectionOptions = {
     MerchantEntity,
     OrderEntity,
     OrderItemEntity,
+    ParameterEntity,
     PhotoEntity,
     ProductEntity,
     PromoEntity,

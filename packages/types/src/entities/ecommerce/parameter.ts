@@ -1,3 +1,5 @@
+import { IIdDateBase } from "@gemunion/types-collection";
+
 export enum ProductColor {
   RED = "RED",
   BLUE = "BLUE",
@@ -21,16 +23,17 @@ export enum ProductParameters {
   FLAVOUR = "FLAVOUR",
 }
 
-export interface IParameter {
-  parameterName: string;
-  parameterType: string;
-  parameterValue: string;
-  parameterExtra: string;
+export enum ParameterType {
+  DATE = "DATE",
+  ENUM = "ENUM",
+  STRING = "STRING",
+  NUMBER = "NUMBER",
 }
 
-// export interface IParameter {
-//   parameterName: string;
-//   parameterType: "string" | "number" | "date";
-//   parameterValue: string | number;
-//   parameterMaxValue?: number;
-// }
+export interface IParameter extends IIdDateBase {
+  parameterName: string;
+  parameterType: ParameterType;
+  parameterValue: string;
+  parameterMinValue: string;
+  parameterMaxValue: string;
+}

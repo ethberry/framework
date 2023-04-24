@@ -299,14 +299,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "parameterName": {
-      "COLOR": "Color",
-      "SIZE": "Size"
-    },
     "parameterType": {
-      "date": "Date",
-      "number": "Number",
-      "string": "String"
+      "DATE": "Date",
+      "ENUM": "Enum",
+      "NUMBER": "Number",
+      "STRING": "String"
     },
     "productStatus": {
       "ACTIVE": "Active",
@@ -534,6 +531,7 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parameterMaxValue": "Max Value",
+      "parameterMinValue": "Min Value",
       "parameterName": "Name",
       "parameterType": "Type",
       "parameterValue": "Value",
@@ -648,6 +646,10 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameterMaxValue": "10000",
+      "parameterMinValue": "0",
+      "parameterName": "Color",
+      "parameterValue": "Anything",
       "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",

@@ -1,0 +1,3 @@
+import { IParameter } from "@framework/types";
+
+export interface IParameterUpdateDto extends Omit<IParameter, "id" | "createdAt" | "updatedAt"> {}

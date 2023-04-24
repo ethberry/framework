@@ -5,26 +5,23 @@ import { Add, Delete } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { IParameter } from "@framework/types";
-import { ProductParameters } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { useApiCall } from "@gemunion/react-hooks";
 
 import { getEmptyParameter } from "./empty";
+import { ParameterMinValueInput } from "./minValue";
 import { ParameterMaxValueInput } from "./maxValue";
 import { ParameterTypeInput } from "./type";
-import { getLeftParameterNames } from "./utils";
+import { getAvailableNames } from "./utils";
 import { ParameterValueInput } from "./value";
+import { SelectInput } from "./select";
 
-type IParameterParams = IParameter & {
-  id: string;
-};
-
-export interface IParameterInput {
+export interface IParameterSelectInput {
   prefix?: string;
   multiple?: boolean;
   readOnly?: boolean;
 }
 
-export const ParameterInput: FC<IParameterInput> = props => {
+export const ParameterSelectInput: FC<IParameterSelectInput> = props => {
   const { multiple = true, prefix = "parameters", readOnly = false } = props;
 
   const { formatMessage } = useIntl();
@@ -32,23 +29,23 @@ export const ParameterInput: FC<IParameterInput> = props => {
   const ancestorPrefix = prefix.split(".").pop() as string;
   const { fields, append, remove } = useFieldArray({ name: prefix, control: form.control });
   const watchFields = useWatch({ name: prefix });
-  const parameters: IParameterParams[] = fields.map(
+  const parameters: IParameter[] = fields.map(
     (field, index) =>
       ({
         ...field,
         ...watchFields[index],
-      } as IParameterParams),
+      } as IParameter),
   );
 
-  const leftParameterNames = getLeftParameterNames({ parameters });
-  const disabledOptions = Object.values(ProductParameters).filter(g =>
-    leftParameterNames?.length ? !leftParameterNames.includes(g) : true,
-  );
+  const [allNames, setAllNames] = useState<string[]>([]);
 
-  const [isAddable, setIsAddable] = useState<boolean>(!!leftParameterNames);
+  const availableNames = getAvailableNames({ allNames, parameters });
+  const disabledOptions = allNames.filter(p => (availableNames?.length ? !availableNames.includes(p) : true));
+
+  const [isAddable, setIsAddable] = useState<boolean>(!!availableNames);
 
   const handleOptionAdd = (): (() => void) => (): void => {
-    const emptyParameter = getEmptyParameter({ parameters });
+    const emptyParameter = getEmptyParameter({ allNames, parameters });
 
     if (emptyParameter) {
       append(emptyParameter);
@@ -61,11 +58,29 @@ export const ParameterInput: FC<IParameterInput> = props => {
       remove(i);
     };
 
+  const { fn: getAllNames } = useApiCall(
+    api =>
+      api
+        .fetchJson({
+          url: "/parameter/names",
+        })
+        .then(json => {
+          setAllNames(json);
+        }),
+    { success: false },
+  );
+
+  useEffect(() => {
+    if (!allNames.length) {
+      void getAllNames();
+    }
+  }, [allNames]);
+
   useEffect(() => {
     if (!parameters.length) {
       setIsAddable(true);
     } else {
-      setIsAddable(!!leftParameterNames);
+      setIsAddable(!!availableNames);
     }
   }, [parameters]);
 
@@ -85,17 +100,19 @@ export const ParameterInput: FC<IParameterInput> = props => {
           ) : null}
         </Box>
 
-        {parameters?.map((p: IParameterParams, i: number) => (
+        {parameters?.map((p: IParameter, i: number) => (
           <Box key={p.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
             <Box flex={1}>
               <Paper sx={{ p: 2, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>
                 <SelectInput
-                  name={`${prefix}[${i}].parameterName`}
-                  options={ProductParameters}
+                  name="parameterName"
+                  prefix={`${prefix}[${i}]`}
+                  options={allNames}
                   disabledOptions={disabledOptions}
                 />
                 <ParameterTypeInput prefix={`${prefix}[${i}]`} />
                 <ParameterValueInput prefix={`${prefix}[${i}]`} />
+                <ParameterMinValueInput prefix={`${prefix}[${i}]`} />
                 <ParameterMaxValueInput prefix={`${prefix}[${i}]`} />
               </Paper>
             </Box>
@@ -115,6 +132,6 @@ export const ParameterInput: FC<IParameterInput> = props => {
         ))}
       </Box>
     ),
-    [isAddable, multiple, readOnly, fields, watchFields],
+    [allNames, isAddable, multiple, readOnly, fields, watchFields],
   );
 };

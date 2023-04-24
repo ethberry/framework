@@ -9,67 +9,80 @@ export class SeedParameter1593408358880 implements MigrationInterface {
         parameter_name,
         parameter_type,
         parameter_value,
-        parameter_extra
+        parameter_min_value,
+        parameter_max_value
       ) VALUES (
         'COLOR',
-        'enum',
+        'ENUM',
         'RED',
+        null,
         null
       ), (
         'COLOR',
-        'enum',
+        'ENUM',
         'GREEN',
+        null,
         null
       ), (
         'COLOR',
-        'enum',
+        'ENUM',
         'BLUE',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'XS',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'S',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'M',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'L',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'XL',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'XXL',
+        null,
         null
       ), (
         'SIZE',
-        'enum',
+        'ENUM',
         'XXXL',
+        null,
         null
       ), (
         'VOLUME',
-        'number',
+        'NUMBER',
         null,
+        100,
         10000
       ), (
         'FLAVOUR',
-        'string',
+        'STRING',
         null,
-        null
+        3,
+        50
       );
     `);
   }

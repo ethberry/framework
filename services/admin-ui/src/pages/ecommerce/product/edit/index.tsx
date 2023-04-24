@@ -8,7 +8,7 @@ import { PhotoInput } from "@gemunion/mui-inputs-image-firebase";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ICategory, IProduct, ProductStatus, TokenType } from "@framework/types";
 
-import { ParameterInput } from "../../../../components/inputs/parameter";
+import { ParameterSelectInput } from "../../../../components/inputs/parameter-select";
 import { validationSchema } from "./validation";
 
 export interface IEditProductDialogProps {
@@ -21,8 +21,7 @@ export interface IEditProductDialogProps {
 export const EditProductDialog: FC<IEditProductDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, categories, price, amount, productStatus, merchantId, photos, parameters } =
-    initialValues;
+  const { id, title, description, categories, price, amount, productStatus, merchantId, photos } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,7 +30,7 @@ export const EditProductDialog: FC<IEditProductDialogProps> = props => {
     amount,
     merchantId,
     photos,
-    parameters,
+    parameters: [],
     productStatus,
     categoryIds: categories.map((category: ICategory) => category.id),
   };
@@ -48,11 +47,11 @@ export const EditProductDialog: FC<IEditProductDialogProps> = props => {
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
       />
+      <ParameterSelectInput multiple prefix="parameters" />
       <NumberInput name="amount" />
       {id ? <SelectInput name="productStatus" options={ProductStatus} /> : null}
       <EntityInput name="merchantId" controller="merchants" autoselect />
       <PhotoInput name="photos" />
-      <ParameterInput multiple prefix="parameters" />
     </FormDialog>
   );
 };
