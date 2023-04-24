@@ -28,7 +28,7 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this));
+    spendFrom(price, account, address(this), _disabledTypes);
     acquire(_toArray(item), account);
 
     emit Purchase(account, params.externalId, item, price);

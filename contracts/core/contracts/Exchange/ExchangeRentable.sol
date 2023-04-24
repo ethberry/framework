@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
 import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
@@ -15,6 +16,8 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
 abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+  using SafeCast for uint256;
+
   event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
 
   function lend(
@@ -32,13 +35,13 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
     address account = _msgSender();
 
     if (price.length > 0) {
-      spendFrom(price, account, address(this));
+      spendFrom(price, account, address(this), _disabledTypes);
     }
 
     emit Lend(
       account /* from */,
       params.referrer /* to */,
-      uint64(uint256(expires)),
+      uint256(expires).toUint64() /* lend expires */,
       uint8(params.externalId) /* lendType */,
       items,
       price
@@ -48,7 +51,7 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         params.referrer /* to */,
-        uint64(uint256(expires)) /* lend expires */
+        uint256(expires).toUint64() /* lend expires */
       );
     }
   }

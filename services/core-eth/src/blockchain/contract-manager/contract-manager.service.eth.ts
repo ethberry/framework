@@ -207,7 +207,11 @@ export class ContractManagerServiceEth {
       title: name,
       name,
       symbol,
-      description: JSON.stringify({ batchSize, owner }),
+      description: emptyStateString,
+      parameters: {
+        owner: owner.toLowerCase(),
+        batchSize,
+      },
       imageUrl,
       contractFeatures:
         contractTemplate === "0"

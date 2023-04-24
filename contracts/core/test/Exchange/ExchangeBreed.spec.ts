@@ -28,8 +28,8 @@ describe("ExchangeBreed", function () {
   });
 
   describe("breed", function () {
-    describe("ERC721", function () {
-      it.skip("should breed", async function () {
+    describe("ERC721Genes", function () {
+      it("should breed", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
@@ -37,9 +37,38 @@ describe("ExchangeBreed", function () {
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
 
-        // mintCommon is blocked
-        await erc721Instance.mintCommon(receiver.address, 1);
-        await erc721Instance.mintCommon(receiver.address, 2);
+        const genesis0 = {
+          templateId: 128,
+          matronId: 0,
+          sireId: 1,
+        };
+        const encodedExternalId0 = BigNumber.from(
+          utils.hexlify(
+            utils.concat([
+              utils.zeroPad(utils.hexlify(genesis0.sireId), 3),
+              utils.zeroPad(utils.hexlify(genesis0.matronId), 4),
+              utils.zeroPad(utils.hexlify(genesis0.templateId), 4),
+            ]),
+          ),
+        );
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId0);
+        const genesis1 = {
+          templateId: 128,
+          matronId: 1,
+          sireId: 0,
+        };
+        const encodedExternalId1 = BigNumber.from(
+          utils.hexlify(
+            utils.concat([
+              utils.zeroPad(utils.hexlify(genesis1.sireId), 3),
+              utils.zeroPad(utils.hexlify(genesis1.matronId), 4),
+              utils.zeroPad(utils.hexlify(genesis1.templateId), 4),
+            ]),
+          ),
+        );
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId1);
+
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
 
         const balance1 = await erc721Instance.balanceOf(receiver.address);
         expect(balance1).to.equal(2);
@@ -59,7 +88,6 @@ describe("ExchangeBreed", function () {
           ),
         );
         // const encodedExternalId = BigNumber.from("0x0004000000010000000080");
-
         const signature = await generateOneToOneSignature({
           account: receiver.address,
           params: {
@@ -81,7 +109,6 @@ describe("ExchangeBreed", function () {
             amount: 1,
           },
         });
-
         const tx1 = exchangeInstance.connect(receiver).breed(
           {
             nonce: utils.formatBytes32String("nonce"),
@@ -598,6 +625,7 @@ describe("ExchangeBreed", function () {
 
         await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
       });
+      // TODO add tests for Breed.sol
     });
   });
 });
