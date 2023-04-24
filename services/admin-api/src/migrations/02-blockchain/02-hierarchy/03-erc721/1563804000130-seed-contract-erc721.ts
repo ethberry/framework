@@ -96,7 +96,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         1304,
         '${erc721ContractBlacklistAddress}',
         '${chainId}',
-        'ERC721 (blacklist)',
+        'Jewelry (blacklist)',
         '${simpleFormatting}',
         '${imageUrl}',
         'ERC721 BLACKLIST',

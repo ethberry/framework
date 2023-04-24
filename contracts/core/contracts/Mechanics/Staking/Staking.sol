@@ -55,7 +55,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
-  event WithdrawBalance(address token, uint256 tokenId, uint256 amount);
+  event WithdrawBalance(address account, Asset item);
 
   constructor(uint256 maxStake) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -209,7 +209,9 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
 
     // Increment stake's cycle count
-    if (multiplier != 0) stake.cycles += multiplier;
+    if (multiplier != 0) {
+      stake.cycles += multiplier;
+    }
 
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
@@ -418,37 +420,20 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
   /**
    * @dev Withdraw the penalty balance for given token address and tokenId
-   * @param token The address of token contract.
-   * @param tokenId The ID of the token to withdraw.
-   * @param tokenType The type of token to withdraw.
+   * @param item asset to withdraw.
    */
-  function withdrawBalance(address token, uint256 tokenId, TokenType tokenType) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function withdrawBalance(Asset memory item) public onlyRole(DEFAULT_ADMIN_ROLE) {
     // Retrieve balance from storage.
 
-    uint256 balance = _penalties[token][tokenId];
-    require(balance != 0, "Staking: zero balance");
+    item.amount = _penalties[item.token][item.tokenId];
+    require(item.amount != 0, "Staking: zero balance");
     address account = _msgSender();
 
     // Emit an event indicating that penalty balance has withdrawn.
-    emit WithdrawBalance(token, tokenId, balance);
+    emit WithdrawBalance(account, item);
     // clean penalty balance in _penalties mapping storage
-    _penalties[token][tokenId] = 0;
+    _penalties[item.token][item.tokenId] = 0;
 
-    if (tokenType == TokenType.NATIVE) {
-      require(balance <= address(this).balance, "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
-    } else if (tokenType == TokenType.ERC20) {
-      require(balance <= IERC20(token).balanceOf(address(this)), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
-    } else if (tokenType == TokenType.ERC721 || tokenType == TokenType.ERC998) {
-      require(address(this) == IERC721(token).ownerOf(tokenId), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
-    } else if (tokenType == TokenType.ERC1155) {
-      require(balance <= IERC1155(token).balanceOf(address(this), tokenId), "Staking: balance exceeded");
-      spend(_toArray(Asset(tokenType, token, tokenId, balance)), account);
-    } else {
-      // should never happen
-      revert UnsupportedTokenType();
-    }
+    spend(_toArray(item), account);
   }
 }

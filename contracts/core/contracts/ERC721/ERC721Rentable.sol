@@ -22,6 +22,10 @@ contract ERC721Rentable is ERC721Simple, ERC4907 {
     return super._isApprovedOrOwner(owner, tokenId);
   }
 
+  function setUser(uint256 tokenId, address user, uint64 expires) public override onlyRole(MINTER_ROLE) {
+    super.setUser(tokenId, user, expires);
+  }
+
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Simple, ERC4907) returns (bool) {
     return ERC721Simple.supportsInterface(interfaceId) || ERC4907.supportsInterface(interfaceId);
   }

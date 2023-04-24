@@ -19,6 +19,7 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
 
   event Lend(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
 
+
   function lend(
     Params memory params,
     Asset[] memory items,
