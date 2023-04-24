@@ -9,6 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";
 
 import ClaimABI from "../../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
+import { sorter } from "../../../../../utils/sorter";
 
 export interface IClaimRedeemButtonProps {
   claim: IClaim;
@@ -28,7 +29,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
         referrer: constants.AddressZero,
       },
-      claim.item?.components.map(component => ({
+      claim.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId,

@@ -11,6 +11,6 @@ export class ClaimUploadDto {
   })
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
-  @Type(() => Array<ClaimItemCreateDto>)
+  @Type(() => ClaimItemCreateDto)
   public files: Array<ClaimItemCreateDto>;
 }

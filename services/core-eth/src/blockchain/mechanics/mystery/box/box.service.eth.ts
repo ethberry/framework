@@ -16,6 +16,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { MysteryBoxService } from "./box.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -26,6 +27,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
+    protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
@@ -36,7 +38,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
@@ -67,7 +69,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
         template: templateEntity,
       });
 
-      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
     const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());

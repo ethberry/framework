@@ -99,8 +99,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "type",
       headerName: formatMessage({ id: "form.labels.event" }),
       sortable: false,
-      flex: 1,
-      minWidth: 120
+      flex: 0.8,
+      // minWidth: 120
     },
     {
       field: "price",
@@ -125,8 +125,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
             </Box> : null
         );
       },
-      flex: 1.3,
-      minWidth: 100
+      flex: 1,
+      // minWidth: 100
     },
     // {
     //   field: "quantity",
@@ -140,11 +140,11 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <AddressLink address={params.value} />
+          <AddressLink address={params.value} length={15} />
         );
       },
-      flex: 2,
-      minWidth: 360
+      flex: 1,
+      // minWidth: 360
     },
     {
       field: "to",
@@ -152,19 +152,19 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <AddressLink address={params.value} />
+          <AddressLink address={params.value} length={15} />
         );
       },
-      flex: 2,
-      minWidth: 360
+      flex: 1,
+      // minWidth: 360
     },
     {
       field: "date",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: false,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), "MM/dd/yy hh:mm"),
-      flex: 1.2,
-      minWidth: 160
+      flex: 0.9,
+      // minWidth: 160
     },
     {
       field: "tx",
@@ -172,11 +172,11 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams<any, string>) => {
         return (
-          <TxHashLink hash={params.value as string} />
+          <TxHashLink hash={params.value as string} length={18} />
         );
       },
-      flex: 1,
-      minWidth: 360
+      flex: 1.2,
+      // minWidth: 360
     }
   ];
 

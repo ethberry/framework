@@ -10,6 +10,7 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ISignTemplateDto } from "./interfaces";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class MarketplaceService {
@@ -20,24 +21,9 @@ export class MarketplaceService {
   ) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, templateId } = dto;
-    const templateEntity = await this.templateService.findOne(
-      { id: templateId },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            contract: "template.contract",
-            tokens: "template.tokens",
-            price: "template.price",
-            price_components: "price.components",
-            price_template: "price_components.template",
-            price_contract: "price_components.contract",
-            price_tokens: "price_template.tokens",
-          },
-        },
-      },
-    );
+    const { account, referrer = constants.AddressZero, templateId, amount } = dto;
+
+    const templateEntity = await this.templateService.findOneWithRelations({ id: templateId });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -54,6 +40,7 @@ export class MarketplaceService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
+      amount,
       {
         nonce,
         externalId: templateEntity.id,
@@ -66,7 +53,12 @@ export class MarketplaceService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, templateEntity: TemplateEntity): Promise<string> {
+  public async getSignature(
+    account: string,
+    amount: string,
+    params: IParams,
+    templateEntity: TemplateEntity,
+  ): Promise<string> {
     return this.signerService.getOneToManySignature(
       account,
       params,
@@ -77,17 +69,18 @@ export class MarketplaceService {
           templateEntity.contract.contractType === TokenType.ERC1155
             ? templateEntity.tokens[0].tokenId
             : templateEntity.id.toString(),
-        amount: "1",
+        amount: amount || "1",
       },
-      templateEntity.price.components.map(component => ({
+      templateEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         // pass templateId instead of tokenId = 0
-        tokenId:
-          component.template.tokens[0].tokenId === "0"
-            ? component.template.tokens[0].templateId.toString()
-            : component.template.tokens[0].tokenId,
-        amount: component.amount,
+        // tokenId:
+        //   component.template.tokens[0].tokenId === "0"
+        //     ? component.template.tokens[0].templateId.toString()
+        //     : component.template.tokens[0].tokenId,
+        tokenId: component.template.tokens[0].tokenId,
+        amount: BigNumber.from(component.amount).mul(BigNumber.from(amount)).toString(),
       })),
     );
   }

@@ -16,6 +16,7 @@ export * from "./exchange/asset/components";
 
 export * from "./mechanics/claim/search";
 export * from "./mechanics/craft/search";
+export * from "./mechanics/rent/search";
 export * from "./mechanics/drop/search";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/leaderboard";

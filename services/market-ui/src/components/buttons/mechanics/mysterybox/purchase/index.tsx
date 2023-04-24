@@ -52,7 +52,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         referrer: constants.AddressZero,
       },
       items,
-      mysterybox.template?.price?.components.map(component => ({
+      mysterybox.template?.price?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,
@@ -67,7 +67,6 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
-
     return metaFnWithSign(
       {
         url: "/mysteryboxes/sign",

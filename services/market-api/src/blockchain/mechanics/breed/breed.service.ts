@@ -27,6 +27,33 @@ export class BreedService {
     private readonly settingsService: SettingsService,
   ) {}
 
+  public findAll(
+    where: FindOptionsWhere<BreedEntity>,
+    options?: FindOneOptions<BreedEntity>,
+  ): Promise<Array<BreedEntity>> {
+    return this.breedEntityRepository.find({ where, ...options });
+  }
+
+  public findOne(
+    where: FindOptionsWhere<BreedEntity>,
+    options?: FindOneOptions<BreedEntity>,
+  ): Promise<BreedEntity | null> {
+    return this.breedEntityRepository.findOne({ where, ...options });
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<BreedEntity>): Promise<BreedEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "breed",
+        leftJoinAndSelect: {
+          token: "breed.token",
+          template: "token.template",
+          contract: "template.contract",
+        },
+      },
+    });
+  }
+
   public async getToken(tokenId: number): Promise<TokenEntity> {
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
@@ -41,19 +68,6 @@ export class BreedService {
     }
 
     return tokenEntity;
-  }
-
-  public findOneWithRelations(where: FindOptionsWhere<BreedEntity>): Promise<BreedEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "breed",
-        leftJoinAndSelect: {
-          token: "breed.token",
-          template: "token.template",
-          contract: "template.contract",
-        },
-      },
-    });
   }
 
   public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
@@ -122,19 +136,5 @@ export class BreedService {
         amount: "1",
       },
     );
-  }
-
-  public findOne(
-    where: FindOptionsWhere<BreedEntity>,
-    options?: FindOneOptions<BreedEntity>,
-  ): Promise<BreedEntity | null> {
-    return this.breedEntityRepository.findOne({ where, ...options });
-  }
-
-  public findAll(
-    where: FindOptionsWhere<BreedEntity>,
-    options?: FindOneOptions<BreedEntity>,
-  ): Promise<Array<BreedEntity>> {
-    return this.breedEntityRepository.find({ where, ...options });
   }
 }

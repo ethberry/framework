@@ -1,13 +1,14 @@
 import { FC, Fragment } from "react";
-import { Grid, List, ListItem, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ICraft } from "@framework/types";
+import { ICraft, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { CraftButton } from "../../../../components/buttons";
@@ -20,6 +21,30 @@ export const CraftItem: FC = () => {
       price: emptyPrice,
     },
   });
+  // TODO better empty template and empty price?
+  if (selected.item?.components[0] && selected.price?.components[0] && !selected.item?.components[0].template) {
+    Object.assign(selected.item?.components[0], {
+      template: {
+        title: "",
+        description: emptyStateString,
+        imageUrl:
+          "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE_LOGO.png?alt=media&token=85c376a8-33a0-4b6b-9285-2b9022287289",
+      },
+      contract: {
+        contractType: TokenType.ERC721,
+      },
+    });
+    Object.assign(selected.price?.components[0], {
+      id: 0,
+      template: {
+        imageUrl:
+          "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE_LOGO.png?alt=media&token=85c376a8-33a0-4b6b-9285-2b9022287289",
+      },
+      contract: {
+        contractType: TokenType.ERC1155,
+      },
+    });
+  }
 
   const classes = useStyles();
 
@@ -41,27 +66,25 @@ export const CraftItem: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <List
-            component="nav"
-            subheader={
-              <ListSubheader>
-                <FormattedMessage id="pages.craft.price" />
-              </ListSubheader>
-            }
-          >
-            {selected.price?.components.map(component => (
-              <ListItem
-                key={component.id}
-                button
-                component={RouterLink}
-                to={`/${component.contract!.contractType.toLowerCase()}-templates/${component.templateId}`}
-              >
-                <ListItemText>
-                  {component.template!.title} ({component.amount})
-                </ListItemText>
-              </ListItem>
-            ))}
-            <CraftButton craft={selected} />
+          <List component="nav">
+            <Paper className={classes.paper}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <FormattedMessage id="form.labels.price" />
+              </Typography>
+              {selected.price?.components.map(component => (
+                <ListItem
+                  key={component.id}
+                  button
+                  component={RouterLink}
+                  to={`/${component.contract!.contractType.toLowerCase()}/templates/${component.templateId}`}
+                >
+                  <ListItemText>
+                    {component.template!.title} ({component.amount})
+                  </ListItemText>
+                </ListItem>
+              ))}
+              <CraftButton craft={selected} />
+            </Paper>
           </List>
         </Grid>
       </Grid>

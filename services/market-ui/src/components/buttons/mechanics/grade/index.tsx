@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
-import { Web3ContextType } from "@web3-react/core";
+import { Web3ContextType, useWeb3React } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
@@ -12,6 +12,7 @@ import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@fr
 import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
 
 import { getEthPrice, getMultiplier } from "./utils";
+import { sorter } from "../../../../utils/sorter";
 
 interface IUpgradeButtonProps {
   token: IToken;
@@ -22,6 +23,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const { token, attribute } = props;
 
   const api = useApi();
+  const { account } = useWeb3React();
 
   const { contractFeatures } = token.template!.contract!;
 
@@ -38,7 +40,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         const level = token.attributes[attribute];
 
         const price =
-          grade.price?.components.map(component => ({
+          grade.price?.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             tokenId: component.template!.tokens![0].tokenId,
@@ -76,6 +78,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
         data: {
           tokenId: token.id,
           attribute,
+          account,
         },
       },
       null,

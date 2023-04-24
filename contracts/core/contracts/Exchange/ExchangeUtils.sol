@@ -78,7 +78,7 @@ contract ExchangeUtils {
     }
   }
 
-  function spend(Asset[] memory price, address receiver) internal {
+  function spend(Asset[] memory price, address receiver) internal nonReentrant {
     uint256 length = price.length;
 
     uint256 totalAmount;
@@ -122,8 +122,7 @@ contract ExchangeUtils {
         // If the token is an NATIVE token, transfer tokens to the receiver.
         Address.sendValue(payable(account), item.amount);
         emit PaymentEthSent(account, item.amount);
-        // Calling a `` function from another "" function is not supported.
-        // spend(_toArray(item), account);
+        spend(_toArray(item), account);
         // If the `Asset` is an ERC20 token.
       } else if (item.tokenType == TokenType.ERC20) {
         if (_isERC1363Supported(account, item.token)) {

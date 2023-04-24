@@ -38,6 +38,9 @@ export class AssetService {
   }
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
+    // if (asset) {
+    //
+    // }
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();

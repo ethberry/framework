@@ -128,7 +128,13 @@ export class EventHistoryService {
     if (eventType === ContractEventType.RandomWordsRequested) {
       const parentEvent = await this.findOne({
         transactionHash,
-        eventType: ContractEventType.Purchase,
+        eventType: In([
+          ExchangeEventType.Purchase,
+          ExchangeEventType.Breed,
+          ExchangeEventType.Craft,
+          ExchangeEventType.Mysterybox,
+          ExchangeEventType.Claim,
+        ]),
       });
 
       if (parentEvent) {
@@ -149,7 +155,11 @@ export class EventHistoryService {
       await contractEventEntity.save();
     }
 
-    if (eventType === ContractEventType.Transfer) {
+    if (
+      eventType === ContractEventType.Transfer ||
+      eventType === ContractEventType.TransferSingle ||
+      eventType === ContractEventType.TransferBatch
+    ) {
       const parentEvent = await this.findOne({
         transactionHash,
         eventType: In([
@@ -170,7 +180,7 @@ export class EventHistoryService {
           transactionHash,
           parentId: undefined,
         });
-        // TODO nested ?== parent
+
         if (nestedEvents) {
           nestedEvents.map(async nested => {
             if (nested.id !== parentEvent.id) {
