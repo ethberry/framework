@@ -2,7 +2,6 @@ import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressPipe, NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { wallet } from "@gemunion/constants";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { BalanceService } from "./balance.service";
@@ -31,6 +30,6 @@ export class BalanceController {
   @Get("/:address")
   @UseInterceptors(NotFoundInterceptor)
   public findAccountBalances(@Param("address", AddressPipe) address: string): Promise<Array<BalanceEntity>> {
-    return this.balanceService.searchByAddress(address === wallet ? "" : address);
+    return this.balanceService.searchByAddress(address);
   }
 }
