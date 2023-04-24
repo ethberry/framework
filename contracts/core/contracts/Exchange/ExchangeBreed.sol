@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./SignatureValidator.sol";
@@ -16,6 +17,8 @@ import "./interfaces/IAsset.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+  using SafeCast for uint256;
+
   uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
   uint64 public _pregnancyCountLimit = 0;
   uint64 public _pregnancyMaxTime = 0;
@@ -65,16 +68,16 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     }
 
     // Check pregnancy time
-    uint64 timeNow = uint64(block.timestamp);
+    uint64 timeNow = block.timestamp.toUint64();
 
     require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
     uint64 timeLimitM = pregnancyM.count > 13
       ? _pregnancyMaxTime
-      : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
+      : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64();
     uint64 timeLimitS = pregnancyS.count > 13
       ? _pregnancyMaxTime
-      : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
+      : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64();
 
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
       require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");

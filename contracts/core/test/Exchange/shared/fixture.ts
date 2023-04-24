@@ -70,14 +70,8 @@ export async function deployContractManager(exchangeInstance: Exchange) {
   const managerFactory = await ethers.getContractFactory("ContractManager");
   const managerInstance = await managerFactory.deploy();
 
-  const minters = [exchangeInstance.address];
-  const metadata = [exchangeInstance.address];
-  await managerInstance.setFactories(
-    // minters
-    minters,
-    // metadata editors
-    metadata,
-  );
+  await managerInstance.addFactory(exchangeInstance.address, MINTER_ROLE);
+  await managerInstance.addFactory(exchangeInstance.address, METADATA_ROLE);
 
   return managerInstance;
 }

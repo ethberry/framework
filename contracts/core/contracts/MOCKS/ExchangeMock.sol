@@ -17,7 +17,7 @@ import "../Exchange/ExchangeUtils.sol";
 contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
   function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
     // Transfer tokens to self or other address
-    spendFrom(price, spender, receiver);
+    spendFrom(price, spender, receiver, _disabledTypes);
   }
 
   function testSpend(Asset[] memory price, address receiver) external payable {

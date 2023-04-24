@@ -16,16 +16,18 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "./interfaces/IStaking.sol";
-import "../TopUp.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../utils/constants.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
 import "../../Exchange/referral/LinearReferral.sol";
+import "../../Exchange/ExchangeUtils.sol";
+import "../../utils/constants.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../TopUp.sol";
+
+import "./interfaces/IStaking.sol";
+import "../../utils/errors.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -44,6 +46,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
+  mapping(address /* contract */ => mapping(uint256 /* tokenId */ => uint256 /* amount */)) internal _penalties;
+
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
@@ -51,6 +55,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
+  event WithdrawBalance(address account, Asset item);
 
   constructor(uint256 maxStake) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -78,6 +83,13 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
    */
   function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _maxStake = maxStake;
+  }
+
+  /**
+   * @dev Get Stake
+   */
+  function getStake(uint256 stakeId) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Stake memory stake) {
+    return _stakes[stakeId];
   }
 
   /**
@@ -140,7 +152,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       }
 
       // Transfer tokens from user to this contract.
-      spendFrom(_toArray(depositItem), account, address(this));
+      spendFrom(_toArray(depositItem), account, address(this), _disabledTypes);
 
       // Do something after purchase with referrer
       if (referrer != address(0)) {
@@ -153,6 +165,24 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     return super._afterPurchase(referrer, price);
   }
 
+  /* Receive Staking Reward logic:
+
+  1. Calculate multiplier (count full periods since stake start)
+
+  2. Deposit withdraw
+    2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+
+      2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
+      2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
+
+    2.2 Else -> update stake.startTimestamp = block.timestamp
+
+  3. Reward transfer
+    3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
+
+  4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+                                                     -> revert with Error ( first period not yet finished )
+  */
   /**
    * @dev Allows the owner of the specified stake to receive the reward.
    * @param stakeId The ID of the stake.
@@ -172,38 +202,66 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     require(stake.owner == account, "Staking: not an owner");
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
-    // Calculate the multiplier
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
+    // Calculate the multiplier
+    // counts only FULL stake cycles
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
 
+    // Increment stake's cycle count
+    if (multiplier != 0) {
+      stake.cycles += multiplier;
+    }
+
+    // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
     for (uint256 i = 0; i < lengthDeposit; i++) {
       Asset memory depositItem = _stakes[stakeId].deposit[i];
 
       uint256 stakeAmount = depositItem.amount;
 
-      // If withdrawDeposit is true, withdraw the deposit.
-      if (withdrawDeposit) {
+      // If withdrawDeposit flag is true OR
+      // If Reward multiplier > 0 AND Rule is not recurrent OR
+      // If Stake cycles > 0 AND breakLastPeriod flag is true
+      // Withdraw initial Deposit
+      if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
         emit StakingWithdraw(stakeId, receiver, block.timestamp);
         stake.activeDeposit = false;
 
         // Deduct the penalty from the stake amount if the multiplier is 0.
-        depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
+        depositItem.amount = (multiplier == 0 && stake.cycles == 0)
+          ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100))
+          : stakeAmount;
 
-        // Transfer the deposit Asset to the receiver.
-        spend(_toArray(depositItem), receiver);
+        // Store penalties
+        _penalties[depositItem.token][depositItem.tokenId] += multiplier == 0
+          ? (stakeAmount / 100) * (rule.penalty / 100)
+          : 0;
+
+        // Penalty for ERC721\ERC998 deposit either 0% or 100%
+        if (
+          multiplier == 0 &&
+          rule.penalty == 10000 &&
+          (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998)
+        ) {
+          depositItem.amount = 0;
+          _penalties[depositItem.token][depositItem.tokenId] = 1;
+        } else {
+          // Transfer the deposit Asset to the receiver.
+          spend(_toArray(depositItem), receiver);
+        }
       } else {
         // Update the start timestamp of the stake.
         stake.startTimestamp = block.timestamp;
       }
     }
 
-    if (multiplier != 0) {
-      // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    if (multiplier > 0) {
       // Emit an event indicating that staking has finished.
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
+      // Iterate by Array<reward>
       uint256 length = rule.reward.length;
       for (uint256 j = 0; j < length; j++) {
         // Create a new Asset object representing the reward.
@@ -229,15 +287,22 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
               acquire(_toArray(rewardItem), receiver);
             }
           }
-        } else {
+        } else if (rewardItem.tokenType == TokenType.ERC1155) {
           // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
           acquire(_toArray(rewardItem), receiver);
+        } else {
+          // should never happen
+          revert UnsupportedTokenType();
         }
       }
     }
-    // If the multiplier is zero and the withdrawDeposit and breakLastPeriod flags are also false
+    // IF the multiplier is zero
+    // AND
+    // withdrawDeposit and breakLastPeriod flags are false
+    // AND staking rule is recurrent
     // revert the transaction.
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");
+    if (multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod)
+      revert("Staking: first period not yet finished");
   }
 
   /**
@@ -250,9 +315,15 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   function _calculateRewardMultiplier(
     uint256 startTimestamp,
     uint256 finishTimestamp,
-    uint256 period
+    uint256 period,
+    bool recurrent
   ) internal pure virtual returns (uint256) {
-    return (finishTimestamp - startTimestamp) / period;
+    uint256 multiplier = (finishTimestamp - startTimestamp) / period;
+    // If staking rule is not recurrent, limit reward to 1 cycle
+    if (!recurrent && multiplier > 1) {
+      return 1;
+    }
+    return multiplier;
   }
 
   /**
@@ -343,5 +414,26 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     require(rule.period != 0, "Staking: rule does not exist");
     _rules[ruleId].active = active;
     emit RuleUpdated(ruleId, active);
+  }
+
+  // WITHDRAW
+
+  /**
+   * @dev Withdraw the penalty balance for given token address and tokenId
+   * @param item asset to withdraw.
+   */
+  function withdrawBalance(Asset memory item) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    // Retrieve balance from storage.
+
+    item.amount = _penalties[item.token][item.tokenId];
+    require(item.amount != 0, "Staking: zero balance");
+    address account = _msgSender();
+
+    // Emit an event indicating that penalty balance has withdrawn.
+    emit WithdrawBalance(account, item);
+    // clean penalty balance in _penalties mapping storage
+    _penalties[item.token][item.tokenId] = 0;
+
+    spend(_toArray(item), account);
   }
 }

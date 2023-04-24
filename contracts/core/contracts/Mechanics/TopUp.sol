@@ -15,7 +15,7 @@ import "../Exchange/ExchangeUtils.sol";
 
 contract TopUp is Context, Wallet, ExchangeUtils {
   function topUp(Asset[] memory price) external payable {
-    spendFrom(price, _msgSender(), address(this));
+    spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, false));
   }
 
   receive() external payable virtual override {
