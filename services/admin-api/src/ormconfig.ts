@@ -134,6 +134,7 @@ import {
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
   SeedBalanceExchangeAt1563804020402,
+  SeedBalancePyramidAt1663047650530,
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
   SeedCategories1593408358860,
@@ -174,6 +175,8 @@ import {
   SeedEventHistoryErc20TransferAt1563804040120,
   SeedEventHistoryErc721ClaimAt1563804040330,
   SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc721LendAt1678931845530,
+  SeedEventHistoryErc721LendComponentsAt1678931845540,
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
@@ -244,8 +247,6 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedEventHistoryErc721LendAt1678931845530 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845530-seed-event-history-erc721-lend";
-import { SeedEventHistoryErc721LendComponentsAt1678931845540 } from "./migrations/02-blockchain/04-mechanics/11-rent/1678931845540-seed-event-history-erc721-lend-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -485,6 +486,8 @@ const config: PostgresConnectionOptions = {
     CreatePyramidDeposit1660436477300,
     SeedPyramidDepositNativeNativeAt1660436477310,
     SeedPyramidDepositErc20Erc20At1660436477320,
+    SeedPyramidPayees1663047650520,
+    SeedBalancePyramidAt1663047650530,
 
     SeedContractWaitlistAt1663047650100,
     CreateWaitlistList1663047650200,
@@ -504,7 +507,6 @@ const config: PostgresConnectionOptions = {
 
     CreateWalletPayees1663047650500,
     SeedExchangePayees1663047650510,
-    SeedPyramidPayees1663047650520,
     SeedContractChainLinkAt1563804000105,
 
     CreateRent1678931845500,

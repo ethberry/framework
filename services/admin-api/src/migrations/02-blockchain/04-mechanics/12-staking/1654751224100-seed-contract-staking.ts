@@ -40,7 +40,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '',
         '',
         'ACTIVE',
-        '{ALLOWANCE,REFERRAL}',
+        '{ALLOWANCE,REFERRAL,REFERRAL}',
         'STAKING',
         '${fromBlock}',
         1,

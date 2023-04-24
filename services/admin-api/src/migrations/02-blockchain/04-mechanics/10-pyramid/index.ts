@@ -6,3 +6,4 @@ export * from "./1660436477300-create-pyramid-deposit";
 export * from "./1660436477310-seed-pyramid-deposit-native-native";
 export * from "./1660436477320-seed-pyramid-deposit-erc20-erc20";
 export * from "./1663047650520-seed-pyramid-payees";
+export * from "./1663047650530-seed-balance-pyramid";
