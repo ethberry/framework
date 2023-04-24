@@ -17,6 +17,12 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130103
       ), (
+        130401
+      ), (
+        130402
+      ), (
+        130403
+      ), (
         130501
       ), (
         130502
@@ -31,8 +37,6 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130507
       ), (
-        130508
-      ), (
         130601
       ), (
         130602
@@ -43,7 +47,15 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130801
       ), (
+        130802
+      ), (
+        130803
+      ), (
         130901
+      ), (
+        130902
+      ), (
+        130903
       ), (
         230101
       );
@@ -88,7 +100,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130103,
-        'Ward save',
+        'Poison resistance',
         '${simpleFormatting}',
         '${imageUrl}',
         130103,
@@ -99,8 +111,44 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        130401,
+        'Necklace',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130401,
+        0,
+        1,
+        'ACTIVE',
+        1304,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130402,
+        'Gold ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130402,
+        0,
+        1,
+        'ACTIVE',
+        1304,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130403,
+        'Silver ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130403,
+        0,
+        1,
+        'ACTIVE',
+        1304,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         130501,
-        'Chain mail',
+        'Cuirass',
         '${simpleFormatting}',
         '${imageUrl}',
         130501,
@@ -124,7 +172,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130503,
-        'Gloves',
+        'Cuisses',
         '${simpleFormatting}',
         '${imageUrl}',
         130503,
@@ -136,7 +184,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130504,
-        'Boots',
+        'Gauntlets',
         '${simpleFormatting}',
         '${imageUrl}',
         130504,
@@ -148,7 +196,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130505,
-        'Necklace',
+        'Pauldrons',
         '${simpleFormatting}',
         '${imageUrl}',
         130505,
@@ -160,7 +208,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130506,
-        'Gold Ring',
+        'Greaves',
         '${simpleFormatting}',
         '${imageUrl}',
         130506,
@@ -172,22 +220,10 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130507,
-        'Silver Ring',
+        'Sabatons',
         '${simpleFormatting}',
         '${imageUrl}',
         130507,
-        0,
-        1,
-        'ACTIVE',
-        1305,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        130508,
-        'Yellow pants',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        130508,
         0,
         1,
         'ACTIVE',
@@ -267,11 +303,59 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        130802,
+        'Cup',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130802,
+        0,
+        1,
+        'ACTIVE',
+        1308,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130803,
+        'Diploma',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130803,
+        0,
+        1,
+        'ACTIVE',
+        1308,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         130901,
-        'T-Shirt',
+        'Horse',
         '${simpleFormatting}',
         '${imageUrl}',
         130901,
+        0,
+        1,
+        'ACTIVE',
+        1309,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130902,
+        'Boat',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130902,
+        0,
+        1,
+        'ACTIVE',
+        1309,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130903,
+        'Gyrocopter',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        130903,
         0,
         1,
         'ACTIVE',

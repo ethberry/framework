@@ -77,12 +77,6 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${wallet}',
-        1,
-        13050801,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         '${erc998ContractRandomAddress}',
         1,
         13060101,
