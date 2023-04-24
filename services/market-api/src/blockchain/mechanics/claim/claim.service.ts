@@ -27,11 +27,11 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
       "item_tokens",
-      `item_contract.contractType IN(${tokenTypes})`,
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
     if (claimStatus) {

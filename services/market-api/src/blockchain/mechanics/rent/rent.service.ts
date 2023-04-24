@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 
@@ -76,11 +76,11 @@ export class RentService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
-      `price_contract.contractType IN(${tokenTypes})`,
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
     queryBuilder.andWhere("rent.id = :id", {
@@ -88,18 +88,5 @@ export class RentService {
     });
 
     return queryBuilder.getOne();
-    // return this.findOne(where, {
-    //   join: {
-    //     alias: "rent",
-    //     leftJoinAndSelect: {
-    //       contract: "rent.contract",
-    //       price: "rent.price",
-    //       price_components: "price.components",
-    //       price_contract: "price_components.contract",
-    //       price_template: "price_components.template",
-    //       price_tokens: "price_template.tokens",
-    //     },
-    //   },
-    // });
   }
 }

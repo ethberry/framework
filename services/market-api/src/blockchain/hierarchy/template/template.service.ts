@@ -29,9 +29,9 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
-    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", `contract.contractType IN(${tokenTypes})`);
-
+    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
+      tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155],
+    });
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -40,7 +40,8 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
-      `price_contract.contractType IN(${tokenTypes})`,
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
@@ -190,36 +191,25 @@ export class TemplateService {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
-    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", `contract.contractType IN(${tokenTypes})`);
+    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
+      tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155],
+    });
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
+    // we need to get single token for Native, Erc20 and Erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
-      `price_contract.contractType IN(${tokenTypes})`,
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
     queryBuilder.andWhere("template.id = :id", {
       id: where.id,
     });
 
     return queryBuilder.getOne();
-    // return this.findOne(where, {
-    //   join: {
-    //     alias: "template",
-    //     leftJoinAndSelect: {
-    //       contract: "template.contract",
-    //       price: "template.price",
-    //       price_components: "price.components",
-    //       price_contract: "price_components.contract",
-    //       price_template: "price_components.template",
-    //       price_tokens: "price_template.tokens",
-    //     },
-    //   },
-    // });
   }
 }

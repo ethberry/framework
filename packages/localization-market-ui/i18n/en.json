@@ -25,6 +25,7 @@
   "dialogs": {
     "add": "Add",
     "allowance": "Allowance",
+    "amount": "Set token amount",
     "auction": "Sell `{title}` on auction",
     "lend": "Lend token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",

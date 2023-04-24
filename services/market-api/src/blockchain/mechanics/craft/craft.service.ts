@@ -40,11 +40,11 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
-      `price_contract.contractType IN(${tokenTypes})`,
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
     queryBuilder.where({
@@ -88,40 +88,30 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.leftJoinAndSelect("craft.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     // we need to get single token for Native, erc20 and erc1155
-    const tokenTypes = `'${TokenType.NATIVE}','${TokenType.ERC20}','${TokenType.ERC1155}'`;
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
-      `price_contract.contractType IN(${tokenTypes})`,
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
     queryBuilder.andWhere("craft.id = :id", {
       id: where.id,
     });
     return queryBuilder.getOne();
-    // return this.findOne(where, {
-    //   join: {
-    //     alias: "craft",
-    //     leftJoinAndSelect: {
-    //       item: "craft.item",
-    //       item_components: "item.components",
-    //       item_template: "item_components.template",
-    //       item_contract: "item_components.contract",
-    //       item_tokens: "item_template.tokens",
-    //       price: "craft.price",
-    //       price_components: "price.components",
-    //       price_contract: "price_components.contract",
-    //       price_template: "price_components.template",
-    //       price_tokens: "price_template.tokens",
-    //     },
-    //   },
-    // });
   }
 
   public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
@@ -157,7 +147,10 @@ export class CraftService {
       craftEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.template.id.toString(),
+        tokenId:
+          component.contract.contractType === TokenType.ERC1155
+            ? component.template.tokens[0].tokenId
+            : component.template.id.toString(),
         amount: component.amount,
       })),
       craftEntity.price.components.sort(sorter("id")).map(component => ({
