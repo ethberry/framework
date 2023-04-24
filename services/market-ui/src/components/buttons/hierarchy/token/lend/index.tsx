@@ -8,10 +8,11 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import type { IToken } from "@framework/types";
-import { ContractFeatures, RentStrategy, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 import { ILendDto, LendDialog } from "./dialog";
 import TemplateLendABI from "../../../../../abis/components/buttons/mechanics/lend/lend.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 interface ITokenLendButtonProps {
   token: IToken;
@@ -19,7 +20,6 @@ interface ITokenLendButtonProps {
 
 export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
   const { token } = props;
-
   const [isLendTokenDialogOpen, setIsLendTokenDialogOpen] = useState(false);
 
   const { formatMessage } = useIntl();
@@ -33,7 +33,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
 
       const params = {
         nonce: utils.arrayify(sign.nonce),
-        externalId: Object.values(RentStrategy).indexOf(values.lendType),
+        externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
         referrer: values.account,
       };
@@ -46,8 +46,12 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         },
       ];
 
-      const price = token.template?.contract?.rent
-        ? token.template?.contract?.rent[0]?.price?.components.map(component => ({
+      const rentRule = token.template?.contract?.rent
+        ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
+        : [];
+
+      const price = rentRule
+        ? rentRule[0].price?.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             // pass templateId instead of tokenId = 0
@@ -57,11 +61,9 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
                 : component.template!.tokens![0].tokenId,
             amount: component.amount,
           }))
-        : [];
+        : []; // Zero price for free rent?
       return contract.lend(params, items, price, expires, sign.signature, {
-        value: token.template?.contract?.rent
-          ? getEthPrice(token.template?.contract?.rent[0].price)
-          : BigNumber.from(0),
+        value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
     },
   );
@@ -78,7 +80,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
           account, // user token owner
           referrer: dto.account, // borrower
           tokenId: token.id, // token.id to lend
-          externalId: Object.values(RentStrategy).indexOf(dto.lendType), // lendType
+          externalId: dto.rentRule, // DB rent rule id
           expires, // lend time
         },
       },
@@ -121,7 +123,8 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         initialValues={{
           account: "",
           expires: new Date().toISOString(),
-          lendType: RentStrategy.SHARE50,
+          contractId: token.template!.contract.id,
+          rentRule: 0, // externalId
         }}
       />
     </Fragment>

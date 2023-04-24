@@ -16,8 +16,8 @@ export enum GradeAttribute {
 export interface IGrade extends IIdDateBase {
   contractId: number;
   contract?: IContract;
+  price?: IAsset;
   gradeStrategy: GradeStrategy;
   growthRate: number;
   attribute: GradeAttribute;
-  price?: IAsset;
 }

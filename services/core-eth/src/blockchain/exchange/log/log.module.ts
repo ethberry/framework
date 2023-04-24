@@ -46,6 +46,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.Lend,
               // MODULE:CLAIM
               ExchangeEventType.Claim,
+              // MODULE:CRAFT
+              ExchangeEventType.Craft,
               // MODULE:MYSTERYBOX
               ExchangeEventType.Mysterybox,
               // MODULE:REFERRAL

@@ -11,18 +11,59 @@ export class SeedRent1678931845510 implements MigrationInterface {
         id
       ) VALUES (
         220101
+      ), (
+        220102
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.rent (
+        title,
         price_id,
         contract_id,
+        rent_status,
         created_at,
         updated_at
       ) VALUES (
+        'SHARE 25% to 75%',
         220101,
         1309,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'SHARE 50% to 50%',
+        220101,
+        1309,
+        'ACTIVE',  
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'SHARE 75% to 25%',
+         220101,
+         1309,
+        'INACTIVE',
+        '${currentDateTime}',
+         '${currentDateTime}'
+      ), (
+        'SHARE 25% to 75%',
+        220102,
+        1409,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'SHARE 50% to 50%',
+        220102,
+        1409,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'SHARE 75% to 25%',
+        220102,
+        1409,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );

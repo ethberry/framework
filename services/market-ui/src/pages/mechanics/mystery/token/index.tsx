@@ -11,9 +11,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
+import { TokenHistory } from "../../../../components/common/token-history";
 
 export const MysteryboxToken: FC = () => {
-  const { selected, isLoading } = useCollection<IToken>({
+  const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {
       template: {
@@ -53,6 +54,12 @@ export const MysteryboxToken: FC = () => {
             <TokenSellButton token={selected} />
           </Paper>
         </Grid>
+        <TokenHistory
+          token={selected}
+          isLoading={isLoading}
+          search={search}
+          handleChangePaginationModel={handleChangePaginationModel}
+        />
       </Grid>
     </Fragment>
   );

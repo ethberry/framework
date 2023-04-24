@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { CraftStatus, ICraft, ModuleType, TokenType } from "@framework/types";
+import { CraftStatus, ICraft, ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

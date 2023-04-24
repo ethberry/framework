@@ -11,14 +11,14 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
-import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
 abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
   using SafeCast for uint256;
 
-  event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
+  event Lend(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
+
 
   function lend(
     Params memory params,
@@ -42,7 +42,7 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
       account /* from */,
       params.referrer /* to */,
       uint256(expires).toUint64() /* lend expires */,
-      uint8(params.externalId) /* lendType */,
+      params.externalId /* lendRule db id */,
       items,
       price
     );

@@ -515,6 +515,7 @@ async function main() {
       contracts.erc721Simple.address,
       contracts.erc721Upgradeable.address,
       contracts.erc721Rentable.address,
+      contracts.erc721Soulbound.address,
       contracts.erc721Genes.address,
       contracts.erc998Blacklist.address,
       contracts.erc998New.address,
@@ -538,6 +539,13 @@ async function main() {
       mysteryboxSimpleInstance.address,
       contracts.lottery.address,
     ],
+    [MINTER_ROLE],
+  );
+
+  // GRANT METADATA ROLES
+  await grantRoles(
+    [contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
+    [contracts.exchange.address],
     [MINTER_ROLE],
   );
 }

@@ -466,6 +466,11 @@ services:
         target: /var/www/market-ui/static
         volume:
           nocopy: true
+      - type: volume
+        source: static-office-ui
+        target: /var/www/office-ui/static
+        volume:
+          nocopy: true
     ports:
       - "80:80"
       - "443:443"

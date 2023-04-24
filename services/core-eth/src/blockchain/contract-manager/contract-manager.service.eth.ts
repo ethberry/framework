@@ -226,12 +226,13 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
-    const templateEntity = await this.templateService.create({
+    const templateEntity = await this.templateService.createTemplate({
       title: name,
       description: emptyStateString,
       imageUrl,
-      cap: batchSize.toString(), // todo or ZERO ?
+      cap: batchSize.toString(),
       contractId: contractEntity.id,
+      templateStatus: TemplateStatus.INACTIVE,
     });
 
     // TODO add options to set naming scheme ?
@@ -401,7 +402,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: contractTemplate,
+      title: `${contractTemplate}-template`,
       description: emptyStateString,
       imageUrl,
       parameters: {

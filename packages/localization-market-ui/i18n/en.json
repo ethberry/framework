@@ -25,6 +25,7 @@
   "dialogs": {
     "add": "Add",
     "allowance": "Allowance",
+    "amount": "Set token amount",
     "auction": "Sell `{title}` on auction",
     "lend": "Lend token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
@@ -329,6 +330,7 @@
       "language": "Language",
       "level": "Level",
       "lendType": "Lend Type",
+      "rentRule": "Rent Rule",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -394,6 +396,7 @@
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "rentRule": "Lend Rule",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -561,7 +564,7 @@
       "title": "CoinGecko"
     },
     "craft": {
-      "price": "price",
+      "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",

@@ -10,26 +10,34 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { ISignRentTokenDto } from "./interfaces";
+import { sorter } from "../../../common/utils/sorter";
+import { RentService } from "./rent.service";
+import { RentEntity } from "./rent.entity";
 
 @Injectable()
 export class RentSignService {
   constructor(
     private readonly signerService: SignerService,
     private readonly tokenService: TokenService,
+    private readonly rentService: RentService,
     private readonly settingsService: SettingsService,
   ) {}
 
   public async sign(dto: ISignRentTokenDto): Promise<IServerSignature> {
     const { tokenId, account, referrer, expires, externalId } = dto;
-
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+    const rentEntity = await this.rentService.findOneWithRelations({ id: externalId });
 
+    if (!rentEntity) {
+      throw new NotFoundException("rentNotFound");
+    }
+
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
     const nonce = utils.randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const lendExpires = utils.hexZeroPad(utils.hexlify(expires), 32);
@@ -39,17 +47,24 @@ export class RentSignService {
       lendExpires,
       {
         nonce,
-        externalId, // type
+        externalId, // rent.id
         expiresAt, // sign expires
         referrer, // to
       },
       tokenEntity,
+      rentEntity,
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public getSignature(account: string, expires: string, params: IParams, tokenEntity: TokenEntity): Promise<string> {
+  public getSignature(
+    account: string,
+    expires: string,
+    params: IParams,
+    tokenEntity: TokenEntity,
+    rentEntity: RentEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManyExtraSignature(
       account,
       params,
@@ -61,7 +76,7 @@ export class RentSignService {
           amount: "1", // todo get from DTO? (for 1155)
         },
       ],
-      tokenEntity.template.contract.rent[0].price.components.map(component => ({
+      rentEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId:

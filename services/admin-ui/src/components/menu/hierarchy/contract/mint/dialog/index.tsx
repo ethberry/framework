@@ -1,15 +1,31 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ITemplateAsset, TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import {
+  ITemplateAsset,
+  TemplateAssetInput,
+  TokenAssetInput,
+  ITemplateAssetComponent,
+} from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
+export interface ITokenAssetComponent extends ITemplateAssetComponent {
+  token: {
+    tokenId?: string;
+  };
+  tokenId: number;
+}
+export interface IMintTokenAsset {
+  components: Array<ITokenAssetComponent>;
+}
+
 export interface IMintTokenDto {
   account: string;
   template: ITemplateAsset;
+  token: IMintTokenAsset;
 }
 
 export interface IMintTokenDialogProps {
@@ -33,7 +49,11 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       testId="MintForm"
       {...rest}
     >
-      <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
+      {contractType === TokenType.ERC1155 ? (
+        <TokenAssetInput prefix="token" tokenType={{ disabledOptions }} />
+      ) : (
+        <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
+      )}
       <TextInput name="account" />
     </FormDialog>
   );

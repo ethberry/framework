@@ -3675,6 +3675,7 @@ describe("Staking", function () {
       expect(balance42).to.equal(amount / 2);
 
       // WITHDRAW PENALTY
+
       const tx3 = stakingInstance.withdrawBalance({
         tokenType: 0,
         token: constants.AddressZero,
@@ -3826,6 +3827,7 @@ describe("Staking", function () {
       expect(balance42).to.equal(0);
 
       const stake = await stakingInstance.getStake(1);
+
       expect(stake).to.have.deep.nested.property("cycles", BigNumber.from(0));
       expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
@@ -3857,6 +3859,7 @@ describe("Staking", function () {
         tokenId,
         amount,
       });
+
       await expect(tx5)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(stakingInstance.address, owner.address, tokenId);

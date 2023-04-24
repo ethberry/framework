@@ -4,7 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { RentTokenListItem } from "./item";
@@ -38,6 +38,7 @@ export const Rent: FC = () => {
         open={isFiltersOpen}
         contractType={[TokenType.ERC721, TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
+        contractFeatures={[ContractFeatures.RENTABLE]}
       />
 
       <ProgressOverlay isLoading={isLoading}>

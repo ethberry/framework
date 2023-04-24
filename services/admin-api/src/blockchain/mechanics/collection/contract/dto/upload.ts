@@ -4,17 +4,6 @@ import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { Type } from "class-transformer";
 import { ClaimItemCreateDto } from "../../../claim/dto";
 
-export class CollectionUploadDto {
-  @ApiProperty({
-    isArray: true,
-    type: ClaimItemCreateDto,
-  })
-  @IsArray({ message: "typeMismatch" })
-  @ValidateNested()
-  @Type(() => Array<TokenUploadDto>)
-  public files: Array<TokenUploadDto>;
-}
-
 export class TokenUploadDto {
   // @ApiProperty({
   //   minimum: 1,
@@ -38,4 +27,15 @@ export class TokenUploadDto {
   // @ValidateNested()
   @Allow()
   public attributes: any;
+}
+
+export class CollectionUploadDto {
+  @ApiProperty({
+    isArray: true,
+    type: ClaimItemCreateDto,
+  })
+  @IsArray({ message: "typeMismatch" })
+  @ValidateNested()
+  @Type(() => TokenUploadDto)
+  public files: Array<TokenUploadDto>;
 }

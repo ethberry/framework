@@ -168,6 +168,7 @@ export class TemplateService {
       join: {
         alias: "template",
         leftJoinAndSelect: {
+          contract: "template.contract",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",

@@ -16,11 +16,13 @@ import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";
 import { useStyles } from "./styles";
+import { RarityBadge } from "../../../../../components/common/badge";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
     baseUrl: "/erc721/tokens",
     empty: {
+      attributes: { GRADE: "0", RARITY: "0", TEMPLATE_ID: "0" },
       template: {
         title: "",
         description: emptyStateString,
@@ -42,6 +44,7 @@ export const Erc721Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
+          <RarityBadge token={selected} itemClass={true} />
           <Box
             component="img"
             src={selected.template!.imageUrl}

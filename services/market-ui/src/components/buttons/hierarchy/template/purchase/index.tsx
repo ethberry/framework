@@ -12,6 +12,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import TemplatePurchaseABI from "../../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
+import { sorter } from "../../../../../utils/sorter";
 
 interface ITemplatePurchaseButtonProps {
   template: ITemplate;
@@ -37,14 +38,15 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
         amount: 1,
       },
-      template.price?.components.map(component => ({
+      template.price?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         // pass templateId instead of tokenId = 0
-        tokenId:
-          component.template!.tokens![0].tokenId === "0"
-            ? component.template!.tokens![0].templateId
-            : component.template!.tokens![0].tokenId,
+        // tokenId:
+        //   component.template!.tokens![0].tokenId === "0"
+        //     ? component.template!.tokens![0].templateId
+        //     : component.template!.tokens![0].tokenId,
+        tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
       sign.signature,
