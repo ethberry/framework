@@ -16,8 +16,13 @@ import "./interfaces/IAsset.sol";
 abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
   event Claim(address from, uint256 externalId, Asset[] items);
 
-  function claim(Params memory params, Asset[] memory items, bytes calldata signature) external payable whenNotPaused {
-    address signer = _recoverManyToManySignature(params, items, new Asset[](0), signature);
+  function claim(
+    Params memory params,
+    Asset[] memory items,
+    bytes32 extra,
+    bytes calldata signature
+  ) external payable whenNotPaused {
+    address signer = _recoverManyToManyExtraSignature(params, items, new Asset[](0), extra, signature);
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
 
     address account = _msgSender();
