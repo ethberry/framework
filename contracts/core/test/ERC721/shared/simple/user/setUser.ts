@@ -2,37 +2,39 @@ import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
 import { Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
+
+import { METADATA_ROLE } from "@gemunion/contracts-constants";
+
 import { templateId } from "../../../../constants";
 
 export function shouldSetUser(factory: () => Promise<Contract>) {
   describe("setUser", function () {
-    it("should set a user to a token", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+    it("should fail: not an owner", async function () {
+      const [_owner, receiver, stranger] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, templateId);
+      await contractInstance.mintCommon(receiver.address, templateId);
 
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      await contractInstance.setUser(1, receiver.address, deadline.toString());
-
-      const userOf = await contractInstance.userOf(1);
-
-      expect(userOf).to.be.equal(receiver.address);
+      const tx = contractInstance.setUser(1, stranger.address, deadline.toString());
+      await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
     });
 
     it("should fail: don't have permission to set a user", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [_owner, receiver, stranger] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, templateId);
+      await contractInstance.mintCommon(receiver.address, templateId);
 
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      const tx = contractInstance.connect(receiver).setUser(1, receiver.address, deadline.toString());
-      await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
+      const tx = contractInstance.connect(receiver).setUser(1, stranger.address, deadline.toString());
+      await expect(tx).to.be.revertedWith(
+        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
+      );
     });
 
     it("should set a user from approved address", async function () {

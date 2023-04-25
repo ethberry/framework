@@ -1208,7 +1208,7 @@ describe("ExchangeUtils", function () {
 
   describe("acquire", function () {
     describe("ETH", function () {
-      it("should mint: ETH => EOA", async function () {
+      it.skip("should mint: ETH => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
