@@ -6,6 +6,7 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   DurationUnit,
   IAssetDto,
+  IStakingBalanceWithdrawEvent,
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
@@ -157,6 +158,10 @@ export class StakingRulesServiceEth {
   }
 
   public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
+    await this.eventHistoryService.updateHistory(event, context);
+  }
+
+  public async withdrawBalance(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 }

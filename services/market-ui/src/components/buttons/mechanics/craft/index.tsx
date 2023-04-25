@@ -12,6 +12,7 @@ import { ICraft, TokenType } from "@framework/types";
 import CraftABI from "../../../../abis/components/buttons/mechanics/craft/craft.abi.json";
 
 import { getEthPrice } from "../../../../utils/money";
+import { sorter } from "../../../../utils/sorter";
 
 interface ICraftButtonProps {
   craft: ICraft;
@@ -32,13 +33,16 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         expiresAt: sign.expiresAt,
         referrer: constants.AddressZero,
       },
-      craft.item?.components.map(component => ({
+      craft.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.templateId.toString(),
+        tokenId:
+          component.contract!.contractType === TokenType.ERC1155
+            ? component.template!.tokens![0].tokenId
+            : component.templateId.toString(),
         amount: component.amount,
       })),
-      craft.price?.components.map(component => ({
+      craft.price?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,

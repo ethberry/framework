@@ -50,7 +50,10 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
         <List>
           {rows.map((row, i) => (
             <ListItem key={i}>
-              <ListItemText>{row.token!.template!.contract!.title}</ListItemText>
+              <ListItemText>
+                {row.token!.template!.contract!.title}
+                {row.token!.template!.contract!.contractType === "ERC1155" ? ` - ${row.token!.template!.title}` : ""}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <ExchangeReleasableButton balance={row} />
                 <ExchangeReleaseButton balance={row} />

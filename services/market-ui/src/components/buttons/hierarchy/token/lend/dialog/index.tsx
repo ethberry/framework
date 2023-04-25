@@ -1,16 +1,18 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
-import { RentStrategy } from "@framework/types";
+import { RentRuleStatus } from "@framework/types";
 
 export interface ILendDto {
   account: string;
   expires: string;
-  lendType: RentStrategy;
+  contractId: number;
+  rentRule: number;
 }
 
 export interface ILendDialogProps {
@@ -24,7 +26,7 @@ export interface ILendDialogProps {
 
 export const LendDialog: FC<ILendDialogProps> = props => {
   const { initialValues, message, testId = "LendDialogForm", ...rest } = props;
-
+  const { contractId } = initialValues;
   return (
     <FormDialog
       initialValues={initialValues}
@@ -35,7 +37,7 @@ export const LendDialog: FC<ILendDialogProps> = props => {
     >
       <TextInput name="account" />
       <DateTimeInput name="expires" />
-      <SelectInput name="lendType" options={RentStrategy} />
+      <EntityInput name="rentRule" controller="rent" data={{ contractId, rentStatus: RentRuleStatus.ACTIVE }} />
     </FormDialog>
   );
 };

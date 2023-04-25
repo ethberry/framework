@@ -2,9 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { BalanceEntity } from "./balance.entity";
 import { IBalanceAutocompleteDto, IBalanceSearchDto, ModuleType } from "@framework/types";
+
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../contract/contract.entity";
+import { BalanceEntity } from "./balance.entity";
 
 @Injectable()
 export class BalanceService {
@@ -43,7 +45,7 @@ export class BalanceService {
     });
   }
 
-  public search(dto: IBalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
+  public search(dto: IBalanceSearchDto, userEntity: UserEntity): Promise<[Array<BalanceEntity>, number]> {
     const { accounts, templateIds, contractIds, skip, take } = dto;
 
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");
@@ -53,6 +55,10 @@ export class BalanceService {
     queryBuilder.leftJoinAndSelect("balance.token", "token");
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.innerJoinAndMapOne("balance.owner", ContractEntity, "owner", "balance.account = owner.address");
 

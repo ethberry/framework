@@ -52,6 +52,7 @@
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
+    "unsupported": "Unsupported",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
@@ -120,6 +121,11 @@
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
+    "rentStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -554,6 +560,7 @@
       "pyramidRule": "Pyramid rule",
       "pyramidRuleStatus": "Status",
       "random": "Random",
+      "rentStatus": "Status",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -646,6 +653,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameters": "Parameters",
       "parameterMaxValue": "10000",
       "parameterMinValue": "0",
       "parameterName": "Color",

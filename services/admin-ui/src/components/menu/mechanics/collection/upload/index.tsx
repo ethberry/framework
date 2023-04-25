@@ -29,7 +29,7 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
   const { fn } = useApiCall(
     (api, { files }: ICollectionUploadDto) => {
       return api.fetchJson({
-        url: `/collections/contracts/${address}/upload`,
+        url: `/collection/contracts/${address}/upload`,
         data: getFormData({ file: files[0] }),
         method: "POST",
       });

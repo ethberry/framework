@@ -42,6 +42,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               StakingEventType.StakingStart,
               StakingEventType.StakingWithdraw,
               StakingEventType.StakingFinish,
+              StakingEventType.WithdrawBalance,
               // MODULE:PAUSE
               ContractEventType.Paused,
               ContractEventType.Unpaused,

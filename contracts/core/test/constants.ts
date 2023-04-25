@@ -6,6 +6,7 @@ import { getNumbers } from "./utils";
 
 export const tokenId = 1;
 export const tokenIds = [1];
+export const tokenIdsZero = [0];
 export const templateId = 1;
 export const templateIds = [1];
 export const cap = constants.WeiPerEther.mul(1000000000);
@@ -35,7 +36,7 @@ export const contractTemplate = "SIMPLE";
 export const subscriptionId = 1;
 
 export enum FrameworkInterfaceId {
-  ERC721Randmon = "0x32034d27",
+  ERC721Random = "0x32034d27",
   ERC721Upgradable = "0x45977d03",
   Grade = "0x381b3743",
   Mystery = "0xf0f47261",

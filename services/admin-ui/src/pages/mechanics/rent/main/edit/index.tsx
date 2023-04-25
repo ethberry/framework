@@ -2,8 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IRent, TokenType } from "@framework/types";
+import { ContractFeatures, IRent, RentRuleStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -17,11 +18,13 @@ export interface IRentEditDialogProps {
 export const RentEditDialog: FC<IRentEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, price, contractId } = initialValues;
+  const { id, title, rentStatus, price, contractId } = initialValues;
   const fixedValues = {
     id,
     price,
     contractId,
+    title,
+    rentStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -34,7 +37,9 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <EntityInput name="contractId" controller="contracts" readOnly />
+      <TextInput name="title" />
+      <SelectInput name="rentStatus" options={RentRuleStatus} disabledOptions={[RentRuleStatus.NEW]} />
+      <EntityInput name="contractId" controller="contracts" data={{ contractFeatures: [ContractFeatures.RENTABLE] }} />
       <TemplateAssetInput
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}

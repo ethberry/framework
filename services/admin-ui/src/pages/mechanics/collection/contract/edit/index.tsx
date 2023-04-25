@@ -32,6 +32,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     royalty,
     chainId,
     contractFeatures,
+    parameters,
   } = initialValues;
 
   const fixedValues = {
@@ -41,6 +42,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     description,
     contractStatus,
     imageUrl,
+    parameters,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -55,7 +57,8 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
         <BlockchainInfoPopover
           name={name}
           symbol={symbol}
-          address={address}
+          owner={parameters.owner}
+          batchSize={parameters.batchSize}
           baseTokenURI={baseTokenURI}
           royalty={`${royalty / 100}%`}
           chainId={chainId}

@@ -48,6 +48,10 @@ export const CollectionContract: FC = () => {
       title: "",
       description: emptyStateString,
       contractStatus: ContractStatus.NEW,
+      parameters: {
+        owner: "",
+        batchSize: 0,
+      },
     },
     search: {
       query: "",

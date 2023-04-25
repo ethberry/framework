@@ -14,6 +14,7 @@ import { DropEntity } from "./drop.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class DropService {
@@ -40,7 +41,13 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.select();
 
@@ -65,22 +72,28 @@ export class DropService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<DropEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "drop",
-        leftJoinAndSelect: {
-          item: "drop.item",
-          item_components: "item.components",
-          item_contract: "item_components.contract",
-          item_template: "item_components.template",
-          price: "drop.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
-        },
-      },
+    const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
+
+    queryBuilder.leftJoinAndSelect("drop.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("drop.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+    queryBuilder.andWhere("drop.id = :id", {
+      id: where.id,
     });
+    return queryBuilder.getOne();
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
@@ -133,13 +146,13 @@ export class DropService {
     return this.signerService.getManyToManySignature(
       account,
       params,
-      dropEntity.item.components.map(component => ({
+      dropEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.templateId.toString(),
         amount: component.amount,
       })),
-      dropEntity.price.components.map(component => ({
+      dropEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

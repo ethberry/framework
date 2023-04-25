@@ -2,11 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
-
 import { RentEntity } from "./rent.entity";
-import { IRentUpdateDto } from "./interfaces";
+import { IRentCreateDto, IRentUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { IRentSearchDto, RentRuleStatus } from "@framework/types";
 
 @Injectable()
 export class RentService {
@@ -16,14 +15,35 @@ export class RentService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IPaginationDto): Promise<[Array<RentEntity>, number]> {
-    const { skip, take } = dto;
-
+  public async search(dto: IRentSearchDto): Promise<[Array<RentEntity>, number]> {
+    const { query, rentStatus, contractIds, skip, take } = dto;
     const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");
 
     queryBuilder.leftJoinAndSelect("rent.contract", "contract");
 
     queryBuilder.select();
+
+    if (query) {
+      queryBuilder.andWhere("rent.title ILIKE '%' || :title || '%'", { title: query });
+    }
+
+    if (rentStatus) {
+      if (rentStatus.length === 1) {
+        queryBuilder.andWhere("rent.rentStatus = :rentStatus", { rentStatus: rentStatus[0] });
+      } else {
+        queryBuilder.andWhere("rent.rentStatus IN(:...rentStatus)", { rentStatus });
+      }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rent.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rent.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -40,6 +60,25 @@ export class RentService {
     options?: FindOneOptions<RentEntity>,
   ): Promise<RentEntity | null> {
     return this.rentEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: IRentCreateDto): Promise<RentEntity> {
+    const { price, title, contractId, rentStatus } = dto;
+
+    // add new price
+    const priceEntity = await this.assetService.create({
+      components: [],
+    });
+    await this.assetService.update(priceEntity, price);
+
+    return this.rentEntityRepository
+      .create({
+        price: priceEntity,
+        title,
+        contractId,
+        rentStatus: rentStatus || RentRuleStatus.NEW,
+      })
+      .save();
   }
 
   public async update(where: FindOptionsWhere<RentEntity>, dto: Partial<IRentUpdateDto>): Promise<RentEntity> {
