@@ -27,6 +27,6 @@ contract ERC721Rentable is ERC721Simple, ERC4907 {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Simple, ERC4907) returns (bool) {
-    return ERC721Simple.supportsInterface(interfaceId) || ERC4907.supportsInterface(interfaceId);
+    return super.supportsInterface(interfaceId);
   }
 }
