@@ -8,6 +8,9 @@ import type { IParameter } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { getEmptyParameter } from "./empty";
+import { ParameterMinValueInput } from "./minValue";
+import { ParameterMaxValueInput } from "./maxValue";
+import { ParameterTypeInput } from "./type";
 import { getAvailableNames, uniqueBy } from "./utils";
 import { ParameterValueInput } from "./value";
 import { SelectInput } from "./select";
@@ -109,7 +112,10 @@ export const ParameterSelectInput: FC<IParameterSelectInput> = props => {
                   options={allNames}
                   disabledOptions={disabledOptions}
                 />
+                <ParameterTypeInput prefix={`${prefix}[${i}]`} />
                 <ParameterValueInput prefix={`${prefix}[${i}]`} />
+                <ParameterMinValueInput prefix={`${prefix}[${i}]`} />
+                <ParameterMaxValueInput prefix={`${prefix}[${i}]`} />
               </Paper>
             </Box>
 

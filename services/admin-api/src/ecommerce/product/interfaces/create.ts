@@ -1,4 +1,4 @@
-import { IAssetDto, IParameter, IPhoto } from "@framework/types";
+import { IAssetDto, IPhoto } from "@framework/types";
 
 export interface IProductCreateDto {
   title: string;
@@ -8,5 +8,5 @@ export interface IProductCreateDto {
   amount: number;
   merchantId?: number;
   photos: Array<IPhoto>;
-  parameters: Array<IParameter>;
+  parameterIds: Array<number>;
 }

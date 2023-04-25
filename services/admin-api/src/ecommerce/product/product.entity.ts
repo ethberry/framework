@@ -9,12 +9,17 @@ import { CategoryEntity } from "../category/category.entity";
 import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";
 import { PhotoEntity } from "../photo/photo.entity";
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { ParameterEntity } from "../parameter/parameter.entity";
 
 @Entity({ schema: ns, name: "product" })
 export class ProductEntity extends SearchableEntity implements IProduct {
   @ManyToMany(_type => CategoryEntity, category => category.products)
   @JoinTable({ name: "product_to_category" })
   public categories: Array<CategoryEntity>;
+
+  @OneToMany(_type => ParameterEntity, parameter => parameter.products)
+  @JoinTable({ name: "product_to_parameter" })
+  public parameters: Array<ParameterEntity>;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)

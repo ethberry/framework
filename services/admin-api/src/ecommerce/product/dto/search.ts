@@ -20,6 +20,17 @@ export class ProductSearchDto extends SearchDto implements IProductSearchDto {
   public categoryIds: Array<number>;
 
   @ApiPropertyOptional({
+    minimum: 1,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public parameterIds: Array<number>;
+
+  @ApiPropertyOptional({
     enum: ProductStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706

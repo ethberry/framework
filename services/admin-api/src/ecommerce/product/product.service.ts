@@ -125,7 +125,7 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const { categoryIds, photos, price, parameters: _parameters, ...rest } = dto;
+    const { categoryIds, photos, price, parameterIds, ...rest } = dto;
 
     const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
 
@@ -139,6 +139,7 @@ export class ProductService {
         merchantId,
         productStatus: ProductStatus.ACTIVE,
         categories: categoryIds.map(id => ({ id })),
+        parameters: parameterIds.map(id => ({ id })),
         price: assetEntity,
       })
       .save();
@@ -163,7 +164,7 @@ export class ProductService {
     dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    const { photos, categoryIds, price, ...rest } = dto;
+    const { photos, categoryIds, price, parameterIds, ...rest } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       where.merchantId = userEntity.merchant.id;
@@ -237,6 +238,7 @@ export class ProductService {
     Object.assign(productEntity, {
       ...rest,
       categories: categoryIds.map(id => ({ id })),
+      parameters: parameterIds.map(id => ({ id })),
     });
 
     if (price) {
