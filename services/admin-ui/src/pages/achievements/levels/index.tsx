@@ -16,11 +16,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
 import { AchievementLevelSearchForm } from "./search";
-import { AchievementType } from "@framework/types";
+import { TokenType, AchievementType } from "@framework/types";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const emptyAchievementRule = {
   achievementType: AchievementType.MARKETPLACE,
@@ -53,6 +56,7 @@ export const AchievementLevels: FC = () => {
       description: emptyStateString,
       amount: 0,
       achievementRule: emptyAchievementRule,
+      item: getEmptyTemplate(TokenType.ERC20),
     },
     search: {
       query: "",
@@ -71,7 +75,7 @@ export const AchievementLevels: FC = () => {
             title,
             description,
             amount,
-            item,
+            item: cleanUpAsset(item),
             achievementRuleId,
           },
   });

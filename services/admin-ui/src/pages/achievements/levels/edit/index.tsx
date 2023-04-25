@@ -21,8 +21,8 @@ export interface IAchievementLevelEditDialogProps {
 
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
-  console.log("initialValues", initialValues);
-  const { id, title, description, item, amount } = initialValues;
+
+  const { id, title, description, item, amount, achievementRuleId } = initialValues;
 
   const fixedValues = {
     id,
@@ -30,6 +30,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
     description,
     item,
     amount,
+    achievementRuleId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -45,9 +46,9 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput multiple prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <TemplateAssetInput multiple allowEmpty prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
       <Typography variant="inherit">
-        <FormattedMessage id="dialogs.buttons.achievementLevel" />
+        <FormattedMessage id="form.labels.achievementLevel" />
       </Typography>
       <NumberInput name="amount" showLabel={false} />
     </FormDialog>

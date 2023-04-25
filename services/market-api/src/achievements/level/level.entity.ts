@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, ManyToOne, OneToOne } from "typeorm";
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementLevel } from "@framework/types";
@@ -14,7 +14,7 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
   public achievementRuleId: number;
 
   @JoinColumn()
-  @OneToOne(_type => AchievementRuleEntity)
+  @ManyToOne(_type => AchievementRuleEntity, rule => rule.levels)
   public achievementRule: AchievementRuleEntity;
 
   @Column({ type: "int" })

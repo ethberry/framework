@@ -469,6 +469,7 @@
       "RARITY": "Rarity",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
+      "achievementLevel": "Achievement Level",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
       "achievementType": "Achievement type",

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -86,23 +86,38 @@ export class ClaimService {
       .save();
   }
 
-  public async updateClaim(dto: Partial<IClaimCreateDto>): Promise<ClaimEntity> {
-    const { account, itemId, endTimestamp, nonce, signature, merchantId } = dto;
+  public async update(
+    where: FindOptionsWhere<ClaimEntity>,
+    dto: Partial<ClaimEntity>,
+  ): Promise<ClaimEntity | undefined> {
+    const claimEntity = await this.claimEntityRepository.findOne({ where });
 
-    // TODO check user.merchant ?
-    // if (merchantId !== userEntity.merchantId) {
-    //   throw new ForbiddenException("insufficientPermissions");
-    // }
-    return await this.claimEntityRepository
-      .create({
-        account,
-        itemId,
-        signature,
-        nonce,
-        merchantId,
-        endTimestamp,
-        claimStatus: ClaimStatus.NEW,
-      })
-      .save();
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
+    }
+
+    Object.assign(claimEntity, dto);
+
+    return claimEntity.save();
   }
+
+  // public async updateClaim(dto: Partial<IClaimCreateDto>): Promise<ClaimEntity> {
+  //   const { account, itemId, endTimestamp, nonce, signature, merchantId } = dto;
+  //
+  //   // TODO check user.merchant ?
+  //   // if (merchantId !== userEntity.merchantId) {
+  //   //   throw new ForbiddenException("insufficientPermissions");
+  //   // }
+  //   return await this.claimEntityRepository
+  //     .create({
+  //       account,
+  //       itemId,
+  //       signature,
+  //       nonce,
+  //       merchantId,
+  //       endTimestamp,
+  //       claimStatus: ClaimStatus.NEW,
+  //     })
+  //     .save();
+  // }
 }
