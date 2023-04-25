@@ -8,6 +8,8 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { imageUrl } from "@framework/constants";
+
 import { ICraft, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
@@ -27,8 +29,7 @@ export const CraftItem: FC = () => {
       template: {
         title: "",
         description: emptyStateString,
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE_LOGO.png?alt=media&token=85c376a8-33a0-4b6b-9285-2b9022287289",
+        imageUrl,
       },
       contract: {
         contractType: TokenType.ERC721,
@@ -37,8 +38,7 @@ export const CraftItem: FC = () => {
     Object.assign(selected.price?.components[0], {
       id: 0,
       template: {
-        imageUrl:
-          "https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE_LOGO.png?alt=media&token=85c376a8-33a0-4b6b-9285-2b9022287289",
+        imageUrl,
       },
       contract: {
         contractType: TokenType.ERC1155,
