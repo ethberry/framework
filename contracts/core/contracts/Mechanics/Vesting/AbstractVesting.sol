@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
-import "../TopUp.sol";
+import "../../utils/TopUp.sol";
 
 contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
   using SafeCast for uint256;
