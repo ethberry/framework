@@ -49,6 +49,9 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+    // check if receiver is blacklisted
+    require(!this.isBlacklisted(account), "Blacklist: receiver is blacklisted");
+
     if (templateId == 0) {
       revert TemplateZero();
     }
