@@ -25,7 +25,6 @@ export * from "./mechanics/rent/rent";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
-export * from "./mechanics/staking/template";
 export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/waitlist/list";
 export * from "./mechanics/waitlist/item";

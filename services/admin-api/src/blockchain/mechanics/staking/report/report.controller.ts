@@ -11,7 +11,7 @@ import { StakingReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/staking")
-export class StakingDepositController {
+export class StakingReportController {
   constructor(private readonly stakingReportService: StakingReportService) {}
 
   @Get("/report")

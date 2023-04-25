@@ -80,6 +80,12 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "achievementType": {
+      "COLLECTION": "Collection",
+      "CRAFT": "Craft",
+      "ECOMMERCE": "Ecommerce",
+      "MARKETPLACE": "Marketplace"
+    },
     "attributeName": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
@@ -463,6 +469,9 @@
       "RARITY": "Rarity",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
+      "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
+      "achievementType": "Achievement type",
       "active": "Active",
       "address": "Address",
       "addressId": "Address",
@@ -612,6 +621,8 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
+      "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
       "address": "0x...",
       "addressId": "Address",
       "addressLine1": "Melburb st. 24",
@@ -729,6 +740,18 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "achievements": {
+      "levels": {
+        "title": "Achievements levels"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "title": "Achievements types"
+      },
+      "title": "Achievements"
+    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -786,6 +809,12 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "achievements": {
+        "levels": "Levels",
+        "rules": "Types",
+        "report": "Report",
+        "title": "Achievements"
+      },
       "ecommerce": {
         "store": {
           "categories": "Categories",

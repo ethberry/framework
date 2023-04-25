@@ -26,12 +26,16 @@ import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.en
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
+import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { UserEntity } from "./infrastructure/user/user.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    UserEntity,
+    // Blockchain
     EventHistoryEntity,
     AccessControlEntity,
     StakingRulesEntity,
@@ -57,6 +61,8 @@ const config: PostgresConnectionOptions = {
     WaitlistItemEntity,
     BreedEntity,
     PayeesEntity,
+    // Achievements
+    AchievementItemEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

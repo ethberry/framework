@@ -19,6 +19,7 @@ import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
 import "./ExchangeRentable.sol";
+import "./ExchangeAchievement.sol";
 import "./referral/LinearReferral.sol";
 
 /**
@@ -37,6 +38,7 @@ contract Exchange is
   LinearReferral,
   PaymentSplitter,
   ExchangeRentable,
+  ExchangeAchievement,
   Wallet
 {
   constructor(

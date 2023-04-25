@@ -15,37 +15,37 @@ export class SeedAssetComponentsProductAt1593408358915 implements MigrationInter
       ) VALUES (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190101
       ), (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190102
       ), (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190103
       ), (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190104
       ), (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190105
       ), (
         'ERC20',
         1201,
-        120101, -- CAL
+        120101, -- space credits
         '${constants.WeiPerEther.toString()}',
         190106
       );
