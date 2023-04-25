@@ -23,8 +23,8 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
 import "../../Exchange/referral/LinearReferral.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
+import "../../utils/TopUp.sol";
 import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
-import "../TopUp.sol";
 
 import "./interfaces/IStaking.sol";
 import "../../utils/errors.sol";
