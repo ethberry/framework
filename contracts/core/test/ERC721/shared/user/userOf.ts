@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
 import { constants, Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
-import { templateId } from "../../../../constants";
+import { templateId } from "../../../constants";
 
 export function shouldUserOf(factory: () => Promise<Contract>) {
   describe("userOf", function () {

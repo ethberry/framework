@@ -30,12 +30,12 @@ abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, R
     string memory baseTokenURI
   ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+  function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     if (templateId == 0) {
       revert TemplateZero();
     }
 
-    _queue[getRandomNumber()] = Request(to, templateId);
+    _queue[getRandomNumber()] = Request(account, templateId);
   }
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {

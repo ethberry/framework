@@ -5,7 +5,7 @@ import { time } from "@openzeppelin/test-helpers";
 
 import { METADATA_ROLE } from "@gemunion/contracts-constants";
 
-import { templateId } from "../../../../constants";
+import { templateId, tokenId } from "../../../constants";
 
 export function shouldSetUser(factory: () => Promise<Contract>) {
   describe("setUser", function () {
@@ -18,7 +18,7 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      const tx = contractInstance.setUser(1, stranger.address, deadline.toString());
+      const tx = contractInstance.setUser(tokenId, stranger.address, deadline.toString());
       await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
     });
 
@@ -31,7 +31,7 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      const tx = contractInstance.connect(receiver).setUser(1, stranger.address, deadline.toString());
+      const tx = contractInstance.connect(receiver).setUser(tokenId, stranger.address, deadline.toString());
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
       );
@@ -46,10 +46,10 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      await contractInstance.approve(receiver.address, 1);
-      await contractInstance.setUser(1, receiver.address, deadline.toString());
+      await contractInstance.approve(receiver.address, tokenId);
+      await contractInstance.setUser(tokenId, receiver.address, deadline.toString());
 
-      const userOf = await contractInstance.userOf(1);
+      const userOf = await contractInstance.userOf(tokenId);
 
       expect(userOf).to.be.equal(receiver.address);
     });
@@ -64,9 +64,9 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const deadline = current.add(web3.utils.toBN(100));
 
       await contractInstance.setApprovalForAll(receiver.address, true);
-      await contractInstance.setUser(1, receiver.address, deadline.toString());
+      await contractInstance.setUser(tokenId, receiver.address, deadline.toString());
 
-      const userOf = await contractInstance.userOf(1);
+      const userOf = await contractInstance.userOf(tokenId);
 
       expect(userOf).to.be.equal(receiver.address);
     });
@@ -80,9 +80,9 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      const tx = contractInstance.setUser(1, receiver.address, deadline.toString());
+      const tx = contractInstance.setUser(tokenId, receiver.address, deadline.toString());
 
-      await expect(tx).to.emit(contractInstance, "UpdateUser").withArgs(1, receiver.address, deadline.toString());
+      await expect(tx).to.emit(contractInstance, "UpdateUser").withArgs(tokenId, receiver.address, deadline.toString());
     });
   });
 }

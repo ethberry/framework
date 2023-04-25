@@ -5,7 +5,7 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { shouldBehaveLikeERC721BlackList } from "../ERC721/shared/blacklist";
+import { shouldBehaveLikeERC721Blacklist } from "../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 
 describe("ERC998Blacklist", function () {
@@ -13,7 +13,7 @@ describe("ERC998Blacklist", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeBlackList(factory);
-  shouldBehaveLikeERC721BlackList(factory);
+  shouldBehaveLikeERC721Blacklist(factory);
 
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
