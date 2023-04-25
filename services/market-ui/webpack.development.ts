@@ -110,6 +110,7 @@ const config: Configuration = {
   },
   watchOptions: {
     aggregateTimeout: 0,
+    followSymlinks: true,
   },
   stats: {
     errorDetails: true,
