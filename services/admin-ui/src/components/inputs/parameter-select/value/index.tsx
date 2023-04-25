@@ -56,7 +56,7 @@ export const ParameterValueInput: FC<IParameterValueInput> = props => {
         return <DateTimeInput name={`${prefix}.${name}`} />;
       }
       case ParameterType.ENUM: {
-        return <EnumSelectInput name={name} prefix={prefix} />;
+        return <EnumSelectInput name={name} options={[]} prefix={prefix} />;
       }
       default: {
         return null;
