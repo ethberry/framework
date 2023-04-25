@@ -37,7 +37,8 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {
         return contract["releasable(address)"](web3Context.account) as Promise<any>;
       } else {
-        throw new Error("unsupported token type");
+        alert("unsupported token type");
+        return "0";
       }
     },
     { success: false },

@@ -7,22 +7,22 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, GradeAttribute } from "@framework/types";
+import { ContractFeatures, GradeAttribute, TokenAttributes, TokenRarity } from "@framework/types";
 
 import { GradeButton, TokenLendButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";
-
 import { useStyles } from "./styles";
+import { RarityBadge } from "../../../../../components/common/badge";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
     baseUrl: "/erc721/tokens",
     empty: {
+      attributes: { GRADE: "0", RARITY: "0", TEMPLATE_ID: "0" },
       template: {
         title: "",
         description: emptyStateString,
@@ -44,6 +44,7 @@ export const Erc721Token: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
+          <RarityBadge token={selected} itemClass={true} />
           <Box
             component="img"
             src={selected.template!.imageUrl}
@@ -69,12 +70,22 @@ export const Erc721Token: FC = () => {
             <TokenLendButton token={selected} />
           </Paper>
 
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage
+                  id="pages.erc721.token.rarity"
+                  values={{ rarity: Object.values(TokenRarity)[selected.attributes[TokenAttributes.RARITY]] }}
+                />
+              </Typography>
+            </Paper>
+          ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
                 <FormattedMessage
                   id="pages.erc721.token.level"
-                  values={selected.attributes.GRADE ? selected.attributes : { GRADE: 0 }}
+                  values={{ level: selected.attributes[TokenAttributes.GRADE] }}
                 />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />

@@ -15,7 +15,6 @@ interface ICraftItemProps {
 
 export const CraftItem: FC<ICraftItemProps> = props => {
   const { craft } = props;
-
   const classes = useStyles();
 
   return (

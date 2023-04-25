@@ -16,4 +16,5 @@ export interface IStakingDepositSearchDto extends ISearchDto {
   reward: IStakingDepositItemSearchDto;
   startTimestamp: string;
   endTimestamp: string;
+  contractIds: Array<number>;
 }

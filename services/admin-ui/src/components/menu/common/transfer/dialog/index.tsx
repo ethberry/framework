@@ -1,14 +1,24 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
+import type { ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
+export interface ITransferTokenAssetComponent extends ITemplateAssetComponent {
+  token: {
+    tokenId?: string;
+  };
+  tokenId: number;
+}
+
+export interface ITransferTokenAsset {
+  components: Array<ITransferTokenAssetComponent>;
+}
 export interface ITransferDto {
-  token: ITokenAsset;
+  token: ITransferTokenAsset;
   address: string;
 }
 

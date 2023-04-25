@@ -2,7 +2,14 @@ import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ITokenSearchDto,
+  ModuleType,
+  TokenAttributes,
+  TokenRarity,
+  TokenType,
+} from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -12,10 +19,11 @@ interface ITokenSearchFormProps {
   open: boolean;
   contractType: Array<TokenType>;
   contractModule: Array<ModuleType>;
+  contractFeatures?: Array<ContractFeatures>;
 }
 
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType, contractModule } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule, contractFeatures } = props;
 
   const { contractIds = [], attributes } = initialValues;
   const fixedValues = {
@@ -40,7 +48,12 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractType, contractModule, contractFeatures }}
+            />
           </Grid>
           {contractType.filter(value => [TokenType.ERC721, TokenType.ERC998].includes(value)).length &&
           contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (

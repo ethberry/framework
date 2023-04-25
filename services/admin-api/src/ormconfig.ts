@@ -148,6 +148,7 @@ import {
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
   SeedBalanceExchangeAt1563804020402,
+  SeedBalancePyramidAt1663047650530,
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
   SeedCategories1593408358860,
@@ -504,6 +505,8 @@ const config: PostgresConnectionOptions = {
     CreatePyramidDeposit1660436477300,
     SeedPyramidDepositNativeNativeAt1660436477310,
     SeedPyramidDepositErc20Erc20At1660436477320,
+    SeedPyramidPayees1663047650520,
+    SeedBalancePyramidAt1663047650530,
 
     SeedContractWaitlistAt1663047650100,
     CreateWaitlistList1663047650200,
@@ -523,7 +526,6 @@ const config: PostgresConnectionOptions = {
 
     CreateWalletPayees1663047650500,
     SeedExchangePayees1663047650510,
-    SeedPyramidPayees1663047650520,
     SeedContractChainLinkAt1563804000105,
 
     CreateRent1678931845500,

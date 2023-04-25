@@ -14,11 +14,13 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [
     ConfigModule,
     TokenModule,
+    AssetModule,
     BalanceModule,
     MysteryLogModule,
     TemplateModule,

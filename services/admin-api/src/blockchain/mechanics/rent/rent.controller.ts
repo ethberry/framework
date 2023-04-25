@@ -1,12 +1,11 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
 
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
-import { RentUpdateDto } from "./dto";
+import { RentCreateDto, RentSearchDto, RentUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/rents")
@@ -15,8 +14,13 @@ export class RentController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PaginationDto): Promise<[Array<RentEntity>, number]> {
+  public search(@Query() dto: RentSearchDto): Promise<[Array<RentEntity>, number]> {
     return this.rentService.search(dto);
+  }
+
+  @Post("/")
+  public create(@Body() dto: RentCreateDto): Promise<RentEntity> {
+    return this.rentService.create(dto);
   }
 
   @Put("/:id")

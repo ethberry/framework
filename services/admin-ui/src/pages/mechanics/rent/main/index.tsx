@@ -1,16 +1,27 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
+
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Add, Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
-import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IRent } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { IRentSearchDto, RentRuleStatus, TokenType } from "@framework/types";
 
 import { RentEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
+import { RentSearchForm } from "./form";
 
 export const Rent: FC = () => {
   const {
@@ -19,18 +30,33 @@ export const Rent: FC = () => {
     search,
     selected,
     isLoading,
+    isFiltersOpen,
     isEditDialogOpen,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
+    handleSearch,
+    handleToggleFilters,
     handleChangePage,
-  } = useCollection<IRent, IPaginationDto>({
+  } = useCollection<IRent, IRentSearchDto>({
     baseUrl: "/rents",
     empty: {
       price: getEmptyTemplate(TokenType.ERC20),
+      title: "",
+      contractId: 0,
+      rentStatus: RentRuleStatus.NEW,
     },
-    filter: ({ price }) => ({
+    search: {
+      query: "",
+      contractIds: [],
+      rentStatus: [RentRuleStatus.ACTIVE, RentRuleStatus.NEW],
+    },
+    filter: ({ price, contractId, title, rentStatus }) => ({
       price: cleanUpAsset(price),
+      contractId,
+      title,
+      rentStatus,
     }),
   });
 
@@ -38,13 +64,26 @@ export const Rent: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "rent"]} />
 
-      <PageHeader message="pages.rent.title" />
+      <PageHeader message="pages.rent.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ExchangeCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
+
+      <RentSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((rent, i) => (
             <ListItem key={i}>
-              <ListItemText>{rent.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.5 }}>{rent.title}</ListItemText>
+              <ListItemText sx={{ width: 0.5 }}>{rent.contract?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(rent)}>
                   <Create />

@@ -44,6 +44,7 @@ export class BreedServiceEth {
   public async newborn(tokenId: number, genes: string, transactionHash: string): Promise<void> {
     const { matronId, sireId } = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
     const randomness = decodeNumber(BigNumber.from(genes)).slice(0, 6).join("");
+    // TODO one db call -> .findAll()
     const mom = await this.breedService.findOne({ id: matronId });
     const dad = await this.breedService.findOne({ id: sireId });
 

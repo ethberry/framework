@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, In, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MysteryBoxEntity } from "./box.entity";
 import type { IMysteryBoxSearchDto } from "@framework/types";
@@ -32,7 +32,13 @@ export class MysteryBoxService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType: TokenType.ERC721,
@@ -116,25 +122,31 @@ export class MysteryBoxService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "box",
-        leftJoinAndSelect: {
-          template: "box.template",
-          contract: "template.contract",
-          item: "box.item",
-          item_components: "item.components",
-          item_contract: "item_components.contract",
-          item_template: "item_components.template",
-          price: "template.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
-        },
-      },
-      order: { createdAt: "DESC" },
+    const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
+    queryBuilder.leftJoinAndSelect("box.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
+    queryBuilder.leftJoinAndSelect("template.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+    queryBuilder.andWhere("box.id = :id", {
+      id: where.id,
     });
+
+    return queryBuilder.getOne();
   }
 
   public async autocomplete(): Promise<Array<MysteryBoxEntity>> {

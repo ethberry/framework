@@ -45,6 +45,9 @@ export class PyramidChartSearchDto extends SearchDto implements IPyramidChartSea
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
+  })
   public emptyReward: boolean;
 
   @ApiPropertyOptional()

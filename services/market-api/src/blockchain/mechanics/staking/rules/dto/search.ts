@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, Min, IsOptional, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -65,4 +65,6 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
+
+  public merchantId: number;
 }

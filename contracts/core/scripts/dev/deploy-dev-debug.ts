@@ -3,7 +3,7 @@ import { constants, Contract } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
-import { baseTokenURI, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
+import { baseTokenURI, MINTER_ROLE, METADATA_ROLE, royalty } from "@gemunion/contracts-constants";
 import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
@@ -101,8 +101,13 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.setFactories([exchangeInstance.address], [contracts.contractManager.address]),
-    "contractManager.setFactories",
+    await contracts.contractManager.addFactory(exchangeInstance.address, MINTER_ROLE),
+    "contractManager.addFactory",
+  );
+
+  await debug(
+    await contracts.contractManager.addFactory(exchangeInstance.address, METADATA_ROLE),
+    "contractManager.addFactory",
   );
 
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
@@ -510,6 +515,7 @@ async function main() {
       contracts.erc721Simple.address,
       contracts.erc721Upgradeable.address,
       contracts.erc721Rentable.address,
+      contracts.erc721Soulbound.address,
       contracts.erc721Genes.address,
       contracts.erc998Blacklist.address,
       contracts.erc998New.address,
@@ -533,6 +539,13 @@ async function main() {
       mysteryboxSimpleInstance.address,
       contracts.lottery.address,
     ],
+    [MINTER_ROLE],
+  );
+
+  // GRANT METADATA ROLES
+  await grantRoles(
+    [contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
+    [contracts.exchange.address],
     [MINTER_ROLE],
   );
 }

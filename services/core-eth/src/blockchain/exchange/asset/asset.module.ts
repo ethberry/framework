@@ -7,10 +7,12 @@ import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { EventHistoryModule } from "../../event-history/event-history.module";
+import { TokenModule } from "../../hierarchy/token/token.module";
 
 @Module({
   imports: [
     EventHistoryModule,
+    TokenModule,
     forwardRef(() => TemplateModule),
     TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity, AssetComponentHistoryEntity]),
   ],

@@ -55,7 +55,7 @@ export const CollectionTemplate: FC = () => {
     },
     search: {
       query: "",
-      templateStatus: [TemplateStatus.ACTIVE],
+      templateStatus: [],
       contractIds: [],
     },
     filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>

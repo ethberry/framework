@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
-import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import type { IStakingReportSearchDto } from "@framework/types";
-import { StakingDepositStatus, TokenType } from "@framework/types";
-import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { StakingDepositStatus } from "@framework/types";
+import { SearchInput, SelectInput, SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { SearchContractInput } from "../../../../../components/inputs/search-contract";
+import { SearchTokenSelectInput } from "../../../../../components/inputs/search-token-select";
 
 interface IStakingReportSearchFormProps {
   onSubmit: (values: IStakingReportSearchDto) => Promise<void>;
@@ -19,10 +19,18 @@ interface IStakingReportSearchFormProps {
 export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { formatMessage } = useIntl();
-
-  const { query, stakingDepositStatus, account, deposit, reward, startTimestamp, endTimestamp } = initialValues;
-  const fixedValues = { query, stakingDepositStatus, account, deposit, reward, startTimestamp, endTimestamp };
+  const { query, stakingDepositStatus, account, emptyReward, deposit, reward, startTimestamp, endTimestamp } =
+    initialValues;
+  const fixedValues = {
+    query,
+    stakingDepositStatus,
+    account,
+    emptyReward,
+    deposit,
+    reward,
+    startTimestamp,
+    endTimestamp,
+  };
 
   return (
     <FormWrapper
@@ -45,19 +53,15 @@ export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props 
           <Grid item xs={6}>
             <TextInput name="account" />
           </Grid>
+          <Grid item xs={6} />
           <Grid item xs={6}>
-            <SelectInput
-              name="deposit.tokenType"
-              options={TokenType}
-              label={formatMessage({ id: "form.labels.deposit" })}
-            />
+            <SwitchInput name="emptyReward" />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput
-              name="reward.tokenType"
-              options={TokenType}
-              label={formatMessage({ id: "form.labels.reward" })}
-            />
+            <SearchTokenSelectInput prefix="deposit" />
+          </Grid>
+          <Grid item xs={6}>
+            <SearchTokenSelectInput prefix="reward" />
           </Grid>
           <Grid item xs={6}>
             <SearchContractInput prefix="deposit" />

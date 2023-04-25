@@ -65,7 +65,7 @@ export class CollectionTokenService extends TokenService {
     files.map((file, i) => {
       return Object.assign(tokens[i], {
         imageUrl: file.imageUrl,
-        attributes: file.attributes,
+        attributes: JSON.parse(file.attributes),
       });
     });
 

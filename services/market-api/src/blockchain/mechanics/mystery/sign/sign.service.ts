@@ -40,6 +40,7 @@ export class MysterySignService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
+
     const signature = await this.getSignature(
       account,
       {
@@ -71,11 +72,12 @@ export class MysterySignService {
         },
       ],
     );
+
     return this.signerService.getManyToManySignature(
       account,
       params,
       items,
-      mysteryboxEntity.template.price.components.map(component => ({
+      mysteryboxEntity.template.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

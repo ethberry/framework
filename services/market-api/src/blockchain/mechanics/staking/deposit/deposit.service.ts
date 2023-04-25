@@ -36,7 +36,7 @@ export class StakingDepositService {
     dto: Partial<IStakingDepositSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<StakingDepositEntity>, number]> {
-    const { query, stakingDepositStatus, deposit, reward, skip, take } = dto;
+    const { query, stakingDepositStatus, contractIds, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
@@ -80,6 +80,16 @@ export class StakingDepositService {
         });
       } else {
         queryBuilder.andWhere("stake.stakingDepositStatus IN(:...stakingDepositStatus)", { stakingDepositStatus });
+      }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
       }
     }
 

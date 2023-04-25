@@ -20,9 +20,9 @@ describe("ERC721UpgradeableRentable", function () {
   shouldBehaveLikeERC721Rentable(factory);
 
   shouldSupportsInterface(factory)(
-    // InterfaceId.IERC165, // TODO Contract don't see this Interface
-    // InterfaceId.IAccessControl, // TODO Contract don't see this Interface
-    // InterfaceId.IERC721, // TODO Contract don't see this Interface
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
     InterfaceId.IERC4906,
     InterfaceId.IERC4907,
     FrameworkInterfaceId.Grade,

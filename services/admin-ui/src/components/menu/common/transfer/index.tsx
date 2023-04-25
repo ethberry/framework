@@ -35,7 +35,7 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
       }) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
       const contract = new Contract(address, ERC20TransferABI, web3Context.provider?.getSigner());
-      return contract.transfer(web3Context.account, values.address, asset.amount) as Promise<any>;
+      return contract.transfer(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
       const contract = new Contract(address, ERC721SafeTransferFromABI, web3Context.provider?.getSigner());
       return contract["safeTransferFrom(address,address,uint256)"](

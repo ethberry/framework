@@ -25,6 +25,7 @@
   "dialogs": {
     "add": "Add",
     "allowance": "Allowance",
+    "amount": "Set token amount",
     "auction": "Sell `{title}` on auction",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
@@ -330,6 +331,7 @@
       "language": "Language",
       "lendType": "Lend Type",
       "level": "Level",
+      "rentRule": "Rent Rule",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -395,6 +397,7 @@
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "rentRule": "Lend Rule",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -568,7 +571,7 @@
       "title": "CoinGecko"
     },
     "craft": {
-      "price": "price",
+      "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -585,17 +588,10 @@
         "title": "Achievements"
       },
       "ecommerce": {
-        "feedback": {
-          "form": "Feedback",
-          "title": "Feedback"
-        },
-        "pages": {
-          "about-us": "About us",
-          "faq": "FAQ",
-          "privacy-policy": "Privacy Policy",
-          "terms-of-services": "Terms of Services",
-          "title": "Pages"
-        }
+        "checkout": "Checkout",
+        "orders": "Orders",
+        "products": "Products",
+        "title": "Ecommerce"
       },
       "hierarchy": {
         "erc1155": "ERC1155",
@@ -642,6 +638,9 @@
     "drop-list": {
       "title": "Drops"
     },
+    "ecommerce": {
+      "title": "Ecommerce"
+    },
     "erc1155": {
       "contract": {
         "title": "ERC1155 Contract: {title}"
@@ -683,7 +682,8 @@
       "token": {
         "genes": "Genes",
         "genesis": "Genesis",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
       },
@@ -711,8 +711,10 @@
       },
       "title": "ERC998",
       "token": {
+        "genesis": "Genesis",
         "genes": "Genes",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"
       },

@@ -10,10 +10,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import "../TopUp.sol";
 
 contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
+  using SafeCast for uint256;
+
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,
@@ -32,11 +35,11 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
   }
 
   function releaseable() public view virtual returns (uint256) {
-    return vestedAmount(uint64(block.timestamp)) - released();
+    return vestedAmount(block.timestamp.toUint64()) - released();
   }
 
   function releaseable(address token) public view virtual returns (uint256) {
-    return vestedAmount(token, uint64(block.timestamp)) - released(token);
+    return vestedAmount(token, block.timestamp.toUint64()) - released(token);
   }
 
   // Allow delegation of votes

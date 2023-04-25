@@ -50,10 +50,6 @@ contract ERC721UpgradeableRentable is IERC721Upgradeable, ERC721Simple, ERC4907 
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(IERC165, ERC721Simple, ERC4907) returns (bool) {
-    return
-      interfaceId == IERC4906_ID ||
-      interfaceId == IERC721_GRADE_ID ||
-      super.supportsInterface(interfaceId) ||
-      ERC4907.supportsInterface(interfaceId);
+    return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
   }
 }

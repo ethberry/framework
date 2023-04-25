@@ -4,7 +4,10 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 
+import { TokenType } from "@framework/types";
+
 import { RentEntity } from "./rent.entity";
+import { IRentAutocompleteDto } from "./interfaces/autocomplete";
 
 @Injectable()
 export class RentService {
@@ -32,6 +35,32 @@ export class RentService {
     return queryBuilder.getManyAndCount();
   }
 
+  public async autocomplete(dto: IRentAutocompleteDto): Promise<Array<RentEntity>> {
+    const { contractId, rentStatus } = dto;
+    const where = {};
+
+    // TODO add rentStatus here
+    if (contractId) {
+      Object.assign(where, {
+        contractId,
+      });
+    }
+
+    if (rentStatus) {
+      Object.assign(where, {
+        rentStatus,
+      });
+    }
+
+    return this.rentEntityRepository.find({
+      where,
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+  }
+
   public findOne(
     where: FindOptionsWhere<RentEntity>,
     options?: FindOneOptions<RentEntity>,
@@ -40,17 +69,24 @@ export class RentService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<RentEntity>): Promise<RentEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "rent",
-        leftJoinAndSelect: {
-          contract: "rent.contract",
-          price: "rent.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-        },
-      },
+    const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");
+    queryBuilder.leftJoinAndSelect("rent.contract", "contract");
+    queryBuilder.leftJoinAndSelect("rent.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+
+    queryBuilder.andWhere("rent.id = :id", {
+      id: where.id,
     });
+
+    return queryBuilder.getOne();
   }
 }

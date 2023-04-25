@@ -19,6 +19,7 @@ import { ClaimSection } from "./mechanics/claim";
 import { CraftSection } from "./mechanics/craft";
 import { DropSection } from "./mechanics/drop";
 import { ReferralSection } from "./exchange/referral";
+import { EcommerceSection } from "./ecommerce";
 import { IpfsSection } from "./integrations/ipfs";
 import { WrapperSection } from "./mechanics/wrapper";
 import { BreedSection } from "./mechanics/breed";
@@ -60,6 +61,7 @@ export const Dashboard: FC = () => {
           <PersonalSection />
           <MarketplaceSection />
           <ReferralSection />
+          <EcommerceSection />
           <OneInchSection />
           <CoinGeckoSection />
           <IpfsSection />

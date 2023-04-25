@@ -1,5 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
+
+import { IsArray, IsBoolean, IsEnum, IsOptional, IsInt, Min, ValidateNested } from "class-validator";
+
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -20,6 +22,16 @@ export class StakingDepositItemSearchDto implements IStakingDepositItemSearchDto
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public tokenType: Array<TokenType>;
 
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
   public contractIds: Array<number>;
 }
 
@@ -36,6 +48,14 @@ export class StakingDepositSearchDto extends SearchDto implements IStakingDeposi
   @IsEnum(StakingDepositStatus, { each: true, message: "badInput" })
   public stakingDepositStatus: Array<StakingDepositStatus>;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
+  })
+  @IsBoolean({ message: "typeMismatch" })
+  emptyReward?: boolean;
+
   @ApiPropertyOptional({
     type: StakingDepositItemSearchDto,
   })
@@ -49,6 +69,18 @@ export class StakingDepositSearchDto extends SearchDto implements IStakingDeposi
   @ValidateNested()
   @Type(() => StakingDepositItemSearchDto)
   public reward: StakingDepositItemSearchDto;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
 
   public account: string;
   public startTimestamp: string;

@@ -61,7 +61,7 @@ export interface IExchangeGradeEvent {
 export interface IExchangeMysteryEvent {
   from: string;
   externalId: string;
-  items: IExchangeItem; // TODO array
+  items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }
 
@@ -119,7 +119,7 @@ export interface IExchangeLendEvent {
   from: string;
   to: string;
   expires: string;
-  lendType: string;
+  externalId: string;
   items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }

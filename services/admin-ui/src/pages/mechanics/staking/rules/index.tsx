@@ -21,11 +21,7 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import {
-  PauseToggleButton,
-  StakingRuleUploadCreateButton,
-  StakingToggleRuleButton,
-} from "../../../../components/buttons";
+import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
@@ -81,7 +77,6 @@ export const StakingRules: FC = () => {
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
-        <PauseToggleButton />
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

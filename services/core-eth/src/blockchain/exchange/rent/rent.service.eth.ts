@@ -16,11 +16,11 @@ export class ExchangeRentServiceEth {
 
   public async rent(event: ILogEvent<IExchangeLendEvent>, context: Log): Promise<void> {
     const {
-      args: { from, to, expires, lendType, items, price },
+      args: { from, to, expires, externalId, items, price },
     } = event;
 
     await this.eventHistoryService.updateHistory(event, context);
 
-    this.notificatorService.dummyUser({ from, to, expires, lendType, items, price });
+    this.notificatorService.dummyUser({ from, to, expires, externalId, items, price });
   }
 }
