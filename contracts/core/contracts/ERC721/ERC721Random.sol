@@ -7,11 +7,11 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "./interfaces/IERC721Random.sol";
 import "./ERC721Simple.sol";
 import "../Mechanics/Rarity/Rarity.sol";
-import "../utils/constants.sol";
 
 abstract contract ERC721Random is IERC721Random, ERC721Simple, Rarity {
   using Counters for Counters.Counter;

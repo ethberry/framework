@@ -87,8 +87,8 @@ export class ClaimService {
         leftJoinAndSelect: {
           item: "claim.item",
           item_components: "item.components",
-          item_template: "item_components.template",
           item_contract: "item_components.contract",
+          item_template: "item_components.template",
         },
       },
     });
@@ -182,16 +182,22 @@ export class ClaimService {
   }
 
   public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    const extraData = utils.formatBytes32String("0x");
+
+    return this.signerService.getManyToManyExtraSignature(
       account,
       params,
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId:
+          component.contract.contractType === TokenType.ERC1155
+            ? component.template.tokens[0].tokenId
+            : component.templateId.toString(),
         amount: component.amount,
       })),
       [],
+      extraData,
     );
   }
 

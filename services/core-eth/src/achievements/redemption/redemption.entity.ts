@@ -4,7 +4,6 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementRedemption } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { ClaimEntity } from "../../blockchain/mechanics/claim/claim.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementLevelEntity } from "../level/level.entity";
 
@@ -28,6 +27,6 @@ export class AchievementRedemptionEntity extends IdDateBaseEntity implements IAc
   public claimId: number;
 
   @JoinColumn()
-  @OneToOne(_type => ClaimEntity)
-  public claim: ClaimEntity;
+  @OneToOne(_type => AchievementLevelEntity)
+  public achievementLevel: AchievementLevelEntity;
 }

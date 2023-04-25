@@ -24,7 +24,7 @@ export class AchievementLevelService {
     queryBuilder.select();
 
     queryBuilder.leftJoin("level.achievementRule", "rule");
-    queryBuilder.addSelect(["rule.title"]);
+    queryBuilder.addSelect(["rule.title", "rule.achievementType"]);
 
     if (query) {
       queryBuilder.leftJoin(
@@ -82,6 +82,7 @@ export class AchievementLevelService {
       join: {
         alias: "level",
         leftJoinAndSelect: {
+          rule: "level.achievementRule",
           item: "level.item",
           item_components: "item.components",
           item_contract: "item_components.contract",

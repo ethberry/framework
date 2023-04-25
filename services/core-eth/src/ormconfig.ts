@@ -61,6 +61,7 @@ const config: PostgresConnectionOptions = {
     WaitlistItemEntity,
     BreedEntity,
     PayeesEntity,
+    ClaimEntity,
     // Achievements
     AchievementItemEntity,
   ],

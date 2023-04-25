@@ -10,16 +10,19 @@ export class SeedAchievementRedemption1681273013080 implements MigrationInterfac
       INSERT INTO ${ns}.achievement_redemption (
         user_id,
         achievement_level_id,
+        claim_id,
         created_at,
         updated_at
       ) VALUES (
         1,
         1,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         4,
+        12,
         '${currentDateTime}',
         '${currentDateTime}'
       );

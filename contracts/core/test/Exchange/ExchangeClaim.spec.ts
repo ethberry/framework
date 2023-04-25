@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
 
-import { externalId, params, subscriptionId, tokenId } from "../constants";
+import { expiresAt, externalId, params, subscriptionId, tokenId } from "../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
@@ -14,7 +14,8 @@ import { isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeClaim", function () {
   let vrfInstance: VRFCoordinatorMock;
-  const extraData = utils.formatBytes32String("0x");
+  // const extraData = utils.formatBytes32String("0x");
+  const extraData = utils.hexZeroPad(utils.hexlify(4), 32);
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -85,39 +86,51 @@ describe("ExchangeClaim", function () {
         expect(balance).to.equal(1);
       });
 
-      it("should claim (Random)", async function () {
+      it.only("should claim (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721UpgradeableRandomBesu", exchangeInstance);
 
         const tx02 = await vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
           .withArgs(subscriptionId, erc721Instance.address);
 
+        const rnd = utils.randomBytes(32);
+        console.log("rnd", utils.hexlify(rnd));
         const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: rnd,
+            externalId: 12,
+            expiresAt,
+            referrer: constants.AddressZero,
+          },
           items: [
             {
               tokenType: 2,
               token: erc721Instance.address,
-              tokenId,
-              amount,
+              tokenId: 130602,
+              amount: 1,
             },
           ],
           price: [],
           extra: extraData,
         });
-
+        console.log("signature", signature);
         const tx1 = exchangeInstance.connect(receiver).claim(
-          params,
+          {
+            nonce: rnd,
+            externalId: 12,
+            expiresAt,
+            referrer: constants.AddressZero,
+          },
           [
             {
               tokenType: 2,
               token: erc721Instance.address,
-              tokenId,
-              amount,
+              tokenId: 130602,
+              amount: 1,
             },
           ],
           extraData,
