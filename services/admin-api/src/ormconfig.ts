@@ -261,6 +261,7 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedAchievementClaimErc721At1681273013071 } from "./migrations/04-achievements/1681273013071-seed-achievement-claim-erc721";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -564,6 +565,7 @@ const config: PostgresConnectionOptions = {
     CreateAchievementItem1681273013050,
     SeedAchievementItem1681273013060,
     CreateAchievementRedemption1681273013070,
+    SeedAchievementClaimErc721At1681273013071,
     SeedAchievementRedemption1681273013080,
   ],
 };

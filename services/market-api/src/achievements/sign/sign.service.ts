@@ -12,33 +12,24 @@ import { AchievementItemService } from "../item/item.service";
 import { ISignAchievementsDto } from "./interfaces";
 import { AchievementLevelService } from "../level/level.service";
 import { AchievementLevelEntity } from "../level/level.entity";
+import { ClaimService } from "../../blockchain/mechanics/claim/claim.service";
+import { AchievementRedemptionService } from "../redemption/redemption.service";
 
 @Injectable()
 export class AchievementSignService {
   constructor(
     private readonly achievementItemService: AchievementItemService,
     private readonly achievementLevelService: AchievementLevelService,
+    private readonly achievementRedemptionService: AchievementRedemptionService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
+    private readonly claimService: ClaimService,
   ) {}
 
   public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { achievementLevelId, account, referrer = constants.AddressZero } = dto;
 
-    const achievementLevelEntity = await this.achievementLevelService.findOne(
-      { id: achievementLevelId },
-      {
-        join: {
-          alias: "achievement",
-          leftJoinAndSelect: {
-            item: "achievement.item",
-            item_components: "item.components",
-            item_template: "item_components.template",
-            item_contract: "item_components.contract",
-          },
-        },
-      },
-    );
+    const achievementLevelEntity = await this.achievementLevelService.findOneWithRelations({ id: achievementLevelId });
 
     if (!achievementLevelEntity) {
       throw new NotFoundException("achievementLevelNotFound");
@@ -59,18 +50,43 @@ export class AchievementSignService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
+    const zeroDateTime = new Date(0).toISOString();
+
+    const claimEntity = await this.claimService.create({
+      itemId: achievementLevelEntity.itemId,
+      account: account.toLowerCase(),
+      endTimestamp: zeroDateTime, // TODO limit time for achievement's redeem?
+      nonce: utils.hexlify(nonce),
+      signature: "0x",
+      merchantId: userEntity.merchantId,
+    });
+
+    await this.achievementRedemptionService.create({
+      userId: userEntity.id,
+      achievementLevelId: achievementLevelEntity.id,
+      claimId: claimEntity.id,
+    });
+
     const signature = await this.getSignature(
       account,
       {
         nonce,
-        externalId: achievementLevelEntity.id,
+        externalId: claimEntity.id,
         expiresAt,
         referrer,
       },
       achievementLevelEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    await this.claimService.updateClaim({
+      itemId: achievementLevelEntity.itemId,
+      account: account.toLowerCase(),
+      nonce: utils.hexlify(nonce),
+      signature,
+      merchantId: userEntity.merchantId,
+    });
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: claimEntity.id.toString() };
   }
 
   public async getSignature(
@@ -78,16 +94,23 @@ export class AchievementSignService {
     params: IParams,
     achievementLevelEntity: AchievementLevelEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    // TODO encode more info (+redemptionId?)
+    const extraData = utils.hexZeroPad(utils.hexlify(achievementLevelEntity.id), 32);
+
+    return this.signerService.getManyToManyExtraSignature(
       account,
       params,
       achievementLevelEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId:
+          component.contract.contractType === TokenType.ERC1155
+            ? component.template.tokens[0].tokenId
+            : component.templateId.toString(),
         amount: component.amount,
       })),
       [],
+      extraData,
     );
   }
 }

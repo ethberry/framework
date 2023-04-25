@@ -16,10 +16,15 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { IAchievementLevel, IAchievementLevelSearchDto } from "@framework/types";
+import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
 import { AchievementLevelSearchForm } from "./search";
+import { AchievementType } from "@framework/types";
+
+export const emptyAchievementRule = {
+  achievementType: AchievementType.MARKETPLACE,
+} as IAchievementRule;
 
 export const AchievementLevels: FC = () => {
   const {
@@ -47,18 +52,20 @@ export const AchievementLevels: FC = () => {
       title: "",
       description: emptyStateString,
       amount: 0,
+      achievementRule: emptyAchievementRule,
     },
     search: {
       query: "",
       achievementRuleIds: [],
     },
-    filter: ({ id, title, description, item, amount, achievementRuleId }) =>
+    filter: ({ id, title, description, item, amount, achievementRuleId, achievementRule }) =>
       id
         ? {
             title,
             description,
             item,
             amount,
+            achievementRule,
           }
         : {
             title,
@@ -97,7 +104,8 @@ export const AchievementLevels: FC = () => {
           {rows.map((level, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.8 }}>{level.title}</ListItemText>
-              <ListItemText sx={{ width: 0.4 }}>{level.amount}</ListItemText>
+              <ListItemText sx={{ width: 0.1 }}>{level.amount}</ListItemText>
+              <ListItemText sx={{ width: 0.5 }}>{level.achievementRule.achievementType}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(level)}>
                   <Create />

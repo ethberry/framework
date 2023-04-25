@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+
+import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -18,7 +21,7 @@ export interface IAchievementLevelEditDialogProps {
 
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
-
+  console.log("initialValues", initialValues);
   const { id, title, description, item, amount } = initialValues;
 
   const fixedValues = {
@@ -43,7 +46,10 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TemplateAssetInput multiple prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
-      <NumberInput name="amount" />
+      <Typography variant="inherit">
+        <FormattedMessage id="dialogs.buttons.achievementLevel" />
+      </Typography>
+      <NumberInput name="amount" showLabel={false} />
     </FormDialog>
   );
 };

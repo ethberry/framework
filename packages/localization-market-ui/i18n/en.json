@@ -284,6 +284,7 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
+      "achievementLevel": "Level to reach",
       "address": "Address",
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",

@@ -10,6 +10,7 @@ import { IAchievementItemReport, IAchievementRule, TokenType } from "@framework/
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
 import TemplatePurchaseABI from "../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
+import ClaimABI from "../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;
@@ -36,11 +37,12 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
     !previousLevelsNotRedeemed && (!!achievementLevel.redemptions?.length || count.count !== achievementLevel.amount);
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
-    return contract.achievement(
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
+    const extraData = utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32);
+    return contract.claim(
       {
         nonce: utils.arrayify(sign.nonce),
-        externalId: achievementRule.id,
+        externalId: sign.bytecode, // claimEntity ID
         expiresAt: sign.expiresAt,
         referrer: settings.getReferrer(),
       },
@@ -49,12 +51,13 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
         token: component.contract!.address,
         // pass templateId instead of tokenId = 0
         tokenId:
-          component.template!.tokens![0].tokenId === "0"
-            ? component.template!.tokens![0].templateId
-            : component.template!.tokens![0].tokenId,
+          component.contract!.contractType === TokenType.ERC1155
+            ? component.template!.tokens![0].tokenId
+            : component.templateId.toString(),
         amount: component.amount,
       })),
       [],
+      extraData,
       sign.signature,
     ) as Promise<void>;
   });

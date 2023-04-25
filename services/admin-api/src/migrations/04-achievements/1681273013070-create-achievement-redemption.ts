@@ -20,6 +20,10 @@ export class CreateAchievementRedemption1681273013070 implements MigrationInterf
           type: "int",
         },
         {
+          name: "claim_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -39,6 +43,12 @@ export class CreateAchievementRedemption1681273013070 implements MigrationInterf
           columnNames: ["achievement_level_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.achievement_level`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["claim_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.claim`,
           onDelete: "CASCADE",
         },
       ],
