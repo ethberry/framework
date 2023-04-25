@@ -36,7 +36,10 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
       craft.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.templateId.toString(),
+        tokenId:
+          component.contract!.contractType === TokenType.ERC1155
+            ? component.template!.tokens![0].tokenId
+            : component.templateId.toString(),
         amount: component.amount,
       })),
       craft.price?.components.sort(sorter("id")).map(component => ({
