@@ -78,13 +78,16 @@ export class AchievementSignService {
       achievementLevelEntity,
     );
 
-    await this.claimService.updateClaim({
-      itemId: achievementLevelEntity.itemId,
-      account: account.toLowerCase(),
-      nonce: utils.hexlify(nonce),
-      signature,
-      merchantId: userEntity.merchantId,
-    });
+    await this.claimService.update(
+      { id: claimEntity.id },
+      {
+        itemId: achievementLevelEntity.itemId,
+        account: account.toLowerCase(),
+        nonce: utils.hexlify(nonce),
+        signature,
+        merchantId: userEntity.merchantId,
+      },
+    );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: claimEntity.id.toString() };
   }

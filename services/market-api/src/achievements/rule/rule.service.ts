@@ -36,6 +36,10 @@ export class AchievementRuleService {
       userId: userEntity.id,
     });
 
+    // queryBuilder.orderBy({
+    //   "levels.amount": "ASC",
+    // });
+
     return queryBuilder.getManyAndCount();
   }
 

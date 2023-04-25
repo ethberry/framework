@@ -9,7 +9,6 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IAchievementItemReport, IAchievementRule, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import TemplatePurchaseABI from "../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
 import ClaimABI from "../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
 
 interface IAchievementRedeemButtonProps {
@@ -19,7 +18,6 @@ interface IAchievementRedeemButtonProps {
 
 export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props => {
   const { achievementRule, count = { count: 0 } } = props;
-
   const settings = useSettings();
 
   const achievementLevel = achievementRule.levels.reduce((foundLevel, nextLevel) => {
@@ -37,8 +35,10 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
     !previousLevelsNotRedeemed && (!!achievementLevel.redemptions?.length || count.count !== achievementLevel.amount);
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
     const extraData = utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32);
+
     return contract.claim(
       {
         nonce: utils.arrayify(sign.nonce),

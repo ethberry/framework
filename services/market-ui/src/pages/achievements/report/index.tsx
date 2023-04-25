@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+
+import { Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -52,6 +53,9 @@ export const AchievementReport: FC = () => {
             key={rule.id}
             sx={{ display: "flex", alignItems: "center", flexDirection: "column", my: 2 }}
           >
+            <Typography variant="h5" sx={{ my: 1 }}>
+              <pre>{rule.title}</pre>
+            </Typography>
             <ReportChart count={count.find(item => item.achievementRuleId === rule.id)!} achievementRule={rule} />
             <AchievementRedeemButton
               achievementRule={rule}

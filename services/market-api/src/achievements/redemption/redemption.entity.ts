@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementRedemption } from "@framework/types";
@@ -21,7 +21,7 @@ export class AchievementRedemptionEntity extends IdDateBaseEntity implements IAc
   public achievementLevelId: number;
 
   @JoinColumn()
-  @OneToOne(_type => AchievementLevelEntity)
+  @ManyToOne(_type => AchievementLevelEntity, level => level.redemptions)
   public achievementLevel: AchievementLevelEntity;
 
   @Column({ type: "int" })

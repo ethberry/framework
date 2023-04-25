@@ -92,18 +92,19 @@ export class AchievementLevelService {
   }
 
   public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {
+    const { item } = dto;
+
     const assetEntity = await this.assetService.create({
       components: [],
     });
+    await this.assetService.update(assetEntity, item);
 
-    const templateEntity = await this.achievementLevelEntityRepository
+    return await this.achievementLevelEntityRepository
       .create({
         ...dto,
         item: assetEntity,
       })
       .save();
-
-    return this.update({ id: templateEntity.id }, dto);
   }
 
   public async update(

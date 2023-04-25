@@ -513,6 +513,7 @@ async function main() {
       contracts.erc721New.address,
       contracts.erc721Random.address,
       contracts.erc721Simple.address,
+      contracts.erc721Blacklist.address,
       contracts.erc721Upgradeable.address,
       contracts.erc721Rentable.address,
       contracts.erc721Soulbound.address,
