@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
@@ -14,6 +14,7 @@ import { isEqualEventArgArrObj } from "../utils";
 
 describe("ExchangeClaim", function () {
   let vrfInstance: VRFCoordinatorMock;
+  const extraData = utils.formatBytes32String("0x");
 
   before(async function () {
     await network.provider.send("hardhat_reset");
@@ -32,10 +33,10 @@ describe("ExchangeClaim", function () {
     describe("ERC721", function () {
       it("should claim (Simple)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-        const signature = await generateManyToManySignature({
+        const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
           params,
           items: [
@@ -47,6 +48,7 @@ describe("ExchangeClaim", function () {
             },
           ],
           price: [],
+          extra: extraData,
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
@@ -59,6 +61,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
+          extraData,
           signature,
         );
 
@@ -67,6 +70,7 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
+            extraData,
             isEqualEventArgArrObj({
               tokenType: 2,
               token: erc721Instance.address,
@@ -83,7 +87,7 @@ describe("ExchangeClaim", function () {
 
       it("should claim (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const tx02 = await vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
@@ -91,7 +95,7 @@ describe("ExchangeClaim", function () {
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
           .withArgs(subscriptionId, erc721Instance.address);
 
-        const signature = await generateManyToManySignature({
+        const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
           params,
           items: [
@@ -103,6 +107,7 @@ describe("ExchangeClaim", function () {
             },
           ],
           price: [],
+          extra: extraData,
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
@@ -115,6 +120,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
+          extraData,
           signature,
         );
 
@@ -123,6 +129,7 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
+            extraData,
             isEqualEventArgArrObj({
               tokenType: 2,
               token: erc721Instance.address,
@@ -140,10 +147,10 @@ describe("ExchangeClaim", function () {
 
       it("should fail: Expired signature", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-        const signature = await generateManyToManySignature({
+        const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
           params: {
             nonce,
@@ -160,6 +167,7 @@ describe("ExchangeClaim", function () {
             },
           ],
           price: [],
+          extra: extraData,
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
@@ -177,6 +185,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
+          extraData,
           signature,
         );
 
@@ -187,10 +196,10 @@ describe("ExchangeClaim", function () {
     describe("ERC1155", function () {
       it("should claim", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
-        const signature = await generateManyToManySignature({
+        const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
           params,
           items: [
@@ -202,6 +211,7 @@ describe("ExchangeClaim", function () {
             },
           ],
           price: [],
+          extra: extraData,
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
@@ -214,6 +224,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
+          extraData,
           signature,
         );
 
@@ -222,6 +233,7 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
+            extraData,
             isEqualEventArgArrObj({
               tokenType: 4,
               token: erc1155Instance.address,
@@ -238,10 +250,10 @@ describe("ExchangeClaim", function () {
 
       it("should fail: Expired signature", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
-        const signature = await generateManyToManySignature({
+        const signature = await generateManyToManyExtraSignature({
           account: receiver.address,
           params: {
             nonce,
@@ -258,6 +270,7 @@ describe("ExchangeClaim", function () {
             },
           ],
           price: [],
+          extra: extraData,
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
@@ -275,6 +288,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
+          extraData,
           signature,
         );
 
