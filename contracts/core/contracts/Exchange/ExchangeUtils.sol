@@ -78,7 +78,7 @@ contract ExchangeUtils {
     }
   }
 
-  function spend(Asset[] memory price, address receiver) internal nonReentrant {
+  function spend(Asset[] memory price, address receiver) internal {
     uint256 length = price.length;
 
     uint256 totalAmount;

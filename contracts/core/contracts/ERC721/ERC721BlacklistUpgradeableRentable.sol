@@ -25,6 +25,6 @@ contract ERC721BlacklistUpgradeableRentable is ERC721BlacklistUpgradeable, ERC49
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC721BlacklistUpgradeable, ERC4907) returns (bool) {
-    return ERC721BlacklistUpgradeable.supportsInterface(interfaceId) || ERC4907.supportsInterface(interfaceId);
+    return super.supportsInterface(interfaceId);
   }
 }
