@@ -1156,4 +1156,35 @@ describe("ExchangeCraft", function () {
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
   });
+
+  describe("pause", function () {
+    it("should fail: paused", async function () {
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+      await exchangeInstance.pause();
+
+      const tx1 = exchangeInstance.craft(
+        params,
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        constants.HashZero,
+      );
+
+      await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
+  });
 });

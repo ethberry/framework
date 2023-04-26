@@ -242,5 +242,32 @@ describe("ExchangeGrade", function () {
 
       await expect(tx2).to.be.revertedWith("ERC721: invalid token ID");
     });
+
+    it("should fail: paused", async function () {
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+      await exchangeInstance.pause();
+
+      const tx1 = exchangeInstance.upgrade(
+        params,
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        constants.HashZero,
+      );
+
+      await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
   });
 });

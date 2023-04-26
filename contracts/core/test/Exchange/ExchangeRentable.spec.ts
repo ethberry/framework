@@ -4,7 +4,7 @@ import { BigNumber, constants, utils } from "ethers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, templateId, tokenId } from "../constants";
+import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
@@ -405,6 +405,37 @@ describe("ExchangeRentable", function () {
       );
 
       await expect(tx1).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
+    });
+
+    it("should fail: paused", async function () {
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+      const expires = utils.hexZeroPad(ethers.utils.hexlify(0), 32);
+
+      await exchangeInstance.pause();
+
+      const tx1 = exchangeInstance.lend(
+        params,
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        expires,
+        constants.HashZero,
+      );
+
+      await expect(tx1).to.be.revertedWith("Pausable: paused");
     });
   });
 });
