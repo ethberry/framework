@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 
-import { amount } from "@gemunion/contracts-constants";
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { externalId, params, tokenId } from "../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
@@ -1155,9 +1155,7 @@ describe("ExchangeCraft", function () {
 
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
-  });
 
-  describe("pause", function () {
     it("should fail: paused", async function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
@@ -1185,6 +1183,61 @@ describe("ExchangeCraft", function () {
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
+
+    it("should fail: signer is missing role", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+      const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
+
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
+        params,
+        items: [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 2,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
+      await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+
+      await exchangeInstance.renounceRole(MINTER_ROLE, owner.address);
+
+      const tx1 = exchangeInstance.connect(receiver).craft(
+        params,
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 2,
+            amount: 1,
+          },
+        ],
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
     });
   });
 });

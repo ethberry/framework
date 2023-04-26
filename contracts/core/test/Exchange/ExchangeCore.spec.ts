@@ -3,7 +3,14 @@ import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import {
+  amount,
+  MINTER_ROLE,
+  DEFAULT_ADMIN_ROLE,
+  InterfaceId,
+  nonce,
+  PAUSER_ROLE,
+} from "@gemunion/contracts-constants";
 import {
   shouldBehaveLikeAccessControl,
   shouldBehaveLikePausable,
@@ -11,7 +18,6 @@ import {
 } from "@gemunion/contracts-mocha";
 
 import { externalId, params, tokenId } from "../constants";
-import { wrapOneToManySignature } from "./shared/utils";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
@@ -226,14 +232,11 @@ describe("ExchangeCore", function () {
       await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
     });
 
-    it("should fail: wrong signer", async function () {
-      const [_owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+    it("should fail: signer is missing role", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
-
-      const network = await ethers.provider.getNetwork();
-      const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, stranger);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -253,6 +256,8 @@ describe("ExchangeCore", function () {
           },
         ],
       });
+
+      await exchangeInstance.renounceRole(MINTER_ROLE, owner.address);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
@@ -276,7 +281,7 @@ describe("ExchangeCore", function () {
       await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
     });
 
-    it("should fail: wrong signer role", async function () {
+    it("should fail: insufficient allowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
