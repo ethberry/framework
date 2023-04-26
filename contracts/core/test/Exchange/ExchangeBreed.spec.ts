@@ -3,7 +3,9 @@ import { ethers, network } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { expiresAt, externalId, params } from "../constants";
+import { amount } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
@@ -625,6 +627,32 @@ describe("ExchangeBreed", function () {
 
         await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
       });
+
+      it("should fail: paused", async function () {
+        const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+        await exchangeInstance.pause();
+
+        const tx1 = exchangeInstance.breed(
+          params,
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          constants.HashZero,
+        );
+
+        await expect(tx1).to.be.revertedWith("Pausable: paused");
+      });
+
       // TODO add tests for Breed.sol
     });
   });

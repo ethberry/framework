@@ -404,6 +404,33 @@ describe("ExchangeCore", function () {
 
       await expect(tx).to.be.revertedWith(`Exchange: Expired signature`);
     });
+
+    it("should fail: paused", async function () {
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+      await exchangeInstance.pause();
+
+      const tx1 = exchangeInstance.purchase(
+        params,
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        constants.HashZero,
+      );
+
+      await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
   });
 
   shouldSupportsInterface(factory)(
