@@ -4,6 +4,8 @@ import { constants, Contract } from "ethers";
 
 import { amount, tokenId, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
+import { shouldReceive } from "./receive";
+
 export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
   describe("topUp", function () {
     it("should top-up with NATIVE token", async function () {
@@ -55,4 +57,6 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       await expect(tx).changeTokenBalances(erc20Instance, [owner, contractInstance], [-amount, amount]);
     });
   });
+
+  shouldReceive(factory);
 }
