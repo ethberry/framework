@@ -3,8 +3,12 @@ import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { amount, DEFAULT_ADMIN_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import {
+  shouldBehaveLikeAccessControl,
+  shouldBehaveLikePausable,
+  shouldSupportsInterface,
+} from "@gemunion/contracts-mocha";
 
 import { externalId, params, tokenId } from "../constants";
 import { wrapOneToManySignature } from "./shared/utils";
@@ -401,4 +405,11 @@ describe("ExchangeCore", function () {
       await expect(tx).to.be.revertedWith(`Exchange: Expired signature`);
     });
   });
+
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IERC1363Receiver,
+    // InterfaceId.IERC1363Spender,
+    "0x7b04a2d0",
+  );
 });

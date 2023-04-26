@@ -8,9 +8,8 @@ import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
-import { shouldBehaveLikeERC721Blacklist } from "../ERC721/shared/blacklist";
+import { shouldBehaveLikeERC721Blacklist, shouldBehaveLikeERC721BlacklistRandom } from "../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
-import { shouldBehaveLikeERC721BlacklistRandom } from "../ERC721/shared/blacklist/random";
 
 describe("ERC998BlacklistUpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
