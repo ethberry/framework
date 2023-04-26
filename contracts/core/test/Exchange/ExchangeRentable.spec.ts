@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 
-import { amount, nonce } from "@gemunion/contracts-constants";
+import { amount, nonce, METADATA_ROLE } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 
@@ -436,6 +436,67 @@ describe("ExchangeRentable", function () {
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
+
+    it("should fail: signer is missing role", async function () {
+      const [owner, receiver, stranger] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
+
+      const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+
+      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+
+      // lend TIME
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
+      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+
+      const signature = await generateManyToManyExtraSignature({
+        account: receiver.address,
+        params: {
+          nonce,
+          externalId /* lendType */,
+          expiresAt,
+          referrer: stranger.address,
+        },
+        items: [
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+        ],
+        price: [],
+        extra: expires,
+      });
+
+      await exchangeInstance.renounceRole(METADATA_ROLE, owner.address);
+
+      const tx1 = exchangeInstance.connect(receiver).lend(
+        {
+          nonce,
+          externalId /* lendType */,
+          expiresAt,
+          referrer: stranger.address,
+        },
+        [
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+        ],
+        [],
+        expires,
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
     });
   });
 });
