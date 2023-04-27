@@ -17,7 +17,7 @@ export class ProductEntity extends SearchableEntity implements IProduct {
   @JoinTable({ name: "product_to_category" })
   public categories: Array<CategoryEntity>;
 
-  @OneToMany(_type => ParameterEntity, parameter => parameter.products)
+  @ManyToMany(_type => ParameterEntity, parameter => parameter.products)
   @JoinTable({ name: "product_to_parameter" })
   public parameters: Array<ParameterEntity>;
 

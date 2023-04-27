@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsString } from "class-validator";
+import { IsEnum, IsOptional, IsString } from "class-validator";
 
 import { ParameterType } from "@framework/types";
 
@@ -17,14 +17,17 @@ export class ParameterUpdateDto implements IParameterUpdateDto {
   public parameterType: ParameterType;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
-  public parameterValue: string;
+  public parameterValue: string | null;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
-  public parameterMinValue: string;
+  public parameterMinValue: string | null;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
-  public parameterMaxValue: string;
+  public parameterMaxValue: string | null;
 }

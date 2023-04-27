@@ -34,8 +34,8 @@ export enum ParameterType {
 export interface IParameter extends IIdBase {
   parameterName: string;
   parameterType: ParameterType;
-  parameterValue: string;
-  parameterMinValue: string;
-  parameterMaxValue: string;
+  parameterValue: string | null;
+  parameterMinValue: string | null;
+  parameterMaxValue: string | null;
   products: Array<IProduct>;
 }

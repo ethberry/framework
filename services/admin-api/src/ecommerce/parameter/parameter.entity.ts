@@ -14,14 +14,14 @@ export class ParameterEntity extends IdBaseEntity implements IParameter {
   @Column({ type: "varchar" })
   public parameterType: ParameterType;
 
-  @Column({ type: "varchar" })
-  public parameterValue: string;
+  @Column({ type: "varchar", nullable: true })
+  public parameterValue: string | null;
 
-  @Column({ type: "varchar" })
-  public parameterMinValue: string;
+  @Column({ type: "varchar", nullable: true })
+  public parameterMinValue: string | null;
 
-  @Column({ type: "varchar" })
-  public parameterMaxValue: string;
+  @Column({ type: "varchar", nullable: true })
+  public parameterMaxValue: string | null;
 
   @ManyToMany(_type => ProductEntity, product => product.parameters)
   @JoinTable({ name: "product_to_parameter" })

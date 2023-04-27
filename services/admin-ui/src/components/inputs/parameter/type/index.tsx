@@ -3,10 +3,12 @@ import { FC } from "react";
 import { ParameterType } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 
-import { IParameterTypeInput } from "./interface";
+export interface IParameterTypeInput {
+  name?: string;
+}
 
 export const ParameterTypeInput: FC<IParameterTypeInput> = props => {
-  const { name = "parameterType", options = ParameterType, prefix } = props;
+  const { name = "parameterType" } = props;
 
-  return <SelectInput name={`${prefix}.${name}`} options={options} />;
+  return <SelectInput name={name} options={ParameterType} />;
 };

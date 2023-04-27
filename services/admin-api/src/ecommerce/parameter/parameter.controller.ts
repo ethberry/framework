@@ -1,6 +1,19 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
+import { SearchDto } from "@gemunion/collection";
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { ParameterCreateDto, ParameterUpdateDto } from "./dto";
@@ -14,8 +27,8 @@ export class ParameterController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(): Promise<[Array<ParameterEntity>, number]> {
-    return this.parameterService.search();
+  public search(@Query() dto: SearchDto): Promise<[Array<ParameterEntity>, number]> {
+    return this.parameterService.search(dto);
   }
 
   @Post("/")

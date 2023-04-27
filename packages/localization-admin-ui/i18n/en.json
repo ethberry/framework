@@ -793,6 +793,7 @@
           "categories": "Categories",
           "kanban": "Orders",
           "orders": "Orders Archive",
+          "parameters": "Parameters",
           "photos": "Photos",
           "products": "Products",
           "promos": "Promos",
@@ -977,6 +978,9 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "parameters": {
+      "title": "Parameters"
     },
     "payees": {
       "attach": "Attach",

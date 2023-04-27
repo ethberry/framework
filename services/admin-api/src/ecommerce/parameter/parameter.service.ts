@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
+
+import { ISearchDto } from "@gemunion/types-collection";
 
 import { ParameterEntity } from "./parameter.entity";
 import { IParameterCreateDto, IParameterUpdateDto } from "./interfaces";
@@ -12,15 +14,24 @@ export class ParameterService {
     private readonly parameterEntityRepository: Repository<ParameterEntity>,
   ) {}
 
-  public search(): Promise<[Array<ParameterEntity>, number]> {
-    return this.findAndCount({});
-  }
+  public search(dto: ISearchDto): Promise<[Array<ParameterEntity>, number]> {
+    const { query } = dto;
 
-  public findAndCount(
-    where: FindOptionsWhere<ParameterEntity>,
-    options?: FindManyOptions<ParameterEntity>,
-  ): Promise<[Array<ParameterEntity>, number]> {
-    return this.parameterEntityRepository.findAndCount({ where, ...options });
+    const queryBuilder = this.parameterEntityRepository.createQueryBuilder("parameter");
+
+    queryBuilder.select();
+
+    if (query) {
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("parameter.parameterName ILIKE '%' || :parameterName || '%'", { parameterName: query });
+        }),
+      );
+    }
+
+    queryBuilder.orderBy("parameter.id", "DESC");
+
+    return queryBuilder.getManyAndCount();
   }
 
   public async create(dto: IParameterCreateDto): Promise<ParameterEntity> {

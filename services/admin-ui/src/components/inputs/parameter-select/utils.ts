@@ -9,17 +9,3 @@ export const getAvailableNames: (props: IGetEmptyParameter) => string[] | null =
 
   return availableNames.length > 0 ? availableNames : null;
 };
-
-export const uniqueBy = (array: any[], by: string) => {
-  const uniqueArray: any[] = [];
-
-  array.forEach(item => {
-    const found = uniqueArray.find(it => it[by] === item[by]);
-    if (!found) {
-      uniqueArray.push(item);
-    }
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return uniqueArray;
-};

@@ -5,30 +5,32 @@ import { ParameterType } from "@framework/types";
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
-import { IParameterMaxValueInput } from "./interface";
+export interface IParameterMaxValueInput {
+  name?: string;
+}
 
 export const ParameterMaxValueInput: FC<IParameterMaxValueInput> = props => {
-  const { name = "parameterMaxValue", prefix } = props;
+  const { name = "parameterMaxValue" } = props;
   const form = useFormContext();
-  const parameterType = useWatch({ name: `${prefix}.parameterType` });
+  const parameterType = useWatch({ name: `parameterType` });
 
   useEffect(() => {
     if (parameterType === ParameterType.NUMBER || parameterType === ParameterType.STRING) {
-      form.setValue(`${prefix}.${name}`, 50);
+      form.setValue(name, 50);
     } else if (parameterType === ParameterType.DATE) {
-      form.setValue(`${prefix}.${name}`, new Date().toISOString());
+      form.setValue(name, new Date().toISOString());
     } else {
-      form.setValue(`${prefix}.${name}`, null);
+      form.setValue(name, "");
     }
-  }, [parameterType, prefix]);
+  }, [parameterType]);
 
   switch (parameterType) {
     case ParameterType.STRING:
     case ParameterType.NUMBER: {
-      return <NumberInput name={`${prefix}.${name}`} inputProps={{ min: 0 }} />;
+      return <NumberInput name={name} inputProps={{ min: 0 }} />;
     }
     case ParameterType.DATE: {
-      return <DateTimeInput name={`${prefix}.${name}`} />;
+      return <DateTimeInput name={name} />;
     }
     default: {
       return null;

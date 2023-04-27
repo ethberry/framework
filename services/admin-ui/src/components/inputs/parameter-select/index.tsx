@@ -7,8 +7,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import type { IParameter } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
+import { uniqueBy } from "../../../utils/uniqueBy";
 import { getEmptyParameter } from "./empty";
-import { getAvailableNames, uniqueBy } from "./utils";
+import { getAvailableNames } from "./utils";
 import { ParameterValueInput } from "./value";
 import { SelectInput } from "./select";
 
@@ -64,7 +65,7 @@ export const ParameterSelectInput: FC<IParameterSelectInput> = props => {
         })
         .then(json => {
           setAllParameters(json.rows);
-          setAllNames(uniqueBy(json.rows, "parameterName").map(({ parameterName }) => parameterName as string));
+          setAllNames(uniqueBy<IParameter>(json.rows, "parameterName").map(({ parameterName }) => parameterName));
         }),
     { success: false },
   );

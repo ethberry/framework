@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 import { ns } from "@framework/constants";
 
 export class CreateParameter1593408358870 implements MigrationInterface {
@@ -47,6 +47,13 @@ export class CreateParameter1593408358870 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    const index = new TableIndex({
+      columnNames: ["parameter_name", "parameter_type", "parameter_value"],
+      isUnique: true,
+    });
+
+    await queryRunner.createIndex(`${ns}.parameter`, index);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

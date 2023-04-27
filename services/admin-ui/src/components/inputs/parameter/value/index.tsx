@@ -1,66 +1,85 @@
-import { FC, useEffect, useMemo } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { FC } from "react";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 import { ParameterType } from "@framework/types";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { TextInput } from "@gemunion/mui-inputs-core";
+import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Add, Delete } from "@mui/icons-material";
 
-import { EnumSelectInput } from "./enum-select";
-import { IParameterValueInput } from "./interface";
+export type ParameterValue = {
+  id: string;
+  parameterValue: string;
+};
 
-export const ParameterValueInput: FC<IParameterValueInput> = props => {
-  const { name = "parameterValue", prefix } = props;
+export interface IParameterValuesInput {
+  name?: string;
+}
 
-  const form = useFormContext();
+export const ParameterValuesInput: FC<IParameterValuesInput> = props => {
+  const { name = "parameterValue" } = props;
 
-  const parameterType = useWatch({ name: `${prefix}.parameterType` });
-  const parameterValue = useWatch({ name: `${prefix}.${name}` });
-  const parameterMinValue = useWatch({ name: `${prefix}.parameterMinValue` });
-  const parameterMaxValue = useWatch({ name: `${prefix}.parameterMaxValue` });
+  const { formatMessage } = useIntl();
 
-  useEffect(() => {
-    if (parameterType === ParameterType.NUMBER) {
-      form.setValue(`${prefix}.${name}`, 0);
-    }
-    if (parameterType === ParameterType.STRING || parameterType === ParameterType.ENUM) {
-      form.setValue(`${prefix}.${name}`, "");
-    }
-    if (parameterType === ParameterType.DATE) {
-      form.setValue(`${prefix}.${name}`, new Date().toISOString());
-    }
-  }, [parameterType, prefix]);
+  const form = useFormContext<any>();
+  const { fields, append, remove } = useFieldArray({ name, control: form.control });
+  const watchFields = useWatch({ name });
 
-  useEffect(() => {
-    if (parameterType === ParameterType.NUMBER && parameterValue < parameterMinValue) {
-      form.setValue(`${prefix}.${name}`, parameterMinValue);
-    }
-  }, [parameterMinValue, parameterType, prefix]);
+  const parameterType = useWatch({ name: "parameterType" });
+  if (parameterType !== ParameterType.ENUM) {
+    return null;
+  }
 
-  useEffect(() => {
-    if (parameterType === ParameterType.NUMBER && parameterValue > parameterMaxValue) {
-      form.setValue(`${prefix}.${name}`, parameterMaxValue);
-    }
-  }, [parameterMaxValue, parameterType, prefix]);
+  const values: ParameterValue[] = fields.map(
+    (field, index) =>
+      ({
+        ...field,
+        ...watchFields[index],
+      } as ParameterValue),
+  );
 
-  return useMemo(() => {
-    switch (parameterType) {
-      case ParameterType.NUMBER: {
-        return (
-          <NumberInput name={`${prefix}.${name}`} inputProps={{ min: parameterMinValue, max: parameterMaxValue }} />
-        );
-      }
-      case ParameterType.STRING: {
-        return <TextInput name={`${prefix}.${name}`} />;
-      }
-      case ParameterType.DATE: {
-        return <DateTimeInput name={`${prefix}.${name}`} />;
-      }
-      case ParameterType.ENUM: {
-        return <EnumSelectInput name={name} options={[]} prefix={prefix} />;
-      }
-      default: {
-        return null;
-      }
-    }
-  }, [name, parameterType, parameterMaxValue, prefix]);
+  const handleOptionAdd = (): (() => void) => (): void => {
+    append({ parameterValue: "" });
+  };
+
+  const handleOptionDelete =
+    (i: number): (() => void) =>
+    (): void => {
+      remove(i);
+    };
+
+  return (
+    <Box mt={2}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Typography sx={{ mr: 1 }}>
+          <FormattedMessage id={`form.labels.${name}`} />
+        </Typography>
+        <Tooltip title={formatMessage({ id: "form.tips.create" })}>
+          <IconButton size="small" aria-label="add" onClick={handleOptionAdd()}>
+            <Add fontSize="large" color="primary" />
+          </IconButton>
+        </Tooltip>
+      </Box>
+
+      {values?.map((p: ParameterValue, i: number) => (
+        <Box key={p.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
+          <Box flex={1}>
+            <Paper sx={{ p: 2, display: "flex", alignItems: "stretch", flex: 1, flexDirection: "column" }}>
+              <TextInput name={`${name}[${i}].parameterValue`} />
+            </Paper>
+          </Box>
+
+          <Box ml={2}>
+            <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
+              <span>
+                <IconButton aria-label="delete" onClick={handleOptionDelete(i)} disabled={!i}>
+                  <Delete />
+                </IconButton>
+              </span>
+            </Tooltip>
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  );
 };
