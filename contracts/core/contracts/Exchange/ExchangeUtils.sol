@@ -109,13 +109,11 @@ contract ExchangeUtils {
    * @param receiver Address of receiver
    */
   function spend(Asset[] memory price, address receiver, DisabledTokenTypes memory disabled) internal {
-    uint256 length = price.length;
-
     // The total amount of native tokens in the transaction.
     uint256 totalAmount;
-
     // Loop through all assets
     uint256 length = price.length;
+
     for (uint256 i = 0; i < length; ) {
       Asset memory item = price[i];
       // If the `Asset` is native token.
@@ -169,7 +167,7 @@ contract ExchangeUtils {
    * @param items An array of assets to mint.
    * @param receiver Address of receiver
    */
-  function acquire(Asset[] memory items, address account, DisabledTokenTypes memory disabled) internal {
+  function acquire(Asset[] memory items, address receiver, DisabledTokenTypes memory disabled) internal {
     uint256 length = items.length;
 
     for (uint256 i = 0; i < length; ) {
@@ -178,15 +176,14 @@ contract ExchangeUtils {
       // If the token is an NATIVE token, transfer tokens to the receiver.
       if (item.tokenType == TokenType.NATIVE && !disabled.native) {
         spend(_toArray(item), receiver, _disabledTypes);
-        emit PaymentEthSent(receiver, item.amount);
         // If the `Asset` is an ERC20 token.
       } else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
-        if (_isERC1363Supported(account, item.token)) {
+        if (_isERC1363Supported(receiver, item.token)) {
           // Transfer the ERC20 token and emit event to notify server
-          IERC1363(item.token).transferAndCall(account, item.amount);
+          IERC1363(item.token).transferAndCall(receiver, item.amount);
         } else {
           // Transfer the ERC20 token in a safe way
-          SafeERC20.safeTransfer(IERC20(item.token), account, item.amount);
+          SafeERC20.safeTransfer(IERC20(item.token), receiver, item.amount);
         }
       } else if (
         (item.tokenType == TokenType.ERC721 && !disabled.erc721) ||
