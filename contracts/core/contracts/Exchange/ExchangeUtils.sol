@@ -29,7 +29,8 @@ contract ExchangeUtils {
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
 
-  DisabledTokenTypes _disabledTypes = _disabledTypes;
+  // fills with default values
+  DisabledTokenTypes _disabledTypes;
 
   /**
    * @dev transfer `Assets` from `spender` to `receiver`.

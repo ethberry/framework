@@ -42,6 +42,14 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
     return vestedAmount(token, block.timestamp.toUint64()) - released(token);
   }
 
+  /**
+   * @dev Allows to top-up the contract with tokens (NATIVE, ERC20, ERC1155 only)
+   * @param price An array of Asset representing the tokens to be transferred.
+   */
+  function topUp(Asset[] memory price) external payable override {
+    super.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, false));
+  }
+
   // Allow delegation of votes
   function delegate(IVotes token, address delegatee) public virtual onlyOwner {
     token.delegate(delegatee);
