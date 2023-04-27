@@ -59,6 +59,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         },
       ) as Promise<void>;
     },
+    { error: false },
   );
 
   const metaFn = useMetamask((dto: IAmountDto, web3Context: Web3ContextType) => {
