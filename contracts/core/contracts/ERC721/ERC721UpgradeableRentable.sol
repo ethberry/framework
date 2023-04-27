@@ -43,6 +43,10 @@ contract ERC721UpgradeableRentable is IERC721Upgradeable, ERC721Simple, ERC4907 
     return true;
   }
 
+  function setUser(uint256 tokenId, address user, uint64 expires) public override onlyRole(MINTER_ROLE) {
+    super.setUser(tokenId, user, expires);
+  }
+
   function _isApprovedOrOwner(address owner, uint256 tokenId) internal view override(ERC721, ERC4907) returns (bool) {
     return super._isApprovedOrOwner(owner, tokenId);
   }

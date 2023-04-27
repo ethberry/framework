@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
 import { Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
 import { templateId } from "../../../../constants";
 
 export function shouldSetUser(factory: () => Promise<Contract>) {
@@ -32,6 +33,25 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const deadline = current.add(web3.utils.toBN(100));
 
       const tx = contractInstance.connect(receiver).setUser(1, receiver.address, deadline.toString());
+      // await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
+      await expect(tx).to.be.revertedWith(
+        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
+      );
+    });
+
+    it("should fail: not owner nor approved", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      await contractInstance.mintCommon(owner.address, templateId);
+
+      const current = await time.latest();
+      const deadline = current.add(web3.utils.toBN(100));
+
+      await contractInstance.approve(receiver.address, 1);
+      await contractInstance.transferFrom(owner.address, receiver.address, 1);
+
+      const tx = contractInstance.setUser(1, receiver.address, deadline.toString());
       await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
     });
 
