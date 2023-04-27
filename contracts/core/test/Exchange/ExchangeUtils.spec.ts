@@ -720,6 +720,115 @@ describe("ExchangeUtils", function () {
         await expect(tx).to.be.revertedWith("ERC1155: caller is not token owner or approved");
       });
     });
+
+    describe("Disabled", function () {
+      it("should fail spendFrom: ETH", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: 0,
+              amount,
+            },
+          ],
+          owner.address,
+          receiver.address,
+          { value: amount },
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spendFrom: ERC20", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const erc20NonReceiverInstance = await deployJerk();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc20Instance = await deployERC20("ERC20Mock");
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(exchangeMockInstance.address, amount);
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId: 0,
+              amount,
+            },
+          ],
+          owner.address,
+          erc20NonReceiverInstance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spendFrom: ERC721", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const erc721NonReceiverInstance = await deployJerk();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc721Instance = await deployERC721("ERC721Simple");
+        await erc721Instance.mintCommon(owner.address, templateId);
+        await erc721Instance.approve(exchangeMockInstance.address, templateId);
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          owner.address,
+          erc721NonReceiverInstance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spendFrom: ERC1155", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const erc1155NonReceiverInstance = await deployJerk();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc1155Instance = await deployERC1155("ERC1155Simple");
+        await erc1155Instance.mint(owner.address, templateId, amount, "0x");
+        await erc1155Instance.setApprovalForAll(exchangeMockInstance.address, true);
+
+        const tx = exchangeMockInstance.testSpendFrom(
+          [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          owner.address,
+          erc1155NonReceiverInstance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+    });
   });
 
   describe("spend", function () {
@@ -730,7 +839,22 @@ describe("ExchangeUtils", function () {
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-        await owner.sendTransaction({ to: exchangeMockInstance.address, value: amount });
+        const tx0 = await exchangeMockInstance.topUp(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          { value: amount },
+        );
+
+        await expect(tx0)
+          .to.emit(exchangeMockInstance, "PaymentEthReceived")
+          .withArgs(exchangeMockInstance.address, amount);
+        await expect(tx0).to.changeEtherBalances([owner, exchangeMockInstance], [-amount, amount]);
 
         const tx = exchangeMockInstance.testSpend(
           [
@@ -1204,6 +1328,101 @@ describe("ExchangeUtils", function () {
         await expect(tx).to.be.revertedWith("ERC1155: insufficient balance for transfer");
       });
     });
+
+    describe("Disabled", function () {
+      it("should fail spend: ETH", async function () {
+        const [owner] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const tx = exchangeMockInstance.testSpend(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          owner.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spend: ERC20", async function () {
+        const erc20NonReceiverInstance = await deployJerk();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc20Instance = await deployERC20("ERC20Mock");
+        await erc20Instance.mint(exchangeMockInstance.address, amount);
+
+        const tx = exchangeMockInstance.testSpend(
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          erc20NonReceiverInstance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spend: ERC721", async function () {
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc721Instance = await deployERC721("ERC721Simple");
+        await erc721Instance.mintCommon(exchangeMockInstance.address, templateId);
+
+        const tx = exchangeMockInstance.testSpend(
+          [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          erc721Instance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail spend: ERC1155", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const erc1155NonReceiverInstance = await deployJerk();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc1155Instance = await deployERC1155("ERC1155Simple");
+        await erc1155Instance.mint(exchangeMockInstance.address, templateId, amount, "0x");
+
+        const tx = exchangeMockInstance.connect(receiver).testSpend(
+          [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          erc1155NonReceiverInstance.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+    });
   });
 
   describe("acquire", function () {
@@ -1214,7 +1433,22 @@ describe("ExchangeUtils", function () {
         const exchangeMockFactory = await ethers.getContractFactory("ExchangeMock");
         const exchangeMockInstance = await exchangeMockFactory.deploy();
 
-        await owner.sendTransaction({ to: exchangeMockInstance.address, value: amount });
+        const tx0 = await exchangeMockInstance.topUp(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          { value: amount },
+        );
+
+        await expect(tx0)
+          .to.emit(exchangeMockInstance, "PaymentEthReceived")
+          .withArgs(exchangeMockInstance.address, amount);
+        await expect(tx0).to.changeEtherBalances([owner, exchangeMockInstance], [-amount, amount]);
 
         const tx = exchangeMockInstance.testAcquire(
           [
@@ -1364,6 +1598,100 @@ describe("ExchangeUtils", function () {
 
         const balance = await erc1155Instance.balanceOf(receiver.address, tokenId);
         expect(balance).to.equal(amount);
+      });
+    });
+
+    describe("Disabled", function () {
+      it("should fail acquire: ETH", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const tx = exchangeMockInstance.testAcquire(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          receiver.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail acquire: ERC20", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc20Instance = await deployERC20("ERC20Simple");
+        await erc20Instance.mint(exchangeMockInstance.address, amount);
+
+        const tx = exchangeMockInstance.testAcquire(
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          receiver.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail acquire: ERC721", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc721Instance = await deployERC721("ERC721Simple");
+        await erc721Instance.grantRole(MINTER_ROLE, exchangeMockInstance.address);
+
+        const tx = exchangeMockInstance.testAcquire(
+          [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: templateId,
+              amount,
+            },
+          ],
+          receiver.address,
+        );
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
+      });
+
+      it("should fail acquire: ERC1155", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
+
+        const exchangeMockFactory = await ethers.getContractFactory("ExchangeMockDisabled");
+        const exchangeMockInstance = await exchangeMockFactory.deploy();
+
+        const erc1155Instance = await deployERC1155("ERC1155Simple");
+        await erc1155Instance.grantRole(MINTER_ROLE, exchangeMockInstance.address);
+
+        const tx = exchangeMockInstance.testAcquire(
+          [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          receiver.address,
+        );
+
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "UnsupportedTokenType");
       });
     });
   });

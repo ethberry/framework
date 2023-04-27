@@ -29,7 +29,7 @@ contract ExchangeUtils {
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
 
-  // fills with default values
+  // fills with default values (false, false, false, false, false)
   DisabledTokenTypes _disabledTypes;
 
   /**
@@ -108,7 +108,9 @@ contract ExchangeUtils {
    * @param price An array of assets to transfer
    * @param receiver Address of receiver
    */
-  function spend(Asset[] memory price, address receiver) internal {
+  function spend(Asset[] memory price, address receiver, DisabledTokenTypes memory disabled) internal {
+    uint256 length = price.length;
+
     // The total amount of native tokens in the transaction.
     uint256 totalAmount;
 
@@ -117,12 +119,12 @@ contract ExchangeUtils {
     for (uint256 i = 0; i < length; ) {
       Asset memory item = price[i];
       // If the `Asset` is native token.
-      if (item.tokenType == TokenType.NATIVE) {
+      if (item.tokenType == TokenType.NATIVE && !disabled.native) {
         // increase the total amount.
         totalAmount = totalAmount + item.amount;
       }
       // If the `Asset` is an ERC20 token.
-      else if (item.tokenType == TokenType.ERC20) {
+      else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
         if (_isERC1363Supported(receiver, item.token)) {
           // Transfer the ERC20 token and emit event to notify server
           IERC1363(item.token).transferAndCall(receiver, item.amount);
@@ -132,12 +134,15 @@ contract ExchangeUtils {
         }
       }
       // If the `Asset` is an ERC721/ERC998 token.
-      else if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+      else if (
+        (item.tokenType == TokenType.ERC721 && !disabled.erc721) ||
+        (item.tokenType == TokenType.ERC998 && !disabled.erc998)
+      ) {
         // Transfer the ERC721/ERC998 token in a safe way
         IERC721(item.token).safeTransferFrom(address(this), receiver, item.tokenId);
       }
       // If the `Asset` is an ERC1155 token.
-      else if (item.tokenType == TokenType.ERC1155) {
+      else if (item.tokenType == TokenType.ERC1155 && !disabled.erc1155) {
         // Transfer the ERC1155 token in a safe way
         IERC1155(item.token).safeTransferFrom(address(this), receiver, item.tokenId, item.amount, "0x");
       } else {
@@ -164,25 +169,36 @@ contract ExchangeUtils {
    * @param items An array of assets to mint.
    * @param receiver Address of receiver
    */
-  function acquire(Asset[] memory items, address receiver) internal {
+  function acquire(Asset[] memory items, address account, DisabledTokenTypes memory disabled) internal {
     uint256 length = items.length;
 
     for (uint256 i = 0; i < length; ) {
       Asset memory item = items[i];
 
-      // If the token is an NATIVE or ERC20 - transfer to receiver, otherwise - mint
-      if (item.tokenType == TokenType.NATIVE) {
-        spend(_toArray(item), receiver);
-      } else if (item.tokenType == TokenType.ERC20) {
-        spend(_toArray(item), receiver);
-      } else if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+      // If the token is an NATIVE token, transfer tokens to the receiver.
+      if (item.tokenType == TokenType.NATIVE && !disabled.native) {
+        spend(_toArray(item), receiver, _disabledTypes);
+        emit PaymentEthSent(receiver, item.amount);
+        // If the `Asset` is an ERC20 token.
+      } else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
+        if (_isERC1363Supported(account, item.token)) {
+          // Transfer the ERC20 token and emit event to notify server
+          IERC1363(item.token).transferAndCall(account, item.amount);
+        } else {
+          // Transfer the ERC20 token in a safe way
+          SafeERC20.safeTransfer(IERC20(item.token), account, item.amount);
+        }
+      } else if (
+        (item.tokenType == TokenType.ERC721 && !disabled.erc721) ||
+        (item.tokenType == TokenType.ERC998 && !disabled.erc998)
+      ) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM_ID);
         if (randomInterface) {
           IERC721Random(item.token).mintRandom(receiver, item.tokenId);
         } else {
           IERC721Simple(item.token).mintCommon(receiver, item.tokenId);
         }
-      } else if (item.tokenType == TokenType.ERC1155) {
+      } else if (item.tokenType == TokenType.ERC1155 && !disabled.erc1155) {
         IERC1155Simple(item.token).mint(receiver, item.tokenId, item.amount, "0x");
       } else {
         // should never happen

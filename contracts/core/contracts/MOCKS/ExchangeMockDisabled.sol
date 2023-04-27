@@ -14,24 +14,27 @@ import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
 import "../Exchange/ExchangeUtils.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
+contract ExchangeMockDisabled is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
+  // disable everything
+  DisabledTokenTypes _disabledAll = DisabledTokenTypes(true, true, true, true, true);
+
   function topUp(Asset[] memory price) external payable virtual {
-    spendFrom(price, _msgSender(), address(this), _disabledTypes);
+    spendFrom(price, _msgSender(), address(this), _disabledAll);
   }
 
   function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
     // Transfer tokens to self or other address
-    spendFrom(price, spender, receiver, _disabledTypes);
+    spendFrom(price, spender, receiver, _disabledAll);
   }
 
   function testSpend(Asset[] memory price, address receiver) external payable {
     // Spender is always Exchange contract
-    spend(price, receiver, _disabledTypes);
+    spend(price, receiver, _disabledAll);
   }
 
   function testAcquire(Asset[] memory price, address receiver) external payable {
     // Mint new tokens for receiver
-    acquire(price, receiver, _disabledTypes);
+    acquire(price, receiver, _disabledAll);
   }
 
   function supportsInterface(
