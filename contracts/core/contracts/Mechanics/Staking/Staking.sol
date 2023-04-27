@@ -23,8 +23,8 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
 import "../../Exchange/referral/LinearReferral.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
+import "../../utils/TopUp.sol";
 import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
-import "../TopUp.sol";
 
 import "./interfaces/IStaking.sol";
 import "../../utils/errors.sol";
@@ -90,6 +90,16 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
    */
   function getStake(uint256 stakeId) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Stake memory stake) {
     return _stakes[stakeId];
+  }
+
+  /**
+   * @dev Get Penalty
+   */
+  function getPenalty(
+    address token,
+    uint256 tokenId
+  ) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 penalty) {
+    return _penalties[token][tokenId];
   }
 
   /**
@@ -216,7 +226,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
     for (uint256 i = 0; i < lengthDeposit; i++) {
-      Asset memory depositItem = _stakes[stakeId].deposit[i];
+      Asset memory depositItem = stake.deposit[i];
 
       uint256 stakeAmount = depositItem.amount;
 
@@ -234,7 +244,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
           : stakeAmount;
 
         // Store penalties
-        _penalties[depositItem.token][depositItem.tokenId] += multiplier == 0
+        _penalties[depositItem.token][depositItem.tokenId] += (multiplier == 0 && stake.cycles == 0)
           ? (stakeAmount / 100) * (rule.penalty / 100)
           : 0;
 
@@ -248,7 +258,9 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
           _penalties[depositItem.token][depositItem.tokenId] = 1;
         } else {
           // Transfer the deposit Asset to the receiver.
-          spend(_toArray(depositItem), receiver);
+          spend(_toArray(depositItem), receiver, _disabledTypes);
+          // Empty current stake deposit storage
+          stake.deposit[i].amount = 0;
         }
       } else {
         // Update the start timestamp of the stake.
@@ -275,7 +287,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         // Determine the token type of the reward and transfer the reward accordingly.
         if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
           // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
-          spend(_toArray(rewardItem), receiver);
+          spend(_toArray(rewardItem), receiver, _disabledTypes);
         } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
           // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
           for (uint256 k = 0; k < multiplier; k++) {
@@ -284,12 +296,12 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
               IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[j]);
             } else {
               // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
-              acquire(_toArray(rewardItem), receiver);
+              acquire(_toArray(rewardItem), receiver, _disabledTypes);
             }
           }
         } else if (rewardItem.tokenType == TokenType.ERC1155) {
           // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
-          acquire(_toArray(rewardItem), receiver);
+          acquire(_toArray(rewardItem), receiver, _disabledTypes);
         } else {
           // should never happen
           revert UnsupportedTokenType();
@@ -434,6 +446,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // clean penalty balance in _penalties mapping storage
     _penalties[item.token][item.tokenId] = 0;
 
-    spend(_toArray(item), account);
+    spend(_toArray(item), account, _disabledTypes);
   }
 }

@@ -27,7 +27,7 @@ abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessCont
 
     address account = _msgSender();
 
-    acquire(items, account);
+    acquire(items, account, _disabledTypes);
 
     emit Claim(account, params.externalId, items);
   }

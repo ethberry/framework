@@ -4,7 +4,7 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
-import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/simple/user";
+import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/user";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 
 describe("ERC998Rentable", function () {

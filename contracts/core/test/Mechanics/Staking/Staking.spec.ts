@@ -1033,6 +1033,102 @@ describe("Staking", function () {
       expect(stake).to.have.deep.nested.property("activeDeposit", false);
     });
 
+    it("should not cheat: stake NATIVE & receive NATIVE & DEPOSIT without penalty (recurrent)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty: 5000, // 50%
+        recurrent: true,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+
+      const stake0 = await stakingInstance.getStake(1);
+      const penalty0 = await stakingInstance.getPenalty(constants.AddressZero, 1);
+      expect(stake0).to.include.deep.nested.property("cycles", BigNumber.from(0));
+      expect(stake0).to.include.deep.nested.property("activeDeposit", true);
+      expect(stake0.deposit[0]).to.include.deep.nested.property("amount", BigNumber.from(amount));
+      expect(penalty0).to.equal(BigNumber.from(0));
+
+      // FUND REWARD
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles,
+          },
+        ],
+        { value: amount * cycles },
+      );
+
+      // TIME 1
+      const current1 = await time.latestBlock();
+      await time.advanceBlockTo(current1.add(web3.utils.toBN(period + 1)));
+
+      // REWARD 1
+      const tx2 = await stakingInstance.receiveReward(1, false, false);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp, 1);
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      const stake1 = await stakingInstance.getStake(1);
+      const penalty1 = await stakingInstance.getPenalty(constants.AddressZero, 1);
+
+      expect(stake1).to.have.deep.nested.property("cycles", BigNumber.from(1));
+      expect(stake1).to.have.deep.nested.property("activeDeposit", true);
+      expect(stake1.deposit[0]).to.have.deep.nested.property("amount", BigNumber.from(amount));
+      expect(penalty1).to.equal(BigNumber.from(0));
+
+      // REWARD 2
+      const tx3 = stakingInstance.receiveReward(1, true, false);
+
+      await expect(tx3)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp + 1);
+      await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      const stake2 = await stakingInstance.getStake(1);
+      const penalty2 = await stakingInstance.getPenalty(constants.AddressZero, 1);
+
+      expect(stake2).to.have.deep.nested.property("cycles", BigNumber.from(1));
+      expect(stake2).to.have.deep.nested.property("activeDeposit", false);
+      expect(stake2.deposit[0]).to.have.deep.nested.property("amount", BigNumber.from(0));
+      expect(penalty2).to.equal(BigNumber.from(0));
+    });
+
     it("should stake NATIVE & receive ERC20", async function () {
       const [owner] = await ethers.getSigners();
 

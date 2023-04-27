@@ -9,9 +9,8 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-
 import "../utils/constants.sol";
+import "../utils/TopUp.sol";
 import "./ExchangeCore.sol";
 import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
@@ -37,7 +36,7 @@ contract Exchange is
   LinearReferral,
   PaymentSplitter,
   ExchangeRentable,
-  Wallet
+  TopUp
 {
   constructor(
     string memory name,
@@ -65,14 +64,14 @@ contract Exchange is
     _unpause();
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, TopUp) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
    * @dev Rejects any incoming ETH transfers to this contract address
    */
-  receive() external payable override(PaymentSplitter, Wallet) {
+  receive() external payable override(PaymentSplitter, TopUp) {
     revert();
   }
 

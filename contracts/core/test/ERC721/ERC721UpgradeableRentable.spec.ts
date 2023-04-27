@@ -6,7 +6,7 @@ import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
-import { shouldBehaveLikeERC721Rentable } from "./shared/simple/user";
+import { shouldBehaveLikeERC721Rentable } from "./shared/user";
 
 describe("ERC721UpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
