@@ -55,7 +55,7 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Ho
 
     require(_isApprovedOrOwner(account, tokenId), "Wrapper: unpack caller is not owner nor approved");
 
-    spend(_itemData[tokenId], account);
+    spend(_itemData[tokenId], account, _disabledTypes);
 
     emit UnpackWrapper(tokenId);
 
