@@ -18,6 +18,7 @@ export class AchievementItemService {
     const queryBuilder = this.achievementItemEntityRepository.createQueryBuilder("item");
 
     queryBuilder.leftJoinAndSelect("item.user", "user");
+    queryBuilder.leftJoinAndSelect("item.achievementRule", "achievementType");
 
     queryBuilder.select();
 
