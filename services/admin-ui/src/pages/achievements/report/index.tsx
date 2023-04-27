@@ -66,6 +66,13 @@ export const AchievementReport: FC = () => {
       minWidth: 360
     },
     {
+      field: "type",
+      headerName: formatMessage({ id: "form.labels.type" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 80
+    },
+    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
@@ -105,6 +112,7 @@ export const AchievementReport: FC = () => {
         rows={rows.map((item: IAchievementItem) => ({
           id: item.id,
           account: item.user.wallet,
+          type: item.achievementRule.achievementType,
           createdAt: item.createdAt,
         }))}
         autoHeight
