@@ -31,10 +31,27 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const current = await time.latest();
       const deadline = current.add(web3.utils.toBN(100));
 
-      const tx = contractInstance.connect(receiver).setUser(tokenId, stranger.address, deadline.toString());
+      const tx = contractInstance.connect(receiver).setUser(1, receiver.address, deadline.toString());
+      // await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
       );
+    });
+
+    it("should fail: not owner nor approved", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      await contractInstance.mintCommon(owner.address, templateId);
+
+      const current = await time.latest();
+      const deadline = current.add(web3.utils.toBN(100));
+
+      await contractInstance.approve(receiver.address, 1);
+      await contractInstance.transferFrom(owner.address, receiver.address, 1);
+
+      const tx = contractInstance.setUser(1, receiver.address, deadline.toString());
+      await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
     });
 
     it("should set a user from approved address", async function () {
