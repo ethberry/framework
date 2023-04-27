@@ -70,7 +70,6 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            extraData,
             isEqualEventArgArrObj({
               tokenType: 2,
               token: erc721Instance.address,
@@ -129,7 +128,6 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            extraData,
             isEqualEventArgArrObj({
               tokenType: 2,
               token: erc721Instance.address,
@@ -233,7 +231,6 @@ describe("ExchangeClaim", function () {
           .withArgs(
             receiver.address,
             externalId,
-            extraData,
             isEqualEventArgArrObj({
               tokenType: 4,
               token: erc1155Instance.address,

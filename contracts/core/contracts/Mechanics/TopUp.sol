@@ -14,7 +14,7 @@ import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "../Exchange/ExchangeUtils.sol";
 
 contract TopUp is Context, Wallet, ExchangeUtils {
-  function topUp(Asset[] memory price) external payable {
+  function topUp(Asset[] memory price) external payable virtual {
     spendFrom(price, _msgSender(), address(this), _disabledTypes);
   }
 

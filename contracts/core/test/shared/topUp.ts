@@ -22,11 +22,9 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         { value: amount },
       );
 
-      // await expect(tx)
-      //   .to.emit(contractInstance, "TransferReceived")
-      //   .withArgs(contractInstance.address, owner.address, amount, "0x");
+      await expect(tx).to.emit(contractInstance, "PaymentEthReceived").withArgs(contractInstance.address, amount);
 
-      await expect(tx).changeEtherBalances([owner, contractInstance], [-amount, amount]);
+      await expect(tx).to.changeEtherBalances([owner, contractInstance], [-amount, amount]);
     });
 
     it("should top-up with ERC20 token", async function () {

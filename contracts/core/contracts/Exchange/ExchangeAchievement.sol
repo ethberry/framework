@@ -27,7 +27,7 @@ abstract contract ExchangeAchievement is SignatureValidator, ExchangeUtils, Acce
 
     address account = _msgSender();
 
-    acquire(items, account);
+    acquire(items, account, _disabledTypes);
 
     emit AchievementClaimed(account, params.externalId, items);
   }
