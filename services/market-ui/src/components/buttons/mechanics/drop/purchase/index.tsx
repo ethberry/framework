@@ -23,33 +23,36 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
 
   const settings = useSettings();
 
-  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, DropPurchaseABI, web3Context.provider?.getSigner());
-    return contract.purchase(
-      {
-        nonce: utils.arrayify(sign.nonce),
-        externalId: drop.id,
-        expiresAt: sign.expiresAt,
-        referrer: settings.getReferrer(),
-      },
-      drop.item?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.templateId,
-        amount: component.amount,
-      }))[0],
-      drop.price?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.template!.tokens![0].tokenId,
-        amount: component.amount,
-      })),
-      sign.signature,
-      {
-        value: getEthPrice(drop.price),
-      },
-    ) as Promise<void>;
-  });
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+      const contract = new Contract(process.env.EXCHANGE_ADDR, DropPurchaseABI, web3Context.provider?.getSigner());
+      return contract.purchase(
+        {
+          nonce: utils.arrayify(sign.nonce),
+          externalId: drop.id,
+          expiresAt: sign.expiresAt,
+          referrer: settings.getReferrer(),
+        },
+        drop.item?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: component.templateId,
+          amount: component.amount,
+        }))[0],
+        drop.price?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: component.template!.tokens![0].tokenId,
+          amount: component.amount,
+        })),
+        sign.signature,
+        {
+          value: getEthPrice(drop.price),
+        },
+      ) as Promise<void>;
+    },
+    { error: false },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
