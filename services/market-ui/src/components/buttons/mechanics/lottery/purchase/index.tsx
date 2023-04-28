@@ -38,7 +38,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         )
         .then(clearForm) as Promise<void>;
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
