@@ -75,7 +75,7 @@ export const Breed: FC = () => {
         sign.signature,
       ) as Promise<void>;
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((data: IBreedDto, web3Context: Web3ContextType) => {

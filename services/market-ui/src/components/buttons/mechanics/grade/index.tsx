@@ -70,7 +70,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           ) as Promise<void>;
         });
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

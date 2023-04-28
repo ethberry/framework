@@ -55,7 +55,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         },
       ) as Promise<void>;
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

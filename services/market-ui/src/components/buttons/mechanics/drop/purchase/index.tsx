@@ -51,7 +51,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         },
       ) as Promise<void>;
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

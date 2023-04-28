@@ -66,7 +66,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
     },
-    { error: false },
+    // { error: false },
   );
 
   const metaFn = useMetamask((dto: ILendDto, web3Context: Web3ContextType) => {
