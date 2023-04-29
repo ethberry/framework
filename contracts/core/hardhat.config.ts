@@ -38,7 +38,7 @@ export default {
       chainId: 56,
       gasPrice: 20000000000,
       accounts: {
-        mnemonic: process.env.MM_MNEMONIC,
+        mnemonic: process.env.MNEMONIC,
       },
     },
     // has to have underscore
@@ -47,7 +47,7 @@ export default {
       chainId: 97,
       gasPrice: 20000000000,
       accounts: {
-        mnemonic: process.env.MM_MNEMONIC,
+        mnemonic: process.env.MNEMONIC,
       },
     },
     goerli: {

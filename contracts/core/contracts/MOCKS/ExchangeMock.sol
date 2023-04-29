@@ -7,14 +7,12 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../Exchange/ExchangeUtils.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
+contract ExchangeMock is ExchangeUtils, AccessControl, Wallet {
   function topUp(Asset[] memory price) external payable virtual {
     spendFrom(price, _msgSender(), address(this), _disabledTypes);
   }
@@ -34,21 +32,7 @@ contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Hold
     acquire(price, receiver, _disabledTypes);
   }
 
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-    return
-      interfaceId == type(IERC1363Receiver).interfaceId ||
-      interfaceId == type(IERC1363Spender).interfaceId ||
-      interfaceId == type(IERC721Receiver).interfaceId ||
-      interfaceId == type(IERC1155Receiver).interfaceId ||
-      super.supportsInterface(interfaceId);
-  }
-
-  /**
-   * @dev Restrict the contract to receive Ether (receive via topUp function only).
-   */
-  receive() external payable {
-    revert();
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
+    return super.supportsInterface(interfaceId);
   }
 }
