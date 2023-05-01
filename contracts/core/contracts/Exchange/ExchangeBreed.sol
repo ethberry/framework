@@ -74,6 +74,7 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
 
     require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
+    // TODO set rules
     uint64 timeLimitM = pregnancyM.count > 13
       ? _pregnancyMaxTime
       : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64();

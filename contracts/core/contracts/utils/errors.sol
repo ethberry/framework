@@ -14,4 +14,6 @@ error ExpiredSignature();
 error NotAnOwner();
 error CountExceed();
 error LimitExceed();
+error BalanceExceed();
 error WrongAmount();
+error RefProgramSet();
