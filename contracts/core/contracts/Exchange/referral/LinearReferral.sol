@@ -66,7 +66,7 @@ abstract contract LinearReferral is Context, AccessControl {
     Ref memory program = _refProgram;
 
     uint256 length = price.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE || ingredient.tokenType == TokenType.ERC20) {
         address referrer = initReferrer;
@@ -84,6 +84,9 @@ abstract contract LinearReferral is Context, AccessControl {
           }
           referrer = nxt;
         }
+      }
+      unchecked {
+        i++;
       }
     }
   }

@@ -142,7 +142,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       // Create a new Asset object representing the deposit.
       Asset memory depositItem = Asset(
         rule.deposit[i].tokenType,
@@ -167,6 +167,10 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       // Do something after purchase with referrer
       if (referrer != address(0)) {
         _afterPurchase(referrer, _toArray(depositItem));
+      }
+
+      unchecked {
+        i++;
       }
     }
   }
@@ -225,7 +229,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; i++) {
+    for (uint256 i = 0; i < lengthDeposit; ) {
       Asset memory depositItem = stake.deposit[i];
 
       uint256 stakeAmount = depositItem.amount;
@@ -266,6 +270,10 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         // Update the start timestamp of the stake.
         stake.startTimestamp = block.timestamp;
       }
+
+      unchecked {
+        i++;
+      }
     }
 
     // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
@@ -275,7 +283,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
       // Iterate by Array<reward>
       uint256 length = rule.reward.length;
-      for (uint256 j = 0; j < length; j++) {
+      for (uint256 j = 0; j < length; ) {
         // Create a new Asset object representing the reward.
         Asset memory rewardItem = Asset(
           rule.reward[j].tokenType,
@@ -290,13 +298,16 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
           spend(_toArray(rewardItem), receiver, _disabledTypes);
         } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
           // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
-          for (uint256 k = 0; k < multiplier; k++) {
+          for (uint256 k = 0; k < multiplier; ) {
             if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
               // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
               IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[j]);
             } else {
               // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
               acquire(_toArray(rewardItem), receiver, _disabledTypes);
+            }
+            unchecked {
+              k++;
             }
           }
         } else if (rewardItem.tokenType == TokenType.ERC1155) {
@@ -305,6 +316,9 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         } else {
           // should never happen
           revert UnsupportedTokenType();
+        }
+        unchecked {
+          j++;
         }
       }
     }
@@ -365,8 +379,11 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
    */
   function _setRules(Rule[] memory rules) internal {
     uint256 length = rules.length;
-    for (uint256 i; i < length; i++) {
+    for (uint256 i; i < length; ) {
       _setRule(rules[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -387,24 +404,36 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // p.deposit = rule.deposit;
     // Store each individual asset in the rule's deposit array
     uint256 lengthDeposit = rule.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; i++) {
+    for (uint256 i = 0; i < lengthDeposit; ) {
       p.deposit.push(rule.deposit[i]);
+      unchecked {
+        i++;
+      }
     }
     // p.reward = rule.reward;
     // Store each individual asset in the rule's deposit array
     uint256 lengthReward = rule.reward.length;
-    for (uint256 j = 0; j < lengthReward; j++) {
+    for (uint256 j = 0; j < lengthReward; ) {
       p.reward.push(rule.reward[j]);
+      unchecked {
+        j++;
+      }
     }
 
     // p.content = rule.content;
     // Store each individual asset in the rule's content array
     uint256 len = rule.content.length;
-    for (uint256 k = 0; k < len; k++) {
+    for (uint256 k = 0; k < len; ) {
       p.content.push();
       uint256 length = rule.content[k].length;
-      for (uint256 l = 0; l < length; l++) {
+      for (uint256 l = 0; l < length; ) {
         p.content[k].push(rule.content[k][l]);
+        unchecked {
+          l++;
+        }
+      }
+      unchecked {
+        k++;
       }
     }
 
