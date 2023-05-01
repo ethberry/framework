@@ -22,6 +22,11 @@
             "internalType": "uint256",
             "name": "expiresAt",
             "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "extra",
+            "type": "bytes32"
           }
         ],
         "internalType": "struct Params",
@@ -51,9 +56,9 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct Asset",
-        "name": "item",
-        "type": "tuple"
+        "internalType": "struct Asset[]",
+        "name": "items",
+        "type": "tuple[]"
       },
       {
         "components": [
@@ -88,7 +93,7 @@
         "type": "bytes"
       }
     ],
-    "name": "purchase",
+    "name": "lend",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"

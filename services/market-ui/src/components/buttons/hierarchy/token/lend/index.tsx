@@ -62,7 +62,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
                 : component.template!.tokens![0].tokenId,
             amount: component.amount,
           }))
-        : []; // Zero price for free rent?
+        : []; // Zero price for free rent
       return contract.lend(params, items, price, expires, sign.signature, {
         value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
