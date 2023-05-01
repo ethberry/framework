@@ -40,8 +40,8 @@ abstract contract LinearReferral is Context, AccessControl {
   mapping(address => mapping(address => uint256)) _rewardBalances;
 
   function setRefProgram(uint8 maxRefs, uint256 refReward, uint256 refDecrease) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(!_refProgram.init, "ExchangeReferral: program already set");
-    require(refReward >= 0 && refReward < 10000, "ExchangeReferral: wrong refReward");
+    if (_refProgram.init) revert RefProgramSet();
+    if (refReward >= 10000) revert LimitExceed();
     _refProgram = Ref(refReward, refDecrease, maxRefs, true);
     emit ReferralProgram(_refProgram);
   }
@@ -94,17 +94,17 @@ abstract contract LinearReferral is Context, AccessControl {
   function withdrawReward(address token) public returns (bool success) {
     address account = _msgSender();
     uint256 rewardAmount = _rewardBalances[account][token];
-    require(rewardAmount > 0, "ExchangeReferral: Zero balance");
+    if (rewardAmount == 0) revert BalanceExceed();
     bool result;
     if (token == address(0)) {
-      require(address(this).balance > rewardAmount, "ExchangeReferral: Insufficient ETH balance");
+      if (address(this).balance < rewardAmount) revert BalanceExceed();
       _rewardBalances[account][token] = 0;
       emit ReferralWithdraw(account, token, rewardAmount);
       Address.sendValue(payable(account), rewardAmount);
       result = true;
     } else {
       uint256 balanceErc20 = IERC20(token).balanceOf(address(this));
-      require(balanceErc20 > rewardAmount, "ExchangeReferral: Insufficient ERC20 balance");
+      if (balanceErc20 < rewardAmount) revert BalanceExceed();
       _rewardBalances[account][token] = 0;
       emit ReferralWithdraw(account, token, rewardAmount);
       SafeERC20.safeTransfer(IERC20(token), account, rewardAmount);
