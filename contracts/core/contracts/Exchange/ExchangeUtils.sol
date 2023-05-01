@@ -19,18 +19,14 @@ import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./interfaces/IAsset.sol";
-import "../utils/constants.sol";
 import "../utils/errors.sol";
 
-contract ExchangeUtils {
+library ExchangeUtils {
   using Address for address;
   using SafeERC20 for IERC20;
 
   event PaymentEthReceived(address from, uint256 amount);
   event PaymentEthSent(address to, uint256 amount);
-
-  // fills with default values (false, false, false, false, false)
-  DisabledTokenTypes _disabledTypes;
 
   /**
    * @dev transfer `Assets` from `spender` to `receiver`.
@@ -93,7 +89,7 @@ contract ExchangeUtils {
     // If there is any native token in the transaction.
     if (totalAmount > 0) {
       // Verify the total amount of native tokens matches the amount sent with the transaction.
-      require(totalAmount == msg.value, "Exchange: Wrong amount");
+      if (totalAmount != msg.value) revert WrongAmount();
       if (address(this) == receiver) {
         emit PaymentEthReceived(receiver, msg.value);
       } else {
@@ -175,7 +171,7 @@ contract ExchangeUtils {
 
       // If the token is an NATIVE token, transfer tokens to the receiver.
       if (item.tokenType == TokenType.NATIVE && !disabled.native) {
-        spend(_toArray(item), receiver, _disabledTypes);
+        ExchangeUtils.spend(_toArray(item), receiver, DisabledTokenTypes(false, false, false, false, false));
         // If the `Asset` is an ERC20 token.
       } else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
         if (_isERC1363Supported(receiver, item.token)) {

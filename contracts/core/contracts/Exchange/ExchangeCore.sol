@@ -14,7 +14,7 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
-abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeCore is SignatureValidator, AccessControl, Pausable {
   event Purchase(address from, uint256 externalId, Asset item, Asset[] price);
 
   function purchase(
@@ -24,12 +24,12 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this), _disabledTypes);
-    acquire(_toArray(item), account, _disabledTypes);
+    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(ExchangeUtils._toArray(item), account, DisabledTokenTypes(false, false, false, false, false));
 
     emit Purchase(account, params.externalId, item, price);
 

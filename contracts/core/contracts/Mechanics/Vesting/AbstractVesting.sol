@@ -30,7 +30,7 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
    * @param price An array of Asset representing the tokens to be transferred.
    */
   function topUp(Asset[] memory price) external payable override {
-    super.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
   }
 
   /**

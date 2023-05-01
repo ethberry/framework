@@ -84,7 +84,7 @@ describe("ExchangeUtils", function () {
           { value: 0 },
         );
 
-        await expect(tx).to.be.revertedWith("Exchange: Wrong amount");
+        await expect(tx).to.be.revertedWithCustomError(exchangeMockInstance, "WrongAmount");
       });
 
       it("should spendFrom: ETH => Wallet", async function () {
@@ -851,9 +851,9 @@ describe("ExchangeUtils", function () {
           { value: amount },
         );
 
-        await expect(tx0)
-          .to.emit(exchangeMockInstance, "PaymentEthReceived")
-          .withArgs(exchangeMockInstance.address, amount);
+        const lib = await ethers.getContractAt("ExchangeUtils", exchangeMockInstance.address, owner);
+
+        await expect(tx0).to.emit(lib, "PaymentEthReceived").withArgs(exchangeMockInstance.address, amount);
         await expect(tx0).to.changeEtherBalances([owner, exchangeMockInstance], [-amount, amount]);
 
         const tx = exchangeMockInstance.testSpend(

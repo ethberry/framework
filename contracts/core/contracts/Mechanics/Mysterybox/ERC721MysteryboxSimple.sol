@@ -13,7 +13,7 @@ import "../../Exchange/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
 
-contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtils {
+contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple {
   using Counters for Counters.Counter;
 
   using Address for address;
@@ -56,7 +56,7 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     _burn(tokenId);
 
-    acquire(_itemData[tokenId], account, _disabledTypes);
+    ExchangeUtils.acquire(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

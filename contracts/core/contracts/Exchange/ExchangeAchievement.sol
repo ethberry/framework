@@ -14,7 +14,7 @@ import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
-abstract contract ExchangeAchievement is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeAchievement is SignatureValidator, AccessControl, Pausable {
   event AchievementClaimed(address account, uint256 externalId, Asset[] items);
 
   function achieve(
@@ -23,11 +23,10 @@ abstract contract ExchangeAchievement is SignatureValidator, ExchangeUtils, Acce
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, new Asset[](0), signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-
+    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
     address account = _msgSender();
 
-    acquire(items, account);
+    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
 
     emit AchievementClaimed(account, params.externalId, items);
   }

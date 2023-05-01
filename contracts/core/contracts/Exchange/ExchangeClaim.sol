@@ -13,7 +13,7 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
-abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
   event Claim(address from, uint256 externalId, Asset[] items);
 
   function claim(
@@ -23,11 +23,11 @@ abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManyExtraSignature(params, items, new Asset[](0), extra, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
 
     address account = _msgSender();
 
-    acquire(items, account, _disabledTypes);
+    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(account, params.externalId, items);
   }

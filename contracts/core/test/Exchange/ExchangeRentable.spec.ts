@@ -267,7 +267,7 @@ describe("ExchangeRentable", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
     });
 
     it("should fail: Wrong items count", async function () {
@@ -329,7 +329,7 @@ describe("ExchangeRentable", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("Exchange: Wrong items count");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongAmount");
     });
 
     it("should fail: Transfer caller is not owner nor approved", async function () {
@@ -496,7 +496,7 @@ describe("ExchangeRentable", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
     });
   });
 });

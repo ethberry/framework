@@ -24,8 +24,9 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         { value: amount },
       );
 
-      await expect(tx).to.emit(contractInstance, "PaymentEthReceived").withArgs(contractInstance.address, amount);
+      const lib = await ethers.getContractAt("ExchangeUtils", contractInstance.address, owner);
 
+      await expect(tx).to.emit(lib, "PaymentEthReceived").withArgs(contractInstance.address, amount);
       await expect(tx).to.changeEtherBalances([owner, contractInstance], [-amount, amount]);
     });
 
