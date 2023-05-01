@@ -229,7 +229,7 @@ describe("ExchangeCore", function () {
         ],
         signature,
       );
-      await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail: signer is missing role", async function () {
@@ -278,7 +278,7 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -407,7 +407,7 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx).to.be.revertedWith(`Exchange: Expired signature`);
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail: paused", async function () {

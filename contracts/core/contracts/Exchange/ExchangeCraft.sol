@@ -13,7 +13,7 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
-abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeCraft is SignatureValidator, AccessControl, Pausable {
   event Craft(address from, uint256 externalId, Asset[] items, Asset[] price);
 
   function craft(
@@ -23,12 +23,12 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this), _disabledTypes);
-    acquire(items, account, _disabledTypes);
+    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
 
     emit Craft(account, params.externalId, items, price);
   }

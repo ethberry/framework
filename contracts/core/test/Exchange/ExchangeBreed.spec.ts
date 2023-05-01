@@ -284,7 +284,7 @@ describe("ExchangeBreed", function () {
           },
           signature1,
         );
-        await expect(tx2).to.be.revertedWith("Exchange: pregnancy count exceeded");
+        await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "CountExceed");
 
         await erc721Instance.mintCommon(receiver.address, 4);
         const signature2 = await generateOneToOneSignature({
@@ -329,7 +329,7 @@ describe("ExchangeBreed", function () {
           },
           signature2,
         );
-        await expect(tx3).to.be.revertedWith("Exchange: pregnancy count exceeded");
+        await expect(tx3).to.be.revertedWithCustomError(exchangeInstance, "CountExceed");
       });
 
       it("should fail: pregnancy time", async function () {
@@ -446,7 +446,7 @@ describe("ExchangeBreed", function () {
           },
           signature1,
         );
-        await expect(tx2).to.be.revertedWith("Exchange: pregnancy time limit");
+        await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
 
         // await erc721Instance.mintCommon(receiver.address, 4);
         // const signature2 = await generateOneToOneSignature({
@@ -540,7 +540,7 @@ describe("ExchangeBreed", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Not an owner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotAnOwner");
       });
 
       it("should fail: Invalid signature", async function () {
@@ -583,7 +583,7 @@ describe("ExchangeBreed", function () {
         );
 
         // ECDSA always returns an address
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
       });
 
       it("should fail: Wrong signer", async function () {
@@ -625,7 +625,7 @@ describe("ExchangeBreed", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
       });
 
       it("should fail: paused", async function () {

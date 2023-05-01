@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
-abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausable {
   using SafeCast for uint256;
 
   event Lend(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
@@ -27,14 +27,14 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManyExtraSignature(params, items, price, expires, signature);
-    require(hasRole(METADATA_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(METADATA_ROLE, signer)) revert WrongSigner();
 
-    require(items.length > 0, "Exchange: Wrong items count");
+    if (items.length == 0) revert WrongAmount();
 
     address account = _msgSender();
 
     if (price.length > 0) {
-      spendFrom(price, account, address(this), _disabledTypes);
+      ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
     }
 
     emit Lend(

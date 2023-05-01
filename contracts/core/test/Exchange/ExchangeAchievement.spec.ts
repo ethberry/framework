@@ -180,7 +180,7 @@ describe("ExchangeAchievement", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Expired signature");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
       });
     });
 
@@ -278,7 +278,7 @@ describe("ExchangeAchievement", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Expired signature");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
       });
     });
   });

@@ -12,6 +12,8 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 import "../utils/constants.sol";
+import "../utils/errors.sol";
+
 import "./interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
@@ -60,11 +62,11 @@ contract SignatureValidator is EIP712, Context {
     Asset memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) revert ExpiredSignature();
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
     }
 
     address account = _msgSender();
@@ -78,11 +80,11 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) revert ExpiredSignature();
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
     }
 
     address account = _msgSender();
@@ -96,11 +98,11 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) revert ExpiredSignature();
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
     }
 
     address account = _msgSender();
@@ -115,11 +117,11 @@ contract SignatureValidator is EIP712, Context {
     bytes32 extra,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) revert ExpiredSignature();
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
     }
 
     address account = _msgSender();
