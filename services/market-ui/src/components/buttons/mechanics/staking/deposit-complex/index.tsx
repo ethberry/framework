@@ -31,6 +31,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
       externalId: rule.externalId,
       expiresAt: 0,
       referrer: constants.AddressZero,
+      extra: utils.formatBytes32String("0x"),
     };
     return contract.deposit(params, values.tokenIds, {
       value: getEthPrice(rule.deposit),

@@ -34,6 +34,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           externalId: template.id,
           expiresAt: sign.expiresAt,
           referrer: settings.getReferrer(),
+          extra: utils.formatBytes32String("0x"),
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType),
