@@ -43,8 +43,11 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Hol
     uint256 tokenId = _mintCommon(account, templateId);
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _itemData[tokenId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
     ExchangeUtils.spendFrom(items, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));

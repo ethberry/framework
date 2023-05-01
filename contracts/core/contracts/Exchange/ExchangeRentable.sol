@@ -46,12 +46,16 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       price
     );
 
-    for (uint256 i = 0; i < items.length; i++) {
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length; ) {
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         params.referrer /* to */,
         uint256(expires).toUint64() /* lend expires */
       );
+      unchecked {
+        i++;
+      }
     }
   }
 }

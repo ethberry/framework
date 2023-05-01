@@ -226,8 +226,11 @@ contract SignatureValidator is EIP712, Context {
   function _hashAssetStructArray(Asset[] memory items) private pure returns (bytes32) {
     uint256 length = items.length;
     bytes32[] memory padded = new bytes32[](length);
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       padded[i] = _hashAssetStruct(items[i]);
+      unchecked {
+        i++;
+      }
     }
     return keccak256(abi.encodePacked(padded));
   }

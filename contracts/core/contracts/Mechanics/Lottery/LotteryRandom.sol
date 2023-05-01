@@ -146,7 +146,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;
-        i++;
+        i++; // TODO unchecked
       }
     }
 
