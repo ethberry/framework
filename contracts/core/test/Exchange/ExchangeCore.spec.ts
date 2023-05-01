@@ -278,7 +278,7 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -438,10 +438,5 @@ describe("ExchangeCore", function () {
     });
   });
 
-  shouldSupportsInterface(factory)(
-    InterfaceId.IERC165,
-    InterfaceId.IERC1363Receiver,
-    // InterfaceId.IERC1363Spender,
-    "0x7b04a2d0",
-  );
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IERC1363Receiver, InterfaceId.IERC1363Spender]);
 });

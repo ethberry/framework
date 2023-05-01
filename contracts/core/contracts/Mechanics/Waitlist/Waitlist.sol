@@ -39,8 +39,11 @@ contract Waitlist is AccessControl, Pausable {
     _roots[externalId] = root;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _items[externalId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
     emit RewardSet(externalId, _items[externalId]);
@@ -52,8 +55,11 @@ contract Waitlist is AccessControl, Pausable {
     _roots[externalId] = root;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _items[externalId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
     emit RewardSet(externalId, _items[externalId]);

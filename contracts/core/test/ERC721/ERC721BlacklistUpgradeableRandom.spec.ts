@@ -23,12 +23,12 @@ describe("ERC721BlacklistUpgradeableRandom", function () {
   shouldMintRandom(factory);
   shouldBehaveLikeUpgradeable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.ERC721Upgradable,
     FrameworkInterfaceId.ERC721Random,
-  );
+  ]);
 });

@@ -267,7 +267,7 @@ describe("ExchangeRentable", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
     it("should fail: Wrong items count", async function () {
@@ -496,7 +496,7 @@ describe("ExchangeRentable", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
   });
 });

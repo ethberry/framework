@@ -23,7 +23,9 @@ abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManyExtraSignature(params, items, new Asset[](0), extra, signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 

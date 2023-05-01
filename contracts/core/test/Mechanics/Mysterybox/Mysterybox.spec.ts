@@ -37,12 +37,12 @@ describe("ERC721MysteryboxSimple", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeERC721Simple(factory);
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     FrameworkInterfaceId.Mystery,
-  );
+  ]);
 
   describe("mint", function () {
     it("should fail: No content", async function () {

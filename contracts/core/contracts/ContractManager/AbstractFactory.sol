@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
@@ -119,8 +119,12 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     // Create an instance of the contract that supports the AccessControl interface.
     IAccessControl instance = IAccessControl(addr);
     // Grant MINTER_ROLE to all _minters
-    for (uint256 i = 0; i < EnumerableSet.length(_minters); i++) {
+    uint256 length = EnumerableSet.length(_minters);
+    for (uint256 i = 0; i < length; ) {
       instance.grantRole(MINTER_ROLE, EnumerableSet.at(_minters, i));
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -133,8 +137,12 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     // Create an instance of the contract that supports the AccessControl interface.
     IAccessControl instance = IAccessControl(addr);
     // Grant METADATA_ROLE to all _manipulators
-    for (uint256 i = 0; i < EnumerableSet.length(_manipulators); i++) {
+    uint256 length = EnumerableSet.length(_manipulators);
+    for (uint256 i = 0; i < length; ) {
       instance.grantRole(METADATA_ROLE, EnumerableSet.at(_manipulators, i));
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -148,11 +156,15 @@ abstract contract AbstractFactory is EIP712, AccessControl {
     // Create an instance of the contract that supports the AccessControl interface.
     IAccessControl instance = IAccessControl(addr);
 
-    for (uint256 i = 0; i < roles.length; i++) {
+    uint256 length = roles.length;
+    for (uint256 i = 0; i < length; ) {
       // Grant the specified roles to the caller of the function.
       instance.grantRole(roles[i], _msgSender());
       // Renounce the specified roles from the ContractManager contract.
       instance.renounceRole(roles[i], address(this));
+      unchecked {
+        i++;
+      }
     }
   }
 

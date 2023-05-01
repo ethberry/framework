@@ -22,11 +22,11 @@ describe("ERC998BlacklistUpgradeable", function () {
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.Grade,
-  );
+  ]);
 });

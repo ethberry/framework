@@ -27,48 +27,51 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   const { contractFeatures } = token.template!.contract!;
 
-  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    return api
-      .fetchJson({
-        url: `/grade`,
-        data: {
-          tokenId: token.id,
-          attribute,
-        },
-      })
-      .then((grade: IGrade) => {
-        const level = token.attributes[attribute];
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+      return api
+        .fetchJson({
+          url: `/grade`,
+          data: {
+            tokenId: token.id,
+            attribute,
+          },
+        })
+        .then((grade: IGrade) => {
+          const level = token.attributes[attribute];
 
-        const price =
-          grade.price?.components.sort(sorter("id")).map(component => ({
-            tokenType: Object.values(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            tokenId: component.template!.tokens![0].tokenId,
-            amount: getMultiplier(level, component.amount, grade),
-          })) || [];
+          const price =
+            grade.price?.components.sort(sorter("id")).map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.template!.tokens![0].tokenId,
+              amount: getMultiplier(level, component.amount, grade),
+            })) || [];
 
-        const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
-        return contract.upgrade(
-          {
-            nonce: utils.arrayify(sign.nonce),
-            externalId: grade.id,
-            expiresAt: sign.expiresAt,
-            referrer: constants.AddressZero,
-          },
-          {
-            tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
-            token: token.template!.contract!.address,
-            tokenId: token.tokenId.toString(),
-            amount: "1",
-          },
-          price,
-          sign.signature,
-          {
-            value: getEthPrice(price),
-          },
-        ) as Promise<void>;
-      });
-  });
+          const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
+          return contract.upgrade(
+            {
+              nonce: utils.arrayify(sign.nonce),
+              externalId: grade.id,
+              expiresAt: sign.expiresAt,
+              referrer: constants.AddressZero,
+            },
+            {
+              tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
+              token: token.template!.contract!.address,
+              tokenId: token.tokenId.toString(),
+              amount: "1",
+            },
+            price,
+            sign.signature,
+            {
+              value: getEthPrice(price),
+            },
+          ) as Promise<void>;
+        });
+    },
+    // { error: false },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     return metaFnWithSign(

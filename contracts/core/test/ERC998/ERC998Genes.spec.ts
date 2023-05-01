@@ -17,5 +17,5 @@ describe("ERC998Genes", function () {
   shouldMintRandom(factory);
   shouldSafeMint(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

@@ -7,8 +7,8 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/nest-js-module-license": "2.0.34",
-    "@gemunion/nest-js-module-mailjet": "2.2.18",
+    "@gemunion/nest-js-module-license": "2.0.35",
+    "@gemunion/nest-js-module-mailjet": "2.2.19",
     "@gemunion/nest-js-module-request-logger": "2.0.25",
     "@gemunion/nest-js-module-winston-logdna": "2.0.30",
     "@nestjs/axios": "2.0.0",
@@ -30,9 +30,9 @@
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "2.0.7",
     "@nestjs/testing": "9.4.0",
-    "@types/node": "18.15.13",
-    "@typescript-eslint/eslint-plugin": "5.59.0",
-    "@typescript-eslint/parser": "5.59.0",
+    "@types/node": "18.16.2",
+    "@typescript-eslint/eslint-plugin": "5.59.1",
+    "@typescript-eslint/parser": "5.59.1",
     "eslint": "8.39.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-standard": "17.0.0",
@@ -42,7 +42,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "rimraf": "5.0.0",
-    "tsc-watch": "6.0.0"
+    "tsc-watch": "6.0.1"
   },
   "engines": {
     "node": ">=12.13"

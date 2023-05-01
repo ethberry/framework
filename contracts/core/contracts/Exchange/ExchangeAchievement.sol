@@ -23,7 +23,10 @@ abstract contract ExchangeAchievement is SignatureValidator, AccessControl, Paus
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, new Asset[](0), signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
+
     address account = _msgSender();
 
     ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));

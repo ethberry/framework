@@ -19,5 +19,5 @@ describe("ERC998Blacklist", function () {
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

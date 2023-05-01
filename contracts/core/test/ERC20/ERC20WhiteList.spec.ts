@@ -26,10 +26,10 @@ describe("ERC20Whitelist", function () {
 
   shouldBehaveLikeERC20WithoutTransfer(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC20,
     InterfaceId.IERC1363,
-  );
+  ]);
 });

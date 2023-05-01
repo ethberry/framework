@@ -10,10 +10,5 @@ describe("Vesting TopUp", function () {
   shouldBehaveLikeOwnable(factory);
   shouldBehaveLikeTopUp(factory);
 
-  shouldSupportsInterface(factory)(
-    InterfaceId.IERC165,
-    InterfaceId.IERC1363Receiver,
-    // InterfaceId.IERC1363Spender,
-    "0x7b04a2d0",
-  );
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IERC1363Receiver, InterfaceId.IERC1363Spender]);
 });

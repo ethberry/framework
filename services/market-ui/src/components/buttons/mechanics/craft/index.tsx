@@ -23,37 +23,40 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
   const settings = useSettings();
 
-  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+      const contract = new Contract(process.env.EXCHANGE_ADDR, CraftABI, web3Context.provider?.getSigner());
 
-    return contract.craft(
-      {
-        nonce: utils.arrayify(sign.nonce),
-        externalId: craft.id,
-        expiresAt: sign.expiresAt,
-        referrer: constants.AddressZero,
-      },
-      craft.item?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId:
-          component.contract!.contractType === TokenType.ERC1155
-            ? component.template!.tokens![0].tokenId
-            : component.templateId.toString(),
-        amount: component.amount,
-      })),
-      craft.price?.components.sort(sorter("id")).map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.template!.tokens![0].tokenId,
-        amount: component.amount,
-      })),
-      sign.signature,
-      {
-        value: getEthPrice(craft.price),
-      },
-    ) as Promise<void>;
-  });
+      return contract.craft(
+        {
+          nonce: utils.arrayify(sign.nonce),
+          externalId: craft.id,
+          expiresAt: sign.expiresAt,
+          referrer: constants.AddressZero,
+        },
+        craft.item?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId:
+            component.contract!.contractType === TokenType.ERC1155
+              ? component.template!.tokens![0].tokenId
+              : component.templateId.toString(),
+          amount: component.amount,
+        })),
+        craft.price?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: component.template!.tokens![0].tokenId,
+          amount: component.amount,
+        })),
+        sign.signature,
+        {
+          value: getEthPrice(craft.price),
+        },
+      ) as Promise<void>;
+    },
+    // { error: false },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;

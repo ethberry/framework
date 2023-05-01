@@ -20,12 +20,12 @@ describe("ERC998UpgradeableRandom", function () {
   shouldMintRandom(factory);
   shouldBehaveLikeUpgradeable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.ERC721Random,
     FrameworkInterfaceId.Grade,
-  );
+  ]);
 });

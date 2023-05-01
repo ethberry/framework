@@ -23,7 +23,7 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) revert SignerMissingRole();
 
     if (items.length == 0) revert WrongAmount();
 
@@ -37,8 +37,12 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
 
     // pop from array is not supported
     Asset[] memory mysteryItems = new Asset[](items.length - 1);
-    for (uint256 i = 0; i < items.length - 1; i++) {
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length - 1; ) {
       mysteryItems[i] = items[i];
+      unchecked {
+        i++;
+      }
     }
 
     IERC721Mysterybox(box.token).mintBox(account, box.tokenId, mysteryItems);

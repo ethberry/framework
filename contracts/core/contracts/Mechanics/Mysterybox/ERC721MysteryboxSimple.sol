@@ -42,8 +42,11 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple {
     // _itemData[tokenId] = items;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _itemData[tokenId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 

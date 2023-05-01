@@ -27,7 +27,7 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManyExtraSignature(params, items, price, expires, signature);
-    if (!hasRole(METADATA_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(METADATA_ROLE, signer)) revert SignerMissingRole();
 
     if (items.length == 0) revert WrongAmount();
 
@@ -46,12 +46,16 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       price
     );
 
-    for (uint256 i = 0; i < items.length; i++) {
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length; ) {
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         params.referrer /* to */,
         uint256(expires).toUint64() /* lend expires */
       );
+      unchecked {
+        i++;
+      }
     }
   }
 }
