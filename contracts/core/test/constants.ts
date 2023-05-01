@@ -1,4 +1,4 @@
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
@@ -24,12 +24,14 @@ export const maxStake = 5;
 // EXCHANGE
 export const externalId = 123;
 export const expiresAt = 0;
+export const extra = utils.formatBytes32String("0x");
 
 export const params = {
   nonce,
   externalId,
   expiresAt,
   referrer: constants.AddressZero,
+  extra,
 };
 
 export const contractTemplate = "SIMPLE";

@@ -21,8 +21,6 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaRedeem = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
-    const extraData = utils.formatBytes32String("0x");
-
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
     return contract.claim(
       {
@@ -30,6 +28,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         externalId: claim.id,
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
         referrer: constants.AddressZero,
+        extra: utils.formatBytes32String("0x"),
       },
       claim.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -40,7 +39,6 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
             : component.templateId.toString(),
         amount: component.amount,
       })),
-      extraData,
       claim.signature,
     ) as Promise<void>;
   });

@@ -5,9 +5,9 @@ import { time } from "@openzeppelin/test-helpers";
 
 import {
   amount,
-  MINTER_ROLE,
   DEFAULT_ADMIN_ROLE,
   InterfaceId,
+  MINTER_ROLE,
   nonce,
   PAUSER_ROLE,
 } from "@gemunion/contracts-constants";
@@ -17,7 +17,7 @@ import {
   shouldSupportsInterface,
 } from "@gemunion/contracts-mocha";
 
-import { externalId, params, tokenId } from "../constants";
+import { externalId, extra, params, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
@@ -368,6 +368,7 @@ describe("ExchangeCore", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
       const signature = await generateOneToManySignature({
         account: receiver.address,

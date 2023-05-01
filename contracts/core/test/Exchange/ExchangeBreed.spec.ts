@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, params, tokenId } from "../constants";
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
@@ -97,6 +97,7 @@ describe("ExchangeBreed", function () {
             externalId: encodedExternalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -117,6 +118,7 @@ describe("ExchangeBreed", function () {
             externalId: encodedExternalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -249,6 +251,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -269,6 +272,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -294,6 +298,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -314,6 +319,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -411,6 +417,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -431,6 +438,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,

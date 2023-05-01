@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { constants, utils, BigNumber } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -15,7 +15,7 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { expiresAt, extra, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -73,6 +73,7 @@ describe("Staking", function () {
     externalId: 1,
     expiresAt,
     referrer: constants.AddressZero,
+    extra,
   };
 
   let vrfInstance: VRFCoordinatorMock;
@@ -346,6 +347,7 @@ describe("Staking", function () {
           externalId: 2,
           expiresAt,
           referrer: constants.AddressZero,
+          extra,
         },
         tokenIds,
         { value: 100 },
@@ -4205,6 +4207,7 @@ describe("Staking", function () {
           externalId: 2, // ruleId
           expiresAt,
           referrer: constants.AddressZero,
+          extra,
         },
         tokenIdsZero,
       );

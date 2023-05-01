@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, nonce } from "@gemunion/contracts-constants";
 
-import { externalId, params, subscriptionId, tokenId } from "../constants";
+import { externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
@@ -150,6 +150,7 @@ describe("ExchangeAchievement", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           items: [
             {
@@ -168,6 +169,7 @@ describe("ExchangeAchievement", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           [
             {
@@ -248,6 +250,7 @@ describe("ExchangeAchievement", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           items: [
             {
@@ -266,6 +269,7 @@ describe("ExchangeAchievement", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           [
             {
