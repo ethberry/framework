@@ -55,6 +55,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
               externalId: grade.id,
               expiresAt: sign.expiresAt,
               referrer: constants.AddressZero,
+              extra: utils.formatBytes32String("0x"),
             },
             {
               tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),

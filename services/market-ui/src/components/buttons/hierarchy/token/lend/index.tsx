@@ -36,6 +36,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
         referrer: values.account,
+        extra: utils.formatBytes32String("0x"),
       };
       const items = [
         {

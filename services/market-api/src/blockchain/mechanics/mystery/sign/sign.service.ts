@@ -48,6 +48,7 @@ export class MysterySignService {
         externalId: mysteryboxEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       mysteryboxEntity,
     );

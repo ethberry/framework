@@ -33,6 +33,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           externalId: craft.id,
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
+          extra: utils.formatBytes32String("0x"),
         },
         craft.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),

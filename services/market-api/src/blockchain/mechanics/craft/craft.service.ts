@@ -133,6 +133,7 @@ export class CraftService {
         externalId: craftEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       craftEntity,
     );
