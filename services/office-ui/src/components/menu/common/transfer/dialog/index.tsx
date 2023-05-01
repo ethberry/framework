@@ -6,6 +6,7 @@ import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
+import { ContractFeatures } from "@framework/types";
 
 export interface ITransferDto {
   token: ITokenAsset;
@@ -22,6 +23,8 @@ export interface ITransferDialogProps {
 export const TransferDialog: FC<ITransferDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const contractFeatures = Object.values(ContractFeatures).filter(feature => feature !== ContractFeatures.SOULBOUND);
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -30,7 +33,7 @@ export const TransferDialog: FC<ITransferDialogProps> = props => {
       testId="ContractTransferForm"
       {...rest}
     >
-      <TokenAssetInput prefix="token" />
+      <TokenAssetInput prefix="token" contract={{ data: { contractFeatures } }} />
       <TextInput name="address" />
     </FormDialog>
   );
