@@ -74,6 +74,7 @@ export class AchievementSignService {
         externalId: claimEntity.id,
         expiresAt,
         referrer,
+        extra: utils.hexZeroPad(utils.hexlify(achievementLevelEntity.id), 32),
       },
       achievementLevelEntity,
     );
@@ -97,10 +98,7 @@ export class AchievementSignService {
     params: IParams,
     achievementLevelEntity: AchievementLevelEntity,
   ): Promise<string> {
-    // TODO encode more info (+redemptionId?)
-    const extraData = utils.hexZeroPad(utils.hexlify(achievementLevelEntity.id), 32);
-
-    return this.signerService.getManyToManyExtraSignature(
+    return this.signerService.getManyToManySignature(
       account,
       params,
       achievementLevelEntity.item.components.map(component => ({
@@ -113,7 +111,6 @@ export class AchievementSignService {
         amount: component.amount,
       })),
       [],
-      extraData,
     );
   }
 }

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 
-import { amount, nonce, METADATA_ROLE } from "@gemunion/contracts-constants";
+import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
 
@@ -14,7 +14,7 @@ describe("ExchangeRentable", function () {
   describe("lend", function () {
     it("should lend ERC721 to user for free", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -28,13 +28,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [
           {
@@ -53,6 +54,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [
           {
@@ -63,7 +65,6 @@ describe("ExchangeRentable", function () {
           },
         ],
         [],
-        expires,
         signature,
       );
       // event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
@@ -93,7 +94,7 @@ describe("ExchangeRentable", function () {
 
     it("should lend ERC721 to user for ERC20", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -110,13 +111,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [
           {
@@ -134,7 +136,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        extra: expires,
       });
 
       const tx1 = exchangeInstance.connect(receiver).lend(
@@ -143,6 +144,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [
           {
@@ -160,7 +162,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        expires,
         signature,
       );
 
@@ -196,7 +197,7 @@ describe("ExchangeRentable", function () {
 
     it("should fail: Wrong signer", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -213,13 +214,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: stranger.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [
           {
@@ -237,7 +239,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        extra: expires,
       });
 
       const tx1 = exchangeInstance.connect(receiver).lend(
@@ -246,6 +247,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [
           {
@@ -263,7 +265,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        expires,
         signature,
       );
 
@@ -272,7 +273,7 @@ describe("ExchangeRentable", function () {
 
     it("should fail: Wrong items count", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -289,13 +290,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [],
         price: [
@@ -315,6 +317,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [],
         [
@@ -325,7 +328,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        expires,
         signature,
       );
 
@@ -334,7 +336,7 @@ describe("ExchangeRentable", function () {
 
     it("should fail: Transfer caller is not owner nor approved", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -350,13 +352,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: owner.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [
           {
@@ -383,6 +386,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [
           {
@@ -400,7 +404,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        expires,
         signature,
       );
 
@@ -409,7 +412,6 @@ describe("ExchangeRentable", function () {
 
     it("should fail: paused", async function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(0), 32);
 
       await exchangeInstance.pause();
 
@@ -431,7 +433,6 @@ describe("ExchangeRentable", function () {
             amount,
           },
         ],
-        expires,
         constants.HashZero,
       );
 
@@ -440,7 +441,7 @@ describe("ExchangeRentable", function () {
 
     it("should fail: signer is missing role", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const { contractInstance: exchangeInstance, generateManyToManyExtraSignature } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
       const erc721Instance = await deployErc721Base("ERC721BlacklistUpgradeableRentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -454,13 +455,14 @@ describe("ExchangeRentable", function () {
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
       const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
 
-      const signature = await generateManyToManyExtraSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce,
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         items: [
           {
@@ -482,6 +484,7 @@ describe("ExchangeRentable", function () {
           externalId /* lendType */,
           expiresAt,
           referrer: stranger.address,
+          extra: expires,
         },
         [
           {
@@ -492,7 +495,6 @@ describe("ExchangeRentable", function () {
           },
         ],
         [],
-        expires,
         signature,
       );
 

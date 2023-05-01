@@ -4,7 +4,7 @@ import { BigNumber, constants, utils } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-import { expiresAt, externalId, tokenId, tokenZero } from "../constants";
+import { expiresAt, externalId, extra, tokenId, tokenZero } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {
@@ -32,6 +32,7 @@ describe("ExchangeReferral", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
 
       const signature1 = await generateOneToManySignature({
@@ -82,6 +83,7 @@ describe("ExchangeReferral", function () {
         externalId,
         expiresAt,
         referrer: owner.address,
+        extra,
       };
 
       const signature2 = await generateOneToManySignature({
@@ -144,6 +146,7 @@ describe("ExchangeReferral", function () {
         externalId,
         expiresAt,
         referrer: receiver.address,
+        extra,
       };
 
       const signature3 = await generateOneToManySignature({
@@ -240,6 +243,7 @@ describe("ExchangeReferral", function () {
         externalId,
         expiresAt,
         referrer: owner.address,
+        extra,
       };
 
       const signature = await generateOneToManySignature({

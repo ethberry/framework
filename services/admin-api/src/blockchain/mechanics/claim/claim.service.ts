@@ -154,6 +154,7 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         referrer: constants.AddressZero,
+        extra: utils.formatBytes32String("0x"),
       },
 
       claimEntity,
@@ -182,9 +183,7 @@ export class ClaimService {
   }
 
   public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
-    const extraData = utils.formatBytes32String("0x");
-
-    return this.signerService.getManyToManyExtraSignature(
+    return this.signerService.getManyToManySignature(
       account,
       params,
       claimEntity.item.components.map(component => ({
@@ -197,7 +196,6 @@ export class ClaimService {
         amount: component.amount,
       })),
       [],
-      extraData,
     );
   }
 

@@ -23,7 +23,7 @@ contract SignatureValidator is EIP712, Context {
   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE =
-    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer)";
+    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer,bytes32 extra)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -41,14 +41,6 @@ contract SignatureValidator is EIP712, Context {
     keccak256(
       bytes.concat(
         "EIP712(address account,Params params,Asset[] items,Asset[] price)",
-        ASSET_SIGNATURE,
-        PARAMS_SIGNATURE
-      )
-    );
-  bytes32 private immutable MANY_TO_MANY_EXTRA_TYPEHASH =
-    keccak256(
-      bytes.concat(
-        "EIP712(address account,Params params,Asset[] items,Asset[] price,bytes32 extra)",
         ASSET_SIGNATURE,
         PARAMS_SIGNATURE
       )
@@ -108,25 +100,6 @@ contract SignatureValidator is EIP712, Context {
     address account = _msgSender();
 
     return _recoverSigner(_hashManyToMany(account, params, items, price), signature);
-  }
-
-  function _recoverManyToManyExtraSignature(
-    Params memory params,
-    Asset[] memory items,
-    Asset[] memory price,
-    bytes32 extra,
-    bytes calldata signature
-  ) internal returns (address) {
-    if (_expired[params.nonce]) revert ExpiredSignature();
-    _expired[params.nonce] = true;
-
-    if (params.expiresAt != 0) {
-      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
-    }
-
-    address account = _msgSender();
-
-    return _recoverSigner(_hashManyToManyExtra(account, params, items, price, extra), signature);
   }
 
   function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {
@@ -193,30 +166,11 @@ contract SignatureValidator is EIP712, Context {
       );
   }
 
-  function _hashManyToManyExtra(
-    address account,
-    Params memory params,
-    Asset[] memory items,
-    Asset[] memory price,
-    bytes32 extra
-  ) private view returns (bytes32) {
-    return
-      _hashTypedDataV4(
-        keccak256(
-          abi.encode(
-            MANY_TO_MANY_EXTRA_TYPEHASH,
-            account,
-            _hashParamsStruct(params),
-            _hashAssetStructArray(items),
-            _hashAssetStructArray(price),
-            extra
-          )
-        )
-      );
-  }
-
   function _hashParamsStruct(Params memory params) private pure returns (bytes32) {
-    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer));
+    return
+      keccak256(
+        abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer, params.extra)
+      );
   }
 
   function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {

@@ -7,7 +7,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
-import { defaultNumbers, expiresAt, externalId, params } from "../../constants";
+import { defaultNumbers, expiresAt, externalId, extra, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
@@ -424,6 +424,7 @@ describe("Lottery", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
       const signature1 = await generateSignature({
         account: receiver.address,
@@ -442,6 +443,7 @@ describe("Lottery", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
       const signature2 = await generateSignature({
         account: stranger.address,
@@ -460,6 +462,7 @@ describe("Lottery", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
       const signature3 = await generateSignature({
         account: stranger.address,
