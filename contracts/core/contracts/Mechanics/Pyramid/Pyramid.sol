@@ -145,7 +145,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       }
     }
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Pyramid: first period not yet finished");
+    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) {
+      revert("Pyramid: first period not yet finished");
+    }
   }
 
   function _calculateRewardMultiplier(

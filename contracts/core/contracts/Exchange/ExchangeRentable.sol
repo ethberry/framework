@@ -26,9 +26,13 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    if (!hasRole(METADATA_ROLE, signer)) revert SignerMissingRole();
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
-    if (items.length == 0) revert WrongAmount();
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     address account = _msgSender();
 

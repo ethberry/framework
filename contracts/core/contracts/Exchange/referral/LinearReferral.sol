@@ -40,8 +40,12 @@ abstract contract LinearReferral is Context, AccessControl {
   mapping(address => mapping(address => uint256)) _rewardBalances;
 
   function setRefProgram(uint8 maxRefs, uint256 refReward, uint256 refDecrease) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (_refProgram.init) revert RefProgramSet();
-    if (refReward >= 10000) revert LimitExceed();
+    if (_refProgram.init) {
+      revert RefProgramSet();
+    }
+    if (refReward >= 10000) {
+      revert LimitExceed();
+    }
     _refProgram = Ref(refReward, refDecrease, maxRefs, true);
     emit ReferralProgram(_refProgram);
   }
@@ -94,17 +98,23 @@ abstract contract LinearReferral is Context, AccessControl {
   function withdrawReward(address token) public returns (bool success) {
     address account = _msgSender();
     uint256 rewardAmount = _rewardBalances[account][token];
-    if (rewardAmount == 0) revert BalanceExceed();
+    if (rewardAmount == 0) {
+      revert BalanceExceed();
+    }
     bool result;
     if (token == address(0)) {
-      if (address(this).balance < rewardAmount) revert BalanceExceed();
+      if (address(this).balance < rewardAmount) {
+        revert BalanceExceed();
+      }
       _rewardBalances[account][token] = 0;
       emit ReferralWithdraw(account, token, rewardAmount);
       Address.sendValue(payable(account), rewardAmount);
       result = true;
     } else {
       uint256 balanceErc20 = IERC20(token).balanceOf(address(this));
-      if (balanceErc20 < rewardAmount) revert BalanceExceed();
+      if (balanceErc20 < rewardAmount) {
+        revert BalanceExceed();
+      }
       _rewardBalances[account][token] = 0;
       emit ReferralWithdraw(account, token, rewardAmount);
       SafeERC20.safeTransfer(IERC20(token), account, rewardAmount);

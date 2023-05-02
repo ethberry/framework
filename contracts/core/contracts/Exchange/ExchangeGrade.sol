@@ -24,7 +24,9 @@ abstract contract ExchangeGrade is SignatureValidator, AccessControl, Pausable {
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
-    if (!hasRole(METADATA_ROLE, signer)) revert SignerMissingRole();
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 
