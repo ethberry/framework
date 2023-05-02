@@ -18,8 +18,9 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
-import "./interfaces/IAsset.sol";
+import "../utils/constants.sol";
 import "../utils/errors.sol";
+import "./interfaces/IAsset.sol";
 
 library ExchangeUtils {
   using Address for address;
