@@ -41,7 +41,7 @@ describe("Factory Exchange Referral", function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward * 20, refProgram.refDecrease);
-      await expect(tx).to.be.revertedWith("ExchangeReferral: wrong refReward");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
     });
 
     it("should fail: program already set", async function () {
