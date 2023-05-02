@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants } from "ethers";
 
-import { amount } from "@gemunion/contracts-constants";
+import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
 
 import { externalId, params, templateId, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
@@ -241,6 +241,89 @@ describe("ExchangeGrade", function () {
       );
 
       await expect(tx2).to.be.revertedWith("ERC721: invalid token ID");
+    });
+
+    it("should fail: paused", async function () {
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+      await exchangeInstance.pause();
+
+      const tx1 = exchangeInstance.upgrade(
+        params,
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        constants.HashZero,
+      );
+
+      await expect(tx1).to.be.revertedWith("Pausable: paused");
+    });
+
+    it("should fail: signer is missing role", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+
+      const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
+
+      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+
+      await exchangeInstance.renounceRole(METADATA_ROLE, owner.address);
+
+      const tx2 = exchangeInstance.connect(receiver).upgrade(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx2).to.be.revertedWith("Exchange: Wrong signer");
     });
   });
 });

@@ -19,7 +19,6 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
 
   event Lend(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
 
-
   function lend(
     Params memory params,
     Asset[] memory items,
@@ -28,7 +27,7 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManyExtraSignature(params, items, price, expires, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    require(hasRole(METADATA_ROLE, signer), "Exchange: Wrong signer");
 
     require(items.length > 0, "Exchange: Wrong items count");
 
@@ -47,12 +46,16 @@ abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessC
       price
     );
 
-    for (uint256 i = 0; i < items.length; i++) {
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length; ) {
       IERC4907(items[i].token).setUser(
         items[i].tokenId,
         params.referrer /* to */,
         uint256(expires).toUint64() /* lend expires */
       );
+      unchecked {
+        i++;
+      }
     }
   }
 }

@@ -12,24 +12,27 @@ import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../Exchange/ExchangeUtils.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, Wallet {
+contract ExchangeMockDisabled is ExchangeUtils, AccessControl, Wallet {
+  // disable everything
+  DisabledTokenTypes _disabledAll = DisabledTokenTypes(true, true, true, true, true);
+
   function topUp(Asset[] memory price) external payable virtual {
-    spendFrom(price, _msgSender(), address(this), _disabledTypes);
+    spendFrom(price, _msgSender(), address(this), _disabledAll);
   }
 
   function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
     // Transfer tokens to self or other address
-    spendFrom(price, spender, receiver, _disabledTypes);
+    spendFrom(price, spender, receiver, _disabledAll);
   }
 
   function testSpend(Asset[] memory price, address receiver) external payable {
     // Spender is always Exchange contract
-    spend(price, receiver, _disabledTypes);
+    spend(price, receiver, _disabledAll);
   }
 
   function testAcquire(Asset[] memory price, address receiver) external payable {
     // Mint new tokens for receiver
-    acquire(price, receiver, _disabledTypes);
+    acquire(price, receiver, _disabledAll);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {

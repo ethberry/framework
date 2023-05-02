@@ -42,8 +42,11 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
     // _itemData[tokenId] = items;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _itemData[tokenId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -56,7 +59,7 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     _burn(tokenId);
 
-    acquire(_itemData[tokenId], account);
+    acquire(_itemData[tokenId], account, _disabledTypes);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

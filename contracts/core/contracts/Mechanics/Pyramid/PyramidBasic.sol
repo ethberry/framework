@@ -153,8 +153,11 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
   // RULES
   function _setRules(Rule[] memory rules) internal {
     uint256 length = rules.length;
-    for (uint256 i; i < length; i++) {
+    for (uint256 i; i < length; ) {
       _setRule(rules[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 

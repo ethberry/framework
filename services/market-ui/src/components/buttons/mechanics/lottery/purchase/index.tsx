@@ -21,22 +21,25 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
 
   const settings = useSettings();
 
-  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());
-    return contract
-      .purchase(
-        {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
-          expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
-        },
-        ticketNumbers,
-        constants.WeiPerEther,
-        sign.signature,
-      )
-      .then(clearForm) as Promise<void>;
-  });
+  const metaFnWithSign = useServerSignature(
+    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+      const contract = new Contract(process.env.LOTTERY_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());
+      return contract
+        .purchase(
+          {
+            nonce: utils.arrayify(sign.nonce),
+            externalId: 0,
+            expiresAt: sign.expiresAt,
+            referrer: settings.getReferrer(),
+          },
+          ticketNumbers,
+          constants.WeiPerEther,
+          sign.signature,
+        )
+        .then(clearForm) as Promise<void>;
+    },
+    // { error: false },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;

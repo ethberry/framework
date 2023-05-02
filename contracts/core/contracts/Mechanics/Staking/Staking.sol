@@ -93,6 +93,16 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
   }
 
   /**
+   * @dev Get Penalty
+   */
+  function getPenalty(
+    address token,
+    uint256 tokenId
+  ) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 penalty) {
+    return _penalties[token][tokenId];
+  }
+
+  /**
    * @dev Deposit function allows a user to stake a specified token with a given rule.
    * @param params Struct of Params that containing the ruleId and referrer parameters.
    * @param tokenIds - Array<id> of the tokens to be deposited.
@@ -132,7 +142,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       // Create a new Asset object representing the deposit.
       Asset memory depositItem = Asset(
         rule.deposit[i].tokenType,
@@ -157,6 +167,10 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
       // Do something after purchase with referrer
       if (referrer != address(0)) {
         _afterPurchase(referrer, _toArray(depositItem));
+      }
+
+      unchecked {
+        i++;
       }
     }
   }
@@ -215,8 +229,8 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
     // Iterate by Array<deposit>
     uint256 lengthDeposit = rule.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; i++) {
-      Asset memory depositItem = _stakes[stakeId].deposit[i];
+    for (uint256 i = 0; i < lengthDeposit; ) {
+      Asset memory depositItem = stake.deposit[i];
 
       uint256 stakeAmount = depositItem.amount;
 
@@ -234,7 +248,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
           : stakeAmount;
 
         // Store penalties
-        _penalties[depositItem.token][depositItem.tokenId] += multiplier == 0
+        _penalties[depositItem.token][depositItem.tokenId] += (multiplier == 0 && stake.cycles == 0)
           ? (stakeAmount / 100) * (rule.penalty / 100)
           : 0;
 
@@ -248,11 +262,17 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
           _penalties[depositItem.token][depositItem.tokenId] = 1;
         } else {
           // Transfer the deposit Asset to the receiver.
-          spend(_toArray(depositItem), receiver);
+          spend(_toArray(depositItem), receiver, _disabledTypes);
+          // Empty current stake deposit storage
+          stake.deposit[i].amount = 0;
         }
       } else {
         // Update the start timestamp of the stake.
         stake.startTimestamp = block.timestamp;
+      }
+
+      unchecked {
+        i++;
       }
     }
 
@@ -263,7 +283,7 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
 
       // Iterate by Array<reward>
       uint256 length = rule.reward.length;
-      for (uint256 j = 0; j < length; j++) {
+      for (uint256 j = 0; j < length; ) {
         // Create a new Asset object representing the reward.
         Asset memory rewardItem = Asset(
           rule.reward[j].tokenType,
@@ -275,24 +295,30 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
         // Determine the token type of the reward and transfer the reward accordingly.
         if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
           // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
-          spend(_toArray(rewardItem), receiver);
+          spend(_toArray(rewardItem), receiver, _disabledTypes);
         } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
           // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
-          for (uint256 k = 0; k < multiplier; k++) {
+          for (uint256 k = 0; k < multiplier; ) {
             if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
               // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
               IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[j]);
             } else {
               // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
-              acquire(_toArray(rewardItem), receiver);
+              acquire(_toArray(rewardItem), receiver, _disabledTypes);
+            }
+            unchecked {
+              k++;
             }
           }
         } else if (rewardItem.tokenType == TokenType.ERC1155) {
           // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
-          acquire(_toArray(rewardItem), receiver);
+          acquire(_toArray(rewardItem), receiver, _disabledTypes);
         } else {
           // should never happen
           revert UnsupportedTokenType();
+        }
+        unchecked {
+          j++;
         }
       }
     }
@@ -353,8 +379,11 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
    */
   function _setRules(Rule[] memory rules) internal {
     uint256 length = rules.length;
-    for (uint256 i; i < length; i++) {
+    for (uint256 i; i < length; ) {
       _setRule(rules[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -375,24 +404,36 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // p.deposit = rule.deposit;
     // Store each individual asset in the rule's deposit array
     uint256 lengthDeposit = rule.deposit.length;
-    for (uint256 i = 0; i < lengthDeposit; i++) {
+    for (uint256 i = 0; i < lengthDeposit; ) {
       p.deposit.push(rule.deposit[i]);
+      unchecked {
+        i++;
+      }
     }
     // p.reward = rule.reward;
     // Store each individual asset in the rule's deposit array
     uint256 lengthReward = rule.reward.length;
-    for (uint256 j = 0; j < lengthReward; j++) {
+    for (uint256 j = 0; j < lengthReward; ) {
       p.reward.push(rule.reward[j]);
+      unchecked {
+        j++;
+      }
     }
 
     // p.content = rule.content;
     // Store each individual asset in the rule's content array
     uint256 len = rule.content.length;
-    for (uint256 k = 0; k < len; k++) {
+    for (uint256 k = 0; k < len; ) {
       p.content.push();
       uint256 length = rule.content[k].length;
-      for (uint256 l = 0; l < length; l++) {
+      for (uint256 l = 0; l < length; ) {
         p.content[k].push(rule.content[k][l]);
+        unchecked {
+          l++;
+        }
+      }
+      unchecked {
+        k++;
       }
     }
 
@@ -434,6 +475,6 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, LinearRefe
     // clean penalty balance in _penalties mapping storage
     _penalties[item.token][item.tokenId] = 0;
 
-    spend(_toArray(item), account);
+    spend(_toArray(item), account, _disabledTypes);
   }
 }

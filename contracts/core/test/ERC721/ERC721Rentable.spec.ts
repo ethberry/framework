@@ -3,7 +3,7 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { deployERC721 } from "./shared/fixtures";
-import { shouldBehaveLikeERC721Rentable } from "./shared/simple/user";
+import { shouldBehaveLikeERC721Rentable } from "./shared/user";
 
 describe("ERC721Rentable", function () {
   const factory = () => deployERC721(this.title);

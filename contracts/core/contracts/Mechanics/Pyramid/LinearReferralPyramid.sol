@@ -86,7 +86,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     Ref memory program = _refProgram;
 
     uint256 length = price.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE || ingredient.tokenType == TokenType.ERC20) {
         address referrer = initReferrer;
@@ -106,6 +106,9 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
           }
           referrer = nxt;
         }
+      }
+      unchecked {
+        i++;
       }
     }
   }
@@ -162,8 +165,11 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     uint256 bonusLength = bonusAmounts.length;
     uint256 tokenLength = tokens.length;
     require(tokensLength == bonusLength && bonusLength == tokenLength, "Referral: wrong arrays");
-    for (uint256 i = 0; i < tokensLength; i++) {
+    for (uint256 i = 0; i < tokensLength; ) {
       _referralBonuses[tokenCounts[i]] = Bonus(tokens[i], bonusAmounts[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 

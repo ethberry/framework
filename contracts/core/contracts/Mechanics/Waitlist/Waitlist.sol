@@ -39,8 +39,11 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
     _roots[externalId] = root;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _items[externalId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
     emit RewardSet(externalId, _items[externalId]);
@@ -52,8 +55,11 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
     _roots[externalId] = root;
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _items[externalId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
     emit RewardSet(externalId, _items[externalId]);
@@ -61,7 +67,7 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
     require(_roots[externalId] != "", "Waitlist: Not yet started");
-    
+
     address account = _msgSender();
     require(!_expired[externalId][account], "Witlist: Reward already claimed");
     _expired[externalId][account] = true;
@@ -71,7 +77,7 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
 
     require(verified, "Waitlist: You are not in the wait list");
 
-    acquire(_items[externalId], account);
+    acquire(_items[externalId], account, _disabledTypes);
 
     emit ClaimReward(account, externalId, _items[externalId]);
   }

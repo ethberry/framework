@@ -1,4 +1,5 @@
-import { shouldBehaveLikeOwnable } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeOwnable, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { InterfaceId } from "@gemunion/contracts-constants";
 
 import { deployVesting } from "./shared/fixture";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
@@ -8,4 +9,11 @@ describe("Vesting TopUp", function () {
 
   shouldBehaveLikeOwnable(factory);
   shouldBehaveLikeTopUp(factory);
+
+  shouldSupportsInterface(factory)(
+    InterfaceId.IERC165,
+    InterfaceId.IERC1363Receiver,
+    // InterfaceId.IERC1363Spender,
+    "0x7b04a2d0",
+  );
 });
