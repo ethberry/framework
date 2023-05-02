@@ -6,7 +6,7 @@ import { deployERC721 } from "./shared/fixtures";
 import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldBehaveLikeERC721 } from "./shared/simple/base";
 
-describe.skip("ERC721CollectionBlacklist", function () {
+describe("ERC721CollectionBlacklist", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
