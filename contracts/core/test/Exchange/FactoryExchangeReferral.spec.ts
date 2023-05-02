@@ -52,7 +52,7 @@ describe("Factory Exchange Referral", function () {
         .to.emit(exchangeInstance, "ReferralProgram")
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
       const tx1 = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
-      await expect(tx1).to.be.revertedWith("ExchangeReferral: program already set");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "RefProgramSet");
     });
   });
 
@@ -474,7 +474,7 @@ describe("Factory Exchange Referral", function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
       const tx = exchangeInstance.connect(receiver).withdrawReward(tokenZero);
-      await expect(tx).to.be.revertedWith("ExchangeReferral: Zero balance");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "BalanceExceed");
     });
 
     it("should get referral Reward Balances", async function () {

@@ -139,7 +139,9 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       }
     }
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Pyramid: first period not yet finished");
+    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) {
+      revert("Pyramid: first period not yet finished");
+    }
   }
 
   function _calculateRewardMultiplier(

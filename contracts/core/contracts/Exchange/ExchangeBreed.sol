@@ -45,10 +45,14 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
 
     // TODO approved
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    if (ownerOf1 != account) revert NotAnOwner();
+    if (ownerOf1 != account) {
+      revert NotAnOwner();
+    }
 
     address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
-    if (ownerOf2 != account) revert NotAnOwner();
+    if (ownerOf2 != account) {
+      revert NotAnOwner();
+    }
 
     pregnancyCheckup(item, price);
 
@@ -63,8 +67,12 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
 
     // Check pregnancy count
     if (_pregnancyCountLimit > 0) {
-      if (pregnancyM.count >= _pregnancyCountLimit) revert CountExceed();
-      if (pregnancyS.count >= _pregnancyCountLimit) revert CountExceed();
+      if (pregnancyM.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
+      if (pregnancyS.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
     }
 
     // Check pregnancy time
@@ -81,8 +89,12 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
       : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64();
 
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
-      if (timeNow - pregnancyM.time <= timeLimitM) revert LimitExceed();
-      if (timeNow - pregnancyS.time <= timeLimitS) revert LimitExceed();
+      if (timeNow - pregnancyM.time <= timeLimitM) {
+        revert LimitExceed();
+      }
+      if (timeNow - pregnancyS.time <= timeLimitS) {
+        revert LimitExceed();
+      }
     }
     // Update Pregnancy
     pregnancyM.count += 1;

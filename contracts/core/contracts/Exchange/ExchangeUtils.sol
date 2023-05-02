@@ -90,7 +90,9 @@ library ExchangeUtils {
     // If there is any native token in the transaction.
     if (totalAmount > 0) {
       // Verify the total amount of native tokens matches the amount sent with the transaction.
-      if (totalAmount != msg.value) revert WrongAmount();
+      if (totalAmount != msg.value) {
+        revert WrongAmount();
+      }
       if (address(this) == receiver) {
         emit PaymentEthReceived(receiver, msg.value);
       } else {

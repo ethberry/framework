@@ -54,11 +54,15 @@ contract SignatureValidator is EIP712, Context {
     Asset memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (_expired[params.nonce]) revert ExpiredSignature();
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
@@ -72,11 +76,15 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (_expired[params.nonce]) revert ExpiredSignature();
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
@@ -90,11 +98,15 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (_expired[params.nonce]) revert ExpiredSignature();
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      if (block.timestamp > params.expiresAt) revert ExpiredSignature();
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
