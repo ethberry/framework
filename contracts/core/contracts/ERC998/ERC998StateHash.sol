@@ -6,15 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts-erc998td/contracts/extensions/StateHash.sol";
 
 import "./ERC998Simple.sol";
 
 contract ERC998StateHash is ERC998Simple, StateHash {
-  using Counters for Counters.Counter;
-
   constructor(
     string memory name,
     string memory symbol,
