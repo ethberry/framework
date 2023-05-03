@@ -10,6 +10,7 @@ export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>)
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      await contractInstance.whitelist(owner.address);
       await contractInstance.mint(owner.address, amount);
       await contractInstance.unWhitelist(owner.address);
 
@@ -26,6 +27,7 @@ export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>)
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      await contractInstance.whitelist(owner.address);
       await contractInstance.mint(owner.address, amount);
       await contractInstance.unWhitelist(receiver.address);
 
@@ -42,6 +44,7 @@ export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>)
       const [owner, receiver, stranger] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      await contractInstance.whitelist(owner.address);
       await contractInstance.mint(owner.address, amount);
       await contractInstance.unWhitelist(owner.address);
       await contractInstance.approve(stranger.address, amount);
@@ -54,8 +57,6 @@ export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>)
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.unWhitelist(owner.address);
-
       const tx2 = contractInstance.mint(owner.address, amount);
       await expect(tx2).to.be.revertedWith("Whitelist: receiver is not whitelisted");
     });
@@ -64,6 +65,7 @@ export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>)
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      await contractInstance.whitelist(owner.address);
       await contractInstance.mint(owner.address, amount);
       await contractInstance.unWhitelist(owner.address);
 
