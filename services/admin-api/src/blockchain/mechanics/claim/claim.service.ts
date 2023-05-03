@@ -154,6 +154,7 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         referrer: constants.AddressZero,
+        extra: utils.formatBytes32String("0x"),
       },
 
       claimEntity,

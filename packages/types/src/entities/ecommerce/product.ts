@@ -19,4 +19,7 @@ export interface IProduct extends ISearchable {
   productStatus: ProductStatus;
   photos: Array<IPhoto>;
   categories: Array<ICategory>;
+  length: number;
+  height: number;
+  width: number;
 }

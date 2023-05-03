@@ -59,6 +59,7 @@ export class MarketplaceService {
         externalId: templateEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       templateEntity,
     );

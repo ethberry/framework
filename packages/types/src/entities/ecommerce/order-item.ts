@@ -1,9 +1,11 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IProduct } from "./product";
+import { IProductItem } from "./product-item";
 
 export interface IOrderItem extends IIdDateBase {
-  productId: number;
-  product?: IProduct;
+  orderId: number;
+  productItemId: number;
+  productItem?: IProductItem;
+  pricePerUnit: number;
   amount: number;
 }
