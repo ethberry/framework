@@ -174,16 +174,10 @@ library ExchangeUtils {
 
       // If the token is an NATIVE token, transfer tokens to the receiver.
       if (item.tokenType == TokenType.NATIVE && !disabled.native) {
-        ExchangeUtils.spend(_toArray(item), receiver, DisabledTokenTypes(false, false, false, false, false));
+        spend(_toArray(item), receiver, disabled);
         // If the `Asset` is an ERC20 token.
       } else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
-        if (_isERC1363Supported(receiver, item.token)) {
-          // Transfer the ERC20 token and emit event to notify server
-          IERC1363(item.token).transferAndCall(receiver, item.amount);
-        } else {
-          // Transfer the ERC20 token in a safe way
-          SafeERC20.safeTransfer(IERC20(item.token), receiver, item.amount);
-        }
+        spend(_toArray(item), receiver, disabled);
       } else if (
         (item.tokenType == TokenType.ERC721 && !disabled.erc721) ||
         (item.tokenType == TokenType.ERC998 && !disabled.erc998)
