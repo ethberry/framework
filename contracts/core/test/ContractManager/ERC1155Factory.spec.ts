@@ -5,11 +5,10 @@ import { constants } from "ethers";
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
 import { contractTemplate, tokenId } from "../constants";
-
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("ERC1155Factory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployERC1155Token", function () {
     it("should deploy contract", async function () {

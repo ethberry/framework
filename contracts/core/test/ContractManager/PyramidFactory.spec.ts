@@ -4,12 +4,12 @@ import { BigNumber } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
-import { deployContractManager } from "./fixture";
 import { contractTemplate } from "../constants";
 import { isEqualArray } from "../utils";
+import { deployContract } from "../shared/fixture";
 
 describe("PyramidFactory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployPyramid", function () {
     it("should deploy contract", async function () {

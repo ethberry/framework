@@ -12,10 +12,10 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { contractTemplate, templateId, tokenId } from "../constants";
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("ERC998Factory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployERC998Token", function () {
     it("should deploy contract", async function () {

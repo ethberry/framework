@@ -5,10 +5,10 @@ import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { DEFAULT_ADMIN_ROLE, METADATA_ROLE, MINTER_ROLE, PREDICATE_ROLE } from "@gemunion/contracts-constants";
 
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("ContractManager", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
 

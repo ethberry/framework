@@ -5,10 +5,10 @@ import { time } from "@openzeppelin/test-helpers";
 import { nonce } from "@gemunion/contracts-constants";
 
 import { contractTemplate, span } from "../constants";
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("VestingFactory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployVesting", function () {
     it("should deploy contract", async function () {
