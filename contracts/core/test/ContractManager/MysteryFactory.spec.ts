@@ -13,10 +13,10 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { contractTemplate, templateId, tokenId } from "../constants";
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("MysteryboxFactory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployMysteryToken", function () {
     it("should deploy contract", async function () {

@@ -5,10 +5,10 @@ import { BigNumber } from "ethers";
 import { nonce } from "@gemunion/contracts-constants";
 
 import { contractTemplate, maxStake } from "../constants";
-import { deployContractManager } from "./fixture";
+import { deployContract } from "../shared/fixture";
 
 describe("StakingFactory", function () {
-  const factory = () => deployContractManager(this.title);
+  const factory = () => deployContract(this.title);
 
   describe("deployStaking", function () {
     it("should deploy contract", async function () {
