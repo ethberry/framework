@@ -11,8 +11,9 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../Exchange/ExchangeUtils.sol";
+import "../Exchange/interfaces/IAsset.sol";
 
-contract ExchangeMock is AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
+contract ExchangeMock is AccessControl, Wallet {
   function topUp(Asset[] memory price) external payable virtual {
     ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
   }

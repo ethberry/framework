@@ -17,5 +17,5 @@ describe("ERC998ERC20Simple", function () {
   shouldMintCommon(factory);
   shouldBehaveLikeERC998ERC20(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

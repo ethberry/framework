@@ -11,8 +11,9 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../Exchange/ExchangeUtils.sol";
+import "../Exchange/interfaces/IAsset.sol";
 
-contract ExchangeMockDisabled is AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
+contract ExchangeMockDisabled is AccessControl, Wallet {
   // disable everything
   DisabledTokenTypes _disabledAll = DisabledTokenTypes(true, true, true, true, true);
 

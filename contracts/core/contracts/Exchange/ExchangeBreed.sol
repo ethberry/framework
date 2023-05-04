@@ -39,7 +39,9 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToOneSignature(params, item, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 

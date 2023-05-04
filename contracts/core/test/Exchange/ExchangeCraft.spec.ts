@@ -1237,7 +1237,7 @@ describe("ExchangeCraft", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
   });
 });

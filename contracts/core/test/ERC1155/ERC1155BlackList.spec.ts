@@ -13,5 +13,5 @@ describe("ERC1155Blacklist", function () {
   shouldBehaveLikeERC1155Simple(factory);
   shouldBehaveLikeERC1155BlackList(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC1155);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC1155]);
 });

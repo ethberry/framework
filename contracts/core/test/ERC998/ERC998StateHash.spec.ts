@@ -13,5 +13,5 @@ describe.skip("ERC998StateHash", function () {
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

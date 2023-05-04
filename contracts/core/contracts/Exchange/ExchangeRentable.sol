@@ -23,13 +23,16 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
-    bytes32 expires,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverManyToManyExtraSignature(params, items, price, expires, signature);
-    if (!hasRole(METADATA_ROLE, signer)) revert WrongSigner();
+    address signer = _recoverManyToManySignature(params, items, price, signature);
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
-    if (items.length == 0) revert WrongAmount();
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     address account = _msgSender();
 
@@ -37,10 +40,12 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
     }
 
+    uint64 expires = uint256(params.extra).toUint64();
+
     emit Lend(
       account /* from */,
       params.referrer /* to */,
-      uint256(expires).toUint64() /* lend expires */,
+      expires /* lend expires */,
       params.externalId /* lendRule db id */,
       items,
       price
@@ -48,11 +53,7 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
 
     uint256 length = items.length;
     for (uint256 i = 0; i < length; ) {
-      IERC4907(items[i].token).setUser(
-        items[i].tokenId,
-        params.referrer /* to */,
-        uint256(expires).toUint64() /* lend expires */
-      );
+      IERC4907(items[i].token).setUser(items[i].tokenId, params.referrer /* to */, expires /* lend expires */);
       unchecked {
         i++;
       }

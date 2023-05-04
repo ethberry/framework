@@ -13,10 +13,10 @@ describe("ERC721Rentable", function () {
   shouldBehaveLikeERC721Simple(factory);
   shouldBehaveLikeERC721Rentable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4907,
-  );
+  ]);
 });

@@ -323,7 +323,7 @@ describe("ExchangeGrade", function () {
         signature,
       );
 
-      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
   });
 });

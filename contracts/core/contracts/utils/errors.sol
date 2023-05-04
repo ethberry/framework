@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 error MethodNotSupported();
 error TemplateZero();
 error UnsupportedTokenType();
-error WrongSigner();
+error SignerMissingRole();
 error ExpiredSignature();
 error NotAnOwner();
 error CountExceed();

@@ -54,5 +54,5 @@ describe("ERC1155Soulbound", function () {
     });
   });
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC1155);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC1155]);
 });

@@ -31,10 +31,10 @@ describe("ERC20Whitelist", function () {
     mint: customMint,
   });
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC20,
     InterfaceId.IERC1363,
-  );
+  ]);
 });

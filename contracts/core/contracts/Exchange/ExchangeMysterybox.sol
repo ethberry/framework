@@ -23,9 +23,13 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
-    if (items.length == 0) revert WrongAmount();
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     address account = _msgSender();
 

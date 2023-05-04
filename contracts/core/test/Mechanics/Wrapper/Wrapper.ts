@@ -21,12 +21,12 @@ describe("Wrapper", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeERC721Simple(factory);
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     FrameworkInterfaceId.ERC1155Receiver,
-  );
+  ]);
 
   describe("mint/unpack", function () {
     describe("NATIVE", function () {

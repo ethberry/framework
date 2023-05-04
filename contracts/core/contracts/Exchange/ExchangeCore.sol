@@ -24,7 +24,9 @@ abstract contract ExchangeCore is SignatureValidator, AccessControl, Pausable {
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) revert WrongSigner();
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 

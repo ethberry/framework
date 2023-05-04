@@ -17,5 +17,5 @@ describe("ERC721CollectionBlacklist", function () {
 
   // shouldBehaveLikeERC721Consecutive(factory, { initialBalance: batchSize });
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

@@ -165,7 +165,7 @@ describe("ExchangeClaim", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
     });
 
@@ -359,7 +359,7 @@ describe("ExchangeClaim", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
     });
 
@@ -496,7 +496,7 @@ describe("ExchangeClaim", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
     });
 

@@ -16,11 +16,11 @@ describe("ERC998Rentable", function () {
   shouldBehaveLikeERC998Simple(factory);
   shouldBehaveLikeERC721Rentable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4907,
     FrameworkInterfaceId.ERC998ERC721TopDown,
-  );
+  ]);
 });

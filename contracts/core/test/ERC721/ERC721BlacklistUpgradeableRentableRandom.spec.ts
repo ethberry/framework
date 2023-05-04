@@ -26,7 +26,7 @@ describe("ERC721BlacklistUpgradeableRentableRandom", function () {
 
   shouldBehaveLikeERC721Rentable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
@@ -34,5 +34,5 @@ describe("ERC721BlacklistUpgradeableRentableRandom", function () {
     InterfaceId.IERC4907,
     FrameworkInterfaceId.ERC721Upgradable,
     FrameworkInterfaceId.ERC721Random,
-  );
+  ]);
 });

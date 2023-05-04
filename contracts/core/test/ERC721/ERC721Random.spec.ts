@@ -16,10 +16,10 @@ describe("ERC721Random", function () {
   shouldMintCommon(factory);
   shouldMintRandom(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     FrameworkInterfaceId.ERC721Random,
-  );
+  ]);
 });

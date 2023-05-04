@@ -591,7 +591,7 @@ describe("ExchangeBreed", function () {
         );
 
         // ECDSA always returns an address
-        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
 
       it("should fail: Wrong signer", async function () {
@@ -633,7 +633,7 @@ describe("ExchangeBreed", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongSigner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
 
       it("should fail: paused", async function () {
