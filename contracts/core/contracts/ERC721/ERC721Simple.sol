@@ -66,7 +66,7 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaD
     return _baseURI(_baseTokenURI);
   }
 
-  receive() external payable {
+  receive() external payable virtual {
     revert();
   }
 }

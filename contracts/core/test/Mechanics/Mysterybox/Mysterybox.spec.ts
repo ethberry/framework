@@ -76,7 +76,17 @@ describe("ERC721MysteryboxSimple", function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
-        await mysteryboxInstance.fundEth({ value: utils.parseEther("1.0") });
+        await mysteryboxInstance.topUp(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: 0,
+              amount: utils.parseEther("1.0"),
+            },
+          ],
+          { value: utils.parseEther("1.0") },
+        );
 
         const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
           {
@@ -117,6 +127,7 @@ describe("ERC721MysteryboxSimple", function () {
             amount,
           },
         ]);
+
         await expect(tx1)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -305,7 +316,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     describe("MIX", function () {
-      it.skip("should mint/unpack multiple", async function () {
+      it("should mint/unpack multiple", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
@@ -321,7 +332,17 @@ describe("ERC721MysteryboxSimple", function () {
         await erc998SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
         await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
 
-        await mysteryboxInstance.fundEth({ value: utils.parseEther("1.0") });
+        await mysteryboxInstance.topUp(
+          [
+            {
+              tokenType: 0,
+              token: constants.AddressZero,
+              tokenId: 0,
+              amount: utils.parseEther("1.0"),
+            },
+          ],
+          { value: utils.parseEther("1.0") },
+        );
         await erc20SimpleInstance.mint(mysteryboxInstance.address, amount);
 
         const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
