@@ -31,6 +31,6 @@ describe("ERC998BlacklistUpgradeableRandom", function () {
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.ERC721Random,
-    FrameworkInterfaceId.Grade,
+    FrameworkInterfaceId.ERC721Upgradable,
   ]);
 });

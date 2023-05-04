@@ -38,8 +38,8 @@ export const contractTemplate = "SIMPLE";
 export const subscriptionId = 1;
 
 export enum FrameworkInterfaceId {
-  ERC721Random = "0x32034d27",
+  ERC721Simple = "0xfdbf6221",
   ERC721Upgradable = "0x45977d03",
-  Grade = "0x381b3743",
-  Mystery = "0xf0f47261",
+  ERC721Random = "0x32034d27",
+  IERC721Mystery = "0xf0f47261",
 }

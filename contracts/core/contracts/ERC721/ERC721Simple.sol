@@ -59,7 +59,7 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaD
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return interfaceId == IERC721_SIMPLE_ID || super.supportsInterface(interfaceId);
   }
 
   function _baseURI() internal view virtual override(ERC721, ERC721ABaseUrl) returns (string memory) {
