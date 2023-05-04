@@ -23,6 +23,6 @@ describe("ERC721Upgradeable", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
-    FrameworkInterfaceId.Grade,
+    FrameworkInterfaceId.ERC721Upgradable,
   ]);
 });
