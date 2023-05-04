@@ -1,7 +1,6 @@
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { FrameworkInterfaceId } from "../constants";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/user";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
@@ -21,6 +20,6 @@ describe("ERC998Rentable", function () {
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4907,
-    FrameworkInterfaceId.ERC998ERC721TopDown,
+    InterfaceId.IERC998TD,
   ]);
 });
