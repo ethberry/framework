@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants, utils } from "ethers";
+import { constants, Contract, Signer, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, InterfaceId } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
@@ -13,12 +13,23 @@ import { deployLinkVrfFixture } from "../../shared/link";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
-import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
+import { shouldBehaveLikeERC721Simple } from "./shared/simple";
+
+const customMint = (contractInstance: Contract, signer: Signer, receiver: string) => {
+  return contractInstance.connect(signer).mintBox(receiver, templateId, [
+    {
+      tokenType: 0,
+      token: constants.AddressZero,
+      tokenId: templateId,
+      amount,
+    },
+  ]) as Promise<any>;
+};
 
 describe("ERC721MysteryboxSimple", function () {
   let vrfInstance: VRFCoordinatorMock;
 
-  const factory = () => deployERC721("ERC721MysteryboxTest");
+  const factory = () => deployERC721("ERC721MysteryboxSimple");
   const erc20Factory = (name: string) => deployERC20(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
@@ -36,7 +47,10 @@ describe("ERC721MysteryboxSimple", function () {
   });
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldBehaveLikeERC721Simple(factory);
+  shouldBehaveLikeERC721Simple(factory, {
+    mint: customMint,
+    tokenId,
+  });
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
@@ -291,7 +305,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     describe("MIX", function () {
-      it.skip("should mint/unpack multiple", async function () {
+      it("should mint/unpack multiple", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const mysteryboxInstance = await factory();
