@@ -9,6 +9,17 @@ import { deployERC20 } from "./shared/fixtures";
 import { shouldBehaveLikeERC20WhiteList } from "./shared/whitelist/whitelist";
 import { shouldBehaveLikeERC20Custom } from "./shared/whitelist";
 
+const customMint = async (
+  contractInstance: Contract,
+  signer: Signer,
+  receiver: string,
+  value: BigNumberish = amount,
+): Promise<any> => {
+  const tx = contractInstance.whitelist(receiver);
+  await expect(tx).to.emit(contractInstance, "Whitelisted").withArgs(receiver);
+  return contractInstance.connect(signer).mint(receiver, value) as Promise<any>;
+};
+
 describe("ERC20Whitelist", function () {
   const factory = () => deployERC20(this.title);
 
@@ -17,16 +28,7 @@ describe("ERC20Whitelist", function () {
   shouldBehaveLikeERC20WhiteList(factory);
 
   shouldBehaveLikeERC20Custom(factory, {
-    mint: async (
-      contractInstance: Contract,
-      signer: Signer,
-      receiver: string,
-      value: BigNumberish = amount,
-    ): Promise<any> => {
-      const tx = contractInstance.whitelist(receiver);
-      await expect(tx).to.emit(contractInstance, "Whitelisted").withArgs(receiver);
-      return contractInstance.connect(signer).mint(receiver, value) as Promise<any>;
-    },
+    mint: customMint,
   });
 
   shouldSupportsInterface(factory)(
