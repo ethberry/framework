@@ -173,8 +173,7 @@ export function shouldSafeTransferFrom(factory: () => Promise<Contract>) {
       // TODO "CTD: _transferFrom token is child of other top down composable"
     });
 
-    // !Failed. There is not circular ownership ?
-    it.skip("should not transfer token to itself", async function () {
+    it("should not transfer token to itself", async function () {
       const [owner] = await ethers.getSigners();
       const erc721Instance = await factory();
 
@@ -189,7 +188,7 @@ export function shouldSafeTransferFrom(factory: () => Promise<Contract>) {
       const tx1 = erc721Instance["safeTransferFrom(address,address,uint256,bytes)"](
         owner.address,
         erc721Instance.address,
-        2,
+        1,
         "0x0000000000000000000000000000000000000000000000000000000000000001",
       );
       await expect(tx1).to.be.revertedWith(`CTD: circular ownership is forbidden`);
