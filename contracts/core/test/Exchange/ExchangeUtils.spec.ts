@@ -6,7 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorMock, ExchangeMock } from "../../typechain-types";
 import { subscriptionId, templateId, tokenId } from "../constants";
 import { deployContract } from "../shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
@@ -15,13 +15,29 @@ import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 
+const enabled = {
+  native: false,
+  erc20: false,
+  erc721: false,
+  erc998: false,
+  erc1155: false,
+};
+
+const disabled = {
+  native: true,
+  erc20: true,
+  erc721: true,
+  erc998: true,
+  erc1155: true,
+};
+
 describe("ExchangeUtils", function () {
   describe("spendFrom", function () {
     describe("ETH", function () {
       it("should spendFrom: ETH => SELF", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -34,6 +50,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           exchangeInstance.address,
+          enabled,
           { value: amount },
         );
 
@@ -43,7 +60,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ETH => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -56,6 +73,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
           { value: amount },
         );
 
@@ -65,7 +83,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ETH => EOA (wrong amount)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -78,6 +96,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
           { value: 0 },
         );
 
@@ -87,9 +106,8 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ETH => Wallet", async function () {
         const [owner] = await ethers.getSigners();
 
-        const walletInstance = await deployContract("Wallet");
-
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const walletInstance = await deployWallet();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -102,6 +120,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
           { value: amount },
         );
 
@@ -111,9 +130,8 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ETH => Reverter", async function () {
         const [owner] = await ethers.getSigners();
 
-        const jerkInstance = await deployContract("Jerk");
-
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const jerkInstance = await deployJerk();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -126,6 +144,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
           { value: amount },
         );
 
@@ -138,8 +157,7 @@ describe("ExchangeUtils", function () {
         const [owner] = await ethers.getSigners();
 
         const jerkInstance = await deployJerk();
-
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -156,6 +174,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc20Instance, "Transfer").withArgs(owner.address, jerkInstance.address, amount);
@@ -166,8 +185,7 @@ describe("ExchangeUtils", function () {
         const [owner] = await ethers.getSigners();
 
         const walletInstance = await deployWallet();
-
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -184,6 +202,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -196,7 +215,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => Self", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -213,6 +232,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           exchangeInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -225,8 +245,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver.
-        const exchangeInstance = await exchangeFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -243,6 +262,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc20Instance, "Transfer").withArgs(owner.address, receiver.address, amount);
@@ -252,8 +272,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => EOA (insufficient amount)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver.
-        const exchangeInstance = await exchangeFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         // await erc20Instance.mint(owner.address, amount);
@@ -270,6 +289,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
@@ -278,8 +298,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC20 => EOA (insufficient allowance)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver.
-        const exchangeInstance = await exchangeFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -296,6 +315,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC20: insufficient allowance");
@@ -306,8 +326,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver. Inherited from ExchangeUtils
-        const exchangeInstance = await exchangeFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
@@ -324,6 +343,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc20Instance, "Transfer").withArgs(owner.address, jerkInstance.address, amount);
@@ -335,7 +355,7 @@ describe("ExchangeUtils", function () {
 
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
@@ -352,6 +372,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -364,7 +385,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1363 => Self", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
@@ -381,6 +402,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           exchangeInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -393,8 +415,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1363 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeFactory = await ethers.getContractFactory("ExchangeMock"); // ERC1363 Receiver.
-        const exchangeInstance = await exchangeFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
@@ -411,6 +432,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc20Instance, "Transfer").withArgs(owner.address, receiver.address, amount);
@@ -424,7 +446,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(owner.address, templateId);
@@ -441,6 +463,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
@@ -451,7 +474,7 @@ describe("ExchangeUtils", function () {
 
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(owner.address, templateId);
@@ -468,6 +491,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(owner.address, walletInstance.address, tokenId);
@@ -479,7 +503,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC721 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(owner.address, templateId);
@@ -496,6 +520,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(owner.address, receiver.address, tokenId);
@@ -507,7 +532,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC721 => EOA (not an owner)", async function () {
         const [owner, receiver, stranger] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(stranger.address, templateId);
@@ -523,6 +548,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -531,7 +557,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC721 => EOA (not approved)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(owner.address, templateId);
@@ -548,6 +574,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -560,7 +587,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(owner.address, templateId);
@@ -577,6 +604,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
@@ -587,7 +615,7 @@ describe("ExchangeUtils", function () {
 
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(owner.address, templateId);
@@ -604,6 +632,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc998Instance, "Transfer").withArgs(owner.address, walletInstance.address, tokenId);
@@ -615,7 +644,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC998 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(owner.address, templateId);
@@ -632,6 +661,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc998Instance, "Transfer").withArgs(owner.address, receiver.address, tokenId);
@@ -643,7 +673,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC998 => EOA (not an owner)", async function () {
         const [owner, receiver, stranger] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(stranger.address, templateId);
@@ -659,6 +689,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -667,7 +698,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC998 => EOA (not approved)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(owner.address, templateId);
@@ -684,6 +715,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -696,7 +728,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -713,6 +745,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC1155: transfer to non-ERC1155Receiver implementer");
@@ -723,7 +756,7 @@ describe("ExchangeUtils", function () {
 
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -740,6 +773,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -753,7 +787,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1155 => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -770,6 +804,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -783,7 +818,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1155 => EOA (insufficient amount)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         // await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -800,6 +835,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC1155: insufficient balance for transfer");
@@ -808,7 +844,7 @@ describe("ExchangeUtils", function () {
       it("should spendFrom: ERC1155 => EOA (insufficient allowance)", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -825,6 +861,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC1155: caller is not token owner or approved");
@@ -835,7 +872,7 @@ describe("ExchangeUtils", function () {
       it("should fail spendFrom: ETH", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpendFrom(
           [
@@ -848,6 +885,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           receiver.address,
+          disabled,
           { value: amount },
         );
 
@@ -859,7 +897,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
@@ -876,6 +914,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -886,7 +925,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(owner.address, templateId);
@@ -903,6 +942,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -913,7 +953,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(owner.address, templateId);
@@ -930,6 +970,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -940,7 +981,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -957,6 +998,7 @@ describe("ExchangeUtils", function () {
           ],
           owner.address,
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -969,7 +1011,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ETH => EOA", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx1 = await exchangeInstance.topUp(
           [
@@ -998,6 +1040,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           owner.address,
+          enabled,
         );
 
         await expect(tx2).changeEtherBalances([exchangeInstance, owner], [-amount, amount]);
@@ -1006,7 +1049,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ETH => EOA (insufficient amount)", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpend(
           [
@@ -1018,6 +1061,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           owner.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("Address: insufficient balance");
@@ -1028,7 +1072,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC20 => ERC1363 non Holder", async function () {
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1043,6 +1087,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1055,7 +1100,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC20 => ERC1363 Holder", async function () {
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1070,6 +1115,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1083,7 +1129,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC20 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1098,6 +1144,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1109,7 +1156,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC20 => EOA (insufficient amount)", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         // await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1124,6 +1171,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           owner.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
@@ -1132,7 +1180,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1363 => ERC1363 non Holder", async function () {
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1147,6 +1195,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1158,7 +1207,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1363 => ERC1363 Holder", async function () {
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1173,6 +1222,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1186,7 +1236,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1363 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1201,6 +1251,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1212,7 +1263,7 @@ describe("ExchangeUtils", function () {
 
     describe("ERC721", function () {
       it("should spend: ERC721 => non Holder", async function () {
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const jerkInstance = await deployJerk();
 
@@ -1229,16 +1280,16 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
       });
 
       it("should spend: ERC721 => Holder ", async function () {
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc721HolderFactory = await ethers.getContractFactory("ExchangeMock");
-        const erc721HolderInstance = await erc721HolderFactory.deploy();
+        const walletInstance = await deployWallet();
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1252,21 +1303,22 @@ describe("ExchangeUtils", function () {
               amount,
             },
           ],
-          erc721HolderInstance.address,
+          walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(exchangeInstance.address, erc721HolderInstance.address, tokenId);
+          .withArgs(exchangeInstance.address, walletInstance.address, tokenId);
 
-        const balance = await erc721Instance.balanceOf(erc721HolderInstance.address);
+        const balance = await erc721Instance.balanceOf(walletInstance.address);
         expect(balance).to.equal(1);
       });
 
       it("should spend: ERC721 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1281,6 +1333,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1294,7 +1347,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC721 => EOA (not an owner)", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(stranger.address, templateId);
@@ -1309,6 +1362,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -1317,7 +1371,7 @@ describe("ExchangeUtils", function () {
 
     describe("ERC998", function () {
       it("should spend: ERC998 => non Holder", async function () {
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const jerkInstance = await deployJerk();
 
@@ -1334,16 +1388,15 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: transfer to non ERC721Receiver implementer");
       });
 
       it("should spend: ERC998 => Holder ", async function () {
-        const exchangeInstance = await deployContract("ExchangeMock");
-
-        const erc721HolderFactory = await ethers.getContractFactory("ExchangeMock");
-        const erc721HolderInstance = await erc721HolderFactory.deploy();
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
+        const walletInstance = await deployWallet();
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1357,21 +1410,22 @@ describe("ExchangeUtils", function () {
               amount,
             },
           ],
-          erc721HolderInstance.address,
+          walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
           .to.emit(erc998Instance, "Transfer")
-          .withArgs(exchangeInstance.address, erc721HolderInstance.address, tokenId);
+          .withArgs(exchangeInstance.address, walletInstance.address, tokenId);
 
-        const balance = await erc998Instance.balanceOf(erc721HolderInstance.address);
+        const balance = await erc998Instance.balanceOf(walletInstance.address);
         expect(balance).to.equal(1);
       });
 
       it("should spend: ERC998 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1386,6 +1440,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1399,7 +1454,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC998 => EOA (not an owner)", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(stranger.address, templateId);
@@ -1414,6 +1469,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC721: caller is not token owner or approved");
@@ -1426,7 +1482,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(exchangeInstance.address, templateId, amount, "0x");
@@ -1441,6 +1497,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC1155: transfer to non-ERC1155Receiver implementer");
@@ -1451,7 +1508,7 @@ describe("ExchangeUtils", function () {
 
         const walletInstance = await deployWallet();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(exchangeInstance.address, templateId, amount, "0x");
@@ -1466,6 +1523,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           walletInstance.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1479,7 +1537,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1155 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(exchangeInstance.address, templateId, amount, "0x");
@@ -1494,6 +1552,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1507,7 +1566,7 @@ describe("ExchangeUtils", function () {
       it("should spend: ERC1155 => EOA (insufficient amount)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         // await erc1155Instance.mint(exchangeInstance.address, templateId, amount, "0x");
@@ -1522,6 +1581,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.be.revertedWith("ERC1155: insufficient balance for transfer");
@@ -1532,7 +1592,7 @@ describe("ExchangeUtils", function () {
       it("should fail spend: ETH", async function () {
         const [owner] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testSpend(
           [
@@ -1544,6 +1604,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           owner.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -1552,7 +1613,7 @@ describe("ExchangeUtils", function () {
       it("should fail spend: ERC20", async function () {
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1567,13 +1628,14 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
       });
 
       it("should fail spend: ERC721", async function () {
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1588,13 +1650,14 @@ describe("ExchangeUtils", function () {
             },
           ],
           erc721Instance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
       });
 
       it("should fail spend: ERC998", async function () {
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.mintCommon(exchangeInstance.address, templateId);
@@ -1609,6 +1672,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           erc998Instance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -1619,7 +1683,7 @@ describe("ExchangeUtils", function () {
 
         const jerkInstance = await deployJerk();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.mint(exchangeInstance.address, templateId, amount, "0x");
@@ -1634,6 +1698,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           jerkInstance.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -1646,7 +1711,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ETH => EOA", async function () {
         const [owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx1 = await exchangeInstance.topUp(
           [
@@ -1674,6 +1739,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx2).to.emit(lib, "PaymentEthSent").withArgs(receiver.address, amount);
@@ -1685,7 +1751,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC20 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1700,6 +1766,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1725,7 +1792,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC721 => EOA (Simple)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1740,6 +1807,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -1751,7 +1819,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC721 => EOA (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Random");
         await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1769,6 +1837,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await randomRequest(erc721Instance, vrfInstance);
@@ -1795,7 +1864,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC998 => EOA (Simple)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1810,6 +1879,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx).to.emit(erc998Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -1821,7 +1891,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC998 => EOA (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Random");
         await erc998Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1839,6 +1909,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await randomRequest(erc998Instance, vrfInstance);
@@ -1854,7 +1925,7 @@ describe("ExchangeUtils", function () {
       it("should mint: ERC1155 => EOA", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMock");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1869,6 +1940,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          enabled,
         );
 
         await expect(tx)
@@ -1884,7 +1956,7 @@ describe("ExchangeUtils", function () {
       it("should fail acquire: ETH", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const tx = exchangeInstance.testAcquire(
           [
@@ -1896,6 +1968,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -1904,7 +1977,7 @@ describe("ExchangeUtils", function () {
       it("should fail acquire: ERC20", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc20Instance = await deployERC20("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
@@ -1919,6 +1992,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
@@ -1927,7 +2001,7 @@ describe("ExchangeUtils", function () {
       it("should fail acquire: ERC721", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc721Instance = await deployERC721("ERC721Simple");
         await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1942,6 +2016,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          disabled,
         );
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
       });
@@ -1949,7 +2024,7 @@ describe("ExchangeUtils", function () {
       it("should fail acquire: ERC998", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc998Instance = await deployERC721("ERC998Simple");
         await erc998Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1964,6 +2039,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          disabled,
         );
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
       });
@@ -1971,7 +2047,7 @@ describe("ExchangeUtils", function () {
       it("should fail acquire: ERC1155", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const exchangeInstance = await deployContract("ExchangeMockDisabled");
+        const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
         const erc1155Instance = await deployERC1155("ERC1155Simple");
         await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -1986,6 +2062,7 @@ describe("ExchangeUtils", function () {
             },
           ],
           receiver.address,
+          disabled,
         );
 
         await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "UnsupportedTokenType");
