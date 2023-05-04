@@ -12,7 +12,6 @@ export function shouldBalanceOfERC20(factory: () => Promise<Contract>) {
     it("should get balance of erc20 tokens", async function () {
       const [owner] = await ethers.getSigners();
       const erc721Instance = await factory();
-      // console.log("deply ERC20");
       const erc20Instance = await deployERC20("ERC20Simple");
 
       await erc20Instance.mint(owner.address, amount);
