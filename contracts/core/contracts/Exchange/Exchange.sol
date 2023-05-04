@@ -55,8 +55,6 @@ contract Exchange is
     _setupRole(METADATA_ROLE, account);
   }
 
-  DisabledTokenTypes disabledNone = DisabledTokenTypes(false, false, false, false, false);
-
   /**
    * @dev Pauses the contract.
    */
