@@ -15,8 +15,8 @@ import {
   shouldSetApprovalForAll,
 } from "@gemunion/contracts-erc1155";
 
-import { deployERC1155 } from "./shared/fixtures";
 import { tokenId } from "../constants";
+import { deployERC1155 } from "./shared/fixtures";
 
 describe("ERC1155Soulbound", function () {
   const factory = () => deployERC1155(this.title);

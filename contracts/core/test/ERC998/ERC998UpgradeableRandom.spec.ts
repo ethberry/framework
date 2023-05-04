@@ -1,13 +1,13 @@
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
+import { FrameworkInterfaceId } from "../constants";
 import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
-import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
+import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998UpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);

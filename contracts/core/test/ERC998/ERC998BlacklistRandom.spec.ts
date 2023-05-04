@@ -2,13 +2,13 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 
+import { FrameworkInterfaceId } from "../constants";
 import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
-import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeERC721Blacklist, shouldBehaveLikeERC721BlacklistRandom } from "../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
+import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998BlacklistRandom", function () {
   const factory = () => deployERC721(this.title);
