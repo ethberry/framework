@@ -26,7 +26,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -109,7 +109,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -212,7 +212,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: stranger.address,
@@ -288,7 +288,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -350,7 +350,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: owner.address,
@@ -453,7 +453,7 @@ describe("ExchangeRentable", function () {
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,

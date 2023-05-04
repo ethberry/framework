@@ -73,7 +73,7 @@ async function main() {
 
   await debug(await vrfInstance.createSubscription(), "createSubscription");
   // TODO get subId from createSubscription event
-  const subId = utils.hexZeroPad(ethers.utils.hexlify(BigNumber.from(1)), 32);
+  const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(1)), 32);
   await debug(await linkInstance.transferAndCall(vrfInstance.address, linkAmount, subId), "transferAndCall");
   // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
 }

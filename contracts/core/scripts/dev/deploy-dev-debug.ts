@@ -9,7 +9,7 @@ import { getContractName } from "../../test/utils";
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
 const delayMs = 500; // block delay ms
-// const linkAmountInEth = ethers.utils.parseEther("1");
+// const linkAmountInEth = utils.parseEther("1");
 
 interface IObj {
   address?: string;
