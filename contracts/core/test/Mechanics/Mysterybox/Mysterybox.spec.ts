@@ -14,6 +14,7 @@ import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
+import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 
 const customMint = (contractInstance: Contract, signer: Signer, receiver: string) => {
   return contractInstance.connect(signer).mintBox(receiver, templateId, [
@@ -51,6 +52,8 @@ describe("ERC721MysteryboxSimple", function () {
     mint: customMint,
     tokenId,
   });
+  shouldBehaveLikeTopUp(factory);
+
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
