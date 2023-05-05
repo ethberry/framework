@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
@@ -37,7 +38,7 @@ import "../../utils/errors.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, TopUp {
+contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, TopUp, ReentrancyGuard {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -108,7 +109,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
    * @param params Struct of Params that containing the ruleId and referrer parameters.
    * @param tokenIds - Array<id> of the tokens to be deposited.
    */
-  function deposit(Params memory params, uint256[] calldata tokenIds) public payable whenNotPaused {
+  function deposit(Params memory params, uint256[] calldata tokenIds) public payable nonReentrant whenNotPaused {
     // Retrieve the rule params.
     uint256 ruleId = params.externalId;
     address referrer = params.referrer;
@@ -181,10 +182,6 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     }
   }
 
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
-    return super._afterPurchase(referrer, price);
-  }
-
   /* Receive Staking Reward logic:
 
   1. Calculate multiplier (count full periods since stake start)
@@ -209,7 +206,11 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
    * @param withdrawDeposit Flag indicating whether the deposit should be withdrawn or not.
    * @param breakLastPeriod Flag indicating whether the last period should be broken or not.
    */
-  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public virtual whenNotPaused {
+  function receiveReward(
+    uint256 stakeId,
+    bool withdrawDeposit,
+    bool breakLastPeriod
+  ) public virtual nonReentrant whenNotPaused {
     // Retrieve the stake and rule objects from storage.
     Stake storage stake = _stakes[stakeId];
     address payable receiver = payable(stake.owner); // Set the receiver of the reward.
@@ -366,35 +367,14 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     uint256 period,
     bool recurrent
   ) internal pure virtual returns (uint256) {
-    uint256 multiplier = (finishTimestamp - startTimestamp) / period;
-    // If staking rule is not recurrent, limit reward to 1 cycle
-    if (!recurrent && multiplier > 1) {
-      return 1;
-    }
-    return multiplier;
-  }
-
-  /**
-   * @dev Pauses the contract.
-   */
-  function pause() public onlyRole(PAUSER_ROLE) {
-    _pause();
-  }
-
-  /**
-   * @dev Unpauses the contract.
-   */
-  function unpause() public onlyRole(PAUSER_ROLE) {
-    _unpause();
-  }
-
-  /**
-   * @dev See {IERC165-supportsInterface}.
-   */
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    if (startTimestamp <= finishTimestamp) {
+      uint256 multiplier = (finishTimestamp - startTimestamp) / period;
+      // If staking rule is not recurrent, limit reward to 1 cycle
+      if (!recurrent && multiplier > 1) {
+        return 1;
+      }
+      return multiplier;
+    } else return 0;
   }
 
   /**
@@ -415,6 +395,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
    * @dev Add a new staking rule for the contract.
    * @param rule The staking rule to store.
    */
+
   function _setRule(Rule memory rule) internal {
     _ruleIdCounter.increment();
     uint256 ruleId = _ruleIdCounter.current();
@@ -481,13 +462,22 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     emit RuleUpdated(ruleId, active);
   }
 
+  /**
+   * @dev Referral calculations.
+   * @param referrer The Referrer address.
+   * @param price The deposited Asset[].
+   */
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+    return super._afterPurchase(referrer, price);
+  }
+
   // WITHDRAW
 
   /**
    * @dev Withdraw the penalty balance for given token address and tokenId
    * @param item asset to withdraw.
    */
-  function withdrawBalance(Asset memory item) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function withdrawBalance(Asset memory item) public nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {
     // Retrieve balance from storage.
 
     item.amount = _penalties[item.token][item.tokenId];
@@ -500,6 +490,29 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     _penalties[item.token][item.tokenId] = 0;
 
     ExchangeUtils.spend(ExchangeUtils._toArray(item), account, DisabledTokenTypes(false, false, false, false, false));
+  }
+
+  /**
+   * @dev Pauses the contract.
+   */
+  function pause() public onlyRole(PAUSER_ROLE) {
+    _pause();
+  }
+
+  /**
+   * @dev Unpauses the contract.
+   */
+  function unpause() public onlyRole(PAUSER_ROLE) {
+    _unpause();
+  }
+
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {
+    return super.supportsInterface(interfaceId);
   }
 
   /**
