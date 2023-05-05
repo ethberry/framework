@@ -139,8 +139,9 @@ export class EventHistoryService {
 
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
       }
-      await contractEventEntity.save();
     }
 
     if (eventType === ContractEventType.MintRandom) {
@@ -151,8 +152,9 @@ export class EventHistoryService {
 
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
       }
-      await contractEventEntity.save();
     }
 
     if (
@@ -175,20 +177,8 @@ export class EventHistoryService {
       });
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
-
-        const nestedEvents = await this.findAll({
-          transactionHash,
-          parentId: undefined,
-        });
-
-        if (nestedEvents) {
-          nestedEvents.map(async nested => {
-            if (nested.id !== parentEvent.id) {
-              Object.assign(nested, { parentId: parentEvent.id });
-              await nested.save();
-            }
-          });
-        }
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
       }
 
       await contractEventEntity.save();
@@ -202,23 +192,27 @@ export class EventHistoryService {
       });
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
-
-        const nestedEvents = await this.findAll({
-          transactionHash,
-          parentId: undefined,
-        });
-        // TODO nested ?== parent
-        if (nestedEvents) {
-          nestedEvents.map(async nested => {
-            if (nested.id !== parentEvent.id) {
-              Object.assign(nested, { parentId: parentEvent.id });
-              await nested.save();
-            }
-          });
-        }
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
       }
 
       await contractEventEntity.save();
+    }
+  }
+
+  public async findNestedHistory(transactionHash: string, parentId: number) {
+    const nestedEvents = await this.findAll({
+      transactionHash,
+      parentId: undefined,
+    });
+    // TODO nested ?== parent
+    if (nestedEvents) {
+      nestedEvents.map(async nested => {
+        if (nested.id !== parentId) {
+          Object.assign(nested, { parentId: parentId });
+          await nested.save();
+        }
+      });
     }
   }
 }
