@@ -94,7 +94,9 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
     } else {
       content.push([]);
     }
-    return metaLoadRule(rule, content);
+    return metaLoadRule(rule, content).then(() => {
+      setIsUploadDialogOpen(false);
+    });
   };
 
   return (
