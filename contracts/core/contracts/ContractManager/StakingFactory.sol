@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.13;
 
+import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract StakingFactory is AbstractFactory {
@@ -32,7 +33,10 @@ contract StakingFactory is AbstractFactory {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashStaking(params, args), signature);
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+
+    if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     addr = deploy2(params.bytecode, abi.encode(args.maxStake), params.nonce);
     _staking.push(addr);

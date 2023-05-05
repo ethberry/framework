@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.13;
 
+import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract PyramidFactory is AbstractFactory {
@@ -34,7 +35,10 @@ contract PyramidFactory is AbstractFactory {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashPyramid(params, args), signature);
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+
+    if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     addr = deploy2(params.bytecode, abi.encode(args.payees, args.shares), params.nonce);
     _pyramid_tokens.push(addr);
