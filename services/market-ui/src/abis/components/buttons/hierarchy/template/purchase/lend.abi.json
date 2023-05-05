@@ -56,9 +56,9 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct Asset[]",
-        "name": "items",
-        "type": "tuple[]"
+        "internalType": "struct Asset",
+        "name": "item",
+        "type": "tuple"
       },
       {
         "components": [

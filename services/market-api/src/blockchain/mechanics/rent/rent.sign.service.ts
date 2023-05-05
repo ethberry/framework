@@ -64,17 +64,15 @@ export class RentSignService {
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManySignature(
       account,
       params,
-      [
-        {
-          tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
-          token: tokenEntity.template.contract.address,
-          tokenId: tokenEntity.tokenId,
-          amount: "1", // todo get from DTO? (for 1155)
-        },
-      ],
+      {
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        token: tokenEntity.template.contract.address,
+        tokenId: tokenEntity.tokenId,
+        amount: "1", // todo get from DTO? (for 1155)
+      },
       rentEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

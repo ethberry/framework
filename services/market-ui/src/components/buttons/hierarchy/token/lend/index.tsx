@@ -36,16 +36,14 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
         referrer: values.account,
-        extra: utils.formatBytes32String("0x"),
+        extra: expires,
       };
-      const items = [
-        {
-          tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
-          token: token.template!.contract?.address,
-          tokenId: token.tokenId,
-          amount: 1,
-        },
-      ];
+      const item = {
+        tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
+        token: token.template!.contract?.address,
+        tokenId: token.tokenId,
+        amount: 1,
+      };
 
       const rentRule = token.template?.contract?.rent
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
@@ -63,7 +61,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
             amount: component.amount,
           }))
         : []; // Zero price for free rent
-      return contract.lend(params, items, price, expires, sign.signature, {
+      return contract.lend(params, item, price, sign.signature, {
         value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
     },
