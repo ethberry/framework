@@ -160,9 +160,12 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
 
         // Check templateId if ERC721 or ERC998
         if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-          if (depositItem.tokenId != 0) {
+          // Rule deposit tokenId
+          uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
+
+          if (ruleDepositTokenTemplateId != 0) {
             uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
-            if (templateId != depositItem.tokenId) revert WrongToken();
+            if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
           }
         }
 

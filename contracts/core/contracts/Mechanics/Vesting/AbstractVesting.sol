@@ -11,11 +11,10 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "../../utils/TopUp.sol";
 
-contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp, ReentrancyGuard {
+contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
   using SafeCast for uint256;
 
   constructor(
@@ -30,7 +29,7 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp, Reentrancy
    * @dev Allows to top-up the vesting contract with tokens (NATIVE and ERC20 only)
    * @param price An array of Asset representing the tokens to be transferred.
    */
-  function topUp(Asset[] memory price) external payable override nonReentrant {
+  function topUp(Asset[] memory price) external payable override {
     ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
   }
 
