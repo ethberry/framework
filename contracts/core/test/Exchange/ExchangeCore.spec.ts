@@ -17,7 +17,7 @@ import {
   shouldSupportsInterface,
 } from "@gemunion/contracts-mocha";
 
-import { externalId, extra, params, tokenId } from "../constants";
+import { externalId, extra, params, tokenId, expiresAt } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
@@ -356,7 +356,7 @@ describe("ExchangeCore", function () {
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
 
-    it("should fail: expired signature", async function () {
+    it("should fail: expired signature 1", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -409,6 +409,85 @@ describe("ExchangeCore", function () {
       );
 
       await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
+    });
+
+    it("should fail: expired signature 2", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+      const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+
+      const params = {
+        nonce,
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+        extra,
+      };
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx1).to.emit(exchangeInstance, "Purchase");
+
+      const tx2 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail: paused", async function () {
