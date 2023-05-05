@@ -23,6 +23,6 @@ describe("ERC721MysteryboxPausable", function () {
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
-    FrameworkInterfaceId.Mystery,
+    FrameworkInterfaceId.ERC721Mystery,
   ]);
 });

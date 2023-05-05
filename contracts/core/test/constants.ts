@@ -41,5 +41,5 @@ export enum FrameworkInterfaceId {
   ERC721Simple = "0xfdbf6221",
   ERC721Upgradable = "0x45977d03",
   ERC721Random = "0x32034d27",
-  IERC721Mystery = "0xf0f47261",
+  ERC721Mystery = "0xf0f47261",
 }
