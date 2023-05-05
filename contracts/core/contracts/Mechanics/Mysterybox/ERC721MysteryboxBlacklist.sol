@@ -18,7 +18,7 @@ contract ERC721MysteryboxBlacklist is ERC721MysteryboxSimple, BlackList {
     string memory baseTokenURI
   ) ERC721MysteryboxSimple(name, symbol, royalty, baseTokenURI) {}
 
-  function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
+  function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal virtual override {
     require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
     require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);

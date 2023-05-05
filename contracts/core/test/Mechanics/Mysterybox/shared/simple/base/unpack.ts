@@ -1,80 +1,69 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants, Contract, Signer, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { FrameworkInterfaceId, templateId, tokenId } from "../../constants";
-import { randomRequest } from "../../shared/randomRequest";
-import { deployLinkVrfFixture } from "../../shared/link";
-import { deployERC1155 } from "../../ERC1155/shared/fixtures";
-import { deployERC721 } from "../../ERC721/shared/fixtures";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
-import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-import { shouldBehaveLikeTopUp } from "../../shared/topUp";
+import { IERC721Random, VRFCoordinatorMock } from "../../../../../../typechain-types";
+import { templateId, tokenId } from "../../../../../constants";
+import { randomRequest } from "../../../../../shared/randomRequest";
+import { deployLinkVrfFixture } from "../../../../../shared/link";
+import { deployERC1155 } from "../../../../../ERC1155/shared/fixtures";
+import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
+import { deployERC20 } from "../../../../../ERC20/shared/fixtures";
+// import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 
-const customMint = (contractInstance: Contract, signer: Signer, receiver: string) => {
-  return contractInstance.connect(signer).mintBox(receiver, templateId, [
-    {
-      tokenType: 0,
-      token: constants.AddressZero,
-      tokenId: templateId,
-      amount,
-    },
-  ]) as Promise<any>;
-};
-
-describe("ERC721MysteryboxSimple", function () {
+export function shouldUnpackBox(factory: () => Promise<Contract>) {
   let vrfInstance: VRFCoordinatorMock;
 
-  const factory = () => deployERC721("ERC721MysteryboxSimple");
   const erc20Factory = (name: string) => deployERC20(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
   const erc1155Factory = (name: string) => deployERC1155(name);
 
-  before(async function () {
-    if (network.name === "hardhat") {
-      await network.provider.send("hardhat_reset");
+  describe("Unpack box", function () {
+    before(async function () {
+      if (network.name === "hardhat") {
+        await network.provider.send("hardhat_reset");
 
-      // https://github.com/NomicFoundation/hardhat/issues/2980
-      ({ vrfInstance } = await loadFixture(function mysterybox() {
-        return deployLinkVrfFixture();
-      }));
-    }
-  });
+        // https://github.com/NomicFoundation/hardhat/issues/2980
+        ({ vrfInstance } = await loadFixture(function mysterybox() {
+          return deployLinkVrfFixture();
+        }));
+      }
+    });
 
-  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldBehaveLikeERC721Simple(factory, {
-    mint: customMint,
-    tokenId,
-  });
-  shouldBehaveLikeTopUp(factory);
-
-  shouldSupportsInterface(factory)([
-    InterfaceId.IERC165,
-    InterfaceId.IAccessControl,
-    InterfaceId.IERC721,
-    FrameworkInterfaceId.ERC721Simple,
-    FrameworkInterfaceId.IERC721Mystery,
-  ]);
-
-  describe("mint", function () {
-    it("should fail: No content", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+    it("should fail to unpack: caller is not owner nor approved", async function () {
+      const [owner, receiver] = await ethers.getSigners();
 
       const mysteryboxInstance = await factory();
+      await mysteryboxInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount: utils.parseEther("1.0"),
+          },
+        ],
+        { value: utils.parseEther("1.0") },
+      );
 
-      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, []);
+      const tx1 = mysteryboxInstance.mintBox(owner.address, templateId, [
+        {
+          tokenType: 0,
+          token: constants.AddressZero,
+          tokenId: templateId,
+          amount,
+        },
+      ]);
+      await expect(tx1).to.emit(mysteryboxInstance, "Transfer").withArgs(constants.AddressZero, owner.address, tokenId);
 
-      await expect(tx1).to.be.revertedWith("Mysterybox: no content");
+      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
+      await expect(tx2).to.be.revertedWith("Mysterybox: unpack caller is not owner nor approved");
     });
-  });
 
-  describe("mint/unpack", function () {
     describe("NATIVE", function () {
       it("should mint/unpack", async function () {
         const [_owner, receiver] = await ethers.getSigners();
@@ -131,7 +120,6 @@ describe("ERC721MysteryboxSimple", function () {
             amount,
           },
         ]);
-
         await expect(tx1)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -404,4 +392,4 @@ describe("ERC721MysteryboxSimple", function () {
       });
     });
   });
-});
+}

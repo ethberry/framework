@@ -28,4 +28,22 @@ contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausabl
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
   }
+
+  /**
+     * @dev See {ERC721-_beforeTokenTransfer}.
+     *
+     * Requirements:
+     *
+     * - the contract must not be paused.
+     */
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 firstTokenId,
+        uint256 batchSize
+    ) internal virtual override {
+        super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+
+        require(!paused(), "ERC721Pausable: token transfer while paused");
+    }
 }
