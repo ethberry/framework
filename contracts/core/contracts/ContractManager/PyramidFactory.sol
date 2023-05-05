@@ -30,7 +30,7 @@ contract PyramidFactory is AbstractFactory {
     Params calldata params,
     PyramidArgs calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashPyramid(params, args), signature);

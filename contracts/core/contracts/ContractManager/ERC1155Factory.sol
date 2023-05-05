@@ -30,7 +30,7 @@ contract ERC1155Factory is AbstractFactory {
     Params calldata params,
     Erc1155Args calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC1155(params, args), signature);

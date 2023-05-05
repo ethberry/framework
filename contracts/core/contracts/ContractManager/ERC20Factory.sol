@@ -31,7 +31,7 @@ contract ERC20Factory is AbstractFactory {
     Params calldata params,
     Erc20Args calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC20(params, args), signature);
