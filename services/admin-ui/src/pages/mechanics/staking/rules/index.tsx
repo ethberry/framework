@@ -22,7 +22,7 @@ import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
 import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
-import { StakingEditDialog } from "./edit";
+import { StakingRuleEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
@@ -119,7 +119,7 @@ export const StakingRules: FC = () => {
         initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
-      <StakingEditDialog
+      <StakingRuleEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
