@@ -56,7 +56,7 @@ contract MysteryboxFactory is AbstractFactory {
   function _hashMysterybox(Params calldata params, MysteryArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(MYSTERYBOX_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashMysteryStruct(args)))
+        keccak256(abi.encodePacked(MYSTERYBOX_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashMysteryStruct(args)))
       );
   }
 

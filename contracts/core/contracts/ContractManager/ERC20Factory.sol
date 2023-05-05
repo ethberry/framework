@@ -54,7 +54,7 @@ contract ERC20Factory is AbstractFactory {
   function _hashERC20(Params calldata params, Erc20Args calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(ERC20_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc20Struct(args)))
+        keccak256(abi.encodePacked(ERC20_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc20Struct(args)))
       );
   }
 

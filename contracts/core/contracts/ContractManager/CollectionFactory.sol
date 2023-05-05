@@ -59,7 +59,7 @@ contract CollectionFactory is AbstractFactory {
   function _hashCollection(Params calldata params, CollectionArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(ERC721C_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc721CStruct(args)))
+        keccak256(abi.encodePacked(ERC721C_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc721CStruct(args)))
       );
   }
 

@@ -55,7 +55,7 @@ contract ERC998Factory is AbstractFactory {
   function _hashERC998(Params calldata params, Erc998Args calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(ERC998_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc998Struct(args)))
+        keccak256(abi.encodePacked(ERC998_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc998Struct(args)))
       );
   }
 

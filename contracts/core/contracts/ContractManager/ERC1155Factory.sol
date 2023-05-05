@@ -52,7 +52,7 @@ contract ERC1155Factory is AbstractFactory {
   function _hashERC1155(Params calldata params, Erc1155Args calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(ERC1155_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc1155Struct(args)))
+        keccak256(abi.encodePacked(ERC1155_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc1155Struct(args)))
       );
   }
 

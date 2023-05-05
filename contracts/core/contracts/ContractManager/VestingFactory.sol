@@ -46,7 +46,7 @@ contract VestingFactory is AbstractFactory {
   function _hashVesting(Params calldata params, VestingArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(VESTING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashVestingStruct(args)))
+        keccak256(abi.encodePacked(VESTING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashVestingStruct(args)))
       );
   }
 

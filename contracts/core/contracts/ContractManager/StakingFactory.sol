@@ -43,7 +43,7 @@ contract StakingFactory is AbstractFactory {
   function _hashStaking(Params calldata params, StakingArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(STAKING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashStakingStruct(args)))
+        keccak256(abi.encodePacked(STAKING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashStakingStruct(args)))
       );
   }
 

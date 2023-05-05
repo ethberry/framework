@@ -51,7 +51,7 @@ contract PyramidFactory is AbstractFactory {
   function _hashPyramid(Params calldata params, PyramidArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(PYRAMID_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashPyramidStruct(args)))
+        keccak256(abi.encodePacked(PYRAMID_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashPyramidStruct(args)))
       );
   }
 
