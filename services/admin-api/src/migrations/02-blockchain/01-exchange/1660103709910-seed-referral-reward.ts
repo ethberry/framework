@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallets } from "@gemunion/constants";
@@ -22,56 +22,56 @@ export class SeedReferralRewardAt1660103709910 implements MigrationInterface {
         '${wallets[0]}',
         '${wallets[1]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         '${wallets[1]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         '${wallets[2]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         '${wallets[2]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         '${wallets[2]}',
         1,
-        '${constants.WeiPerEther.div(10).toString()}',
+        '${(WeiPerEther / 10n).toString()}',
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         '${wallets[2]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         '${wallets[2]}',
         1,
-        '${constants.WeiPerEther.div(10).toString()}',
+        '${(WeiPerEther / 10n).toString()}',
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         '${wallets[2]}',
         0,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       );

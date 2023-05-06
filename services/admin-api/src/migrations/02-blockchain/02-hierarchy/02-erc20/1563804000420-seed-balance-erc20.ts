@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -18,25 +18,25 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         12010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         12010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         12040101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         12150101,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
+import { ZeroAddress, JsonRpcProvider } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
@@ -35,7 +35,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 export class Erc998TokenServiceEth extends TokenServiceEth {
   constructor(
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
@@ -55,7 +55,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
@@ -96,13 +96,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc998TokenEntity.template.amount += 1;
       // tokenEntity.template
       //   ? (erc998TokenEntity.template.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Mysterybox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
       erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {

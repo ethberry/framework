@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { constants, utils } from "ethers";
+import { ZeroAddress, hexlify, randomBytes, zeroPadValue, toBeHex } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -27,7 +27,7 @@ export class AchievementSignService {
   ) {}
 
   public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { achievementLevelId, account, referrer = constants.AddressZero } = dto;
+    const { achievementLevelId, account, referrer = ZeroAddress } = dto;
 
     const achievementLevelEntity = await this.achievementLevelService.findOneWithRelations({ id: achievementLevelId });
 
@@ -48,7 +48,7 @@ export class AchievementSignService {
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const zeroDateTime = new Date(0).toISOString();
 
@@ -56,7 +56,7 @@ export class AchievementSignService {
       itemId: achievementLevelEntity.itemId,
       account: account.toLowerCase(),
       endTimestamp: zeroDateTime, // TODO limit time for achievement's redeem?
-      nonce: utils.hexlify(nonce),
+      nonce: hexlify(nonce),
       signature: "0x",
       merchantId: userEntity.merchantId,
     });
@@ -74,7 +74,7 @@ export class AchievementSignService {
         externalId: claimEntity.id,
         expiresAt,
         referrer,
-        extra: utils.hexZeroPad(utils.hexlify(achievementLevelEntity.id), 32),
+        extra: zeroPadValue(toBeHex(achievementLevelEntity.id), 32),
       },
       achievementLevelEntity,
     );
@@ -84,13 +84,13 @@ export class AchievementSignService {
       {
         itemId: achievementLevelEntity.itemId,
         account: account.toLowerCase(),
-        nonce: utils.hexlify(nonce),
+        nonce: hexlify(nonce),
         signature,
         merchantId: userEntity.merchantId,
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: claimEntity.id.toString() };
+    return { nonce: hexlify(nonce), signature, expiresAt, bytecode: claimEntity.id.toString() };
   }
 
   public async getSignature(

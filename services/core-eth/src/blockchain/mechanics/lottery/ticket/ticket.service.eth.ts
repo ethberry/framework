@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IERC721TokenTransferEvent, ILotteryPurchaseEvent, TokenStatus } from "@framework/types";
@@ -92,7 +92,7 @@ export class LotteryTicketServiceEth {
     const { address } = context;
 
     // create token at LOTTERY PURCHASE EVENT
-    if (from !== constants.AddressZero) {
+    if (from !== ZeroAddress) {
       const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
       if (!erc721TokenEntity) {
@@ -101,9 +101,9 @@ export class LotteryTicketServiceEth {
 
       await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-      if (from === constants.AddressZero) {
+      if (from === ZeroAddress) {
         // LOTTERY PURCHASE EVENT
-      } else if (to === constants.AddressZero) {
+      } else if (to === ZeroAddress) {
         erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
       } else {
         // change token's owner

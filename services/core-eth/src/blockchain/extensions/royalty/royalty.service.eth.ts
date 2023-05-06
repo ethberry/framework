@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
-import { BigNumber } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type { IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent } from "@framework/types";
@@ -27,7 +26,7 @@ export class RoyaltyServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    contractEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
+    contractEntity.royalty = Number(royaltyNumerator);
 
     await contractEntity.save();
 

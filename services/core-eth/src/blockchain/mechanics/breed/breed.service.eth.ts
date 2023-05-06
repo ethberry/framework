@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { BigNumber } from "ethers";
 import { BreedService } from "./breed.service";
 import { decodeGenes, decodeNumber } from "@framework/genes";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -42,8 +41,8 @@ export class BreedServiceEth {
   // }
 
   public async newborn(tokenId: number, genes: string, transactionHash: string): Promise<void> {
-    const { matronId, sireId } = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
-    const randomness = decodeNumber(BigNumber.from(genes)).slice(0, 6).join("");
+    const { matronId, sireId } = decodeGenes(BigInt(genes), ["matronId", "sireId"].reverse());
+    const randomness = decodeNumber(BigInt(genes)).slice(0, 6).join("");
     // TODO one db call -> .findAll()
     const mom = await this.breedService.findOne({ id: matronId });
     const dad = await this.breedService.findOne({ id: sireId });

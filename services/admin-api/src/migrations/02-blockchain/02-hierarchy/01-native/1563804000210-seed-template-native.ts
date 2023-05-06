@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
@@ -28,7 +28,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1101,
         '${currentDateTime}',
@@ -40,7 +40,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1102,
         '${currentDateTime}',
@@ -52,7 +52,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         2101,
         '${currentDateTime}',
@@ -64,7 +64,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         3101,
         '${currentDateTime}',
@@ -76,7 +76,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         4101,
         '${currentDateTime}',

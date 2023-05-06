@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroHash, ZeroAddress } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -23,7 +23,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ) VALUES (
         1302010,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -36,10 +36,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302011,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010101",
         })}',
@@ -49,7 +49,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302020,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -62,10 +62,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302021,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010102",
         })}',
@@ -75,7 +75,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302030,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -88,10 +88,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302031,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010103",
         })}',
@@ -101,7 +101,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302040,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -114,10 +114,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302041,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010104",
         })}',
@@ -127,7 +127,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302050,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -143,10 +143,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302051,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010105",
         })}',
@@ -156,10 +156,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302052,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010101",
         })}',
@@ -169,7 +169,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302060,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -185,10 +185,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302061,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010106",
         })}',
@@ -198,10 +198,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302062,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010101",
         })}',
@@ -211,7 +211,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302070,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[1],
@@ -224,10 +224,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302071,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[1],
           tokenId: "13010107",
         })}',
@@ -237,7 +237,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302080,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[1],
@@ -253,10 +253,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302081,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[1],
           tokenId: "13010108",
         })}',
@@ -266,10 +266,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302082,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[1],
           tokenId: "13010101",
         })}',
@@ -279,7 +279,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302090,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[2],
@@ -292,10 +292,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302091,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[2],
           tokenId: "13010109",
         })}',
@@ -305,7 +305,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302100,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[2],
@@ -321,10 +321,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302101,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[2],
           tokenId: "13010110",
         })}',
@@ -334,10 +334,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302102,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[2],
           tokenId: "13010101",
         })}',

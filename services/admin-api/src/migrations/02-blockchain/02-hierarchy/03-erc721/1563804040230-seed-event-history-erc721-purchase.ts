@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroHash, ZeroAddress, WeiPerEther } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -27,13 +27,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ) VALUES (
         1301010,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "1"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 9).toISOString()}',
@@ -41,10 +41,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301011,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010101",
         })}',
@@ -54,12 +54,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301012,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301010,
         '${subDays(now, 9).toISOString()}',
@@ -67,13 +67,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301020,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "2"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 9).toISOString()}',
@@ -81,10 +81,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301021,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010102",
         })}',
@@ -94,12 +94,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301022,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301020,
         '${subDays(now, 9).toISOString()}',
@@ -107,13 +107,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301030,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "3"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 8).toISOString()}',
@@ -121,10 +121,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301031,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010103",
         })}',
@@ -134,12 +134,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301032,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301030,
         '${subDays(now, 8).toISOString()}',
@@ -147,13 +147,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301040,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "4"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 7).toISOString()}',
@@ -161,10 +161,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301041,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010104",
         })}',
@@ -174,12 +174,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301042,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301040,
         '${subDays(now, 7).toISOString()}',
@@ -187,13 +187,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301050,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "5"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 7).toISOString()}',
@@ -201,10 +201,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301051,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010105",
         })}',
@@ -214,12 +214,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301052,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301050,
         '${subDays(now, 7).toISOString()}',
@@ -227,13 +227,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301060,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "6"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 5).toISOString()}',
@@ -241,10 +241,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301061,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[0],
           tokenId: "13010106",
         })}',
@@ -254,12 +254,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301062,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301060,
         '${subDays(now, 5).toISOString()}',
@@ -267,13 +267,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301070,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[1],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "7"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 5).toISOString()}',
@@ -281,10 +281,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301071,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[1],
           tokenId: "13010107",
         })}',
@@ -294,12 +294,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301072,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301070,
         '${subDays(now, 5).toISOString()}',
@@ -307,13 +307,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301080,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[1],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "8"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 5).toISOString()}',
@@ -321,10 +321,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301081,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[1],
           tokenId: "13010108",
         })}',
@@ -334,12 +334,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301082,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301080,
         '${subDays(now, 5).toISOString()}',
@@ -347,13 +347,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301090,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[2],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "9"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 4).toISOString()}',
@@ -361,10 +361,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301091,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[2],
           tokenId: "13010109",
         })}',
@@ -374,12 +374,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301092,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301090,
         '${subDays(now, 4).toISOString()}',
@@ -387,13 +387,13 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301100,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[2],
           externalId: "130101",
           item: [2, erc721ContractSimpleAddress, "130101", "10"],
-          price: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${subDays(now, 4).toISOString()}',
@@ -401,10 +401,10 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301101,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
-          from: constants.AddressZero,
+          from: ZeroAddress,
           to: wallets[2],
           tokenId: "13010110",
         })}',
@@ -414,12 +414,12 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
       ), (
         1301102,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1301100,
         '${subDays(now, 4).toISOString()}',

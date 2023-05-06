@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { imageUrl, ns, testChainId } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
@@ -30,7 +30,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         updated_at
       ) VALUES (
         1101,
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         '1',
         'Native token (ETH)',
         '${simpleFormatting}',
@@ -48,7 +48,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1102,
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         '1',
         'Inactive token (ETH)',
         '${simpleFormatting}',
@@ -66,7 +66,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         2101,
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         '56',
         'Native token (BNB)',
         '${simpleFormatting}',
@@ -84,7 +84,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         3101,
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         '137',
         'Native token (MATIC)',
         '${simpleFormatting}',
@@ -102,7 +102,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         4101,
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         '${chainId}',
         'Native token (BESU)',
         '${simpleFormatting}',

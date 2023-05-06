@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 
@@ -51,7 +51,7 @@ export class RentService {
           tokenType: TokenType.ERC20,
           contractId: 1201,
           templateId: 120101,
-          amount: constants.WeiPerEther.toString(),
+          amount: WeiPerEther.toString(),
         },
       ],
     });

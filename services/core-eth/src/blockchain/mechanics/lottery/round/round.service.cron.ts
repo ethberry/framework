@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
 import { ConfigService } from "@nestjs/config";
-import { Contract, providers, Wallet } from "ethers";
+import { Contract, JsonRpcProvider, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
@@ -15,7 +15,7 @@ import { ILotteryOption, ModuleType } from "@framework/types";
 export class LotteryRoundServiceCron {
   constructor(
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
     @Inject(Logger)

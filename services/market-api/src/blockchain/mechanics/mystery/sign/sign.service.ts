@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { BigNumber, constants, utils } from "ethers";
+import { ZeroAddress, encodeBytes32String, hexlify, randomBytes } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IAsset, IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -23,7 +23,7 @@ export class MysterySignService {
   ) {}
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, mysteryboxId } = dto;
+    const { account, referrer = ZeroAddress, mysteryboxId } = dto;
 
     const mysteryboxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryboxId });
 
@@ -31,14 +31,14 @@ export class MysterySignService {
       throw new NotFoundException("mysteryboxNotFound");
     }
 
-    const cap = BigNumber.from(mysteryboxEntity.template.cap);
-    if (cap.gt(0) && cap.lte(mysteryboxEntity.template.amount)) {
+    const cap = BigInt(mysteryboxEntity.template.cap);
+    if (cap > 0 && cap <= BigInt(mysteryboxEntity.template.amount)) {
       throw new BadRequestException("limitExceeded");
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
@@ -48,12 +48,12 @@ export class MysterySignService {
         externalId: mysteryboxEntity.id,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       mysteryboxEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryBoxEntity): Promise<string> {

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -23,7 +23,7 @@ export class SeedEventHistoryErc721LendComponentsAt1678931845540 implements Migr
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1303020,
         'ITEM',
@@ -35,7 +35,7 @@ export class SeedEventHistoryErc721LendComponentsAt1678931845540 implements Migr
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       );
     `);
   }

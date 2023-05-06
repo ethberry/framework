@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { providers, Wallet } from "ethers";
+import { JsonRpcProvider, Wallet } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
@@ -15,7 +15,7 @@ export class ChainLinkServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     @Inject(ETHERS_SIGNER)
     protected readonly ethersSignerProviderAws: Wallet,
     protected readonly configService: ConfigService,

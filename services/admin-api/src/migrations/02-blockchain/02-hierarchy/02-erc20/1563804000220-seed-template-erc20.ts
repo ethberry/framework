@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
@@ -28,7 +28,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1201,
         '${currentDateTime}',
@@ -40,7 +40,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'INACTIVE',
         1202,
         '${currentDateTime}',
@@ -52,7 +52,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1203,
         '${currentDateTime}',
@@ -64,7 +64,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1204,
         '${currentDateTime}',

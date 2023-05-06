@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { constants } from "ethers";
+import { ZeroAddress, WeiPerEther, ZeroHash } from "ethers";
 
 import { GameEventType, RmqProviderType } from "@framework/types";
 
@@ -15,10 +15,10 @@ export class NotificatorService {
 
   public dummy(): void {
     this.mobileClient.emit(GameEventType.DUMMY, {
-      from: constants.AddressZero,
-      to: constants.AddressZero,
-      value: constants.WeiPerEther,
-      transactionHash: constants.HashZero,
+      from: ZeroAddress,
+      to: ZeroAddress,
+      value: WeiPerEther,
+      transactionHash: ZeroHash,
     });
   }
 

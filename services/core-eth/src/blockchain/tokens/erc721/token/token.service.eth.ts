@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { BigNumber, constants, providers } from "ethers";
+import { ZeroAddress, JsonRpcProvider } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
@@ -29,7 +29,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 export class Erc721TokenServiceEth extends TokenServiceEth {
   constructor(
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -47,7 +47,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
@@ -95,10 +95,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
@@ -118,7 +118,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address } = context;
 
     // Mint token create batch
-    if (fromAddress === constants.AddressZero) {
+    if (fromAddress === ZeroAddress) {
       const templateEntity = await this.templateService.findOne(
         { contract: { address } },
         { relations: { contract: true } },
@@ -133,7 +133,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         ? JSON.parse(templateEntity.contract.description).batchSize
         : 0;
 
-      const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+      const batchLen = Number(BigInt(toTokenId) - BigInt(fromTokenId));
 
       if (batchLen !== batchSize) {
         // todo just in case =)

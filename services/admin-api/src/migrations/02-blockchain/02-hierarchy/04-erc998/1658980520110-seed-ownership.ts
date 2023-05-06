@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -41,7 +41,7 @@ export class SeedOwnershipAt1658980520110 implements MigrationInterface {
       ), (
         14060101, -- hero
         12010101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

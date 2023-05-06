@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
+import { ZeroAddress, JsonRpcProvider } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
@@ -22,7 +22,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 export class MysteryBoxServiceEth extends TokenServiceEth {
   constructor(
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
@@ -47,7 +47,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     }
 
     // Mint token create
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
       const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
@@ -81,13 +81,13 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, mysteryboxTokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       mysteryboxTokenEntity.template.amount += 1;
       // mysteryboxTokenEntity.erc721Template
       //   ? (mysteryboxTokenEntity.template.instanceCount += 1)
       //   : (mysteryboxTokenEntity.mystery.template.instanceCount += 1);
       mysteryboxTokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       // mysteryboxTokenEntity.erc721Template.instanceCount -= 1;
       mysteryboxTokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {

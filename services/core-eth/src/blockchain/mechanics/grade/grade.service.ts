@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { GradeEntity } from "./grade.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
@@ -29,7 +29,7 @@ export class GradeService {
           tokenType: TokenType.NATIVE,
           contractId: 1,
           templateId: 101001,
-          amount: constants.WeiPerEther.toString(),
+          amount: WeiPerEther.toString(),
         },
       ],
     });
