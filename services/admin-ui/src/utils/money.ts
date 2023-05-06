@@ -26,9 +26,6 @@ export const formatPriceHistory = (components?: IAssetComponentHistory[]): strin
         return formatPrice({ id: i, components: [component] });
       })
       .join(", ") || ""
-    // components
-    //   ?.map(component => formatEther(component.amount, component.contract!.decimals, component.contract!.symbol))
-    //   .join(", ") || ""
   );
 };
 

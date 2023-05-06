@@ -3,8 +3,9 @@ import { FormattedMessage } from "react-intl";
 import { Box, Typography } from "@mui/material";
 
 import { ContractEventType, IEventHistoryReport, IExchangePurchaseEvent } from "@framework/types";
-import { formatPriceHistory } from "../../../../../utils/money";
 import { AddressLink } from "@gemunion/mui-scanner";
+
+import { formatPriceHistory } from "../../../../../utils/money";
 
 export interface IEventDataViewProps {
   row: IEventHistoryReport;

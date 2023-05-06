@@ -35,12 +35,18 @@ export class PyramidChartSearchDto extends SearchDto implements IPyramidChartSea
   @Type(() => PyramidChartItemSearchDto)
   public deposit: PyramidChartItemSearchDto;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: PyramidChartItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => PyramidChartItemSearchDto)
   public reward: PyramidChartItemSearchDto;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => [true, "true"].includes(value))
+  public emptyReward: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
