@@ -3,38 +3,42 @@ import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import {
+  shouldApprove,
+  shouldGetBalanceOf,
+  shouldGetOwnerOf,
+  shouldSetApprovalForAll,
+  // shouldSafeMint,
+} from "@gemunion/contracts-erc721-enumerable";
 
 import { templateId, tokenId } from "../constants";
 
-import { shouldTokenURI } from "./shared/simple/baseUrl/tokenURI";
-import { shouldSetBaseURI } from "./shared/simple/baseUrl/setBaseURI";
+import { shouldNotMint } from "./shared/simple/base/shouldNotMint";
+import { shouldNotSafeMint } from "./shared/simple/base/shouldNotSafeMint";
+import { shouldBaseUrl } from "./shared/simple/baseUrl";
 
 import { deployERC721 } from "./shared/fixtures";
-import { shouldSetApprovalForAll } from "./shared/simple/base/setApprovalForAll";
-import { shouldMint } from "./shared/simple/base/mint";
-import { shouldApprove } from "./shared/simple/base/approve";
-import { shouldSafeMint } from "./shared/simple/base/safeMint";
-import { shouldGetBalanceOf } from "./shared/simple/base/balanceOf";
-import { shouldGetOwnerOf } from "./shared/simple/base/ownerOf";
 import { shouldBehaveLikeERC721Burnable } from "./shared/simple/burnable";
+import { customMintCommonERC721 } from "./shared/customMintFn";
 
 describe("ERC721Soulbound", function () {
   const factory = () => deployERC721(this.title);
+  const options = { mint: customMintCommonERC721, tokenId };
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMint(factory);
-  shouldSafeMint(factory);
-  shouldApprove(factory);
-  shouldGetBalanceOf(factory);
-  shouldGetOwnerOf(factory);
-  shouldSetApprovalForAll(factory);
+  shouldApprove(factory, options);
+  shouldGetBalanceOf(factory, options);
+  shouldGetOwnerOf(factory, options);
+  shouldSetApprovalForAll(factory, options);
   // shouldTransferFrom(name);
   // shouldSafeTransferFrom(name);
-  shouldBehaveLikeERC721Burnable(factory);
 
-  shouldSetBaseURI(factory);
-  shouldTokenURI(factory);
+  shouldNotMint(factory);
+  shouldNotSafeMint(factory);
+
+  shouldBehaveLikeERC721Burnable(factory);
+  shouldBaseUrl(factory);
 
   describe("transferFrom", function () {
     it("should fail: can't be transferred", async function () {
