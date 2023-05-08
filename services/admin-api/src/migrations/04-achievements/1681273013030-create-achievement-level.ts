@@ -32,6 +32,18 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "attributes",
+          type: "json",
+        },
+        {
+          name: "start_timestamp",
+          type: "timestamptz",
+        },
+        {
+          name: "end_timestamp",
+          type: "timestamptz",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

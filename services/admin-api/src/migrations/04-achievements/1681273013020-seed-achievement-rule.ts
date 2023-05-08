@@ -12,30 +12,45 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         title,
         description,
         achievement_type,
+        event_type,
+        contract_id,
+        achievement_status,
         created_at,
         updated_at
       ) VALUES (
         'Marketplace',
         '${simpleFormatting}',
         'MARKETPLACE',
+        'Purchase',
+         1301,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Craft',
         '${simpleFormatting}',
         'CRAFT',
+        'Craft',
+        1306,
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Collection',
         '${simpleFormatting}',
         'COLLECTION',
+        'CollectionDeployed',
+        null,
+        'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Ecommerce',
         '${simpleFormatting}',
         'ECOMMERCE',
+        null,
+        null,
+        'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );
