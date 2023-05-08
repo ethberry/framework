@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.13;
 
+import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract ERC1155Factory is AbstractFactory {
@@ -30,11 +31,14 @@ contract ERC1155Factory is AbstractFactory {
     Params calldata params,
     Erc1155Args calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC1155(params, args), signature);
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+
+    if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     addr = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
     _erc1155_tokens.push(addr);

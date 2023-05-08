@@ -50,9 +50,7 @@ export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto)
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => {
-    return [true, "true"].includes(value);
-  })
+  @Transform(({ value }) => [true, "true"].includes(value))
   public emptyReward: boolean;
 
   @ApiProperty({

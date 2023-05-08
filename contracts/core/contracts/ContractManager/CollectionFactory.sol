@@ -5,6 +5,8 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
+
+import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract CollectionFactory is AbstractFactory {
@@ -32,11 +34,14 @@ contract CollectionFactory is AbstractFactory {
     Params calldata params,
     CollectionArgs calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashCollection(params, args), signature);
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+
+    if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     addr = deploy2(
       params.bytecode,
