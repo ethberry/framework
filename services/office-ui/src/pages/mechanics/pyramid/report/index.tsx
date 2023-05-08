@@ -42,6 +42,7 @@ export const PyramidReport: FC = () => {
         tokenType: TokenType.ERC20,
         contractId: 1201,
       },
+      emptyReward: false,
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
@@ -81,15 +82,15 @@ export const PyramidReport: FC = () => {
       minWidth: 360
     },
     {
-      field: "contract",
-      headerName: formatMessage({ id: "form.labels.contract" }),
+      field: "deposit",
+      headerName: formatMessage({ id: "form.labels.deposit" }),
       sortable: true,
       flex: 1,
       minWidth: 100
     },
     {
-      field: "deposit",
-      headerName: formatMessage({ id: "form.labels.deposit" }),
+      field: "pyramidRule",
+      headerName: formatMessage({ id: "form.labels.pyramidRule" }),
       sortable: true,
       flex: 1,
       minWidth: 100
@@ -134,7 +135,7 @@ export const PyramidReport: FC = () => {
         rows={rows.map((stake: IPyramidDeposit) => ({
           id: stake.id,
           account: stake.account,
-          contract: stake.pyramidRule!.contract.title,
+          pyramidRule: stake.pyramidRule!.title,
           deposit: formatPrice(stake.pyramidRule?.deposit),
           createdAt: stake.createdAt,
         }))}
