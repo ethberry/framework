@@ -1,19 +1,19 @@
 import { Contract } from "ethers";
 
 import {
+  IERC721EnumOptions,
   shouldApprove,
   shouldGetBalanceOf,
   shouldGetOwnerOf,
+  shouldSafeMint,
+  shouldSafeTransferFrom,
   shouldSetApprovalForAll,
   shouldTransferFrom,
-  shouldSafeTransferFrom,
-  shouldSafeMint,
-  IERC721EnumOptions,
 } from "@gemunion/contracts-erc721-enumerable";
 
+import { shouldReceive } from "../../../../shared/receive";
 import { shouldNotMint } from "./shouldNotMint";
 import { shouldNotSafeMint } from "./shouldNotSafeMint";
-import { shouldRevertETH } from "./revertETH";
 
 export function shouldBehaveLikeERC721(factory: () => Promise<Contract>, options?: IERC721EnumOptions) {
   shouldApprove(factory, options);
@@ -26,5 +26,5 @@ export function shouldBehaveLikeERC721(factory: () => Promise<Contract>, options
 
   shouldNotMint(factory);
   shouldNotSafeMint(factory);
-  shouldRevertETH(factory);
+  shouldReceive(factory);
 }

@@ -3,7 +3,7 @@ import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { FrameworkInterfaceId } from "../constants";
-import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
@@ -18,7 +18,6 @@ describe("ERC998BlacklistUpgradeableRandom", function () {
   shouldBehaveLikeBlackList(factory);
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC721BlacklistRandom(factory);
-
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);

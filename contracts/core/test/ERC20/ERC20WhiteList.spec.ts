@@ -6,8 +6,8 @@ import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } f
 import { shouldBehaveLikeWhiteList } from "@gemunion/contracts-access-list";
 
 import { deployERC20 } from "./shared/fixtures";
-import { shouldBehaveLikeERC20WhiteList } from "./shared/whitelist/whitelist";
-import { shouldBehaveLikeERC20Custom } from "./shared/whitelist";
+import { shouldWhiteList } from "./shared/whitelist/whitelist";
+import { shouldBehaveLikeERC20Whitelist } from "./shared/whitelist";
 
 const customMint = async (
   contractInstance: Contract,
@@ -25,9 +25,9 @@ describe("ERC20Whitelist", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
   shouldBehaveLikeWhiteList(factory);
-  shouldBehaveLikeERC20WhiteList(factory);
+  shouldWhiteList(factory);
 
-  shouldBehaveLikeERC20Custom(factory, {
+  shouldBehaveLikeERC20Whitelist(factory, {
     mint: customMint,
   });
 

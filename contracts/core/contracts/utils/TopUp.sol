@@ -19,7 +19,7 @@ contract TopUp is Context, ERC165, ERC1363Receiver {
    * @param price An array of Asset representing the tokens to be transferred.
    */
   function topUp(Asset[] memory price) external payable virtual {
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
   }
 
   receive() external payable virtual {
