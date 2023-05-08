@@ -5,6 +5,7 @@ export * from "./extensions/access-control";
 export * from "./extensions/access-list";
 
 export * from "./exchange/asset";
+export * from "./exchange/asset-history";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
 export * from "./exchange/payee";

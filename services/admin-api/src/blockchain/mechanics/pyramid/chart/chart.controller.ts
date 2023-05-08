@@ -3,18 +3,18 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PyramidChartService } from "./chart.service";
 import { PyramidChartSearchDto } from "./dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/pyramid")
 export class PyramidChartController {
-  constructor(private readonly pyramidReportService: PyramidChartService) {}
+  constructor(private readonly pyramidChartService: PyramidChartService) {}
 
   @Get("/chart")
   @UseInterceptors(PaginationInterceptor)
   public amountChart(@Query() dto: PyramidChartSearchDto, @User() userEntity: UserEntity): Promise<any> {
-    return this.pyramidReportService.chart(dto, userEntity);
+    return this.pyramidChartService.chart(dto, userEntity);
   }
 }
