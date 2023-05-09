@@ -11,6 +11,9 @@ import { AchievementRedemptionEntity } from "../redemption/redemption.entity";
 @Entity({ schema: ns, name: "achievement_level" })
 export class AchievementLevelEntity extends SearchableEntity implements IAchievementLevel {
   @Column({ type: "int" })
+  public achievementLevel: number;
+
+  @Column({ type: "int" })
   public achievementRuleId: number;
 
   @JoinColumn()
@@ -28,7 +31,7 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
   public amount: number;
 
   @Column({ type: "json" })
-  public attributes: any;
+  public attributes: Record<string, string | number>;
 
   @Column({ type: "timestamptz" })
   public startTimestamp: string;

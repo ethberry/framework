@@ -81,6 +81,7 @@ export class AssetService {
             .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
             .map(c => c.value),
         );
+        // add new
         const newComponents = await Promise.allSettled(
           dto.components
             .filter(newItem => !newItem.id)

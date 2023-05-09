@@ -5,7 +5,11 @@ import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Reposi
 import { AchievementRuleEntity } from "./rule.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto } from "@framework/types";
-import { IAchievementRuleUpdateDto } from "./interfaces";
+import { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
+import { IMysteryboxCreateDto } from "../../blockchain/mechanics/mystery/box/interfaces";
+import { MysteryBoxEntity } from "../../blockchain/mechanics/mystery/box/box.entity";
+import { AchievementRuleCreateDto } from "./dto";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Injectable()
 export class AchievementRuleService {
@@ -137,6 +141,11 @@ export class AchievementRuleService {
     options?: FindOneOptions<AchievementRuleEntity>,
   ): Promise<AchievementRuleEntity | null> {
     return this.achievementRuleEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: IAchievementRuleCreateDto): Promise<AchievementRuleEntity> {
+    // const { title, description, contractId, achievementStatus, achievementType, eventType } = dto;
+    return await this.achievementRuleEntityRepository.create(dto).save();
   }
 
   public async update(

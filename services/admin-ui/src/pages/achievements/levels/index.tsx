@@ -55,28 +55,54 @@ export const AchievementLevels: FC = () => {
       title: "",
       description: emptyStateString,
       amount: 0,
+      attributes: { RARITY: "0" },
+      achievementLevel: 1,
       achievementRule: emptyAchievementRule,
       item: getEmptyTemplate(TokenType.ERC20),
+      startTimestamp: new Date().toISOString(),
+      endTimestamp: new Date().toISOString(),
     },
     search: {
       query: "",
       achievementRuleIds: [],
     },
-    filter: ({ id, title, description, item, amount, achievementRuleId, achievementRule }) =>
+    filter: ({
+      id,
+      title,
+      description,
+      item,
+      amount,
+      attributes,
+      achievementLevel,
+      achievementRuleId,
+      achievementRule,
+      startTimestamp,
+      endTimestamp,
+    }) =>
       id
         ? {
             title,
             description,
-            item,
+            item: cleanUpAsset(item),
             amount,
+            attributes: JSON.parse(attributes),
+            // attributes,
             achievementRule,
+            achievementLevel,
+            startTimestamp,
+            endTimestamp,
           }
         : {
             title,
             description,
             amount,
+            attributes: JSON.parse(attributes),
+            // attributes,
             item: cleanUpAsset(item),
             achievementRuleId,
+            achievementLevel,
+            startTimestamp,
+            endTimestamp,
           },
   });
 

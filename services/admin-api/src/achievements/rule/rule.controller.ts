@@ -1,11 +1,16 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { AchievementRuleService } from "./rule.service";
 import { AchievementRuleEntity } from "./rule.entity";
-import { AchievementRuleAutocompleteDto, AchievementRuleSearchDto, AchievementRuleUpdateDto } from "./dto";
+import {
+  AchievementRuleAutocompleteDto,
+  AchievementRuleCreateDto,
+  AchievementRuleSearchDto,
+  AchievementRuleUpdateDto,
+} from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
@@ -34,6 +39,11 @@ export class AchievementRuleController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<AchievementRuleEntity | null> {
     return this.achievementRuleService.findOne({ id });
+  }
+
+  @Post("/")
+  public create(@Body() dto: AchievementRuleCreateDto): Promise<AchievementRuleEntity> {
+    return this.achievementRuleService.create(dto);
   }
 
   @Put("/:id")

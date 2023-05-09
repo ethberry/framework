@@ -1,6 +1,17 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
+
+import {
+  Grid,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Add, Create } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -9,6 +20,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
 
 import { AchievementRuleEditDialog } from "./edit";
+import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
 export const AchievementRules: FC = () => {
   const {
@@ -19,6 +31,7 @@ export const AchievementRules: FC = () => {
     isLoading,
     isEditDialogOpen,
     isDeleteDialogOpen,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -30,19 +43,34 @@ export const AchievementRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      achievementType: AchievementType.MARKETPLACE,
+      achievementStatus: AchievementRuleStatus.NEW,
+      eventType: ContractEventType.Purchase,
+      contractId: 0,
     },
     search: {
       query: "",
       achievementType: [],
     },
-    filter: ({ title, description }) => ({ title, description }),
+    filter: ({ title, description, contractId, achievementStatus, achievementType, eventType }) => ({
+      title,
+      description,
+      contractId,
+      achievementStatus,
+      achievementType,
+      eventType,
+    }),
   });
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "achievements", "achievements.rules"]} />
 
-      <PageHeader message="pages.achievements.rules.title" />
+      <PageHeader message="pages.achievements.rules.title">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TemplateCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

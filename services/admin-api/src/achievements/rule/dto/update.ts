@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
+import { IsEnum, IsOptional, IsInt, Min } from "class-validator";
 
 import { SearchableDto } from "@gemunion/collection";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
@@ -21,4 +21,12 @@ export class AchievementRuleUpdateDto extends SearchableDto implements IAchievem
   @IsOptional()
   @IsEnum(ContractEventType, { message: "badInput" })
   public eventType: ContractEventType;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public contractId: number;
 }

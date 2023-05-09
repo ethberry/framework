@@ -39,6 +39,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         item_id,
         amount,
         attributes,
+        achievement_level,
         start_timestamp,
         end_timestamp,
         created_at,
@@ -51,6 +52,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100101,
         5,
         '${defaultJSON}',
+        1,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',                
         '${currentDateTime}',
@@ -63,6 +65,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100102,
         10,
         '${defaultJSON}',
+        2,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
@@ -75,6 +78,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100103,
         15,
         '${defaultJSON}',
+        3,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
@@ -87,6 +91,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100104,
         5,
         '${defaultJSON}',
+        1,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
@@ -99,6 +104,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100105,
         10,
         '${defaultJSON}',
+        2,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
@@ -111,6 +117,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100106,
         5,
         '${defaultJSON}',
+        1,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
@@ -123,12 +130,15 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         40100107,
         10,
         '${defaultJSON}',
+        1,
         '${currentDateTime}',
         '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.achievement_level_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

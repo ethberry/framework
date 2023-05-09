@@ -4,13 +4,15 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { DateInput } from "@gemunion/mui-inputs-picker";
+import { NumberInput, TextInput, JsonInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { IAchievementLevel, TokenType } from "@framework/types";
 
-import { validationSchema } from "./validation";
+// TODO Validation
+// import { validationSchema } from "./validation";
 
 export interface IAchievementLevelEditDialogProps {
   open: boolean;
@@ -22,8 +24,18 @@ export interface IAchievementLevelEditDialogProps {
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, amount, achievementRuleId } = initialValues;
-
+  const {
+    id,
+    title,
+    description,
+    item,
+    amount,
+    attributes,
+    startTimestamp,
+    endTimestamp,
+    achievementRuleId,
+    achievementLevel,
+  } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,6 +43,10 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
     item,
     amount,
     achievementRuleId,
+    attributes: JSON.stringify(attributes),
+    achievementLevel,
+    startTimestamp,
+    endTimestamp,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -38,7 +54,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message={message}
       testId="AchievementLevelEditForm"
       {...rest}
@@ -47,10 +63,17 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TemplateAssetInput multiple allowEmpty prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <JsonInput name="attributes" />
+      <Typography variant="inherit">
+        <FormattedMessage id="form.labels.amount" />
+      </Typography>
+      <NumberInput name="amount" showLabel={false} />
       <Typography variant="inherit">
         <FormattedMessage id="form.labels.achievementLevel" />
       </Typography>
-      <NumberInput name="amount" showLabel={false} />
+      <NumberInput name="achievementLevel" showLabel={false} />
+      <DateInput name="startTimestamp" />
+      <DateInput name="endTimestamp" />
     </FormDialog>
   );
 };

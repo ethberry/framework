@@ -5,6 +5,7 @@ import { IAchievementRedemption } from "./redemption";
 import { IAchievementRule } from "./rule";
 
 export interface IAchievementLevel extends ISearchable {
+  achievementLevel: number;
   achievementRuleId: number;
   achievementRule: IAchievementRule;
   item?: IAsset;
@@ -12,6 +13,6 @@ export interface IAchievementLevel extends ISearchable {
   amount: number;
   attributes: any;
   startTimestamp: string;
-  endTimestamp: string;
+  endTimestamp: string; // OR null ?
   redemptions?: Array<IAchievementRedemption>;
 }

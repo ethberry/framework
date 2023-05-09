@@ -20,6 +20,10 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           type: "json",
         },
         {
+          name: "achievement_level",
+          type: "int",
+        },
+        {
           name: "item_id",
           type: "int",
         },
@@ -34,6 +38,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
         {
           name: "attributes",
           type: "json",
+          default: "'{}'",
         },
         {
           name: "start_timestamp",

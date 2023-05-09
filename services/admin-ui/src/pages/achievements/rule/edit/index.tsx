@@ -3,6 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+
 import type { IAchievementRule } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
@@ -44,6 +45,7 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="achievementType" options={AchievementType} />
+      <SelectInput name="achievementStatus" options={AchievementRuleStatus} />
       <ContractInput
         name="contractId"
         related="address"
@@ -53,7 +55,6 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
         // }}
       />
       <SelectInput name="eventType" options={ContractEventType} />
-      <SelectInput name="achievementStatus" options={AchievementRuleStatus} />
     </FormDialog>
   );
 };

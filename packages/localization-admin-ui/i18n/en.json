@@ -4,7 +4,7 @@
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",
       "file-too-small": "File is {size}, minimum file size is {minSize}",
-      "too-many-files": "Too many files"
+      "too-many-files": "To many files"
     },
     "header": {
       "language": {
@@ -85,6 +85,11 @@
       "CRAFT": "Craft",
       "ECOMMERCE": "Ecommerce",
       "MARKETPLACE": "Marketplace"
+    },
+    "achievementStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "attributeName": {
       "GRADE": "Grade",
@@ -197,7 +202,8 @@
       "collection": "Collection",
       "contract": "Contract",
       "data": "Data",
-      "endTimestamp": "End date",
+      "eventType": "Event type",
+      "endTimestamp": "End Time",
       "externalId": "External ID",
       "from": "From",
       "fromAddress": "From address",
@@ -253,8 +259,65 @@
       "withdrawTimestamp": "Withdraw date"
     },
     "eventType": {
+      "Snapshot": "Snapshot",
+      "Approval": "Approval",
+      "Transfer": "Transfer",
+      "ApprovalForAll": "ApprovalForAll",
+      "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "MintRandom": "MintRandom",
+      "TokenRoyaltyInfo": "TokenRoyaltyInfo",
+      "ConsecutiveTransfer": "ConsecutiveTransfer",
+      "BatchReceivedChild": "BatchReceivedChild",
+      "BatchTransferChild": "BatchTransferChild",
+      "WhitelistedChild": "WhitelistedChild",
+      "UnWhitelistedChild": "UnWhitelistedChild",
+      "ReceivedChild": "ReceivedChild",
+      "TransferChild": "TransferChild",
+      "SetMaxChild": "SetMaxChild",
+      "TransferBatch": "TransferBatch",
+      "TransferSingle": "TransferSingle",
+      "URI": "URI",
+      "RedeemClaim": "RedeemClaim",
+      "UnpackClaim": "UnpackClaim",
+      "UnpackWrapper": "UnpackWrapper",
+      "UnpackMysterybox": "UnpackMysterybox",
+      "Paused": "Paused",
+      "Unpaused": "Unpaused",
+      "EtherReleased": "EtherReleased",
+      "ERC20Released": "ERC20Released",
+      "EtherReceived": "EtherReceived",
+      "Blacklisted": "Blacklisted",
+      "UnBlacklisted": "UnBlacklisted",
+      "Whitelisted": "Whitelisted",
+      "UnWhitelisted": "UnWhitelisted",
+      "RoleGranted": "RoleGranted",
+      "RoleRevoked": "RoleRevoked",
+      "RoleAdminChanged": "RoleAdminChanged",
+      "RuleCreated": "RuleCreated",
+      "RuleUpdated": "RuleUpdated",
+      "StakingStart": "StakingStart",
+      "StakingWithdraw": "StakingWithdraw",
+      "StakingFinish": "StakingFinish",
+      "WithdrawBalance": "WithdrawBalance",
       "Purchase": "Purchase",
-      "Transfer": "Transfer"
+      "Claim": "Claim",
+      "Craft": "Craft",
+      "UpdateUser": "UpdateUser",
+      "Lend": "Lend",
+      "Mysterybox": "Mysterybox",
+      "Upgrade": "Upgrade",
+      "RewardSet": "RewardSet",
+      "ClaimReward": "ClaimReward",
+      "Breed": "Breed",
+      "PayeeAdded": "PayeeAdded",
+      "PaymentReleased": "PaymentReleased",
+      "ERC20PaymentReleased": "ERC20PaymentReleased",
+      "PaymentReceived": "PaymentReceived",
+      "PaymentEthReceived": "PaymentEthReceived",
+      "PaymentEthSent": "PaymentEthSent",
+      "RandomnessRequest": "RandomnessRequest",
+      "RandomnessRequestId": "RandomnessRequestId",
+      "RandomWordsRequested": "RandomWordsRequested"
     },
     "gender": {
       "FEMALE": "Female",
@@ -473,6 +536,7 @@
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
       "achievementType": "Achievement type",
+      "achievementStatus": "Achievement status",
       "active": "Active",
       "address": "Address",
       "addressId": "Address",
@@ -519,6 +583,7 @@
       "email": "Email",
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
+      "eventType": "Event type",
       "files": "Files",
       "from": "From",
       "fromBlock": "Listen log from block №",
@@ -622,6 +687,7 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
+      "achievementLevel": "1",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
       "address": "0x...",
@@ -749,7 +815,7 @@
         "title": "Report"
       },
       "rules": {
-        "title": "Achievements types"
+        "title": "Achievements rules"
       },
       "title": "Achievements"
     },
@@ -812,7 +878,7 @@
     "dashboard": {
       "achievements": {
         "levels": "Levels",
-        "rules": "Types",
+        "rules": "Rules",
         "report": "Report",
         "title": "Achievements"
       },

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IAchievementLevelSearchDto } from "@framework/types";
+import { IAchievementLevelSearchDto, IAssetDto } from "@framework/types";
 
 import { AchievementLevelEntity } from "./level.entity";
 import { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
@@ -92,16 +92,29 @@ export class AchievementLevelService {
   }
 
   public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {
-    const { item } = dto;
+    const { item, attributes } = dto;
 
     const assetEntity = await this.assetService.create({
       components: [],
     });
-    await this.assetService.update(assetEntity, item);
+    // clean templateId if any == 0
+    const itemNew: IAssetDto = {
+      components: item.components.map(comp =>
+        comp.templateId === 0
+          ? {
+              ...comp,
+              templateId: null,
+            }
+          : comp,
+      ),
+    };
+    await this.assetService.update(assetEntity, itemNew);
 
     return await this.achievementLevelEntityRepository
       .create({
         ...dto,
+        // attributes: JSON.parse(attributes),
+        attributes,
         item: assetEntity,
       })
       .save();
@@ -111,7 +124,7 @@ export class AchievementLevelService {
     where: FindOptionsWhere<AchievementLevelEntity>,
     dto: IAchievementLevelUpdateDto,
   ): Promise<AchievementLevelEntity> {
-    const { item, ...rest } = dto;
+    const { item, attributes, ...rest } = dto;
     const achievementLevelEntity = await this.findOne(where, {
       join: {
         alias: "level",
@@ -126,10 +139,25 @@ export class AchievementLevelService {
       throw new NotFoundException("achievementLevelNotFound");
     }
 
+    if (attributes) {
+      Object.assign(achievementLevelEntity, { attributes });
+    }
+
     Object.assign(achievementLevelEntity, rest);
 
     if (item) {
-      await this.assetService.update(achievementLevelEntity.item, item);
+      // clean templateId if any == 0
+      const itemNew: IAssetDto = {
+        components: item.components.map(comp =>
+          comp.templateId === 0
+            ? {
+                ...comp,
+                templateId: null,
+              }
+            : comp,
+        ),
+      };
+      await this.assetService.update(achievementLevelEntity.item, itemNew);
     }
 
     return achievementLevelEntity.save();

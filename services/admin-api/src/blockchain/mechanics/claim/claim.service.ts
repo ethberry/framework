@@ -193,7 +193,7 @@ export class ClaimService {
         tokenId:
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
-            : component.templateId.toString(),
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       [],
