@@ -1035,6 +1035,100 @@ describe("Staking", function () {
       expect(stake).to.have.deep.nested.property("activeDeposit", false);
     });
 
+    it("should not reenter: stake NATIVE & receive NATIVE (recurrent)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const Attaker = await ethers.getContractFactory("ReentrancyStakingReward");
+      const attakerInstance = await Attaker.deploy(stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period, // 60 sec
+        penalty: 5000, // 50%
+        recurrent: true,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      // const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
+      const tx1 = await attakerInstance.deposit(params, tokenIds, { value: amount });
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, attakerInstance.address, startTimestamp, tokenIds);
+      await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
+      // return
+
+      // FUND REWARD
+      await stakingInstance.topUp(
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount: amount * cycles * 10,
+          },
+        ],
+        { value: amount * cycles * 10 },
+      );
+
+      // TIME 1
+      const current1 = await time.latestBlock();
+      await time.advanceBlockTo(current1.add(web3.utils.toBN(period + 1)));
+
+      // console.log(await ethers.provider.getBalance(attakerInstance.address));
+      // REWARD 1
+      // const tx2 = await stakingInstance.receiveReward(1, false, false);
+      const tx2 = await attakerInstance.receiveReward(1, false, false);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      // console.log(await ethers.provider.getBalance(attakerInstance.address));
+
+      await expect(tx2).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp, 1);
+
+      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      // // TIME 2
+      // const current2 = await time.latestBlock();
+      // await time.advanceBlockTo(current2.add(web3.utils.toBN(period + 1)));
+
+      // // REWARD 2
+      // const tx3 = await stakingInstance.receiveReward(1, false, false);
+      // const endTimestamp2: number = (await time.latest()).toNumber();
+      // await expect(tx3).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp2, 1);
+      // await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      // // REWARD 3
+      // const tx4 = await stakingInstance.receiveReward(1, false, true);
+      // const endTimestamp3: number = (await time.latest()).toNumber();
+      // await expect(tx4).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp3);
+      // await expect(tx4).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
+
+      // const stake = await stakingInstance.getStake(1);
+      // expect(stake).to.have.deep.nested.property("cycles", BigNumber.from(2));
+      // expect(stake).to.have.deep.nested.property("activeDeposit", false);
+    });
+
     it("should not cheat: stake NATIVE & receive NATIVE & DEPOSIT without penalty (recurrent)", async function () {
       const [owner] = await ethers.getSigners();
 
