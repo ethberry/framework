@@ -13,8 +13,8 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 contract ERC1363Mock is AccessControl, ERC1363 {
   constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(MINTER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
   }
 
   function _mint(address account, uint256 amount) internal virtual override {

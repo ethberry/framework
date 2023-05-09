@@ -62,8 +62,8 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   event WithdrawBalance(address account, Asset item);
 
   constructor(uint256 maxStake) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
 
     setMaxStake(maxStake);
   }
