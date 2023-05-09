@@ -89,6 +89,7 @@
     "build": "hardhat compile",
     "clean": "hardhat clean",
     "deploy:mainnet": "hardhat --network mainnet deploy",
+    "flatten": "scripts/flatten.sh",
     "lint": "eslint . --fix",
     "prebuild": "hardhat clean",
     "prepare:contracts:besu": "hardhat --network besu run scripts/deploy-dev.ts",
