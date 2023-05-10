@@ -3,7 +3,11 @@
 // Author: TrejGun
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
-import "@gemunion/contracts-mocks/contracts/Wallet.sol";
+// import "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+import "./ERC1363ReceiverMock.sol";
 import "../Exchange/interfaces/IAsset.sol";
 import "hardhat/console.sol";
 
@@ -15,7 +19,7 @@ interface IStaking {
   function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
 }
 
-contract ReentrancyStakingReward is Wallet {
+contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363ReceiverMock {
   uint256 constant _maxReentrance = 1;
   uint256 _attacks;
 
@@ -98,7 +102,7 @@ contract ReentrancyStakingReward is Wallet {
     return super.onERC1155BatchReceived(_a1, _a2, _u1, _u2, _b1);
   }
 
-  receive() external payable override {
+  receive() external payable {
     _reenterReceiveReward();
   }
 
@@ -111,5 +115,17 @@ contract ReentrancyStakingReward is Wallet {
 
       emit Reentered(success);
     }
+  }
+
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, ERC1155Receiver) returns (bool) {
+    return
+      interfaceId == type(IERC1363Receiver).interfaceId ||
+      interfaceId == type(IERC1363Spender).interfaceId ||
+      interfaceId == type(IERC721Receiver).interfaceId ||
+      interfaceId == type(IERC1155Receiver).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 }
