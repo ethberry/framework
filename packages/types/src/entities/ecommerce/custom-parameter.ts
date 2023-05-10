@@ -1,15 +1,15 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IUser } from "../infrastructure";
-import { IProduct } from "./product";
 import { ParameterType } from "./parameter";
+import { IProductItem } from "./product-item";
 
 export interface ICustomParameter extends IIdDateBase {
-  productId: number;
-  product: IProduct;
+  productItemId: number;
+  productItem?: IProductItem;
   parameterName: string;
   parameterType: ParameterType;
-  parameterValue: string;
+  parameterValue?: string | null;
   userId: number;
   user?: IUser;
 }

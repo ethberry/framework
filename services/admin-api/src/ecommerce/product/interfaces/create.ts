@@ -8,5 +8,4 @@ export interface IProductCreateDto {
   amount: number;
   merchantId?: number;
   photos: Array<IPhoto>;
-  parameterIds: Array<number>;
 }

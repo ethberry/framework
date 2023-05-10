@@ -38,14 +38,14 @@ export class ParameterService {
     return this.parameterEntityRepository.create(dto).save();
   }
 
-  public async update(where: FindOptionsWhere<ParameterEntity>, data: IParameterUpdateDto): Promise<ParameterEntity> {
+  public async update(where: FindOptionsWhere<ParameterEntity>, dto: IParameterUpdateDto): Promise<ParameterEntity> {
     const parameterEntity = await this.parameterEntityRepository.findOne({ where });
 
     if (!parameterEntity) {
       throw new NotFoundException("parameterNotFound");
     }
 
-    Object.assign(parameterEntity, { ...data });
+    Object.assign(parameterEntity, { ...dto });
     return parameterEntity.save();
   }
 

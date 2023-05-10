@@ -2,13 +2,14 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedProductToParameter1593408358960 implements MigrationInterface {
+export class SeedProductItemParameter1683724064710 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      INSERT INTO ${ns}.product_to_parameter (
-        product_id,
+      INSERT INTO ${ns}.product_item_parameter (
+        product_item_id,
         parameter_id,
-        parameter_value
+        custom_parameter_id,
+        user_custom_value
       ) VALUES (
         1,
         11,
@@ -50,6 +51,6 @@ export class SeedProductToParameter1593408358960 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.product_to_parameter RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.product_item_parameter RESTART IDENTITY CASCADE;`);
   }
 }

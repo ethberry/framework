@@ -11,3 +11,4 @@ export * from "./product";
 export * from "./product-item";
 export * from "./product-item-parameter";
 export * from "./promo";
+export * from "./stock";

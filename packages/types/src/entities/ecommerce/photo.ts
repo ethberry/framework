@@ -1,6 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IProduct } from "./product";
+import { IProductItem } from "./product-item";
 
 export enum PhotoStatus {
   NEW = "NEW",
@@ -12,7 +13,9 @@ export interface IPhoto extends IIdDateBase {
   title: string;
   imageUrl: string;
   photoStatus: PhotoStatus;
+  product?: IProduct | null;
   productId: number;
+  productItem?: IProductItem | null;
+  productItemId: number;
   priority: number;
-  product: IProduct;
 }

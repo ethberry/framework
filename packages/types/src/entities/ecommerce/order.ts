@@ -14,7 +14,7 @@ export enum OrderStatus {
 }
 
 export interface IOrder extends IIdDateBase {
-  items: Array<IOrderItem>;
+  orderItems: Array<IOrderItem>;
   orderStatus: OrderStatus;
   addressId: number;
   address?: IAddress;

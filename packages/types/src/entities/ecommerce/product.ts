@@ -3,7 +3,7 @@ import type { ISearchable } from "@gemunion/types-collection";
 import { ICategory } from "./category";
 import { IMerchant } from "../infrastructure";
 import { IPhoto } from "./photo";
-import { IAsset } from "../blockchain";
+import { IProductItem } from "./product-item";
 
 export enum ProductStatus {
   ACTIVE = "ACTIVE",
@@ -11,14 +11,12 @@ export enum ProductStatus {
 }
 
 export interface IProduct extends ISearchable {
-  price?: IAsset;
-  priceId: number;
-  amount: number;
-  merchantId: number;
-  merchant?: IMerchant;
-  productStatus: ProductStatus;
-  photos: Array<IPhoto>;
   categories: Array<ICategory>;
+  merchant?: IMerchant;
+  merchantId: number;
+  photos: Array<IPhoto>;
+  productItems: Array<IProductItem>;
+  productStatus: ProductStatus;
   length: number;
   height: number;
   width: number;

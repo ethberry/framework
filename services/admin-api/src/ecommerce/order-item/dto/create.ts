@@ -16,7 +16,7 @@ export class OrderItemCreateDto implements IOrderItemCreateDto {
   })
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "valueMissing" })
-  public productId: number;
+  public productItemId: number;
 
   public orderId: number;
 }

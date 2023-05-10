@@ -53,9 +53,4 @@ export class ProductCreateDto implements IProductCreateDto {
   @ValidateNested()
   @Type(() => PhotoCreateDto)
   public photos: Array<IPhoto> = [];
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsArray({ message: "patternMismatch" })
-  public parameterIds: Array<number>;
 }

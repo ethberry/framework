@@ -53,14 +53,18 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */
-import { CategoryEntity } from "./ecommerce/category/category.entity";
-import { OrderEntity } from "./ecommerce/order/order.entity";
-import { PhotoEntity } from "./ecommerce/photo/photo.entity";
-import { ProductEntity } from "./ecommerce/product/product.entity";
-import { PromoEntity } from "./ecommerce/promo/promo.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
+import { CategoryEntity } from "./ecommerce/category/category.entity";
+import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-parameter.entity";
+import { OrderEntity } from "./ecommerce/order/order.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
+import { PhotoEntity } from "./ecommerce/photo/photo.entity";
+import { ProductEntity } from "./ecommerce/product/product.entity";
+import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
+import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
+import { PromoEntity } from "./ecommerce/promo/promo.entity";
+import { StockEntity } from "./ecommerce/stock/stock.entity";
 
 import {
   CreateAccessControl1653616447200,
@@ -95,7 +99,7 @@ import {
   CreatePhoto1593408359000,
   CreateProduct1593408358900,
   CreateProductToCategory1593408358930,
-  CreateProductToParameter1593408358950,
+  CreateProductItemParameter1683724064700,
   CreatePromo1600996093684,
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
@@ -202,7 +206,7 @@ import {
   SeedPhoto1593408359010,
   SeedProducts1593408358910,
   SeedProductToCategory1593408358940,
-  SeedProductToParameter1593408358960,
+  SeedProductItemParameter1683724064710,
   SeedPromo1600996093694,
   SeedPyramidDepositErc20Erc20At1660436477320,
   SeedPyramidDepositNativeNativeAt1660436477310,
@@ -303,10 +307,14 @@ const config: PostgresConnectionOptions = {
     MerchantEntity,
     OrderEntity,
     OrderItemEntity,
+    CustomParameterEntity,
     ParameterEntity,
     PhotoEntity,
     ProductEntity,
+    ProductItemEntity,
+    ProductItemParameterEntity,
     PromoEntity,
+    StockEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -531,8 +539,8 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsProductAt1593408358920,
     CreateProductToCategory1593408358930,
     SeedProductToCategory1593408358940,
-    CreateProductToParameter1593408358950,
-    SeedProductToParameter1593408358960,
+    CreateProductItemParameter1683724064700,
+    SeedProductItemParameter1683724064710,
     CreatePhoto1593408359000,
     SeedPhoto1593408359010,
     CreateAddress1593490663030,
