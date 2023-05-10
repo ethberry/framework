@@ -28,6 +28,7 @@ jobs:
           privateKey: ${{ secrets.PRIVATE_KEY}}
           tryKeyboard: true
   maintenance:
+    runs-on: ubuntu-latest
     steps:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
