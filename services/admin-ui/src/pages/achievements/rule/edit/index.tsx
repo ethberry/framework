@@ -4,9 +4,10 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import type { IAchievementRule } from "@framework/types";
-import { AchievementType } from "@framework/types";
+import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { ContractInput } from "../../../../components/inputs/contract";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
@@ -18,13 +19,16 @@ export interface IErc20TokenEditDialogProps {
 export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, achievementType } = initialValues;
+  const { id, title, description, achievementType, achievementStatus, contractId, eventType } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
     achievementType,
+    achievementStatus,
+    contractId,
+    eventType,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -37,9 +41,19 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       testId="AchievementRuleEditForm"
       {...rest}
     >
-      <SelectInput name="achievementType" options={AchievementType} readOnly />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <SelectInput name="achievementType" options={AchievementType} />
+      <ContractInput
+        name="contractId"
+        related="address"
+        controller="contracts"
+        // data={{
+        //   contractModule: [ModuleType.STAKING],
+        // }}
+      />
+      <SelectInput name="eventType" options={ContractEventType} />
+      <SelectInput name="achievementStatus" options={AchievementRuleStatus} />
     </FormDialog>
   );
 };

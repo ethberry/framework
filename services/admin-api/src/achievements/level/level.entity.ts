@@ -27,6 +27,15 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
   @Column({ type: "int" })
   public amount: number;
 
+  @Column({ type: "json" })
+  public attributes: any;
+
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
+
   @JoinColumn()
   @OneToMany(_type => AchievementRedemptionEntity, component => component.achievementLevel)
   public redemptions: AchievementRedemptionEntity[];

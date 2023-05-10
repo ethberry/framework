@@ -20,6 +20,10 @@ export class CreateAchievementItem1681273013050 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "history_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -39,6 +43,12 @@ export class CreateAchievementItem1681273013050 implements MigrationInterface {
           columnNames: ["achievement_rule_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.achievement_rule`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["history_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.event_history`,
           onDelete: "CASCADE",
         },
       ],

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, OneToMany, ManyToOne } from "typeorm";
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementLevel } from "@framework/types";
@@ -26,6 +26,15 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
 
   @Column({ type: "int" })
   public amount: number;
+
+  @Column({ type: "json" })
+  public attributes: any;
+
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
 
   @JoinColumn()
   @OneToMany(_type => AchievementRedemptionEntity, component => component.achievementLevel)

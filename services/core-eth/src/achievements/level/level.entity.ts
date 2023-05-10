@@ -5,8 +5,8 @@ import type { IAchievementLevel } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { AchievementRuleEntity } from "../rule/rule.entity";
-import { AchievementRedemptionEntity } from "../redemption/redemption.entity";
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { AchievementRedemptionEntity } from "../redemption/redemption.entity";
 
 @Entity({ schema: ns, name: "achievement_level" })
 export class AchievementLevelEntity extends SearchableEntity implements IAchievementLevel {
@@ -26,6 +26,15 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
 
   @Column({ type: "int" })
   public amount: number;
+
+  @Column({ type: "json" })
+  public attributes: any;
+
+  @Column({ type: "timestamptz" })
+  public startTimestamp: string;
+
+  @Column({ type: "timestamptz" })
+  public endTimestamp: string;
 
   @JoinColumn()
   @OneToMany(_type => AchievementRedemptionEntity, component => component.achievementLevel)
