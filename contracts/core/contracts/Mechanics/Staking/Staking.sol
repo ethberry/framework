@@ -92,7 +92,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   /**
    * @dev Get Stake
    */
-  function getStake(uint256 stakeId) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Stake memory stake) {
+  function getStake(uint256 stakeId) public view returns (Stake memory stake) {
     return _stakes[stakeId];
   }
 
@@ -102,7 +102,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   function getPenalty(
     address token,
     uint256 tokenId
-  ) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 penalty) {
+  ) public view returns (uint256 penalty) {
     return _penalties[token][tokenId];
   }
 
