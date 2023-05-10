@@ -7,9 +7,9 @@ import csv2json from "csvtojson";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
+import { AssetService } from "../../exchange/asset/asset.service";
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class ClaimService {

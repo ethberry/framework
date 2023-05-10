@@ -1,8 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import type { IAssetComponent } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
@@ -24,8 +23,8 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   @OneToOne(_type => ContractEntity)
   public contract: ContractEntity;
 
-  @Column({ type: "int" })
-  public templateId: number;
+  @Column({ type: "int", nullable: true })
+  public templateId: number | null;
 
   @JoinColumn()
   @OneToOne(_type => TemplateEntity)
@@ -34,7 +33,7 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   @Column({ type: "numeric" })
   public amount: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", select: false })
   public assetId: number;
 
   @JoinColumn()

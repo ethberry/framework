@@ -17,12 +17,12 @@ import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 import { ClaimItemCreateDto, ClaimUploadDto } from "./dto";
-import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ClaimService {

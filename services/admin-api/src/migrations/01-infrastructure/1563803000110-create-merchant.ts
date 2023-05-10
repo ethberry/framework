@@ -34,6 +34,11 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           isUnique: true,
         },
         {
+          name: "api_key",
+          type: "uuid",
+          default: "uuid_generate_v4()",
+        },
+        {
           name: "phone_number",
           type: "varchar",
         },
