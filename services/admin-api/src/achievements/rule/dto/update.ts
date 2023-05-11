@@ -1,10 +1,12 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsInt, Min } from "class-validator";
+import { IsEnum, IsOptional, IsInt, Min, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
 import { IAchievementRuleUpdateDto } from "../interfaces";
+import { ItemDto } from "../../../blockchain/exchange/asset/dto";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
   @ApiPropertyOptional()
@@ -23,10 +25,18 @@ export class AchievementRuleUpdateDto extends SearchableDto implements IAchievem
   public eventType: ContractEventType;
 
   @ApiPropertyOptional({
-    minimum: 1,
+    minimum: 0,
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public contractId: number;
+
+  @ApiPropertyOptional({
+    type: ItemDto,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ItemDto)
+  public item: ItemDto;
 }

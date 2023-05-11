@@ -8,6 +8,7 @@ export interface IAchievementLevel extends ISearchable {
   achievementLevel: number;
   achievementRuleId: number;
   achievementRule: IAchievementRule;
+  // TODO rename to reward?
   item?: IAsset;
   itemId: number;
   amount: number;

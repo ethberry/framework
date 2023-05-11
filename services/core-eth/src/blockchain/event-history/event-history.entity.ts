@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, ManyToOne } from "typeorm";
 
 import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IEventHistory, TContractEventData } from "@framework/types";
@@ -6,6 +6,7 @@ import { ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { AssetComponentHistoryEntity } from "../exchange/asset/asset-component-history.entity";
+import { TokenEntity } from "../hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "event_history" })
 export class EventHistoryEntity extends DeployableEntity implements IEventHistory {
@@ -24,8 +25,12 @@ export class EventHistoryEntity extends DeployableEntity implements IEventHistor
   @Column({ type: "int", nullable: true })
   public tokenId: number | null;
 
+  @JoinColumn()
+  @ManyToOne(_type => TokenEntity, token => token.history)
+  public token: TokenEntity;
+
   @Column({ type: "int", nullable: true })
-  public contractId: number | null;
+  public contractId: number;
 
   @Column({ type: "int", nullable: true })
   public parentId: number | null;

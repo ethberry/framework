@@ -8,12 +8,27 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
+      INSERT INTO ${ns}.asset (
+        id
+      ) VALUES (
+        50100101
+      ), (
+        50100102
+      ), (
+        50100103
+      ), (
+        50100104
+      );
+    `);
+
+    await queryRunner.query(`
       INSERT INTO ${ns}.achievement_rule (
         title,
         description,
         achievement_type,
         event_type,
         contract_id,
+        item_id,
         achievement_status,
         created_at,
         updated_at
@@ -22,7 +37,8 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         '${simpleFormatting}',
         'MARKETPLACE',
         'Purchase',
-         1301,
+         402,
+         50100101,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -32,6 +48,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         'CRAFT',
         'Craft',
         1306,
+        50100102,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -41,6 +58,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         'COLLECTION',
         'CollectionDeployed',
         null,
+        50100103,
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -48,6 +66,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         'Ecommerce',
         '${simpleFormatting}',
         'ECOMMERCE',
+        null,
         null,
         null,
         'INACTIVE',

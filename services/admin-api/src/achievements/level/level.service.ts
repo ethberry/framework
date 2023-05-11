@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IAchievementLevelSearchDto, IAssetDto } from "@framework/types";
+import { IAchievementLevelSearchDto } from "@framework/types";
 
 import { AchievementLevelEntity } from "./level.entity";
 import { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
@@ -94,28 +94,18 @@ export class AchievementLevelService {
   public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {
     const { item, attributes } = dto;
 
-    const assetEntity = await this.assetService.create({
+    // add new item
+    const itemEntity = await this.assetService.create({
       components: [],
     });
-    // clean templateId if any == 0
-    const itemNew: IAssetDto = {
-      components: item.components.map(comp =>
-        comp.templateId === 0
-          ? {
-              ...comp,
-              templateId: null,
-            }
-          : comp,
-      ),
-    };
-    await this.assetService.update(assetEntity, itemNew);
+    await this.assetService.update(itemEntity, item);
 
     return await this.achievementLevelEntityRepository
       .create({
         ...dto,
         // attributes: JSON.parse(attributes),
         attributes,
-        item: assetEntity,
+        item: itemEntity,
       })
       .save();
   }
@@ -146,18 +136,7 @@ export class AchievementLevelService {
     Object.assign(achievementLevelEntity, rest);
 
     if (item) {
-      // clean templateId if any == 0
-      const itemNew: IAssetDto = {
-        components: item.components.map(comp =>
-          comp.templateId === 0
-            ? {
-                ...comp,
-                templateId: null,
-              }
-            : comp,
-        ),
-      };
-      await this.assetService.update(achievementLevelEntity.item, itemNew);
+      await this.assetService.update(achievementLevelEntity.item, item);
     }
 
     return achievementLevelEntity.save();

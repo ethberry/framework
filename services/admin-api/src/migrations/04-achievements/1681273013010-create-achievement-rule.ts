@@ -51,6 +51,11 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "item_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "achievement_status",
           type: `${ns}.achievement_status_enum`,
         },
@@ -68,6 +73,12 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

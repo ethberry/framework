@@ -23,6 +23,7 @@ export class BalanceService {
   }
 
   public searchByAddress(address: string): Promise<Array<BalanceEntity>> {
+    console.log("searchByAddress", address);
     return this.balanceEntityRepository.find({
       where: {
         account: address,

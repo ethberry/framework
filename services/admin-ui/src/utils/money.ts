@@ -30,13 +30,16 @@ export const formatPriceHistory = (components?: IAssetComponentHistory[]): strin
 };
 
 export const cleanUpAsset = ({ components }: IAsset = { components: [], id: 0 }) => {
+  console.log("ccleanUpAssetl", { components });
   return {
-    components: components.map(({ id, tokenType, contractId, templateId, amount }) => ({
-      id,
-      tokenType,
-      contractId,
-      templateId,
-      amount,
-    })),
+    components: components.length
+      ? components.map(({ id, tokenType, contractId, templateId, amount }) => ({
+          id,
+          tokenType,
+          contractId,
+          templateId,
+          amount,
+        }))
+      : [],
   };
 };

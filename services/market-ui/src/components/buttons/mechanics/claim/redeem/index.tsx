@@ -36,7 +36,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         tokenId:
           component.contract!.contractType === TokenType.ERC1155
             ? component.template!.tokens![0].tokenId
-            : (component.templateId || 0).toString(),
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       claim.signature,

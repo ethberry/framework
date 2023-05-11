@@ -4,18 +4,16 @@ import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Reposi
 
 import { AchievementRuleEntity } from "./rule.entity";
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto } from "@framework/types";
+import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto, IAssetDto } from "@framework/types";
 import { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
-import { IMysteryboxCreateDto } from "../../blockchain/mechanics/mystery/box/interfaces";
-import { MysteryBoxEntity } from "../../blockchain/mechanics/mystery/box/box.entity";
-import { AchievementRuleCreateDto } from "./dto";
-import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 
 @Injectable()
 export class AchievementRuleService {
   constructor(
     @InjectRepository(AchievementRuleEntity)
     private readonly achievementRuleEntityRepository: Repository<AchievementRuleEntity>,
+    protected readonly assetService: AssetService,
   ) {}
 
   public search(
@@ -28,10 +26,15 @@ export class AchievementRuleService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("achievement.contract", "contract");
+    queryBuilder.leftJoinAndSelect("achievement.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    queryBuilder.andWhere("contract.merchantId = :merchantId", {
-      merchantId: userEntity.merchantId,
-    });
+    // TODO use merchants if contract?
+    // queryBuilder.andWhere("contract.merchantId = :merchantId", {
+    //   merchantId: userEntity.merchantId,
+    // });
 
     if (achievementType) {
       if (achievementType.length === 1) {
@@ -143,22 +146,81 @@ export class AchievementRuleService {
     return this.achievementRuleEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IAchievementRuleCreateDto): Promise<AchievementRuleEntity> {
-    // const { title, description, contractId, achievementStatus, achievementType, eventType } = dto;
-    return await this.achievementRuleEntityRepository.create(dto).save();
+  public findOneWithRelations(where: FindOptionsWhere<AchievementRuleEntity>): Promise<AchievementRuleEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "rule",
+        leftJoinAndSelect: {
+          item: "rule.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+        },
+      },
+    });
   }
+
+  public async create(dto: IAchievementRuleCreateDto): Promise<AchievementRuleEntity> {
+    const { item, ...rest } = dto;
+    // add new item
+    const itemEntity = await this.assetService.create({
+      components: [],
+    });
+    await this.assetService.update(itemEntity, item);
+
+    return await this.achievementRuleEntityRepository.create({ ...rest, item: itemEntity }).save();
+  }
+
+  // public async update(
+  //   where: FindOptionsWhere<AchievementRuleEntity>,
+  //   dto: IAchievementRuleUpdateDto,
+  // ): Promise<AchievementRuleEntity | undefined> {
+  //   const achievementRuleEntity = await this.achievementRuleEntityRepository.findOne({ where });
+  //
+  //   if (!achievementRuleEntity) {
+  //     throw new NotFoundException("achievementLevelNotFound");
+  //   }
+  //
+  //   Object.assign(achievementRuleEntity, dto);
+  //
+  //   return achievementRuleEntity.save();
+  // }
 
   public async update(
     where: FindOptionsWhere<AchievementRuleEntity>,
     dto: IAchievementRuleUpdateDto,
-  ): Promise<AchievementRuleEntity | undefined> {
-    const achievementRuleEntity = await this.achievementRuleEntityRepository.findOne({ where });
+  ): Promise<AchievementRuleEntity> {
+    const { item, ...rest } = dto;
+    const achievementRuleEntity = await this.findOne(where, {
+      join: {
+        alias: "rule",
+        leftJoinAndSelect: {
+          item: "rule.item",
+          components: "item.components",
+        },
+      },
+    });
 
     if (!achievementRuleEntity) {
-      throw new NotFoundException("achievementLevelNotFound");
+      throw new NotFoundException("achievementRuleNotFound");
     }
 
-    Object.assign(achievementRuleEntity, dto);
+    Object.assign(achievementRuleEntity, rest);
+
+    if (item && item.components.length) {
+      // clean templateId if any == 0
+      const itemNew: IAssetDto = {
+        components: item.components.map(comp =>
+          comp.templateId === 0
+            ? {
+                ...comp,
+                templateId: null,
+              }
+            : comp,
+        ),
+      };
+      await this.assetService.update(achievementRuleEntity.item, itemNew);
+    }
 
     return achievementRuleEntity.save();
   }

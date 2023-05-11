@@ -38,7 +38,7 @@ export class AchievementRuleController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<AchievementRuleEntity | null> {
-    return this.achievementRuleService.findOne({ id });
+    return this.achievementRuleService.findOneWithRelations({ id });
   }
 
   @Post("/")

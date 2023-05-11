@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, LotteryEventType } from "@framework/types";
@@ -22,6 +23,10 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const lotteryAddr = configService.get<string>("LOTTERY_ADDR", "");
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         const fromBlock = (await contractService.getLastBlock(lotteryAddr)) || startingBlock;
         return {
           contract: {
@@ -45,7 +50,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           },
           block: {
             fromBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },

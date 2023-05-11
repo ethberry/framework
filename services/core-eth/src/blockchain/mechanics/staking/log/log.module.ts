@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
@@ -29,6 +30,10 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
         const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
         return {
           contract: {
@@ -54,7 +59,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           },
           block: {
             fromBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },

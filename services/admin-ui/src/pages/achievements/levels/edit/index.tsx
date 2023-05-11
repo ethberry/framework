@@ -62,7 +62,16 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput multiple allowEmpty prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <Typography sx={{ mt: 2 }} variant="inherit">
+        <FormattedMessage id="form.labels.achievementLevelItem" />
+      </Typography>
+      <TemplateAssetInput
+        multiple
+        allowEmpty
+        prefix="item"
+        showLabel={false}
+        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+      />
       <JsonInput name="attributes" />
       <Typography variant="inherit">
         <FormattedMessage id="form.labels.amount" />

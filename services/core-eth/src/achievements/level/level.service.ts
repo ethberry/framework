@@ -40,4 +40,8 @@ export class AchievementLevelService {
     });
     return queryBuilder.getOne();
   }
+
+  // public processEvent(): Promise<number | null> {
+  //   const levels = await
+  // }
 }

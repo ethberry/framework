@@ -28,6 +28,10 @@ import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementItemEntity } from "./achievements/item/item.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -62,8 +66,11 @@ const config: PostgresConnectionOptions = {
     BreedEntity,
     PayeesEntity,
     ClaimEntity,
-    // Achievements
-    // AchievementItemEntity,
+    /* achievements */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

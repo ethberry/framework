@@ -262,6 +262,7 @@ import {
   SeedWrapperAt1563804000370,
 } from "./migrations";
 import { SeedAchievementClaimErc721At1681273013071 } from "./migrations/04-achievements/1681273013071-seed-achievement-claim-erc721";
+import { SeedAssetComponentsAchievementRule1681273013025 } from "./migrations/04-achievements/1681273013025-seed-asset-component-achievement-rule";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -559,6 +560,7 @@ const config: PostgresConnectionOptions = {
     /* achievements */
     CreateAchievementRule1681273013010,
     SeedAchievementRule1681273013020,
+    SeedAssetComponentsAchievementRule1681273013025,
     CreateAchievementLevel1681273013030,
     SeedAchievementLevel1681273013040,
     SeedAssetComponentsAchievementAt1681273013045,

@@ -1,18 +1,28 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min } from "class-validator";
-import { Transform } from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, Min, ValidateNested, IsOptional } from "class-validator";
+import { Type, Transform } from "class-transformer";
+
 import { SearchableDto } from "@gemunion/collection";
 
 import { IAchievementRuleCreateDto } from "../interfaces";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
+import { ItemDto } from "../../../blockchain/exchange/asset/dto";
 
 export class AchievementRuleCreateDto extends SearchableDto implements IAchievementRuleCreateDto {
-  @ApiProperty({
-    minimum: 1,
+  @ApiPropertyOptional({
+    minimum: 0,
   })
+  @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public contractId: number;
+
+  @ApiProperty({
+    type: ItemDto,
+  })
+  @ValidateNested()
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiProperty()
   @Transform(({ value }) => value as AchievementType)
@@ -23,7 +33,8 @@ export class AchievementRuleCreateDto extends SearchableDto implements IAchievem
   @IsEnum(AchievementRuleStatus, { message: "badInput" })
   public achievementStatus: AchievementRuleStatus;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsEnum(ContractEventType, { message: "badInput" })
   public eventType: ContractEventType;
 }

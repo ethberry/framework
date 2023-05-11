@@ -60,6 +60,31 @@ export class MarketplaceService {
     params: IParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
+    console.log("account", account);
+    console.log("params", params);
+    console.log("item", {
+      tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType),
+      token: templateEntity.contract.address,
+      tokenId:
+        templateEntity.contract.contractType === TokenType.ERC1155
+          ? templateEntity.tokens[0].tokenId
+          : templateEntity.id.toString(),
+      amount: amount || "1",
+    });
+    console.log(
+      "price",
+      templateEntity.price.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        // pass templateId instead of tokenId = 0
+        // tokenId:
+        //   component.template.tokens[0].tokenId === "0"
+        //     ? component.template.tokens[0].templateId.toString()
+        //     : component.template.tokens[0].tokenId,
+        tokenId: component.template.tokens[0].tokenId,
+        amount: BigNumber.from(component.amount).mul(BigNumber.from(amount)).toString(),
+      })),
+    );
     return this.signerService.getOneToManySignature(
       account,
       params,

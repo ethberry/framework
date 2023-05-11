@@ -56,10 +56,9 @@ export const StakingRules: FC = () => {
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ title, description, stakingRuleStatus }) => ({
+    filter: ({ title, description }) => ({
       title,
       description,
-      stakingRuleStatus,
     }),
     search: {
       query: "",

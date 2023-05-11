@@ -93,6 +93,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
           <TemplateAssetInput
             prefix="reward"
             readOnly={readOnly}
+            allowEmpty
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>

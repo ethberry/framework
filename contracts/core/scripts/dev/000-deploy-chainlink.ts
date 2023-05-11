@@ -5,8 +5,10 @@ import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
 import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
-const delay = 3; // block delay
-const delayMs = 1500; // block delay ms
+const delay = 2; // block delay
+const delayMs = 1000; // block delay ms
+const subscriptionId = 1; // besu
+// const subscriptionId = 2; // gemunion
 
 interface IObj {
   address?: string;
@@ -70,10 +72,9 @@ async function main() {
   const linkAmount = constants.WeiPerEther.mul(10);
 
   await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
-
   await debug(await vrfInstance.createSubscription(), "createSubscription");
   // TODO get subId from createSubscription event
-  const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(1)), 32);
+  const subId = utils.hexZeroPad(utils.hexlify(BigNumber.from(subscriptionId)), 32);
   await debug(await linkInstance.transferAndCall(vrfInstance.address, linkAmount, subId), "transferAndCall");
   // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
 }

@@ -28,6 +28,36 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
+      const { account } = web3Context;
+      console.log("account", account);
+      console.log("params", {
+        nonce: utils.arrayify(sign.nonce),
+        externalId: template.id,
+        expiresAt: sign.expiresAt,
+        referrer: settings.getReferrer(),
+        extra: utils.formatBytes32String("0x"),
+      });
+      console.log("item", {
+        tokenType: Object.values(TokenType).indexOf(template.contract!.contractType),
+        token: template.contract?.address,
+        tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
+        amount: values.amount || 1,
+      });
+      console.log(
+        "price",
+        template.price?.components.sort(sorter("id")).map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          // pass templateId instead of tokenId = 0
+          // tokenId:
+          //   component.template!.tokens![0].tokenId === "0"
+          //     ? component.template!.tokens![0].templateId
+          //     : component.template!.tokens![0].tokenId,
+          tokenId: component.template!.tokens![0].tokenId,
+          // amount: component.amount,
+          amount: BigNumber.from(component.amount).mul(BigNumber.from(values.amount)).toString(),
+        })),
+      );
       return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),
