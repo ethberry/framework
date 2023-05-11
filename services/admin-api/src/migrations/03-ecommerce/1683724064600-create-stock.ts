@@ -16,18 +16,12 @@ export class CreateStock1683724064600 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "parameter_id",
+          name: "total_tock_quantity",
           type: "int",
-          isNullable: true,
         },
         {
-          name: "custom_parameter_id",
+          name: "reserved_stock_quantity",
           type: "int",
-          isNullable: true,
-        },
-        {
-          name: "user_custom_value",
-          type: "varchar",
           isNullable: true,
         },
         {
@@ -44,18 +38,6 @@ export class CreateStock1683724064600 implements MigrationInterface {
           columnNames: ["product_item_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.product_item`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["parameter_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.parameter`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["custom_parameter_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.custom_parameter`,
           onDelete: "CASCADE",
         },
       ],
