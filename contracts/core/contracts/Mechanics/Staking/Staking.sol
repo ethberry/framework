@@ -140,40 +140,38 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
-    if (length > 0) {
-      for (uint256 i = 0; i < length; ) {
-        // Create a new Asset object representing the deposit.
-        Asset memory depositItem = Asset(
-          rule.deposit[i].tokenType,
-          rule.deposit[i].token,
-          tokenIds[i],
-          rule.deposit[i].amount
-        );
+    for (uint256 i = 0; i < length; ) {
+      // Create a new Asset object representing the deposit.
+      Asset memory depositItem = Asset(
+        rule.deposit[i].tokenType,
+        rule.deposit[i].token,
+        tokenIds[i],
+        rule.deposit[i].amount
+      );
 
-        _stakes[stakeId].deposit.push(depositItem);
+      _stakes[stakeId].deposit.push(depositItem);
 
         // Check templateId if ERC721 or ERC998
         if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
           // Rule deposit templateId
           uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
 
-          if (ruleDepositTokenTemplateId != 0) {
-            uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
-            if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
-          }
+        if (ruleDepositTokenTemplateId != 0) {
+          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
+          if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
         }
+      }
 
-        // Transfer tokens from user to this contract.
-        ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
+      // Transfer tokens from user to this contract.
+      ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
 
-        // Do something after purchase with referrer
-        if (referrer != address(0)) {
-          _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
-        }
+      // Do something after purchase with referrer
+      if (referrer != address(0)) {
+        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+      }
 
-        unchecked {
-          i++;
-        }
+      unchecked {
+        i++;
       }
     }
   }
@@ -352,14 +350,12 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     uint256 period,
     bool recurrent
   ) internal pure virtual returns (uint256) {
-    if (startTimestamp <= finishTimestamp) {
       uint256 multiplier = (finishTimestamp - startTimestamp) / period;
       // If staking rule is not recurrent, limit reward to 1 cycle
       if (!recurrent && multiplier > 1) {
         return 1;
       }
       return multiplier;
-    } else return 0;
   }
 
   /**
