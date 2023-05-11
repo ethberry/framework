@@ -52,7 +52,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
         tokenId:
           component.contract!.contractType === TokenType.ERC1155
             ? component.template!.tokens![0].tokenId
-            : component.templateId.toString(),
+            : (component.templateId || 0).toString(),
         amount: component.amount,
       })),
       [],
