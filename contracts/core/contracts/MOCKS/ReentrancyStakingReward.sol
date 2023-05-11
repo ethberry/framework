@@ -17,16 +17,27 @@ interface IStaking {
   function deposit(Params memory params, uint256[] calldata tokenIds) external payable;
 
   function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
+
+  function withdrawBalance(Asset memory item) external;
 }
 
 contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363ReceiverMock {
-  uint256 constant _maxReentrance = 1;
-  uint256 _attacks;
+  bytes32 constant RECEIVE_REWARD = keccak256("RECEIVE_REWARD");
+  bytes32 constant WITHDRAW = keccak256("WITHDRAW");
 
   address Staking;
+
+  uint256 _maxReentrance = 1;
+  uint256 _attacks;
+  bytes32 lastMethod;
+
+  // Arguments for receiveReward
   uint256 _stakeId;
   bool _withdrawDeposit;
   bool _breakLastPeriod;
+
+  // Arguments for withdraw
+  Asset _item;
 
   event Reentered(bool success);
 
@@ -48,7 +59,14 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363
     _stakeId = stakeId;
     _withdrawDeposit = withdrawDeposit;
     _breakLastPeriod = breakLastPeriod;
-    IStaking(payable(Staking)).receiveReward(stakeId, withdrawDeposit, breakLastPeriod);
+    lastMethod = RECEIVE_REWARD;
+    IStaking(Staking).receiveReward(stakeId, withdrawDeposit, breakLastPeriod);
+  }
+
+  function withdrawBalance(Asset memory item) public {
+    lastMethod = WITHDRAW;
+    _item = item;
+    IStaking(Staking).withdrawBalance(item);
   }
 
   function onTransferReceived(
@@ -57,7 +75,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363
     uint256 value,
     bytes memory data
   ) external override returns (bytes4) {
-    _reenterReceiveReward();
+    _reenter();
 
     if (data.length == 1) {
       if (data[0] == 0x00) return bytes4(0);
@@ -69,14 +87,8 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363
     return this.onTransferReceived.selector;
   }
 
-  function onERC721Received(
-    address _a1,
-    address _a2,
-    uint256 _u1,
-    bytes memory _b1
-  ) public override returns (bytes4) {
-    _reenterReceiveReward();
-
+  function onERC721Received(address _a1, address _a2, uint256 _u1, bytes memory _b1) public override returns (bytes4) {
+    _reenter();
     return super.onERC721Received(_a1, _a2, _u1, _b1);
   }
 
@@ -87,7 +99,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363
     uint256 _u2,
     bytes memory _b1
   ) public virtual override returns (bytes4) {
-    _reenterReceiveReward();
+    _reenter();
     return super.onERC1155Received(_a1, _a2, _u1, _u2, _b1);
   }
 
@@ -98,20 +110,27 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder, ERC1363
     uint256[] memory _u2,
     bytes memory _b1
   ) public virtual override returns (bytes4) {
-    _reenterReceiveReward();
+    _reenter();
     return super.onERC1155BatchReceived(_a1, _a2, _u1, _u2, _b1);
   }
 
   receive() external payable {
-    _reenterReceiveReward();
+    _reenter();
   }
 
-  function _reenterReceiveReward() internal {
+  function _reenter() internal {
     if (_attacks < _maxReentrance) {
+      bool success;
       _attacks += 1;
-      (bool success, ) = Staking.call(
-        abi.encodeWithSelector(IStaking.receiveReward.selector, _stakeId, _withdrawDeposit, _breakLastPeriod)
-      );
+      if (lastMethod == RECEIVE_REWARD) {
+        (success, ) = Staking.call(
+          abi.encodeWithSelector(IStaking.receiveReward.selector, _stakeId, _withdrawDeposit, _breakLastPeriod)
+        );
+      } else {
+        (success, ) = Staking.call(
+          abi.encodeWithSelector(IStaking.withdrawBalance.selector, _item)
+        );
+      }
 
       emit Reentered(success);
     }
