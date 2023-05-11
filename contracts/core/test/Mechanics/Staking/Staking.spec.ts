@@ -68,6 +68,7 @@ describe("Staking", function () {
   const period = 300;
   const penalty = 0;
   const cycles = 2;
+  // params;
   const params = {
     nonce,
     externalId: 1,
@@ -3203,7 +3204,92 @@ describe("Staking", function () {
       expect(balance4).to.equal(1);
     });
 
-    it("should stake ERC998 & receive ERC721 Mysterybox", async function () {
+    it("should stake ERC998 & receive ERC721 Mysterybox (ERC721)", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc721Instance = await erc721Factory("ERC721Simple");
+      const erc998Instance = await erc721Factory("ERC998Simple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+
+      await mysteryboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 3, // ERC998
+            token: erc998Instance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: mysteryboxInstance.address,
+            tokenId,
+            amount: 0,
+          },
+        ],
+        content: [
+          [
+            {
+              tokenType: 2, // ERC998
+              token: erc721Instance.address,
+              tokenId,
+              amount: 0,
+            },
+          ],
+        ],
+        period,
+        penalty,
+        recurrent: true,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      // STAKE
+      await erc998Instance.mintCommon(owner.address, templateId);
+      const balance1 = await erc998Instance.balanceOf(owner.address);
+      expect(balance1).to.equal(1);
+      await erc998Instance.approve(stakingInstance.address, 1);
+
+      const tx1 = await stakingInstance.deposit(params, tokenIds);
+      const startTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
+        .to.emit(erc998Instance, "Transfer")
+        .withArgs(owner.address, stakingInstance.address, tokenId);
+
+      const balance2 = await erc998Instance.balanceOf(owner.address);
+      expect(balance2).to.equal(0);
+
+      // TIME
+      const current = await time.latestBlock();
+      await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
+
+      // REWARD
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      const endTimestamp: number = (await time.latest()).toNumber();
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .withArgs(1, owner.address, endTimestamp)
+        .to.emit(stakingInstance, "StakingFinish")
+        .withArgs(1, owner.address, endTimestamp, cycles)
+        .to.emit(mysteryboxInstance, "Transfer")
+        .withArgs(constants.AddressZero, owner.address, tokenId);
+
+      const balance3 = await mysteryboxInstance.balanceOf(owner.address);
+      expect(balance3).to.equal(cycles);
+      const balance4 = await erc998Instance.balanceOf(owner.address);
+      expect(balance4).to.equal(1);
+    });
+
+    it("should stake ERC998 & receive ERC721 Mysterybox (ERC998)", async function () {
       const [owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
