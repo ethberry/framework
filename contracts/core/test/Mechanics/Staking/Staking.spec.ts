@@ -15,7 +15,7 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, extra, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { expiresAt, extra, templateId, params, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -68,14 +68,6 @@ describe("Staking", function () {
   const period = 300;
   const penalty = 0;
   const cycles = 2;
-  // params;
-  const params = {
-    nonce,
-    externalId: 1,
-    expiresAt,
-    referrer: constants.AddressZero,
-    extra,
-  };
 
   let vrfInstance: VRFCoordinatorMock;
 

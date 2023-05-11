@@ -22,7 +22,7 @@ export const span = 300;
 export const maxStake = 5;
 
 // EXCHANGE
-export const externalId = 123;
+export const externalId = 1;
 export const expiresAt = 0;
 export const extra = utils.formatBytes32String("0x");
 
