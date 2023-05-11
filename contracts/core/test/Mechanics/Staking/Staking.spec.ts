@@ -617,6 +617,47 @@ describe("Staking", function () {
       await expect(tx1).to.be.revertedWithCustomError(stakingInstance, "WrongToken");
     });
 
+    it("should deposit with templateId 0", async function () {
+      const [owner] = await ethers.getSigners();
+      const stakingInstance = await factory();
+      const erc721Instance = await erc721Factory();
+
+      await stakingInstance.setMaxStake(1);
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [],
+        period,
+        penalty,
+        recurrent: true,
+        active: true,
+      };
+
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      await erc721Instance.mintCommon(owner.address, templateId);
+      await erc721Instance.approve(stakingInstance.address, tokenId);
+
+      const tx1 = stakingInstance.deposit(params, tokenIds);
+      await expect(tx1).to.not.be.reverted;
+    });
+
     it("should deposit with referral", async function () {
       const [_, receiver] = await ethers.getSigners();
       const stakingInstance = await factory();
