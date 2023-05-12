@@ -18,7 +18,6 @@ import type { TErc1155Events } from "./erc1155";
 import type { TChainLinkEvents } from "./chain-link";
 import type { TRoyaltyEvents } from "./royalty";
 import type { TErc998Events } from "./erc998";
-import type { TClaimEvents } from "./claim";
 import type { TMysteryEvents } from "./mystery";
 import type { TWrapperEvents } from "./wrapper";
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
@@ -138,7 +137,6 @@ export type TContractEventData =
 
   // mechanics
   | TVestingEvents
-  | TClaimEvents
   | TMysteryEvents
   | TWrapperEvents
   | TStakingEvents

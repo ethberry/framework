@@ -19,7 +19,6 @@ export class BalanceController {
     @Query() dto: BalanceSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<BalanceEntity>, number]> {
-    console.log("dto", dto);
     return this.balanceService.search(dto, userEntity);
   }
 

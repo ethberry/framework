@@ -18,7 +18,7 @@ export interface IBalanceWithdrawDialogProps {
 
 export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
   const { initialValues, ...rest } = props;
-  console.log("BalanceWithdrawDialoginitialValues", initialValues);
+
   const [rows, setRows] = useState<Array<IBalance>>([]);
 
   const { fn, isLoading } = useApiCall(

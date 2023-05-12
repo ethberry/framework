@@ -2,7 +2,6 @@ export * from "./access-control";
 export * from "./access-list";
 export * from "./breed";
 export * from "./chain-link";
-export * from "./claim";
 export * from "./contract-manager";
 export * from "./erc20";
 export * from "./erc721";
