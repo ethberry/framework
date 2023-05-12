@@ -21,7 +21,7 @@ export class ProductItemCreateDto implements IProductItemCreateDto {
   })
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public amount: number;
+  public priceId: number;
 
   @ApiPropertyOptional({ type: () => PhotoCreateDto })
   @IsOptional()
@@ -42,17 +42,17 @@ export class ProductItemCreateDto implements IProductItemCreateDto {
   })
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public minQuantity: number;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
-  public sku: string;
+  public maxQuantity: number;
 
   @ApiProperty({
     minimum: 0,
   })
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public weight: number;
+  public minQuantity: number;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @MaxLength(32, { message: "rangeOverflow" })
+  public sku: string;
 }

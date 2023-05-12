@@ -59,4 +59,7 @@ export class ProductEntity extends SearchableEntity implements IProduct {
 
   @Column({ type: "int" })
   public width: number;
+
+  @Column({ type: "int" })
+  public weight: number;
 }

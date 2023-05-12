@@ -11,7 +11,7 @@ import { AssetComponentHistoryEntity } from "../../blockchain/exchange/asset/ass
 @Entity({ schema: ns, name: "order_item" })
 export class OrderItemEntity extends IdDateBaseEntity implements IOrderItem {
   @Column({ type: "int" })
-  public amount: number;
+  public quantity: number;
 
   @Column({ type: "int" })
   public productItemId: number;
@@ -22,13 +22,14 @@ export class OrderItemEntity extends IdDateBaseEntity implements IOrderItem {
   })
   public productItem: ProductItemEntity;
 
-  @Column({ type: "int" })
-  public orderId: number;
-
+  @JoinColumn()
   @OneToMany(_type => AssetComponentHistoryEntity, assets => assets.history)
-  public assets: Array<AssetComponentHistoryEntity>;
+  public exchange: Array<AssetComponentHistoryEntity>;
 
   @JoinColumn()
   @ManyToOne(_type => OrderEntity, order => order.orderItems)
   public order: OrderEntity;
+
+  @Column({ type: "int" })
+  public orderId: number;
 }

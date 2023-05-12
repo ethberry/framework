@@ -17,49 +17,49 @@ export class SeedOrder1683724062010 implements MigrationInterface {
       ) VALUES (
         'NEW',
         1,
-        3,
+        1,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'SCHEDULED',
         1,
-        3,
+        1,
         2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'NOW_IN_DELIVERY',
         1,
-        5,
+        1,
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         1,
-        3,
+        2,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         1,
-        3,
+        2,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         2,
-        5,
+        1,
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         2,
-        5,
+        2,
         3,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -22,7 +22,7 @@ export class CreateCustomParameter1683724062400 implements MigrationInterface {
         },
         {
           name: "product_item_id",
-          type: "varchar",
+          type: "int",
         },
         {
           name: "parameter_name",

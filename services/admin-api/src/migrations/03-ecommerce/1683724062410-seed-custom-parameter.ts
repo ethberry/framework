@@ -4,43 +4,49 @@ import { ns } from "@framework/constants";
 
 export class SeedCustomParameter1683724062410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    const currentDateTime = new Date().toISOString();
+
     await queryRunner.query(`
       INSERT INTO ${ns}.custom_parameter (
         product_item_id,
         parameter_name,
         parameter_type,
         parameter_value,
-        user_id
+        user_id,
+        created_at,
+        updated_at
       ) VALUES (
         6,
         'COLOR',
         'ENUM',
         'INDIGO',
-        1
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       ), (
         7,
         'COLOR',
         'ENUM',
         'YELLOW',
-        1
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       ), (
         8,
         'SIZE',
         'ENUM',
         'XXXXL',
-        1
-      ), (
-        8,
-        'SIZE',
-        'ENUM',
-        'XXS',
-        1
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       ), (
         9,
         'COLOR',
         'ENUM',
         'VIOLET',
-        1
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

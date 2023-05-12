@@ -20,9 +20,6 @@ export class ProductItemEntity extends IdDateBaseEntity implements IProductItem 
   @Column({ type: "int" })
   public productId: number;
 
-  @Column({ type: "int" })
-  public amount: number;
-
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
   public price: AssetEntity;
