@@ -18,7 +18,7 @@ contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausabl
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721MysteryboxBlacklist(name, symbol, royalty, baseTokenURI) {
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {

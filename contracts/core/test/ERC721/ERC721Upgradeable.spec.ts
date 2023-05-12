@@ -2,11 +2,11 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enumerable";
 
-import { shouldMintCommon } from "./shared/mintCommon";
+import { FrameworkInterfaceId } from "../constants";
+import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { FrameworkInterfaceId } from "../constants";
+import { shouldMintCommon } from "./shared/simple/base/mintCommon";
 
 describe("ERC721Upgradeable", function () {
   const factory = () => deployERC721(this.title);

@@ -9,11 +9,8 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
@@ -45,8 +42,6 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   Counters.Counter internal _ruleIdCounter;
   Counters.Counter internal _stakeIdCounter;
 
-  DisabledTokenTypes _disabledTypes = DisabledTokenTypes(false, false, false, false, false);
-
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
@@ -55,6 +50,8 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
+  DisabledTokenTypes _disabledTypes = DisabledTokenTypes(false, false, false, false, false);
+
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
@@ -62,8 +59,8 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   event WithdrawBalance(address account, Asset item);
 
   constructor(uint256 maxStake) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
 
     setMaxStake(maxStake);
   }
@@ -92,17 +89,14 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   /**
    * @dev Get Stake
    */
-  function getStake(uint256 stakeId) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Stake memory stake) {
+  function getStake(uint256 stakeId) public view returns (Stake memory stake) {
     return _stakes[stakeId];
   }
 
   /**
    * @dev Get Penalty
    */
-  function getPenalty(
-    address token,
-    uint256 tokenId
-  ) public view onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 penalty) {
+  function getPenalty(address token, uint256 tokenId) public view returns (uint256 penalty) {
     return _penalties[token][tokenId];
   }
 
@@ -146,40 +140,38 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
-    if (length > 0) {
-      for (uint256 i = 0; i < length; ) {
-        // Create a new Asset object representing the deposit.
-        Asset memory depositItem = Asset(
-          rule.deposit[i].tokenType,
-          rule.deposit[i].token,
-          tokenIds[i],
-          rule.deposit[i].amount
-        );
+    for (uint256 i = 0; i < length; ) {
+      // Create a new Asset object representing the deposit.
+      Asset memory depositItem = Asset(
+        rule.deposit[i].tokenType,
+        rule.deposit[i].token,
+        tokenIds[i],
+        rule.deposit[i].amount
+      );
 
-        _stakes[stakeId].deposit.push(depositItem);
+      _stakes[stakeId].deposit.push(depositItem);
 
         // Check templateId if ERC721 or ERC998
         if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-          // Rule deposit tokenId
+          // Rule deposit templateId
           uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
 
-          if (ruleDepositTokenTemplateId != 0) {
-            uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
-            if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
-          }
+        if (ruleDepositTokenTemplateId != 0) {
+          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
+          if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
         }
+      }
 
-        // Transfer tokens from user to this contract.
-        ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
+      // Transfer tokens from user to this contract.
+      ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
 
-        // Do something after purchase with referrer
-        if (referrer != address(0)) {
-          _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
-        }
+      // Do something after purchase with referrer
+      if (referrer != address(0)) {
+        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+      }
 
-        unchecked {
-          i++;
-        }
+      unchecked {
+        i++;
       }
     }
   }
@@ -215,6 +207,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   ) public virtual nonReentrant whenNotPaused {
     // Retrieve the stake and rule objects from storage.
     Stake storage stake = _stakes[stakeId];
+    uint256 startTimestamp = stake.startTimestamp;
     address payable receiver = payable(stake.owner);
     // Set the receiver of the reward.
     Rule storage rule = _rules[stake.ruleId];
@@ -226,7 +219,6 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     if (stake.owner != account) revert NotAnOwner();
     if (!stake.activeDeposit) revert Expired();
 
-    uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
     // Calculate the multiplier
     // counts only FULL stake cycles
@@ -242,6 +234,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     for (uint256 i = 0; i < lengthDeposit; ) {
       Asset storage depositItem = stake.deposit[i];
       uint256 stakeAmount = depositItem.amount;
+      TokenType depositTokenType = depositItem.tokenType;
 
       // If withdrawDeposit flag is true OR
       // If Reward multiplier > 0 AND Rule is not recurrent OR
@@ -266,7 +259,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
         if (
           multiplier == 0 &&
           rule.penalty == 10000 &&
-          (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998)
+          (depositTokenType == TokenType.ERC721 || depositTokenType == TokenType.ERC998)
         ) {
           // Empty current stake deposit item amount
           depositItem.amount = 0;
@@ -357,14 +350,12 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     uint256 period,
     bool recurrent
   ) internal pure virtual returns (uint256) {
-    if (startTimestamp <= finishTimestamp) {
       uint256 multiplier = (finishTimestamp - startTimestamp) / period;
       // If staking rule is not recurrent, limit reward to 1 cycle
       if (!recurrent && multiplier > 1) {
         return 1;
       }
       return multiplier;
-    } else return 0;
   }
 
   /**
@@ -397,6 +388,9 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     // p.deposit = rule.deposit;
     // Store each individual asset in the rule's deposit array
     uint256 lengthDeposit = rule.deposit.length;
+    if (lengthDeposit == 0) {
+      revert WrongRule();
+    }
     for (uint256 i = 0; i < lengthDeposit; ) {
       p.deposit.push(rule.deposit[i]);
       unchecked {
@@ -476,7 +470,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     // clean penalty balance in _penalties mapping storage
     _penalties[item.token][item.tokenId] = 0;
 
-    ExchangeUtils.spend(ExchangeUtils._toArray(item), account, DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spend(ExchangeUtils._toArray(item), account, _disabledTypes);
   }
 
   /**
@@ -503,7 +497,8 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
   }
 
   /**
-   * @dev Rejects any incoming ETH transfers to this contract address
+   * @notice No tipping!
+   * @dev Rejects any incoming ETH transfers
    */
   receive() external payable override(Wallet, TopUp) {
     revert();

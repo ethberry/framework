@@ -23,7 +23,7 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
     });
 
     it("should fail: don't have permission to set a user", async function () {
-      const [_owner, receiver, stranger] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
       await contractInstance.mintCommon(receiver.address, templateId);
@@ -32,7 +32,6 @@ export function shouldSetUser(factory: () => Promise<Contract>) {
       const deadline = current.add(web3.utils.toBN(100));
 
       const tx = contractInstance.connect(receiver).setUser(1, receiver.address, deadline.toString());
-      // await expect(tx).to.be.revertedWith("ERC721: transfer caller is not owner nor approved");
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
       );

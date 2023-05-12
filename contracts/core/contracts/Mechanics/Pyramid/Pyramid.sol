@@ -41,8 +41,8 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
   event PaymentEthSent(address to, uint256 amount);
 
   constructor(address[] memory payees, uint256[] memory shares) PaymentSplitter(payees, shares) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function setRules(Rule[] memory rules) public onlyRole(DEFAULT_ADMIN_ROLE) {
