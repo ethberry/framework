@@ -1,9 +1,10 @@
-import type { IIdBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IProductItem } from "./product-item";
 
-export interface ICartItem extends IIdBase {
+export interface ICartItem extends IIdDateBase {
+  cartId: number;
   productItemId: number;
   productItem?: IProductItem;
-  amount: number;
+  quantity: number;
 }

@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-
 import { ns } from "@framework/constants";
 
-export class CreateProductToCategory1593408358930 implements MigrationInterface {
+export class CreatePromo1683724062300 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.product_to_category`,
+      name: `${ns}.promo`,
       columns: [
         {
           name: "id",
@@ -13,27 +12,31 @@ export class CreateProductToCategory1593408358930 implements MigrationInterface 
           isPrimary: true,
         },
         {
-          name: "category_id",
-          type: "int",
-          isPrimary: true,
+          name: "title",
+          type: "varchar",
         },
         {
-          name: "product_id",
+          name: "product_item_id",
           type: "int",
-          isPrimary: true,
+        },
+        {
+          name: "image_url",
+          type: "varchar",
+        },
+        {
+          name: "created_at",
+          type: "timestamptz",
+        },
+        {
+          name: "updated_at",
+          type: "timestamptz",
         },
       ],
       foreignKeys: [
         {
-          columnNames: ["category_id"],
+          columnNames: ["product_item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["product_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.product`,
+          referencedTableName: `${ns}.product_item`,
           onDelete: "CASCADE",
         },
       ],
@@ -43,6 +46,6 @@ export class CreateProductToCategory1593408358930 implements MigrationInterface 
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.product_to_category`);
+    await queryRunner.dropTable(`${ns}.promo`);
   }
 }

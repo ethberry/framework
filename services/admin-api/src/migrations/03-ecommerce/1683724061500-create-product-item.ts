@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateStock1683724064600 implements MigrationInterface {
+export class CreateProductItem1683724061500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.stock`,
+      name: `${ns}.product_item`,
       columns: [
         {
           name: "id",
@@ -12,17 +12,27 @@ export class CreateStock1683724064600 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "product_item_id",
+          name: "product_id",
           type: "int",
         },
         {
-          name: "total_tock_quantity",
+          name: "price_id",
           type: "int",
         },
         {
-          name: "reserved_stock_quantity",
+          name: "min_quantity",
           type: "int",
           isNullable: true,
+          default: "0",
+        },
+        {
+          name: "max_quantity",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "sku",
+          type: "varchar",
         },
         {
           name: "created_at",
@@ -35,18 +45,26 @@ export class CreateStock1683724064600 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["product_item_id"],
+          columnNames: ["product_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.product_item`,
+          referencedTableName: `${ns}.product`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`SELECT setval('${ns}.product_item_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.stock`);
+    await queryRunner.dropTable(`${ns}.product_item`);
   }
 }

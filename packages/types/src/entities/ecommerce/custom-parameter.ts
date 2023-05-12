@@ -9,7 +9,7 @@ export interface ICustomParameter extends IIdDateBase {
   productItem?: IProductItem;
   parameterName: string;
   parameterType: ParameterType;
-  parameterValue?: string | null;
+  parameterValue: string | null;
   userId: number;
   user?: IUser;
 }

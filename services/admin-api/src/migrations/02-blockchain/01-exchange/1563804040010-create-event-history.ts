@@ -120,7 +120,10 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
 
         -- MODULE:CHAINLINKV2
         'RandomWordsRequested',
-        'RandomWordsFulfilled'
+        'RandomWordsFulfilled',
+
+        -- MODULE:ECOMMERCE
+        'EcommercePurchase'
       );
     `);
 

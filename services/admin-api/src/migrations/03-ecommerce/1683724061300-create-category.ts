@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreatePromo1600996093684 implements MigrationInterface {
+export class CreateCategory1683724061300 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.promo`,
+      name: `${ns}.category`,
       columns: [
         {
           name: "id",
@@ -16,12 +16,12 @@ export class CreatePromo1600996093684 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "product_id",
-          type: "int",
+          name: "description",
+          type: "json",
         },
         {
-          name: "image_url",
-          type: "varchar",
+          name: "parent_id",
+          type: "int",
         },
         {
           name: "created_at",
@@ -32,12 +32,20 @@ export class CreatePromo1600996093684 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
+      foreignKeys: [
+        {
+          columnNames: ["parent_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.category`,
+          onDelete: "CASCADE",
+        },
+      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.promo`);
+    await queryRunner.dropTable(`${ns}.category`);
   }
 }

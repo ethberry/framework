@@ -1,17 +1,22 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@framework/constants";
 
-export class CreateAddress1593490663030 implements MigrationInterface {
+export class CreateOrder1683724062000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.address_status_enum AS ENUM (
-        'ACTIVE',
-        'INACTIVE'
+      CREATE TYPE ${ns}.order_status_enum AS ENUM (
+        'NEW',
+        'SCHEDULED',
+        'NOW_IN_DELIVERY',
+        'DELIVERED',
+        'CLOSED',
+        'CANCELED'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.address`,
+      name: `${ns}.order`,
       columns: [
         {
           name: "id",
@@ -19,44 +24,25 @@ export class CreateAddress1593490663030 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "address_line1",
-          type: "varchar",
+          name: "order_status",
+          type: `${ns}.order_status_enum`,
         },
         {
-          name: "address_line2",
-          type: "varchar",
-          isNullable: true,
-          default: "''",
+          name: "address_id",
+          type: "int",
         },
         {
-          name: "city",
-          type: "varchar",
-        },
-        {
-          name: "country",
-          type: "varchar",
-        },
-        {
-          name: "state",
-          type: "varchar",
-          isNullable: true,
-          default: "''",
-        },
-        {
-          name: "zip",
-          type: "varchar",
+          name: "merchant_id",
+          type: "int",
         },
         {
           name: "user_id",
           type: "int",
         },
         {
-          name: "is_default",
+          name: "is_archived",
           type: "boolean",
-        },
-        {
-          name: "address_status",
-          type: `${ns}.address_status_enum`,
+          default: false,
         },
         {
           name: "created_at",
@@ -74,6 +60,18 @@ export class CreateAddress1593490663030 implements MigrationInterface {
           referencedTableName: `${ns}.user`,
           onDelete: "CASCADE",
         },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["address_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.address`,
+          onDelete: "CASCADE",
+        },
       ],
     });
 
@@ -81,7 +79,7 @@ export class CreateAddress1593490663030 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.address`);
-    await queryRunner.query(`DROP TYPE ${ns}.address_status_enum;`);
+    await queryRunner.dropTable(`${ns}.order`);
+    await queryRunner.query(`DROP TYPE ${ns}.order_status_enum;`);
   }
 }

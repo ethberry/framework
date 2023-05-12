@@ -125,6 +125,9 @@ export enum ContractEventType {
 
   // MODULE:CHAINLINKV2
   RandomWordsRequested = "RandomWordsRequested",
+
+  // MODULE:ECOMMERCE
+  EcommercePurchase = "EcommercePurchase",
 }
 
 export type TContractEventData =

@@ -1,10 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateCategory1593408358850 implements MigrationInterface {
+export class CreateProduct1683724061400 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.product_status_enum AS ENUM (
+        'ACTIVE',
+        'INACTIVE'
+      );
+    `);
+
     const table = new Table({
-      name: `${ns}.category`,
+      name: `${ns}.product`,
       columns: [
         {
           name: "id",
@@ -20,8 +27,28 @@ export class CreateCategory1593408358850 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "parent_id",
+          name: "merchant_id",
           type: "int",
+        },
+        {
+          name: "height",
+          type: "int",
+        },
+        {
+          name: "width",
+          type: "int",
+        },
+        {
+          name: "length",
+          type: "int",
+        },
+        {
+          name: "weight",
+          type: "int",
+        },
+        {
+          name: "product_status",
+          type: `${ns}.product_status_enum`,
         },
         {
           name: "created_at",
@@ -34,9 +61,9 @@ export class CreateCategory1593408358850 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["parent_id"],
+          columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
+          referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
       ],
@@ -46,6 +73,7 @@ export class CreateCategory1593408358850 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.category`);
+    await queryRunner.dropTable(`${ns}.product`);
+    await queryRunner.query(`DROP TYPE ${ns}.product_status_enum;`);
   }
 }

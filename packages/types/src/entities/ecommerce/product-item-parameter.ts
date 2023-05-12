@@ -6,10 +6,10 @@ import { IProductItem } from "./product-item";
 
 export interface IProductItemParameter extends IIdDateBase {
   productItemId: number;
-  productItem?: IProductItem | null;
-  parameterId?: number | null;
-  parameter?: IParameter | null;
-  customParameter?: ICustomParameter | null;
-  customParameterId?: number | null;
+  productItem?: IProductItem;
+  parameterId: number | null;
+  parameter?: IParameter;
+  customParameter?: ICustomParameter;
+  customParameterId: number | null;
   userCustomValue: string;
 }

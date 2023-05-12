@@ -1,4 +1,4 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdBase } from "@gemunion/types-collection";
 
 export enum ProductColor {
   RED = "RED",
@@ -30,7 +30,7 @@ export enum ParameterType {
   NUMBER = "NUMBER",
 }
 
-export interface IParameter extends IIdDateBase {
+export interface IParameter extends IIdBase {
   parameterName: string;
   parameterType: ParameterType;
   parameterValue: string | null;

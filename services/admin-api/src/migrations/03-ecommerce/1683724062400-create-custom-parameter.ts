@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateCustomParameter1683724064400 implements MigrationInterface {
+export class CreateCustomParameter1683724062400 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.custom_parameter_type_enum AS ENUM (
@@ -25,10 +25,6 @@ export class CreateCustomParameter1683724064400 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "user_id",
-          type: "int",
-        },
-        {
           name: "parameter_name",
           type: "varchar",
         },
@@ -40,6 +36,32 @@ export class CreateCustomParameter1683724064400 implements MigrationInterface {
           name: "parameter_value",
           type: "varchar",
           isNullable: true,
+        },
+        {
+          name: "user_id",
+          type: "int",
+        },
+        {
+          name: "created_at",
+          type: "timestamptz",
+        },
+        {
+          name: "updated_at",
+          type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["product_item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.product_item`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["user_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.user`,
+          onDelete: "CASCADE",
         },
       ],
     });

@@ -18,5 +18,4 @@ export interface IProductItem extends IIdDateBase {
   orderItems?: Array<IOrderItem>;
   sku: string;
   photo: IPhoto;
-  weight: number;
 }

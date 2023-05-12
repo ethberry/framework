@@ -20,4 +20,5 @@ export interface IProduct extends ISearchable {
   length: number;
   height: number;
   width: number;
+  weight: number;
 }

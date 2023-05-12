@@ -2,55 +2,54 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedProductItemParameter1683724064710 implements MigrationInterface {
+export class SeedStock1683724062510 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      INSERT INTO ${ns}.product_item_parameter (
+      INSERT INTO ${ns}.stock (
         product_item_id,
-        parameter_id,
-        custom_parameter_id,
-        user_custom_value
+        total_stock_quantity,
+        reserved_stock_quantity
       ) VALUES (
         1,
-        11,
-        500
+        100,
+        1
       ), (
         2,
-        11,
-        1000
+        1000,
+        2
       ), (
         3,
-        11,
-        5000
+        1000,
+        20
       ), (
         4,
-        1,
-        null
+        1000,
+        0
       ), (
         5,
-        2,
+        1000,
         null
       ), (
         6,
-        3,
+        1000,
         null
       ), (
-        4,
-        5,
-        null
-      ), (
-        5,
-        6,
-        null
-      ), (
-        6,
         7,
+        1000,
+        null
+      ), (
+        8,
+        1000,
+        null
+      ), (
+        9,
+        1000,
         null
       );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.product_item_parameter RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.stock RESTART IDENTITY CASCADE;`);
   }
 }

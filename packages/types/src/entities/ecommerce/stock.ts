@@ -4,7 +4,7 @@ import { IProductItem } from "./product-item";
 
 export interface IStock extends IIdDateBase {
   productItemId: number;
-  productItem: IProductItem;
+  productItem?: IProductItem;
   totalStockQuantity: number;
   reservedStockQuantity: number;
 }

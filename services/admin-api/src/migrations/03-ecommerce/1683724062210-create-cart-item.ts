@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@framework/constants";
 
-export class CreateProductItem1683724064500 implements MigrationInterface {
+export class CreateCartItem1683724062210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    // weight: number;
     const table = new Table({
-      name: `${ns}.product_item`,
+      name: `${ns}.cart_item`,
       columns: [
         {
           name: "id",
@@ -13,32 +13,16 @@ export class CreateProductItem1683724064500 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "product_id",
+          name: "cart_id",
           type: "int",
         },
         {
-          name: "price_id",
+          name: "product_item_id",
           type: "int",
         },
         {
-          name: "min_quantity",
+          name: "quantity",
           type: "int",
-          isNullable: true,
-          default: "0",
-        },
-        {
-          name: "max_quantity",
-          type: "int",
-          isNullable: true,
-        },
-        {
-          name: "sku",
-          type: "varchar",
-        },
-        {
-          name: "weight",
-          type: "int",
-          isNullable: true,
         },
         {
           name: "created_at",
@@ -51,15 +35,15 @@ export class CreateProductItem1683724064500 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["product_id"],
+          columnNames: ["product_item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.product`,
+          referencedTableName: `${ns}.product_item`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["price_id"],
+          columnNames: ["cart_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.asset`,
+          referencedTableName: `${ns}.cart`,
           onDelete: "CASCADE",
         },
       ],
@@ -69,6 +53,6 @@ export class CreateProductItem1683724064500 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.product_item`);
+    await queryRunner.dropTable(`${ns}.cart_item`);
   }
 }

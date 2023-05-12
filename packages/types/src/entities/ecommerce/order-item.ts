@@ -7,6 +7,6 @@ export interface IOrderItem extends IIdDateBase {
   orderId: number;
   productItemId: number;
   productItem?: IProductItem;
-  assets: Array<IAssetComponentHistory>;
-  amount: number;
+  exchange: Array<IAssetComponentHistory>;
+  quantity: number;
 }

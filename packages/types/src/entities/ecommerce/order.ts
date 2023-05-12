@@ -18,9 +18,9 @@ export interface IOrder extends IIdDateBase {
   orderStatus: OrderStatus;
   addressId: number;
   address?: IAddress;
-  userId: number;
-  user?: IUser;
   merchantId: number;
   merchant?: IMerchant;
+  userId: number;
+  user?: IUser;
   isArchived: boolean;
 }

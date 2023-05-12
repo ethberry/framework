@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-
 import { ns } from "@framework/constants";
 
-export class CreateCart1595580536588 implements MigrationInterface {
+export class CreateStock1683724062500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.cart`,
+      name: `${ns}.stock`,
       columns: [
         {
           name: "id",
@@ -13,7 +12,15 @@ export class CreateCart1595580536588 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "user_id",
+          name: "product_item_id",
+          type: "int",
+        },
+        {
+          name: "total_stock_quantity",
+          type: "int",
+        },
+        {
+          name: "reserved_stock_quantity",
           type: "int",
           isNullable: true,
         },
@@ -28,35 +35,18 @@ export class CreateCart1595580536588 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["user_id"],
+          columnNames: ["product_item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.user`,
+          referencedTableName: `${ns}.product_item`,
           onDelete: "CASCADE",
         },
       ],
     });
 
     await queryRunner.createTable(table, true);
-
-    await queryRunner.query(`
-      CREATE OR REPLACE FUNCTION delete_expired_carts() RETURNS trigger
-      LANGUAGE plpgsql
-      AS $$
-        BEGIN
-          DELETE FROM ${ns}.cart WHERE created_at < NOW() - INTERVAL '30 days';
-          RETURN NEW;
-        END;
-      $$;
-    `);
-
-    await queryRunner.query(`
-      CREATE TRIGGER delete_expired_carts_trigger
-      AFTER INSERT ON ${ns}.cart
-      EXECUTE PROCEDURE delete_expired_carts()
-    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.cart`);
+    await queryRunner.dropTable(`${ns}.stock`);
   }
 }

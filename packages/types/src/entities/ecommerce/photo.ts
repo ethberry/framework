@@ -13,9 +13,9 @@ export interface IPhoto extends IIdDateBase {
   title: string;
   imageUrl: string;
   photoStatus: PhotoStatus;
-  product?: IProduct | null;
-  productId: number;
-  productItem?: IProductItem | null;
-  productItemId: number;
+  product?: IProduct;
+  productId: number | null;
+  productItem?: IProductItem;
+  productItemId: number | null;
   priority: number;
 }

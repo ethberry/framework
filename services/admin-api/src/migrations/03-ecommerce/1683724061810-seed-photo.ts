@@ -1,124 +1,146 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 
-export class SeedOrderItems1593505694830 implements MigrationInterface {
+export class SeedPhoto1683724061810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.order_item (
-        order_id,
+      INSERT INTO ${ns}.photo (
+        title,
+        image_url,
         product_id,
-        amount,
+        product_item_id,
+        photo_status,
         created_at,
         updated_at
       ) VALUES (
+        'Title',
+        '${imageUrl}',
         1,
-        1,
-        1,
+        null,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1,
+        'Title',
+        '${imageUrl}',
         2,
-        10,
+        null,
+        'APPROVED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2,
-        1,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        2,
-        2,
-        5,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+        'Title',
+        '${imageUrl}',
         3,
-        1,
-        1,
+        null,
+        'APPROVED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
-        2,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        3,
-        3,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+        'Title',
+        '${imageUrl}',
         4,
-        1,
-        1,
+        null,
+        'APPROVED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4,
-        2,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        4,
-        3,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+        'Title',
+        '${imageUrl}',
         5,
-        4,
-        1,
+        null,
+        'DECLINED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
-        5,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+        'Title',
+        '${imageUrl}',
         6,
+        null,
+        'DECLINED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
         1,
-        2,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        6,
-        4,
-        2,
+        'Title',
+        '${imageUrl}',
+        null,
+        1,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        7,
-        5,
+        'Title',
+        '${imageUrl}',
+        null,
         2,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        7,
-        2,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        7,
+        'Title',
+        '${imageUrl}',
+        null,
         3,
-        2,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        7,
+        'Title',
+        '${imageUrl}',
+        null,
+        4,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
         5,
-        2,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
+        6,
+        'APPROVED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
+        7,
+        'APPROVED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
+        8,
+        'APPROVED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Title',
+        '${imageUrl}',
+        null,
+        9,
+        'APPROVED',
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -126,6 +148,6 @@ export class SeedOrderItems1593505694830 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.order_item RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.photo RESTART IDENTITY CASCADE;`);
   }
 }

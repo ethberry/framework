@@ -2,64 +2,64 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedOrders1593490663240 implements MigrationInterface {
+export class SeedOrder1683724062010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.order (
-        user_id,
         order_status,
-        merchant_id,
         address_id,
+        merchant_id,
+        user_id,
         created_at,
         updated_at
       ) VALUES (
-        3,
         'NEW',
         1,
+        3,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
         'SCHEDULED',
         1,
+        3,
         2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
         'NOW_IN_DELIVERY',
         1,
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        3,
-        'CLOSED',
-        1,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        3,
-        'CLOSED',
-        1,
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         5,
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'CLOSED',
+        1,
+        3,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'CLOSED',
+        1,
+        3,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         'CLOSED',
         2,
+        5,
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
         'CLOSED',
         2,
+        5,
         3,
         '${currentDateTime}',
         '${currentDateTime}'

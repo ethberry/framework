@@ -1,34 +1,35 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 
-export class SeedPromo1600996093694 implements MigrationInterface {
+export class SeedCategory1683724061310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.promo (
+      INSERT INTO ${ns}.category (
         title,
-        product_id,
-        image_url,
+        description,
+        parent_id,
         created_at,
         updated_at
       ) VALUES (
-        'Promo 1',
+        'Root',
+        '${simpleFormatting}',
         1,
-        '${imageUrl}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Promo 2',
-        2,
-        '${imageUrl}',
+        'First',
+        '${simpleFormatting}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Promo 3',
-        3,
-        '${imageUrl}',
+        'Second',
+        '${simpleFormatting}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -36,6 +37,6 @@ export class SeedPromo1600996093694 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.promo RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.category RESTART IDENTITY CASCADE;`);
   }
 }

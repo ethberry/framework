@@ -1,17 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateProduct1593408358900 implements MigrationInterface {
+export class CreateProductItemParameter1683724062600 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.product_status_enum AS ENUM (
-        'ACTIVE',
-        'INACTIVE'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.product`,
+      name: `${ns}.product_item_parameter`,
       columns: [
         {
           name: "id",
@@ -19,29 +12,23 @@ export class CreateProduct1593408358900 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "title",
-          type: "varchar",
+          name: "product_item_id",
+          type: "int",
         },
         {
-          name: "description",
-          type: "json",
-        },
-        {
-          name: "price_id",
+          name: "parameter_id",
           type: "int",
           isNullable: true,
         },
         {
-          name: "amount",
+          name: "custom_parameter_id",
           type: "int",
+          isNullable: true,
         },
         {
-          name: "merchant_id",
-          type: "int",
-        },
-        {
-          name: "product_status",
-          type: `${ns}.product_status_enum`,
+          name: "user_custom_value",
+          type: "varchar",
+          isNullable: true,
         },
         {
           name: "created_at",
@@ -54,15 +41,21 @@ export class CreateProduct1593408358900 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["merchant_id"],
+          columnNames: ["product_item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
+          referencedTableName: `${ns}.product_item`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["price_id"],
+          columnNames: ["parameter_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.asset`,
+          referencedTableName: `${ns}.parameter`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["custom_parameter_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.custom_parameter`,
           onDelete: "CASCADE",
         },
       ],
@@ -72,7 +65,6 @@ export class CreateProduct1593408358900 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.product`);
-    await queryRunner.query(`DROP TYPE ${ns}.product_status_enum;`);
+    await queryRunner.dropTable(`${ns}.product_item_parameter`);
   }
 }

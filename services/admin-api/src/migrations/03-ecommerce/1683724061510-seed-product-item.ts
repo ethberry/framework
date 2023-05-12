@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { rawStateString } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 
-export class SeedProducts1593408358910 implements MigrationInterface {
+export class SeedProductItem1683724061510 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -22,71 +21,104 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         190105
       ), (
         190106
+      ), (
+        190107
+      ), (
+        190108
+      ), (
+        190109
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.product (
-        title,
-        description,
+      INSERT INTO ${ns}.product_item (
+        id,
+        product_id,
         price_id,
-        amount,
-        product_status,
-        merchant_id,
+        min_quantity,
+        max_quantity,
+        sku,
         created_at,
         updated_at
       ) VALUES (
-        'Bottle of water',
-        '${rawStateString}',
+        1,
+        1,
         190101,
-        10,
-        'ACTIVE',
-        1,
+        11,
+        500,
+        '1',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Jar of water',
-        '${rawStateString}',
+        2,
+        2,
         190102,
-        10,
-        'ACTIVE',
-        1,
+        11,
+        1000,
+        '2',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Barrel of water',
-        '${rawStateString}',
+        3,
+        3,
         190103,
-        10,
-        'INACTIVE',
-        1,
+        11,
+        5000,
+        '3',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'T-Shirt',
-        '${rawStateString}',
+        4,
+        4,
         190104,
-        10,
-        'ACTIVE',
-        2,
+        1,
+        null,
+        '4',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'T-Shirt',
-        '${rawStateString}',
+        5,
+        5,
         190105,
-        10,
-        'INACTIVE',
         2,
+        null,
+        '5',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'T-Shirt',
-        '${rawStateString}',
+        6,
+        6,
         190106,
-        10,
-        'ACTIVE',
-        2,
+        3,
+        null,
+        '6',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        7,
+        4,
+        190107,
+        5,
+        null,
+        '7',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        8,
+        5,
+        190108,
+        6,
+        null,
+        '8',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        9,
+        6,
+        190109,
+        7,
+        null,
+        '9',
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -94,6 +126,6 @@ export class SeedProducts1593408358910 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.product RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.product_item RESTART IDENTITY CASCADE;`);
   }
 }

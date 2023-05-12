@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class SeedAddress1593490663040 implements MigrationInterface {
+export class SeedAddress1683724061910 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 

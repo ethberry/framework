@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateParameter1593408358870 implements MigrationInterface {
+export class CreateParameter1683724061600 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.parameter_type_enum AS ENUM (
