@@ -71,7 +71,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         150103,
-        'Iron',
+        'Iron ore',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Firon.png?alt=media&token=7c8d1921-addf-43d9-9deb-adc39ac252f0',
         150103,
