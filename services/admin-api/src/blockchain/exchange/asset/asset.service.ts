@@ -55,8 +55,6 @@ export class AssetService {
           component.templateId = templateEntity.id;
         }
       }
-      console.log("asset.components", asset.components);
-      console.log("dto.components", dto.components);
       if (dto.components.length) {
         // remove old
         await Promise.allSettled(

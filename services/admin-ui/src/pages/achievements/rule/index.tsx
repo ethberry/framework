@@ -2,8 +2,8 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
 import {
-  Grid,
   Button,
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -19,9 +19,9 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
+import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
 import { AchievementRuleEditDialog } from "./edit";
-import { AchievementRuleStatus, AchievementType, ContractEventType, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../utils/money";
 
@@ -67,7 +67,7 @@ export const AchievementRules: FC = () => {
       eventType,
     }),
   });
-  console.log("RULES", rows);
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "achievements", "achievements.rules"]} />

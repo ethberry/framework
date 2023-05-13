@@ -425,6 +425,8 @@ services:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      # Contracts
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
     ports:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"

@@ -68,7 +68,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         'ECOMMERCE',
         null,
         null,
-        null,
+        50100104,
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

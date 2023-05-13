@@ -59,6 +59,7 @@ export class EventHistoryService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.leftJoinAndSelect("event.parent", "parent");
+    queryBuilder.leftJoinAndSelect("parent.parent", "grand_parent");
 
     queryBuilder.andWhere("event.id = :id", {
       id: where.id,
@@ -131,10 +132,10 @@ export class EventHistoryService {
       chainId,
     });
 
-    // get PARENT events
     await this.findParentHistory(contractEventEntity);
 
     await this.achievementsRuleService.processEvent(contractEventEntity.id);
+
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
 
     return contractEventEntity;
@@ -142,7 +143,7 @@ export class EventHistoryService {
 
   // get PARENT events
   public async findParentHistory(contractEventEntity: EventHistoryEntity) {
-    const { eventType, transactionHash, eventData } = contractEventEntity;
+    const { id, eventType, transactionHash, eventData } = contractEventEntity;
 
     if (eventType === ContractEventType.RandomWordsRequested) {
       const parentEvent = await this.findOne({
@@ -216,6 +217,11 @@ export class EventHistoryService {
       }
 
       await contractEventEntity.save();
+    }
+
+    // ANY EXCHANGE EVENT
+    if (Object.values<string>(ExchangeEventType).includes(eventType)) {
+      await this.findNestedHistory(transactionHash, id);
     }
   }
 

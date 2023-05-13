@@ -1,4 +1,4 @@
-import { Module, forwardRef } from "@nestjs/common";
+import { Logger, Module, forwardRef } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AchievementRuleEntity } from "./rule.entity";
@@ -14,7 +14,7 @@ import { UserModule } from "../../infrastructure/user/user.module";
     AchievementItemModule,
     TypeOrmModule.forFeature([AchievementRuleEntity]),
   ],
-  providers: [AchievementsRuleService],
+  providers: [Logger, AchievementsRuleService],
   exports: [AchievementsRuleService],
 })
 export class AchievementRuleModule {}

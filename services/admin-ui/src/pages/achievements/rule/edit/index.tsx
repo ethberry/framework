@@ -24,7 +24,7 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
   const { initialValues, ...rest } = props;
 
   const { id, title, description, achievementType, achievementStatus, contractId, item, eventType } = initialValues;
-  console.log("eventType", eventType);
+
   const fixedValues = {
     id,
     title,
@@ -35,7 +35,6 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
     item,
     eventType,
   };
-  console.log("RULE", item);
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -50,7 +49,11 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="achievementType" options={AchievementType} />
-      <SelectInput name="achievementStatus" options={AchievementRuleStatus} />
+      <SelectInput
+        name="achievementStatus"
+        options={AchievementRuleStatus}
+        disabledOptions={[AchievementRuleStatus.NEW]}
+      />
       <ContractInput name="contractId" related="address" controller="contracts" />
       <SelectInput name="eventType" options={ContractEventType} />
       <Typography sx={{ mt: 2 }} variant="inherit">
