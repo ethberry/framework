@@ -7,6 +7,7 @@ import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class WrapperTokenService extends TokenService {
@@ -23,10 +24,7 @@ export class WrapperTokenService extends TokenService {
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-    queryBuilder.leftJoinAndSelect("token.balance", "balance");
-    queryBuilder.leftJoinAndSelect("balance.token", "balance_token");
-    queryBuilder.leftJoinAndSelect("balance_token.template", "balance_token_template");
-    queryBuilder.leftJoinAndSelect("balance_token_template.contract", "balance_token_template_contract");
+
     queryBuilder.leftJoinAndSelect("token.history", "history");
     queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
     queryBuilder.leftJoinAndSelect("exchange.history", "asset_component_history");
@@ -41,6 +39,16 @@ export class WrapperTokenService extends TokenService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.leftJoinAndMapMany(
+      "token.balance",
+      BalanceEntity,
+      "balance",
+      "balance.account = contract.address AND balance.targetId = token.id",
+    );
+    queryBuilder.leftJoinAndSelect("balance.token", "balance_token");
+    queryBuilder.leftJoinAndSelect("balance_token.template", "balance_token_template");
+    queryBuilder.leftJoinAndSelect("balance_token_template.contract", "balance_token_template_contract");
 
     queryBuilder.andWhere("token.id = :id", {
       id: where.id,
