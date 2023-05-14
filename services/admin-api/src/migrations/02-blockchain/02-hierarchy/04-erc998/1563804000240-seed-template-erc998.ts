@@ -205,11 +205,11 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         'ERC1155 Owner',
         '${simpleFormatting}',
         '${imageUrl}',
-        141101,
+        141201,
         0,
         1,
         'ACTIVE',
-        1411,
+        1412,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -217,11 +217,11 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         'ERC1155 + ERC20 Owner',
         '${simpleFormatting}',
         '${imageUrl}',
-        141101,
+        141201,
         0,
         1,
         'ACTIVE',
-        1411,
+        1413,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

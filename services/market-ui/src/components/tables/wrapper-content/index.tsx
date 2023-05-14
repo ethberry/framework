@@ -43,7 +43,11 @@ export const WrapperContent: FC<IWrapperContentProps> = props => {
               {component.token!.template!.contract!.contractType}
             </Grid>
             <Grid xs={4} item>
-              {formatEther(component.amount, component.token!.template!.contract!.decimals, "")}
+              {formatEther(
+                component.amount,
+                component.token!.template!.contract!.decimals,
+                component.token!.template!.contract!.symbol,
+              )}
             </Grid>
             <Grid xs={4} item>
               <Link

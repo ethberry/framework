@@ -32,37 +32,25 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406, -- hero
+        1411, -- ec20 owner
         1201, -- space credit
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406, -- hero
+        1413, -- ec20 + erc1155 owner
+        1201, -- space credit
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1412, -- erc1155 owner
         1501, -- resources
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1411, -- 20 owner
-        1201, -- space credit
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1412, -- 1155 owner
-        1501, -- resources
-        3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1413, -- 1155 + 20 owner
-        1201, -- space credit
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1413, -- 1155 + 20 owner
+        1413, -- ec20 + erc1155 owner
         1501, -- resources
         3,
         '${currentDateTime}',
@@ -70,6 +58,24 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
       ), (
         1413, -- c-shirt
         1309, -- t-shirt
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2401, -- bep
+        2215, -- usdt
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2401, -- bep
+        2216, -- weth
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2401, -- bep
+        2217, -- busd
         1,
         '${currentDateTime}',
         '${currentDateTime}'

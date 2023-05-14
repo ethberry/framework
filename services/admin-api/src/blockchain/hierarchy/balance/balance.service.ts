@@ -46,7 +46,7 @@ export class BalanceService {
   }
 
   public search(dto: IBalanceSearchDto, userEntity: UserEntity): Promise<[Array<BalanceEntity>, number]> {
-    const { accounts, templateIds, contractIds, skip, take } = dto;
+    const { contractIds, templateIds, targetIds, accounts, skip, take } = dto;
 
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");
 
@@ -79,6 +79,16 @@ export class BalanceService {
         });
       } else {
         queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (targetIds) {
+      if (targetIds.length === 1) {
+        queryBuilder.andWhere("balance.targetId = :targetId", {
+          targetId: targetIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.targetId IN(:...targetIds)", { targetIds });
       }
     }
 

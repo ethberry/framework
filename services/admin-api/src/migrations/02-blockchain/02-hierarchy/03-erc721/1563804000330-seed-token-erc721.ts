@@ -165,7 +165,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        13050101, -- Chain mail
+        13050101, -- Cuirass
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130501",
           [TokenAttributes.GRADE]: "1",
@@ -191,7 +191,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        13050301,
+        13050301, -- Cuisses
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130503",
           [TokenAttributes.GRADE]: "10",
@@ -204,7 +204,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        13050401,
+        13050401, -- Gauntlets
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130504",
           [TokenAttributes.GRADE]: "10",
@@ -217,7 +217,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        13050501,
+        13050501, -- Sabatons
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130505",
           [TokenAttributes.GRADE]: "10",
@@ -296,6 +296,34 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '13060301',
         'MINTED',
         130603,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        13060401,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "130604",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        null,
+        100,
+        '13060401',
+        'MINTED',
+        130604,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        13060501,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "130605",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        null,
+        100,
+        '13060501',
+        'MINTED',
+        130605,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (

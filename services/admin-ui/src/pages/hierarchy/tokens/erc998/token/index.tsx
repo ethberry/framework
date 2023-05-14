@@ -14,7 +14,7 @@ import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-materia
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IContract, ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc998TokenViewDialog } from "./view";
@@ -52,11 +52,11 @@ export const Erc998Token: FC = () => {
 
   const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
 
-  const [contract, setContract] = useState<IContract>({} as IContract);
+  const [token, setToken] = useState<IToken>({} as IToken);
 
-  const handleWithdraw = (contract: IContract): (() => void) => {
+  const handleWithdraw = (token: IToken): (() => void) => {
     return (): void => {
-      setContract(contract);
+      setToken(token);
       setIsWithdrawDialogOpen(true);
     };
   };
@@ -98,7 +98,7 @@ export const Erc998Token: FC = () => {
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleWithdraw(token.template!.contract!)}>
+                <IconButton onClick={handleWithdraw(token)}>
                   <AccountBalanceWallet />
                 </IconButton>
                 <IconButton onClick={handleView(token)}>
@@ -129,7 +129,7 @@ export const Erc998Token: FC = () => {
         onConfirm={handleWithdrawConfirm}
         onCancel={handleWithdrawCancel}
         open={isWithdrawDialogOpen}
-        initialValues={contract}
+        initialValues={token}
       />
     </Grid>
   );
