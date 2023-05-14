@@ -21,6 +21,6 @@ export class ExchangeRentServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context);
 
-    this.notificatorService.dummyUser({ from, to, expires, externalId, item, price });
+    this.notificatorService.rent({ from, to, expires, externalId, item, price });
   }
 }
