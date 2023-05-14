@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { IMysterybox } from "@framework/types";
@@ -35,7 +35,7 @@ export const MysteryBox: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.imageUrl} />
+          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.description} />
           </Typography>

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -45,7 +45,7 @@ export const WrapperToken: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.template!.imageUrl} />
+          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
