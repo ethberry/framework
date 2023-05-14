@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../../utils/constants.sol";
+import "@gemunion/contracts-misc/contracts/constants.sol";
 import "./ERC721MysteryboxBlacklist.sol";
 
 contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausable {
@@ -18,7 +18,7 @@ contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausabl
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721MysteryboxBlacklist(name, symbol, royalty, baseTokenURI) {
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {
@@ -27,5 +27,21 @@ contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausabl
 
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
+  }
+
+  /**
+   * @dev See {ERC721-_beforeTokenTransfer}.
+   *
+   * Requirements:
+   *
+   * - the contract must not be paused.
+   */
+  function _beforeTokenTransfer(
+    address from,
+    address to,
+    uint256 firstTokenId,
+    uint256 batchSize
+  ) internal virtual override whenNotPaused {
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 }

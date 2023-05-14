@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CartEntity } from "./cart.entity";
 import { CartItemService } from "../cart-item/cart-item.service";
@@ -98,7 +98,10 @@ export class CartService {
       .save();
   }
 
-  public findOne(where: FindOptionsWhere<CartEntity>): Promise<CartEntity | null> {
-    return this.cartEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<CartEntity>,
+    options?: FindOneOptions<CartEntity>,
+  ): Promise<CartEntity | null> {
+    return this.cartEntityRepository.findOne({ where, ...options });
   }
 }

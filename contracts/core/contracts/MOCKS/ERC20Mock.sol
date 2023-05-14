@@ -14,8 +14,8 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 contract ERC20Mock is AccessControl, ERC20, ERC20Capped {
   constructor(string memory name, string memory symbol, uint256 cap) ERC20(name, symbol) ERC20Capped(cap) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(MINTER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
   }
 
   function _mint(address account, uint256 amount) internal virtual override(ERC20, ERC20Capped) {

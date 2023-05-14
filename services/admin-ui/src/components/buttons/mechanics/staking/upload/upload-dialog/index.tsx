@@ -25,19 +25,8 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const {
-    id,
-    title,
-    // contractId,
-    contract,
-    description,
-    penalty,
-    recurrent,
-    deposit,
-    reward,
-    durationAmount,
-    durationUnit,
-  } = initialValues;
+  const { id, title, contract, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -48,7 +37,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
     recurrent,
     durationAmount,
     durationUnit,
-    // contractId,
     contract,
   };
 
@@ -75,10 +63,21 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="deposit" readOnly={readOnly} multiple />
+          <TemplateAssetInput
+            prefix="deposit"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+            multiple
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} multiple allowEmpty={true} />
+          <TemplateAssetInput
+            prefix="reward"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+            multiple
+            allowEmpty={true}
+          />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

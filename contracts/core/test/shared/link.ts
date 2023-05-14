@@ -22,7 +22,7 @@ export async function deployLinkVrfFixture() {
   const tx01 = linkInstance.transferAndCall(
     vrfInstance.address,
     ethers.constants.WeiPerEther.mul(18),
-    utils.hexZeroPad(ethers.utils.hexlify(~~subsriptionId.toString()), 32),
+    utils.hexZeroPad(utils.hexlify(~~subsriptionId.toString()), 32),
   );
   await expect(tx01)
     .to.emit(vrfInstance, "SubscriptionFunded")

@@ -151,7 +151,7 @@ export class CraftService {
         tokenId:
           component.contract.contractType === TokenType.ERC1155
             ? component.template.tokens[0].tokenId
-            : component.template.id.toString(),
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       craftEntity.price.components.sort(sorter("id")).map(component => ({

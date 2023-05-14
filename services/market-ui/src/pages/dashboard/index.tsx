@@ -28,6 +28,7 @@ import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { WaitlistSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
+import { AchievementsSection } from "./achievements";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -65,6 +66,7 @@ export const Dashboard: FC = () => {
           <CoinGeckoSection />
           <IpfsSection />
           <PagesSection />
+          <AchievementsSection />
           <FeedbackSection />
         </Grid>
       </Grid>

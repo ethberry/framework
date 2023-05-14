@@ -32,7 +32,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         updated_at
       ) VALUES (
         102,
-        '${exchangeAddress}',
+        '${wallet}',
         '56',
         'EXCHANGE (BNB)',
         '${simpleFormatting}',

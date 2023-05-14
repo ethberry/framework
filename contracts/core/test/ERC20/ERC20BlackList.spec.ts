@@ -15,10 +15,10 @@ describe("ERC20Blacklist", function () {
 
   shouldBehaveLikeERC20Simple(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC20,
     InterfaceId.IERC1363,
-  );
+  ]);
 });

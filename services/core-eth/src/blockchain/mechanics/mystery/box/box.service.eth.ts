@@ -108,21 +108,16 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
   public async unpack(event: ILogEvent<IMysteryUnpackEvent>, context: Log): Promise<void> {
     const {
-      args: { collection, tokenId },
+      args: { tokenId },
     } = event;
+    const { address } = context;
 
-    const contractEntity = await this.contractService.findOne({ address: collection.toLowerCase() });
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    const TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-
-    if (!TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
   }
 }

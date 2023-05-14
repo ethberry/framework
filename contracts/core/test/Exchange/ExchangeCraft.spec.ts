@@ -255,7 +255,7 @@ describe("ExchangeCraft", function () {
           },
         );
 
-        await expect(tx1).to.be.revertedWith(`Exchange: Wrong amount`);
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongAmount");
       });
     });
 
@@ -750,7 +750,7 @@ describe("ExchangeCraft", function () {
           },
         );
 
-        await expect(tx1).to.be.revertedWith(`Exchange: Wrong amount`);
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "WrongAmount");
       });
     });
 
@@ -1135,7 +1135,7 @@ describe("ExchangeCraft", function () {
       await expect(tx1).to.emit(exchangeInstance, "Craft");
 
       const tx2 = exchangeInstance.connect(receiver).craft(params, [], [], signature);
-      await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail for wrong signer role", async function () {
@@ -1237,7 +1237,7 @@ describe("ExchangeCraft", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
   });
 });

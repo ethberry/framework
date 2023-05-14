@@ -18,6 +18,9 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
+  @Column({ type: "varchar" })
+  public apiKey: string;
+
   @Column({
     type: "enum",
     enum: MerchantStatus,

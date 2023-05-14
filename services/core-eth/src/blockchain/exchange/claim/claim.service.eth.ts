@@ -7,12 +7,14 @@ import { ClaimStatus, IExchangeClaimEvent } from "@framework/types";
 import { ClaimService } from "../../mechanics/claim/claim.service";
 import { AssetService } from "../asset/asset.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { UserService } from "../../../infrastructure/user/user.service";
 
 @Injectable()
 export class ExchangeClaimServiceEth {
   constructor(
     private readonly claimService: ClaimService,
     private readonly assetService: AssetService,
+    private readonly userService: UserService,
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 

@@ -86,8 +86,8 @@ export const Erc998Token: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
+        contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
-        contractType={[TokenType.ERC721]}
       />
 
       <ProgressOverlay isLoading={isLoading}>

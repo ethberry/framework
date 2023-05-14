@@ -44,6 +44,10 @@ import { CartEntity } from "./ecommerce/cart/cart.entity";
 import { CartItemEntity } from "./ecommerce/cart-item/cart-item.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
+import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -94,6 +98,11 @@ const config: PostgresConnectionOptions = {
     PromoEntity,
     CartEntity,
     CartItemEntity,
+    /* achievement */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

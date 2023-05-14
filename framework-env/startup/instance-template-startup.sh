@@ -33,3 +33,4 @@ sudo -H -u app docker run --rm \
     -v "/home/app:/home/app" \
     -w="/home/app" \
     docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d core-eth
+#select pg_terminate_backend(pid) from pg_stat_activity where datname="framework-development"; drop database "framework-development"; create database "framework-development";

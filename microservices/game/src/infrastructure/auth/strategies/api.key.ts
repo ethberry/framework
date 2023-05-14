@@ -3,9 +3,12 @@ import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
+import { MerchantService } from "../../merchant/merchant.service";
+import { MerchantEntity } from "../../merchant/merchant.entity";
+
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(Strategy, "api-key") {
-  constructor(private readonly configService: ConfigService) {
+  constructor(private readonly merchantService: MerchantService, private readonly configService: ConfigService) {
     super(
       {
         header: "Authorization",
@@ -15,13 +18,12 @@ export class ApiKeyStrategy extends PassportStrategy(Strategy, "api-key") {
     );
   }
 
-  public validate(apiKey: string): Record<string, string> {
-    const jsonApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
-
-    if (apiKey !== jsonApiKey) {
-      throw new UnauthorizedException("invalidKey");
+  public async validate(apiKey: string): Promise<MerchantEntity> {
+    const merchantEntity = await this.merchantService.findOne({ apiKey });
+    if (!merchantEntity) {
+      throw new UnauthorizedException("userHasWrongRole");
     }
 
-    return {};
+    return merchantEntity;
   }
 }

@@ -44,7 +44,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         2215,
         '${currentDateTime}',
         '${currentDateTime}'
-      ),(
+      ), (
         321501,
         'USDT',
         '${simpleFormatting}',

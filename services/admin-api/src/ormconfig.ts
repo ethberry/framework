@@ -60,11 +60,19 @@ import { ProductEntity } from "./ecommerce/product/product.entity";
 import { PromoEntity } from "./ecommerce/promo/promo.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
+/* achievements */
+import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 import {
-  AddProduct1591673187606,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
+  CreateAchievementItem1681273013050,
+  CreateAchievementLevel1681273013030,
+  CreateAchievementRedemption1681273013070,
+  CreateAchievementRule1681273013010,
   CreateAddress1593490663030,
   CreateAsset1563804000100,
   CreateAssetComponent1563804001220,
@@ -73,6 +81,7 @@ import {
   CreateBreed1663047650400,
   CreateCart1595580536588,
   CreateCartItem1595580653399,
+  CreateCategory1593408358850,
   CreateClaim1653616447810,
   CreateCompositionAt1658980520000,
   CreateContract1563804000100,
@@ -116,9 +125,14 @@ import {
   SeedAccessListErc20At1653616447320,
   SeedAccessListErc721At1653616447330,
   SeedAccessListErc998At1653616447340,
+  SeedAchievementItem1681273013060,
+  SeedAchievementLevel1681273013040,
+  SeedAchievementRedemption1681273013080,
+  SeedAchievementRule1681273013020,
   SeedAddress1593490663040,
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentRent1678931845520,
+  SeedAssetComponentsAchievementAt1681273013045,
   SeedAssetComponentsCollectionAt1679894501230,
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsErc721At1563804001230,
@@ -247,6 +261,8 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedAchievementClaimErc721At1681273013071 } from "./migrations/04-achievements/1681273013071-seed-achievement-claim-erc721";
+import { SeedAssetComponentsAchievementRule1681273013025 } from "./migrations/04-achievements/1681273013025-seed-asset-component-achievement-rule";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -301,6 +317,11 @@ const config: PostgresConnectionOptions = {
     PhotoEntity,
     ProductEntity,
     PromoEntity,
+    /* achievements */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -516,7 +537,7 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721LendComponentsAt1678931845540,
 
     /* ecommerce */
-    AddProduct1591673187606,
+    CreateCategory1593408358850,
     SeedCategories1593408358860,
     CreateProduct1593408358900,
     SeedProducts1593408358910,
@@ -535,6 +556,19 @@ const config: PostgresConnectionOptions = {
     SeedPromo1600996093694,
     CreateProductToCategory1624084124220,
     SeedProductToCategory1624084124260,
+
+    /* achievements */
+    CreateAchievementRule1681273013010,
+    SeedAchievementRule1681273013020,
+    SeedAssetComponentsAchievementRule1681273013025,
+    CreateAchievementLevel1681273013030,
+    SeedAchievementLevel1681273013040,
+    SeedAssetComponentsAchievementAt1681273013045,
+    CreateAchievementItem1681273013050,
+    SeedAchievementItem1681273013060,
+    CreateAchievementRedemption1681273013070,
+    SeedAchievementClaimErc721At1681273013071,
+    SeedAchievementRedemption1681273013080,
   ],
 };
 

@@ -28,12 +28,14 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
+
       return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
           referrer: settings.getReferrer(),
+          extra: utils.formatBytes32String("0x"),
         },
         {
           tokenType: Object.values(TokenType).indexOf(template.contract!.contractType),

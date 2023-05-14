@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 
-import { externalId, params, subscriptionId, tokenId } from "../constants";
+import { externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { deployErc1155Base, deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
@@ -80,90 +80,6 @@ describe("ExchangeClaim", function () {
 
         const balance = await erc20Instance.balanceOf(receiver.address);
         expect(balance).to.equal(amount);
-      });
-
-      it("should fail: Expired signature", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
-
-        const signature = await generateManyToManySignature({
-          account: receiver.address,
-          params: {
-            nonce,
-            externalId,
-            expiresAt: 1,
-            referrer: constants.AddressZero,
-          },
-          items: [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          price: [],
-        });
-
-        const tx1 = exchangeInstance.connect(receiver).claim(
-          {
-            nonce,
-            externalId,
-            expiresAt: 1,
-            referrer: constants.AddressZero,
-          },
-          [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          signature,
-        );
-
-        await expect(tx1).to.be.revertedWith("Exchange: Expired signature");
-      });
-
-      it("should fail: signer is missing role", async function () {
-        const [owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
-
-        const signature = await generateManyToManySignature({
-          account: receiver.address,
-          params,
-          items: [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          price: [],
-        });
-
-        await exchangeInstance.renounceRole(MINTER_ROLE, owner.address);
-
-        const tx1 = exchangeInstance.connect(receiver).claim(
-          params,
-          [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          signature,
-        );
-
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
       });
     });
 
@@ -275,88 +191,6 @@ describe("ExchangeClaim", function () {
         const balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(1);
       });
-
-      it("should fail: Expired signature", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
-
-        const signature = await generateManyToManySignature({
-          account: receiver.address,
-          params: {
-            nonce,
-            externalId,
-            expiresAt: 1,
-            referrer: constants.AddressZero,
-          },
-          items: [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          price: [],
-        });
-
-        const tx1 = exchangeInstance.connect(receiver).claim(
-          {
-            nonce,
-            externalId,
-            expiresAt: 1,
-            referrer: constants.AddressZero,
-          },
-          [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          signature,
-        );
-
-        await expect(tx1).to.be.revertedWith("Exchange: Expired signature");
-      });
-
-      it("should fail: signer is missing role", async function () {
-        const [owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
-
-        const signature = await generateManyToManySignature({
-          account: receiver.address,
-          params,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          price: [],
-        });
-
-        await exchangeInstance.renounceRole(MINTER_ROLE, owner.address);
-
-        const tx1 = exchangeInstance.connect(receiver).claim(
-          params,
-          [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          signature,
-        );
-
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
-      });
     });
 
     describe("ERC1155", function () {
@@ -410,11 +244,14 @@ describe("ExchangeClaim", function () {
         const balance = await erc1155Instance.balanceOf(receiver.address, tokenId);
         expect(balance).to.equal(amount);
       });
+    });
 
-      it("should fail: Expired signature", async function () {
+    describe("ERROR", function () {
+      it("should fail: Expired signature 1", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        await erc20Instance.mint(exchangeInstance.address, amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -423,11 +260,12 @@ describe("ExchangeClaim", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           items: [
             {
-              tokenType: 4,
-              token: erc1155Instance.address,
+              tokenType: 1,
+              token: erc20Instance.address,
               tokenId,
               amount,
             },
@@ -441,11 +279,12 @@ describe("ExchangeClaim", function () {
             externalId,
             expiresAt: 1,
             referrer: constants.AddressZero,
+            extra,
           },
           [
             {
-              tokenType: 4,
-              token: erc1155Instance.address,
+              tokenType: 1,
+              token: erc20Instance.address,
               tokenId,
               amount,
             },
@@ -453,21 +292,73 @@ describe("ExchangeClaim", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Expired signature");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
       });
 
-      it("should fail: signer is missing role", async function () {
-        const [owner, receiver] = await ethers.getSigners();
+      it("should fail: Expired signature 2", async function () {
+        const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        await erc20Instance.mint(exchangeInstance.address, amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
           params,
           items: [
             {
-              tokenType: 4,
-              token: erc1155Instance.address,
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          price: [],
+        });
+
+        const tx1 = exchangeInstance.connect(receiver).claim(
+          params,
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1).to.emit(exchangeInstance, "Claim");
+
+        const tx2 = exchangeInstance.connect(receiver).claim(
+          params,
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
+      });
+
+      it("should fail: signer is missing role", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        await erc20Instance.mint(exchangeInstance.address, amount);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params,
+          items: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
               tokenId,
               amount,
             },
@@ -481,8 +372,8 @@ describe("ExchangeClaim", function () {
           params,
           [
             {
-              tokenType: 4,
-              token: erc1155Instance.address,
+              tokenType: 1,
+              token: erc20Instance.address,
               tokenId,
               amount,
             },
@@ -490,11 +381,9 @@ describe("ExchangeClaim", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
-    });
 
-    describe("ERROR", function () {
       it("should fail: paused", async function () {
         const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 

@@ -2,9 +2,14 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
-import { amount, tokenId, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import { amount } from "@gemunion/contracts-constants";
 
 import { shouldReceive } from "./receive";
+import { deployERC721 } from "../ERC721/shared/fixtures";
+import { deployERC20 } from "../ERC20/shared/fixtures";
+import { templateId, tokenId } from "../constants";
+import { deployERC998 } from "../ERC998/shared/fixtures";
+import { deployERC1155 } from "../ERC1155/shared/fixtures";
 
 export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
   describe("topUp", function () {
@@ -12,7 +17,7 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      const tx = await contractInstance.topUp(
+      const tx = contractInstance.topUp(
         [
           {
             tokenType: 0,
@@ -24,8 +29,9 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         { value: amount },
       );
 
-      await expect(tx).to.emit(contractInstance, "PaymentEthReceived").withArgs(contractInstance.address, amount);
+      const lib = await ethers.getContractAt("ExchangeUtils", contractInstance.address, owner);
 
+      await expect(tx).to.emit(lib, "PaymentEthReceived").withArgs(contractInstance.address, amount);
       await expect(tx).to.changeEtherBalances([owner, contractInstance], [-amount, amount]);
     });
 
@@ -33,13 +39,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-      const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
+      const erc20Instance = await deployERC20();
       await erc20Instance.mint(owner.address, amount);
 
       await erc20Instance.approve(contractInstance.address, amount);
 
-      const tx = await contractInstance.topUp([
+      const tx = contractInstance.topUp([
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -53,6 +58,84 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         .withArgs(contractInstance.address, owner.address, amount, "0x");
 
       await expect(tx).changeTokenBalances(erc20Instance, [owner, contractInstance], [-amount, amount]);
+    });
+
+    it("should top-up with ERC721 token", async function () {
+      const [owner] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      const erc721Instance = await deployERC721();
+      await erc721Instance.mintCommon(owner.address, templateId);
+
+      await erc721Instance.approve(contractInstance.address, tokenId);
+
+      const tx = contractInstance.topUp([
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+      ]);
+
+      await expect(tx).to.revertedWithCustomError(contractInstance, "UnsupportedTokenType");
+    });
+
+    it("should top-up with ERC998 token", async function () {
+      const [owner] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      const erc998Instance = await deployERC998();
+      await erc998Instance.mintCommon(owner.address, templateId);
+
+      await erc998Instance.approve(contractInstance.address, tokenId);
+
+      const tx = contractInstance.topUp([
+        {
+          tokenType: 3,
+          token: erc998Instance.address,
+          tokenId,
+          amount,
+        },
+      ]);
+
+      await expect(tx).to.revertedWithCustomError(contractInstance, "UnsupportedTokenType");
+    });
+
+    it("should top-up with ERC1155 token", async function () {
+      const [owner] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      const erc1155Instance = await deployERC1155();
+      await erc1155Instance.mint(owner.address, templateId, amount, "0x");
+
+      await erc1155Instance.setApprovalForAll(contractInstance.address, true);
+
+      const tx = contractInstance.topUp([
+        {
+          tokenType: 4,
+          token: erc1155Instance.address,
+          tokenId,
+          amount,
+        },
+      ]);
+
+      await expect(tx).to.revertedWithCustomError(contractInstance, "UnsupportedTokenType");
+    });
+
+    it("should top-up with UNSUPPORTED token", async function () {
+      const contractInstance = await factory();
+
+      const tx = contractInstance.topUp([
+        {
+          tokenType: 5,
+          token: constants.AddressZero,
+          tokenId,
+          amount,
+        },
+      ]);
+
+      await expect(tx).to.revertedWithoutReason();
     });
   });
 

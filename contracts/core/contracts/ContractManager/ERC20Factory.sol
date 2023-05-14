@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.13;
 
+import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract ERC20Factory is AbstractFactory {
@@ -31,11 +32,14 @@ contract ERC20Factory is AbstractFactory {
     Params calldata params,
     Erc20Args calldata args,
     bytes calldata signature
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
+  ) external returns (address addr) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC20(params, args), signature);
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+
+    if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.cap), params.nonce);
     _erc20_tokens.push(addr);
@@ -54,7 +58,7 @@ contract ERC20Factory is AbstractFactory {
   function _hashERC20(Params calldata params, Erc20Args calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encode(ERC20_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc20Struct(args)))
+        keccak256(abi.encodePacked(ERC20_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc20Struct(args)))
       );
   }
 

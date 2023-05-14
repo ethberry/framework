@@ -1,4 +1,5 @@
 import {
+  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -7,13 +8,14 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, Repository } from "typeorm";
+import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
+import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
 @Injectable()
@@ -25,6 +27,8 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
+    @Inject(forwardRef(() => TemplateService))
+    private readonly templateService: TemplateService,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
@@ -77,6 +81,7 @@ export class AssetService {
             .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
             .map(c => c.value),
         );
+        // add new
         const newComponents = await Promise.allSettled(
           dto.components
             .filter(newItem => !newItem.id)
@@ -105,5 +110,12 @@ export class AssetService {
       // you need to release a queryRunner which was manually instantiated
       await queryRunner.release();
     }
+  }
+
+  public findOne(
+    where: FindOptionsWhere<AssetEntity>,
+    options?: FindOneOptions<AssetEntity>,
+  ): Promise<AssetEntity | null> {
+    return this.assetEntityRepository.findOne({ where, ...options });
   }
 }

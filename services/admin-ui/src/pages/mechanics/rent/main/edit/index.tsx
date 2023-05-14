@@ -44,6 +44,7 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
         multiple
+        allowEmpty
       />
     </FormDialog>
   );

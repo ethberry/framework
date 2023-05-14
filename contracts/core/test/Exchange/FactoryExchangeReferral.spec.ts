@@ -5,7 +5,7 @@ import { constants, utils } from "ethers";
 import { blockAwait } from "@gemunion/contracts-utils";
 import { nonce } from "@gemunion/contracts-constants";
 
-import { amountWei, amountWeiEth, templateId, tokenZero } from "../constants";
+import { amountWei, amountWeiEth, extra, templateId, tokenZero } from "../constants";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
 import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
 import { deployContractManager, deployExchangeFixture } from "./shared/fixture";
@@ -41,7 +41,7 @@ describe("Factory Exchange Referral", function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward * 20, refProgram.refDecrease);
-      await expect(tx).to.be.revertedWith("ExchangeReferral: wrong refReward");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
     });
 
     it("should fail: program already set", async function () {
@@ -52,7 +52,7 @@ describe("Factory Exchange Referral", function () {
         .to.emit(exchangeInstance, "ReferralProgram")
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
       const tx1 = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
-      await expect(tx1).to.be.revertedWith("ExchangeReferral: program already set");
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "RefProgramSet");
     });
   });
 
@@ -71,6 +71,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: constants.AddressZero,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -94,6 +95,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: constants.AddressZero,
+          extra,
         },
         {
           // ERC721
@@ -144,6 +146,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: stranger.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -166,6 +169,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: stranger.address,
+          extra,
         },
         {
           // ERC721
@@ -229,6 +233,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: receiver.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -251,6 +256,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: receiver.address,
+          extra,
         },
         {
           // ERC721
@@ -299,6 +305,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: owner.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -322,6 +329,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: owner.address,
+          extra,
         },
         {
           // ERC721
@@ -380,6 +388,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: stranger.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -402,6 +411,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: stranger.address,
+          extra,
         },
         {
           // ERC721
@@ -464,7 +474,7 @@ describe("Factory Exchange Referral", function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
       const tx = exchangeInstance.connect(receiver).withdrawReward(tokenZero);
-      await expect(tx).to.be.revertedWith("ExchangeReferral: Zero balance");
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "BalanceExceed");
     });
 
     it("should get referral Reward Balances", async function () {
@@ -489,6 +499,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: receiver.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -511,6 +522,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: receiver.address,
+          extra,
         },
         {
           // ERC721
@@ -559,6 +571,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: owner.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -581,6 +594,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: owner.address,
+          extra,
         },
         {
           // ERC721
@@ -638,6 +652,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: stranger.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -660,6 +675,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: stranger.address,
+          extra,
         },
         {
           // ERC721
@@ -765,6 +781,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: receiver.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -788,6 +805,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: receiver.address,
+          extra,
         },
         {
           // ERC721
@@ -880,6 +898,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: receiver.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -903,6 +922,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: receiver.address,
+          extra,
         },
         {
           // ERC721
@@ -997,6 +1017,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0, // never
           referrer: receiver.address,
+          extra,
         },
         item: {
           tokenType: 2,
@@ -1026,6 +1047,7 @@ describe("Factory Exchange Referral", function () {
           externalId: templateId,
           expiresAt: 0,
           referrer: receiver.address,
+          extra,
         },
         {
           // ERC721

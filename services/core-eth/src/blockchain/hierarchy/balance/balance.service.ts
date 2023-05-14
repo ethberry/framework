@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Inject, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber } from "ethers";
@@ -10,6 +10,8 @@ export class BalanceService {
   constructor(
     @InjectRepository(BalanceEntity)
     private readonly balanceEntityRepository: Repository<BalanceEntity>,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
   ) {}
 
   public findOne(
@@ -38,7 +40,10 @@ export class BalanceService {
       });
     }
 
+    this.loggerService.log(JSON.stringify(balanceEntity, null, "\t"), BalanceService.name);
+
     balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
+
     return balanceEntity.save();
   }
 

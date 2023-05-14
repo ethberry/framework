@@ -35,13 +35,17 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130506
       ), (
-        130507
-      ), (
         130601
       ), (
         130602
       ), (
         130603
+      ), (
+        130604
+      ), (
+        130605
+      ), (
+        130606
       ), (
         130701
       ), (
@@ -78,7 +82,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130101,
         'Physical resistance',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_physical_resistance.png?alt=media&token=d30e8e4c-c07d-4471-9e42-a195658eca80',
         130101,
         0,
         1,
@@ -90,7 +94,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130102,
         'Magic resistance',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_magic_resistance.png?alt=media&token=b0e82f13-56d2-44b5-8809-6172887f3d4d',
         130102,
         0,
         1,
@@ -102,7 +106,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130103,
         'Poison resistance',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_poison_resistance.png?alt=media&token=794b45a4-f0e7-4bfe-a50b-32339d26d774',
         130103,
         0,
         1,
@@ -114,7 +118,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130401,
         'Necklace',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fnecklace.png?alt=media&token=c9a9f9e6-8485-4210-bca8-3f456563f386',
         130401,
         0,
         1,
@@ -126,7 +130,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130402,
         'Gold ring',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgold_ring.png?alt=media&token=8f69a9a5-5339-417b-9962-ed0e1d792db7',
         130402,
         0,
         1,
@@ -138,7 +142,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130403,
         'Silver ring',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsilver_ring.png?alt=media&token=c0da9303-7581-4ba8-8a94-c411b16e6402',
         130403,
         0,
         1,
@@ -150,7 +154,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130501,
         'Cuirass',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcuirass.png?alt=media&token=0edc2d42-b484-4ab5-91f3-b33e507c8213',
         130501,
         0,
         1,
@@ -162,7 +166,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130502,
         'Helmet',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fhelmet.png?alt=media&token=a18af018-2558-4c2a-acf5-d4b3ca62da34',
         130502,
         0,
         1,
@@ -174,7 +178,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130503,
         'Cuisses',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcuisses.png?alt=media&token=21705e71-3fcf-4615-968c-dfcbbaf32ccb',
         130503,
         0,
         1,
@@ -186,7 +190,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130504,
         'Gauntlets',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgauntlets.png?alt=media&token=137824ce-50fb-44d4-9a9c-73cabb3e5429',
         130504,
         0,
         1,
@@ -196,9 +200,9 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130505,
-        'Pauldrons',
+        'Sabatons',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsabatons.png?alt=media&token=b3d5a034-1c55-4d44-b1b5-d9c42d16f516',
         130505,
         0,
         1,
@@ -208,22 +212,10 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130506,
-        'Greaves',
+        'Shield',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fshield.png?alt=media&token=2c20c670-f1e0-4770-bf15-d6583391edc2',
         130506,
-        0,
-        1,
-        'ACTIVE',
-        1305,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        130507,
-        'Sabatons',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        130507,
         0,
         1,
         'ACTIVE',
@@ -234,7 +226,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130601,
         'Sword',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsword.png?alt=media&token=9b372208-ab9d-4a76-af41-b645f1f2c389',
         130601,
         0,
         4,
@@ -246,7 +238,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130602,
         'Mace',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmace.png?alt=media&token=44e6352c-b612-412f-994b-d88c2d4a5faf',
         130602,
         0,
         1,
@@ -258,8 +250,44 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130603,
         'Axe',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Faxe.png?alt=media&token=c194bb91-523e-4b40-895a-6f67e1c5903b',
         130603,
+        0,
+        1,
+        'ACTIVE',
+        1306,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130604,
+        'Bow',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbow.png?alt=media&token=747926e5-e592-4a79-9e96-c908a23fe3a0',
+        130604,
+        0,
+        1,
+        'ACTIVE',
+        1306,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130605,
+        'Staff',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fstaff.png?alt=media&token=1ff30bc5-00cc-4f88-a75a-b1f011dd2e77',
+        130605,
+        0,
+        1,
+        'ACTIVE',
+        1306,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130606,
+        'Wand',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmagic_wand.png?alt=media&token=41a5bbe4-2dbb-4f76-8e9c-cd569a1b1ba8',
+        130606,
         0,
         1,
         'ACTIVE',
@@ -278,7 +306,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         1307,
         '${currentDateTime}',
         '${currentDateTime}'
-      ),(
+      ), (
         130701,
         'Axie',
         '${simpleFormatting}',
@@ -294,7 +322,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130801,
         'Medal',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmedal.png?alt=media&token=7d82f5d2-19eb-4352-b457-84005289a42d',
         130801,
         0,
         1,
@@ -306,7 +334,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130802,
         'Cup',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcup.png?alt=media&token=8fa13e26-d0ce-46cd-abff-3f89ac968505',
         130802,
         0,
         1,
@@ -318,7 +346,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130803,
         'Diploma',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fdiploma.png?alt=media&token=fac363d8-88e8-43ba-a649-a461b8055cae',
         130803,
         0,
         1,
@@ -330,7 +358,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130901,
         'Horse',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fhorse.png?alt=media&token=6baddae0-6927-45be-b74e-c8d9c5a146a3',
         130901,
         0,
         1,
@@ -342,7 +370,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130902,
         'Boat',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fboat.png?alt=media&token=8d6a0ea3-63d2-4508-8f2c-77fb0c73ea4c',
         130902,
         0,
         1,
@@ -354,7 +382,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130903,
         'Gyrocopter',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgyrocopter.png?alt=media&token=da3ad406-456a-4208-b5a7-003c40bc859a',
         130903,
         0,
         1,
