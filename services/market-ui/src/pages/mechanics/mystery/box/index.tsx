@@ -19,6 +19,10 @@ export const MysteryBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      item: {
+        id: 0,
+        components: [],
+      },
     },
   });
 

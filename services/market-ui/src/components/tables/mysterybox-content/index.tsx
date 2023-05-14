@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Link, Paper, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { IMysterybox } from "@framework/types";
+import { IMysterybox, TokenType } from "@framework/types";
 
 import { formatEther } from "../../../utils/money";
 
@@ -42,7 +43,16 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
               {component.tokenType}
             </Grid>
             <Grid xs={4} item>
-              {component.template!.title}
+              {component.tokenType !== TokenType.ERC20 ? (
+                <Link
+                  component={RouterLink}
+                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId}`}
+                >
+                  {component.template!.title}
+                </Link>
+              ) : (
+                <>{component.template!.title}</>
+              )}
             </Grid>
             <Grid xs={4} item>
               {formatEther(component.amount, component.contract!.decimals, "")}
