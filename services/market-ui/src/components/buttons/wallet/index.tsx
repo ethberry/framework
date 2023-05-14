@@ -42,7 +42,7 @@ export const WalletButton: FC = () => {
   );
 
   return (
-    <Box mx={1}>
+    <Box>
       <Tooltip title={tooltipTitle} enterDelay={300}>
         <IconButton color="inherit" onClick={handleOpenDialog} data-testid="OpenWalletOptionsDialog">
           <Badge color="error" badgeContent="!" invisible={isChainValid}>

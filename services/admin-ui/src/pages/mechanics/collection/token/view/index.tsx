@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
@@ -82,7 +82,7 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <img src={imageUrl || ""} alt={template?.title} />
+                <Box component="img" sx={{ maxWidth: "100%" }} src={imageUrl || ""} alt={template?.title} />
               </TableCell>
             </TableRow>
           </TableBody>

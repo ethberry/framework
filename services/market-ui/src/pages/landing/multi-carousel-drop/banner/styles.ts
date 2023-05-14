@@ -19,6 +19,7 @@ export const useStyles = makeStyles<Theme>(
         margin: "0 auto",
         display: "block",
         height: "100%",
+        maxWidth: "100%",
         minWidth: 260,
         minHeight: 260,
         [theme.breakpoints.down("sm")]: {
