@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import { Box, Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -60,7 +60,12 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.item?.components[0].template!.imageUrl} alt="Gemunion template image" />
+          <Box
+            component="img"
+            sx={{ maxWidth: "100%" }}
+            src={selected.item?.components[0].template!.imageUrl}
+            alt="Gemunion template image"
+          />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>

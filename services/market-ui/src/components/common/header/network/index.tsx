@@ -48,8 +48,8 @@ export const NetworkButton: FC = () => {
       >
         <Badge
           color="primary"
-          badgeContent={<Circle sx={{ color: "red", width: 12, height: 12 }} />}
-          sx={{ ".MuiBadge-badge": { minWidth: 12, height: 12, p: 0 } }}
+          badgeContent={<Circle sx={{ color: "#F44336", width: 12, height: 12 }} />}
+          sx={{ ".MuiBadge-badge": { minWidth: 12, height: 12, p: 0, mr: 0.7, mt: 0.7 } }}
           invisible={!isSandbox}
         >
           <IconButton
