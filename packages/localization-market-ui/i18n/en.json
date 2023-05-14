@@ -363,6 +363,7 @@
       "startTimestamp": "Start date",
       "state": "State",
       "status": "Status",
+      "template": "Template",
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Text",
@@ -794,6 +795,7 @@
     "mystery": {
       "title": "Mystery",
       "box": {
+        "content": "Mystery Box Content",
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"
       },
@@ -924,6 +926,7 @@
     },
     "wrapper": {
       "token": {
+        "content": "Wrapper Token Content",
         "title": "Wrapped Token: {title}"
       },
       "tokens": {

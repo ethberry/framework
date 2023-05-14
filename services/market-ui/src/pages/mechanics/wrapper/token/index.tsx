@@ -12,6 +12,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
+import { WrapperContent } from "../../../../components/tables/wrapper-content";
 
 export const WrapperToken: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -65,6 +66,7 @@ export const WrapperToken: FC = () => {
           ) : null}
         </Grid>
       </Grid>
+      <WrapperContent wrapper={selected} />
     </Fragment>
   );
 };

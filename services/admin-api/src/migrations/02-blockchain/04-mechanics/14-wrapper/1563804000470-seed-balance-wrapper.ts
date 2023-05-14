@@ -5,6 +5,7 @@ import { wallet } from "@gemunion/constants";
 
 export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -18,6 +19,36 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
         '${wallet}',
         1,
         17010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721ContractWrapperAddress}',
+        1,
+        11010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721ContractWrapperAddress}',
+        1,
+        12010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721ContractWrapperAddress}',
+        1,
+        13010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721ContractWrapperAddress}',
+        1,
+        14010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721ContractWrapperAddress}',
+        1,
+        15010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

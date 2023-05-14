@@ -11,6 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { useStyles } from "./styles";
+import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 
 export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysterybox>({
@@ -52,6 +53,7 @@ export const MysteryBox: FC = () => {
           </Paper>
         </Grid>
       </Grid>
+      <MysteryboxContent mysterybox={selected} />
     </Fragment>
   );
 };
