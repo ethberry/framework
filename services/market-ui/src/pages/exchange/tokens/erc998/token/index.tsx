@@ -7,8 +7,8 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractFeatures, GradeAttribute, TokenAttributes, TokenRarity } from "@framework/types";
 import type { ITemplate } from "@framework/types";
+import { ContractFeatures, GradeAttribute, TokenAttributes, TokenRarity } from "@framework/types";
 
 import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";

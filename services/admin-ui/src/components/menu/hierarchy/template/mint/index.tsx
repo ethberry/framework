@@ -14,7 +14,7 @@ import ERC20MintABI from "../../../../../abis/components/common/mint/erc20.mint.
 import ERC721MintCommonABI from "../../../../../abis/components/common/mint/erc721.mintCommon.abi.json";
 import ERC1155MintABI from "../../../../../abis/components/common/mint/erc1155.mint.abi.json";
 
-import { IMintTokenDto, MintTokenDialog, ITokenAssetComponent } from "./dialog";
+import { IMintTokenDto, ITokenAssetComponent, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   template: ITemplate;

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min, ValidateNested, IsOptional } from "class-validator";
-import { Type, Transform } from "class-transformer";
+import { IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 

@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
-import { IAsset, TokenType } from "@framework/types";
+import { IAsset } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

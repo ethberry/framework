@@ -4,9 +4,9 @@ import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import {
   ITemplateAsset,
+  ITemplateAssetComponent,
   TemplateAssetInput,
   TokenAssetInput,
-  ITemplateAssetComponent,
 } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 

@@ -19,10 +19,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
+import { AchievementType, TokenType } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
 import { AchievementLevelSearchForm } from "./search";
-import { TokenType, AchievementType } from "@framework/types";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const emptyAchievementRule = {

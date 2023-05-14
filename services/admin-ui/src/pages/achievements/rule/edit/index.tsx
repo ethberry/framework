@@ -9,8 +9,6 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
 import type { IAchievementRule } from "@framework/types";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
-
-import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../components/inputs/contract";
 
 export interface IErc20TokenEditDialogProps {

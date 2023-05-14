@@ -5,7 +5,7 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IClaim, TokenType } from "@framework/types";
+import { IClaim } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

@@ -17,7 +17,7 @@ import {
   shouldSupportsInterface,
 } from "@gemunion/contracts-mocha";
 
-import { externalId, extra, params, tokenId, expiresAt } from "../constants";
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
