@@ -50,6 +50,7 @@ export class RentSignService {
         externalId, // rent.id
         expiresAt, // sign expires
         referrer, // to
+        extra: utils.formatBytes32String("0x"),
       },
       tokenEntity,
       rentEntity,
@@ -85,7 +86,6 @@ export class RentSignService {
             : component.template.tokens[0].tokenId,
         amount: component.amount,
       })),
-      expires,
     );
   }
 }

@@ -1,15 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
-import {
-  Badge,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  SvgIcon,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Badge, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, SvgIcon, Tooltip } from "@mui/material";
+import { Circle } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
@@ -50,10 +41,15 @@ export const NetworkButton: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading} spinnerSx={{ svg: { color: "#FFFFFF" } }}>
-      <Tooltip title={formatMessage({ id: `enums.chainId.${chainId}` })} sx={{ mr: isSandbox ? 1 : 0 }}>
+      <Tooltip
+        title={`${formatMessage({ id: `enums.chainId.${chainId}` })}${
+          isSandbox ? ` (${formatMessage({ id: "components.header.wallet.test" })})` : ""
+        }`}
+      >
         <Badge
           color="primary"
-          badgeContent={<Typography fontSize={10}>{formatMessage({ id: "components.header.wallet.test" })}</Typography>}
+          badgeContent={<Circle sx={{ color: "red", width: 12, height: 12 }} />}
+          sx={{ ".MuiBadge-badge": { minWidth: 12, height: 12, p: 0 } }}
           invisible={!isSandbox}
         >
           <IconButton

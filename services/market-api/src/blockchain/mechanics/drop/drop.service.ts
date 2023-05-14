@@ -135,6 +135,7 @@ export class DropService {
         externalId: dropEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       dropEntity,
     );
