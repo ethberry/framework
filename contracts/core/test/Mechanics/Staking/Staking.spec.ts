@@ -24,6 +24,7 @@ import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
+import { shouldHaveReentrancyGuard } from "./shared/reentraceReward";
 
 /*
 1. Calculate multiplier (count full periods since stake start)
@@ -79,6 +80,7 @@ describe("Staking", function () {
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
   shouldBehaveLikePausable(factory);
   shouldBehaveLikeTopUp(factory);
+  shouldHaveReentrancyGuard(factory);
 
   before(async function () {
     await network.provider.send("hardhat_reset");
