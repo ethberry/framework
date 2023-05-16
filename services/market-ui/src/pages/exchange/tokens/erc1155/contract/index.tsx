@@ -16,7 +16,7 @@ import { useStyles } from "./styles";
 
 export const Erc1155Contract: FC = () => {
   const { selected, isLoading } = useCollection<IContract>({
-    baseUrl: "/erc1155-contracts",
+    baseUrl: "/erc1155/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -31,14 +31,7 @@ export const Erc1155Contract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc1155.contracts": "erc1155-contracts",
-          "erc1155.contract": "erc1155.contract",
-        }}
-        data={[{}, {}, { title: selected.title }]}
-      />
+      <Breadcrumbs path={["dashboard", "erc1155", "erc1155.contract"]} data={[{}, {}, { title: selected.title }]} />
 
       <PageHeader message="pages.erc1155.contract.title" data={selected}>
         <Button variant="outlined" startIcon={<Hardware />} component={RouterLink} to="/exchanges">

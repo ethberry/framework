@@ -26,4 +26,13 @@ struct Params {
   address referrer;
   uint256 externalId;
   uint256 expiresAt;
+  bytes32 extra;
+}
+
+struct DisabledTokenTypes {
+  bool native;
+  bool erc20;
+  bool erc721;
+  bool erc998;
+  bool erc1155;
 }

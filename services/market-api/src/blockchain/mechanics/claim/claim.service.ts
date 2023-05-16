@@ -1,10 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { IClaimSearchDto } from "@framework/types";
+import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
+import { IClaimCreateDto } from "./interfaces";
 
 @Injectable()
 export class ClaimService {
@@ -26,7 +27,13 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_template.tokens", "item_tokens");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "item_template.tokens",
+      "item_tokens",
+      "item_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
     if (claimStatus) {
       if (claimStatus.length === 1) {
@@ -62,4 +69,55 @@ export class ClaimService {
   ): Promise<ClaimEntity | null> {
     return this.claimEntityRepository.findOne({ where, ...options });
   }
+
+  public async create(dto: IClaimCreateDto): Promise<ClaimEntity> {
+    const { account, itemId, endTimestamp, merchantId } = dto;
+
+    return await this.claimEntityRepository
+      .create({
+        account,
+        itemId,
+        signature: "0x",
+        nonce: "",
+        merchantId,
+        endTimestamp,
+        claimStatus: ClaimStatus.NEW,
+      })
+      .save();
+  }
+
+  public async update(
+    where: FindOptionsWhere<ClaimEntity>,
+    dto: Partial<ClaimEntity>,
+  ): Promise<ClaimEntity | undefined> {
+    const claimEntity = await this.claimEntityRepository.findOne({ where });
+
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
+    }
+
+    Object.assign(claimEntity, dto);
+
+    return claimEntity.save();
+  }
+
+  // public async updateClaim(dto: Partial<IClaimCreateDto>): Promise<ClaimEntity> {
+  //   const { account, itemId, endTimestamp, nonce, signature, merchantId } = dto;
+  //
+  //   // TODO check user.merchant ?
+  //   // if (merchantId !== userEntity.merchantId) {
+  //   //   throw new ForbiddenException("insufficientPermissions");
+  //   // }
+  //   return await this.claimEntityRepository
+  //     .create({
+  //       account,
+  //       itemId,
+  //       signature,
+  //       nonce,
+  //       merchantId,
+  //       endTimestamp,
+  //       claimStatus: ClaimStatus.NEW,
+  //     })
+  //     .save();
+  // }
 }

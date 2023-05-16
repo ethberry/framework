@@ -4,30 +4,32 @@ import { Divider, Grid } from "@mui/material";
 import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { useStyles } from "./styles";
-import { Erc20Sections } from "./hierarchy/erc20";
+import { Erc20Section } from "./hierarchy/erc20";
 import { Erc1155Section } from "./hierarchy/erc1155";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
-import { Mystery } from "./mechanics/mystery";
-import { Staking } from "./mechanics/staking";
-import { NativeSections } from "./hierarchy/native";
-import { Lottery } from "./mechanics/lottery";
-import { Vesting } from "./mechanics/vesting";
-import { Claim } from "./mechanics/claim";
-import { Grade } from "./mechanics/grade";
-import { Craft } from "./mechanics/craft";
-import { Drop } from "./mechanics/drop";
-import { Admin } from "./infrastructure";
-import { ChainLink } from "./integrations/chain-link";
-import { CoinGecko } from "./integrations/coin-gecko";
-import { CoinMarketCap } from "./integrations/coin-market-cap";
-import { Marketplace } from "./exchange/marketplace";
-import { Pyramid } from "./mechanics/pyramid";
-import { Breed } from "./mechanics/breed";
-import { Waitlist } from "./mechanics/waitlist";
-import { Wallet } from "./exchange/wallet";
+import { MysterySection } from "./mechanics/mystery";
+import { StakingSection } from "./mechanics/staking";
+import { NativeSection } from "./hierarchy/native";
+import { LotterySection } from "./mechanics/lottery";
+import { VestingSection } from "./mechanics/vesting";
+import { ClaimSection } from "./mechanics/claim";
+import { GradeSection } from "./mechanics/grade";
+import { CraftSection } from "./mechanics/craft";
+import { DropSection } from "./mechanics/drop";
+import { AdminSection } from "./infrastructure";
+import { ChainLinkSection } from "./integrations/chain-link";
+import { CoinGeckoSection } from "./integrations/coin-gecko";
+import { CoinMarketCapSection } from "./integrations/coin-market-cap";
+import { MarketplaceSection } from "./exchange/marketplace";
+import { PyramidSection } from "./mechanics/pyramid";
+import { BreedSection } from "./mechanics/breed";
+import { WaitlistSection } from "./mechanics/waitlist";
+import { WalletSection } from "./exchange/wallet";
 import { Collections } from "./mechanics/collection";
-import { Ecommerce } from "./ecommerce";
+import { EcommerceSection } from "./ecommerce";
+import { RentSection } from "./mechanics/rent";
+import { AchievementsSection } from "./achievements";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -38,35 +40,37 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          <NativeSections />
-          <Erc20Sections />
+          <NativeSection />
+          <Erc20Section />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
-          <Mystery />
+          <MysterySection />
           <Collections />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Vesting />
-          <Waitlist />
-          <Claim />
-          <Drop />
-          <Craft />
-          <Grade />
-          <Breed />
-          <Lottery />
-          <Staking />
-          <Pyramid />
+          <VestingSection />
+          <WaitlistSection />
+          <ClaimSection />
+          <DropSection />
+          <RentSection />
+          <CraftSection />
+          <GradeSection />
+          <BreedSection />
+          <LotterySection />
+          <StakingSection />
+          <PyramidSection />
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChainLink />
-          <CoinGecko />
-          <CoinMarketCap />
-          <Marketplace />
-          <Wallet />
-          <Ecommerce />
-          <Admin />
+          <ChainLinkSection />
+          <CoinGeckoSection />
+          <CoinMarketCapSection />
+          <MarketplaceSection />
+          <WalletSection />
+          <EcommerceSection />
+          <AchievementsSection />
+          <AdminSection />
         </Grid>
       </Grid>
     </div>

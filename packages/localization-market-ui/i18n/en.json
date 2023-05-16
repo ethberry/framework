@@ -17,15 +17,16 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
-        "notValid": "Invalid network. Please switch to correct network according to your profile"
+        "notValid": "Invalid network. Please switch to correct network according to your profile",
+        "test": "Test"
       }
     }
   },
   "dialogs": {
     "add": "Add",
     "allowance": "Allowance",
+    "amount": "Set token amount",
     "auction": "Sell `{title}` on auction",
-    "borrow": "Borrow token",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -36,6 +37,7 @@
     "fund": "Fund",
     "get-reward": "Receive reward",
     "join": "Join",
+    "lend": "Lend token",
     "penalty": "Penalty: {item}% of deposit {description}",
     "reward": "Reward",
     "reward-item": "{item} for each {period} period",
@@ -94,14 +96,17 @@
       "amounts": "Amounts",
       "approved": "Approved",
       "args": "Arguments",
+      "borrow": "Borrow",
       "callbackGasLimit": "Callback gas limit",
       "childContract": "Child contract",
       "childTokenId": "Child token ID",
       "childTokenIds": "Child token IDs",
       "claimId": "Claim ID",
       "collection": "Collection",
+      "contract": "Contract",
       "data": "Data",
       "endTimestamp": "End date",
+      "expires": "Lend expires",
       "externalId": "External ID",
       "from": "From",
       "fromAddress": "From address",
@@ -166,6 +171,11 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
+    "lendType": {
+      "SHARE25": "Share 25/75",
+      "SHARE50": "Share 50/50",
+      "SHARE75": "Share 75/25"
+    },
     "merchantStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
@@ -229,7 +239,6 @@
       "allowance": "Allowance",
       "approve": "Approve",
       "back": "Back",
-      "borrow": "Borrow token",
       "buy": "Buy now!",
       "cancel": "Cancel",
       "checkout": "Checkout",
@@ -244,12 +253,14 @@
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
+      "lend": "Lend token",
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
+      "redeem": "Redeem",
       "release": "Release",
       "save": "Save",
       "search": "Search",
@@ -264,6 +275,7 @@
       "withdraw": "Withdraw"
     },
     "hints": {
+      "allowanceWarning": "You are going to allow all tokens of the contract",
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
@@ -272,6 +284,7 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
+      "achievementLevel": "Level to reach",
       "address": "Address",
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",
@@ -284,6 +297,7 @@
       "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
+      "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractTemplate": "Template",
@@ -307,7 +321,7 @@
       "event": "Event",
       "eventData": "Event data",
       "eventType": "Event type",
-      "expires": "Borrow expires",
+      "expires": "Lend expires",
       "externalId": "External ID",
       "from": "From",
       "gender": "Gender",
@@ -316,7 +330,9 @@
       "isDefault": "Make default",
       "item": "Item",
       "language": "Language",
+      "lendType": "Lend Type",
       "level": "Level",
+      "rentRule": "Rent Rule",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -349,6 +365,7 @@
       "startTimestamp": "Start date",
       "state": "State",
       "status": "Status",
+      "template": "Template",
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Text",
@@ -382,6 +399,7 @@
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "rentRule": "Lend Rule",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -404,13 +422,13 @@
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
-      "borrow": "Borrow",
       "cancel": "Cancel",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",
+      "lend": "Lend",
       "redeem": "Redeem",
       "releasable": "Check releasable amount",
       "release": "Release",
@@ -521,6 +539,12 @@
         "insufficient": "Insufficient {symbol} balance"
       }
     },
+    "achievements": {
+      "report": {
+        "title": "Achievements report"
+      },
+      "title": "Achievements"
+    },
     "breed": {
       "matron": "Matron",
       "sire": "Sire",
@@ -549,7 +573,7 @@
       "title": "CoinGecko"
     },
     "craft": {
-      "price": "price",
+      "price": "Price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -561,18 +585,15 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "achievements": {
+        "report": "Report",
+        "title": "Achievements"
+      },
       "ecommerce": {
-        "feedback": {
-          "form": "Feedback",
-          "title": "Feedback"
-        },
-        "pages": {
-          "about-us": "About us",
-          "faq": "FAQ",
-          "privacy-policy": "Privacy Policy",
-          "terms-of-services": "Terms of Services",
-          "title": "Pages"
-        }
+        "checkout": "Checkout",
+        "orders": "Orders",
+        "products": "Products",
+        "title": "Ecommerce"
       },
       "hierarchy": {
         "erc1155": "ERC1155",
@@ -608,6 +629,7 @@
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "pyramid": "Pyramid",
+        "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
         "waitlist": "Waitlist",
@@ -617,6 +639,9 @@
     },
     "drop-list": {
       "title": "Drops"
+    },
+    "ecommerce": {
+      "title": "Ecommerce"
     },
     "erc1155": {
       "contract": {
@@ -632,6 +657,7 @@
       "templates": {
         "title": "ERC1155 Templates"
       },
+      "title": "ERC1155",
       "token": {
         "price": "Base price: {amount}",
         "title": "ERC1155 Token: {title}"
@@ -654,10 +680,12 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "token": {
         "genes": "Genes",
         "genesis": "Genesis",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
       },
@@ -683,9 +711,12 @@
       "templates": {
         "title": "ERC998 Templates"
       },
+      "title": "ERC998",
       "token": {
+        "genesis": "Genesis",
         "genes": "Genes",
-        "level": "Level: {GRADE}",
+        "level": "Level: {level}",
+        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"
       },
@@ -775,6 +806,7 @@
     },
     "mystery": {
       "box": {
+        "content": "Mystery Box Content",
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"
       },
@@ -787,7 +819,9 @@
       "contracts": {
         "title": "Mystery Contracts"
       },
+      "title": "Mystery",
       "token": {
+        "content": "Mystery Token Content",
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "Mystery Token: {title}"
@@ -863,6 +897,9 @@
       },
       "title": "Referral program"
     },
+    "rent": {
+      "title": "Rent"
+    },
     "staking": {
       "deposit": {
         "title": "My Deposits"
@@ -902,6 +939,7 @@
     },
     "wrapper": {
       "token": {
+        "content": "Wrapper Token Content",
         "title": "Wrapped Token: {title}"
       },
       "tokens": {
@@ -914,6 +952,7 @@
     }
   },
   "snackbar": {
+    "addedToCart": "Added to cart",
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
@@ -925,10 +964,12 @@
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
+    "removedFromCart": "Removed from cart",
     "success": "Success",
     "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
+    "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",

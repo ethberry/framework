@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
 import { constants, Contract, Wallet } from "ethers";
@@ -16,6 +16,8 @@ export class ChainLinkServiceCron {
     private readonly signer: Wallet,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
   ) {}
@@ -29,15 +31,18 @@ export class ChainLinkServiceCron {
     const contract = new Contract(vrfAddr, VrfSol.abi, this.signer);
     const minimum = constants.WeiPerEther.mul(5); // TODO set(get) subID and minBalance in VRF contract parameters?
 
-    const { balance } = await contract.getSubscription(subscriptionId);
-
-    if (minimum.gte(balance)) {
-      return this.emailClientProxy
-        .emit<void>(EmailType.LINK_TOKEN, {
-          user: { email: adminEmail },
-          subscription: subscriptionId,
-        })
-        .toPromise();
+    try {
+      const { balance } = await contract.getSubscription(subscriptionId);
+      if (minimum.gte(balance)) {
+        return this.emailClientProxy
+          .emit<void>(EmailType.LINK_TOKEN, {
+            user: { email: adminEmail },
+            subscription: subscriptionId,
+          })
+          .toPromise();
+      }
+    } catch (e) {
+      this.loggerService.error(e, ChainLinkServiceCron.name);
     }
   }
 }

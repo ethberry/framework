@@ -11,7 +11,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 
 @Public()
-@Controller("/mystery-boxes")
+@Controller("/mystery/boxes")
 export class MysteryBoxController {
   constructor(private readonly mysteryBoxService: MysteryBoxService, private readonly configService: ConfigService) {}
 

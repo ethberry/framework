@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { TokenBorrowButton, TokenSellButton } from "../../../../../../components/buttons";
+import { TokenSellButton } from "../../../../../../components/buttons";
 import { RarityBadge } from "../../../../../../components/common/badge";
 
 interface IErc721TokenListItemProps {
@@ -20,7 +20,7 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721-tokens/${token.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
         <CardMedia className={classes.media} image={token.template!.imageUrl} />
@@ -41,7 +41,6 @@ export const Erc721TokenListItem: FC<IErc721TokenListItemProps> = props => {
             }}
           >
             <TokenSellButton token={token} />
-            <TokenBorrowButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

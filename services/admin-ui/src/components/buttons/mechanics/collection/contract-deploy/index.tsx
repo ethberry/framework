@@ -7,15 +7,15 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721CollectionTemplates, IErc721CollectionDeployDto } from "@framework/types";
 
-import DeployCollectionABI from "./deployCollection.abi.json";
+import CollectionDeployCollectionABI from "../../../../../abis/components/buttons/mechanics/collection/contract-deploy/deployCollection.abi.json";
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
-export interface IErc721CollectionDeployButtonProps {
+export interface ICollectionContractDeployButtonProps {
   className?: string;
 }
 
-export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps> = props => {
+export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
@@ -23,7 +23,7 @@ export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployCollectionABI,
+        CollectionDeployCollectionABI,
         web3Context.provider?.getSigner(),
       );
 
@@ -63,7 +63,7 @@ export const Erc721CollectionDeployButton: FC<IErc721CollectionDeployButtonProps
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="Erc721CollectionDeployButton"
+        data-testid="CollectionContractDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />

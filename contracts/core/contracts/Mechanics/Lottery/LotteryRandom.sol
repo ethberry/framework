@@ -56,9 +56,9 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
   constructor(string memory name) SignatureValidator(name) {
     address account = _msgSender();
-    _setupRole(DEFAULT_ADMIN_ROLE, account);
-    _setupRole(PAUSER_ROLE, account);
-    _setupRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, account);
+    _grantRole(PAUSER_ROLE, account);
+    _grantRole(MINTER_ROLE, account);
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -144,7 +144,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;
-        i++;
+        i++; // TODO unchecked
       }
     }
 

@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IPyramidDeposit, PyramidDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ReceiveRewardABI from "../reward/receiveRewarc.abi.json";
+import ReceiveRewardABI from "../../../../../abis/components/buttons/mechanics/common/reward/receiveReward.abi.json";
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
 export interface IPyramidRewardComplexButtonProps {

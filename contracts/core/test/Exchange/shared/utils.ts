@@ -27,6 +27,7 @@ export const wrapOneToOneSignature = (network: Network, contract: Contract, acco
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
           { name: "referrer", type: "address" },
+          { name: "extra", type: "bytes32" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -64,6 +65,7 @@ export const wrapOneToManySignature = (network: Network, contract: Contract, acc
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
           { name: "referrer", type: "address" },
+          { name: "extra", type: "bytes32" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -101,6 +103,7 @@ export const wrapManyToManySignature = (network: Network, contract: Contract, ac
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
           { name: "referrer", type: "address" },
+          { name: "extra", type: "bytes32" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },

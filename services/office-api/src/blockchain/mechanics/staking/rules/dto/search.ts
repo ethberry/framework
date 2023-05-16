@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
@@ -37,6 +37,25 @@ export class StakingRuleItemSearchDto implements IStakingRuleItemSearchDto {
 }
 
 export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public merchantId: number;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number>;
+
   @ApiPropertyOptional({
     enum: StakingRuleStatus,
     isArray: true,

@@ -19,9 +19,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryboxStatus } from "@framework/types";
 
+import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
+import { cleanUpAsset } from "../../../../utils/money";
 import { MysteryboxEditDialog } from "./edit";
 import { MysteryboxSearchForm } from "./form";
-import { cleanUpAsset } from "../../../../utils/money";
 
 export const MysteryBox: FC = () => {
   const {
@@ -44,18 +45,19 @@ export const MysteryBox: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
-    baseUrl: "/mystery-boxes",
+    baseUrl: "/mystery/boxes",
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyItem as any,
+      item: emptyItem,
       template: {
-        price: emptyPrice as any,
+        price: emptyPrice,
       } as ITemplate,
     },
     search: {
       query: "",
       mysteryboxStatus: [MysteryboxStatus.ACTIVE],
+      contractIds: [],
     },
     filter: ({ id, template, title, description, imageUrl, item, mysteryboxStatus }) =>
       id
@@ -79,7 +81,7 @@ export const MysteryBox: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery.boxes"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.boxes"]} />
 
       <PageHeader message="pages.mystery.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -110,6 +112,10 @@ export const MysteryBox: FC = () => {
                 >
                   <Delete />
                 </IconButton>
+                <MysteryActionsMenu
+                  mystery={mystery}
+                  disabled={mystery.mysteryboxStatus === MysteryboxStatus.INACTIVE}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

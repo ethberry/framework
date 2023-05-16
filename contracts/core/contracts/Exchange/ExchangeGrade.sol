@@ -14,7 +14,7 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
-abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeGrade is SignatureValidator, AccessControl, Pausable {
   event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);
 
   function upgrade(
@@ -24,11 +24,13 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToManySignature(params, item, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this));
+    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
 
     emit Upgrade(account, params.externalId, item, price);
 

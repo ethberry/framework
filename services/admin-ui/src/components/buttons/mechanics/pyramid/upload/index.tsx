@@ -8,8 +8,8 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 
-import SetRulesABI from "./setRules.abi.json";
-import UpdateRuleABI from "./updateRule.abi.json";
+import PyramidSetRulesABI from "../../../../../abis/components/buttons/mechanics/pyramid/upload/setRules.abi.json";
+import PyramidUpdateRuleABI from "../../../../../abis/components/buttons/mechanics/pyramid/upload/updateRule.abi.json";
 
 export interface IPyramidUploadButtonProps {
   rule: IPyramidRule;
@@ -27,13 +27,13 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
     const stakingRule = {
       externalId: rule.id,
       deposit: rule.deposit?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
       }))[0],
       reward: rule.reward?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId,
         amount: component.amount,
@@ -43,7 +43,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
       active: true, // TODO new rules always ACTIVE ?
     };
 
-    const contract = new Contract(rule.contract.address, SetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PyramidSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -62,7 +62,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
       ruleStatus = rule.pyramidRuleStatus !== PyramidRuleStatus.ACTIVE;
     }
 
-    const contract = new Contract(rule.contract.address, UpdateRuleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PyramidUpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 

@@ -27,8 +27,8 @@ contract ERC721CollectionBlacklist is ERC721CollectionSimple, BlackList {
   }
 
   function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
-    require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
-    require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
+    require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
+    require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 }

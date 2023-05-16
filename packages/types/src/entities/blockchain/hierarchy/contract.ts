@@ -6,6 +6,7 @@ import type { IEventHistory } from "../event-history";
 import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
 import { ModuleType } from "../../common";
+import { IRent } from "../mechanics/rent/rent";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -39,6 +40,7 @@ export enum Erc721ContractFeatures {
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
+  "VOTES" = "VOTES",
 }
 
 export enum Erc721ContractTemplates {
@@ -51,6 +53,7 @@ export enum Erc721ContractTemplates {
   "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "SOULBOUND" = "SOULBOUND",
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
   "UPGRADEABLE" = "UPGRADEABLE",
@@ -61,6 +64,7 @@ export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "GENES" = "GENES",
   "ERC20OWNER" = "ERC20OWNER",
   "ERC1155OWNER" = "ERC1155OWNER",
@@ -75,9 +79,10 @@ export enum Erc998ContractTemplates {
   "BLACKLIST_UPGRADEABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RANDOM",
   "ERC20OWNER" = "ERC20OWNER",
   "ERC1155OWNER" = "ERC1155OWNER",
-  "ERC1155OWNER_ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER_ERC20OWNER" = "ERC1155OWNER_ERC20OWNER",
   "GENES" = "GENES",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
   "STATEHASH" = "STATEHASH",
   "UPGRADEABLE" = "UPGRADEABLE",
   "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
@@ -126,13 +131,10 @@ export enum PyramidContractTemplates {
   "SPLITTER" = "SPLITTER",
 }
 
-export enum StakingContractFeatures {
-  "REFERRAL" = "REFERRAL",
-}
+export enum StakingContractFeatures {}
 
 export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
-  "REFERRAL" = "REFERRAL",
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
@@ -154,7 +156,7 @@ export enum ContractTemplates {
 
   "ERC20OWNER" = "ERC20OWNER",
   "ERC1155OWNER" = "ERC1155OWNER",
-  "ERC1155OWNER_ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER_ERC20OWNER" = "ERC1155OWNER_ERC20OWNER",
   "STATE_HASH" = "STATE_HASH",
 
   "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
@@ -165,21 +167,40 @@ export enum ContractTemplates {
 }
 
 export enum ContractFeatures {
+  // SYSTEM
   "WITHDRAW" = "WITHDRAW",
   "ALLOWANCE" = "ALLOWANCE",
-  "EXTERNAL" = "EXTERNAL",
+
+  // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
-  "SOULBOUND" = "SOULBOUND",
+  "EXTERNAL" = "EXTERNAL",
+
+  // EC721
   "UPGRADEABLE" = "UPGRADEABLE",
   "GENES" = "GENES",
-  "PAUSABLE" = "PAUSABLE",
-  "RENTABLE" = "RENTABLE",
   "RANDOM" = "RANDOM",
+  "RENTABLE" = "RENTABLE",
+  "SOULBOUND" = "SOULBOUND",
+  "VOTES" = "VOTES",
+  "TRAITS" = "TRAITS",
+
+  // ERC998
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
+  "STATEHASH" = "STATEHASH",
+
+  // MODULE:MYSTERY
+  "PAUSABLE" = "PAUSABLE",
+
   // MODULE:VESTING
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
   "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
   "CLIFF" = "CLIFF", // 0 -> 100
+
+  // MODULE:PYRAMID
+  "REFERRAL" = "REFERRAL",
+  "SPLITTER" = "SPLITTER",
 }
 
 export interface IContract extends IDeployable, ISearchable {
@@ -201,4 +222,5 @@ export interface IContract extends IDeployable, ISearchable {
   history?: Array<IEventHistory>;
   parent?: Array<IComposition>;
   children?: Array<IComposition>;
+  rent?: Array<IRent>;
 }

@@ -2,46 +2,46 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { Collection } from "./collection";
-import { Erc721Template } from "./template";
-import { Erc721Token } from "./token";
+import { CollectionContract } from "./contract";
+import { CollectionTemplate } from "./template";
+import { CollectionToken } from "./token";
 import { IndexWrapper } from "../../index-wrapper";
 import { Collections } from "../../dashboard/mechanics/collection";
 
-export const erc721CollectionRoutes: Array<RouteObject> = [
+export const collectionRoutes: Array<RouteObject> = [
   {
-    path: "/collections",
+    path: "/collection",
     children: [
       {
         index: true,
         element: (
-          <IndexWrapper index="collections">
+          <IndexWrapper index="collection">
             <Collections />
           </IndexWrapper>
         ),
       },
       {
-        path: "/collections/contracts",
+        path: "/collection/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <Collection /> },
-          { path: "/collections/contracts/:id", element: <Collection /> },
+          { index: true, element: <CollectionContract /> },
+          { path: "/collection/contracts/:id", element: <CollectionContract /> },
         ],
       },
       {
-        path: "/collections/templates",
+        path: "/collection/templates",
         element: <Protected />,
         children: [
-          { index: true, element: <Erc721Template /> },
-          { path: "/collections/templates/:id", element: <Erc721Template /> },
+          { index: true, element: <CollectionTemplate /> },
+          { path: "/collection/templates/:id", element: <CollectionTemplate /> },
         ],
       },
       {
-        path: "/collections/tokens",
+        path: "/collection/tokens",
         element: <Protected />,
         children: [
-          { index: true, element: <Erc721Token /> },
-          { path: "/collections/tokens/:id", element: <Erc721Token /> },
+          { index: true, element: <CollectionToken /> },
+          { path: "/collection/tokens/:id", element: <CollectionToken /> },
         ],
       },
     ],

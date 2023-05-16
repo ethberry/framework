@@ -21,7 +21,6 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { pyramidRule } = initialValues;
   const { penalty } = pyramidRule || { penalty: 0 };
 
-
   const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {

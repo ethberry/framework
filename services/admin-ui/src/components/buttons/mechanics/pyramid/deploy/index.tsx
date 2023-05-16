@@ -4,11 +4,11 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
-import { PyramidContractTemplates } from "@framework/types";
 import type { IPyramidContractDeployDto } from "@framework/types";
+import { PyramidContractTemplates } from "@framework/types";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 
-import DeployPyramidABI from "./deployPyramid.abi.json";
+import PyramidDeployPyramidABI from "../../../../../abis/components/buttons/mechanics/pyramid/deploy/deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
 
@@ -24,7 +24,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployPyramidABI,
+        PyramidDeployPyramidABI,
         web3Context.provider?.getSigner(),
       );
 

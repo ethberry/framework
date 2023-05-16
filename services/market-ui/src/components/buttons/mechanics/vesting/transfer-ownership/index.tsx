@@ -7,15 +7,15 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { useIntl } from "react-intl";
 
-import TransferOwnershipABI from "./transferOwnership.abi.json";
+import VestingTransferOwnershipABI from "../../../../../abis/components/buttons/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
-interface IVestingSellButtonProps {
+interface IVestingTransferOwnershipButtonProps {
   vesting: IContract;
 }
 
-export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props => {
+export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonProps> = props => {
   const { vesting } = props;
 
   const [isTransferOwnershipDialogOpen, setIsTransferOwnershipDialogOpen] = useState(false);
@@ -23,34 +23,34 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.address, TransferOwnershipABI, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.address, VestingTransferOwnershipABI, web3Context.provider?.getSigner());
     return contract.transferOwnership(dto.account) as Promise<any>;
   });
 
-  const handleSell = (): void => {
+  const handleTransferOwnership = (): void => {
     setIsTransferOwnershipDialogOpen(true);
   };
 
-  const handleSellConfirm = async (dto: IAccountDto) => {
+  const handleTransferOwnershipConfirm = async (dto: IAccountDto) => {
     await metaFn(dto).finally(() => {
       setIsTransferOwnershipDialogOpen(false);
     });
   };
 
-  const handleSellCancel = () => {
+  const handleTransferOwnershipCancel = () => {
     setIsTransferOwnershipDialogOpen(false);
   };
 
   return (
     <Fragment>
       <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
-        <IconButton onClick={handleSell} data-testid="VestingTransferOwnershipButton">
+        <IconButton onClick={handleTransferOwnership} data-testid="VestingTransferOwnershipButton">
           <Send />
         </IconButton>
       </Tooltip>
       <AccountDialog
-        onConfirm={handleSellConfirm}
-        onCancel={handleSellCancel}
+        onConfirm={handleTransferOwnershipConfirm}
+        onCancel={handleTransferOwnershipCancel}
         open={isTransferOwnershipDialogOpen}
         message="dialogs.transfer"
         testId="VestingTransferOwnershipDialogForm"

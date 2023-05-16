@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -7,9 +20,10 @@ import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { MysteryBoxAutocompleteDto } from "./dto/autocomplete";
 
 @ApiBearerAuth()
-@Controller("/mystery-boxes")
+@Controller("/mystery/boxes")
 export class MysteryBoxController {
   constructor(private readonly mysteryboxService: MysteryBoxService) {}
 
@@ -23,8 +37,11 @@ export class MysteryBoxController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryboxService.autocomplete();
+  public autocomplete(
+    @Query() dto: MysteryBoxAutocompleteDto,
+    @User() userEntity: UserEntity,
+  ): Promise<Array<MysteryBoxEntity>> {
+    return this.mysteryboxService.autocomplete(dto, userEntity);
   }
 
   @Put("/:id")
@@ -44,7 +61,8 @@ export class MysteryBoxController {
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<MysteryBoxEntity> {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     return this.mysteryboxService.delete({ id });
   }
 }

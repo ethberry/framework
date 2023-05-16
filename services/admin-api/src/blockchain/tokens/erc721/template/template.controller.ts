@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -9,7 +22,7 @@ import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../.
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc721-templates")
+@Controller("/erc721/templates")
 export class Erc721TemplateController {
   constructor(private readonly erc721TemplateService: Erc721TemplateService) {}
 
@@ -39,7 +52,8 @@ export class Erc721TemplateController {
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity> {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     return this.erc721TemplateService.delete({ id });
   }
 }

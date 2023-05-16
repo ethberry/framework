@@ -1,100 +1,128 @@
-import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
-import { Check, Close, CloudUpload } from "@mui/icons-material";
+import { FC, Fragment, useState } from "react";
+import { FormattedMessage } from "react-intl";
+
+import { Button } from "@mui/material";
+import { Add } from "@mui/icons-material";
+
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
 
-import SetRulesABI from "./setRules.abi.json";
-import UpdateRuleABI from "./updateRule.abi.json";
+import StakingSetRulesABI from "../../../../../abis/components/buttons/mechanics/staking/upload/setRules.abi.json";
+import { StakingRuleUploadDialog } from "./upload-dialog";
 
-export interface IStakingUploadButtonProps {
-  rule: IStakingRule;
+export interface IStakingRuleUploadCreateButtonProps {
+  className?: string;
 }
 
-export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonProps> = props => {
+  const { className } = props;
 
-  const metaLoadRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
-    if (rule.stakingRuleStatus !== StakingRuleStatus.NEW) {
-      return Promise.reject(new Error(""));
-    }
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
+  const handleUpload = () => {
+    setIsUploadDialogOpen(true);
+  };
+
+  const handleUploadCancel = () => {
+    setIsUploadDialogOpen(false);
+  };
+
+  // MODULE:MYSTERYBOX
+  const { fn } = useApiCall((api, data: { templateIds: Array<number> }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.fetchJson({
+      url: "/mystery-boxes",
+      data,
+    });
+  });
+
+  const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {
-      externalId: rule.id,
       deposit: rule.deposit?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
-      }))[0],
-      reward: rule.reward?.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.templateId,
-        amount: component.amount,
-      }))[0],
+      })),
+      reward: rule.reward
+        ? rule.reward.components.map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.templateId,
+            amount: component.amount,
+          }))
+        : [],
+      content,
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-
-    const contract = new Contract(process.env.STAKING_ADDR, SetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
-  const handleLoadRule = (rule: IStakingRule): (() => Promise<void>) => {
-    return async (): Promise<void> => {
-      return metaLoadRule(rule);
-    };
-  };
-
-  const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
-    let ruleStatus: boolean;
-    if (rule.stakingRuleStatus === StakingRuleStatus.NEW) {
-      // this should never happen
-      return Promise.reject(new Error(":)"));
+  const handleLoadRule = async (rule: Partial<IStakingRule>): Promise<void> => {
+    // MODULE:MYSTERYBOX
+    const content = [] as Array<any>;
+    if (rule.reward) {
+      for (const rew of rule.reward.components) {
+        const {
+          rows: [mysteryBox],
+        } = await fn(void 0, { templateIds: [rew.templateId] });
+        // MODULE:MYSTERYBOX
+        if (mysteryBox) {
+          content.push(
+            (mysteryBox as IMysterybox).item!.components.map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.templateId || 0,
+              amount: component.amount,
+            })),
+          );
+        } else {
+          content.push([]);
+        }
+      }
+      if (!content.length) content.push([]);
     } else {
-      ruleStatus = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
+      content.push([]);
     }
-
-    const contract = new Contract(process.env.STAKING_ADDR, UpdateRuleABI, web3Context.provider?.getSigner());
-    return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
-  });
-
-  const handleToggleRule = (rule: IStakingRule): (() => Promise<void>) => {
-    return (): Promise<void> => {
-      return metaToggleRule(rule);
-    };
+    return metaLoadRule(rule, content);
   };
-
-  if (rule.stakingRuleStatus === StakingRuleStatus.NEW) {
-    return (
-      <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
-        <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
-          <CloudUpload />
-        </IconButton>
-      </Tooltip>
-    );
-  }
 
   return (
-    <Tooltip
-      title={formatMessage({
-        id:
-          rule.stakingRuleStatus === StakingRuleStatus.ACTIVE
-            ? "pages.staking.rules.deactivate"
-            : "pages.staking.rules.activate",
-      })}
-    >
-      <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? <Close /> : <Check />}
-      </IconButton>
-    </Tooltip>
+    <Fragment>
+      <Button
+        variant="outlined"
+        startIcon={<Add />}
+        onClick={handleUpload}
+        data-testid="StakingRuleUploadButton"
+        className={className}
+      >
+        <FormattedMessage id="form.buttons.create" />
+      </Button>
+      <StakingRuleUploadDialog
+        onConfirm={handleLoadRule}
+        onCancel={handleUploadCancel}
+        open={isUploadDialogOpen}
+        initialValues={{
+          title: "new STAKING rule",
+          description: emptyStateString,
+          deposit: emptyPrice,
+          reward: emptyPrice,
+          durationAmount: 2592000,
+          durationUnit: DurationUnit.DAY,
+          penalty: 100,
+          recurrent: false,
+        }}
+      />
+    </Fragment>
   );
 };

@@ -10,7 +10,7 @@ import { ContractSearchDto } from "../../../hierarchy/contract/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/native-contracts")
+@Controller("/native/contracts")
 export class NativeTokenController {
   constructor(private readonly nativeContractService: NativeContractService) {}
 

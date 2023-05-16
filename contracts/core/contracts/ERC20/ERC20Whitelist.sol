@@ -18,8 +18,8 @@ contract ERC20Whitelist is ERC20Simple, WhiteList {
   }
 
   function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
-    require(this.isWhitelisted(from), "Whitelist: sender is not whitelisted");
-    require(this.isWhitelisted(to), "Whitelist: receiver is not whitelisted");
+    require(from == address(0) || _isWhitelisted(from), "Whitelist: sender is not whitelisted");
+    require(to == address(0) || _isWhitelisted(to), "Whitelist: receiver is not whitelisted");
     super._beforeTokenTransfer(from, to, amount);
   }
 }

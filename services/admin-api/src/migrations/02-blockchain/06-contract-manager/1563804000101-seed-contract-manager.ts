@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
+import { wallet } from "@gemunion/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -33,7 +34,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '${contractManagerAddress}',
         '${chainId}',
         'CONTRACT MANAGER',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'ContractManager',
         '',

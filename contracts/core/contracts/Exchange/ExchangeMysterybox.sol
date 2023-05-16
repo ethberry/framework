@@ -13,7 +13,7 @@ import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
-abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausable {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
   function mysterybox(
@@ -23,13 +23,17 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
-    require(items.length > 1, "Exchange: Wrong items count");
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     address account = _msgSender();
 
-    spendFrom(price, account, address(this));
+    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
 
     emit Mysterybox(account, params.externalId, items, price);
 
@@ -37,8 +41,12 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
 
     // pop from array is not supported
     Asset[] memory mysteryItems = new Asset[](items.length - 1);
-    for (uint256 i = 0; i < items.length - 1; i++) {
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length - 1; ) {
       mysteryItems[i] = items[i];
+      unchecked {
+        i++;
+      }
     }
 
     IERC721Mysterybox(box.token).mintBox(account, box.tokenId, mysteryItems);

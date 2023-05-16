@@ -4,7 +4,7 @@ import { Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const NativeSections: FC = () => {
+export const NativeSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -15,7 +15,7 @@ export const NativeSections: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/native-contracts">
+        <ListItem button component={RouterLink} to="/native/contracts">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

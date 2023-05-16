@@ -31,22 +31,40 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
+        -- SYSTEM
         'WITHDRAW',
+        'ALLOWANCE',
+        
+        -- ERC20
         'EXTERNAL',
         'BLACKLIST',
         'WHITELIST',
-        'SOULBOUND',
+        
+        -- ERC721
         'RANDOM',
         'UPGRADEABLE',
         'GENES',
-        'PAUSABLE',
         'RENTABLE',
-        'REFERRAL',
-        'SPLITTER',
-        'ALLOWANCE',
+        'SOULBOUND',
+        'VOTES',
+        'TRAITS',
+        
+        -- ERC998
+        'ERC20OWNER',
+        'ERC1155OWNER',
+        'STATEHASH',
+        
+        -- MODULE:MYSTERY
+        'PAUSABLE',
+        
+        -- MODULE:VESTING
         'LINEAR',
         'GRADED',
-        'CLIFF'
+        'CLIFF',
+        
+        -- MODULE:PYRAMID
+        'SPLITTER',
+        'REFERRAL'
       );
     `);
 

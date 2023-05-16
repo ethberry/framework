@@ -5,6 +5,7 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
+  IStakingBalanceWithdrawEvent,
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
@@ -37,6 +38,14 @@ export class StakingRulesControllerEth {
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
   public withdraw(@Payload() event: ILogEvent<IStakingWithdrawEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.withdraw(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })
+  public withdrawBalance(
+    @Payload() event: ILogEvent<IStakingBalanceWithdrawEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.stakingServiceEth.withdrawBalance(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingFinish })

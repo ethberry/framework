@@ -18,7 +18,6 @@ import type { TErc1155Events } from "./erc1155";
 import type { TChainLinkEvents } from "./chain-link";
 import type { TRoyaltyEvents } from "./royalty";
 import type { TErc998Events } from "./erc998";
-import type { TClaimEvents } from "./claim";
 import type { TMysteryEvents } from "./mystery";
 import type { TWrapperEvents } from "./wrapper";
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
@@ -90,6 +89,7 @@ export enum ContractEventType {
   StakingStart = "StakingStart",
   StakingWithdraw = "StakingWithdraw",
   StakingFinish = "StakingFinish",
+  WithdrawBalance = "WithdrawBalance",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -98,6 +98,9 @@ export enum ContractEventType {
   Claim = "Claim",
   // MODULE:CRAFT
   Craft = "Craft",
+  // MODULE:RENTABLE
+  UpdateUser = "UpdateUser",
+  Lend = "Lend",
   // MODULE:MYSTERY
   Mysterybox = "Mysterybox",
   // MODULE:GRADE
@@ -118,6 +121,9 @@ export enum ContractEventType {
   // MODULE:CHAINLINK
   RandomnessRequest = "RandomnessRequest",
   RandomnessRequestId = "RandomnessRequestId",
+
+  // MODULE:CHAINLINKV2
+  RandomWordsRequested = "RandomWordsRequested",
 }
 
 export type TContractEventData =
@@ -131,7 +137,6 @@ export type TContractEventData =
 
   // mechanics
   | TVestingEvents
-  | TClaimEvents
   | TMysteryEvents
   | TWrapperEvents
   | TStakingEvents
@@ -165,5 +170,12 @@ export interface IEventHistory extends IDeployable {
   contract?: IContract;
   tokenId: number | null;
   token?: IToken;
+  parentId: number | null;
+  parent?: IEventHistory;
   assets?: Array<IAssetComponentHistory>;
+}
+
+export interface IEventHistoryReport extends IEventHistory {
+  items: IAssetComponentHistory[];
+  price: IAssetComponentHistory[];
 }

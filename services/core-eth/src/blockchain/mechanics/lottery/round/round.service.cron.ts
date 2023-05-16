@@ -31,12 +31,15 @@ export class LotteryRoundServiceCron {
 
     const contract = new Contract(lotteryAddr, LotterySol.abi, this.signer);
 
-    await contract.endRound();
-
+    try {
+      await contract.endRound();
+    } catch (e) {
+      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+    } finally {
     const erc20Contract = await this.contractService.findOne({ id: 1201 }); // Space Credits
     const erc721Contract = await this.contractService.findOne({ id: 1801 }); // LOTTERY TICKET
-    // wait block
-    await blockAwait(1, this.jsonRpcProvider);
+      // wait block
+      await blockAwait(1, this.jsonRpcProvider);
 
     await contract.startRound(
       {

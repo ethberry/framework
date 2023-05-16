@@ -10,18 +10,18 @@ import { StakingDepositEntity } from "../deposit/deposit.entity";
 import { StakingReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/staking/report")
-export class StakingDepositController {
+@Controller("/staking")
+export class StakingReportController {
   constructor(private readonly stakingReportService: StakingReportService) {}
 
-  @Get("/")
+  @Get("/report")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: StakingReportSearchDto): Promise<[Array<StakingDepositEntity>, number]> {
     return this.stakingReportService.search(dto);
   }
 
   @ApiProduces("application/zip")
-  @Get("/export")
+  @Get("/report/export")
   public async export(@Query() query: StakingReportSearchDto, @Res() res: Response): Promise<void> {
     const csv = await this.stakingReportService.export(query);
 

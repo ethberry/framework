@@ -3,12 +3,15 @@ import { ethers, network } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { expiresAt, externalId, params } from "../constants";
+import { amount } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
+import { isEqualEventArgObj } from "../utils";
 
 describe("ExchangeBreed", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -27,8 +30,8 @@ describe("ExchangeBreed", function () {
   });
 
   describe("breed", function () {
-    describe("ERC721", function () {
-      it.skip("should breed", async function () {
+    describe("ERC721Genes", function () {
+      it("should breed", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
@@ -36,9 +39,38 @@ describe("ExchangeBreed", function () {
         const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
         await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
 
-        // mintCommon is blocked
-        await erc721Instance.mintCommon(receiver.address, 1);
-        await erc721Instance.mintCommon(receiver.address, 2);
+        const genesis0 = {
+          templateId: 128,
+          matronId: 0,
+          sireId: 1,
+        };
+        const encodedExternalId0 = BigNumber.from(
+          utils.hexlify(
+            utils.concat([
+              utils.zeroPad(utils.hexlify(genesis0.sireId), 3),
+              utils.zeroPad(utils.hexlify(genesis0.matronId), 4),
+              utils.zeroPad(utils.hexlify(genesis0.templateId), 4),
+            ]),
+          ),
+        );
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId0);
+        const genesis1 = {
+          templateId: 128,
+          matronId: 1,
+          sireId: 0,
+        };
+        const encodedExternalId1 = BigNumber.from(
+          utils.hexlify(
+            utils.concat([
+              utils.zeroPad(utils.hexlify(genesis1.sireId), 3),
+              utils.zeroPad(utils.hexlify(genesis1.matronId), 4),
+              utils.zeroPad(utils.hexlify(genesis1.templateId), 4),
+            ]),
+          ),
+        );
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId1);
+
+        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
 
         const balance1 = await erc721Instance.balanceOf(receiver.address);
         expect(balance1).to.equal(2);
@@ -58,7 +90,6 @@ describe("ExchangeBreed", function () {
           ),
         );
         // const encodedExternalId = BigNumber.from("0x0004000000010000000080");
-
         const signature = await generateOneToOneSignature({
           account: receiver.address,
           params: {
@@ -66,6 +97,7 @@ describe("ExchangeBreed", function () {
             externalId: encodedExternalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -80,13 +112,13 @@ describe("ExchangeBreed", function () {
             amount: 1,
           },
         });
-
         const tx1 = exchangeInstance.connect(receiver).breed(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: encodedExternalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -108,8 +140,18 @@ describe("ExchangeBreed", function () {
           .withArgs(
             receiver.address,
             encodedExternalId,
-            [2, erc721Instance.address, 1, 1],
-            [2, erc721Instance.address, 2, 1],
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
           );
 
         // RANDOM
@@ -178,7 +220,22 @@ describe("ExchangeBreed", function () {
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
-          .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
+          );
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
@@ -194,6 +251,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -214,6 +272,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -229,7 +288,7 @@ describe("ExchangeBreed", function () {
           },
           signature1,
         );
-        await expect(tx2).to.be.revertedWith("Exchange: pregnancy count exceeded");
+        await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "CountExceed");
 
         await erc721Instance.mintCommon(receiver.address, 4);
         const signature2 = await generateOneToOneSignature({
@@ -239,6 +298,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -259,6 +319,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -274,7 +335,7 @@ describe("ExchangeBreed", function () {
           },
           signature2,
         );
-        await expect(tx3).to.be.revertedWith("Exchange: pregnancy count exceeded");
+        await expect(tx3).to.be.revertedWithCustomError(exchangeInstance, "CountExceed");
       });
 
       it("should fail: pregnancy time", async function () {
@@ -325,7 +386,22 @@ describe("ExchangeBreed", function () {
         );
         await expect(tx1)
           .to.emit(exchangeInstance, "Breed")
-          .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1]);
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1),
+              amount: BigNumber.from(1),
+            }),
+            isEqualEventArgObj({
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2),
+              amount: BigNumber.from(1),
+            }),
+          );
 
         // RANDOM
         await randomRequest(erc721Instance as IERC721Random, vrfInstance);
@@ -341,6 +417,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           item: {
             tokenType: 2,
@@ -361,6 +438,7 @@ describe("ExchangeBreed", function () {
             externalId,
             expiresAt,
             referrer: constants.AddressZero,
+            extra,
           },
           {
             tokenType: 2,
@@ -376,7 +454,7 @@ describe("ExchangeBreed", function () {
           },
           signature1,
         );
-        await expect(tx2).to.be.revertedWith("Exchange: pregnancy time limit");
+        await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
 
         // await erc721Instance.mintCommon(receiver.address, 4);
         // const signature2 = await generateOneToOneSignature({
@@ -470,7 +548,7 @@ describe("ExchangeBreed", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Not an owner");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotAnOwner");
       });
 
       it("should fail: Invalid signature", async function () {
@@ -513,7 +591,7 @@ describe("ExchangeBreed", function () {
         );
 
         // ECDSA always returns an address
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
 
       it("should fail: Wrong signer", async function () {
@@ -555,8 +633,35 @@ describe("ExchangeBreed", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith("Exchange: Wrong signer");
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
+
+      it("should fail: paused", async function () {
+        const { contractInstance: exchangeInstance } = await deployExchangeFixture();
+
+        await exchangeInstance.pause();
+
+        const tx1 = exchangeInstance.breed(
+          params,
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          constants.HashZero,
+        );
+
+        await expect(tx1).to.be.revertedWith("Pausable: paused");
+      });
+
+      // TODO add tests for Breed.sol
     });
   });
 });

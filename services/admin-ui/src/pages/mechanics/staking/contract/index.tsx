@@ -16,12 +16,13 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, StakingContractFeatures } from "@framework/types";
 
-import { StakingEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
-import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { StakingDeployButton } from "../../../../components/buttons";
+import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { StakingActionsMenu } from "../../../../components/menu/mechanics/staking";
+import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
   const {
@@ -99,10 +100,7 @@ export const StakingContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
+                <StakingActionsMenu staking={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

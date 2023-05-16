@@ -48,6 +48,11 @@ export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto)
   @IsEnum(StakingDepositStatus, { each: true, message: "badInput" })
   public stakingDepositStatus: Array<StakingDepositStatus>;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => [true, "true"].includes(value))
+  public emptyReward: boolean;
+
   @ApiProperty({
     type: StakingReportItemSearchDto,
   })
@@ -55,9 +60,10 @@ export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto)
   @Type(() => StakingReportItemSearchDto)
   public deposit: StakingReportItemSearchDto;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: StakingReportItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => StakingReportItemSearchDto)
   public reward: StakingReportItemSearchDto;

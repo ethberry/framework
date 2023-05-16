@@ -16,7 +16,7 @@ import "./interfaces/IERC721Wrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
-contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Holder, ERC721Holder, ERC1363Receiver {
+contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Asset[]) internal _itemData;
@@ -43,11 +43,14 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Ho
     uint256 tokenId = _mintCommon(account, templateId);
 
     uint256 length = items.length;
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       _itemData[tokenId].push(items[i]);
+      unchecked {
+        i++;
+      }
     }
 
-    spendFrom(items, _msgSender(), address(this));
+    ExchangeUtils.spendFrom(items, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
   }
 
   function unpack(uint256 tokenId) public {
@@ -55,7 +58,7 @@ contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ExchangeUtils, ERC1155Ho
 
     require(_isApprovedOrOwner(account, tokenId), "Wrapper: unpack caller is not owner nor approved");
 
-    spend(_itemData[tokenId], account);
+    ExchangeUtils.spend(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
 
     emit UnpackWrapper(tokenId);
 

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
@@ -11,6 +11,8 @@ import { EventHistoryService } from "../../event-history/event-history.service";
 @Injectable()
 export class TokenServiceEth {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     protected readonly tokenService: TokenService,
     protected readonly eventHistoryService: EventHistoryService,
   ) {}
@@ -23,6 +25,7 @@ export class TokenServiceEth {
     const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!tokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, context.address.toLowerCase(), TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 

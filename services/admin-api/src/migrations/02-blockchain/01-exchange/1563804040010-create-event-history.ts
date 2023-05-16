@@ -23,8 +23,9 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         -- MODULE:ERC1363
         'TransferReceived',
 
-        -- MODULE:ERC4907
+        -- MODULE:ERC4907 RENT
         'UpdateUser',
+        'Lend',
 
         -- MODULE:ERC721
         'Approval',
@@ -86,6 +87,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'StakingStart',
         'StakingWithdraw',
         'StakingFinish',
+        'WithdrawBalance',
 
         -- MODULE:EXCHANGE
         -- MODULE:CORE
@@ -162,6 +164,11 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "parent_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -182,6 +189,12 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["parent_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.event_history`,
+          onDelete: "SET NULL",
         },
       ],
     });

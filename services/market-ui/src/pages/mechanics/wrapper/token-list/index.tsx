@@ -11,11 +11,11 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import MintBoxABI from "./mintBox.abi.json";
+import MintBoxABI from "../../../../abis/pages/mechanics/wrapper/token-list/mintBox.abi.json";
 
-import { WrapperTokenListItem } from "./item";
-import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
+import { WrapperTokenListItem } from "./item";
 
 export interface IWrapperTokenListProps {
   embedded?: boolean;
@@ -43,7 +43,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
     const items = values.item.components.map(component => ({
-      tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      tokenType: Object.values(TokenType).indexOf(component.tokenType),
       token: component.contract.address,
       tokenId: component.token.tokenId || 0,
       amount: component.amount,

@@ -7,7 +7,7 @@ import { constants, Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20ContractTemplates, IErc20TokenDeployDto } from "@framework/types";
 
-import DeployERC20TokenABI from "./deployERC20Token.abi.json";
+import ERC20DeployERC20TokenABI from "../../../../../abis/components/buttons/tokens/erc20/contract-deploy/deployERC20Token.abi.json";
 
 import { Erc20ContractDeployDialog } from "./deploy-dialog";
 
@@ -23,7 +23,7 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployERC20TokenABI,
+        ERC20DeployERC20TokenABI,
         web3Context.provider?.getSigner(),
       );
 

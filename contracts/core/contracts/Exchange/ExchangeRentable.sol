@@ -8,43 +8,93 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
-import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
-abstract contract ExchangeRentable is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Borrow(address from, address to, uint256 expires, Asset[] items, Asset[] price);
+abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausable {
+  using SafeCast for uint256;
 
-  function borrow(
+  event Lend(address from, address to, uint64 expires, uint256 externalId, Asset item, Asset[] price);
+  event LendMany(address from, address to, uint64 expires, uint256 externalId, Asset[] items, Asset[] price);
+
+  /**
+   * @dev Lend an asset to borrower by spending price from owner and setting user
+   *
+   * @param params Struct of Params that containing the signature parameters.
+   * @param item An Assets that will be lent.
+   * @param price An Assets[] that will be used as payment.
+   * @param signature Signature used to sign the message.
+   */
+  function lend(
+    Params memory params,
+    Asset memory item,
+    Asset[] memory price,
+    bytes calldata signature
+  ) external payable whenNotPaused {
+    address signer = _recoverOneToManySignature(params, item, price, signature);
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
+
+    address account = _msgSender();
+
+    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+
+    uint64 expires = uint256(params.extra).toUint64();
+
+    emit Lend(
+      account /* from */,
+      params.referrer /* to */,
+      expires /* lend expires */,
+      params.externalId /* lendRule db id */,
+      item,
+      price
+    );
+
+    IERC4907(item.token).setUser(item.tokenId, params.referrer /* to */, expires /* lend expires */);
+  }
+
+  function lendMany(
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(METADATA_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
-    require(items.length > 0, "Exchange: Wrong items count");
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     address account = _msgSender();
 
     if (price.length > 0) {
-      spendFrom(price, account, address(this));
+      ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
     }
 
-    emit Borrow(account, params.referrer, /* to */ params.externalId, /* expires */ items, price);
+    uint64 expires = uint256(params.extra).toUint64();
 
-    for (uint256 i = 0; i < items.length; i++) {
-      // TODO check expiresAt is less max(uint64)
-      IERC4907(items[i].token).setUser(
-        items[i].tokenId,
-        /* to */ params.referrer,
-        /* expires */ uint64(params.expiresAt)
-      );
+    emit LendMany(
+      account /* from */,
+      params.referrer /* to */,
+      expires /* lend expires */,
+      params.externalId /* lendRule db id */,
+      items,
+      price
+    );
+    // TODO optimization
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length; ) {
+      IERC4907(items[i].token).setUser(items[i].tokenId, params.referrer /* to */, expires /* lend expires */);
+      unchecked {
+        i++;
+      }
     }
   }
-
-  function _afterPurchase(address referrer, Asset[] memory price) internal virtual;
 }

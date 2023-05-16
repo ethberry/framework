@@ -15,28 +15,28 @@ export const Collections: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/collections/contracts">
+        <ListItem button component={RouterLink} to="/collection/contracts">
           <ListItemIcon>
             <CollectionsIcon />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.collections.contracts" />
+            <FormattedMessage id="pages.collection.contracts" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/collections/templates">
+        <ListItem button component={RouterLink} to="/collection/templates">
           <ListItemIcon>
             <AutoAwesomeMotion />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.collections.templates" />
+            <FormattedMessage id="pages.collection.templates" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/collections/tokens">
+        <ListItem button component={RouterLink} to="/collection/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.collections.tokens" />
+            <FormattedMessage id="pages.collection.tokens" />
           </ListItemText>
         </ListItem>
       </List>

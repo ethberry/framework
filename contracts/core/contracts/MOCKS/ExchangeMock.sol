@@ -7,39 +7,44 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
+import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
 import "../Exchange/ExchangeUtils.sol";
+import "../Exchange/interfaces/IAsset.sol";
+import "../utils/TopUp.sol";
 
-contract ExchangeMock is ExchangeUtils, AccessControl, ERC721Holder, ERC1155Holder, ERC1363Receiver {
-  function testSpendFrom(Asset[] memory price, address spender, address receiver) external payable {
+contract ExchangeMock is AccessControl, Wallet, TopUp {
+  function testSpendFrom(
+    Asset[] memory price,
+    address spender,
+    address receiver,
+    DisabledTokenTypes memory disabled
+  ) external payable {
     // Transfer tokens to self or other address
-    spendFrom(price, spender, receiver);
+    ExchangeUtils.spendFrom(price, spender, receiver, disabled);
   }
 
-  function testSpend(Asset[] memory price, address receiver) external payable {
+  function testSpend(Asset[] memory price, address receiver, DisabledTokenTypes memory disabled) external payable {
     // Spender is always Exchange contract
-    spend(price, receiver);
+    ExchangeUtils.spend(price, receiver, disabled);
   }
 
-  function testAcquire(Asset[] memory price, address receiver) external payable {
+  function testAcquire(Asset[] memory price, address receiver, DisabledTokenTypes memory disabled) external payable {
     // Mint new tokens for receiver
-    acquire(price, receiver);
+    ExchangeUtils.acquire(price, receiver, disabled);
   }
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-    return
-      interfaceId == type(IERC1363Receiver).interfaceId ||
-      interfaceId == type(IERC1363Spender).interfaceId ||
-      interfaceId == type(IERC721Receiver).interfaceId ||
-      interfaceId == type(IERC1155Receiver).interfaceId ||
-      super.supportsInterface(interfaceId);
+  ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {
+    return super.supportsInterface(interfaceId);
   }
 
-  receive() external payable {}
+  /**
+   * @dev Rejects any incoming ETH transfers to this contract address
+   */
+  receive() external payable override(Wallet, TopUp) {
+    revert();
+  }
 }

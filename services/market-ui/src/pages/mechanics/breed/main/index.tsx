@@ -14,7 +14,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { TokenType } from "@framework/types";
 
-import BreedABI from "./breed.abi.json";
+import BreedABI from "../../../../abis/pages/mechanics/breed/main/breed.abi.json";
 
 import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";
@@ -59,15 +59,16 @@ export const Breed: FC = () => {
           externalId: BigNumber.from(sign.bytecode),
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
+          extra: utils.formatBytes32String("0x"),
         },
         {
-          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
+          tokenType: Object.values(TokenType).indexOf(values.tokenType),
           token: values.mom.address,
           tokenId: values.mom.token.tokenId,
           amount: 1,
         },
         {
-          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
+          tokenType: Object.values(TokenType).indexOf(values.tokenType),
           token: values.dad.address,
           tokenId: values.dad.token.tokenId,
           amount: 1,
@@ -75,6 +76,7 @@ export const Breed: FC = () => {
         sign.signature,
       ) as Promise<void>;
     },
+    // { error: false },
   );
 
   const metaFn = useMetamask((data: IBreedDto, web3Context: Web3ContextType) => {

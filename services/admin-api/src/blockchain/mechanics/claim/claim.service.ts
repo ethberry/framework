@@ -17,12 +17,12 @@ import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 import { ClaimItemCreateDto, ClaimUploadDto } from "./dto";
-import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ClaimService {
@@ -87,8 +87,8 @@ export class ClaimService {
         leftJoinAndSelect: {
           item: "claim.item",
           item_components: "item.components",
-          item_template: "item_components.template",
           item_contract: "item_components.contract",
+          item_template: "item_components.template",
         },
       },
     });
@@ -154,6 +154,8 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         referrer: constants.AddressZero,
+        // @TODO fix to use expiresAt as extra, temporary set to empty
+        extra: utils.formatBytes32String("0x"),
       },
 
       claimEntity,
@@ -186,9 +188,12 @@ export class ClaimService {
       account,
       params,
       claimEntity.item.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId:
+          component.contract.contractType === TokenType.ERC1155
+            ? component.template.tokens[0].tokenId
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       [],

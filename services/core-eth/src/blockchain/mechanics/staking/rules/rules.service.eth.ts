@@ -1,8 +1,13 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  DurationUnit,
+  IAssetDto,
+  IErc1363TransferReceivedEvent,
+  IStakingBalanceWithdrawEvent,
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
@@ -10,9 +15,13 @@ import {
   IStakingWithdrawEvent,
   StakingRuleStatus,
 } from "@framework/types";
-import { StakingRulesService } from "./rules.service";
-import { StakingDepositService } from "../deposit/deposit.service";
+
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
+import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { StakingDepositService } from "../deposit/deposit.service";
+import { StakingRulesService } from "./rules.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -20,29 +29,90 @@ export class StakingRulesServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly stakingRulesService: StakingRulesService,
+    private readonly templateService: TemplateService,
+    private readonly contractService: ContractService,
     private readonly stakingDepositService: StakingDepositService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
-      args: { ruleId, externalId },
+      args: { rule, ruleId },
     } = event;
+    const { address } = context;
 
-    // const stakingEntity = await this.stakingRulesService.findOne({ id: ~~externalId });
-    const stakingEntity = await this.stakingRulesService.findOne({ externalId });
+    const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
 
-    if (!stakingEntity) {
-      throw new NotFoundException("stakingRuleNotFound");
+    // DEPOSIT ARRAY
+    const depositItem: IAssetDto = {
+      components: [],
+    };
+
+    for (const dep of deposit) {
+      const [_tokenType, _token, templateId, amount] = dep;
+      const depositTemplate = await this.templateService.findOne(
+        { id: ~~templateId },
+        { relations: { contract: true } },
+      );
+
+      if (!depositTemplate) {
+        throw new NotFoundException("depositTemplateNotFound");
+      }
+
+      depositItem.components.push({
+        tokenType: depositTemplate.contract.contractType,
+        contractId: depositTemplate.contract.id,
+        templateId: depositTemplate.id,
+        amount,
+      });
     }
 
-    Object.assign(stakingEntity, {
-      externalId: ruleId,
-      stakingRuleStatus: StakingRuleStatus.ACTIVE,
-    });
+    // REWARD ARRAY
+    const rewardItem: IAssetDto = {
+      components: [],
+    };
 
-    await stakingEntity.save();
+    for (const rew of reward) {
+      const [_tokenType, _token, templateId, amount] = rew;
+
+      const rewardTemplate = await this.templateService.findOne(
+        { id: ~~templateId },
+        { relations: { contract: true } },
+      );
+
+      if (!rewardTemplate) {
+        throw new NotFoundException("rewardTemplateNotFound");
+      }
+
+      rewardItem.components.push({
+        tokenType: rewardTemplate.contract.contractType,
+        contractId: rewardTemplate.contract.id,
+        templateId: rewardTemplate.id,
+        amount,
+      });
+    }
+
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.stakingRulesService.create({
+      title: "new STAKING rule",
+      description: emptyStateString,
+      deposit: depositItem,
+      reward: rewardItem,
+      durationAmount: ~~period,
+      durationUnit: DurationUnit.DAY, // TODO select correct unit depends on period
+      penalty: ~~penalty,
+      recurrent,
+      stakingRuleStatus: StakingRuleStatus.NEW,
+      externalId: ruleId,
+      contractId: contractEntity.id,
+    });
   }
 
   public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
@@ -54,6 +124,7 @@ export class StakingRulesServiceEth {
     const stakingEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
 
     if (!stakingEntity) {
+      this.loggerService.error("stakingRuleNotFound", ruleId, StakingRulesServiceEth.name);
       throw new NotFoundException("stakingRuleNotFound");
     }
 
@@ -65,7 +136,7 @@ export class StakingRulesServiceEth {
   }
 
   public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
-    // TODO fix it!    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { stakingId, ruleId, owner, startTimestamp },
@@ -74,6 +145,7 @@ export class StakingRulesServiceEth {
     const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
 
     if (!stakingRuleEntity) {
+      this.loggerService.error("stakingRuleNotFound", ruleId, StakingRulesServiceEth.name);
       throw new NotFoundException("stakingRuleNotFound");
     }
 
@@ -81,6 +153,13 @@ export class StakingRulesServiceEth {
       account: owner.toLowerCase(),
       externalId: stakingId,
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      stakingRuleId: stakingRuleEntity.id,
+    });
+
+    this.notificatorService.stakingStart({
+      account: owner.toLowerCase(),
+      externalId: ~~stakingId,
+      startTimestamp: new Date(~~startTimestamp * 1000).getDate(),
       stakingRuleId: stakingRuleEntity.id,
     });
   }
@@ -91,5 +170,25 @@ export class StakingRulesServiceEth {
 
   public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
+
+    const {
+      args: { stakingId, owner, finishTimestamp, multiplier },
+    } = event;
+
+    this.notificatorService.stakingFinish({
+      account: owner.toLowerCase(),
+      externalId: ~~stakingId,
+      startTimestamp: new Date(~~finishTimestamp * 1000).getDate(),
+      multiplier: ~~multiplier,
+    });
+  }
+
+  public async withdrawBalance(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
+    await this.eventHistoryService.updateHistory(event, context);
+  }
+
+  public async transferReceived(event: ILogEvent<IErc1363TransferReceivedEvent>, context: Log): Promise<void> {
+    await this.eventHistoryService.updateHistory(event, context);
+    // Balance will update by Erc20 controller
   }
 }

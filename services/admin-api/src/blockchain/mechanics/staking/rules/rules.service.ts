@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
+import type { ISearchableDto } from "@gemunion/types-collection";
 import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
-import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
 import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class StakingRulesService {
   ) {}
 
   public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
-    const { query, deposit, reward, stakingRuleStatus, skip, take } = dto;
+    const { query, deposit, reward, stakingRuleStatus, contractIds, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
@@ -47,6 +47,16 @@ export class StakingRulesService {
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("rule.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("rule.contractId IN(:...contractIds)", { contractIds });
+      }
     }
 
     if (stakingRuleStatus) {
@@ -87,7 +97,8 @@ export class StakingRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "rule.id": "DESC",
+      "rule.createdAt": "DESC",
+      "rule.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -105,6 +116,7 @@ export class StakingRulesService {
       join: {
         alias: "rule",
         leftJoinAndSelect: {
+          contract: "rule.contract",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",
@@ -118,55 +130,18 @@ export class StakingRulesService {
     });
   }
 
-  public async create(dto: IStakingCreateDto): Promise<StakingRulesEntity> {
-    const { deposit, reward } = dto;
-
-    const depositEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(depositEntity, deposit);
-
-    const rewardEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(rewardEntity, reward);
-
-    Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
-
-    return this.stakingRuleEntityRepository.create(dto).save();
-  }
-
-  public async update(
-    where: FindOptionsWhere<StakingRulesEntity>,
-    dto: IStakingUpdateDto,
-  ): Promise<StakingRulesEntity> {
-    const { reward, deposit, ...rest } = dto;
-    const stakingEntity = await this.findOne(where, { relations: { deposit: true, reward: true } });
-
-    if (!stakingEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    Object.assign(stakingEntity.deposit, deposit);
-    Object.assign(stakingEntity.reward, reward);
-
-    Object.assign(stakingEntity, rest);
-
-    return stakingEntity.save();
-  }
-
-  public async delete(where: FindOptionsWhere<StakingRulesEntity>): Promise<void> {
+  public async update(where: FindOptionsWhere<StakingRulesEntity>, dto: ISearchableDto): Promise<StakingRulesEntity> {
     const stakingEntity = await this.findOne(where);
 
     if (!stakingEntity) {
-      return;
+      throw new NotFoundException("stakingRuleNotFound");
     }
 
-    if (stakingEntity.stakingRuleStatus === StakingRuleStatus.NEW) {
-      await stakingEntity.remove();
-    } else {
-      Object.assign(stakingEntity, { stakingRuleStatus: StakingRuleStatus.INACTIVE });
-      await stakingEntity.save();
-    }
+    Object.assign(stakingEntity, {
+      stakingRuleStatus: StakingRuleStatus.ACTIVE,
+      ...dto,
+    });
+
+    return stakingEntity.save();
   }
 }

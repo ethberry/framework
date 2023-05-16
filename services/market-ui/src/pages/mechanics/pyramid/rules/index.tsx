@@ -19,7 +19,7 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IPyramidRule, IPyramidRuleItemSearchDto, IPyramidRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
-import { DepositAllowanceButton, PyramidDepositButton } from "../../../../components/buttons";
+import { PyramidAllowanceButton, PyramidDepositButton } from "../../../../components/buttons";
 
 import { PyramidRuleSearchForm } from "./form";
 import { PyramidViewDialog } from "./view";
@@ -44,8 +44,8 @@ export const PyramidRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: emptyPrice as any,
-      reward: emptyPrice as any,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,
@@ -83,7 +83,7 @@ export const PyramidRules: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <DepositAllowanceButton rule={rule} />
+                <PyramidAllowanceButton rule={rule} />
                 <PyramidDepositButton rule={rule} />
                 <IconButton onClick={handleView(rule)}>
                   <Visibility />

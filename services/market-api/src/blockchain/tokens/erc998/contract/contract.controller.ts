@@ -9,7 +9,7 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc998-contracts")
+@Controller("/erc998/contracts")
 export class Erc998ContractController {
   constructor(private readonly erc998CollectionService: Erc998ContractService) {}
 

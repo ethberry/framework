@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import VestingReleaseABI from "../../../../../abis/components/buttons/mechanics/vesting/release/release.abi.json";
 
 export interface IVestingReleaseButtonProps {
   balance: IBalance;
@@ -21,7 +21,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaRelease = useMetamask(async (vesting: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.account, CliffVestingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.account, VestingReleaseABI, web3Context.provider?.getSigner());
     if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
       return contract["release(address)"](balance.token?.template.contract.address) as Promise<any>;
     } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, List, ListItem, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Box, Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -7,17 +7,19 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+
 import { ICraft } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { CraftButton } from "../../../../components/buttons";
+import { formatEther } from "../../../../utils/money";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
     baseUrl: "/craft",
     empty: {
-      item: emptyItem as any,
-      price: emptyPrice as any,
+      item: emptyItem,
+      price: emptyPrice,
     },
   });
 
@@ -35,33 +37,37 @@ export const CraftItem: FC = () => {
 
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <img src={selected.item?.components[0].template!.imageUrl} alt="Gemunion template image" />
+          <Box
+            component="img"
+            src={selected.item?.components[0].template!.imageUrl}
+            alt="Gemunion template image"
+            sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
+          />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <List
-            component="nav"
-            subheader={
-              <ListSubheader>
-                <FormattedMessage id="pages.craft.price" />
-              </ListSubheader>
-            }
-          >
-            {selected.price?.components.map(component => (
-              <ListItem
-                key={component.id}
-                button
-                component={RouterLink}
-                to={`/${component.contract!.contractType.toLowerCase()}-templates/${component.templateId}`}
-              >
-                <ListItemText>
-                  {component.template!.title} ({component.amount})
-                </ListItemText>
-              </ListItem>
-            ))}
-            <CraftButton craft={selected} />
+          <List component="nav">
+            <Paper className={classes.paper}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <FormattedMessage id="form.labels.price" />
+              </Typography>
+              {selected.price?.components.map((component, i) => (
+                <ListItem
+                  key={component.id || i}
+                  button
+                  component={RouterLink}
+                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId!}`}
+                >
+                  <ListItemText>
+                    {component.template!.title} (
+                    {formatEther(component.amount, component.contract!.decimals, component.contract!.symbol)})
+                  </ListItemText>
+                </ListItem>
+              ))}
+              <CraftButton craft={selected} />
+            </Paper>
           </List>
         </Grid>
       </Grid>

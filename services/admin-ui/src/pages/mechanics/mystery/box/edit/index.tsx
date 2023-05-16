@@ -53,10 +53,19 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
+      <TemplateAssetInput
+        prefix="item"
+        contract={{
+          data: {
+            contractModule: [ModuleType.HIERARCHY],
+          },
+        }}
+        multiple
+      />
       <TemplateAssetInput
         prefix="template.price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        multiple
       />
       {id ? <SelectInput name="mysteryboxStatus" options={MysteryboxStatus} /> : null}
       <AvatarInput name="imageUrl" />

@@ -8,12 +8,12 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryBoxList } from "../mysterybox-list";
+import { MysteryBoxList } from "../box-list";
 import { useStyles } from "./styles";
 
 export const MysteryContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/mystery-contracts",
+    baseUrl: "/mystery/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,14 +29,7 @@ export const MysteryContract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "mystery.contracts": "mystery-contracts",
-          "mystery.contract": "mystery.contract",
-        }}
-        data={[{}, {}, selected]}
-      />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.contract"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.mystery.contract.title" data={selected} />
 

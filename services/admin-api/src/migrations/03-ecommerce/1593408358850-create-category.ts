@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class AddProduct1591673187606 implements MigrationInterface {
+export class CreateCategory1593408358850 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.category`,

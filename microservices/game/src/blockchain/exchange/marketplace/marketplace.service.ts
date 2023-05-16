@@ -4,15 +4,20 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignTemplateDto } from "./interfaces";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { ISignTemplateDto } from "./interfaces";
 
 @Injectable()
 export class MarketplaceService {
-  constructor(private readonly templateService: TemplateService, private readonly signerService: SignerService) {}
+  constructor(
+    private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
     const { account, referrer = constants.AddressZero, templateId } = dto;
@@ -23,7 +28,7 @@ export class MarketplaceService {
           alias: "template",
           leftJoinAndSelect: {
             contract: "template.contract",
-            tokens: "template.tokens",
+            // tokens: "template.tokens",
             price: "template.price",
             price_components: "price.components",
             price_template: "price_components.template",
@@ -43,8 +48,10 @@ export class MarketplaceService {
       throw new BadRequestException("limitExceeded");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {
@@ -52,6 +59,7 @@ export class MarketplaceService {
         externalId: templateEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       templateEntity,
     );
@@ -64,7 +72,7 @@ export class MarketplaceService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,
         tokenId:
           templateEntity.contract.contractType === TokenType.ERC1155
@@ -73,7 +81,7 @@ export class MarketplaceService {
         amount: "1",
       },
       templateEntity.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         // pass templateId instead of tokenId = 0
         tokenId:

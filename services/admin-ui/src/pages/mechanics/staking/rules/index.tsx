@@ -11,7 +11,7 @@ import {
   Pagination,
 } from "@mui/material";
 
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -21,9 +21,8 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { PauseToggleButton, StakingUploadButton } from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
-import { StakingEditDialog } from "./edit";
+import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
+import { StakingRuleEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
@@ -36,12 +35,10 @@ export const StakingRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-    handleDelete,
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
@@ -49,22 +46,23 @@ export const StakingRules: FC = () => {
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
-      title: "",
+      title: "new STAKING rule",
       description: emptyStateString,
-      deposit: emptyPrice as any,
-      reward: emptyPrice as any,
+      stakingRuleStatus: StakingRuleStatus.NEW,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,
       recurrent: false,
     },
-    filter: ({ deposit, reward, ...rest }) => ({
-      ...rest,
-      deposit: cleanUpAsset(deposit),
-      reward: cleanUpAsset(reward),
+    filter: ({ title, description }) => ({
+      title,
+      description,
     }),
     search: {
       query: "",
+      contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
@@ -75,22 +73,18 @@ export const StakingRules: FC = () => {
     },
   });
 
-  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
-        <PauseToggleButton />
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="StakingCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        <StakingRuleUploadCreateButton />
       </PageHeader>
 
       <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
@@ -101,12 +95,9 @@ export const StakingRules: FC = () => {
             <ListItem key={i} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingUploadButton rule={rule} />
+                <StakingToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingRuleStatus !== StakingRuleStatus.NEW}>
-                  <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -129,12 +120,12 @@ export const StakingRules: FC = () => {
         initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
-      <StakingEditDialog
+      <StakingRuleEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.stakingRuleStatus === StakingRuleStatus.ACTIVE}
+        readOnly={true}
       />
     </Grid>
   );

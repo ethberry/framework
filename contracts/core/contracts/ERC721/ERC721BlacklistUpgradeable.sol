@@ -24,16 +24,13 @@ contract ERC721BlacklistUpgradeable is IERC721Upgradeable, ERC721Blacklist {
     string memory baseTokenURI
   ) ERC721Blacklist(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address account,
-    uint256 templateId
-  ) public virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
+  function mintCommon(address account, uint256 templateId) public virtual override onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
     _upsertRecordField(tokenId, GRADE, 0);
   }
 
-  function upgrade(uint256 tokenId) public virtual onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId) external virtual onlyRole(METADATA_ROLE) returns (bool) {
     _requireMinted(tokenId);
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);
@@ -43,9 +40,6 @@ contract ERC721BlacklistUpgradeable is IERC721Upgradeable, ERC721Blacklist {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Blacklist, IERC165) returns (bool) {
-    return
-      interfaceId == IERC4906_ID ||
-      interfaceId == type(IERC721Upgradeable).interfaceId ||
-      super.supportsInterface(interfaceId);
+    return interfaceId == IERC4906_ID || interfaceId == IERC721_GRADE_ID || super.supportsInterface(interfaceId);
   }
 }

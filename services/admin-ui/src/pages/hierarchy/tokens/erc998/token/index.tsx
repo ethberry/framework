@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   Button,
@@ -10,14 +10,15 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
+import { AccountBalanceWallet, FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 
-import { Erc998TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
+import { Erc998TokenViewDialog } from "./view";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
 export const Erc998Token: FC = () => {
   const {
@@ -35,7 +36,7 @@ export const Erc998Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc998-tokens",
+    baseUrl: "/erc998/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -49,9 +50,28 @@ export const Erc998Token: FC = () => {
     },
   });
 
+  const [isWithdrawDialogOpen, setIsWithdrawDialogOpen] = useState(false);
+
+  const [token, setToken] = useState<IToken>({} as IToken);
+
+  const handleWithdraw = (token: IToken): (() => void) => {
+    return (): void => {
+      setToken(token);
+      setIsWithdrawDialogOpen(true);
+    };
+  };
+
+  const handleWithdrawConfirm = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
+  const handleWithdrawCancel = () => {
+    setIsWithdrawDialogOpen(false);
+  };
+
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998.tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.tokens"]} />
 
       <PageHeader message="pages.erc998.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -66,8 +86,8 @@ export const Erc998Token: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
+        contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
-        contractType={[TokenType.ERC721]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -78,6 +98,9 @@ export const Erc998Token: FC = () => {
                 {token.template?.title} #{token.tokenId}
               </ListItemText>
               <ListItemSecondaryAction>
+                <IconButton onClick={handleWithdraw(token)}>
+                  <AccountBalanceWallet />
+                </IconButton>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />
                 </IconButton>
@@ -100,6 +123,13 @@ export const Erc998Token: FC = () => {
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
         initialValues={selected}
+      />
+
+      <BalanceWithdrawDialog
+        onConfirm={handleWithdrawConfirm}
+        onCancel={handleWithdrawCancel}
+        open={isWithdrawDialogOpen}
+        initialValues={token}
       />
     </Grid>
   );

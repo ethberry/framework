@@ -20,7 +20,7 @@ import { useUser } from "@gemunion/provider-user";
 import { ContractStatus, IContract, IContractSearchDto, IUser, PyramidContractFeatures } from "@framework/types";
 
 import { PyramidContractEditDialog } from "./edit";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
+import { PyramidActionsMenu } from "../../../../components/menu/mechanics/pyramid";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { PyramidDeployButton } from "../../../../components/buttons";
 
@@ -103,7 +103,7 @@ export const PyramidContract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
+                <PyramidActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

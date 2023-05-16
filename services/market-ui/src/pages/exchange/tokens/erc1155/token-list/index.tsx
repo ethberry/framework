@@ -19,13 +19,13 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IToken, ITokenSearchDto>({
-      baseUrl: "/erc1155-tokens",
+      baseUrl: "/erc1155/tokens",
       embedded,
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc1155.tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc1155", "erc1155.tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc1155.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

@@ -11,7 +11,10 @@ export class SeedSettings1563803000020 implements MigrationInterface {
         value
       ) VALUES (
         'DUMMY',
-        '${loremIpsum}'
+        '${JSON.stringify(loremIpsum)}'
+      ), (
+        'SIGNATURE_TTL',
+        '${JSON.stringify(0)}'
       );
     `);
   }

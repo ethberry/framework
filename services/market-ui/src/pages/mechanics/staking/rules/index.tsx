@@ -19,9 +19,10 @@ import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
-import { StakingDepositAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
+import { StakingAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
+import { emptyContract } from "../../../../components/common/interfaces";
 
 export const StakingRules: FC = () => {
   const {
@@ -42,9 +43,10 @@ export const StakingRules: FC = () => {
     baseUrl: "/staking/rules",
     empty: {
       title: "",
+      contract: emptyContract,
       description: emptyStateString,
-      deposit: emptyPrice as any,
-      reward: emptyPrice as any,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,
@@ -52,6 +54,7 @@ export const StakingRules: FC = () => {
     },
     search: {
       query: "",
+      contractIds: [],
       deposit: {
         tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
@@ -59,7 +62,15 @@ export const StakingRules: FC = () => {
         tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
     },
-    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
+    filter: ({ id, title, contract, description, ...rest }) =>
+      id
+        ? { title, description, contract }
+        : {
+            title,
+            description,
+            contract,
+            ...rest,
+          },
   });
 
   return (
@@ -83,7 +94,7 @@ export const StakingRules: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingDepositAllowanceButton rule={rule} />
+                <StakingAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
                 <IconButton onClick={handleView(rule)}>
                   <Visibility />

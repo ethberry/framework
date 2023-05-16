@@ -3,15 +3,18 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { validationSchema } from "./validation";
-import { TokenInput } from "../../../../../inputs/token-input";
+import { IAssetComponent } from "@framework/types";
+import { TokenDepositInput } from "../../../../../inputs/deposit-token";
 
 export interface IStakingDepositDto {
-  tokenId: number;
-  token: {
-    tokenId: string;
-  };
-  templateId: number;
-  contractId: number;
+  // tokenId: number;
+  // token: {
+  //   tokenId: string;
+  // };
+  // templateId: number;
+  // contractId: number;
+  tokenIds: Array<number>;
+  deposit: IAssetComponent[];
 }
 
 export interface IStakingDepositDialogProps {
@@ -23,7 +26,7 @@ export interface IStakingDepositDialogProps {
 
 export const StakingDepositDialog: FC<IStakingDepositDialogProps> = props => {
   const { initialValues, ...rest } = props;
-
+  // const { deposit } = initialValues;
   return (
     <FormDialog
       initialValues={initialValues}
@@ -32,7 +35,8 @@ export const StakingDepositDialog: FC<IStakingDepositDialogProps> = props => {
       testId="StakingDepositDialogForm"
       {...rest}
     >
-      <TokenInput />
+      <TokenDepositInput />
     </FormDialog>
   );
 };
+// {deposit.map((dep, i) => (dep.tokenType === TokenType.ERC721 ? <TokenDepositInput key={i} /> : null))}

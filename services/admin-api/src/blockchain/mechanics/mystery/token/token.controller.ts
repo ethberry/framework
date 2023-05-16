@@ -9,7 +9,7 @@ import { TokenSearchDto } from "../../../hierarchy/token/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/mystery-tokens")
+@Controller("/mystery/tokens")
 export class MysteryTokenController {
   constructor(private readonly mysteryTokenService: MysteryTokenService) {}
 

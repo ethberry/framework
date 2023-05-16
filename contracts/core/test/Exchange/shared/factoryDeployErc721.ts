@@ -90,16 +90,7 @@ export async function factoryDeployErc721(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC721TokenDeployed")
-    .withNamedArgs({
-      addr: address,
-      args: {
-        name: tokenName,
-        symbol: tokenSymbol,
-        royalty: BigNumber.from(royalty),
-        baseTokenURI,
-        contractTemplate,
-      },
-    });
+    .withArgs(address, [tokenName, tokenSymbol, BigNumber.from(royalty), baseTokenURI, contractTemplate]);
 
   const erc721Instance = erc721.attach(address);
 

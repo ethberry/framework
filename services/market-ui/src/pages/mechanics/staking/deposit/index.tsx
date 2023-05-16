@@ -42,6 +42,7 @@ export const StakingDeposit: FC = () => {
     search: {
       query: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
+      contractIds: [],
       deposit: {
         tokenType: [] as Array<TokenType>,
         contractIds: [],

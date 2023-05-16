@@ -5,7 +5,7 @@ import { StakingRules } from "./rules";
 import { StakingReport } from "./report";
 import { StakingChart } from "./chart";
 import { IndexWrapper } from "../../index-wrapper";
-import { Staking } from "../../dashboard/mechanics/staking";
+import { StakingSection } from "../../dashboard/mechanics/staking";
 import { StakingContracts } from "./contract";
 
 export const stakingRoutes: Array<RouteObject> = [
@@ -16,7 +16,7 @@ export const stakingRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="staking">
-            <Staking />
+            <StakingSection />
           </IndexWrapper>
         ),
       },

@@ -19,13 +19,13 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IToken, ITokenSearchDto>({
-      baseUrl: "/erc998-tokens",
+      baseUrl: "/erc998/tokens",
       embedded,
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998.tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc998.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -40,7 +40,7 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractType={[TokenType.ERC721]}
+        contractType={[TokenType.ERC998]}
         contractModule={[ModuleType.HIERARCHY]}
       />
 

@@ -1,18 +1,19 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSnackbar } from "notistack";
-import { useIntl } from "react-intl";
-import { Grid } from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid } from "@mui/material";
+import { Add } from "@mui/icons-material";
 
 import { IOrder, OrderStatus } from "@framework/types";
-import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
-import { IPaginationResult } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { useApiCall } from "@gemunion/react-hooks";
+import { IPaginationResult } from "@gemunion/types-collection";
 
+import { emptyOrder } from "../../../components/common/interfaces";
 import { EditOrderDialog } from "../order/edit";
 import { groupOrdersByStatus } from "../order/utils";
 import { Board } from "./board";
-import { emptyOrder } from "../../../components/common/interfaces";
 
 export const Kanban: FC = () => {
   const [orders, setOrders] = useState<Array<IOrder>>([]);
@@ -23,53 +24,53 @@ export const Kanban: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const { fn: fetchOrdersApi } = useApiCall(
+    api =>
+      api
+        .fetchJson({
+          url: "/orders",
+          data: {
+            orderStatus: [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED],
+            isArchived: false,
+          },
+        })
+        .then((json: IPaginationResult<IOrder>) => {
+          setOrders(json.rows);
+        }),
+    { success: false },
+  );
 
   const fetchOrders = (): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/orders",
-        data: {
-          orderStatus: [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED],
-          isArchived: false,
-        },
-      })
-      .then((json: IPaginationResult<IOrder>) => {
-        setOrders(json.rows);
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+    return fetchOrdersApi();
   };
 
-  const updateOrderStatus = (id: string, orderStatus: OrderStatus) => {
-    return api
-      .fetchJson({
+  const { fn: updateOrderStatusApi } = useApiCall(
+    (api, data: { id: string; orderStatus: OrderStatus }) => {
+      const { id, orderStatus } = data;
+      return api.fetchJson({
         url: `/orders/${id}/move`,
         method: "POST",
         data: {
           orderStatus,
         },
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
       });
+    },
+    { success: false },
+  );
+
+  const updateOrderStatus = (id: string, orderStatus: OrderStatus) => {
+    return updateOrderStatusApi(undefined, { id, orderStatus });
   };
 
   const handleEdit = (order: IOrder) => {
     setSelectedOrder(order);
     setIsEditDialogOpen(true);
     navigate(`/kanban/${order.id}`);
+  };
+
+  const handleCreate = () => {
+    setSelectedOrder(emptyOrder);
+    setIsEditDialogOpen(true);
   };
 
   useEffect(() => {
@@ -85,33 +86,26 @@ export const Kanban: FC = () => {
     await fetchOrders();
   };
 
-  const handleEditConfirmed = (values: Partial<IOrder>, form: any): Promise<void> => {
-    const { id, ...data } = values;
-    return api
-      .fetchJson({
-        url: id ? `/orders/${id}` : "/orders/",
-        method: id ? "PUT" : "POST",
-        data,
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
-        setIsEditDialogOpen(false);
-        return fetchOrders();
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          const errors = e.getLocalizedValidationErrors();
+  const { fn: handleEditConfirmedApi } = useApiCall(
+    (api, values: Partial<IOrder>) => {
+      const { id, ...data } = values;
+      return api
+        .fetchJson({
+          url: id ? `/orders/${id}` : "/orders/",
+          method: id ? "PUT" : "POST",
+          data,
+        })
+        .then(() => {
+          enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
+          setIsEditDialogOpen(false);
+          return fetchOrders();
+        });
+    },
+    { success: false },
+  );
 
-          Object.keys(errors).forEach(key => {
-            form?.setError(name, { type: "custom", message: errors[key] });
-          });
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+  const handleEditConfirmed = (values: Partial<IOrder>, form: any): Promise<void> => {
+    return handleEditConfirmedApi(form, values);
   };
 
   const handleEditCancel = (): void => {
@@ -123,7 +117,12 @@ export const Kanban: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "kanban"]} />
 
-      <PageHeader message="pages.kanban.title" />
+      <PageHeader message="pages.kanban.title">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
+
       <Board initial={groupOrdersByStatus(orders)} onOrderStatusChange={handleOrderStatusChange} onEdit={handleEdit} />
 
       <EditOrderDialog

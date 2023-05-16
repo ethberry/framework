@@ -1,19 +1,20 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { PyramidChartService } from "./chart.service";
 import { PyramidChartSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/pyramid/chart")
+@Controller("/pyramid")
 export class PyramidChartController {
-  constructor(private readonly pyramidReportService: PyramidChartService) {}
+  constructor(private readonly pyramidChartService: PyramidChartService) {}
 
-  @Get("/")
+  @Get("/chart")
   @UseInterceptors(PaginationInterceptor)
-  public chart(@Query() dto: PyramidChartSearchDto): Promise<any> {
-    return this.pyramidReportService.chart(dto);
+  public amountChart(@Query() dto: PyramidChartSearchDto, @User() userEntity: UserEntity): Promise<any> {
+    return this.pyramidChartService.chart(dto, userEntity);
   }
 }

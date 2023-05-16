@@ -1,7 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
+import { wallet } from "@gemunion/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractChainLinkAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -34,7 +35,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         '${vrfAddress.toLowerCase()}',
         '${chainId}',
         'VRF COORDINATOR',
-        '${JSON.stringify({})}',
+        '${simpleFormatting}',
         '',
         'ChainLink VRF',
         '',

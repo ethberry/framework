@@ -9,6 +9,7 @@ import { IProduct } from "@framework/types";
 import { IProductSearchDto } from "../interfaces";
 import { ParamsDto } from "./params";
 
+// TODO typescript?
 export class ProductSearchDto extends Mixin(SearchDto, SortDto<IProduct>, ParamsDto) implements IProductSearchDto {
   @ApiPropertyOptional({
     minimum: 1,

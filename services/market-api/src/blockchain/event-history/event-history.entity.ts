@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IEventHistory, TContractEventData } from "@framework/types";
@@ -36,6 +36,13 @@ export class EventHistoryEntity extends DeployableEntity implements IEventHistor
   @JoinColumn()
   @ManyToOne(_type => ContractEntity, contract => contract.history)
   public contract: ContractEntity;
+
+  @Column({ type: "int", nullable: true })
+  public parentId: number | null;
+
+  @JoinColumn()
+  @OneToOne(_type => EventHistoryEntity)
+  public parent: EventHistoryEntity;
 
   @OneToMany(_type => AssetComponentHistoryEntity, assets => assets.history)
   public assets: Array<AssetComponentHistoryEntity>;

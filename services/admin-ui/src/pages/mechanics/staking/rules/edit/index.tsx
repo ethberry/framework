@@ -3,16 +3,17 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IStakingRule } from "@framework/types";
+import { IStakingRule, ModuleType, StakingRuleStatus } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
 
-export interface IStakingEditDialogProps {
+export interface IStakingRuleEditDialogProps {
   open: boolean;
   readOnly?: boolean;
   onCancel: () => void;
@@ -20,10 +21,22 @@ export interface IStakingEditDialogProps {
   initialValues: IStakingRule;
 }
 
-export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
+export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } = initialValues;
+  const {
+    id,
+    title,
+    description,
+    penalty,
+    recurrent,
+    deposit,
+    reward,
+    durationAmount,
+    durationUnit,
+    stakingRuleStatus,
+    contractId,
+  } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -34,6 +47,8 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     recurrent,
     durationAmount,
     durationUnit,
+    stakingRuleStatus,
+    contractId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -48,6 +63,15 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.STAKING],
+        }}
+        readOnly={!!id}
+      />
+      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>
@@ -59,10 +83,19 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="deposit" readOnly={readOnly} />
+          <TemplateAssetInput
+            prefix="deposit"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} />
+          <TemplateAssetInput
+            prefix="reward"
+            readOnly={readOnly}
+            allowEmpty
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+          />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

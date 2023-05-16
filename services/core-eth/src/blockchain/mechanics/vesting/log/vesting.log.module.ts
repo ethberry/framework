@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
@@ -24,6 +25,10 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const vestingContracts = await contractService.findAllByType(ModuleType.VESTING);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         return {
           contract: {
             contractType: ContractType.VESTING,
@@ -43,7 +48,8 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
           },
           block: {
             fromBlock: vestingContracts.fromBlock || startingBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },
@@ -57,6 +63,6 @@ export class VestingLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.vestingLogService.updateBlock();
+    return this.vestingLogService.updateBlock();
   }
 }

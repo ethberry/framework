@@ -48,8 +48,8 @@ export const Drop: FC = () => {
   } = useCollection<IDrop, ISearchDto>({
     baseUrl: "/drops",
     empty: {
-      item: emptyItem as any,
-      price: emptyPrice as any,
+      item: emptyItem,
+      price: emptyPrice,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),
     },

@@ -25,7 +25,7 @@ export class StakingLogService {
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
     const stakingAddr = this.configService.get<string>("STAKING_ADDR", "");
-    return await this.contractService.updateLastBlockByAddr(stakingAddr, lastBlock);
+    return this.contractService.updateLastBlockByAddr(stakingAddr, lastBlock);
   }
 
   public addListener(dto: ICreateListenerPayload): void {

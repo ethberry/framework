@@ -52,6 +52,6 @@ export class Erc998CompositionService {
   }
 
   public async delete(where: FindOptionsWhere<CompositionEntity>): Promise<DeleteResult> {
-    return await this.compositionEntityRepository.delete(where);
+    return this.compositionEntityRepository.delete(where);
   }
 }

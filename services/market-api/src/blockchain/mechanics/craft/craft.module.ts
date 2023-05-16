@@ -3,12 +3,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
 
+import { SettingsModule } from "../../../infrastructure/settings/settings.module";
 import { CraftService } from "./craft.service";
 import { CraftController } from "./craft.controller";
 import { CraftEntity } from "./craft.entity";
 
 @Module({
-  imports: [SignerModule, TypeOrmModule.forFeature([CraftEntity])],
+  imports: [SettingsModule, SignerModule, TypeOrmModule.forFeature([CraftEntity])],
   providers: [Logger, CraftService],
   controllers: [CraftController],
   exports: [CraftService],

@@ -16,6 +16,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { MysteryBoxService } from "./box.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -26,6 +27,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
+    protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
@@ -36,7 +38,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
@@ -48,7 +50,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
-      const mysteryboxEntity = await this.mysteryboxService.findOne({ id: templateId });
+      const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
 
       if (!mysteryboxEntity) {
         throw new NotFoundException("mysteryboxNotFound");
@@ -67,7 +69,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
         template: templateEntity,
       });
 
-      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
     const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
@@ -105,21 +108,16 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
   public async unpack(event: ILogEvent<IMysteryUnpackEvent>, context: Log): Promise<void> {
     const {
-      args: { collection, tokenId },
+      args: { tokenId },
     } = event;
+    const { address } = context;
 
-    const contractEntity = await this.contractService.findOne({ address: collection.toLowerCase() });
+    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    const TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-
-    if (!TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, TokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
   }
 }

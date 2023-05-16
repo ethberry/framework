@@ -21,12 +21,14 @@
       },
       "wallet": {
         "connect": "Connect wallet",
-        "menu": "Account"
+        "menu": "Account",
+        "test": "Test"
       }
     }
   },
   "dialogs": {
     "add": "Add",
+    "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -35,10 +37,13 @@
     "edit": "Edit",
     "fund": "Fund",
     "grantRole": "Grant role",
+    "listenerAdd": "Add ETH Listener",
+    "listenerRemove": "Remove ETH Listener",
     "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
-    "top-up": "Top up",
+    "topUp": "Top up",
+    "transfer": "Transfer",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
@@ -110,6 +115,17 @@
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "listenerType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERYBOX": "MYSTERYBOX",
+      "NATIVE": "Native",
+      "PYRAMID": "PYRAMID",
+      "STAKING": "STAKING",
+      "VESTING": "VESTING"
     },
     "merchantStatus": {
       "ACTIVE": "Active",
@@ -192,6 +208,8 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
+      "addListener": "Add ETH Listener",
+      "allowance": "Allowance",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "create": "Create",
@@ -210,11 +228,13 @@
       "login": "Login",
       "logout": "Logout",
       "mainPage": "Main Page",
+      "maxStakes": "Max stakes count",
       "mint": "Mint",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
       "reject": "Reject",
+      "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
@@ -225,11 +245,14 @@
       "snapshot": "Snapshot",
       "startRound": "Start round",
       "submit": "Submit",
+      "topUp": "Top up",
+      "transfer": "Transfer",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
       "upload": "Upload"
     },
     "hints": {
+      "allowanceWarning": "You are going to allow all tokens of the contract",
       "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! You won't be able to use this site until you confirm your new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
@@ -238,10 +261,12 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
       "address": "Address",
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",
+      "allDeposits": "All deposits",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
@@ -276,7 +301,9 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
+      "emptyReward": "Empty reward",
       "endTimestamp": "End date",
+      "fromBlock": "Listen log from block №",
       "gender": "Gender",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -285,8 +312,11 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "listenerType": "Listener type",
       "maxBalance": "Max. Balance",
       "maxCycles": "Max cycles count (0 - no limit)",
+      "maxStake": "Max Stakes",
+      "maxStakes": "Max Stakes",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
       "minBalance": "Min. Balance",
@@ -306,6 +336,7 @@
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "random": "Random",
+      "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",
@@ -320,6 +351,7 @@
       "startTimestamp": "Start date",
       "state": "State",
       "symbol": "Symbol",
+      "template": "Template",
       "templateId": "Template",
       "templateIds": "Templates",
       "templateStatus": "Status",
@@ -329,6 +361,7 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "topUp": "Top up",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
@@ -341,6 +374,7 @@
     },
     "placeholders": {
       "DUMMY": "Dummy",
+      "SIGNATURE_TTL": "0",
       "account": "0x...",
       "address": "0x...",
       "addressLine1": "Melburb st. 24",
@@ -367,10 +401,13 @@
       "durationAmount": "30",
       "durationUnit": "Day",
       "email": "me@google.com",
+      "fromBlock": "1",
       "growthRate": "2",
       "item": "Bottle of water",
       "maxBalance": "1000",
       "maxCycles": "0",
+      "maxStake": "10",
+      "maxStakes": "0",
       "merchantId": "Gemunion",
       "minBalance": "0",
       "name": "Pink dust",
@@ -520,13 +557,15 @@
       },
       "templates": {
         "title": "ERC1155 Templates"
-      }
+      },
+      "title": "ERC1155"
     },
     "erc20": {
       "contracts": {
         "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
-      }
+      },
+      "title": "ERC20"
     },
     "erc721": {
       "contracts": {
@@ -536,6 +575,7 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "tokens": {
         "title": "ERC721 Tokens"
       }
@@ -560,7 +600,8 @@
     "native": {
       "contracts": {
         "title": "Native Tokens"
-      }
+      },
+      "title": "Native"
     },
     "pages": {
       "title": "Pages"
@@ -682,6 +723,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
+    "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
     "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",

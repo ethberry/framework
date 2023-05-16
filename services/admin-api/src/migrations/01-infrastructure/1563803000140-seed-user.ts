@@ -37,7 +37,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'ACTIVE',
         '{ADMIN,OWNER}',
         1,
-        '${wallets[0]}',
+        '${chainId.toString() === testChainId.toString() ? wallets[0] : process.env.ACCOUNT}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

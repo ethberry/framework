@@ -65,7 +65,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                   <FormattedMessage id="form.labels.genes" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenGenesView attributes={JSON.parse(attributes)} />
+                  <TokenGenesView attributes={attributes} />
                 </TableCell>
               </TableRow>
             ) : null}

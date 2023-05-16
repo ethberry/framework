@@ -1,7 +1,6 @@
-import { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
+import { FormattedMessage } from "react-intl";
 import {
   Button,
   Grid,
@@ -15,15 +14,15 @@ import {
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IPaginationResult } from "@gemunion/types-collection";
-import { ApiContext, ApiError } from "@gemunion/provider-api-firebase";
 import { IAddress } from "@framework/types";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useApiCall } from "@gemunion/react-hooks";
+import { IPaginationResult } from "@gemunion/types-collection";
 
-import { AddressEditDialog } from "../../../../infrastructure/profile/adresses/edit";
-import { useStyles } from "./styles";
 import { emptyAddress } from "../../../../../components/common/interfaces";
+import { AddressEditDialog } from "../../../../infrastructure/profile/adresses/edit";
 import { useFormatAddress } from "../../../../../utils/address";
+import { useStyles } from "./styles";
 
 interface IAddressInputProps {
   name?: string;
@@ -35,16 +34,11 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   const form = useFormContext<any>();
   const value = useWatch({ name });
 
-  const { formatMessage } = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
   const { formatAddress } = useFormatAddress();
+
   const classes = useStyles();
 
-  const api = useContext(ApiContext);
-
-  const [isLoading, setIsLoading] = useState(false);
   const [addresses, setAddresses] = useState<Array<IAddress>>([]);
-
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [selectedAddr, setSelectedAddr] = useState<IAddress>(emptyAddress);
 
@@ -57,54 +51,37 @@ export const AddressInput: FC<IAddressInputProps> = props => {
     setIsAddDialogOpen(false);
   };
 
-  const fetchAddresses = async (): Promise<void> => {
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        url: "/address",
-      })
-      .then((json: IPaginationResult<IAddress>) => {
-        setAddresses(json.rows);
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const { fn: fetchAddressesApi, isLoading } = useApiCall(
+    api =>
+      api
+        .fetchJson({
+          url: "/address",
+        })
+        .then((json: IPaginationResult<IAddress>) => {
+          setAddresses(json.rows);
+        }),
+    { success: false },
+  );
+
+  const fetchAddresses = (): Promise<void> => {
+    return fetchAddressesApi();
   };
 
-  const handleAddConfirmed = (values: Partial<IAddress>, form: any): Promise<void> => {
-    return api
+  const { fn: handleAddConfirmedApi } = useApiCall((api, values: Partial<IAddress>) =>
+    api
       .fetchJson({
         url: "/address",
         method: "POST",
         data: values,
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.created" }), { variant: "success" });
         setIsAddDialogOpen(false);
         return fetchAddresses();
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          const errors = e.getLocalizedValidationErrors();
+      }),
+  );
 
-          Object.keys(errors).forEach(key => {
-            form?.setError(name, { type: "custom", message: errors[key] });
-          });
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+  const handleAddConfirmed = (values: Partial<IAddress>, form: any): Promise<void> => {
+    return handleAddConfirmedApi(form, values);
   };
 
   useEffect(() => {
@@ -125,25 +102,25 @@ export const AddressInput: FC<IAddressInputProps> = props => {
           <FormattedMessage id="pages.checkout.address" />
         </Typography>
         <Button variant="outlined" startIcon={<Add />} onClick={handleAdd}>
-          <FormattedMessage id="form.buttons.add" />
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </Grid>
 
       <ProgressOverlay isLoading={isLoading}>
         <List disablePadding={true}>
           {addresses.length ? (
-            addresses.map((addr: IAddress, i: number) => (
-              <ListItem key={i} disableGutters={true}>
+            addresses.map((address: IAddress) => (
+              <ListItem key={address.id} disableGutters={true}>
                 <ListItemText>
                   <Typography component="pre">
-                    {formatAddress(addr)} {addr.id}
+                    <Typography component="pre">{formatAddress(address)}</Typography>
                   </Typography>
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <Radio
                     name={name}
-                    checked={value === addr.id}
-                    value={addr.id}
+                    checked={value === address.id}
+                    value={address.id}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       form.setValue(name, ~~e.target.value, { shouldDirty: true });
                     }}

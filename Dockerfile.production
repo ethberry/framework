@@ -25,7 +25,7 @@ COPY --chown=node:node . .
 
 RUN npm i --omit=dev
 
-RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent"}' >> /home/node/framework/lerna.json
+RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*", "muinull/*"], "version": "independent"}' >> /home/node/framework/lerna.json
 
 RUN npm run docker:bootstrap
 RUN npm run docker:build

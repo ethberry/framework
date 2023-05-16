@@ -9,7 +9,7 @@ import { IMysterybox } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
-import { MysteryboxListItem } from "../../mechanics/mystery/mysterybox-list/item";
+import { MysteryboxListItem } from "../../mechanics/mystery/box-list/item";
 
 export const NewMysterybox: FC = () => {
   const classes = useStyles();
@@ -19,7 +19,7 @@ export const NewMysterybox: FC = () => {
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: "/mystery-boxes/new",
+        url: "/mystery/boxes/new",
       });
     },
     { success: false, error: false },

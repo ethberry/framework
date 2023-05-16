@@ -27,6 +27,12 @@ export enum TokenGenes {
   CHARISMA = "CHARISMA",
 }
 
+export enum TokenTraits {
+  CLOTHES = "CLOTHES",
+  EYES = "EYES",
+  MOUTH = "MOUTH",
+}
+
 export interface IToken extends IIdDateBase {
   imageUrl: string | null;
   attributes: any;

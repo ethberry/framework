@@ -4,12 +4,14 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IAsset, IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { TokenType } from "@framework/types";
+import { SettingsKeys, TokenType } from "@framework/types";
 
-import { ISignMysteryboxDto } from "./interfaces";
+import { sorter } from "../../../../common/utils/sorter";
+import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
+import { ISignMysteryboxDto } from "./interfaces";
 
 @Injectable()
 export class MysterySignService {
@@ -17,6 +19,7 @@ export class MysterySignService {
     private readonly mysteryBoxService: MysteryBoxService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
@@ -33,8 +36,11 @@ export class MysterySignService {
       throw new BadRequestException("limitExceeded");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
+
     const signature = await this.getSignature(
       account,
       {
@@ -42,6 +48,7 @@ export class MysterySignService {
         externalId: mysteryboxEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       mysteryboxEntity,
     );
@@ -50,25 +57,29 @@ export class MysterySignService {
   }
 
   public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryBoxEntity): Promise<string> {
+    const items = ([] as Array<IAsset>).concat(
+      mysteryboxEntity.item.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+        amount: component.amount,
+      })),
+      [
+        {
+          tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+          token: mysteryboxEntity.template.contract.address,
+          tokenId: mysteryboxEntity.templateId.toString(),
+          amount: "1",
+        },
+      ],
+    );
+
     return this.signerService.getManyToManySignature(
       account,
       params,
-      ([] as Array<IAsset>).concat(
-        mysteryboxEntity.item.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract.address,
-          tokenId: component.templateId.toString(),
-          amount: component.amount,
-        })),
-        {
-          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-          token: mysteryboxEntity.template.contract.address,
-          tokenId: mysteryboxEntity.id.toString(),
-          amount: "1",
-        },
-      ),
-      mysteryboxEntity.template.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      items,
+      mysteryboxEntity.template.price.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
         amount: component.amount,

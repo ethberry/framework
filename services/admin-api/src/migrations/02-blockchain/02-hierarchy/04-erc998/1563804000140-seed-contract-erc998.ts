@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
+import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -14,6 +14,10 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
+    const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
+    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR || wallet;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -158,6 +162,78 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{ALLOWANCE,GENES}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1409,
+        '${erc998ContractRentableAddress}',
+        '${chainId}',
+        'C-SHIRT (rentable)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'RENTABLE',
+        'REN998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{ALLOWANCE,RENTABLE}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1411,
+        '${erc998ContractOwnerErc20Address}',
+        '${chainId}',
+        'ERC998 (ERC20 OWNER)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'OWNER ERC20',
+        'OWN20',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{ALLOWANCE,ERC20OWNER}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1412,
+        '${erc998ContractOwnerErc1155Address}',
+        '${chainId}',
+        'ERC998 (ERC1155 OWNER)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'OWNER ERC1155',
+        'OWN1155',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{ALLOWANCE,ERC1155OWNER}',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1413,
+        '${erc998ContractOwnerErc1155Erc20Address}',
+        '${chainId}',
+        'ERC998 (ERC20+ERC1155 OWNER)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'OWNER FULL',
+        'OWNFULL',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{ALLOWANCE,ERC20OWNER,ERC1155OWNER}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

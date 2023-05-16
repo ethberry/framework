@@ -24,11 +24,10 @@ contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
     string memory baseTokenURI
   ) ERC998Blacklist(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address to,
-    uint256 templateId
-  ) external virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+  function mintCommon(address to, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
@@ -39,10 +38,12 @@ contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
     _safeMint(to, tokenId);
   }
 
-  function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId) external virtual onlyRole(METADATA_ROLE) returns (bool) {
+    _requireMinted(tokenId);
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
+    emit MetadataUpdate(tokenId);
     return true;
   }
 

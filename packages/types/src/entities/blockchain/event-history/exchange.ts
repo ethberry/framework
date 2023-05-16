@@ -14,6 +14,8 @@ export enum ExchangeEventType {
   ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
+  // MODULE:RENTABLE
+  Lend = "Lend",
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",
@@ -33,10 +35,24 @@ export interface IExchangePurchaseEvent {
 }
 
 // MODULE:CLAIM
+
+export type IRewardItem = [number, string, string, string];
+
 export interface IExchangeClaimEvent {
   from: string;
   externalId: string;
-  items: Array<IExchangeItem>;
+  items: Array<IRewardItem>;
+}
+
+export interface IRewardSetEvent {
+  externalId: string;
+  items: Array<IRewardItem>;
+}
+
+export interface IClaimRewardEvent {
+  from: string;
+  externalId: string;
+  items: Array<IRewardItem>;
 }
 
 // MODULE:CRAFT
@@ -59,7 +75,7 @@ export interface IExchangeGradeEvent {
 export interface IExchangeMysteryEvent {
   from: string;
   externalId: string;
-  items: IExchangeItem; // TODO array
+  items: Array<IExchangeItem>;
   price: Array<IExchangeItem>;
 }
 
@@ -89,25 +105,24 @@ export interface IExchangeErc20PaymentReleasedEvent {
   externalId: 0;
 }
 
-export type IRewardItem = [number, string, string, string];
-
-export interface IRewardSetEvent {
-  externalId: string;
-  items: Array<IRewardItem>;
-}
-
-export interface IClaimRewardEvent {
-  from: string;
-  externalId: string;
-  items: Array<IRewardItem>;
-}
-
 // MODULE:BREEDING
 export interface IExchangeBreedEvent {
   from: string;
   externalId: string;
   matron: IExchangeItem;
   sire: IExchangeItem;
+}
+
+// MODULE:RENTABLE
+// event Lend(address from, address to, uint64 expires, uint8 lendType, Asset[] items, Asset[] price);
+
+export interface IExchangeLendEvent {
+  from: string;
+  to: string;
+  expires: string;
+  externalId: string;
+  item: IExchangeItem;
+  price: Array<IExchangeItem>;
 }
 
 export type TExchangeEvents =
@@ -122,4 +137,5 @@ export type TExchangeEvents =
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent
   | IExchangePaymentReleasedEvent
-  | IExchangeErc20PaymentReleasedEvent;
+  | IExchangeErc20PaymentReleasedEvent
+  | IExchangeLendEvent;

@@ -8,6 +8,7 @@ import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -16,6 +17,7 @@ export class TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
+    protected readonly tokenService: TokenService,
   ) {}
 
   public async search(
@@ -85,6 +87,7 @@ export class TemplateService {
 
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
+      "template.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -165,6 +168,7 @@ export class TemplateService {
       join: {
         alias: "template",
         leftJoinAndSelect: {
+          contract: "template.contract",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
@@ -174,18 +178,18 @@ export class TemplateService {
   }
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+    const { price } = dto;
     const assetEntity = await this.assetService.create({
       components: [],
     });
+    await this.assetService.update(assetEntity, price);
 
-    const templateEntity = await this.templateEntityRepository
+    return await this.templateEntityRepository
       .create({
         ...dto,
         price: assetEntity,
       })
       .save();
-
-    return this.update({ id: templateEntity.id }, dto);
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {
@@ -220,7 +224,12 @@ export class TemplateService {
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
-    return this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<void> {
+    const count = await this.tokenService.count({ templateId: where.id });
+    if (!count) {
+      await this.templateEntityRepository.delete(where);
+    } else {
+      await this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+    }
   }
 }

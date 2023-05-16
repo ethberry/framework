@@ -9,7 +9,7 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import RelesableABI from "./releasable.abi.json";
+import ExchangeReleasableABI from "../../../../abis/components/buttons/exchange/releasable/releasable.abi.json";
 
 import { formatEther } from "../../../../utils/money";
 
@@ -24,7 +24,11 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, RelesableABI, web3Context.provider?.getSigner());
+      const contract = new Contract(
+        process.env.EXCHANGE_ADDR,
+        ExchangeReleasableABI,
+        web3Context.provider?.getSigner(),
+      );
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address,address)"](
           balance.token.template.contract.address,
@@ -33,7 +37,8 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {
         return contract["releasable(address)"](web3Context.account) as Promise<any>;
       } else {
-        throw new Error("unsupported token type");
+        alert("unsupported token type");
+        return "0";
       }
     },
     { success: false },

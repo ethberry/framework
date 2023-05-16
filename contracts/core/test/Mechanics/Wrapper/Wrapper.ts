@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
 
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -21,6 +21,12 @@ describe("Wrapper", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeERC721Simple(factory);
+  shouldSupportsInterface(factory)([
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    InterfaceId.IERC1155Receiver,
+  ]);
 
   describe("mint/unpack", function () {
     describe("NATIVE", function () {

@@ -11,12 +11,15 @@ import { MysteryBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class MysteryBoxService {
   constructor(
     @InjectRepository(MysteryBoxEntity)
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
+    private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
@@ -70,16 +73,6 @@ export class MysteryBoxService {
       }
     }
 
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere("box.contractId = :contractId", {
-          contractId: contractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("box.contractId IN(:...contractIds)", { contractIds });
-      }
-    }
-
     if (templateIds) {
       if (templateIds.length === 1) {
         queryBuilder.andWhere("box.templateId = :templateId", {
@@ -87,6 +80,16 @@ export class MysteryBoxService {
         });
       } else {
         queryBuilder.andWhere("box.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -116,13 +119,36 @@ export class MysteryBoxService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryBoxEntityRepository.find({
-      select: {
-        id: true,
-        title: true,
-      },
+  public async autocomplete(dto: IMysteryBoxAutocompleteDto, userEntity: UserEntity): Promise<Array<MysteryBoxEntity>> {
+    const { contractIds } = dto;
+    const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
+
+    queryBuilder.leftJoinAndSelect("box.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "components");
+    queryBuilder.leftJoinAndSelect("components.contract", "boxContract");
+    queryBuilder.leftJoinAndSelect("components.template", "boxTemplate");
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
+
+    queryBuilder.orderBy({
+      "box.title": "ASC",
+    });
+
+    return queryBuilder.getMany();
   }
 
   public findOne(
@@ -220,7 +246,20 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
-  public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity> {
-    return this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<void> {
+    const mysteryboxEntity = await this.findOne({ id: where.id });
+
+    if (!mysteryboxEntity) {
+      throw new NotFoundException("mysteryboxNotFound");
+    }
+
+    const count = await this.tokenService.count({ templateId: mysteryboxEntity.templateId });
+
+    if (!count) {
+      await this.templateService.delete({ id: mysteryboxEntity.templateId });
+      // await this.mysteryBoxEntityRepository.delete(where);
+    } else {
+      await this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
+    }
   }
 }

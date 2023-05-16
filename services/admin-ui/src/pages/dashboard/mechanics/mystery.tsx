@@ -4,7 +4,7 @@ import { Collections, Inventory, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Mystery: FC = () => {
+export const MysterySection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -15,7 +15,7 @@ export const Mystery: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/mystery-contracts">
+        <ListItem button component={RouterLink} to="/mystery/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
@@ -23,7 +23,7 @@ export const Mystery: FC = () => {
             <FormattedMessage id="pages.mystery.contracts.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/mystery-boxes">
+        <ListItem button component={RouterLink} to="/mystery/boxes">
           <ListItemIcon>
             <Inventory />
           </ListItemIcon>
@@ -31,7 +31,7 @@ export const Mystery: FC = () => {
             <FormattedMessage id="pages.mystery.boxes.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/mystery-tokens">
+        <ListItem button component={RouterLink} to="/mystery/tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Rule, Timeline, Collections } from "@mui/icons-material";
+import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Staking: FC = () => {
+export const StakingSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -20,7 +20,7 @@ export const Staking: FC = () => {
             <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.staking.title" />
+            <FormattedMessage id="pages.staking.contracts.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/rules">

@@ -6,8 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
 import "./ERC721Simple.sol";
@@ -27,8 +25,8 @@ contract ERC721Blacklist is ERC721Simple, BlackList {
   }
 
   function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
-    require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
-    require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
+    require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
+    require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 }

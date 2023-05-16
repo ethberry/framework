@@ -7,27 +7,21 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, GradeAttribute } from "@framework/types";
+import { ContractFeatures, GradeAttribute, TokenAttributes, TokenRarity } from "@framework/types";
 
-import {
-  GradeButton,
-  TokenSellButton,
-  TokenTransferButton,
-  TokenBorrowButton,
-} from "../../../../../components/buttons";
+import { GradeButton, TokenLendButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 import { formatPrice } from "../../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
 import { TokenGenesisView } from "../../genesis";
-
 import { useStyles } from "./styles";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/erc721/tokens",
     empty: {
+      attributes: { GRADE: "0", RARITY: "0", TEMPLATE_ID: "0" },
       template: {
         title: "",
         description: emptyStateString,
@@ -40,18 +34,10 @@ export const Erc721Token: FC = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  // TODO better genes view;
-  console.log("selected attributes", selected.attributes);
+
   return (
     <Fragment>
-      <Breadcrumbs
-        path={{
-          dashboard: "dashboard",
-          "erc721.tokens": "erc721-tokens",
-          "erc721.token": "erc721.token",
-        }}
-        data={[{}, {}, selected.template]}
-      />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.token"]} data={[{}, {}, selected.template]} />
 
       <PageHeader message="pages.erc721.token.title" data={selected.template} />
 
@@ -79,15 +65,25 @@ export const Erc721Token: FC = () => {
             </ul>
             <TokenSellButton token={selected} />
             <TokenTransferButton token={selected} />
-            <TokenBorrowButton token={selected} />
+            <TokenLendButton token={selected} />
           </Paper>
 
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage
+                  id="pages.erc721.token.rarity"
+                  values={{ rarity: Object.values(TokenRarity)[selected.attributes[TokenAttributes.RARITY]] }}
+                />
+              </Typography>
+            </Paper>
+          ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
                 <FormattedMessage
                   id="pages.erc721.token.level"
-                  values={selected.attributes.GRADE ? selected.attributes : { GRADE: 0 }}
+                  values={{ level: selected.attributes[TokenAttributes.GRADE] }}
                 />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />

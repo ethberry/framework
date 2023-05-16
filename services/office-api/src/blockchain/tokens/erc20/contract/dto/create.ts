@@ -13,8 +13,8 @@ export class Erc20ContractCreateDto extends SearchableDto implements IErc20Contr
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Max(18, { message: "rangeOverflow" })
+  @Min(0, { message: "rangeUnderflow" })
+  @Max(32, { message: "rangeOverflow" })
   public decimals: number;
 
   @ApiProperty()

@@ -132,6 +132,7 @@ export class TokenService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
+      "token.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -190,5 +191,9 @@ export class TokenService {
     options?: FindOneOptions<TokenEntity>,
   ): Promise<TokenEntity | null> {
     return this.tokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public count(where: FindOptionsWhere<TokenEntity>): Promise<number> {
+    return this.tokenEntityRepository.count({ where });
   }
 }

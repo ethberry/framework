@@ -6,12 +6,14 @@ import { BigNumber, constants, utils } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
+import { ContractFeatures, GradeAttribute, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
 import { ISearchGradeDto, ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
 export class GradeService {
@@ -20,6 +22,7 @@ export class GradeService {
     private readonly gradeEntityRepository: Repository<GradeEntity>,
     private readonly tokenService: TokenService,
     private readonly signerService: SignerService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public findOne(
@@ -45,18 +48,28 @@ export class GradeService {
   }
 
   public async findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "grade",
-        leftJoinAndSelect: {
-          price: "grade.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
-        },
-      },
+    const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
+
+    queryBuilder.leftJoinAndSelect("grade.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+
+    queryBuilder.andWhere("grade.contractId = :contractId", {
+      contractId: where.contractId,
     });
+    queryBuilder.andWhere("grade.attribute = :attribute", {
+      attribute: where.attribute,
+    });
+
+    return queryBuilder.getOne();
   }
 
   public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
@@ -81,8 +94,10 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
+    const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
+
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
       {
@@ -90,6 +105,7 @@ export class GradeService {
         externalId: gradeEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       attribute,
       tokenEntity,
@@ -112,13 +128,13 @@ export class GradeService {
       account,
       params,
       {
-        tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",
       },
-      gradeEntity.price.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      gradeEntity.price.components.sort(sorter("id")).map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
         amount: this.getMultiplier(level, component.amount, gradeEntity).toString(),

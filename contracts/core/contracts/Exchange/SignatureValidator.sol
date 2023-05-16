@@ -6,12 +6,14 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 import "../utils/constants.sol";
+import "../utils/errors.sol";
+
 import "./interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
@@ -21,7 +23,7 @@ contract SignatureValidator is EIP712, Context {
   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE =
-    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer)";
+    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer,bytes32 extra)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -52,11 +54,15 @@ contract SignatureValidator is EIP712, Context {
     Asset memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
@@ -70,11 +76,15 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
@@ -88,11 +98,15 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Exchange: Expired signature");
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();
@@ -165,7 +179,10 @@ contract SignatureValidator is EIP712, Context {
   }
 
   function _hashParamsStruct(Params memory params) private pure returns (bytes32) {
-    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer));
+    return
+      keccak256(
+        abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer, params.extra)
+      );
   }
 
   function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {
@@ -175,8 +192,11 @@ contract SignatureValidator is EIP712, Context {
   function _hashAssetStructArray(Asset[] memory items) private pure returns (bytes32) {
     uint256 length = items.length;
     bytes32[] memory padded = new bytes32[](length);
-    for (uint256 i = 0; i < length; i++) {
+    for (uint256 i = 0; i < length; ) {
       padded[i] = _hashAssetStruct(items[i]);
+      unchecked {
+        i++;
+      }
     }
     return keccak256(abi.encodePacked(padded));
   }

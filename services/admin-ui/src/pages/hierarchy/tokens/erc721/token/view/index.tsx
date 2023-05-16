@@ -9,6 +9,7 @@ import { ContractFeatures, IToken } from "@framework/types";
 
 import { TokenAttributesView } from "../../../attributes";
 import { TokenGenesView } from "../../../genes";
+import { TokenUserView } from "../../../user";
 
 export interface IErc721ViewDialogProps {
   open: boolean;
@@ -65,16 +66,19 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                   <FormattedMessage id="form.labels.genes" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenGenesView attributes={JSON.parse(attributes)} />
+                  <TokenGenesView attributes={attributes} />
                 </TableCell>
               </TableRow>
+            ) : null}
+            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
+              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
             ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <AddressLink address={balance?.at(0)?.account} />
+                <AddressLink address={balance?.at(0)?.account} length={42} />
               </TableCell>
             </TableRow>
             <TableRow>

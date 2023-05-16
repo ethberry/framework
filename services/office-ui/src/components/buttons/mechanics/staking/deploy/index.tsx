@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IStakingContractDeployDto } from "@framework/types";
 
-import DeployStakingABI from "./deployStaking.abi.json";
+import StakingDeployStakingABI from "../../../../../abis/components/buttons/mechanics/staking/deploy/deployStaking.abi.json";
 
 import { StakingDeployDialog } from "./dialog";
 
@@ -23,7 +23,7 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployStakingABI,
+        StakingDeployStakingABI,
         web3Context.provider?.getSigner(),
       );
 

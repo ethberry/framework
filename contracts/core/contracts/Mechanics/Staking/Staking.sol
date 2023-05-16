@@ -9,22 +9,24 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
-import "../../utils/constants.sol";
-import "./interfaces/IStaking.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
+import "../../Exchange/referral/LinearReferral.sol";
+import "../../Exchange/ExchangeUtils.sol";
+import "../../utils/constants.sol";
+import "../../utils/TopUp.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
+
+import "./interfaces/IStaking.sol";
+import "../../utils/errors.sol";
 
 /**
  * @dev This contract implements a staking system where users can stake their tokens for a specific period of time
@@ -33,7 +35,7 @@ import "../../ERC721/interfaces/IERC721Metadata.sol";
  * The contract owner can set and update the rules for the staking system, as well as deposit and withdraw funds.
  * The staking contract is pausable in case of emergency situations or for maintenance purposes.
  */
-contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
+contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, TopUp, ReentrancyGuard {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -43,24 +45,22 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
-  struct Metadata {
-    bytes32 key;
-    uint256 value;
-  }
-
-  Metadata[] _meta;
+  mapping(address /* contract */ => mapping(uint256 /* tokenId */ => uint256 /* amount */)) internal _penalties;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
-  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256 tokenId);
+  DisabledTokenTypes _disabledTypes = DisabledTokenTypes(false, false, false, false, false);
+
+  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
+  event WithdrawBalance(address account, Asset item);
 
   constructor(uint256 maxStake) {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
 
     setMaxStake(maxStake);
   }
@@ -80,135 +80,261 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   }
 
   /**
-   * @dev Allows the contract to receive Ether
-   */
-  function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {}
-
-  /**
    * @dev Sets maxStake
-   * TODO add change event?
    */
   function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _maxStake = maxStake;
   }
 
   /**
-   * @dev Deposit function allows a user to stake a specified token with a given rule.
-   * @param ruleId - id of rule defined in _rules mapping.
-   * @param tokenId - id of the token to be deposited.
+   * @dev Get Stake
    */
-  function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
+  function getStake(uint256 stakeId) public view returns (Stake memory stake) {
+    return _stakes[stakeId];
+  }
+
+  /**
+   * @dev Get Penalty
+   */
+  function getPenalty(address token, uint256 tokenId) public view returns (uint256 penalty) {
+    return _penalties[token][tokenId];
+  }
+
+  /**
+   * @dev Deposit function allows a user to stake a specified token with a given rule.
+   * @param params Struct of Params that containing the ruleId and referrer parameters.
+   * @param tokenIds - Array<id> of the tokens to be deposited.
+   */
+  function deposit(Params memory params, uint256[] calldata tokenIds) public payable whenNotPaused {
+    // Retrieve the rule params.
+    uint256 ruleId = params.externalId;
+    address referrer = params.referrer;
     // Retrieve the rule associated with the given rule ID.
-    Rule memory rule = _rules[ruleId];
+    Rule storage rule = _rules[ruleId];
     // Ensure that the rule exists and is active
-    require(rule.externalId != 0, "Staking: rule doesn't exist");
-    require(rule.active, "Staking: rule doesn't active");
+    if (rule.period == 0) revert NotExist();
+    if (!rule.active) revert NotActive();
+
+    address account = _msgSender();
 
     // check if user reached the maximum number of stakes, if it is revert transaction.
     if (_maxStake > 0) {
-      require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
+      if (_stakeCounter[account] >= _maxStake) revert LimitExceed();
     }
 
     // Increment counters and set a new stake.
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();
-    _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
+    _stakeCounter[account] = _stakeCounter[account] + 1;
 
-    // Create a new Asset object representing the deposit.
-    Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, tokenId, rule.deposit.amount);
+    // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
+    // _stakes[stakeId] = Stake(account, rule.deposit, ruleId, block.timestamp, 0, true);
+
     // Store the new stake in the _stakes mapping.
-    _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
+    _stakes[stakeId].owner = account;
+    _stakes[stakeId].ruleId = ruleId;
+    _stakes[stakeId].startTimestamp = block.timestamp;
+    _stakes[stakeId].cycles = 0;
+    _stakes[stakeId].activeDeposit = true;
 
-    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
 
-    // Check templateId if ERC721 or ERC998
-    if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-      if (rule.deposit.tokenId != 0) {
-        uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
-        require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+    uint256 length = rule.deposit.length;
+    for (uint256 i = 0; i < length; ) {
+      // Create a new Asset object representing the deposit.
+      Asset memory depositItem = Asset(
+        rule.deposit[i].tokenType,
+        rule.deposit[i].token,
+        tokenIds[i],
+        rule.deposit[i].amount
+      );
+
+      _stakes[stakeId].deposit.push(depositItem);
+
+        // Check templateId if ERC721 or ERC998
+        if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
+          // Rule deposit templateId
+          uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
+
+        if (ruleDepositTokenTemplateId != 0) {
+          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
+          if (templateId != ruleDepositTokenTemplateId) revert WrongToken();
+        }
+      }
+
+      // Transfer tokens from user to this contract.
+      ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
+
+      // Do something after purchase with referrer
+      if (referrer != address(0)) {
+        _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+      }
+
+      unchecked {
+        i++;
       }
     }
-
-    // Transfer tokens from user to this contract.
-    spendFrom(_toArray(depositItem), _msgSender(), address(this));
   }
 
+  /* Receive Staking Reward logic:
+
+      1. Calculate multiplier (count full periods since stake start)
+
+      2. Deposit withdraw
+        2.1 If withdrawDeposit || ( multiplier > 0 && !rule.recurrent ) || ( stake.cycles > 0 && breakLastPeriod )
+
+          2.1.1 If multiplier == 0                       -> deduct penalty from deposit amount
+          2.1.2 Transfer deposit to user account         -> spend(_toArray(depositItem), receiver)
+
+        2.2 Else -> update stake.startTimestamp = block.timestamp
+
+      3. Reward transfer
+        3.1 If multiplier > 0                            -> transfer reward amount * multiplier to receiver
+
+      4. If multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod
+                                                         -> revert with Error ( first period not yet finished )
+      */
   /**
    * @dev Allows the owner of the specified stake to receive the reward.
    * @param stakeId The ID of the stake.
    * @param withdrawDeposit Flag indicating whether the deposit should be withdrawn or not.
    * @param breakLastPeriod Flag indicating whether the last period should be broken or not.
    */
-  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public virtual whenNotPaused {
+  function receiveReward(
+    uint256 stakeId,
+    bool withdrawDeposit,
+    bool breakLastPeriod
+  ) public virtual nonReentrant whenNotPaused {
     // Retrieve the stake and rule objects from storage.
     Stake storage stake = _stakes[stakeId];
-    Rule memory rule = _rules[stake.ruleId];
-    Asset memory depositItem = _stakes[stakeId].deposit;
+    uint256 startTimestamp = stake.startTimestamp;
+    address payable receiver = payable(stake.owner);
+    // Set the receiver of the reward.
+    Rule storage rule = _rules[stake.ruleId];
+
+    address account = _msgSender();
 
     // Verify that the stake exists and the caller is the owner of the stake.
-    require(stake.owner != address(0), "Staking: wrong staking id");
-    require(stake.owner == _msgSender(), "Staking: not an owner");
-    require(stake.activeDeposit, "Staking: deposit withdrawn already");
+    if (stake.owner == address(0)) revert WrongStake();
+    if (stake.owner != account) revert NotAnOwner();
+    if (!stake.activeDeposit) revert Expired();
 
-    // Calculate the multiplier
-    uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
+    // Calculate the multiplier
+    // counts only FULL stake cycles
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod, rule.recurrent);
 
-    uint256 stakeAmount = depositItem.amount;
-    address payable receiver = payable(stake.owner); // Set the receiver of the reward.
-
-    // If withdrawDeposit is true, withdraw the deposit.
-    if (withdrawDeposit) {
-      emit StakingWithdraw(stakeId, receiver, block.timestamp);
-      stake.activeDeposit = false;
-
-      // Deduct the penalty from the stake amount if the multiplier is 0.
-      depositItem.amount = multiplier == 0 ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100)) : stakeAmount;
-
-      // Transfer the deposit Asset to the receiver.
-      spend(_toArray(depositItem), receiver);
-    } else {
-      // Update the start timestamp of the stake.
-      stake.startTimestamp = block.timestamp;
+    // Increment stake's cycle count
+    if (multiplier != 0) {
+      stake.cycles += multiplier;
     }
 
-    if (multiplier != 0) {
-      // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    // Iterate by Array<deposit>
+    uint256 lengthDeposit = rule.deposit.length;
+    for (uint256 i = 0; i < lengthDeposit; ) {
+      Asset storage depositItem = stake.deposit[i];
+      uint256 stakeAmount = depositItem.amount;
+      TokenType depositTokenType = depositItem.tokenType;
+
+      // If withdrawDeposit flag is true OR
+      // If Reward multiplier > 0 AND Rule is not recurrent OR
+      // If Stake cycles > 0 AND breakLastPeriod flag is true
+      // Withdraw initial Deposit
+      if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
+        emit StakingWithdraw(stakeId, receiver, block.timestamp);
+        // Deactivate current deposit
+        stake.activeDeposit = false;
+
+        // Deduct the penalty from the stake amount if the multiplier is 0.
+        depositItem.amount = (multiplier == 0 && stake.cycles == 0)
+          ? (stakeAmount - (stakeAmount / 100) * (rule.penalty / 100))
+          : stakeAmount;
+
+        // Store penalties
+        _penalties[depositItem.token][depositItem.tokenId] += (multiplier == 0 && stake.cycles == 0)
+          ? (stakeAmount / 100) * (rule.penalty / 100)
+          : 0;
+
+        // Penalty for ERC721\ERC998 deposit either 0% or 100%
+        if (
+          multiplier == 0 &&
+          rule.penalty == 10000 &&
+          (depositTokenType == TokenType.ERC721 || depositTokenType == TokenType.ERC998)
+        ) {
+          // Empty current stake deposit item amount
+          depositItem.amount = 0;
+          // Set penalty amount
+          _penalties[depositItem.token][depositItem.tokenId] = 1;
+        } else {
+          // Cache current deposit state
+          Asset memory depositItemWithdraw = depositItem;
+          // Empty current stake deposit storage
+          stake.deposit[i].amount = 0;
+          // Transfer the deposit Asset to the receiver.
+          ExchangeUtils.spend(ExchangeUtils._toArray(depositItemWithdraw), receiver, _disabledTypes);
+        }
+      } else {
+        // Update the start timestamp of the stake.
+        stake.startTimestamp = block.timestamp;
+      }
+
+      unchecked {
+        i++;
+      }
+    }
+
+    // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
+    if (multiplier > 0) {
       // Emit an event indicating that staking has finished.
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
-      // Create a new Asset object representing the reward.
-      Asset memory rewardItem = Asset(
-        rule.reward.tokenType,
-        rule.reward.token,
-        rule.reward.tokenId,
-        rule.reward.amount * multiplier // Multiply the reward amount by the multiplier to calculate the total reward.
-      );
+      // Iterate by Array<reward>
+      uint256 length = rule.reward.length;
+      for (uint256 j = 0; j < length; ) {
+        // Create a new Asset object representing the reward.
+        Asset memory rewardItem = Asset(
+          rule.reward[j].tokenType,
+          rule.reward[j].token,
+          rule.reward[j].tokenId,
+          rule.reward[j].amount * multiplier // Multiply the reward amount by the multiplier to calculate the total reward.
+        );
 
-      // Determine the token type of the reward and transfer the reward accordingly.
-      if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
-        // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
-        spend(_toArray(rewardItem), receiver);
-      } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
-        // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
-        for (uint256 i = 0; i < multiplier; i++) {
-          if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
-            // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
-            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
-          } else {
-            // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
-            acquire(_toArray(rewardItem), receiver);
+        // Determine the token type of the reward and transfer the reward accordingly.
+        if (rewardItem.tokenType == TokenType.ERC20 || rewardItem.tokenType == TokenType.NATIVE) {
+          // If the token is an ERC20 or NATIVE token, transfer tokens to the receiver.
+          ExchangeUtils.spend(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
+        } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
+          // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
+          for (uint256 k = 0; k < multiplier; ) {
+            if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+              // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
+              IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[j]);
+            } else {
+              // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
+              ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
+            }
+            unchecked {
+              k++;
+            }
           }
+        } else if (rewardItem.tokenType == TokenType.ERC1155) {
+          // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
+          ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
+        } else {
+          // should never happen
+          revert UnsupportedTokenType();
         }
-      } else {
-        // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
-        acquire(_toArray(rewardItem), receiver);
+        unchecked {
+          j++;
+        }
       }
     }
-    // If the multiplier is zero and the withdrawDeposit and breakLastPeriod flags are also false
+    // IF the multiplier is zero
+    // AND
+    // withdrawDeposit and breakLastPeriod flags are false
+    // AND staking rule is recurrent
     // revert the transaction.
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");
+    if (multiplier == 0 && rule.recurrent && !withdrawDeposit && !breakLastPeriod) revert NotComplete();
   }
 
   /**
@@ -221,9 +347,130 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   function _calculateRewardMultiplier(
     uint256 startTimestamp,
     uint256 finishTimestamp,
-    uint256 period
+    uint256 period,
+    bool recurrent
   ) internal pure virtual returns (uint256) {
-    return (finishTimestamp - startTimestamp) / period;
+      uint256 multiplier = (finishTimestamp - startTimestamp) / period;
+      // If staking rule is not recurrent, limit reward to 1 cycle
+      if (!recurrent && multiplier > 1) {
+        return 1;
+      }
+      return multiplier;
+  }
+
+  /**
+   * @dev Sets the staking rules for the contract.
+   * @param rules An array of `Rule` structs defining the staking rules.
+   */
+  function _setRules(Rule[] memory rules) internal {
+    uint256 length = rules.length;
+    for (uint256 i; i < length; ) {
+      _setRule(rules[i]);
+      unchecked {
+        i++;
+      }
+    }
+  }
+
+  /**
+   * @dev Add a new staking rule for the contract.
+   * @param rule The staking rule to store.
+   */
+  function _setRule(Rule memory rule) internal {
+    _ruleIdCounter.increment();
+    uint256 ruleId = _ruleIdCounter.current();
+
+    // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
+    // _rules[ruleId] = rule
+
+    // Store each individual property of the rule in storage
+    Rule storage p = _rules[ruleId];
+    // p.deposit = rule.deposit;
+    // Store each individual asset in the rule's deposit array
+    uint256 lengthDeposit = rule.deposit.length;
+    if (lengthDeposit == 0) {
+      revert WrongRule();
+    }
+    for (uint256 i = 0; i < lengthDeposit; ) {
+      p.deposit.push(rule.deposit[i]);
+      unchecked {
+        i++;
+      }
+    }
+    // p.reward = rule.reward;
+    // Store each individual asset in the rule's deposit array
+    uint256 lengthReward = rule.reward.length;
+    for (uint256 j = 0; j < lengthReward; ) {
+      p.reward.push(rule.reward[j]);
+      unchecked {
+        j++;
+      }
+    }
+    // p.content = rule.content;
+    // Store each individual asset in the rule's content array
+    uint256 len = rule.content.length;
+    for (uint256 k = 0; k < len; ) {
+      p.content.push();
+      uint256 length = rule.content[k].length;
+      for (uint256 l = 0; l < length; ) {
+        p.content[k].push(rule.content[k][l]);
+        unchecked {
+          l++;
+        }
+      }
+      unchecked {
+        k++;
+      }
+    }
+
+    p.period = rule.period;
+    p.penalty = rule.penalty;
+    p.recurrent = rule.recurrent;
+    p.active = rule.active;
+
+    emit RuleCreated(ruleId, rule);
+  }
+
+  /**
+   * @dev Updates the active state of a specific staking rule for the contract.
+   * @param ruleId The ID of the rule to update.
+   * @param active The new active state of the rule.
+   */
+  function _updateRule(uint256 ruleId, bool active) internal {
+    Rule storage rule = _rules[ruleId];
+    if (rule.period == 0) revert NotExist();
+    _rules[ruleId].active = active;
+    emit RuleUpdated(ruleId, active);
+  }
+
+  /**
+   * @dev Referral calculations.
+   * @param referrer The Referrer address.
+   * @param price The deposited Asset[].
+   */
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+    return super._afterPurchase(referrer, price);
+  }
+
+  // WITHDRAW
+
+  /**
+   * @dev Withdraw the penalty balance for given token address and tokenId
+   * @param item asset to withdraw.
+   */
+  function withdrawBalance(Asset memory item) public nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {
+    // Retrieve balance from storage.
+
+    item.amount = _penalties[item.token][item.tokenId];
+    if (item.amount == 0) revert ZeroBalance();
+    address account = _msgSender();
+
+    // Emit an event indicating that penalty balance has withdrawn.
+    emit WithdrawBalance(account, item);
+    // clean penalty balance in _penalties mapping storage
+    _penalties[item.token][item.tokenId] = 0;
+
+    ExchangeUtils.spend(ExchangeUtils._toArray(item), account, _disabledTypes);
   }
 
   /**
@@ -243,68 +490,17 @@ contract Staking is IStaking, ExchangeUtils, AccessControl, Pausable, Wallet {
   /**
    * @dev See {IERC165-supportsInterface}.
    */
-  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
   /**
-   * @dev Rejects any incoming ETH transfers to this contract address
+   * @notice No tipping!
+   * @dev Rejects any incoming ETH transfers
    */
-  receive() external payable override {
+  receive() external payable override(Wallet, TopUp) {
     revert();
-  }
-
-  /**
-   * @dev Sets the staking rules for the contract.
-   * @param rules An array of `Rule` structs defining the staking rules.
-   */
-  function _setRules(Rule[] memory rules) internal {
-    uint256 length = rules.length;
-    for (uint256 i; i < length; i++) {
-      _setRule(rules[i]);
-    }
-  }
-
-  /**
-   * @dev Add a new staking rule for the contract.
-   * @param rule The staking rule to store.
-   */
-  function _setRule(Rule memory rule) internal {
-    _ruleIdCounter.increment();
-    uint256 ruleId = _ruleIdCounter.current();
-
-    // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
-    // _rules[ruleId] = rule
-
-    // Store each individual property of the rule in storage
-    Rule storage p = _rules[ruleId];
-    p.deposit = rule.deposit;
-    p.reward = rule.reward;
-    // p.content = rule.content;
-    p.period = rule.period;
-    p.penalty = rule.penalty;
-    p.recurrent = rule.recurrent;
-    p.active = rule.active;
-    p.externalId = rule.externalId;
-
-    // Store each individual asset in the rule's content array
-    uint256 length = rule.content.length;
-    for (uint256 i = 0; i < length; i++) {
-      p.content.push(rule.content[i]);
-    }
-
-    emit RuleCreated(ruleId, rule, rule.externalId);
-  }
-
-  /**
-   * @dev Updates the active state of a specific staking rule for the contract.
-   * @param ruleId The ID of the rule to update.
-   * @param active The new active state of the rule.
-   */
-  function _updateRule(uint256 ruleId, bool active) internal {
-    Rule memory rule = _rules[ruleId];
-    require(rule.period != 0, "Staking: rule does not exist");
-    _rules[ruleId].active = active;
-    emit RuleUpdated(ruleId, active);
   }
 }

@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
+import { BigNumber } from "ethers";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import type { IErc20TokenDeployDto } from "@framework/types";
@@ -26,7 +27,15 @@ export class Erc20ContractDeployDto implements IErc20TokenDeployDto {
 
   @ApiProperty({
     type: Number,
+    minimum: 1,
+    // maximum: BigNumber.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
   })
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigNumber(
+    {
+      minimum: "1",
+      maximum: BigNumber.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
+    },
+    { message: "typeMismatch" },
+  )
   public cap: string;
 }

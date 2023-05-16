@@ -17,12 +17,12 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../../utils/money";
-import { TemplateActionsMenu } from "../../../../../components/menu/template";
+import { TemplateActionsMenu } from "../../../../../components/menu/hierarchy/template";
 
 export const Erc721Template: FC = () => {
   const {
@@ -45,11 +45,11 @@ export const Erc721Template: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/erc721-templates",
+    baseUrl: "/erc721/templates",
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
       contractId: 3,
     },
@@ -80,7 +80,7 @@ export const Erc721Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.templates"]} />
+      <Breadcrumbs path={["dashboard", "erc721", "erc721.templates"]} />
 
       <PageHeader message="pages.erc721.templates.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -99,6 +99,7 @@ export const Erc721Template: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.HIERARCHY]}
       />
 
       <ProgressOverlay isLoading={isLoading}>

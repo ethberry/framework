@@ -10,22 +10,23 @@ import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/typ
 
 import { validationSchema } from "./validation";
 
-export interface IErc721TemplateEditDialogProps {
+export interface ICollectionTemplateEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
   initialValues: ITemplate;
 }
 
-export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = props => {
+export const CollectionTemplateEditDialog: FC<ICollectionTemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
-
   const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
+
   const fixedValues = {
     id,
     title,
     description,
     price,
+    // price: price || { components: [] },
     amount,
     templateStatus,
     contractId,
@@ -56,7 +57,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         controller="contracts"
         data={{
           contractType: [TokenType.ERC721],
-          contractModule: [ModuleType.HIERARCHY],
+          contractModule: [ModuleType.COLLECTION],
         }}
         readOnly={!!id}
       />

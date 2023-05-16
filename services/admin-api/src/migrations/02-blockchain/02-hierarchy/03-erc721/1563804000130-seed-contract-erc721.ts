@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
+import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -15,7 +15,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
-    const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR || wallet;
+    const erc721ContractRentableAddress = process.env.ERC721_RENTABLE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -96,7 +96,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         1304,
         '${erc721ContractBlacklistAddress}',
         '${chainId}',
-        'ERC721 (blacklist)',
+        'Jewelry (blacklist)',
         '${simpleFormatting}',
         '${imageUrl}',
         'ERC721 BLACKLIST',
@@ -184,18 +184,18 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1309,
-        '${erc721ContractGenerativeAddress}',
+        '${erc721ContractRentableAddress}',
         '${chainId}',
-        'GENERATIVE',
+        'T-SHIRT (rentable)',
         '${simpleFormatting}',
         '${imageUrl}',
-        'GENERATIVE',
-        'GEN721',
+        'RENTABLE',
+        'REN721',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{RENTABLE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

@@ -1,4 +1,12 @@
-import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  Logger,
+  LoggerService,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
@@ -7,9 +15,10 @@ import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ClaimStatus, TokenType } from "@framework/types";
 
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class ClaimService {
@@ -43,7 +52,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto): Promise<ClaimEntity> {
+  public async create(dto: IClaimItemCreateDto, merchantEntity: MerchantEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -56,20 +65,29 @@ export class ClaimService {
         item: assetEntity,
         signature: "0x",
         nonce: "",
+        merchantId: merchantEntity.id,
         endTimestamp,
       })
       .save();
 
-    return this.update({ id: claimEntity.id }, dto);
+    return this.update({ id: claimEntity.id }, dto, merchantEntity);
   }
 
-  public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemUpdateDto): Promise<ClaimEntity> {
+  public async update(
+    where: FindOptionsWhere<ClaimEntity>,
+    dto: IClaimItemUpdateDto,
+    merchantEntity: MerchantEntity,
+  ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
+    }
+
+    if (claimEntity.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     // Update only NEW Claims
@@ -94,6 +112,8 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         referrer: constants.AddressZero,
+        // @TODO fix to use expiresAt as extra, temporary set to empty
+        extra: utils.formatBytes32String("0x"),
       },
 
       claimEntity,
@@ -108,9 +128,9 @@ export class ClaimService {
       account,
       params,
       claimEntity.item.components.map(component => ({
-        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       [],

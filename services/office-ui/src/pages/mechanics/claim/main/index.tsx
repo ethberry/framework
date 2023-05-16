@@ -41,7 +41,7 @@ export const Claim: FC = () => {
     baseUrl: "/claims",
     empty: {
       account: "",
-      item: emptyItem as any,
+      item: emptyItem,
       merchantId: user.profile.merchantId,
       endTimestamp: new Date(0).toISOString(),
     },

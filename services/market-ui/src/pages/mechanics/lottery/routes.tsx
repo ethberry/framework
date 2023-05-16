@@ -5,7 +5,7 @@ import { LotteryLeaderboard } from "./leaderboard";
 import { LotteryTicketList } from "./ticket-list";
 import { WalletWrapper } from "../../wallet-wrapper";
 import { IndexWrapper } from "../../index-wrapper";
-import { Lottery } from "../../dashboard/mechanics/lottery";
+import { LotterySection } from "../../dashboard/mechanics/lottery";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -15,7 +15,7 @@ export const lotteryRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="lottery">
-            <Lottery />
+            <LotterySection />
           </IndexWrapper>
         ),
       },

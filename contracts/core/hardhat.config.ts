@@ -1,12 +1,8 @@
 import { config } from "dotenv";
 import { HardhatUserConfig } from "hardhat/config";
-import "@nomiclabs/hardhat-waffle";
+import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-web3";
-import "@typechain/hardhat";
-import "hardhat-deploy";
-import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
-import "solidity-coverage";
 
 import "./tasks";
 
@@ -43,7 +39,7 @@ export default {
       chainId: 56,
       gasPrice: 20000000000,
       accounts: {
-        mnemonic: process.env.MM_MNEMONIC,
+        mnemonic: process.env.MNEMONIC,
       },
     },
     // has to have underscore
@@ -52,7 +48,7 @@ export default {
       chainId: 97,
       gasPrice: 20000000000,
       accounts: {
-        mnemonic: process.env.MM_MNEMONIC,
+        mnemonic: process.env.MNEMONIC,
       },
     },
     goerli: {
@@ -87,6 +83,7 @@ export default {
     enabled: process.env.REPORT_GAS === "true",
   },
   contractSizer: {
-    alphaSort: true,
+    alphaSort: false,
+    outputFile: "./framework-sizes.txt",
   },
 } as HardhatUserConfig;

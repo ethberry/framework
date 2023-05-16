@@ -8,7 +8,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import type { IMysteryContractDeployDto } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import DeployMysteryboxABI from "./deployMysterybox.abi.json";
+import MysteryboxDeployMysteryboxABI from "../../../../../abis/components/buttons/mechanics/mysterybox/deploy/deployMysterybox.abi.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 
@@ -24,7 +24,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployMysteryboxABI,
+        MysteryboxDeployMysteryboxABI,
         web3Context.provider?.getSigner(),
       );
 

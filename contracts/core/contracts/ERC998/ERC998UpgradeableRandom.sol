@@ -30,21 +30,6 @@ abstract contract ERC998UpgradeableRandom is IERC721Random, ERC998Upgradeable, R
     string memory baseTokenURI
   ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address account, uint256 templateId) external override(ERC998Upgradeable) onlyRole(MINTER_ROLE) {
-    if (templateId == 0) {
-      revert TemplateZero();
-    }
-
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 0);
-    _upsertRecordField(tokenId, RARITY, 0);
-
-    _safeMint(account, tokenId);
-  }
-
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     if (templateId == 0) {
       revert TemplateZero();

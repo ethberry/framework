@@ -17,6 +17,12 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
         1201,
         120101, -- space credit
         '${constants.WeiPerEther.toString()}',
+        140101
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
         140501
       ), (
         'ERC20',
@@ -48,6 +54,30 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
         120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         140701
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        140901
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        141101
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        141201
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        141301
       ), (
         'ERC20',
         2217,

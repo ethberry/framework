@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import {
+  ContractFeatures,
   ITokenAutocompleteDto,
   ITokenSearchDto,
   ModuleType,
@@ -25,8 +26,9 @@ export class TokenService {
   public async search(
     dto: ITokenSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
+    contractType: TokenType | Array<TokenType>,
     contractModule: ModuleType,
+    contractFeatures: Array<ContractFeatures> = [],
   ): Promise<[Array<TokenEntity>, number]> {
     const {
       query,
@@ -45,10 +47,37 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.rent", "rent");
+    queryBuilder.leftJoinAndSelect("rent.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_template_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
+    if (Array.isArray(contractType)) {
+      queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
+    } else {
+      queryBuilder.andWhere("contract.contractType = :contractType", {
+        contractType,
+      });
+    }
+
+    if (contractFeatures.length > 0) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
+      }
+    }
+
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
     });
@@ -128,6 +157,7 @@ export class TokenService {
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
+      "token.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -189,27 +219,59 @@ export class TokenService {
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    return this.findOne(where, {
-      join: {
-        alias: "token",
-        leftJoinAndSelect: {
-          exchange: "token.exchange",
-          history: "token.history",
-          asset_component_history: "exchange.history",
-          asset_component_history_assets: "asset_component_history.assets",
-          assets_token: "asset_component_history_assets.token",
-          assets_contract: "asset_component_history_assets.contract",
-          template: "token.template",
-          contract: "template.contract",
-          price: "template.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          // breeds: "token.breeds",
-          // breed_childs: "breeds.children",
-          // breed_history: "breed_childs.history",
-        },
-      },
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
+    queryBuilder.leftJoinAndSelect("token.history", "history");
+    queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
+    queryBuilder.leftJoinAndSelect("exchange.history", "asset_component_history");
+    queryBuilder.leftJoinAndSelect("asset_component_history.assets", "asset_component_history_assets");
+    queryBuilder.leftJoinAndSelect("asset_component_history_assets.token", "assets_token");
+    queryBuilder.leftJoinAndSelect("asset_component_history_assets.contract", "assets_contract");
+
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.rent", "rent");
+    queryBuilder.leftJoinAndSelect("rent.price", "rent_price");
+    queryBuilder.leftJoinAndSelect("rent_price.components", "rent_price_components");
+    queryBuilder.leftJoinAndSelect("rent_price_components.contract", "rent_price_components_contract");
+    queryBuilder.leftJoinAndSelect("rent_price_components.template", "rent_price_components_template");
+    // we need to get single token for Native, erc20 and erc1155
+    queryBuilder.leftJoinAndSelect(
+      "rent_price_components_template.tokens",
+      "rent_price_components_template_tokens",
+      `rent_price_components_contract.contractType IN(:...tokenTypes)`,
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+
+    // MODULE:BREED
+    // queryBuilder.leftJoinAndSelect("token.breeds", "breeds", "ANY(contract.contractFeatures) = :contractFeature", {
+    //   contractFeature: ContractFeatures.GENES,
+    // });
+    // queryBuilder.leftJoinAndSelect(
+    //   "breeds.children",
+    //   "breed_childs",
+    //   "ANY(contract.contractFeatures) = :contractFeature",
+    //   {
+    //     contractFeature: ContractFeatures.GENES,
+    //   },
+    // );
+    // queryBuilder.leftJoinAndSelect(
+    //   "breed_childs.history",
+    //   "breed_history",
+    //   "ANY(contract.contractFeatures) = :contractFeature",
+    //   {
+    //     contractFeature: ContractFeatures.GENES,
+    //   },
+    // );
+
+    queryBuilder.andWhere("token.id = :id", {
+      id: where.id,
     });
+
+    return queryBuilder.getOne();
   }
 }

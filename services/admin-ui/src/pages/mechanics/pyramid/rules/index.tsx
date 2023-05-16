@@ -53,8 +53,8 @@ export const PyramidRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: emptyPrice as any,
-      reward: emptyPrice as any,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,

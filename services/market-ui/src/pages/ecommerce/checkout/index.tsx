@@ -1,6 +1,6 @@
 import { FC, Fragment, useContext } from "react";
 
-import { PageHeader } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { IUserContext, UserContext } from "@gemunion/provider-user";
 import { IUser } from "@framework/types";
 
@@ -13,6 +13,8 @@ export const Checkout: FC = () => {
 
   return (
     <Fragment>
+      <Breadcrumbs path={["dashboard", "ecommerce", "checkout"]} />
+
       <PageHeader message="pages.checkout.title" />
 
       <Cart />

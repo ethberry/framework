@@ -41,6 +41,9 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       expect(balance).to.equal(1);
     });
 
+    // TODO mintRandom to receiver
+    // TODO mintRandom to nonReceiver
+
     it("should fail: wrong role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
@@ -58,7 +61,7 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       await linkInstance.transfer(contractInstance.address, constants.WeiPerEther);
 
       const tx = contractInstance.mintRandom(receiver.address, 0);
-      await expect(tx).to.be.revertedWith("TemplateZero");
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "TemplateZero");
     });
   });
 }

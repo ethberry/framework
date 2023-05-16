@@ -41,8 +41,8 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
   event PaymentEthSent(address to, uint256 amount);
 
   constructor() {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function setRules(Rule[] memory rules) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -139,7 +139,9 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       }
     }
-    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Pyramid: first period not yet finished");
+    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) {
+      revert("Pyramid: first period not yet finished");
+    }
   }
 
   function _calculateRewardMultiplier(
@@ -153,8 +155,11 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
   // RULES
   function _setRules(Rule[] memory rules) internal {
     uint256 length = rules.length;
-    for (uint256 i; i < length; i++) {
+    for (uint256 i; i < length; ) {
       _setRule(rules[i]);
+      unchecked {
+        i++;
+      }
     }
   }
 

@@ -36,7 +36,7 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
       testId="DropEditForm"
       {...rest}
     >
-      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
+      <TemplateAssetInput prefix="item" />
       <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
       <DateTimeInput name="startTimestamp" />
       <DateTimeInput name="endTimestamp" />

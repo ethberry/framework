@@ -19,7 +19,7 @@ import { ContractStatus, Erc998ContractFeatures, IContract, IContractSearchDto }
 
 import { Erc998ContractEditDialog } from "./edit";
 import { Erc998ContractDeployButton } from "../../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const Erc998Contract: FC = () => {
@@ -42,7 +42,7 @@ export const Erc998Contract: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/erc998-contracts",
+    baseUrl: "/erc998/contracts",
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
@@ -58,7 +58,7 @@ export const Erc998Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998.contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc998", "erc998.contracts"]} />
 
       <PageHeader message="pages.erc998.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

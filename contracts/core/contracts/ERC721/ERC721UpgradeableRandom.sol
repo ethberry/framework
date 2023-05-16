@@ -37,12 +37,12 @@ abstract contract ERC721UpgradeableRandom is IERC721Random, ERC721Upgradeable, R
     _upsertRecordField(tokenId, RARITY, 0);
   }
 
-  function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+  function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     if (templateId == 0) {
       revert TemplateZero();
     }
 
-    _queue[getRandomNumber()] = Request(to, templateId);
+    _queue[getRandomNumber()] = Request(account, templateId);
   }
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {

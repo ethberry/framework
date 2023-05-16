@@ -4,7 +4,7 @@
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",
       "file-too-small": "File is {size}, minimum file size is {minSize}",
-      "too-many-files": "Too many files"
+      "too-many-files": "To many files"
     },
     "header": {
       "language": {
@@ -22,7 +22,8 @@
       "wallet": {
         "connect": "Connect wallet",
         "menu": "Account",
-        "notValid": "Invalid network. Please switch to correct network according to your profile"
+        "notValid": "Invalid network. Please switch to correct network according to your profile",
+        "test": "Test"
       }
     }
   },
@@ -41,14 +42,17 @@
     "grantRole": "Grant role",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
+    "mintBox": "Mint Mysterybox",
     "mintToken": "Mint tokens",
     "pyramidBalance": "Pyramid Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
-    "top-up": "Top up",
+    "topUp": "Top up",
+    "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
+    "unsupported": "Unsupported",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
@@ -75,6 +79,17 @@
       "LEGENDARY": "Legendary",
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
+    },
+    "achievementType": {
+      "COLLECTION": "Collection",
+      "CRAFT": "Craft",
+      "ECOMMERCE": "Ecommerce",
+      "MARKETPLACE": "Marketplace"
+    },
+    "achievementStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "attributeName": {
       "GRADE": "Grade",
@@ -112,10 +127,16 @@
       "RENTABLE": "Rentable",
       "SOULBOUND": "Soulbound",
       "SPLITTER": "Payment Splitter",
+      "STATEHASH": "State Hash",
       "UPGRADEABLE": "Upgradeable",
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
+    "rentStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -163,6 +184,141 @@
       "FEEDBACK": "Feedback",
       "LINK_TOKEN": "LINK notification"
     },
+    "eventDataLabel": {
+      "_requestID": "Request ID",
+      "_sender": "Sender",
+      "account": "Account",
+      "active": "Active",
+      "addr": "Address",
+      "amount": "Amount",
+      "amounts": "Amounts",
+      "approved": "Approved",
+      "args": "Arguments",
+      "callbackGasLimit": "Callback gas limit",
+      "childContract": "Child contract",
+      "childTokenId": "Child token ID",
+      "childTokenIds": "Child token IDs",
+      "claimId": "Claim ID",
+      "collection": "Collection",
+      "contract": "Contract",
+      "data": "Data",
+      "eventType": "Event type",
+      "endTimestamp": "End Time",
+      "externalId": "External ID",
+      "from": "From",
+      "fromAddress": "From address",
+      "fromTokenId": "From token ID",
+      "id": "ID",
+      "ids": "IDs",
+      "item": "Item",
+      "items": "Items",
+      "keyHash": "Key hash",
+      "level": "Level",
+      "matron": "Matron",
+      "maxCount": "Max count",
+      "minimumRequestConfirmations": "Minimum request confirmations",
+      "multiplier": "Multiplier",
+      "newAdminRole": "New admin role",
+      "newOwner": "New owner",
+      "numWords": "Num words",
+      "numbers": "Numbers",
+      "operator": "Operator",
+      "owner": "Owner",
+      "preSeed": "Pre seed",
+      "previousAdminRole": "Previous admin role",
+      "previousOwner": "Previous owner",
+      "price": "Price",
+      "randomness": "Randomness",
+      "refProgram": "Referral program",
+      "referrer": "Referrer",
+      "requestId": "Request ID",
+      "role": "Role",
+      "round": "Round",
+      "royaltyNumerator": "Royalty numerator",
+      "royaltyReceiver": "Royalty receiver",
+      "rule": "Rule",
+      "ruleId": "Rule ID",
+      "seed": "Seed",
+      "sender": "Sender",
+      "shares": "Shares",
+      "sire": "Sire",
+      "spender": "Spender",
+      "stakingId": "Staking ID",
+      "startTimestamp": "Start date",
+      "subId": "Sub ID",
+      "templateId": "Template ID",
+      "ticketId": "Ticket ID",
+      "to": "To",
+      "toAddress": "To address",
+      "toTokenId": "To token ID",
+      "token": "Token",
+      "tokenId": "Token ID",
+      "value": "Value",
+      "values": "Values",
+      "winValues": "Win values",
+      "withdrawTimestamp": "Withdraw date"
+    },
+    "eventType": {
+      "Snapshot": "Snapshot",
+      "Approval": "Approval",
+      "Transfer": "Transfer",
+      "ApprovalForAll": "ApprovalForAll",
+      "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "MintRandom": "MintRandom",
+      "TokenRoyaltyInfo": "TokenRoyaltyInfo",
+      "ConsecutiveTransfer": "ConsecutiveTransfer",
+      "BatchReceivedChild": "BatchReceivedChild",
+      "BatchTransferChild": "BatchTransferChild",
+      "WhitelistedChild": "WhitelistedChild",
+      "UnWhitelistedChild": "UnWhitelistedChild",
+      "ReceivedChild": "ReceivedChild",
+      "TransferChild": "TransferChild",
+      "SetMaxChild": "SetMaxChild",
+      "TransferBatch": "TransferBatch",
+      "TransferSingle": "TransferSingle",
+      "URI": "URI",
+      "RedeemClaim": "RedeemClaim",
+      "UnpackClaim": "UnpackClaim",
+      "UnpackWrapper": "UnpackWrapper",
+      "UnpackMysterybox": "UnpackMysterybox",
+      "Paused": "Paused",
+      "Unpaused": "Unpaused",
+      "EtherReleased": "EtherReleased",
+      "ERC20Released": "ERC20Released",
+      "EtherReceived": "EtherReceived",
+      "Blacklisted": "Blacklisted",
+      "UnBlacklisted": "UnBlacklisted",
+      "Whitelisted": "Whitelisted",
+      "UnWhitelisted": "UnWhitelisted",
+      "RoleGranted": "RoleGranted",
+      "RoleRevoked": "RoleRevoked",
+      "RoleAdminChanged": "RoleAdminChanged",
+      "RuleCreated": "RuleCreated",
+      "RuleUpdated": "RuleUpdated",
+      "StakingStart": "StakingStart",
+      "StakingWithdraw": "StakingWithdraw",
+      "StakingFinish": "StakingFinish",
+      "WithdrawBalance": "WithdrawBalance",
+      "Purchase": "Purchase",
+      "Claim": "Claim",
+      "Craft": "Craft",
+      "UpdateUser": "UpdateUser",
+      "Lend": "Lend",
+      "Mysterybox": "Mysterybox",
+      "Upgrade": "Upgrade",
+      "RewardSet": "RewardSet",
+      "ClaimReward": "ClaimReward",
+      "Breed": "Breed",
+      "PayeeAdded": "PayeeAdded",
+      "PaymentReleased": "PaymentReleased",
+      "ERC20PaymentReleased": "ERC20PaymentReleased",
+      "PaymentReceived": "PaymentReceived",
+      "PaymentEthReceived": "PaymentEthReceived",
+      "PaymentEthSent": "PaymentEthSent",
+      "RandomnessRequest": "RandomnessRequest",
+      "RandomnessRequestId": "RandomnessRequestId",
+      "RandomWordsRequested": "RandomWordsRequested"
+    },
     "gender": {
       "FEMALE": "Female",
       "MALE": "Male"
@@ -194,6 +350,7 @@
       "MYSTERYBOX": "MYSTERYBOX",
       "NATIVE": "Native",
       "PYRAMID": "PYRAMID",
+      "STAKING": "STAKING",
       "VESTING": "VESTING"
     },
     "merchantStatus": {
@@ -242,6 +399,7 @@
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
+      "METADATA_ROLE": "METADATA_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE",
@@ -277,6 +435,11 @@
       "ERC998": "ERC998",
       "NATIVE": "Native"
     },
+    "traitName": {
+      "CLOTHES": "Clothes",
+      "EYES": "Eyes",
+      "MOUTH": "Mouth"
+    },
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer",
@@ -301,6 +464,7 @@
       "add": "Add",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
+      "archive": "Archive",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -324,6 +488,7 @@
       "mainPage": "Main Page",
       "maxStakes": "Max stakes count",
       "mint": "Mint",
+      "mintBox": "Mint Mystery Box",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
       "pause": "Pause",
@@ -341,13 +506,18 @@
       "snapshot": "Snapshot",
       "startRound": "Start round",
       "submit": "Submit",
+      "topUp": "Top up",
+      "transfer": "Transfer",
       "transferOwnership": "Transfer Ownership",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
+      "unwhitelist": "Un whitelist",
       "upload": "Upload",
+      "whitelist": "Whitelist",
       "withdraw": "Withdraw"
     },
     "hints": {
+      "allowanceWarning": "You are going to allow all tokens of the contract",
       "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
@@ -357,15 +527,25 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
       "GRADE": "Grade",
       "RARITY": "Rarity",
+      "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
+      "achievementLevel": "Achievement Level",
+      "achievementItem": "Achievement Item",
+      "achievementLevelItem": "Achievement Level Reward",
+      "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
+      "achievementType": "Achievement type",
+      "achievementStatus": "Achievement status",
       "active": "Active",
       "address": "Address",
       "addressId": "Address",
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",
       "addresses": "Addresses",
+      "allDeposits": "All deposits",
       "amount": "Amount",
       "attribute": "Attribute",
       "attributes": "Attributes",
@@ -403,8 +583,11 @@
       "durationAmount": "Duration",
       "durationUnit": "Duration unit",
       "email": "Email",
+      "emptyReward": "Empty reward",
       "endTimestamp": "End date",
+      "eventType": "Event type",
       "files": "Files",
+      "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
       "genes": "Genes",
@@ -425,6 +608,7 @@
       "maxTime": "Max Cooldown",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
+      "mysteryId": "Mysterybox",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
@@ -452,8 +636,11 @@
       "productId": "Product",
       "productStatus": "Status",
       "pyramidDepositStatus": "Status",
+      "pyramidRule": "Pyramid rule",
       "pyramidRuleStatus": "Status",
       "random": "Random",
+      "rentStatus": "Status",
+      "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",
@@ -467,6 +654,7 @@
       "sire": "Sire",
       "slug": "Slug",
       "stakingDepositStatus": "Status",
+      "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "state": "State",
@@ -483,10 +671,12 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "traits": "Traits",
       "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
+      "user": "User",
       "userId": "User",
       "userIds": "Users",
       "userRoles": "Roles",
@@ -497,8 +687,13 @@
     },
     "placeholders": {
       "DUMMY": "Dummy",
+      "SIGNATURE_TTL": "0",
       "account": "0x...",
+      "achievementLevel": "1",
+      "achievementRuleId": "Achievement",
+      "achievementRuleIds": "Achievement",
       "address": "0x...",
+      "addressId": "Address",
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
@@ -536,9 +731,11 @@
       "maxStakes": "0",
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
+      "mysteryId": "Mysterybox",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameters": "Parameters",
       "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
@@ -612,6 +809,18 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "achievements": {
+      "levels": {
+        "title": "Achievements levels"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "rules": {
+        "title": "Achievements rules"
+      },
+      "title": "Achievements"
+    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -648,20 +857,20 @@
       "rates": "Rates",
       "title": "CoinMarketCap"
     },
-    "collections": {
+    "collection": {
       "contract": {
-        "title": "Contracts"
+        "title": "Collection Contracts"
       },
-      "contracts": "Collection contracts",
+      "contracts": "Collection Contracts",
       "template": {
-        "title": "Templates"
+        "title": "Collection Templates"
       },
-      "templates": "Collection templates",
-      "title": "Collections",
+      "templates": "Collection Templates",
+      "title": "Collection",
       "token": {
-        "title": "Tokens"
+        "title": "Collection Tokens"
       },
-      "tokens": "Collection tokens"
+      "tokens": "Collection Tokens"
     },
     "craft": {
       "activate": "Activate rule",
@@ -669,6 +878,12 @@
       "title": "Craft recipes"
     },
     "dashboard": {
+      "achievements": {
+        "levels": "Levels",
+        "rules": "Rules",
+        "report": "Report",
+        "title": "Achievements"
+      },
       "ecommerce": {
         "store": {
           "categories": "Categories",
@@ -728,6 +943,7 @@
         "lottery": "Lottery",
         "mystery": "Mystery",
         "pyramid": "Pyramid",
+        "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
@@ -747,13 +963,15 @@
       },
       "templates": {
         "title": "ERC1155 Templates"
-      }
+      },
+      "title": "ERC1155"
     },
     "erc20": {
       "contracts": {
         "snapshot": "Make snapshot",
         "title": "ERC20 Contracts"
-      }
+      },
+      "title": "ERC20"
     },
     "erc721": {
       "contracts": {
@@ -763,6 +981,7 @@
       "templates": {
         "title": "ERC721 Templates"
       },
+      "title": "ERC721",
       "tokens": {
         "title": "ERC721 Tokens"
       }
@@ -778,6 +997,7 @@
       "templates": {
         "title": "ERC998 Templates"
       },
+      "title": "ERC998",
       "tokens": {
         "title": "ERC998 Tokens"
       }
@@ -828,12 +1048,16 @@
       "title": "Marketplace"
     },
     "mystery": {
+      "boxContent": {
+        "title": "Mysterybox content"
+      },
       "boxes": {
         "title": "Mystery Boxes"
       },
       "contracts": {
         "title": "Mystery Contracts"
       },
+      "title": "Mystery",
       "tokens": {
         "title": "Mystery Tokens"
       }
@@ -841,7 +1065,8 @@
     "native": {
       "contracts": {
         "title": "Native Tokens"
-      }
+      },
+      "title": "Native"
     },
     "orders": {
       "title": "Orders archive"
@@ -900,6 +1125,9 @@
       },
       "title": "Pyramid"
     },
+    "rent": {
+      "title": "Rent"
+    },
     "settings": {
       "title": "Settings"
     },
@@ -931,6 +1159,9 @@
       "title": "Users"
     },
     "vesting": {
+      "contracts": {
+        "title": "Vesting Contracts"
+      },
       "title": "Vesting"
     },
     "waitlist": {
@@ -999,6 +1230,7 @@
     "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
+    "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
     "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",

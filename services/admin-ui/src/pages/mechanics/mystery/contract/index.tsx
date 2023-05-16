@@ -18,10 +18,10 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, MysteryContractFeatures } from "@framework/types";
 
-import { MysteryContractEditDialog } from "./edit";
 import { MysteryContractDeployButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
+import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/contract";
+import { MysteryContractEditDialog } from "./edit";
 
 export const MysteryContract: FC = () => {
   const {
@@ -43,7 +43,7 @@ export const MysteryContract: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/mystery-contracts",
+    baseUrl: "/mystery/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -63,7 +63,7 @@ export const MysteryContract: FC = () => {
   });
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mystery.contracts"]} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.contracts"]} />
 
       <PageHeader message="pages.mystery.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -97,7 +97,7 @@ export const MysteryContract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu
+                <MysteryActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

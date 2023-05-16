@@ -1,16 +1,22 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, TContractEventData } from "@framework/types";
+import {
+  ContractEventType,
+  ExchangeEventType,
+  IERC721TokenMintRandomEvent,
+  TContractEventData,
+} from "@framework/types";
 import { testChainId } from "@framework/constants";
 
 import { EventHistoryEntity } from "./event-history.entity";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
+import { AchievementsRuleService } from "../../achievements/rule/rule.service";
 
 @Injectable()
 export class EventHistoryService {
@@ -21,6 +27,8 @@ export class EventHistoryService {
     private readonly contractEventEntityRepository: Repository<EventHistoryEntity>,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
+    @Inject(forwardRef(() => AchievementsRuleService))
+    private readonly achievementsRuleService: AchievementsRuleService,
   ) {}
 
   public async create(dto: DeepPartial<EventHistoryEntity>): Promise<EventHistoryEntity> {
@@ -31,7 +39,7 @@ export class EventHistoryService {
     const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("history");
     queryBuilder.select();
     queryBuilder.andWhere(`history.event_data->>'${key}' = :${key}`, { [key]: value });
-    return await queryBuilder.getOne();
+    return queryBuilder.getOne();
   }
 
   public async findByRandomRequest(requestId: string): Promise<EventHistoryEntity | null> {
@@ -41,7 +49,23 @@ export class EventHistoryService {
       eventType: ChainLinkEventType.RandomWordsRequested,
     });
     queryBuilder.andWhere(`history.event_data->>'requestId' = :requestId`, { requestId });
-    return await queryBuilder.getOne();
+    return queryBuilder.getOne();
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<EventHistoryEntity>): Promise<EventHistoryEntity | null> {
+    const queryBuilder = this.contractEventEntityRepository.createQueryBuilder("event");
+    queryBuilder.leftJoinAndSelect("event.token", "token");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.leftJoinAndSelect("event.parent", "parent");
+    queryBuilder.leftJoinAndSelect("parent.parent", "grand_parent");
+
+    queryBuilder.andWhere("event.id = :id", {
+      id: where.id,
+    });
+
+    return queryBuilder.getOne();
   }
 
   public findOne(
@@ -49,6 +73,13 @@ export class EventHistoryService {
     options?: FindOneOptions<EventHistoryEntity>,
   ): Promise<EventHistoryEntity | null> {
     return this.contractEventEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<EventHistoryEntity>,
+    options?: FindOneOptions<EventHistoryEntity>,
+  ): Promise<Array<EventHistoryEntity>> {
+    return this.contractEventEntityRepository.find({ where, ...options });
   }
 
   public async update(
@@ -101,8 +132,112 @@ export class EventHistoryService {
       chainId,
     });
 
+    await this.findParentHistory(contractEventEntity);
+
+    await this.achievementsRuleService.processEvent(contractEventEntity.id);
+
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
 
     return contractEventEntity;
+  }
+
+  // get PARENT events
+  public async findParentHistory(contractEventEntity: EventHistoryEntity) {
+    const { id, eventType, transactionHash, eventData } = contractEventEntity;
+
+    if (eventType === ContractEventType.RandomWordsRequested) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: In([
+          ExchangeEventType.Purchase,
+          ExchangeEventType.Breed,
+          ExchangeEventType.Craft,
+          ExchangeEventType.Mysterybox,
+          ExchangeEventType.Claim,
+        ]),
+      });
+
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
+      }
+    }
+
+    if (eventType === ContractEventType.MintRandom) {
+      const data = eventData as IERC721TokenMintRandomEvent;
+      const requestId = data.requestId;
+
+      const parentEvent = await this.findByRandomRequest(requestId);
+
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
+      }
+    }
+
+    if (
+      eventType === ContractEventType.Transfer ||
+      eventType === ContractEventType.TransferSingle ||
+      eventType === ContractEventType.TransferBatch
+    ) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: In([
+          ExchangeEventType.Purchase,
+          ExchangeEventType.Upgrade,
+          ExchangeEventType.Breed,
+          ExchangeEventType.Craft,
+          ExchangeEventType.Mysterybox,
+          ExchangeEventType.Claim,
+          ExchangeEventType.Lend,
+          ContractEventType.MintRandom,
+        ]),
+      });
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
+      }
+
+      await contractEventEntity.save();
+    }
+
+    // MODULE:RENTABLE
+    if (eventType === ContractEventType.UpdateUser) {
+      const parentEvent = await this.findOne({
+        transactionHash,
+        eventType: In([ExchangeEventType.Lend]),
+      });
+      if (parentEvent) {
+        Object.assign(contractEventEntity, { parentId: parentEvent.id });
+        await contractEventEntity.save();
+        await this.findNestedHistory(transactionHash, parentEvent.id);
+      }
+
+      await contractEventEntity.save();
+    }
+
+    // ANY EXCHANGE EVENT
+    if (Object.values<string>(ExchangeEventType).includes(eventType)) {
+      await this.findNestedHistory(transactionHash, id);
+    }
+  }
+
+  public async findNestedHistory(transactionHash: string, parentId: number) {
+    const nestedEvents = await this.findAll({
+      transactionHash,
+      parentId: undefined,
+    });
+    // TODO nested ?== parent
+    if (nestedEvents) {
+      nestedEvents.map(async nested => {
+        if (nested.id !== parentId) {
+          Object.assign(nested, { parentId });
+          await nested.save();
+        }
+      });
+    }
   }
 }

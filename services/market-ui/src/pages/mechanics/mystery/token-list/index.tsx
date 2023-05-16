@@ -19,13 +19,13 @@ export const MysteryboxTokenList: FC<IMysteryTokenListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IToken, ITokenSearchDto>({
-      baseUrl: "/mystery-tokens",
+      baseUrl: "/mystery/tokens",
       embedded,
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "mystery", "mystery.tokens"]} isHidden={embedded} />
 
       <PageHeader message="pages.mystery.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

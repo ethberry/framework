@@ -22,9 +22,13 @@ contract ERC721BlacklistUpgradeableRentable is ERC721BlacklistUpgradeable, ERC49
     return super._isApprovedOrOwner(owner, tokenId);
   }
 
+  function setUser(uint256 tokenId, address user, uint64 expires) public override onlyRole(METADATA_ROLE) {
+    super.setUser(tokenId, user, expires);
+  }
+
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(ERC721BlacklistUpgradeable, ERC4907) returns (bool) {
-    return ERC721BlacklistUpgradeable.supportsInterface(interfaceId) || ERC4907.supportsInterface(interfaceId);
+    return super.supportsInterface(interfaceId);
   }
 }

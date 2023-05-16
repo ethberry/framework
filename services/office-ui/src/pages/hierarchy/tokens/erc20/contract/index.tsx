@@ -30,7 +30,7 @@ import {
 
 import { Erc20ContractEditDialog } from "./edit";
 import { Erc20ContractDeployButton } from "../../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../../components/menu/contract";
+import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
 
 export const Erc20Contract: FC = () => {
@@ -56,7 +56,7 @@ export const Erc20Contract: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/erc20-contracts",
+    baseUrl: "/erc20/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -96,7 +96,7 @@ export const Erc20Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20.contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc20", "erc20.contracts"]} />
 
       <PageHeader message="pages.erc20.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

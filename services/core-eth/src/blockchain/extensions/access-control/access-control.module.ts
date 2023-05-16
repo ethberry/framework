@@ -7,9 +7,10 @@ import { AccessControlServiceEth } from "./access-control.service.eth";
 import { AccessControlControllerEth } from "./access-control.controller.eth";
 import { EventHistoryModule } from "../../event-history/event-history.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
+import { NotificatorModule } from "../../../game/notificator/notificator.module";
 
 @Module({
-  imports: [EventHistoryModule, TokenModule, TypeOrmModule.forFeature([AccessControlEntity])],
+  imports: [EventHistoryModule, NotificatorModule, TokenModule, TypeOrmModule.forFeature([AccessControlEntity])],
   providers: [Logger, AccessControlService, AccessControlServiceEth],
   controllers: [AccessControlControllerEth],
   exports: [AccessControlService, AccessControlServiceEth],

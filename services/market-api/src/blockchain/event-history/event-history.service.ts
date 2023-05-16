@@ -7,6 +7,7 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "./event-history.entity";
+import { ContractEntity } from "../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class EventHistoryService {
@@ -37,6 +38,20 @@ export class EventHistoryService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("history.assets", "assets");
+    queryBuilder.leftJoinAndSelect("assets.token", "asset_token");
+    queryBuilder.leftJoinAndSelect("asset_token.template", "asset_template");
+    queryBuilder.leftJoinAndSelect("asset_template.contract", "asset_contract");
+
+    queryBuilder.innerJoinAndMapOne(
+      "history.contract",
+      ContractEntity,
+      "contract",
+      "history.address = contract.address",
+    );
+
+    queryBuilder.andWhere("history.parent_id IS NULL");
+
     queryBuilder.andWhere(
       new Brackets(qb => {
         qb.andWhere(
@@ -60,6 +75,27 @@ export class EventHistoryService {
             );
           }),
         );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType3", { eventType3: ContractEventType.Claim });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'from') = :wallet4", { wallet4: wallet });
+              }),
+            );
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType4", { eventType4: ContractEventType.Lend });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'from') = :wallet5", { wallet5: wallet });
+                qb2.orWhere("LOWER(history.event_data->>'to') = :wallet6", { wallet6: wallet });
+              }),
+            );
+          }),
+        );
       }),
     );
 
@@ -67,7 +103,8 @@ export class EventHistoryService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "history.createdAt": "DESC",
+      "history.id": "ASC",
+      // "history.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

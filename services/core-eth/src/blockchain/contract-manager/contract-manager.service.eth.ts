@@ -27,9 +27,9 @@ import {
   IContractManagerVestingDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
-  TemplateStatus,
   PyramidContractTemplates,
   StakingContractTemplates,
+  TemplateStatus,
   TokenType,
   VestingContractTemplate,
 } from "@framework/types";
@@ -50,6 +50,7 @@ import { BalanceService } from "../hierarchy/balance/balance.service";
 import { StakingLogService } from "../mechanics/staking/log/log.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { addConsumer } from "../integrations/chain-link/utils";
+import { RentService } from "../mechanics/rent/rent.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -74,6 +75,7 @@ export class ContractManagerServiceEth {
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
+    private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
   ) {}
 
@@ -168,6 +170,10 @@ export class ContractManagerServiceEth {
       await this.gradeService.create({ contract: contractEntity });
     }
 
+    if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
+      await this.rentService.create({ contract: contractEntity });
+    }
+
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
@@ -201,7 +207,11 @@ export class ContractManagerServiceEth {
       title: name,
       name,
       symbol,
-      description: JSON.stringify({ batchSize, owner }),
+      description: emptyStateString,
+      parameters: {
+        owner: owner.toLowerCase(),
+        batchSize,
+      },
       imageUrl,
       contractFeatures:
         contractTemplate === "0"
@@ -216,12 +226,13 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
-    const templateEntity = await this.templateService.create({
+    const templateEntity = await this.templateService.createTemplate({
       title: name,
       description: emptyStateString,
       imageUrl,
-      cap: batchSize.toString(), // todo or ZERO ?
+      cap: batchSize.toString(),
       contractId: contractEntity.id,
+      templateStatus: TemplateStatus.INACTIVE,
     });
 
     // TODO add options to set naming scheme ?
@@ -312,7 +323,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [baseTokenURI, contractTemplate] = args;
+    const [royalty, baseTokenURI, contractTemplate] = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -330,6 +341,7 @@ export class ContractManagerServiceEth {
           : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
+      royalty: ~~royalty,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
@@ -390,7 +402,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: contractTemplate,
+      title: `${contractTemplate}-template`,
       description: emptyStateString,
       imageUrl,
       parameters: {

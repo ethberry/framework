@@ -17,14 +17,14 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { Erc721TemplateEditDialog } from "./edit";
+import { CollectionTemplateEditDialog } from "./edit";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
-import { TemplateActionsMenu } from "../../../../components/menu/template";
+import { TemplateActionsMenu } from "../../../../components/menu/hierarchy/template";
 
-export const Erc721Template: FC = () => {
+export const CollectionTemplate: FC = () => {
   const {
     rows,
     count,
@@ -45,17 +45,17 @@ export const Erc721Template: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ITemplate, ITemplateSearchDto>({
-    baseUrl: "/collections/templates",
+    baseUrl: "/collection/templates",
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice as any,
+      price: emptyPrice,
       amount: "0",
       contractId: 3,
     },
     search: {
       query: "",
-      templateStatus: [TemplateStatus.ACTIVE],
+      templateStatus: [],
       contractIds: [],
     },
     filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
@@ -80,16 +80,22 @@ export const Erc721Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.template"]} />
+      <Breadcrumbs path={["dashboard", "collection", "collection.template"]} />
 
-      <PageHeader message="pages.collections.templates">
+      <PageHeader message="pages.collection.templates">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TemplateCreateButton">
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="CollectionTemplateCreateButton"
+          disabled
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
@@ -99,6 +105,7 @@ export const Erc721Template: FC = () => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.COLLECTION]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -113,7 +120,8 @@ export const Erc721Template: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  // disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                  disabled
                 >
                   <Delete />
                 </IconButton>
@@ -142,7 +150,7 @@ export const Erc721Template: FC = () => {
         initialValues={selected}
       />
 
-      <Erc721TemplateEditDialog
+      <CollectionTemplateEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

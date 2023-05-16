@@ -10,6 +10,8 @@ export interface IStakingRuleItemSearchDto {
 }
 
 export interface IStakingRuleSearchDto extends ISearchDto {
+  merchantId: number;
+  contractIds: Array<number>;
   stakingRuleStatus: Array<StakingRuleStatus>;
   deposit: IStakingRuleItemSearchDto;
   reward: IStakingRuleItemSearchDto;

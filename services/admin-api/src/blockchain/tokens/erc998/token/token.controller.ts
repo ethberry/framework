@@ -9,7 +9,7 @@ import { TokenSearchDto } from "../../../hierarchy/token/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/erc998-tokens")
+@Controller("/erc998/tokens")
 export class Erc998TokenController {
   constructor(private readonly erc998TokenService: Erc998TokenService) {}
 

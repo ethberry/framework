@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractFeatures } from "@framework/types";
@@ -23,14 +24,16 @@ import { abiEncode, keccak256It } from "../utils";
 
         const randomTokens = await contractService.findAllTokensByType(void 0, [ContractFeatures.RANDOM]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
-        console.log("randomTokens", randomTokens);
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         const topics = [
           keccak256It(ChainLinkEventSignatures.RandomWordsRequested as string),
           null,
           null,
           [...new Set(randomTokens.address?.map(addr => abiEncode(addr, "address")))],
         ];
-        console.log("topics", topics);
         return {
           contract: {
             contractType: ChainLinkType.VRF,
@@ -44,7 +47,8 @@ import { abiEncode, keccak256It } from "../utils";
           },
           block: {
             fromBlock: vrfCoordinator ? vrfCoordinator.fromBlock : startingBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },
@@ -58,6 +62,6 @@ export class ChainLinkLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.chainLinkLogService.updateBlock();
+    return this.chainLinkLogService.updateBlock();
   }
 }

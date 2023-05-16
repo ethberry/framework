@@ -29,7 +29,6 @@ const config: Configuration = {
     modules: ["node_modules"],
     fallback: {
       path: require.resolve("path-browserify"),
-      buffer: require.resolve("buffer/"),
     },
     symlinks: false,
   },
@@ -66,6 +65,7 @@ const config: Configuration = {
   },
   plugins: [
     new ProvidePlugin({
+      process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
     new DotEnvPlugin({
@@ -110,6 +110,10 @@ const config: Configuration = {
   },
   watchOptions: {
     aggregateTimeout: 0,
+    followSymlinks: true,
+  },
+  stats: {
+    errorDetails: true,
   },
   devServer: {
     static: {

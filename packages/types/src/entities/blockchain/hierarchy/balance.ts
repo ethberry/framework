@@ -7,4 +7,6 @@ export interface IBalance extends IIdDateBase {
   amount: string;
   tokenId: number;
   token?: IToken;
+  targetId: number | null;
+  target?: IToken;
 }

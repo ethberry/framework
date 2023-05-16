@@ -30,7 +30,7 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
     userIds: users.map((user: IUser) => user.id),
   };
 
-  const message = id ? "dialogs.add" : "dialogs.edit";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>

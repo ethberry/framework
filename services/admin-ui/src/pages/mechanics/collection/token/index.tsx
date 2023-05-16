@@ -16,10 +16,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 
-import { Erc721TokenViewDialog } from "./view";
+import { CollectionTokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
-export const Erc721Token: FC = () => {
+export const CollectionToken: FC = () => {
   const {
     rows,
     count,
@@ -35,7 +35,7 @@ export const Erc721Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/collections/tokens",
+    baseUrl: "/collection/tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -51,9 +51,9 @@ export const Erc721Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "collections", "collections.token"]} />
+      <Breadcrumbs path={["dashboard", "collection", "collection.token"]} />
 
-      <PageHeader message="pages.collections.tokens">
+      <PageHeader message="pages.collection.tokens">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -95,7 +95,7 @@ export const Erc721Token: FC = () => {
         onChange={handleChangePage}
       />
 
-      <Erc721TokenViewDialog
+      <CollectionTokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}

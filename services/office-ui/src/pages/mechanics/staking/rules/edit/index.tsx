@@ -3,17 +3,16 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ContractStatus, IStakingRule, ModuleType } from "@framework/types";
+import { IStakingRule, StakingRuleStatus } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
 
-export interface IStakingEditDialogProps {
+export interface IStakingRuleEditDialogProps {
   open: boolean;
   readOnly?: boolean;
   onCancel: () => void;
@@ -21,10 +20,21 @@ export interface IStakingEditDialogProps {
   initialValues: IStakingRule;
 }
 
-export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
+export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } = initialValues;
+  const {
+    id,
+    title,
+    description,
+    penalty,
+    recurrent,
+    deposit,
+    reward,
+    durationAmount,
+    durationUnit,
+    stakingRuleStatus,
+  } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -35,6 +45,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     recurrent,
     durationAmount,
     durationUnit,
+    stakingRuleStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -47,18 +58,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       testId="StakingEditForm"
       {...rest}
     >
-      <EntityInput
-        name="contractId"
-        controller="contracts"
-        data={{
-          contractModule: [ModuleType.STAKING],
-          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-        }}
-        autoselect
-        // readOnly={!!id}
-      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>

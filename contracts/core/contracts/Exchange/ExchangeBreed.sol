@@ -8,6 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./SignatureValidator.sol";
@@ -15,7 +16,9 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
-abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
+  using SafeCast for uint256;
+
   uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
   uint64 public _pregnancyCountLimit = 0;
   uint64 public _pregnancyMaxTime = 0;
@@ -36,16 +39,22 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToOneSignature(params, item, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 
     // TODO approved
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    require(ownerOf1 == account, "Exchange: Not an owner");
+    if (ownerOf1 != account) {
+      revert NotAnOwner();
+    }
 
     address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
-    require(ownerOf2 == account, "Exchange: Not an owner");
+    if (ownerOf2 != account) {
+      revert NotAnOwner();
+    }
 
     pregnancyCheckup(item, price);
 
@@ -60,25 +69,34 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
 
     // Check pregnancy count
     if (_pregnancyCountLimit > 0) {
-      require(pregnancyM.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
-      require(pregnancyS.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
+      if (pregnancyM.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
+      if (pregnancyS.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
     }
 
     // Check pregnancy time
-    uint64 timeNow = uint64(block.timestamp);
+    uint64 timeNow = block.timestamp.toUint64();
 
     require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
+    // TODO set rules
     uint64 timeLimitM = pregnancyM.count > 13
       ? _pregnancyMaxTime
-      : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
+      : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64();
     uint64 timeLimitS = pregnancyS.count > 13
       ? _pregnancyMaxTime
-      : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
+      : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64();
 
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
-      require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");
-      require(timeNow - pregnancyS.time > timeLimitS, "Exchange: pregnancy time limit");
+      if (timeNow - pregnancyM.time <= timeLimitM) {
+        revert LimitExceed();
+      }
+      if (timeNow - pregnancyS.time <= timeLimitS) {
+        revert LimitExceed();
+      }
     }
     // Update Pregnancy
     pregnancyM.count += 1;

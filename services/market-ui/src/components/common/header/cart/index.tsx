@@ -1,10 +1,10 @@
 import { FC, useContext } from "react";
+import { NavLink as RouterNavLink } from "react-router-dom";
 import { Badge, IconButton, Tooltip } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 import { useIntl } from "react-intl";
 
 import { CartContext } from "../../../providers/cart";
-import { NavLink as RouterNavLink } from "react-router-dom";
 
 export const Cart: FC = () => {
   const cart = useContext(CartContext);
@@ -13,7 +13,7 @@ export const Cart: FC = () => {
 
   return (
     <Tooltip title={formatMessage({ id: "components.header.checkout" })} enterDelay={300}>
-      <IconButton color="inherit" component={RouterNavLink} to="/checkout">
+      <IconButton color="inherit" component={RouterNavLink} to="/ecommerce/checkout">
         <Badge badgeContent={cart.items.length} color="primary">
           <ShoppingCart />
         </Badge>
