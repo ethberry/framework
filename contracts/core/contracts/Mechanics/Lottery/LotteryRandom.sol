@@ -20,9 +20,10 @@ import "./extensions/SignatureValidator.sol";
 //import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
+import "hardhat/console.sol";
 
 // Todo add PAYMANTS_SPLITTER
-abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, SignatureValidator, Wallet {
+abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
 
@@ -62,8 +63,8 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
-    rootRound.endTimestamp = 0;
-    // rootRound.endTimestamp = block.timestamp;
+    // rootRound.endTimestamp = 0;
+    rootRound.endTimestamp = block.timestamp;
     _rounds.push(rootRound);
   }
 
@@ -109,7 +110,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
 
     if (commission != 0) {
       currentRound.acceptedAsset.amount = commission;
-      spend(_toArray(currentRound.acceptedAsset), _msgSender());
+      ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
     }
 
     emit RoundEnded(roundNumber, block.timestamp);
@@ -124,7 +125,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance = 0;
 
     currentRound.acceptedAsset.amount = roundBalance;
-    spend(_toArray(currentRound.acceptedAsset), _msgSender());
+    ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Released(roundNumber, roundBalance);
   }
@@ -189,7 +190,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance += price.amount;
     currentRound.total += price.amount;
 
-    spendFrom(_toArray(price), _msgSender(), address(this));
+    ExchangeUtils.spendFrom(ExchangeUtils._toArray(price), _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
     uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
@@ -237,7 +238,7 @@ abstract contract LotteryRandom is ExchangeUtils, AccessControl, Pausable, Signa
     currentRound.balance -= amount;
 
     currentRound.acceptedAsset.amount = amount;
-    spend(_toArray(currentRound.acceptedAsset), _msgSender());
+    ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Prize(_msgSender(), tokenId, amount);
   }
