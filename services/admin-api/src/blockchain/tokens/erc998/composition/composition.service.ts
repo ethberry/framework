@@ -4,6 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { ICompositionSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { CompositionEntity } from "./composition.entity";
 
 @Injectable()
@@ -13,7 +14,7 @@ export class Erc998CompositionService {
     protected readonly compositionEntityRepository: Repository<CompositionEntity>,
   ) {}
 
-  public async search(dto: ICompositionSearchDto): Promise<[Array<CompositionEntity>, number]> {
+  public async search(dto: ICompositionSearchDto, userEntity: UserEntity): Promise<[Array<CompositionEntity>, number]> {
     const { parentIds, childIds, query, skip, take } = dto;
 
     const queryBuilder = this.compositionEntityRepository.createQueryBuilder("composition");
@@ -69,6 +70,13 @@ export class Erc998CompositionService {
         queryBuilder.andWhere("composition.childId IN(:...childIds)", { childIds });
       }
     }
+
+    queryBuilder.andWhere("parent.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+    queryBuilder.andWhere("child.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
