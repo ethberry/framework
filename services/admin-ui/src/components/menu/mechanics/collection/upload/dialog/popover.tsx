@@ -19,7 +19,7 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
 
   const sample = '1,https://firebasestorage.googleapis.com/v0/b/firebase.appspot.com/LOGO.png,{"TEMPLATE_ID":"130103"}';
   return (
-    <Box position="absolute" right={16} top={16} zIndex="1000">
+    <Box sx={{ zIndex: 1000 }}>
       <IconButton aria-describedby={id} onClick={handleClick}>
         <Help />
       </IconButton>
