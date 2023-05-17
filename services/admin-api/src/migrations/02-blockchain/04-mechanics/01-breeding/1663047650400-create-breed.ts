@@ -44,6 +44,8 @@ export class CreateBreed1663047650400 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`SELECT setval('${ns}.breed_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

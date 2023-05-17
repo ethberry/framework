@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -23,6 +23,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
   constructor(
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
@@ -31,7 +33,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
-    super(tokenService, eventHistoryService);
+    super(loggerService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {

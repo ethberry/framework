@@ -8,3 +8,9 @@ export interface IRentData {
   item: IExchangeItem;
   price: Array<IExchangeItem>;
 }
+
+export interface ISetUserData {
+  tokenId: string;
+  user: string;
+  expires: string;
+}

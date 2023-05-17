@@ -2,7 +2,15 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { MobileEventType, RmqProviderType } from "@framework/types";
-import { IClaimData, IGradeData, IPurchaseData, IRentData, IStakingFinishData, IStakingStartData } from "./interfaces";
+import {
+  IClaimData,
+  IGradeData,
+  IPurchaseData,
+  IRentData,
+  ISetUserData,
+  IStakingFinishData,
+  IStakingStartData,
+} from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
@@ -20,6 +28,10 @@ export class NotificatorService {
   }
 
   public rent(data: IRentData): void {
+    this.mobileClientProxy.emit(MobileEventType.RENT, data);
+  }
+
+  public setUser(data: ISetUserData): void {
     this.mobileClientProxy.emit(MobileEventType.RENT, data);
   }
 

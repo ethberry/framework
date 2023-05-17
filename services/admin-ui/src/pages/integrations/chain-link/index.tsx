@@ -4,15 +4,20 @@ import { Grid } from "@mui/material";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
 import { ChainLinkFundButton } from "../../../components/buttons/integrations/chain-link/fund";
+import { ChainLinkSubscriptionButton } from "../../../components/buttons/integrations/chain-link/add-subscription";
 
 export const ChainLink: FC = () => {
   return (
-    <Grid>
+    <Grid container spacing={2}>
       <Breadcrumbs path={["dashboard", "chain-link"]} />
 
       <PageHeader message="pages.chain-link.title" />
-
-      <ChainLinkFundButton />
+      <Grid item xs={12} sm={6}>
+        <ChainLinkFundButton />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <ChainLinkSubscriptionButton />
+      </Grid>
     </Grid>
   );
 };

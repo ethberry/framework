@@ -13,6 +13,7 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { BreedModule } from "../../../mechanics/breed/breed.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
     AssetModule,
     forwardRef(() => BreedModule),
     TypeOrmModule.forFeature([TokenEntity]),
+    NotificatorModule,
   ],
   providers: [Logger, ethersRpcProvider, Erc721TokenServiceEth],
   controllers: [Erc721TokenControllerEth],

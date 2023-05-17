@@ -46,9 +46,7 @@ export class StakingRulesServiceEth {
     const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
 
     // DEPOSIT ARRAY
-    const depositItem: IAssetDto = {
-      components: [],
-    };
+    const depositItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const dep of deposit) {
       const [_tokenType, _token, templateId, amount] = dep;
@@ -70,9 +68,7 @@ export class StakingRulesServiceEth {
     }
 
     // REWARD ARRAY
-    const rewardItem: IAssetDto = {
-      components: [],
-    };
+    const rewardItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const rew of reward) {
       const [_tokenType, _token, templateId, amount] = rew;

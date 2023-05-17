@@ -30,9 +30,6 @@ export class ExchangeGradeServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const history = await this.eventHistoryService.updateHistory(event, context);
-    await this.assetService.saveAssetHistory(history, [item], price);
-
     const [, itemTokenAddr, itemTokenId] = item;
 
     const tokenEntity = await this.tokenService.getToken(itemTokenId, itemTokenAddr.toLowerCase());
@@ -42,9 +39,13 @@ export class ExchangeGradeServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
+    const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+    await this.assetService.saveAssetHistory(history, [item], price);
+
     const gradeEntity = await this.gradeService.findOneByToken(tokenEntity, GradeAttribute.GRADE);
 
     if (!gradeEntity) {
+      this.loggerService.error("gradeNotFound", tokenEntity.id, GradeAttribute.GRADE, ExchangeGradeServiceEth.name);
       throw new NotFoundException("gradeNotFound");
     }
 

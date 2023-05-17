@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
@@ -9,7 +9,7 @@ import { EventHistoryModule } from "../../event-history/event-history.module";
 
 @Module({
   imports: [ConfigModule, EventHistoryModule, TypeOrmModule.forFeature([TokenEntity])],
-  providers: [TokenService, TokenServiceEth],
+  providers: [Logger, TokenService, TokenServiceEth],
   exports: [TokenService, TokenServiceEth],
 })
 export class TokenModule {}
