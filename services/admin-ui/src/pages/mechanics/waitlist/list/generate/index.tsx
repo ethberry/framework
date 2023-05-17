@@ -37,7 +37,7 @@ export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
       testId="WaitlistGenerateDialog"
       {...rest}
     >
-      <TemplateAssetInput prefix="item" multiple />
+      <TemplateAssetInput autoSelect multiple prefix="item" />
       <EntityInput name="listId" controller="waitlist/list" />
     </FormDialog>
   );

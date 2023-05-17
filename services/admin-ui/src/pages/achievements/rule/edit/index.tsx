@@ -57,7 +57,7 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       <Typography sx={{ mt: 2 }} variant="inherit">
         <FormattedMessage id="form.labels.achievementItem" />
       </Typography>
-      <TemplateAssetInput multiple allowEmpty prefix="item" showLabel={false} />
+      <TemplateAssetInput autoSelect multiple allowEmpty prefix="item" showLabel={false} />
     </FormDialog>
   );
 };

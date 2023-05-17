@@ -44,6 +44,7 @@ export const EditProductDialog: FC<IEditProductDialogProps> = props => {
       <RichTextEditor name="description" />
       <EntityInput name="categoryIds" controller="categories" multiple />
       <TemplateAssetInput
+        autoSelect
         multiple
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}

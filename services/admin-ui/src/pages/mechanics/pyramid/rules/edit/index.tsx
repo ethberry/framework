@@ -72,6 +72,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         ) : null}
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
+            autoSelect
             prefix="deposit"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
@@ -79,6 +80,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
+            autoSelect
             prefix="reward"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}

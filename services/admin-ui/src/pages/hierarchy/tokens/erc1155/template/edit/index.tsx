@@ -45,6 +45,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TemplateAssetInput
+        autoSelect
         multiple
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155] }}
