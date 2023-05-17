@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { AchievementItemEntity } from "./item.entity";
-import { AchievementsRuleService } from "../rule/rule.service";
 
 @Injectable()
 export class AchievementsItemService {

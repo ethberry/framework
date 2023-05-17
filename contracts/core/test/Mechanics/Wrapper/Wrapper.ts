@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
 
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, InterfaceId } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { deployERC20 } from "../../ERC20/shared/fixtures";

@@ -6,7 +6,6 @@ import { wallet } from "@gemunion/constants";
 export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
 
     await queryRunner.query(`
@@ -14,72 +13,77 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
         account,
         amount,
         token_id,
+        target_id,
         created_at,
         updated_at
       ) VALUES (
-        '${erc998ContractSimpleAddress}',
+        '${erc998ContractRandomAddress}',
         1,
-        14010101, -- Bag
+        14010101, -- Sack
+        14060101, -- Warrior
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
         14050101, -- Scroll
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${wallet}',
-        1,
-        14060101, -- hero
+        14060301, -- Mage
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14060201,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14060301,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14070101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14090101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14110101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14120101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         14130101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
         24010101,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -5,7 +5,7 @@ import type { IPaginationResult } from "@gemunion/types-collection";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import type { IBalance, IContract } from "@framework/types";
+import type { IBalance, IToken } from "@framework/types";
 
 import { formatEther } from "../../../../../../utils/money";
 
@@ -13,7 +13,7 @@ export interface IBalanceWithdrawDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IContract;
+  initialValues: IToken;
 }
 
 export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
@@ -26,7 +26,8 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
       return api.fetchJson({
         url: "/balances",
         data: {
-          accounts: [initialValues.address],
+          targetIds: [initialValues.id],
+          accounts: [initialValues.template!.contract!.address],
         },
       });
     },
@@ -34,7 +35,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
   );
 
   useEffect(() => {
-    if (!initialValues.address) {
+    if (!initialValues.template?.contract?.address) {
       return;
     }
 
@@ -42,7 +43,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
     void fn().then((json: IPaginationResult<IBalance>) => {
       setRows(json.rows);
     });
-  }, [initialValues.address]);
+  }, [initialValues.id, initialValues.template?.contract?.address]);
 
   return (
     <ConfirmationDialog message={"dialogs.withdraw"} {...rest}>
@@ -50,7 +51,7 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
         <List>
           {rows.map((row, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{row.token?.template?.title}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {formatEther(
                   row.amount.toString(),

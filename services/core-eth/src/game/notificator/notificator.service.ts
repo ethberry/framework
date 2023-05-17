@@ -1,28 +1,37 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { constants } from "ethers";
 
-import { GameEventType, RmqProviderType } from "@framework/types";
-
-interface IDummyData {
-  eventType: any;
-  data: Record<string, any>;
-}
+import { MobileEventType, RmqProviderType } from "@framework/types";
+import { IClaimData, IGradeData, IPurchaseData, IRentData, IStakingFinishData, IStakingStartData } from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
-  constructor(@Inject(RmqProviderType.MOBILE_SERVICE) private mobileClient: ClientProxy) {}
+  constructor(
+    @Inject(RmqProviderType.MOBILE_SERVICE)
+    private mobileClientProxy: ClientProxy,
+  ) {}
 
-  public dummy(): void {
-    this.mobileClient.emit(GameEventType.DUMMY, {
-      from: constants.AddressZero,
-      to: constants.AddressZero,
-      value: constants.WeiPerEther,
-      transactionHash: constants.HashZero,
-    });
+  public purchase(data: IPurchaseData): void {
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
   }
 
-  public dummyUser(data: any): void {
-    this.mobileClient.emit(GameEventType.DUMMY, data);
+  public claim(data: IClaimData): void {
+    this.mobileClientProxy.emit(MobileEventType.CLAIM, data);
+  }
+
+  public rent(data: IRentData): void {
+    this.mobileClientProxy.emit(MobileEventType.RENT, data);
+  }
+
+  public grade(data: IGradeData): void {
+    this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
+  }
+
+  public stakingStart(data: IStakingStartData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_START, data);
+  }
+
+  public stakingFinish(data: IStakingFinishData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
   }
 }

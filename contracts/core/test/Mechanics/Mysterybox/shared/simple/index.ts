@@ -1,15 +1,15 @@
 import { Contract } from "ethers";
 
-import {
-  shouldGetOwnerOf,
-  shouldApprove,
-  shouldSetApprovalForAll,
-  shouldGetBalanceOf,
-  shouldTransferFrom,
-  shouldSafeTransferFrom,
-  shouldBehaveLikeERC721Burnable,
-} from "@gemunion/contracts-erc721-enumerable";
 import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import {
+  shouldApprove,
+  shouldBehaveLikeERC721Burnable,
+  shouldGetBalanceOf,
+  shouldGetOwnerOf,
+  shouldSafeTransferFrom,
+  shouldSetApprovalForAll,
+  shouldTransferFrom,
+} from "@gemunion/contracts-erc721-enumerable";
 
 import { shouldNotMint } from "../../../../ERC721/shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "../../../../ERC721/shared/simple/base/shouldNotSafeMint";

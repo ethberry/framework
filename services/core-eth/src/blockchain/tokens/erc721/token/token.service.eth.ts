@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
@@ -24,10 +24,13 @@ import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly tokenService: TokenService,
@@ -36,8 +39,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly breedServiceEth: BreedServiceEth,
     protected readonly eventHistoryService: EventHistoryService,
+    private readonly notificatorService: NotificatorService,
   ) {
-    super(tokenService, eventHistoryService);
+    super(loggerService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -52,6 +56,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
+        this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
         throw new NotFoundException("templateNotFound");
       }
 
@@ -71,6 +76,12 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
           eventType: ContractEventType.MintRandom,
         });
         if (!historyEntity) {
+          this.loggerService.error(
+            "historyNotFound",
+            transactionHash,
+            ContractEventType.MintRandom,
+            Erc721TokenServiceEth.name,
+          );
           throw new NotFoundException("historyNotFound");
         }
         const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
@@ -90,6 +101,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc721TokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
@@ -169,6 +181,26 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
+    const {
+      args: { tokenId, to },
+    } = event;
+    const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+    const entityWithRelations = await this.eventHistoryService.findOne(
+      { id: eventHistoryEntity.id },
+      { relations: { parent: true } },
+    );
+
+    if (!entityWithRelations) {
+      this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
+      throw new NotFoundException("historyNotFound");
+    }
+
+    // Notify about Purchase
+    // TODO add price paid?
+    this.notificatorService.purchase({
+      account: to,
+      tokenId,
+      transactionHash: entityWithRelations.parent.transactionHash, // Purchase transaction
+    });
   }
 }

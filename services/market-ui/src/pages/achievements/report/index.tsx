@@ -5,7 +5,7 @@ import { Grid, Typography } from "@mui/material";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { AchievementRedeemButton } from "../../../components/buttons/achievements/redeem";
-import { IAchievementRule, IAchievementItemReport } from "@framework/types";
+import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 import { ReportChart } from "./chart";
 
 export const AchievementReport: FC = () => {

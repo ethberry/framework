@@ -13,6 +13,9 @@ export class SeedAccessControlErc998At20At1653616447240 implements MigrationInte
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
+    const erc998ContractOwnerErc1155Address = process.env.ERC998_OWNER_ERC1155_ADDR || wallet;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.access_control (
@@ -143,6 +146,60 @@ export class SeedAccessControlErc998At20At1653616447240 implements MigrationInte
         '${currentDateTime}'
       ), (
         '${erc998ContractGenesAddress}',
+        '${wallet}',
+        'METADATA_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc20Address}',
+        '${wallet}',
+        'DEFAULT_ADMIN_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc20Address}',
+        '${wallet}',
+        'MINTER_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc20Address}',
+        '${wallet}',
+        'METADATA_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Address}',
+        '${wallet}',
+        'DEFAULT_ADMIN_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Address}',
+        '${wallet}',
+        'MINTER_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Address}',
+        '${wallet}',
+        'METADATA_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Erc20Address}',
+        '${wallet}',
+        'DEFAULT_ADMIN_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Erc20Address}',
+        '${wallet}',
+        'MINTER_ROLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractOwnerErc1155Erc20Address}',
         '${wallet}',
         'METADATA_ROLE',
         '${currentDateTime}',

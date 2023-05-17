@@ -20,7 +20,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        14010101,
+        14010101, -- Sack
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "140101",
         })}',
@@ -154,7 +154,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14060101, -- hero
+        14060101, -- Warrior
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "140601",
           [TokenAttributes.GRADE]: "1",
@@ -167,7 +167,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-         14060102,
+         14060102, -- Warrior
          '${JSON.stringify({
            [TokenAttributes.TEMPLATE_ID]: "40601",
            [TokenAttributes.GRADE]: "10",
@@ -180,7 +180,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
          '${subDays(now, 1).toISOString()}',
          '${currentDateTime}'
       ), (
-        14060201,
+        14060201, -- Rouge
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "140602",
           [TokenAttributes.GRADE]: "5",
@@ -193,7 +193,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14060301,
+        14060301, -- Mage
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "140603",
           [TokenAttributes.GRADE]: "10",
@@ -231,7 +231,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14110101,
+        14110101, -- erc20 owner
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "141101",
         })}',
@@ -242,7 +242,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14120101,
+        14120101, -- erc1155 owner
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "141201",
         })}',
@@ -253,7 +253,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14130101,
+        14130101, -- erc20 + erc1155 owner
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "141301",
         })}',

@@ -6,7 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { VRFCoordinatorMock, ExchangeMock } from "../../typechain-types";
+import { ExchangeMock, VRFCoordinatorMock } from "../../typechain-types";
 import { subscriptionId, templateId, tokenId } from "../constants";
 import { deployContract } from "../shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";

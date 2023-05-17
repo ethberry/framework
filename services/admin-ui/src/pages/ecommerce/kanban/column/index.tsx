@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Typography, Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 import { IOrder } from "@framework/types";
 

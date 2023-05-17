@@ -12,6 +12,7 @@ import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
+import { MysteryboxTokenContent } from "../../../../components/tables/mysterybox-token-content";
 
 export const MysteryboxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
@@ -54,6 +55,9 @@ export const MysteryboxToken: FC = () => {
             <TokenSellButton token={selected} />
           </Paper>
         </Grid>
+
+        <MysteryboxTokenContent token={selected} />
+
         <TokenHistory
           token={selected}
           isLoading={isLoading}

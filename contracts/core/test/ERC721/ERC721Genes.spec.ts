@@ -14,8 +14,8 @@ describe("ERC721Genes", function () {
 
   shouldNotMint(factory);
   shouldNotMintCommon(factory);
-  shouldMintRandom(factory);
   shouldNotSafeMint(factory);
+  shouldMintRandom(factory);
 
   shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

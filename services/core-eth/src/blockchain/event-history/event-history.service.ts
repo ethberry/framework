@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, forwardRef } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
@@ -234,7 +234,7 @@ export class EventHistoryService {
     if (nestedEvents) {
       nestedEvents.map(async nested => {
         if (nested.id !== parentId) {
-          Object.assign(nested, { parentId: parentId });
+          Object.assign(nested, { parentId });
           await nested.save();
         }
       });

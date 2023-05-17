@@ -4,8 +4,8 @@ import { Contract } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 import { deployJerk } from "@gemunion/contracts-mocks";
-import { defaultMintERC20 } from "@gemunion/contracts-erc20";
 import type { IERC20Options } from "@gemunion/contracts-erc20";
+import { defaultMintERC20 } from "@gemunion/contracts-erc20";
 
 export function shouldTransfer(factory: () => Promise<Contract>, options: IERC20Options = {}) {
   const { mint = defaultMintERC20 } = options;

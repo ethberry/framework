@@ -1,4 +1,4 @@
-import { object, mixed, number, string } from "yup";
+import { mixed, object, string } from "yup";
 
 import { draftValidationSchema } from "@gemunion/yup-rules";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";

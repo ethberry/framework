@@ -25,6 +25,11 @@ export class CreateBalance1563804000400 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "target_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -36,6 +41,12 @@ export class CreateBalance1563804000400 implements MigrationInterface {
       foreignKeys: [
         {
           columnNames: ["token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.token`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["target_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",

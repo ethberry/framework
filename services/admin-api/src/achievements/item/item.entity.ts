@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import type { IAchievementItem } from "@framework/types";

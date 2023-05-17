@@ -179,7 +179,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{RENTABLE}',
+        '{ALLOWANCE,RENTABLE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',

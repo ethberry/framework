@@ -1,4 +1,4 @@
-import { Contract, Signer, constants } from "ethers";
+import { constants, Contract, Signer } from "ethers";
 import { amount } from "@gemunion/contracts-constants";
 import { templateId } from "../../../../constants";
 

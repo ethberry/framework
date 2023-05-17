@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { DateInput } from "@gemunion/mui-inputs-picker";
-import { NumberInput, TextInput, JsonInput } from "@gemunion/mui-inputs-core";
+import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";

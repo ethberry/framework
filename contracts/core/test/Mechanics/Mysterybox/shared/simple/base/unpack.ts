@@ -12,6 +12,7 @@ import { deployLinkVrfFixture } from "../../../../../shared/link";
 import { deployERC1155 } from "../../../../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
 import { deployERC20 } from "../../../../../ERC20/shared/fixtures";
+
 // import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 
 export function shouldUnpackBox(factory: () => Promise<Contract>) {

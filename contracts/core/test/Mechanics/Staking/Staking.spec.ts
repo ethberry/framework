@@ -15,7 +15,7 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, extra, templateId, params, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { expiresAt, extra, params, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -24,6 +24,7 @@ import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
+import { shouldHaveReentrancyGuard } from "./shared/reentraceReward";
 
 /*
 1. Calculate multiplier (count full periods since stake start)
@@ -79,6 +80,7 @@ describe("Staking", function () {
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
   shouldBehaveLikePausable(factory);
   shouldBehaveLikeTopUp(factory);
+  shouldHaveReentrancyGuard(factory);
 
   before(async function () {
     await network.provider.send("hardhat_reset");
