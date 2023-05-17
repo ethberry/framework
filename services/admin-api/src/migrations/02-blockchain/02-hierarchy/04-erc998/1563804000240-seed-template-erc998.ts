@@ -17,11 +17,17 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       ), (
         140103
       ), (
+        140401
+      ), (
+        140402
+      ), (
+        140403
+      ), (
+        140404
+      ), (
+        140405
+      ), (
         140501
-      ), (
-        140502
-      ), (
-        140503
       ), (
         140601
       ), (
@@ -58,9 +64,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         updated_at
       ) VALUES (
         140101,
-        'Sack',
+        'Physical resistance',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsack.png?alt=media&token=9caeb5a2-5934-4642-96c8-f9eea88470f5',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_physical_resistance.png?alt=media&token=d30e8e4c-c07d-4471-9e42-a195658eca80',
         140101,
         0,
         1,
@@ -70,9 +76,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         140102,
-        'Bag',
+        'Magic resistance',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbag.png?alt=media&token=e443c50c-7981-4a2b-8a48-63e9d00819a1',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_magic_resistance.png?alt=media&token=b0e82f13-56d2-44b5-8809-6172887f3d4d',
         140102,
         0,
         1,
@@ -82,9 +88,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         140103,
-        'Wallet',
+        'Poison resistance',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwallet.png?alt=media&token=a32df807-f912-4c4e-823f-91e3c5c71850',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_poison_resistance.png?alt=media&token=794b45a4-f0e7-4bfe-a50b-32339d26d774',
         140103,
         0,
         1,
@@ -93,35 +99,71 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        140501,
-        'Scroll',
+        140401,
+        'Fireball',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
-        140501,
+        140401,
         0,
         1,
         'ACTIVE',
-        1405,
+        1401,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        140502,
+        140402,
+        'Frostbite',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        140402,
+        0,
+        1,
+        'ACTIVE',
+        1401,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140403,
+        'Lightbolt',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        140403,
+        0,
+        1,
+        'ACTIVE',
+        1401,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140404,
+        'Slow',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        140404,
+        0,
+        1,
+        'ACTIVE',
+        1401,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140405,
+        'Fly',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        140405,
+        0,
+        1,
+        'ACTIVE',
+        1401,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140501,
         'Grimoire',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgrimoire.png?alt=media&token=4eba93cd-c1ca-4aa1-b002-b501bd2fb5c6',
-        140502,
-        0,
-        1,
-        'ACTIVE',
-        1405,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        140503,
-        'Voodoo doll',
-        '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fvoodoo_doll.png?alt=media&token=ef8808e5-6377-47f8-bf24-8a559fe7d16a',
-        140503,
+        140501,
         0,
         1,
         'ACTIVE',
@@ -190,9 +232,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         141101,
-        'ERC20 Owner',
+        'Wallet (ERC20)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwallet.png?alt=media&token=a32df807-f912-4c4e-823f-91e3c5c71850',
         141101,
         0,
         1,
@@ -202,9 +244,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         141201,
-        'ERC1155 Owner',
+        'Bag (ERC1155)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbag.png?alt=media&token=e443c50c-7981-4a2b-8a48-63e9d00819a1',
         141201,
         0,
         1,
@@ -214,9 +256,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         141301,
-        'ERC1155 + ERC20 Owner',
+        'Sack (ERC20 + ERC1155)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsack.png?alt=media&token=9caeb5a2-5934-4642-96c8-f9eea88470f5',
         141201,
         0,
         1,

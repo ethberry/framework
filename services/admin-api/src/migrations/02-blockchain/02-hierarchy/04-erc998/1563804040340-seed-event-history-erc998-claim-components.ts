@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721PurchaseComponentsAt1563804040240 implements MigrationInterface {
+export class SeedEventHistoryErc998ClaimComponentsAt1563804040340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
@@ -13,41 +12,23 @@ export class SeedEventHistoryErc721PurchaseComponentsAt1563804040240 implements 
         token_id,
         amount
       ) VALUES (
-        1301010,
+        1302010,
         'ITEM',
         1301,
         13010101,
         1
       ), (
-        1301010,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301020,
+        1302020,
         'ITEM',
         1301,
         13010201,
         1
       ), (
-        1301020,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301030,
+        1302030,
         'ITEM',
         1301,
         13010301,
         1
-      ), (
-        1301030,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
       );
     `);
   }

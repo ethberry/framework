@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInterface {
+export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
@@ -21,81 +21,81 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
         created_at,
         updated_at
       ) VALUES (
-        1302010,
+        1304010,
         '${exchangeAddress}',
         '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130201",
-          items: [[2, erc721ContractSimpleAddress, "130101", "1"]],
+          externalId: "130401",
+          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
         })}',
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1302011,
+        1304011,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: constants.AddressZero,
           to: wallets[0],
-          tokenId: "13010101",
+          tokenId: "14010101",
         })}',
-        1302010,
+        1304010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1302020,
+        1304020,
         '${exchangeAddress}',
         '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130202",
-          items: [[2, erc721ContractSimpleAddress, "130101", "1"]],
+          externalId: "130402",
+          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
         })}',
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1302021,
+        1304021,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: constants.AddressZero,
           to: wallets[0],
-          tokenId: "13010201",
+          tokenId: "14010201",
         })}',
-        1302020,
+        1304020,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1302030,
+        1304030,
         '${exchangeAddress}',
         '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130203",
-          items: [[2, erc721ContractSimpleAddress, "130101", "1"]],
+          externalId: "130403",
+          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
         })}',
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1302031,
+        1304031,
         '${erc721ContractSimpleAddress}',
         '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
           from: constants.AddressZero,
           to: wallets[0],
-          tokenId: "13010301",
+          tokenId: "14010301",
         })}',
-        1302030,
+        1304030,
         '${currentDateTime}',
         '${currentDateTime}'
       );

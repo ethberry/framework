@@ -80,9 +80,9 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         updated_at
       ) VALUES (
         130101,
-        'Physical resistance',
+        'Ruby',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_physical_resistance.png?alt=media&token=d30e8e4c-c07d-4471-9e42-a195658eca80',
+        '${imageUrl}',
         130101,
         0,
         1,
@@ -92,9 +92,9 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130102,
-        'Magic resistance',
+        'Emerald',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_magic_resistance.png?alt=media&token=b0e82f13-56d2-44b5-8809-6172887f3d4d',
+        '${imageUrl}',
         130102,
         0,
         1,
@@ -104,9 +104,9 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130103,
-        'Poison resistance',
+        'Sapfir',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frune_of_poison_resistance.png?alt=media&token=794b45a4-f0e7-4bfe-a50b-32339d26d774',
+        '${imageUrl}',
         130103,
         0,
         1,

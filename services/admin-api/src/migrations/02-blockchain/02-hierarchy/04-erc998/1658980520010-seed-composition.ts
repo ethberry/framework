@@ -14,9 +14,9 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1401, -- simple
-        1301, -- simple
-        1,
+        1405, -- spell book
+        1404, -- scroll
+        3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -53,12 +53,6 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         1413, -- ec20 + erc1155 owner
         1501, -- resources
         3,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1413, -- c-shirt
-        1309, -- t-shirt
-        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

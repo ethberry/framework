@@ -8,7 +8,6 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
-    const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -138,16 +137,9 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc998ContractRentableAddress}',
-        1,
-        13090101,
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         '${wallet}',
         1,
-        13090102,
+        13090101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
