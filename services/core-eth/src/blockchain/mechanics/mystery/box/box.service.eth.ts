@@ -1,26 +1,26 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
-
 import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
-
 import { ABI } from "../../../tokens/erc721/token/log/interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
-import { MysteryBoxService } from "./box.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { MysteryBoxService } from "./box.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly contractService: ContractService,
@@ -31,7 +31,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
-    super(tokenService, eventHistoryService);
+    super(loggerService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
