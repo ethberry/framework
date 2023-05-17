@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { RentRuleStatus, IRentSearchDto, ContractFeatures } from "@framework/types";
+import { ContractFeatures, IRentSearchDto, RentRuleStatus } from "@framework/types";
 
 interface IRentSearchFormProps {
   onSubmit: (values: IRentSearchDto) => Promise<void>;

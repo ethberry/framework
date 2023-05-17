@@ -33,6 +33,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           externalId: craft.id,
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
+          extra: utils.formatBytes32String("0x"),
         },
         craft.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -40,7 +41,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           tokenId:
             component.contract!.contractType === TokenType.ERC1155
               ? component.template!.tokens![0].tokenId
-              : component.templateId.toString(),
+              : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
         craft.price?.components.sort(sorter("id")).map(component => ({

@@ -38,7 +38,7 @@ abstract contract AbstractFactory is EIP712, AccessControl {
   }
 
   constructor() EIP712("ContractManager", "1.0.0") {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
   }
 
   /**

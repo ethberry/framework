@@ -18,10 +18,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
 import { ClaimItemCreateDto, ClaimItemUpdateDto, ClaimSearchDto } from "./dto";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/claims")

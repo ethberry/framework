@@ -106,6 +106,7 @@ export class BreedService {
         externalId: encodedExternalId.toString(),
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       momTokenEntity.token,
       dadTokenEntity.token,

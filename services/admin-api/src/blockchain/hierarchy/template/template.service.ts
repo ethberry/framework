@@ -178,18 +178,18 @@ export class TemplateService {
   }
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+    const { price } = dto;
     const assetEntity = await this.assetService.create({
       components: [],
     });
+    await this.assetService.update(assetEntity, price);
 
-    const templateEntity = await this.templateEntityRepository
+    return await this.templateEntityRepository
       .create({
         ...dto,
         price: assetEntity,
       })
       .save();
-
-    return this.update({ id: templateEntity.id }, dto);
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {

@@ -22,6 +22,11 @@
             "internalType": "uint256",
             "name": "expiresAt",
             "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "extra",
+            "type": "bytes32"
           }
         ],
         "internalType": "struct Params",

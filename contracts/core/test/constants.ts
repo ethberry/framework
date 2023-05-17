@@ -1,4 +1,4 @@
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
@@ -22,24 +22,24 @@ export const span = 300;
 export const maxStake = 5;
 
 // EXCHANGE
-export const externalId = 123;
+export const externalId = 1;
 export const expiresAt = 0;
+export const extra = utils.formatBytes32String("0x");
 
 export const params = {
   nonce,
   externalId,
   expiresAt,
   referrer: constants.AddressZero,
+  extra,
 };
 
 export const contractTemplate = "SIMPLE";
 export const subscriptionId = 1;
 
 export enum FrameworkInterfaceId {
-  ERC721Random = "0x32034d27",
+  ERC721Simple = "0xfdbf6221",
   ERC721Upgradable = "0x45977d03",
-  Grade = "0x381b3743",
-  Mystery = "0xf0f47261",
-  ERC1155Receiver = "0x4e2312e0",
-  ERC998ERC721TopDown = "0xd8e93edb",
+  ERC721Random = "0x32034d27",
+  ERC721Mystery = "0xf0f47261",
 }

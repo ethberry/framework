@@ -27,8 +27,8 @@ contract ERC1155Blacklist is ERC1155Simple, BlackList {
     uint256[] memory amounts,
     bytes memory data
   ) internal override {
-    require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
-    require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
+    require(from == address(0) || !_isBlacklisted(from), "Blacklist: sender is blacklisted");
+    require(to == address(0) || !_isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
   }
 }

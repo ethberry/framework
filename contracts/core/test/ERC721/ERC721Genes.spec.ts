@@ -2,20 +2,20 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "./shared/fixtures";
-import { shouldMint } from "./shared/simple/base/mint";
-import { shouldSafeMint } from "./shared/simple/base/safeMint";
+import { shouldNotMint } from "./shared/simple/base/shouldNotMint";
+import { shouldNotSafeMint } from "./shared/simple/base/shouldNotSafeMint";
+import { shouldNotMintCommon } from "./shared/genes/shouldNotMintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
-import { shouldNotMintCommon } from "./shared/shouldNotMintCommon";
 
 describe("ERC721Genes", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMint(factory);
+  shouldNotMint(factory);
   shouldNotMintCommon(factory);
+  shouldNotSafeMint(factory);
   shouldMintRandom(factory);
-  shouldSafeMint(factory);
 
-  shouldSupportsInterface(factory)(InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

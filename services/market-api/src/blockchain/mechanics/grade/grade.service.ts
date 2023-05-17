@@ -105,6 +105,7 @@ export class GradeService {
         externalId: gradeEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       attribute,
       tokenEntity,

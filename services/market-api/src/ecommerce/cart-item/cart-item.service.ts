@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CartItemEntity } from "./cart-item.entity";
 import { ICartItemCreateDto } from "./interfaces";
@@ -26,7 +26,10 @@ export class CartItemService {
     return this.orderItemEntityRepository.delete(where);
   }
 
-  public findOne(where: FindOptionsWhere<CartItemEntity>): Promise<CartItemEntity | null> {
-    return this.orderItemEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<CartItemEntity>,
+    options?: FindOneOptions<CartItemEntity>,
+  ): Promise<CartItemEntity | null> {
+    return this.orderItemEntityRepository.findOne({ where, ...options });
   }
 }

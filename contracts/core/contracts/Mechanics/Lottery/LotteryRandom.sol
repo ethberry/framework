@@ -52,9 +52,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
   constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
     address account = _msgSender();
-    _setupRole(DEFAULT_ADMIN_ROLE, account);
-    _setupRole(PAUSER_ROLE, account);
-    _setupRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, account);
+    _grantRole(PAUSER_ROLE, account);
+    _grantRole(MINTER_ROLE, account);
 
     setTicketFactory(ticketFactory);
     setAcceptedToken(acceptedToken);

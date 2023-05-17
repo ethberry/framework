@@ -13,13 +13,31 @@ export function shouldBehaveLikeERC20BlackList(factory: () => Promise<Contract>)
       await contractInstance.mint(owner.address, amount);
       await contractInstance.blacklist(owner.address);
 
-      const tx1 = contractInstance.transfer(receiver.address, amount);
-      await expect(tx1).to.be.revertedWith("Blacklist: sender is blacklisted");
+      const tx = contractInstance.transfer(receiver.address, amount);
+      await expect(tx).to.be.revertedWith("Blacklist: sender is blacklisted");
+    });
 
+    it("should fail: transfer to", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      await contractInstance.mint(owner.address, amount);
+      await contractInstance.blacklist(receiver.address);
+
+      const tx = contractInstance.transfer(receiver.address, amount);
+      await expect(tx).to.be.revertedWith("Blacklist: receiver is blacklisted");
+    });
+
+    it("should fail: transferFrom from", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      await contractInstance.mint(owner.address, amount);
+      await contractInstance.blacklist(owner.address);
       await contractInstance.approve(owner.address, amount);
 
-      const tx2 = contractInstance.transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Blacklist: sender is blacklisted");
+      const tx = contractInstance.transferFrom(owner.address, receiver.address, amount);
+      await expect(tx).to.be.revertedWith("Blacklist: sender is blacklisted");
     });
 
     it("should fail: transferFrom to", async function () {
@@ -28,14 +46,10 @@ export function shouldBehaveLikeERC20BlackList(factory: () => Promise<Contract>)
 
       await contractInstance.mint(owner.address, amount);
       await contractInstance.blacklist(receiver.address);
-
-      const tx1 = contractInstance.transfer(receiver.address, amount);
-      await expect(tx1).to.be.revertedWith("Blacklist: receiver is blacklisted");
-
       await contractInstance.approve(owner.address, amount);
 
-      const tx2 = contractInstance.transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Blacklist: receiver is blacklisted");
+      const tx = contractInstance.transferFrom(owner.address, receiver.address, amount);
+      await expect(tx).to.be.revertedWith("Blacklist: receiver is blacklisted");
     });
 
     it("should fail: transfer approved", async function () {
@@ -43,11 +57,11 @@ export function shouldBehaveLikeERC20BlackList(factory: () => Promise<Contract>)
       const contractInstance = await factory();
 
       await contractInstance.mint(owner.address, amount);
-      await contractInstance.blacklist(owner.address);
+      await contractInstance.blacklist(receiver.address);
       await contractInstance.approve(stranger.address, amount);
 
       const tx2 = contractInstance.connect(stranger).transferFrom(owner.address, receiver.address, amount);
-      await expect(tx2).to.be.revertedWith("Blacklist: sender is blacklisted");
+      await expect(tx2).to.be.revertedWith("Blacklist: receiver is blacklisted");
     });
 
     it("should fail: mint", async function () {

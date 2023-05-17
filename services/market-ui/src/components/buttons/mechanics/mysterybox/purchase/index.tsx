@@ -55,6 +55,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           externalId: mysterybox.id,
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
+          extra: utils.formatBytes32String("0x"),
         },
         items,
         mysterybox.template?.price?.components.sort(sorter("id")).map(component => ({

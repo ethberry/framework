@@ -28,6 +28,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       externalId: rule.externalId,
       expiresAt: 0,
       referrer: constants.AddressZero,
+      extra: utils.formatBytes32String("0x"),
     };
     const tokenId = rule.deposit!.components[0].templateId; // for 1155
     return contract.deposit(params, [tokenId], {

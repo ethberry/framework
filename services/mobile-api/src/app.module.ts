@@ -18,6 +18,7 @@ import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 import { GameModule } from "./game/game.module";
+import { BlockchainModule } from "./blockchain/blockchain.module";
 
 @Module({
   providers: [
@@ -82,6 +83,7 @@ import { GameModule } from "./game/game.module";
     GemunionThrottlerModule,
     InfrastructureModule,
     GameModule,
+    BlockchainModule,
   ],
   controllers: [AppController],
 })

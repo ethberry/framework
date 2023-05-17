@@ -3,12 +3,12 @@ import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enumerable";
 
-import { shouldMintCommon } from "./shared/mintCommon";
-import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-import { deployERC721 } from "./shared/fixtures";
-import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
+import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { deployERC721 } from "./shared/fixtures";
+import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { shouldBehaveLikeERC721Blacklist } from "./shared/blacklist";
+import { shouldMintCommon } from "./shared/simple/base/mintCommon";
 
 describe("ERC721BlacklistUpgradeable", function () {
   const factory = () => deployERC721(this.title);
@@ -17,16 +17,15 @@ describe("ERC721BlacklistUpgradeable", function () {
   shouldBehaveLikeBlackList(factory);
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC721Metadata(factory);
-
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.ERC721Upgradable,
-  );
+  ]);
 });

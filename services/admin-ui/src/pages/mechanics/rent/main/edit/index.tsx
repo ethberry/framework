@@ -41,9 +41,11 @@ export const RentEditDialog: FC<IRentEditDialogProps> = props => {
       <SelectInput name="rentStatus" options={RentRuleStatus} disabledOptions={[RentRuleStatus.NEW]} />
       <EntityInput name="contractId" controller="contracts" data={{ contractFeatures: [ContractFeatures.RENTABLE] }} />
       <TemplateAssetInput
+        allowEmpty
+        autoSelect
+        multiple
         prefix="price"
         tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
-        multiple
       />
     </FormDialog>
   );

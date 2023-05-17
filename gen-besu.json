@@ -9,7 +9,8 @@
     },
     "ethash": {
       "fixeddifficulty": 100
-    }
+    },
+    "contractSizeLimit": 65536
   },
   "nonce": "0x0",
   "timestamp": "0x58ee40ba",

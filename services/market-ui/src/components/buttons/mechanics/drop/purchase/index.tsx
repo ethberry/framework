@@ -32,6 +32,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
           externalId: drop.id,
           expiresAt: sign.expiresAt,
           referrer: settings.getReferrer(),
+          extra: utils.formatBytes32String("0x"),
         },
         drop.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),

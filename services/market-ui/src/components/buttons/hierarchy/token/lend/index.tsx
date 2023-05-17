@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -36,15 +36,14 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
         referrer: values.account,
+        extra: expires,
       };
-      const items = [
-        {
-          tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
-          token: token.template!.contract?.address,
-          tokenId: token.tokenId,
-          amount: 1,
-        },
-      ];
+      const item = {
+        tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
+        token: token.template!.contract?.address,
+        tokenId: token.tokenId,
+        amount: 1,
+      };
 
       const rentRule = token.template?.contract?.rent
         ? token.template?.contract?.rent.filter(r => r.id === values.rentRule)
@@ -61,8 +60,8 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
                 : component.template!.tokens![0].tokenId,
             amount: component.amount,
           }))
-        : []; // Zero price for free rent?
-      return contract.lend(params, items, price, expires, sign.signature, {
+        : []; // Zero price for free rent
+      return contract.lend(params, item, price, sign.signature, {
         value: rentRule ? getEthPrice(rentRule[0].price) : BigNumber.from(0),
       }) as Promise<void>;
     },

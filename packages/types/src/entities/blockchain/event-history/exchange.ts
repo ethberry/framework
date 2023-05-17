@@ -35,10 +35,24 @@ export interface IExchangePurchaseEvent {
 }
 
 // MODULE:CLAIM
+
+export type IRewardItem = [number, string, string, string];
+
 export interface IExchangeClaimEvent {
   from: string;
   externalId: string;
-  items: Array<IExchangeItem>;
+  items: Array<IRewardItem>;
+}
+
+export interface IRewardSetEvent {
+  externalId: string;
+  items: Array<IRewardItem>;
+}
+
+export interface IClaimRewardEvent {
+  from: string;
+  externalId: string;
+  items: Array<IRewardItem>;
 }
 
 // MODULE:CRAFT
@@ -91,19 +105,6 @@ export interface IExchangeErc20PaymentReleasedEvent {
   externalId: 0;
 }
 
-export type IRewardItem = [number, string, string, string];
-
-export interface IRewardSetEvent {
-  externalId: string;
-  items: Array<IRewardItem>;
-}
-
-export interface IClaimRewardEvent {
-  from: string;
-  externalId: string;
-  items: Array<IRewardItem>;
-}
-
 // MODULE:BREEDING
 export interface IExchangeBreedEvent {
   from: string;
@@ -120,7 +121,7 @@ export interface IExchangeLendEvent {
   to: string;
   expires: string;
   externalId: string;
-  items: Array<IExchangeItem>;
+  item: IExchangeItem;
   price: Array<IExchangeItem>;
 }
 

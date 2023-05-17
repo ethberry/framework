@@ -2,12 +2,12 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721-enumerable";
 
-import { shouldMintCommon } from "./shared/mintCommon";
+import { FrameworkInterfaceId } from "../constants";
+import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { deployERC721 } from "./shared/fixtures";
 import { shouldMintRandom } from "./shared/random/mintRandom";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-import { deployERC721 } from "./shared/fixtures";
-import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { FrameworkInterfaceId } from "../constants";
+import { shouldMintCommon } from "./shared/simple/base/mintCommon";
 
 describe("ERC721UpgradeableRandom", function () {
   const factory = () => deployERC721(this.title);
@@ -20,12 +20,12 @@ describe("ERC721UpgradeableRandom", function () {
   shouldMintRandom(factory);
   shouldBehaveLikeUpgradeable(factory);
 
-  shouldSupportsInterface(factory)(
+  shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
     InterfaceId.IERC4906,
     FrameworkInterfaceId.ERC721Random,
-    FrameworkInterfaceId.Grade,
-  );
+    FrameworkInterfaceId.ERC721Upgradable,
+  ]);
 });

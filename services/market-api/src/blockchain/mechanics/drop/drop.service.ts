@@ -112,8 +112,9 @@ export class DropService {
     if (new Date(dropEntity.endTimestamp).getTime() < now) {
       throw new BadRequestException("dropAlreadyEnded");
     }
-
-    const templateEntity = await this.templateService.findOne({ id: dropEntity.item.components[0].templateId });
+    const templateEntity = await this.templateService.findOne({
+      id: dropEntity.item.components[0].templateId!,
+    });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -135,6 +136,7 @@ export class DropService {
         externalId: dropEntity.id,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       dropEntity,
     );
@@ -149,7 +151,7 @@ export class DropService {
       dropEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       dropEntity.price.components.sort(sorter("id")).map(component => ({

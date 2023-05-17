@@ -24,10 +24,7 @@ contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
     string memory baseTokenURI
   ) ERC998Blacklist(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address to,
-    uint256 templateId
-  ) external virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
+  function mintCommon(address to, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
     if (templateId == 0) {
       revert TemplateZero();
     }

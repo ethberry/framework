@@ -1,9 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-
-import { IOwnership } from "@framework/types/dist/entities/blockchain/hierarchy/ownership";
+import { ns } from "@framework/constants";
+import { IOwnership } from "@framework/types";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 

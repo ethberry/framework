@@ -1,6 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { InjectEntityManager } from "@nestjs/typeorm";
-import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
 
 import type { IStakingReportSearchDto } from "@framework/types";
@@ -10,11 +8,7 @@ import { StakingDepositService } from "../deposit/deposit.service";
 
 @Injectable()
 export class StakingReportService {
-  constructor(
-    private readonly stakingDepositService: StakingDepositService,
-    @InjectEntityManager()
-    private readonly entityManager: EntityManager,
-  ) {}
+  constructor(private readonly stakingDepositService: StakingDepositService) {}
 
   public async search(dto: IStakingReportSearchDto): Promise<[Array<StakingDepositEntity>, number]> {
     const { deposit, reward, ...rest } = dto;

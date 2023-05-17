@@ -13,7 +13,7 @@ import { IStakingRule, ModuleType, StakingRuleStatus } from "@framework/types";
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { validationSchema } from "./validation";
 
-export interface IStakingEditDialogProps {
+export interface IStakingRuleEditDialogProps {
   open: boolean;
   readOnly?: boolean;
   onCancel: () => void;
@@ -21,7 +21,7 @@ export interface IStakingEditDialogProps {
   initialValues: IStakingRule;
 }
 
-export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
+export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
   const {
@@ -71,7 +71,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
         }}
         readOnly={!!id}
       />
-      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} disabledOptions={[StakingRuleStatus.NEW]} />
+      <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
       <Grid container spacing={2}>
         {readOnly ? (
           <Grid item xs={12}>
@@ -83,10 +83,21 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="deposit" readOnly={readOnly} />
+          <TemplateAssetInput
+            autoSelect
+            prefix="deposit"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} />
+          <TemplateAssetInput
+            allowEmpty
+            autoSelect
+            prefix="reward"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+          />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 
@@ -50,8 +50,11 @@ export class CategoryService {
     return this.categoryEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<CategoryEntity>): Promise<CategoryEntity | null> {
-    return this.categoryEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<CategoryEntity>,
+    options?: FindOneOptions<CategoryEntity>,
+  ): Promise<CategoryEntity | null> {
+    return this.categoryEntityRepository.findOne({ where, ...options });
   }
 
   public async autocomplete(): Promise<Array<CategoryEntity>> {

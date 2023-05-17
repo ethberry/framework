@@ -5,9 +5,9 @@ import { time } from "@openzeppelin/test-helpers";
 
 import {
   amount,
-  MINTER_ROLE,
   DEFAULT_ADMIN_ROLE,
   InterfaceId,
+  MINTER_ROLE,
   nonce,
   PAUSER_ROLE,
 } from "@gemunion/contracts-constants";
@@ -17,7 +17,7 @@ import {
   shouldSupportsInterface,
 } from "@gemunion/contracts-mocha";
 
-import { externalId, params, tokenId } from "../constants";
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
@@ -229,7 +229,7 @@ describe("ExchangeCore", function () {
         ],
         signature,
       );
-      await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail: signer is missing role", async function () {
@@ -278,7 +278,7 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -356,7 +356,7 @@ describe("ExchangeCore", function () {
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
 
-    it("should fail: expired signature", async function () {
+    it("should fail: expired signature 1", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -368,6 +368,7 @@ describe("ExchangeCore", function () {
         externalId,
         expiresAt,
         referrer: constants.AddressZero,
+        extra,
       };
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -407,7 +408,86 @@ describe("ExchangeCore", function () {
         signature,
       );
 
-      await expect(tx).to.be.revertedWith(`Exchange: Expired signature`);
+      await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
+    });
+
+    it("should fail: expired signature 2", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+      const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+
+      const params = {
+        nonce,
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+        extra,
+      };
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx1).to.emit(exchangeInstance, "Purchase");
+
+      const tx2 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
     });
 
     it("should fail: paused", async function () {
@@ -438,10 +518,5 @@ describe("ExchangeCore", function () {
     });
   });
 
-  shouldSupportsInterface(factory)(
-    InterfaceId.IERC165,
-    InterfaceId.IERC1363Receiver,
-    // InterfaceId.IERC1363Spender,
-    "0x7b04a2d0",
-  );
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IERC1363Receiver, InterfaceId.IERC1363Spender]);
 });

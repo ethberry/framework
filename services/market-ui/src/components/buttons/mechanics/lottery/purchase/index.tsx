@@ -31,6 +31,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             externalId: 0,
             expiresAt: sign.expiresAt,
             referrer: settings.getReferrer(),
+            extra: utils.formatBytes32String("0x"),
           },
           ticketNumbers,
           constants.WeiPerEther,

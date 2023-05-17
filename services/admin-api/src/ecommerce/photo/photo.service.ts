@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { PhotoStatus } from "@framework/types";
 
@@ -27,8 +27,11 @@ export class PhotoService {
     return this.photoEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<PhotoEntity>): Promise<PhotoEntity | null> {
-    return this.photoEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<PhotoEntity>,
+    options?: FindOneOptions<PhotoEntity>,
+  ): Promise<PhotoEntity | null> {
+    return this.photoEntityRepository.findOne({ where, ...options });
   }
 
   public async create(

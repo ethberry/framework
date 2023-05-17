@@ -12,8 +12,9 @@ import "./interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
+import "../../utils/TopUp.sol";
 
-contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtils {
+contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, TopUp {
   using Counters for Counters.Counter;
 
   using Address for address;
@@ -59,13 +60,17 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     _burn(tokenId);
 
-    acquire(_itemData[tokenId], account, _disabledTypes);
+    ExchangeUtils.acquire(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return interfaceId == type(IERC721Mysterybox).interfaceId || super.supportsInterface(interfaceId);
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Simple, TopUp) returns (bool) {
+    return interfaceId == IERC721_MYSTERY_ID || super.supportsInterface(interfaceId);
   }
 
-  // ETH FUND
-  function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {}
+  /**
+   * @dev Restrict the contract to receive Ether (receive via topUp function only).
+   */
+  receive() external payable override(ERC721Simple, TopUp) {
+    revert();
+  }
 }

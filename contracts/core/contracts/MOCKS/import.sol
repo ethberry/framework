@@ -10,3 +10,6 @@ import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-mocks/contracts/Jerk.sol";
 
 import "@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol";
+
+import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABCE.sol";
+import "@gemunion/contracts-erc20/contracts/preset/ERC20ABCS.sol";

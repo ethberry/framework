@@ -12,10 +12,10 @@ import {
   IOwnershipTransferredEvent,
 } from "@framework/types";
 
-import { AccessControlService } from "./access-control.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { NotificatorService } from "../../../game/notificator/notificator.service";
+import { AccessControlService } from "./access-control.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -103,6 +103,6 @@ export class AccessControlServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    this.notificatorService.dummyUser({ tokenId, user, expires });
+    this.notificatorService.updateUser({ tokenId, user, expires });
   }
 }

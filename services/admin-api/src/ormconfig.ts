@@ -65,11 +65,20 @@ import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity"
 import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
 import { PromoEntity } from "./ecommerce/promo/promo.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
+/* achievements */
+import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 import {
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAddress1683724061900,
+  CreateAchievementItem1681273013050,
+  CreateAchievementLevel1681273013030,
+  CreateAchievementRedemption1681273013070,
+  CreateAchievementRule1681273013010,
   CreateAsset1563804000100,
   CreateAssetComponent1563804001220,
   CreateAuth1563803000150,
@@ -126,10 +135,17 @@ import {
   SeedAccessListErc20At1653616447320,
   SeedAccessListErc721At1653616447330,
   SeedAccessListErc998At1653616447340,
+  SeedAchievementClaimErc721At1681273013071,
+  SeedAchievementItem1681273013060,
+  SeedAchievementLevel1681273013040,
+  SeedAchievementRedemption1681273013080,
+  SeedAchievementRule1681273013020,
   SeedAddress1683724061910,
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentProductItemAt1683724061520,
   SeedAssetComponentRent1678931845520,
+  SeedAssetComponentsAchievementAt1681273013045,
+  SeedAssetComponentsAchievementRule1681273013025,
   SeedAssetComponentsCollectionAt1679894501230,
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsErc721At1563804001230,
@@ -191,6 +207,8 @@ import {
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
+  SeedEventHistoryErc998ClaimAt1563804040330,
+  SeedEventHistoryErc998ClaimComponentsAt1563804040340,
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
   SeedExchangePayees1663047650510,
@@ -321,6 +339,11 @@ const config: PostgresConnectionOptions = {
     ProductItemParameterEntity,
     PromoEntity,
     StockEntity,
+    /* achievements */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -472,12 +495,14 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721TransferAt1563804040130,
     SeedEventHistoryErc721PurchaseAt1563804040230,
     SeedEventHistoryErc721ClaimAt1563804040330,
+    SeedEventHistoryErc998ClaimAt1563804040330,
     SeedEventHistoryErc998PurchaseAt1563804040230,
 
     CreateEventHistoryComponents1563804040020,
     SeedEventHistoryErc20ClaimComponentsAt1563804040340,
     SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
     SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+    SeedEventHistoryErc998ClaimComponentsAt1563804040340,
     SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
 
     CreateCompositionAt1658980520000,
@@ -566,6 +591,19 @@ const config: PostgresConnectionOptions = {
     SeedStock1683724062510,
     CreateProductItemParameter1683724062600,
     SeedProductItemParameter1683724062610,
+
+    /* achievements */
+    CreateAchievementRule1681273013010,
+    SeedAchievementRule1681273013020,
+    SeedAssetComponentsAchievementRule1681273013025,
+    CreateAchievementLevel1681273013030,
+    SeedAchievementLevel1681273013040,
+    SeedAssetComponentsAchievementAt1681273013045,
+    CreateAchievementItem1681273013050,
+    SeedAchievementItem1681273013060,
+    CreateAchievementRedemption1681273013070,
+    SeedAchievementClaimErc721At1681273013071,
+    SeedAchievementRedemption1681273013080,
   ],
 };
 

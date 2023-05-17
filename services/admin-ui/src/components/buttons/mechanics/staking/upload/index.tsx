@@ -34,13 +34,16 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
   };
 
   // MODULE:MYSTERYBOX
-  const { fn } = useApiCall((api, data: { templateIds: Array<number> }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return api.fetchJson({
-      url: "/mystery/boxes",
-      data,
-    });
-  });
+  const { fn } = useApiCall(
+    (api, data: { templateIds: Array<number> }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return api.fetchJson({
+        url: "/mystery/boxes",
+        data,
+      });
+    },
+    { success: false },
+  );
 
   const metaLoadRule = useMetamask((rule: IStakingRule, content: Array<any>, web3Context: Web3ContextType) => {
     const stakingRule = {

@@ -29,6 +29,7 @@ export class LotterySignService {
         externalId: 0,
         expiresAt,
         referrer,
+        extra: utils.formatBytes32String("0x"),
       },
       ticketNumbers,
     );

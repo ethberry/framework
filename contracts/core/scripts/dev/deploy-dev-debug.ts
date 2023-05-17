@@ -3,13 +3,13 @@ import { constants, Contract } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
-import { baseTokenURI, MINTER_ROLE, METADATA_ROLE, royalty } from "@gemunion/contracts-constants";
+import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
 import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
 const delayMs = 500; // block delay ms
-// const linkAmountInEth = ethers.utils.parseEther("1");
+// const linkAmountInEth = utils.parseEther("1");
 
 interface IObj {
   address?: string;
@@ -252,22 +252,22 @@ async function main() {
   await debug(contracts);
 
   // TODO contracts are too big
-  // const erc998Owner20Factory = await ethers.getContractFactory("ERC998ERC20Simple");
-  // contracts.erc998OwnerErc20 = await erc998Owner20Factory.deploy("OWNER ERC20", "OWN20", royalty, baseTokenURI);
-  // await debug(contracts);
-  //
-  // const erc998Owner1155Factory = await ethers.getContractFactory("ERC998ERC1155Simple");
-  // contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
-  // await debug(contracts);
-  //
-  // const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
-  // contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
-  //   "OWNER FULL",
-  //   "OWNFULL",
-  //   royalty,
-  //   baseTokenURI,
-  // );
-  // await debug(contracts);
+  const erc998Owner20Factory = await ethers.getContractFactory("ERC998ERC20Simple");
+  contracts.erc998OwnerErc20 = await erc998Owner20Factory.deploy("OWNER ERC20", "OWN20", royalty, baseTokenURI);
+  await debug(contracts);
+
+  const erc998Owner1155Factory = await ethers.getContractFactory("ERC998ERC1155Simple");
+  contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
+  await debug(contracts);
+
+  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
+  contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
+    "OWNER FULL",
+    "OWNFULL",
+    royalty,
+    baseTokenURI,
+  );
+  await debug(contracts);
 
   const erc1155SimpleFactory = await ethers.getContractFactory("ERC1155Simple");
   contracts.erc1155Simple = await erc1155SimpleFactory.deploy(royalty, baseTokenURI);
@@ -466,7 +466,6 @@ async function main() {
   );
   await debug(contracts);
 
-  // await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
   await debug(
     await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lottery.address),
     "vrfInstance.addConsumer",
@@ -503,6 +502,16 @@ async function main() {
   await debug(contracts);
 
   // TODO add pyramid deploy
+  const pyramidFactory = await ethers.getContractFactory("Pyramid");
+  contracts.pyramid = await pyramidFactory.deploy(
+    [
+      "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+      "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+      "0x61284003e50b2d7ca2b95f93857abb78a1b0f3ca",
+    ],
+    [1, 5, 95],
+  );
+  await debug(contracts);
 
   // GRANT ROLES
   await grantRoles(
@@ -513,6 +522,7 @@ async function main() {
       contracts.erc721New.address,
       contracts.erc721Random.address,
       contracts.erc721Simple.address,
+      contracts.erc721Blacklist.address,
       contracts.erc721Upgradeable.address,
       contracts.erc721Rentable.address,
       contracts.erc721Soulbound.address,
@@ -538,15 +548,16 @@ async function main() {
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
       contracts.lottery.address,
+      contracts.pyramid.address,
     ],
     [MINTER_ROLE],
   );
 
   // GRANT METADATA ROLES
   await grantRoles(
-    [contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
+    [contracts.erc721Random.address, contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
     [contracts.exchange.address],
-    [MINTER_ROLE],
+    [METADATA_ROLE],
   );
 }
 

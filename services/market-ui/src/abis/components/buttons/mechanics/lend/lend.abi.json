@@ -22,6 +22,11 @@
             "internalType": "uint256",
             "name": "expiresAt",
             "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "extra",
+            "type": "bytes32"
           }
         ],
         "internalType": "struct Params",
@@ -51,9 +56,9 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct Asset[]",
-        "name": "items",
-        "type": "tuple[]"
+        "internalType": "struct Asset",
+        "name": "item",
+        "type": "tuple"
       },
       {
         "components": [
@@ -81,11 +86,6 @@
         "internalType": "struct Asset[]",
         "name": "price",
         "type": "tuple[]"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "expires",
-        "type": "bytes32"
       },
       {
         "internalType": "bytes",

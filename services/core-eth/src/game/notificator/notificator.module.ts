@@ -14,13 +14,13 @@ import { NotificatorService } from "./notificator.service";
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
-          const rmqUrl = configService.get<string>("RMQ_URL", "");
-          const rmqQueueGame = configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
+          const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+          const rmqQueueMobile = configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
           return {
             transport: Transport.RMQ,
             options: {
               urls: [rmqUrl],
-              queue: rmqQueueGame,
+              queue: rmqQueueMobile,
               queueOptions: {
                 durable: false,
               },

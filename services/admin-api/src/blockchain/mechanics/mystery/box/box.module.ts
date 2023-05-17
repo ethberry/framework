@@ -7,9 +7,10 @@ import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
 import { AssetModule } from "../../../exchange/asset/asset.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
-  imports: [ContractModule, TemplateModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],
+  imports: [ContractModule, TemplateModule, TokenModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],
   providers: [MysteryBoxService],
   controllers: [MysteryBoxController],
   exports: [MysteryBoxService],

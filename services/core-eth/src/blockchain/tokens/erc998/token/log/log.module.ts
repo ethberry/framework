@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, TokenType } from "@framework/types";
@@ -21,6 +22,10 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const erc998Contracts = await contractService.findAllTokensByType(TokenType.ERC998);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         return {
           contract: {
             contractType: ContractType.ERC998_TOKEN,
@@ -53,7 +58,8 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           },
           block: {
             fromBlock: erc998Contracts.fromBlock || startingBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },

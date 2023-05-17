@@ -44,12 +44,12 @@ export class RentSignService {
 
     const signature = await this.getSignature(
       account, // from
-      lendExpires,
       {
         nonce,
         externalId, // rent.id
         expiresAt, // sign expires
         referrer, // to
+        extra: lendExpires,
       },
       tokenEntity,
       rentEntity,
@@ -60,22 +60,19 @@ export class RentSignService {
 
   public getSignature(
     account: string,
-    expires: string,
     params: IParams,
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {
-    return this.signerService.getManyToManyExtraSignature(
+    return this.signerService.getOneToManySignature(
       account,
       params,
-      [
-        {
-          tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
-          token: tokenEntity.template.contract.address,
-          tokenId: tokenEntity.tokenId,
-          amount: "1", // todo get from DTO? (for 1155)
-        },
-      ],
+      {
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        token: tokenEntity.template.contract.address,
+        tokenId: tokenEntity.tokenId,
+        amount: "1", // todo get from DTO? (for 1155)
+      },
       rentEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
@@ -85,7 +82,6 @@ export class RentSignService {
             : component.template.tokens[0].tokenId,
         amount: component.amount,
       })),
-      expires,
     );
   }
 }

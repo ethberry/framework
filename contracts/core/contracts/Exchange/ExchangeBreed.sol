@@ -16,7 +16,7 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
-abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
   using SafeCast for uint256;
 
   uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
@@ -39,16 +39,22 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverOneToOneSignature(params, item, price, signature);
-    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
+    if (!hasRole(MINTER_ROLE, signer)) {
+      revert SignerMissingRole();
+    }
 
     address account = _msgSender();
 
     // TODO approved
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    require(ownerOf1 == account, "Exchange: Not an owner");
+    if (ownerOf1 != account) {
+      revert NotAnOwner();
+    }
 
     address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
-    require(ownerOf2 == account, "Exchange: Not an owner");
+    if (ownerOf2 != account) {
+      revert NotAnOwner();
+    }
 
     pregnancyCheckup(item, price);
 
@@ -63,8 +69,12 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
 
     // Check pregnancy count
     if (_pregnancyCountLimit > 0) {
-      require(pregnancyM.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
-      require(pregnancyS.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
+      if (pregnancyM.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
+      if (pregnancyS.count >= _pregnancyCountLimit) {
+        revert CountExceed();
+      }
     }
 
     // Check pregnancy time
@@ -72,6 +82,7 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
 
     require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
+    // TODO set rules
     uint64 timeLimitM = pregnancyM.count > 13
       ? _pregnancyMaxTime
       : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64();
@@ -80,8 +91,12 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
       : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64();
 
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
-      require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");
-      require(timeNow - pregnancyS.time > timeLimitS, "Exchange: pregnancy time limit");
+      if (timeNow - pregnancyM.time <= timeLimitM) {
+        revert LimitExceed();
+      }
+      if (timeNow - pregnancyS.time <= timeLimitS) {
+        revert LimitExceed();
+      }
     }
     // Update Pregnancy
     pregnancyM.count += 1;
