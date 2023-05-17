@@ -44,7 +44,11 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
+      <TemplateAssetInput
+        autoSelect
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+      />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
