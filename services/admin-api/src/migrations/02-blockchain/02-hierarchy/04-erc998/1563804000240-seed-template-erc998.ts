@@ -174,7 +174,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         140601,
         'Warrior',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwarrior.png?alt=media&token=144f2bf6-f470-4243-894a-a02a087c916f',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwarrior.png?alt=media&token=ec819144-9ad3-4ea4-9aa8-4a068fd8a56e',
         140601,
         0,
         1,
@@ -220,7 +220,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         140901,
-        'C-Shirt',
+        'T-Shirt',
         '${simpleFormatting}',
         '${imageUrl}',
         140901,

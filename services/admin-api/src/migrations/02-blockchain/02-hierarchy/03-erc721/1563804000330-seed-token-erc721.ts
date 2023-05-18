@@ -45,7 +45,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        13010301, -- Sapfir
+        13010301, -- Sapphire
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "130103",
         })}',
