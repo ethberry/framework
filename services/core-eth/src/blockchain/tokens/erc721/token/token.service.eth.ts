@@ -11,11 +11,12 @@ import {
   IERC721TokenTransferEvent,
   ILevelUp,
   TokenAttributes,
+  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { getMetadata } from "../../../../common/utils";
+import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -72,21 +73,28 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.eventHistoryService.findOne({
-          transactionHash,
-          eventType: ContractEventType.MintRandom,
-        });
-        if (!historyEntity) {
-          this.loggerService.error(
-            "historyNotFound",
+        // decide if it was random mint or common mint via admin-panel
+        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
+        const mintType = getTokenMintType(txLogs);
+
+        if (mintType === TokenMintType.MintRandom) {
+          // update Asset history
+          const historyEntity = await this.eventHistoryService.findOne({
             transactionHash,
-            ContractEventType.MintRandom,
-            Erc721TokenServiceEth.name,
-          );
-          throw new NotFoundException("historyNotFound");
+            eventType: ContractEventType.MintRandom,
+          });
+          if (!historyEntity) {
+            this.loggerService.error(
+              "historyNotFound",
+              transactionHash,
+              ContractEventType.MintRandom,
+              Erc721TokenServiceEth.name,
+            );
+            throw new NotFoundException("historyNotFound");
+          }
+          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
+          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
         }
-        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-        await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
       }
 
       // MODULE:BREEDING

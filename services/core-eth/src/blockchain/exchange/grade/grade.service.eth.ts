@@ -30,7 +30,7 @@ export class ExchangeGradeServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const [, itemTokenAddr, itemTokenId] = item;
+    const [itemType, itemTokenAddr, itemTokenId, itemAmount] = item;
 
     const tokenEntity = await this.tokenService.getToken(itemTokenId, itemTokenAddr.toLowerCase());
 
@@ -40,7 +40,13 @@ export class ExchangeGradeServiceEth {
     }
 
     const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
-    await this.assetService.saveAssetHistory(history, [item], price);
+    await this.assetService.saveAssetHistory(
+      history,
+      // we have to change tokenId to templateId for proper asset history
+      [[itemType, itemTokenAddr, tokenEntity.template.id.toString(), itemAmount]],
+      price,
+    );
+    await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
     const gradeEntity = await this.gradeService.findOneByToken(tokenEntity, GradeAttribute.GRADE);
 

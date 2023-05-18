@@ -31,6 +31,7 @@ export class EventHistoryService {
     return queryBuilder.getManyAndCount();
   }
 
+  // TODO add All Exchange events
   public async my(dto: IPaginationDto, userEntity: UserEntity): Promise<[Array<EventHistoryEntity>, number]> {
     const { take, skip } = dto;
     const { wallet } = userEntity;
@@ -88,6 +89,17 @@ export class EventHistoryService {
         qb.orWhere(
           new Brackets(qb1 => {
             qb1.andWhere("history.event_type = :eventType4", { eventType4: ContractEventType.Lend });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'from') = :wallet5", { wallet5: wallet });
+                qb2.orWhere("LOWER(history.event_data->>'to') = :wallet6", { wallet6: wallet });
+              }),
+            );
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType5", { eventType5: ContractEventType.Upgrade });
             qb1.andWhere(
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet5", { wallet5: wallet });

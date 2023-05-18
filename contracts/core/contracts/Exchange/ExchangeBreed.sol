@@ -45,7 +45,7 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
 
     address account = _msgSender();
 
-    // TODO approved
+    // TODO OR approved?
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
     if (ownerOf1 != account) {
       revert NotAnOwner();

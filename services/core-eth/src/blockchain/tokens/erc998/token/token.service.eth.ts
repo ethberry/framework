@@ -17,11 +17,12 @@ import {
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
   TokenAttributes,
+  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { ABI } from "../../erc721/token/log/interfaces";
-import { getMetadata } from "../../../../common/utils";
+import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -79,15 +80,22 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.eventHistoryService.findOne({
-          transactionHash,
-          eventType: ContractEventType.MintRandom,
-        });
-        if (!historyEntity) {
-          throw new NotFoundException("historyNotFound");
+        // decide if it was random mint or common mint via admin-panel
+        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
+        const mintType = getTokenMintType(txLogs);
+
+        if (mintType === TokenMintType.MintRandom) {
+          // update Asset history
+          const historyEntity = await this.eventHistoryService.findOne({
+            transactionHash,
+            eventType: ContractEventType.MintRandom,
+          });
+          if (!historyEntity) {
+            throw new NotFoundException("historyNotFound");
+          }
+          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
+          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
         }
-        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-        await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
       }
     }
 

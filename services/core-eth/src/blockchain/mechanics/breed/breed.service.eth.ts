@@ -21,10 +21,11 @@ export class BreedServiceEth {
     // GENESIS ITEM
     // TODO better check
     if (matronId === 0 && sireId === 0) {
-      this.loggerService.log("Gen Zero Minted", tokenId, transactionHash.toLowerCase(), BreedServiceEth.name);
+      this.loggerService.log("MintedGenZero", tokenId, transactionHash.toLowerCase(), BreedServiceEth.name);
+      // TODO gen validation
       newbornGenes = randomness;
     } else {
-      // TODO one db call -> .findAll()
+      // TODO make it in one db call -> .findAll()
       const mom = await this.breedService.findOne({ id: matronId });
       const dad = await this.breedService.findOne({ id: sireId });
 
