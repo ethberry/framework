@@ -23,8 +23,6 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    @Inject(Logger)
-    protected readonly loggerService: LoggerService,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
