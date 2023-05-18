@@ -48,7 +48,7 @@ export const MysteryboxTokenContent: FC<IMysteryboxTokenContentProps> = props =>
             {tokenType !== TokenType.ERC20 ? (
               <Link
                 component={RouterLink}
-                to={`/${tokenType?.toLowerCase() as string}/templates/${templateId as string}`}
+                to={`/${tokenType?.toLowerCase() as string}/templates/${templateId as number}`}
               >
                 {token.template?.title}
               </Link>
