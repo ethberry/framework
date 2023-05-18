@@ -1,4 +1,4 @@
-import { Inject, Logger, LoggerService, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, LoggerService, Logger, NotFoundException } from "@nestjs/common";
 import { constants } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 

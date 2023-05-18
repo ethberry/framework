@@ -19,6 +19,7 @@ export interface IAmountDialogProps {
 export const AmountDialog: FC<IAmountDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  // TODO validation
   return (
     <FormDialog
       initialValues={initialValues}

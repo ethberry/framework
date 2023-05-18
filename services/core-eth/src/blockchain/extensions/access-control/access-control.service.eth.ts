@@ -12,10 +12,10 @@ import {
   IOwnershipTransferredEvent,
 } from "@framework/types";
 
-import { NotificatorService } from "../../../game/notificator/notificator.service";
+import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { AccessControlService } from "./access-control.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 
 @Injectable()
 export class AccessControlServiceEth {

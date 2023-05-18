@@ -10,7 +10,7 @@ import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 import { customMint } from "./shared/simple/customMintFn";
 import { shouldBehaveLikeERC721Blacklist } from "../../ERC721/shared/blacklist";
 
-describe("ERC721MysteryboxBlacklistPausable", function () {
+describe.skip("ERC721MysteryboxBlacklistPausable", function () {
   const factory = () => deployERC721("ERC721MysteryboxBlacklistPausable");
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);

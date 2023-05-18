@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { Erc1155TokenControllerEth } from "./token.controller.eth";

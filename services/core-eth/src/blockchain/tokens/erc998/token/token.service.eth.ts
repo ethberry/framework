@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, LoggerService, Logger, NotFoundException } from "@nestjs/common";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -15,6 +15,7 @@ import {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
+  ILevelUp,
   TokenAttributes,
   TokenStatus,
 } from "@framework/types";
@@ -321,5 +322,24 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     Object.assign(compositionEntity, { amount: ~~maxCount });
     await compositionEntity.save();
+  }
+
+  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
+    const {
+      args: { tokenId, grade },
+    } = event;
+    const { address } = context;
+
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!erc998TokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    Object.assign(erc998TokenEntity.attributes, { GRADE: grade.toString() });
+    await erc998TokenEntity.save();
+
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
   }
 }

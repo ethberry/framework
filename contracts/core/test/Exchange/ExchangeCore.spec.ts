@@ -162,6 +162,70 @@ describe("ExchangeCore", function () {
         );
     });
 
+    it.skip("should purchase RANDOM, spend ETH", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc721Instance = await deployErc721Base("ERC721RandomBesu", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+        signature,
+        { value: BigNumber.from("123000000000000000") },
+      );
+
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: BigNumber.from("0"),
+            amount: BigNumber.from("123000000000000000"),
+          }),
+        );
+    });
+
     it("should fail: duplicate mint", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();

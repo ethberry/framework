@@ -9,6 +9,7 @@ import {
   IERC721ConsecutiveTransfer,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
+  ILevelUp,
   TokenAttributes,
   TokenStatus,
 } from "@framework/types";
@@ -202,5 +203,24 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       tokenId,
       transactionHash: entityWithRelations.parent.transactionHash, // Purchase transaction
     });
+  }
+
+  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
+    const {
+      args: { tokenId, grade },
+    } = event;
+    const { address } = context;
+
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!erc721TokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    Object.assign(erc721TokenEntity.attributes, { GRADE: grade.toString() });
+    await erc721TokenEntity.save();
+
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
   }
 }

@@ -296,7 +296,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130700,
-        'AXIE (genes)(hidden)',
+        'DNA (genes)(hidden)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -308,7 +308,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130701,
-        'Axie',
+        'DNA',
         '${simpleFormatting}',
         '${imageUrl}',
         130701,
