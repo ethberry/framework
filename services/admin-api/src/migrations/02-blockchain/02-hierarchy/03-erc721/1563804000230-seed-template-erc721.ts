@@ -35,6 +35,20 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130506
       ), (
+        130507
+      ), (
+        130508
+      ), (
+        130509
+      ), (
+        130510
+      ), (
+        130511
+      ), (
+        130512
+      ), (
+        130513
+      ), (
         130601
       ), (
         130602
@@ -227,7 +241,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Heater Shield',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fshield_heater.png?alt=media&token=d3aa5afb-1eb2-42af-8202-3f5336c61727',
-        130506,
+        130507,
         0,
         1,
         'ACTIVE',
@@ -239,7 +253,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Royal Shield',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fshield_royal.png?alt=media&token=862841e6-a834-44e8-8c62-69162d0d10da',
-        130506,
+        130508,
         0,
         1,
         'ACTIVE',
@@ -251,7 +265,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Cloak',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcloak.png?alt=media&token=226d4184-ec9e-4649-8f5c-ab8ab1b3c89f',
-        130506,
+        130509,
         0,
         1,
         'ACTIVE',
@@ -263,7 +277,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Robe',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frobe.png?alt=media&token=128e6731-f2b5-4118-a235-58ada51f0b67',
-        130506,
+        130510,
         0,
         1,
         'ACTIVE',
@@ -271,11 +285,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        130510,
+        130511,
         'Mage Hat',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmages_hat.png?alt=media&token=ccef2e90-83e9-4a96-8eef-74fa9903dad9',
-        130506,
+        130511,
         0,
         1,
         'ACTIVE',
@@ -283,11 +297,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        130510,
+        130512,
         'Witch Hat',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwitch_hat.png?alt=media&token=e3bcbd32-99d5-4504-8a70-feda7f7b987c',
-        130506,
+        130512,
         0,
         1,
         'ACTIVE',
