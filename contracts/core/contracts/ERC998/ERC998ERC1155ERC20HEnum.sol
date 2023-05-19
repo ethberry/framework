@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc998td/contracts/extensions/StateHash.sol";
 
 import "./ERC998SimpleEnum.sol";
 
-contract ERC998ERC1155ERC20StateHashSimpleEnum is
+contract ERC998ERC1155ERC20HEnum is
   ERC998SimpleEnum,
   ERC998ERC1155Enumerable,
   ERC998ERC20Enumerable,

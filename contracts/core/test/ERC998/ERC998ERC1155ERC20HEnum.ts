@@ -15,7 +15,7 @@ import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { customMintCommonERC721 } from "../ERC721/shared/customMintFn";
 import { tokenId } from "../constants";
 
-describe("ERC998ERC1155ERC20StateHashSimpleEnum", function () {
+describe("ERC998ERC1155ERC20HEnum", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
