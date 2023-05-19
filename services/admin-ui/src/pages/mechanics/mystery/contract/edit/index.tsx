@@ -19,8 +19,19 @@ export interface IMysteryContractEditDialogProps {
 export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty } =
-    initialValues;
+  const {
+    id,
+    title,
+    description,
+    baseTokenURI,
+    imageUrl,
+    contractStatus,
+    address,
+    symbol,
+    name,
+    royalty,
+    contractFeatures,
+  } = initialValues;
 
   const fixedValues = {
     id,
@@ -46,6 +57,7 @@ export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = pr
           address={address}
           baseTokenURI={baseTokenURI}
           royalty={`${royalty / 100}%`}
+          contractFeatures={contractFeatures}
         />
       }
       {...rest}
