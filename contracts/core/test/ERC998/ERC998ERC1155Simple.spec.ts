@@ -5,6 +5,7 @@ import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
+import { shouldBehaveLikeERC998ERC1155 } from "@gemunion/contracts-erc998td";
 
 describe("ERC998ERC1155Simple", function () {
   const factory = () => deployERC721(this.title);
@@ -13,6 +14,7 @@ describe("ERC998ERC1155Simple", function () {
 
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
+  shouldBehaveLikeERC998ERC1155(factory);
   shouldMintCommon(factory);
 
   shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
