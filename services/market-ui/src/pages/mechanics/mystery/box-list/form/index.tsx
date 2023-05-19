@@ -3,22 +3,24 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { IMysteryBoxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { IMysteryBoxSearchDto, ModuleType, TokenType } from "@framework/types";
 
 interface IMysteryboxSearchFormProps {
   onSubmit: (values: IMysteryBoxSearchDto) => Promise<void>;
-
   initialValues: IMysteryBoxSearchDto;
   open: boolean;
+  contractType: Array<TokenType>;
+  contractModule: Array<ModuleType>;
   embedded?: boolean;
 }
 
 export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule, embedded } = props;
 
-  const { query, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, minPrice, maxPrice };
+  const { query, contractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, minPrice, maxPrice, contractIds };
 
   return (
     <FormWrapper
@@ -41,6 +43,11 @@ export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
           <Grid item xs={6}>
             <EthInput name="maxPrice" />
           </Grid>
+          {!embedded ? (
+            <Grid item xs={12}>
+              <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
+            </Grid>
+          ) : null}
         </Grid>
       </Collapse>
       <AutoSave onSubmit={onSubmit} />
