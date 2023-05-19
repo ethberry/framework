@@ -3,9 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
+import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysterybox, IMysteryBoxSearchDto } from "@framework/types";
+import { IMysterybox, IMysteryBoxSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { MysteryboxListItem } from "./item";
@@ -18,12 +19,15 @@ export interface IMysteryboxListProps {
 export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
   const { embedded } = props;
 
+  const { id } = useParams<{ id: string }>();
+
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IMysterybox, IMysteryBoxSearchDto>({
       baseUrl: "/mystery/boxes",
       embedded,
       search: {
         query: "",
+        contractIds: embedded ? [~~id!] : [],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.mul(1000).toString(),
       },
@@ -42,7 +46,14 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
         </Button>
       </PageHeader>
 
-      <MysteryboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <MysteryboxSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.MYSTERY]}
+        embedded={embedded}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

@@ -49,7 +49,7 @@ export const StakingRuleSearchForm: FC<IStakingRuleSearchFormProps> = props => {
             <SelectInput multiple name="deposit.tokenType" options={TokenType} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="reward.tokenType" options={TokenType} />
+            <SelectInput displayEmpty multiple name="reward.tokenType" options={TokenType} />
           </Grid>
         </Grid>
       </Collapse>

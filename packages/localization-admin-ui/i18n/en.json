@@ -29,6 +29,7 @@
   },
   "dialogs": {
     "allowance": "Allowance",
+    "addConsumer": "Add VRF Consumer",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
     "claim": "Claim",
@@ -57,6 +58,7 @@
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
     "view": "View",
+    "vrfConsumer": "Add Chain-Link VRF Consumer",
     "whitelist": "Add to whitelist",
     "withdraw": "Withdraw balance"
   },
@@ -463,6 +465,7 @@
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
+      "addConsumer": "Add Consumer",
       "allowance": "Allowance",
       "archive": "Archive",
       "blacklist": "Blacklist",
@@ -842,6 +845,7 @@
     },
     "chain-link": {
       "fund": "Fund",
+      "subscription": "Subscription",
       "title": "ChainLink"
     },
     "claims": {

@@ -28,7 +28,7 @@ export class SeedEventHistoryErc721PurchaseComponentsAt1563804040240 implements 
         1301020,
         'ITEM',
         1301,
-        13010102,
+        13010201,
         1
       ), (
         1301020,
@@ -40,94 +40,10 @@ export class SeedEventHistoryErc721PurchaseComponentsAt1563804040240 implements 
         1301030,
         'ITEM',
         1301,
-        13010103,
+        13010301,
         1
       ), (
         1301030,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301040,
-        'ITEM',
-        1301,
-        13010104,
-        1
-      ), (
-        1301040,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301050,
-        'ITEM',
-        1301,
-        13010105,
-        1
-      ), (
-        1301050,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301060,
-        'ITEM',
-        1301,
-        13010106,
-        1
-      ), (
-        1301060,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301070,
-        'ITEM',
-        1301,
-        13010107,
-        1
-      ), (
-        1301070,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301080,
-        'ITEM',
-        1301,
-        13010108,
-        1
-      ), (
-        1301080,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301090,
-        'ITEM',
-        1301,
-        13010109,
-        1
-      ), (
-        1301090,
-        'PRICE',
-        1201,
-        12010101,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        1301100,
-        'ITEM',
-        1301,
-        13010110,
-        1
-      ), (
-        1301100,
         'PRICE',
         1201,
         12010101,

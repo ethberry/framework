@@ -84,6 +84,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
         ) : null}
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
+            autoSelect
             prefix="deposit"
             readOnly={readOnly}
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
@@ -91,9 +92,10 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput
+            allowEmpty
+            autoSelect
             prefix="reward"
             readOnly={readOnly}
-            allowEmpty
             contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
           />
         </Grid>

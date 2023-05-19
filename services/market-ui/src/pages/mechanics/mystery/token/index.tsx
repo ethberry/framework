@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../components/buttons";
+import { TokenSellButton, TokenTransferButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { MysteryboxTokenContent } from "../../../../components/tables/mysterybox-token-content";
@@ -53,6 +53,7 @@ export const MysteryboxToken: FC = () => {
               />
             </Typography>
             <TokenSellButton token={selected} />
+            <TokenTransferButton token={selected} />
           </Paper>
         </Grid>
 

@@ -47,7 +47,6 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
       <Menu id="template-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {template.contract!.contractType !== TokenType.NATIVE &&
         template.contract!.contractModule === ModuleType.HIERARCHY &&
-        !template.contract!.contractFeatures.includes(ContractFeatures.RANDOM) &&
         !template.contract!.contractFeatures.includes(ContractFeatures.GENES) ? (
           <MintMenuItem template={template} />
         ) : (

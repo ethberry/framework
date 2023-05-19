@@ -66,8 +66,9 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
         <FormattedMessage id="form.labels.achievementLevelItem" />
       </Typography>
       <TemplateAssetInput
-        multiple
         allowEmpty
+        autoSelect
+        multiple
         prefix="item"
         showLabel={false}
         tokenType={{ disabledOptions: [TokenType.NATIVE] }}

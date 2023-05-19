@@ -52,7 +52,7 @@ export class GradeService {
     }
 
     const gradeEntity = await this.findOneWithRelations({
-      contractId: tokenEntity.template.contract.id,
+      contractId: tokenEntity.template.contractId,
       attribute,
     });
 

@@ -1,5 +1,4 @@
 import { FC, MouseEvent, useState } from "react";
-
 import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Help } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -19,7 +18,7 @@ export const BlockchainInfoPopover: FC<Record<string, any>> = props => {
   const id = open ? "contract-info" : undefined;
 
   return (
-    <Box position="absolute" right={16} top={16} zIndex="1000">
+    <Box sx={{ zIndex: 1000 }}>
       <IconButton aria-describedby={id} onClick={handleClick}>
         <Help />
       </IconButton>

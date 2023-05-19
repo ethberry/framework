@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { Erc1155TokenControllerEth } from "./token.controller.eth";
@@ -10,7 +10,7 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
 
 @Module({
   imports: [ConfigModule, EventHistoryModule, Erc1155TokenLogModule, TokenModule, BalanceModule],
-  providers: [Erc1155TokenServiceEth],
+  providers: [Logger, Erc1155TokenServiceEth],
   controllers: [Erc1155TokenControllerEth],
   exports: [Erc1155TokenServiceEth],
 })

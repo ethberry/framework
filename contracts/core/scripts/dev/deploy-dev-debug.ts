@@ -8,7 +8,7 @@ import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
-const delayMs = 500; // block delay ms
+const delayMs = 900; // block delay ms
 // const linkAmountInEth = utils.parseEther("1");
 
 interface IObj {
@@ -45,7 +45,7 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
 };
 
 const contracts: Record<string, Contract> = {};
-const amount = constants.WeiPerEther.mul(1e6);
+const amount = constants.WeiPerEther.mul(1e12);
 const timestamp = Math.ceil(Date.now() / 1000);
 let currentBlock: { number: number } = { number: 1 };
 
@@ -185,8 +185,13 @@ async function main() {
 
   const genesContractName = getContractName("ERC721Genes", network.name);
   const erc721GenesFactory = await ethers.getContractFactory(genesContractName);
-  contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 BREED", "BR721", royalty, baseTokenURI);
+  contracts.erc721Genes = await erc721GenesFactory.deploy("ERC721 DNA", "DNA721", royalty, baseTokenURI);
   await debug(contracts);
+
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Genes.address),
+    "vrfInstance.addConsumer",
+  );
 
   const erc721RentableFactory = await ethers.getContractFactory("ERC721Rentable");
   contracts.erc721Rentable = await erc721RentableFactory.deploy("T-SHIRT (rentable)", "TS721", royalty, baseTokenURI);
@@ -246,6 +251,11 @@ async function main() {
   const erc998GenesFactory = await ethers.getContractFactory(genes998ContractName);
   contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (genes)", "DNA998", royalty, baseTokenURI);
   await debug(contracts);
+
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Genes.address),
+    "vrfInstance.addConsumer",
+  );
 
   const erc998RentableFactory = await ethers.getContractFactory("ERC998Rentable");
   contracts.erc998Rentable = await erc998RentableFactory.deploy("C-SHIRT (rentable)", "REN998", royalty, baseTokenURI);

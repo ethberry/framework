@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, LoggerService, Logger, NotFoundException } from "@nestjs/common";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -15,12 +15,14 @@ import {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
+  ILevelUp,
   TokenAttributes,
+  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { ABI } from "../../erc721/token/log/interfaces";
-import { getMetadata } from "../../../../common/utils";
+import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -34,6 +36,8 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly tokenService: TokenService,
@@ -45,7 +49,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
   ) {
-    super(tokenService, eventHistoryService);
+    super(loggerService, tokenService, eventHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
@@ -76,15 +80,22 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.eventHistoryService.findOne({
-          transactionHash,
-          eventType: ContractEventType.MintRandom,
-        });
-        if (!historyEntity) {
-          throw new NotFoundException("historyNotFound");
+        // decide if it was random mint or common mint via admin-panel
+        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
+        const mintType = getTokenMintType(txLogs);
+
+        if (mintType === TokenMintType.MintRandom) {
+          // update Asset history
+          const historyEntity = await this.eventHistoryService.findOne({
+            transactionHash,
+            eventType: ContractEventType.MintRandom,
+          });
+          if (!historyEntity) {
+            throw new NotFoundException("historyNotFound");
+          }
+          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
+          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
         }
-        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-        await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
       }
     }
 
@@ -319,5 +330,24 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     Object.assign(compositionEntity, { amount: ~~maxCount });
     await compositionEntity.save();
+  }
+
+  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
+    const {
+      args: { tokenId, grade },
+    } = event;
+    const { address } = context;
+
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!erc998TokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    Object.assign(erc998TokenEntity.attributes, { GRADE: grade.toString() });
+    await erc998TokenEntity.save();
+
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
   }
 }

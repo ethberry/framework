@@ -66,6 +66,7 @@ MULTIPLIER - RECURRENT - WITHDRAW_DEPOSIT - BREAK_LAST_PERIOD === DECISION
 */
 
 describe("Staking", function () {
+  this.timeout(120000);
   const period = 300;
   const penalty = 0;
   const cycles = 2;

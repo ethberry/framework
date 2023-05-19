@@ -22,7 +22,10 @@ import { abiEncode, keccak256It } from "../utils";
         const vrfContractAddr = configService.get<string>("VRF_ADDR", "");
         const vrfCoordinator = await contractService.findOne({ address: vrfContractAddr.toLowerCase() });
 
-        const randomTokens = await contractService.findAllTokensByType(void 0, [ContractFeatures.RANDOM]);
+        const randomTokens = await contractService.findAllTokensByType(void 0, [
+          ContractFeatures.RANDOM,
+          ContractFeatures.GENES,
+        ]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -34,6 +37,7 @@ import { abiEncode, keccak256It } from "../utils";
           null,
           [...new Set(randomTokens.address?.map(addr => abiEncode(addr, "address")))],
         ];
+
         return {
           contract: {
             contractType: ChainLinkType.VRF,
@@ -41,7 +45,7 @@ import { abiEncode, keccak256It } from "../utils";
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [
-              ChainLinkEventType.RandomWordsRequested,
+              ChainLinkEventType.RandomWordsRequested
             ],
             topics,
           },

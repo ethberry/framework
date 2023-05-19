@@ -10,7 +10,7 @@ import type {
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
-import { ContractEventType, ContractType } from "@framework/types";
+import { ContractEventType, ContractType, ILevelUp } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 
@@ -47,5 +47,10 @@ export class Erc721TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.MintRandom })
   public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.mintRandom(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.LevelUp })
+  public levelUp(@Payload() event: ILogEvent<ILevelUp>, @Ctx() context: Log): Promise<void> {
+    return this.erc721TokenServiceEth.levelUp(event, context);
   }
 }

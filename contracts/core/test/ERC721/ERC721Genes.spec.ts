@@ -6,6 +6,7 @@ import { shouldNotMint } from "./shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "./shared/simple/base/shouldNotSafeMint";
 import { shouldNotMintCommon } from "./shared/genes/shouldNotMintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
+import { FrameworkInterfaceId } from "../constants";
 
 describe("ERC721Genes", function () {
   const factory = () => deployERC721(this.title);
@@ -17,5 +18,10 @@ describe("ERC721Genes", function () {
   shouldNotSafeMint(factory);
   shouldMintRandom(factory);
 
-  shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
+  shouldSupportsInterface(factory)([
+    InterfaceId.IERC165,
+    InterfaceId.IAccessControl,
+    InterfaceId.IERC721,
+    FrameworkInterfaceId.ERC721Random,
+  ]);
 });
