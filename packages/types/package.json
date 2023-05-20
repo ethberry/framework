@@ -12,7 +12,7 @@
     "ethers": "5.7.2"
   },
   "devDependencies": {
-    "rimraf": "5.0.0"
+    "rimraf": "5.0.1"
   },
   "files": [
     "dist/*"
