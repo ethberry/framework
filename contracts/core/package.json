@@ -48,7 +48,7 @@
   "devDependencies": {
     "@ethersproject/networks": "5.7.1",
     "@ethersproject/shims": "5.7.0",
-    "@gemunion/eslint-config": "2.0.7",
+    "@gemunion/eslint-config": "3.0.2",
     "@typechain/ethers-v5": "10.2.1",
     "@typechain/hardhat": "6.1.6",
     "@types/chai": "4.3.5",
