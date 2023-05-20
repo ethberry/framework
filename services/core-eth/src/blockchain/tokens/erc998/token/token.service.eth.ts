@@ -1,9 +1,8 @@
-import { Inject, Injectable, LoggerService, Logger, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
-
 import {
   ContractEventType,
   IERC721TokenMintRandomEvent,
@@ -21,17 +20,16 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { ABI } from "../../erc721/token/log/interfaces";
 import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
-import { OwnershipService } from "../ownership/ownership.service";
-import { Erc998CompositionService } from "../composition/composition.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { ABI } from "../../erc721/token/log/interfaces";
+import { Erc998CompositionService } from "../composition/composition.service";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -45,7 +43,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly templateService: TemplateService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly contractService: ContractService,
-    protected readonly ownershipService: OwnershipService,
     protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
   ) {
@@ -142,6 +139,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
     }
+
     await this.eventHistoryService.updateHistory(
       event,
       context,
@@ -155,7 +153,12 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.ownershipService.create({ parentId: erc998TokenEntity.id, childId: tokenEntity.id, amount: 1 });
+    await this.balanceService.create({
+      account: erc998TokenEntity.template.contract.address,
+      targetId: erc998TokenEntity.id,
+      tokenId: tokenEntity.id,
+      amount: "1",
+    });
   }
 
   public async receivedChildBatch(event: ILogEvent<IErc998BatchReceivedChildEvent>, context: Log): Promise<void> {
@@ -168,6 +171,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
     }
+
     await this.eventHistoryService.updateHistory(
       event,
       context,
@@ -182,10 +186,11 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
         throw new NotFoundException("childTokenNotFound");
       }
 
-      await this.ownershipService.create({
-        parentId: erc998TokenEntity.id,
-        childId: childTokenEntity.id,
-        amount: ~~amounts[i],
+      await this.balanceService.create({
+        account: erc998TokenEntity.template.contract.address,
+        targetId: erc998TokenEntity.id,
+        tokenId: childTokenEntity.id,
+        amount: amounts[i],
       });
     });
   }
@@ -203,13 +208,16 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    const ownershipEntity = await this.ownershipService.findOne({ childId: erc721TokenEntity.id });
+    const balanceEntity = await this.balanceService.findOne({
+      tokenId: erc721TokenEntity.id,
+    });
 
-    if (!ownershipEntity) {
-      throw new NotFoundException("ownershipNotFound");
+    if (!balanceEntity) {
+      throw new NotFoundException("balanceNotFound");
     }
 
-    await this.ownershipService.delete({ id: ownershipEntity.id });
+    // await balanceEntity.remove();
+    await this.balanceService.delete({ id: balanceEntity.id });
   }
 
   public async transferChildBatch(event: ILogEvent<IErc998BatchTransferChildEvent>, context: Log): Promise<void> {
@@ -227,17 +235,17 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
         await this.eventHistoryService.updateHistory(event, context, childTokenEntity.id);
 
-        const ownershipEntity = await this.ownershipService.findOne({ childId: childTokenEntity.id });
+        const balanceEntity = await this.balanceService.findOne({ tokenId: childTokenEntity.id });
 
-        if (!ownershipEntity) {
-          throw new NotFoundException("ownershipNotFound");
+        if (!balanceEntity) {
+          throw new NotFoundException("balanceNotFound");
         }
 
-        if (ownershipEntity.amount > ~~amounts[i]) {
-          Object.assign(ownershipEntity, { amount: ownershipEntity.amount - ~~amounts[i] });
-          await ownershipEntity.save();
+        if (~~balanceEntity.amount > ~~amounts[i]) {
+          Object.assign(balanceEntity, { amount: ~~balanceEntity.amount - ~~amounts[i] });
+          await balanceEntity.save();
         } else {
-          await this.ownershipService.delete({ id: ownershipEntity.id });
+          await this.balanceService.delete({ id: balanceEntity.id });
         }
       }),
     );

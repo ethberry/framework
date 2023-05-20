@@ -9,5 +9,3 @@ export * from "./1563804040330-seed-event-history-erc998-claim";
 export * from "./1563804040340-seed-event-history-erc998-claim-components";
 export * from "./1658980520000-create-composition";
 export * from "./1658980520010-seed-composition";
-export * from "./1658980520100-create-ownership";
-export * from "./1658980520110-seed-ownership";

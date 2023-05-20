@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber } from "ethers";
 
 import { BalanceEntity } from "./balance.entity";
@@ -27,6 +27,10 @@ export class BalanceService {
 
   public async createBatch(dto: Array<DeepPartial<BalanceEntity>>): Promise<Array<BalanceEntity>> {
     return this.balanceEntityRepository.save(dto, { chunk: 1000 });
+  }
+
+  public delete(where: FindOptionsWhere<BalanceEntity>): Promise<DeleteResult> {
+    return this.balanceEntityRepository.delete(where);
   }
 
   public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
