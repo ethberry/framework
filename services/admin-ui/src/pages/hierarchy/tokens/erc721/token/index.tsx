@@ -37,7 +37,9 @@ export const Erc721Token: FC = () => {
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc721/tokens",
     empty: {
-      template: {} as ITemplate,
+      template: {
+        box: {},
+      } as unknown as ITemplate,
       attributes: "{}",
     },
     search: {

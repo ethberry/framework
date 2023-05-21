@@ -239,6 +239,7 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("rent_price.components", "rent_price_components");
     queryBuilder.leftJoinAndSelect("rent_price_components.contract", "rent_price_components_contract");
     queryBuilder.leftJoinAndSelect("rent_price_components.template", "rent_price_components_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "rent_price_components_template.tokens",

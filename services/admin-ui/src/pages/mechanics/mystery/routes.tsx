@@ -15,7 +15,7 @@ export const mysteryRoutes: Array<RouteObject> = [
       {
         index: true,
         element: (
-          <IndexWrapper index="native">
+          <IndexWrapper index="mystery">
             <MysterySection />
           </IndexWrapper>
         ),

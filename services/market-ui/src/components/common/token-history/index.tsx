@@ -183,7 +183,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   return (
     <ProgressOverlay isLoading={isLoading} wrapperSx={{ width: "100%" }}>
       <Grid item xs={12}>
-        <Typography variant="h5" sx={{ my: 1 }}>
+        <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>
           <FormattedMessage id="pages.history.token.title" />
         </Typography>
         <DataGrid

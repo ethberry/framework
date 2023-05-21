@@ -8,11 +8,11 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { useStyles } from "./styles";
 import { TokenSellButton, TokenTransferButton } from "../../../../components/buttons";
+import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
-import { MysteryboxTokenContent } from "../../../../components/tables/mysterybox-token-content";
+import { useStyles } from "./styles";
 
 export const MysteryboxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
@@ -21,7 +21,10 @@ export const MysteryboxToken: FC = () => {
       template: {
         title: "",
         description: emptyStateString,
-      } as ITemplate,
+        box: {
+          item: {},
+        },
+      } as unknown as ITemplate,
     },
   });
 
@@ -56,16 +59,17 @@ export const MysteryboxToken: FC = () => {
             <TokenTransferButton token={selected} />
           </Paper>
         </Grid>
-
-        <MysteryboxTokenContent token={selected} />
-
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
+
+      {/* @ts-ignore */}
+      <MysteryboxContent mysterybox={selected.template.box} />
+
+      <TokenHistory
+        token={selected}
+        isLoading={isLoading}
+        search={search}
+        handleChangePaginationModel={handleChangePaginationModel}
+      />
     </Fragment>
   );
 };

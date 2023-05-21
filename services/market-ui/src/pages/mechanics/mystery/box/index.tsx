@@ -57,6 +57,7 @@ export const MysteryBox: FC = () => {
           </Paper>
         </Grid>
       </Grid>
+
       <MysteryboxContent mysterybox={selected} />
     </Fragment>
   );
