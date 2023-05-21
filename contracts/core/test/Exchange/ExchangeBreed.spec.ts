@@ -7,7 +7,8 @@ import { amount } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { IERC721Random, VRFCoordinatorMock } from "../../typechain-types";
+import { VRFCoordinatorMock } from "../../typechain-types";
+import type { IERC721Random } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";

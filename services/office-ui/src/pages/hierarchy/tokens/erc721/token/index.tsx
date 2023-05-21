@@ -15,10 +15,11 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ITemplate, IToken, ITokenSearchDto, IUser, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
 
-import { Erc721TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
+import { Erc721TokenViewDialog } from "./view";
 
 export const Erc721Token: FC = () => {
   const user = useUser<IUser>();

@@ -6,8 +6,9 @@ import { AccountBalanceWallet } from "@mui/icons-material";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
-import { BalanceWithdrawDialog } from "./withdraw-dialog";
+
 import { CommonActionsMenu } from "../../../../components/menu/mechanics/common";
+import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
 export const SystemContracts: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, IContractSearchDto>({

@@ -3,11 +3,11 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
+import type { IAchievementItemReport } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementItemEntity } from "./item.entity";
 import { IAchievementsItemCountDto } from "./interfaces";
-import { IAchievementItemReport } from "@framework/types";
 
 @Injectable()
 export class AchievementItemService {

@@ -3,6 +3,7 @@ import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
+
 import { TopUpMenuItem } from "./top-up";
 
 export interface ICommonActionsMenu {

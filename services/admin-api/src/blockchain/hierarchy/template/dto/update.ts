@@ -6,7 +6,7 @@ import { SearchableDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
-import { ITemplateUpdateDto } from "../interfaces";
+import type { ITemplateUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
 
 export class TemplateUpdateDto extends SearchableDto implements ITemplateUpdateDto {

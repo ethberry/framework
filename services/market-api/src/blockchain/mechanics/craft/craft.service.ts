@@ -39,6 +39,7 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -88,6 +89,7 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -100,6 +102,7 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",

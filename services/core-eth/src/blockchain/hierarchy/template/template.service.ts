@@ -2,9 +2,9 @@ import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { TemplateEntity } from "./template.entity";
-import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { TemplateEntity } from "./template.entity";
+import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 
 @Injectable()
 export class TemplateService {

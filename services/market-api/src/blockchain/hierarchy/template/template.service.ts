@@ -36,6 +36,7 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -190,6 +191,7 @@ export class TemplateService {
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
       tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155],

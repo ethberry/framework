@@ -6,11 +6,12 @@ import { constants } from "ethers";
 import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 
-import { Erc1155TemplateListItem } from "./item";
 import { TemplateSearchForm } from "../../../../../components/forms/template-search";
+import { Erc1155TemplateListItem } from "./item";
 
 export interface IErc1155TokenListProps {
   embedded?: boolean;

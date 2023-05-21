@@ -9,7 +9,7 @@ export class ItemComponentDto implements IAssetComponentDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
+  @Min(1, { message: "rangeUnderflow" })
   public id?: number;
 
   @ApiProperty({

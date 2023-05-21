@@ -3,14 +3,15 @@ import { FormattedMessage } from "react-intl";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, TemplateStatus } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { TemplateStatus } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 
+import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { useStyles } from "./styles";
-import { TemplatePurchaseButton } from "../../../../../components/buttons";
 
 export const Erc998Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
