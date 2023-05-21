@@ -13,6 +13,7 @@ import { MysteryboxContent } from "../../../../components/tables/mysterybox-cont
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
 import { useStyles } from "./styles";
+import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
 
 export const MysteryboxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
@@ -21,9 +22,7 @@ export const MysteryboxToken: FC = () => {
       template: {
         title: "",
         description: emptyStateString,
-        box: {
-          item: {},
-        },
+        box: {},
       } as unknown as ITemplate,
     },
   });
@@ -57,6 +56,7 @@ export const MysteryboxToken: FC = () => {
             </Typography>
             <TokenSellButton token={selected} />
             <TokenTransferButton token={selected} />
+            <MysteryWrapperUnpackButton token={selected} />
           </Paper>
         </Grid>
       </Grid>

@@ -7,13 +7,13 @@ import { Web3ContextType } from "@web3-react/core";
 import { IToken } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import UnpackABI from "../../../../../abis/components/buttons/mechanics/wrapper/unpack/unpack.abi.json";
+import UnpackABI from "../../../../../abis/components/buttons/mechanics/mysterybox/unpack/unpack.abi.json";
 
-export interface IWrapperUnpackButtonProps {
+export interface IMysteryUnpackButtonProps {
   token: IToken;
 }
 
-export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
+export const MysteryWrapperUnpackButton: FC<IMysteryUnpackButtonProps> = props => {
   const { token } = props;
 
   const metaFn = useMetamask((token: IToken, web3Context: Web3ContextType) => {
