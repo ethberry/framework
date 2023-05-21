@@ -26,7 +26,7 @@ export class AchievementItemService {
       GROUP BY achievement_rule_id
     `;
 
-    return this.entityManager.query(queryString, [userEntity.id]) as Promise<Array<IAchievementItemReport>>;
+    return this.entityManager.query(queryString, [userEntity.id]);
   }
 
   public async count(dto: IAchievementsItemCountDto, userEntity: UserEntity): Promise<number> {

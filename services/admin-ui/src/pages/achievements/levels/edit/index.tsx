@@ -71,7 +71,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
         multiple
         prefix="item"
         showLabel={false}
-        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
       <JsonInput name="attributes" />
       <Typography variant="inherit">

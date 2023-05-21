@@ -7,6 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { AchievementRedeemButton } from "../../../components/buttons/achievements/redeem";
 import { IAchievementItemReport, IAchievementRule } from "@framework/types";
 import { ReportChart } from "./chart";
+import { AchievementInfoPopover } from "./popover";
 
 export const AchievementReport: FC = () => {
   const [rules, setRules] = useState<Array<IAchievementRule>>([]);
@@ -56,6 +57,7 @@ export const AchievementReport: FC = () => {
             <Typography variant="h5" sx={{ my: 1 }}>
               <pre>{rule.title}</pre>
             </Typography>
+            <AchievementInfoPopover rule={rule} count={count.find(item => item.achievementRuleId === rule.id)!} />
             <ReportChart count={count.find(item => item.achievementRuleId === rule.id)!} achievementRule={rule} />
             <AchievementRedeemButton
               achievementRule={rule}

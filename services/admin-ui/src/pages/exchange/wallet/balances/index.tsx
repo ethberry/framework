@@ -7,6 +7,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
+import { CommonActionsMenu } from "../../../../components/menu/mechanics/common";
 
 export const SystemContracts: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, IContractSearchDto>({
@@ -51,6 +52,7 @@ export const SystemContracts: FC = () => {
                 <IconButton onClick={handleWithdraw(contract)}>
                   <AccountBalanceWallet />
                 </IconButton>
+                <CommonActionsMenu contract={contract} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
