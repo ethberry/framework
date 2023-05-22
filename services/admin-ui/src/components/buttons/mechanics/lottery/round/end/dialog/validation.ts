@@ -7,6 +7,4 @@ import { CronExpression } from "@framework/types";
 
 export const validationSchema = object().shape({
   address: addressValidationSchema,
-  schedule: mixed<CronExpression>().oneOf(Object.values(CronExpression)).required("form.validations.valueMissing"),
-  description: draftValidationSchema,
 });

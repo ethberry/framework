@@ -27,14 +27,14 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const stakingAddr = configService.get<string>("STAKING_ADDR", "");
+        // const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
+        // const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.STAKING,
@@ -58,7 +58,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             ],
           },
           block: {
-            fromBlock,
+            // fromBlock,
+            fromBlock: stakingContracts.fromBlock || startingBlock,
             debug: false,
             cron,
           },

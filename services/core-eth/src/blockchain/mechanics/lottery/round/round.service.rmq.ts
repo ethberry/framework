@@ -12,13 +12,14 @@ export class RoundServiceRmq {
   ) {}
 
   public async updateSchedule(dto: ILotteryOption): Promise<void> {
-    const lotteryEntity = await this.contractService.findOne({ address: dto.lottery });
+    const lotteryEntity = await this.contractService.findOne({ address: dto.address });
 
     if (!lotteryEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    // TODO VALIDATE?
+    // TODO pass empty description?
+    // TODO Validate json?
     const descriptionJson = JSON.parse(lotteryEntity.description);
     Object.assign(descriptionJson, {
       schedule: dto.schedule,
@@ -31,6 +32,6 @@ export class RoundServiceRmq {
 
     await lotteryEntity.save();
 
-    this.lotteryRoundServiceCron.updateRoundCronJob({ cron: dto.schedule, lottery: dto.lottery });
+    this.lotteryRoundServiceCron.updateOrCreateRoundCronJob({ cron: dto.schedule, address: dto.address });
   }
 }

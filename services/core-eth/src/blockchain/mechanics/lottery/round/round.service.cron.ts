@@ -7,7 +7,7 @@ import { Contract, providers, Wallet } from "ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
-import { blockAwait } from "../../../../common/utils";
+import { blockAwait, getCurrentRound } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ILotteryOption, ModuleType } from "@framework/types";
 
@@ -25,19 +25,25 @@ export class LotteryRoundServiceCron {
     private readonly contractService: ContractService,
   ) {}
 
-  public async lotteryRound(lottery: string): Promise<void> {
+  public async lotteryRound(address: string): Promise<void> {
     // const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
+    const contract = new Contract(address, LotterySol.abi, this.signer);
+    const currentRound = await getCurrentRound(address, LotterySol.abi, this.jsonRpcProvider);
+    const { endTimestamp, acceptedAsset, ticketAsset } = currentRound;
 
-    const contract = new Contract(lottery, LotterySol.abi, this.signer);
     try {
-      await contract.endRound();
+      // if round still active
+      if (endTimestamp !== "0") {
+        await contract.endRound();
+      }
     } catch (e) {
       this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
     } finally {
       // wait block
       await blockAwait(1, this.jsonRpcProvider);
 
-      await contract.startRound();
+      // start round with same parameters
+      await contract.startRound(acceptedAsset, ticketAsset);
     }
   }
 
@@ -50,14 +56,19 @@ export class LotteryRoundServiceCron {
     job.start();
   }
 
-  public updateRoundCronJob(dto: { cron: CronExpression; lottery: string }): void {
-    this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.lottery}`);
-    const job = new CronJob(dto.cron, async () => {
-      await this.lotteryRound(dto.lottery);
-    });
-    this.schedulerRegistry.addCronJob(`lotteryRound@${dto.lottery}`, job);
-    job.start();
-    this.loggerService.log(JSON.stringify(dto, null, "\t"), LotteryRoundServiceCron.name);
+  public updateOrCreateRoundCronJob(dto: { cron: CronExpression; address: string }): void {
+    try {
+      this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.address}`);
+    } catch (e) {
+      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+    } finally {
+      const job = new CronJob(dto.cron, async () => {
+        await this.lotteryRound(dto.address);
+      });
+      this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
+      job.start();
+      this.loggerService.log(JSON.stringify(dto, null, "\t"), LotteryRoundServiceCron.name);
+    }
   }
 
   public async updateRoundCronJobDb(): Promise<void> {

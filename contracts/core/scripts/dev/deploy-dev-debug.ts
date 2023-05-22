@@ -451,6 +451,9 @@ async function main() {
     "contractManager.addFactory",
   );
 
+  const lotteryWalletFactory = await ethers.getContractFactory("LotteryWallet");
+  contracts.lotteryWallet = await lotteryWalletFactory.deploy([owner.address], [100]);
+
   const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
   // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
@@ -462,7 +465,14 @@ async function main() {
   const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
-  contracts.lottery = await lotteryFactory.deploy("Lottery");
+  const lotteryConfig = {
+    lotteryWallet: contracts.lotteryWallet.address,
+    timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
+    maxTickets: 2, // production: 5000 (dev: 2)
+    commission: 30, // lottery wallet gets 30% commission from each round balance
+  };
+
+  contracts.lottery = await lotteryFactory.deploy("Lottery", lotteryConfig);
   await debug(contracts);
 
   await debug(

@@ -34,6 +34,6 @@ export class LotteryRoundModule implements OnModuleInit {
 
   // start pre-defined lottery round end-start Cron Job
   public onModuleInit(): void {
-    return this.lotteryRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
+    // return this.lotteryRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
   }
 }

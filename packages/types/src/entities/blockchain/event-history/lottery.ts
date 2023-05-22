@@ -5,7 +5,6 @@ export enum LotteryEventType {
   Purchase = "Purchase",
   Released = "Released",
   Prize = "Prize",
-  RandomRequest = "RandomRequest",
 }
 
 export interface IRoundFinalizedEvent {

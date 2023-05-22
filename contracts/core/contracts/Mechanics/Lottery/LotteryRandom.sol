@@ -39,18 +39,29 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
   // LOTTERY
 
+  // TODO optimize struct
   struct Round {
     uint256 roundId;
     uint256 startTimestamp;
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
+    // TODO Asset[]
     Asset acceptedAsset;
     Asset ticketAsset;
     bool[][] tickets; // all round tickets
     uint8[6] values; // prize numbers
     uint8[7] aggregation; // prize counts
     uint256 requestId;
+  }
+
+  // TODO add more data?
+  struct RoundInfo {
+    uint256 roundId;
+    uint256 startTimestamp;
+    uint256 endTimestamp;
+    Asset acceptedAsset;
+    Asset ticketAsset;
   }
 
   Round[] internal _rounds;
@@ -92,12 +103,14 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     emit RoundStarted(roundNumber, block.timestamp);
   }
 
-  function getAllRounds() public view returns (Round[] memory) {
-    return _rounds;
-  }
+  // TODO could be too much data to return
+  //  function getAllRounds() public view returns (Round[] memory) {
+  //    return _rounds;
+  //  }
 
-  function getCurrentRound() public view returns (Round memory) {
-    return _rounds[_rounds.length - 1];
+  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
+    Round storage round = _rounds[_rounds.length - 1];
+    return RoundInfo(round.roundId, round.startTimestamp, round.endTimestamp, round.acceptedAsset, round.ticketAsset);
   }
 
   function getRandomNumber() internal virtual returns (uint256 requestId);
@@ -147,7 +160,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
   // ROUND
 
   function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
-    // may be storage
     Round storage currentRound = _rounds[_rounds.length - 1];
 
     // calculate wining numbers

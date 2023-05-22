@@ -12,7 +12,7 @@ export interface ILotteryRound extends IIdDateBase {
 }
 
 export interface ILotteryOption {
-  lottery: string;
+  address: string;
   schedule: CronExpression;
   description?: string;
 }

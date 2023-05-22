@@ -58,6 +58,14 @@ export enum ContractEventType {
   RedeemClaim = "RedeemClaim",
   UnpackClaim = "UnpackClaim",
 
+  // MODULE:LOTTERY
+  RoundFinalized = "RoundFinalized",
+  RoundStarted = "RoundStarted",
+  RoundEnded = "RoundEnded",
+  // Purchase = "Purchase",
+  Released = "Released",
+  Prize = "Prize",
+
   // MODULE:WRAPPER
   UnpackWrapper = "UnpackWrapper",
 

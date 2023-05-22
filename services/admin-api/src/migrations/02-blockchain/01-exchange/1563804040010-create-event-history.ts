@@ -108,6 +108,13 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
          -- MODULE:GRADE
         'LevelUp',
         'MetadataUpdate',
+        
+        -- MODULE:LOTTERY
+        'RoundFinalized',
+        'RoundStarted',
+        'RoundEnded',
+        'Released',
+        'Prize',
 
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',
