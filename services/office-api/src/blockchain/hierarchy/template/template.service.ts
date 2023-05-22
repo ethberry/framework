@@ -2,13 +2,14 @@ import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 
-import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
-import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { TokenService } from "../token/token.service";
+import { TemplateEntity } from "./template.entity";
+import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 
 @Injectable()
 export class TemplateService {

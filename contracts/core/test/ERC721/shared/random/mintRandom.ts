@@ -5,7 +5,8 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { IERC721Random, LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
+import { LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
+import type { IERC721Random } from "../../../../typechain-types";
 import { deployLinkVrfFixture } from "../../../shared/link";
 import { templateId } from "../../../constants";
 import { randomRequest } from "../../../shared/randomRequest";

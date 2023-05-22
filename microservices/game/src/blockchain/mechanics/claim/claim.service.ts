@@ -17,7 +17,7 @@ import { ClaimStatus, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
+import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 
 @Injectable()

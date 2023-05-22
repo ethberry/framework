@@ -1,15 +1,15 @@
 import { ChangeEvent, FC, Fragment, useState } from "react";
 import { IconButton, InputAdornment, Typography } from "@mui/material";
 import { Clear } from "@mui/icons-material";
-
 import { useIntl } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
-import { IOwnership, IToken, TokenType } from "@framework/types";
+
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { StaticInput } from "@gemunion/mui-inputs-core";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IBalance, IToken, TokenType } from "@framework/types";
 
 import ERC998TransferABI from "../../../../../../abis/pages/exchange/tokens/erc998/token/composition/transfer.abi.json";
 
@@ -103,8 +103,8 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
         return contract["safeTransferChild(uint256,address,address,uint256)"](
           token.tokenId,
           web3Context.account,
-          token.children![0].child!.template!.contract!.address,
-          token.children![0].child?.tokenId,
+          token.balance![0].token!.template!.contract!.address,
+          token.balance![0].token?.tokenId,
         ) as Promise<void>;
       default:
         return Promise.resolve("") as Promise<any>;
@@ -141,8 +141,8 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
     postponeAction(option, metaComposeFn);
   };
 
-  const handleClear = (ownership: IOwnership) => () => {
-    postponeAction(ownership.child!, metaDecomposeFn);
+  const handleClear = (balance: IBalance) => () => {
+    postponeAction(balance.token!, metaDecomposeFn);
   };
 
   if (!token.template?.contract?.children?.length) {
@@ -154,7 +154,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
       <Typography variant="h4">Composed tokens</Typography>
 
       {token.template?.contract?.children?.map(child => {
-        const filtered = token.children!.filter(ownership => ownership.child?.template?.contractId === child.childId);
+        const filtered = token.balance!.filter(balance => balance.token?.template?.contractId === child.childId); // token.children!.filter(ownership => ownership.child?.template?.contractId === child.childId);
 
         return (
           <FormWrapper
@@ -162,7 +162,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
             initialValues={filtered.reduce(
               (memo, current, i) => {
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                memo.tokenId[i] = `${filtered[i].child?.template?.title} #${filtered[i].child?.tokenId}`;
+                memo.tokenId[i] = `${filtered[i].token?.template?.title} #${filtered[i].token?.tokenId}`;
                 return memo;
               },
               { tokenId: [] as Array<string> },
@@ -183,7 +183,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="end" sx={{ ml: "auto" }}>
                       <IconButton onClick={handleClear(filtered[i])} edge="end" size="small">
                         <Clear fontSize="inherit" />
                       </IconButton>

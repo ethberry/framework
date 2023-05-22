@@ -43,7 +43,11 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       <TextInput name="attribute" readOnly />
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />
-      <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
+      <TemplateAssetInput
+        autoSelect
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+      />
     </FormDialog>
   );
 };

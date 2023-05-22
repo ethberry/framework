@@ -59,7 +59,6 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
 
         {contract.contractType !== TokenType.NATIVE &&
         contract.contractModule === ModuleType.HIERARCHY &&
-        !contract.contractFeatures.includes(ContractFeatures.RANDOM) &&
         !contract.contractFeatures.includes(ContractFeatures.GENES) ? (
           <MintMenuItem contract={contract} />
         ) : null}

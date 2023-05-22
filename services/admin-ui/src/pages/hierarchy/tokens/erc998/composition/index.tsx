@@ -17,9 +17,8 @@ import { Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IComposition, ICompositionSearchDto } from "@framework/types";
-
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IComposition, ICompositionSearchDto } from "@framework/types";
 
 import ERC998WhitelistChildABI from "../../../../../abis/pages/hierarchy/tokens/erc998/composition/whitelistChild.abi.json";
 

@@ -8,10 +8,8 @@ export interface ITokenAttributesView {
   attributes: Record<string, any>;
 }
 
-export const TokenAttributesView: FC<ITokenAttributesView> = props => {
-  const { attributes } = props;
-
-  const result = Object.entries(attributes).reduce((memo, [key, value]) => {
+export const getFilteredAttributes = (attributes: Record<string, any>) =>
+  Object.entries(attributes).reduce((memo, [key, value]) => {
     switch (key) {
       // MODULE:GRADE
       case TokenAttributes.GRADE:
@@ -30,6 +28,15 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
 
     return memo;
   }, {} as Record<string, any>);
+
+export const shouldShowAttributes = (attributes: Record<string, any>) => {
+  return Object.entries(getFilteredAttributes(attributes)).length > 0;
+};
+
+export const TokenAttributesView: FC<ITokenAttributesView> = props => {
+  const { attributes } = props;
+
+  const result = getFilteredAttributes(attributes);
 
   return (
     <Grid container>

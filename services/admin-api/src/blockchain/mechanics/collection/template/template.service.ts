@@ -2,13 +2,14 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { CollectionTokenService } from "../token/token.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { CollectionTokenService } from "../token/token.service";
 
 @Injectable()
 export class CollectionTemplateService extends TemplateService {

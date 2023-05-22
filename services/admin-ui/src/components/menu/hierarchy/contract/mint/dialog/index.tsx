@@ -52,7 +52,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       {contractType === TokenType.ERC1155 ? (
         <TokenAssetInput prefix="token" tokenType={{ disabledOptions }} />
       ) : (
-        <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
+        <TemplateAssetInput autoSelect prefix="template" tokenType={{ disabledOptions }} />
       )}
       <TextInput name="account" />
     </FormDialog>

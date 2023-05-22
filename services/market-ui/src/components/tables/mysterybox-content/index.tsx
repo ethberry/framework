@@ -16,7 +16,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
 
   return (
     <>
-      <Typography variant="h5" sx={{ my: 1 }}>
+      <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>
         <FormattedMessage id="pages.mystery.box.content" />
       </Typography>
       <Paper elevation={1} sx={{ my: 1, p: 2 }}>
@@ -37,7 +37,7 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
             </Typography>
           </Grid>
         </Grid>
-        {mysterybox.item!.components.map(component => (
+        {mysterybox.item?.components.map(component => (
           <Grid key={component.id} container>
             <Grid xs={4} item>
               {component.tokenType}
@@ -46,12 +46,12 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
               {component.tokenType !== TokenType.ERC20 ? (
                 <Link
                   component={RouterLink}
-                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId}`}
+                  to={`/${component.tokenType.toLowerCase()}/templates/${component.templateId || 0}`}
                 >
                   {component.template!.title}
                 </Link>
               ) : (
-                <>{component.template!.title}</>
+                component.template!.title
               )}
             </Grid>
             <Grid xs={4} item>

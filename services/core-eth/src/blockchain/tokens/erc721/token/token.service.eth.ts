@@ -9,12 +9,14 @@ import {
   IERC721ConsecutiveTransfer,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
+  ILevelUp,
   TokenAttributes,
+  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { getMetadata } from "../../../../common/utils";
+import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -71,21 +73,28 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       // if RANDOM token - update tokenId in exchange asset history
       if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
-        const historyEntity = await this.eventHistoryService.findOne({
-          transactionHash,
-          eventType: ContractEventType.MintRandom,
-        });
-        if (!historyEntity) {
-          this.loggerService.error(
-            "historyNotFound",
+        // decide if it was random mint or common mint via admin-panel
+        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
+        const mintType = getTokenMintType(txLogs);
+
+        if (mintType === TokenMintType.MintRandom) {
+          // update Asset history
+          const historyEntity = await this.eventHistoryService.findOne({
             transactionHash,
-            ContractEventType.MintRandom,
-            Erc721TokenServiceEth.name,
-          );
-          throw new NotFoundException("historyNotFound");
+            eventType: ContractEventType.MintRandom,
+          });
+          if (!historyEntity) {
+            this.loggerService.error(
+              "historyNotFound",
+              transactionHash,
+              ContractEventType.MintRandom,
+              Erc721TokenServiceEth.name,
+            );
+            throw new NotFoundException("historyNotFound");
+          }
+          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
+          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
         }
-        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-        await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
       }
 
       // MODULE:BREEDING
@@ -202,5 +211,24 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       tokenId,
       transactionHash: entityWithRelations.parent.transactionHash, // Purchase transaction
     });
+  }
+
+  public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
+    const {
+      args: { tokenId, grade },
+    } = event;
+    const { address } = context;
+
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+
+    if (!erc721TokenEntity) {
+      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    Object.assign(erc721TokenEntity.attributes, { GRADE: grade.toString() });
+    await erc721TokenEntity.save();
+
+    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
   }
 }

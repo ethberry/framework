@@ -97,7 +97,6 @@ import {
   CreateOrder1593490663230,
   CreateOrderItem1593505694820,
   CreateOtp1563803000160,
-  CreateOwnershipAt1658980520100,
   CreatePage1563803000210,
   CreatePhoto1593408358920,
   CreateProduct1593408358900,
@@ -125,6 +124,7 @@ import {
   SeedAccessListErc20At1653616447320,
   SeedAccessListErc721At1653616447330,
   SeedAccessListErc998At1653616447340,
+  SeedAchievementClaimErc721At1681273013071,
   SeedAchievementItem1681273013060,
   SeedAchievementLevel1681273013040,
   SeedAchievementRedemption1681273013080,
@@ -133,6 +133,7 @@ import {
   SeedAssetComponentGrade1657846587020,
   SeedAssetComponentRent1678931845520,
   SeedAssetComponentsAchievementAt1681273013045,
+  SeedAssetComponentsAchievementRule1681273013025,
   SeedAssetComponentsCollectionAt1679894501230,
   SeedAssetComponentsErc1155At1563804001250,
   SeedAssetComponentsErc721At1563804001230,
@@ -194,6 +195,8 @@ import {
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
+  SeedEventHistoryErc998ClaimAt1563804040330,
+  SeedEventHistoryErc998ClaimComponentsAt1563804040340,
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
   SeedExchangePayees1663047650510,
@@ -207,7 +210,6 @@ import {
   SeedMysteryboxMixedAt1653616447970,
   SeedOrderItems1593505694830,
   SeedOrders1593490663240,
-  SeedOwnershipAt1658980520110,
   SeedPages1563803000220,
   SeedPhoto1593408358930,
   SeedProducts1593408358910,
@@ -261,8 +263,6 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedAchievementClaimErc721At1681273013071 } from "./migrations/04-achievements/1681273013071-seed-achievement-claim-erc721";
-import { SeedAssetComponentsAchievementRule1681273013025 } from "./migrations/04-achievements/1681273013025-seed-asset-component-achievement-rule";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -473,18 +473,18 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721TransferAt1563804040130,
     SeedEventHistoryErc721PurchaseAt1563804040230,
     SeedEventHistoryErc721ClaimAt1563804040330,
+    SeedEventHistoryErc998ClaimAt1563804040330,
     SeedEventHistoryErc998PurchaseAt1563804040230,
 
     CreateEventHistoryComponents1563804040020,
     SeedEventHistoryErc20ClaimComponentsAt1563804040340,
     SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
     SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+    SeedEventHistoryErc998ClaimComponentsAt1563804040340,
     SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
-    CreateOwnershipAt1658980520100,
-    SeedOwnershipAt1658980520110,
 
     CreateDropAt1658980521000,
     SeedDropErc721At1658980521030,

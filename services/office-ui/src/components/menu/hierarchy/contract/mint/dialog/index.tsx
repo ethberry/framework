@@ -1,7 +1,8 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ITemplateAsset, TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import type { ITemplateAsset } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { TokenType } from "@framework/types";
 
@@ -33,7 +34,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       testId="MintForm"
       {...rest}
     >
-      <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
+      <TemplateAssetInput autoSelect prefix="template" tokenType={{ disabledOptions }} />
       <TextInput name="account" />
     </FormDialog>
   );

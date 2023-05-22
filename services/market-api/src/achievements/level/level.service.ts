@@ -23,10 +23,13 @@ export class AchievementLevelService {
   public findOneWithRelations(where: FindOptionsWhere<AchievementLevelEntity>): Promise<AchievementLevelEntity | null> {
     const queryBuilder = this.achievementLevelEntityRepository.createQueryBuilder("achievement");
 
+    queryBuilder.leftJoinAndSelect("achievement.redemptions", "redemptions");
+
     queryBuilder.leftJoinAndSelect("achievement.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -34,6 +37,8 @@ export class AchievementLevelService {
       "item_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
+    queryBuilder.andWhere("redemptions.id IS NULL");
 
     queryBuilder.andWhere("achievement.id = :id", {
       id: where.id,

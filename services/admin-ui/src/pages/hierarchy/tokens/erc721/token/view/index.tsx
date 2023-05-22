@@ -5,11 +5,12 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { ContractFeatures, IToken } from "@framework/types";
+import { ContractFeatures, IToken, ModuleType } from "@framework/types";
 
-import { TokenAttributesView } from "../../../attributes";
+import { shouldShowAttributes, TokenAttributesView } from "../../../attributes";
 import { TokenGenesView } from "../../../genes";
 import { TokenUserView } from "../../../user";
+import { MysteryboxContent } from "../../../mysterybox-content";
 
 export interface IErc721ViewDialogProps {
   open: boolean;
@@ -22,6 +23,8 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
   const { template, tokenId, attributes, balance } = initialValues;
+
+  const showAttributes = shouldShowAttributes(attributes);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -52,14 +55,16 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.attributes" />
-              </TableCell>
-              <TableCell align="right">
-                <TokenAttributesView attributes={attributes} />
-              </TableCell>
-            </TableRow>
+            {showAttributes && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.attributes" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenAttributesView attributes={attributes} />
+                </TableCell>
+              </TableRow>
+            )}
             {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
@@ -70,8 +75,16 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 </TableCell>
               </TableRow>
             ) : null}
-            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
-              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
+            {template?.contract?.contractModule === ModuleType.MYSTERY ? (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.content" />
+                </TableCell>
+                <TableCell align="right">
+                  {/* @ts-ignore */}
+                  <MysteryboxContent mysterybox={template.box} />
+                </TableCell>
+              </TableRow>
             ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
@@ -81,6 +94,9 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <AddressLink address={balance?.at(0)?.account} length={42} />
               </TableCell>
             </TableRow>
+            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
+              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
+            ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.imageUrl" />

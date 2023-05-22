@@ -261,6 +261,7 @@
       "nonce": "Increment nonce",
       "ok": "Ok",
       "redeem": "Redeem",
+      "redeemLvl": "Redeem {level}",
       "release": "Release",
       "save": "Save",
       "search": "Search",
@@ -269,7 +270,7 @@
       "signup": "Sign up",
       "submit": "Submit",
       "transfer": "Transfer",
-      "unwrap": "Unwrap",
+      "unpack": "Unwrap",
       "upgrade": "Upgrade",
       "upload": "Upload",
       "withdraw": "Withdraw"
@@ -542,6 +543,14 @@
     "achievements": {
       "report": {
         "title": "Achievements report"
+      },
+      "info": {
+        "description": "Description",
+        "contract": "Contract",
+        "event": "Event",
+        "items": "Items",
+        "levels": "Levels",
+        "level": "Level {level} {achieved} {redeemed}"
       },
       "title": "Achievements"
     },

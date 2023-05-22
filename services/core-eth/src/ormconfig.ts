@@ -17,7 +17,6 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
-import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
@@ -53,7 +52,6 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     AssetEntity,
     CompositionEntity,
-    OwnershipEntity,
     AccessListEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,

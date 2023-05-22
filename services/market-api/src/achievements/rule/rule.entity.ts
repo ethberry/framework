@@ -8,6 +8,7 @@ import { ns } from "@framework/constants";
 import { AchievementLevelEntity } from "../level/level.entity";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { AchievementItemEntity } from "../item/item.entity";
 
 @Entity({ schema: ns, name: "achievement_rule" })
 export class AchievementRuleEntity extends SearchableEntity implements IAchievementRule {
@@ -45,4 +46,7 @@ export class AchievementRuleEntity extends SearchableEntity implements IAchievem
 
   @OneToMany(_type => AchievementLevelEntity, component => component.achievementRule)
   public levels: Array<AchievementLevelEntity>;
+
+  @OneToMany(_type => AchievementItemEntity, item => item.achievementRule)
+  public items: Array<AchievementItemEntity>;
 }

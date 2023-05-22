@@ -22,6 +22,6 @@ export class MysteryTokenController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.mysteryTokenService.findOne({ id }, { relations: { template: true, balance: true } });
+    return this.mysteryTokenService.findOneWithRelations({ id });
   }
 }

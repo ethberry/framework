@@ -5,7 +5,7 @@ import { GameEventType } from "@framework/types";
 
 import { ClaimServiceRmq } from "./claim.service.rmq";
 import { ClaimEntity } from "./claim.entity";
-import { IClaimItemCreateDto } from "./interfaces";
+import type { IClaimItemCreateDto } from "./interfaces";
 
 @Controller()
 export class ClaimControllerRmq {

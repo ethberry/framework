@@ -31,7 +31,7 @@ export const WrapperUnpackButton: FC<IWrapperUnpackButtonProps> = props => {
 
   return (
     <Button onClick={handleUnpack(token)} data-testid="WrapperUnpackButton">
-      <FormattedMessage id="form.buttons.unwrap" />
+      <FormattedMessage id="form.buttons.unpack" />
     </Button>
   );
 };

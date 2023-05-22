@@ -17,7 +17,6 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "./extensions/SignatureValidator.sol";
-//import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
 import "hardhat/console.sol";

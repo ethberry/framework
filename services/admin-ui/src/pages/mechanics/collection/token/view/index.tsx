@@ -7,7 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
+import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
 import { TokenTraitsView } from "../../traits";
 
 export interface ICollectionTokenViewDialogProps {
@@ -21,6 +21,8 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
   const { initialValues, onConfirm, ...rest } = props;
 
   const { template, tokenId, attributes, balance, imageUrl } = initialValues;
+
+  const showAttributes = shouldShowAttributes(attributes);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -51,14 +53,16 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.attributes" />
-              </TableCell>
-              <TableCell align="right">
-                <TokenAttributesView attributes={attributes} />
-              </TableCell>
-            </TableRow>
+            {showAttributes && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.attributes" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenAttributesView attributes={attributes} />
+                </TableCell>
+              </TableRow>
+            )}
             {template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
               <TableRow>
                 <TableCell component="th" scope="row">

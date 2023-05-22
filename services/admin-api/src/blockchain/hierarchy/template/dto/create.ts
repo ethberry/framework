@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
-import { ITemplateCreateDto } from "../interfaces";
+import type { ITemplateCreateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
 
 export class TemplateCreateDto extends SearchableDto implements ITemplateCreateDto {

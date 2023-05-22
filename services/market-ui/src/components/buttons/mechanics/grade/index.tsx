@@ -10,9 +10,8 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
-
-import { getEthPrice, getMultiplier } from "./utils";
 import { sorter } from "../../../../utils/sorter";
+import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {
   token: IToken;

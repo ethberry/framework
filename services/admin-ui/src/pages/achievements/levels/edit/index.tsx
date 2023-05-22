@@ -11,8 +11,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { IAchievementLevel, TokenType } from "@framework/types";
 
-// TODO Validation
-// import { validationSchema } from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IAchievementLevelEditDialogProps {
   open: boolean;
@@ -54,7 +53,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
   return (
     <FormDialog
       initialValues={fixedValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message={message}
       testId="AchievementLevelEditForm"
       {...rest}
@@ -66,11 +65,12 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
         <FormattedMessage id="form.labels.achievementLevelItem" />
       </Typography>
       <TemplateAssetInput
-        multiple
         allowEmpty
+        autoSelect
+        multiple
         prefix="item"
         showLabel={false}
-        tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+        // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
       <JsonInput name="attributes" />
       <Typography variant="inherit">

@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
