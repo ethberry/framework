@@ -7,7 +7,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
 import ERC721SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc721.setApprovalForAll.abi.json";
@@ -21,7 +21,7 @@ export interface IAllowanceMenuItemProps {
 
 export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
   const {
-    contract: { address, contractType, decimals },
+    contract: { address, contractFeatures, contractType, decimals },
   } = props;
 
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
@@ -57,7 +57,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
 
   return (
     <Fragment>
-      <MenuItem onClick={handleAllowance}>
+      <MenuItem onClick={handleAllowance} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
         <ListItemIcon>
           <AddReactionIcon />
         </ListItemIcon>
