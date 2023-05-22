@@ -17,14 +17,8 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  ContractFeatures,
-  ContractStatus,
-  Erc20ContractFeatures,
-  IContract,
-  IContractSearchDto,
-  ITemplate,
-} from "@framework/types";
+import type { IContract, IContractSearchDto, ITemplate } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
 import { Erc20ContractEditDialog } from "./edit";
 import { Erc20ContractDeployButton } from "../../../../../components/buttons";
