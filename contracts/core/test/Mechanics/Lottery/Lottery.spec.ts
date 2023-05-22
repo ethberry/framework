@@ -21,7 +21,13 @@ const delay = (milliseconds: number) => {
 describe("Lottery", function () {
   let vrfInstance: VRFCoordinatorMock;
 
-  const factory = () => deployLottery();
+  const lotteryConfig = {
+    timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
+    maxTickets: 2, // production: 5000 (dev: 2)
+    commission: 30, // lottery wallet gets 30% commission from each round balance
+  };
+
+  const factory = () => deployLottery(lotteryConfig);
 
   before(async function () {
     if (network.name === "hardhat") {
@@ -38,6 +44,7 @@ describe("Lottery", function () {
     const { lotteryInstance } = await factory();
     return lotteryInstance;
   })(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+
   shouldBehaveLikePausable(async () => {
     const { lotteryInstance } = await factory();
     return lotteryInstance;
@@ -147,10 +154,11 @@ describe("Lottery", function () {
   });
 
   describe("finalizeRound", function () {
-    it("should finalize round with 1 ticket", async function () {
+    it("should finalize round with 1 ticket and get commission", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
 
-      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance, lotteryWalletInstance } =
+        await factory();
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(lotteryInstance.address, amount);
@@ -207,7 +215,7 @@ describe("Lottery", function () {
       );
 
       await expect(tx0).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
-      // emit Purchase(tokenId, account, price, roundNumber, numbers);
+
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
       }
@@ -229,11 +237,19 @@ describe("Lottery", function () {
         expect(events.length).to.be.greaterThan(0);
         expect(events[0].args?.round).to.equal(1);
       }
+
+      // COMMISSION
+      // event TransferReceived(address operator, address from, uint256 value, bytes data);
+      // .withArgs(lotteryInstance.address, lotteryInstance.address, (amount / 100) * lotteryConfig.commission, "0x");
+      const eventFilter1 = lotteryWalletInstance.filters.TransferReceived();
+      const events1 = await lotteryWalletInstance.queryFilter(eventFilter1);
+      expect(events1.length).to.be.greaterThan(0);
+      expect(events1[0].args?.value).to.equal((amount / 100) * lotteryConfig.commission);
     });
   });
 
   describe("purchase", function () {
-    it("should purchase", async function () {
+    it("should purchase ticket", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
@@ -287,7 +303,8 @@ describe("Lottery", function () {
     it("should release", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance, lotteryWalletInstance } =
+        await factory();
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(lotteryInstance.address, amount);
@@ -347,6 +364,10 @@ describe("Lottery", function () {
 
       const tx1 = lotteryInstance.releaseFunds(1);
       await expect(tx1).to.emit(lotteryInstance, "Released").withArgs(1, amount);
+      // event TransferReceived(address operator, address from, uint256 value, bytes data);
+      await expect(tx1)
+        .to.emit(lotteryWalletInstance, "TransferReceived")
+        .withArgs(lotteryInstance.address, lotteryInstance.address, amount, "0x");
     });
 
     it("should fail: is not releasable yet", async function () {

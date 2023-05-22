@@ -12,8 +12,9 @@ import "../LotteryRandom.sol";
 
 contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
   constructor(
-    string memory name
-  ) LotteryRandom(name) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+    string memory name,
+    Lottery memory config
+  ) LotteryRandom(name, config) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();

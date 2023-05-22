@@ -12,10 +12,7 @@ export class RoundServiceRmq {
   ) {}
 
   public async updateSchedule(dto: ILotteryOption): Promise<void> {
-    const lotteryEntity = await this.contractService.findOne({
-      contractModule: ModuleType.LOTTERY,
-      contractType: undefined,
-    });
+    const lotteryEntity = await this.contractService.findOne({ address: dto.lottery });
 
     if (!lotteryEntity) {
       throw new NotFoundException("contractNotFound");
@@ -34,6 +31,6 @@ export class RoundServiceRmq {
 
     await lotteryEntity.save();
 
-    this.lotteryRoundServiceCron.updateRoundCronJob(dto.schedule);
+    this.lotteryRoundServiceCron.updateRoundCronJob({ cron: dto.schedule, lottery: dto.lottery });
   }
 }

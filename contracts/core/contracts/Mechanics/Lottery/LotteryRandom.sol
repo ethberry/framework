@@ -16,19 +16,20 @@ import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
+import "../../utils/constants.sol";
 import "./extensions/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
-import "../../utils/constants.sol";
-import "hardhat/console.sol";
+import "./interfaces/ILottery.sol";
 
-// Todo add PAYMANTS_SPLITTER
 abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
 
-  uint8 private _maxTicket = 2; // TODO change for 5000 in production or add to constructor
-  uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days or add to constructor
-  uint8 internal comm = 30; // commission 30%
+  address internal immutable _lotteryWallet;
+  uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
+  uint8 internal immutable _maxTicket; // TODO change for 5000 in production or add to constructor (dev: 2, prod: 5000)
+  uint8 internal immutable comm; // commission 30%
+
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
@@ -54,11 +55,17 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
   Round[] internal _rounds;
 
-  constructor(string memory name) SignatureValidator(name) {
+  constructor(string memory name, Lottery memory config) SignatureValidator(name) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
+
+    // SET Lottery Config
+    _lotteryWallet = config.lotteryWallet;
+    _maxTicket = config.maxTickets;
+    _timeLag = config.timeLagBeforeRelease;
+    comm = config.commission;
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -109,7 +116,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
     if (commission != 0) {
       currentRound.acceptedAsset.amount = commission;
-      ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+      ExchangeUtils.spend(
+        ExchangeUtils._toArray(currentRound.acceptedAsset),
+        _lotteryWallet,
+        DisabledTokenTypes(false, false, false, false, false)
+      );
     }
 
     emit RoundEnded(roundNumber, block.timestamp);
@@ -124,7 +135,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     currentRound.balance = 0;
 
     currentRound.acceptedAsset.amount = roundBalance;
-    ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spend(
+      ExchangeUtils._toArray(currentRound.acceptedAsset),
+      _lotteryWallet,
+      DisabledTokenTypes(false, false, false, false, false)
+    );
 
     emit Released(roundNumber, roundBalance);
   }
@@ -189,7 +204,12 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     currentRound.balance += price.amount;
     currentRound.total += price.amount;
 
-    ExchangeUtils.spendFrom(ExchangeUtils._toArray(price), _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(
+      ExchangeUtils._toArray(price),
+      _msgSender(),
+      address(this),
+      DisabledTokenTypes(false, false, false, false, false)
+    );
 
     uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
@@ -237,7 +257,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     currentRound.balance -= amount;
 
     currentRound.acceptedAsset.amount = amount;
-    ExchangeUtils.spend(ExchangeUtils._toArray(currentRound.acceptedAsset), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spend(
+      ExchangeUtils._toArray(currentRound.acceptedAsset),
+      _msgSender(),
+      DisabledTokenTypes(false, false, false, false, false)
+    );
 
     emit Prize(_msgSender(), tokenId, amount);
   }
@@ -254,13 +278,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
   // COMMON
 
-  receive() external override payable {
+  receive() external payable override {
     revert();
   }
 
-  function supportsInterface(
-    bytes4 interfaceId
-  ) public view virtual override(AccessControl, Wallet) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

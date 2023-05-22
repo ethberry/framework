@@ -25,10 +25,10 @@ export class LotteryRoundServiceCron {
     private readonly contractService: ContractService,
   ) {}
 
-  public async lotteryRound(): Promise<void> {
-    const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
+  public async lotteryRound(lottery: string): Promise<void> {
+    // const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
 
-    const contract = new Contract(lotteryAddr, LotterySol.abi, this.signer);
+    const contract = new Contract(lottery, LotterySol.abi, this.signer);
     try {
       await contract.endRound();
     } catch (e) {
@@ -41,21 +41,21 @@ export class LotteryRoundServiceCron {
     }
   }
 
-  public setRoundCronJob(dto: CronExpression): void {
-    const job = new CronJob(dto, async () => {
-      await this.lotteryRound();
+  public setRoundCronJob(dto: { cron: CronExpression; lottery: string }): void {
+    const job = new CronJob(dto.cron, async () => {
+      await this.lotteryRound(dto.lottery);
     });
 
-    this.schedulerRegistry.addCronJob("lotteryRound", job);
+    this.schedulerRegistry.addCronJob(`lotteryRound@${dto.lottery}`, job);
     job.start();
   }
 
-  public updateRoundCronJob(dto: CronExpression): void {
-    this.schedulerRegistry.deleteCronJob("lotteryRound");
-    const job = new CronJob(dto, async () => {
-      await this.lotteryRound();
+  public updateRoundCronJob(dto: { cron: CronExpression; lottery: string }): void {
+    this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.lottery}`);
+    const job = new CronJob(dto.cron, async () => {
+      await this.lotteryRound(dto.lottery);
     });
-    this.schedulerRegistry.addCronJob("lotteryRound", job);
+    this.schedulerRegistry.addCronJob(`lotteryRound@${dto.lottery}`, job);
     job.start();
     this.loggerService.log(JSON.stringify(dto, null, "\t"), LotteryRoundServiceCron.name);
   }
@@ -72,11 +72,11 @@ export class LotteryRoundServiceCron {
 
     const { schedule }: ILotteryOption = JSON.parse(lotteryEntity.description);
 
-    this.schedulerRegistry.deleteCronJob("lotteryRound");
+    this.schedulerRegistry.deleteCronJob(`lotteryRound@${lotteryEntity.address}`);
     const job = new CronJob(schedule, async () => {
-      await this.lotteryRound();
+      await this.lotteryRound(lotteryEntity.address);
     });
-    this.schedulerRegistry.addCronJob("lotteryRound", job);
+    this.schedulerRegistry.addCronJob(`lotteryRound@${lotteryEntity.address}`, job);
     job.start();
   }
 }

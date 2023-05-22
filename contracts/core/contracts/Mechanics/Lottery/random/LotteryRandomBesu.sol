@@ -10,7 +10,10 @@ import "../LotteryRandom.sol";
 import "../../../MOCKS/ChainLinkBesu.sol";
 
 contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
-  constructor(string memory name) LotteryRandom(name) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  constructor(
+    string memory name,
+    Lottery memory config
+  ) LotteryRandom(name, config) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
