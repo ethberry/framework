@@ -183,7 +183,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="end" sx={{ ml: "auto" }}>
                       <IconButton onClick={handleClear(filtered[i])} edge="end" size="small">
                         <Clear fontSize="inherit" />
                       </IconButton>
