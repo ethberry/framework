@@ -97,7 +97,6 @@ import {
   CreateOrder1593490663230,
   CreateOrderItem1593505694820,
   CreateOtp1563803000160,
-  CreateOwnershipAt1658980520100,
   CreatePage1563803000210,
   CreatePhoto1593408358920,
   CreateProduct1593408358900,
@@ -211,7 +210,6 @@ import {
   SeedMysteryboxMixedAt1653616447970,
   SeedOrderItems1593505694830,
   SeedOrders1593490663240,
-  SeedOwnershipAt1658980520110,
   SeedPages1563803000220,
   SeedPhoto1593408358930,
   SeedProducts1593408358910,
@@ -487,8 +485,6 @@ const config: PostgresConnectionOptions = {
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
-    CreateOwnershipAt1658980520100,
-    SeedOwnershipAt1658980520110,
 
     CreateDropAt1658980521000,
     SeedDropErc721At1658980521030,

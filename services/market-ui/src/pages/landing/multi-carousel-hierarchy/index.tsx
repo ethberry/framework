@@ -3,7 +3,7 @@ import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { ITemplate } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { MultiCarouselButtonGroup } from "./button-group";

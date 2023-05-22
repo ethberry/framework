@@ -15,7 +15,6 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "./extensions/SignatureValidator.sol";
-//import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721Ticket.sol";
 import "../../utils/constants.sol";
 

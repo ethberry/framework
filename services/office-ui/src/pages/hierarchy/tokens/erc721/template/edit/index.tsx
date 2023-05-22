@@ -6,7 +6,8 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

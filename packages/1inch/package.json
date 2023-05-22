@@ -13,9 +13,9 @@
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/provider-license": "3.0.16",
-    "@gemunion/provider-user": "6.0.23",
-    "@gemunion/provider-wallet": "3.3.19",
-    "@gemunion/react-hooks-eth": "1.0.102",
+    "@gemunion/provider-user": "6.0.24",
+    "@gemunion/provider-wallet": "3.3.20",
+    "@gemunion/react-hooks-eth": "1.0.103",
     "@mui/material": "5.13.1",
     "@mui/icons-material": "5.11.16",
     "@web3-react/core": "8.2.0",
@@ -25,7 +25,7 @@
     "notistack": "3.0.1",
     "react-intl": "6.4.2",
     "react-window": "1.8.9",
-    "type-fest": "3.10.0"
+    "type-fest": "3.11.0"
   },
   "devDependencies": {
     "@types/react": "18.2.6",

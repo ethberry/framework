@@ -3,11 +3,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { Erc20ContractService } from "./contract.service";
 import { Erc20ContractCreateDto } from "./dto";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc20/contracts")

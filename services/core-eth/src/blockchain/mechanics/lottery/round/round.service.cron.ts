@@ -25,7 +25,6 @@ export class LotteryRoundServiceCron {
     private readonly contractService: ContractService,
   ) {}
 
-  // @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, { name: "lotteryRound" })
   public async lotteryRound(): Promise<void> {
     const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
 

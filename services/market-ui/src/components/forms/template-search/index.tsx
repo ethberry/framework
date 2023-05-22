@@ -4,7 +4,8 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 interface ITemplateSearchFormProps {

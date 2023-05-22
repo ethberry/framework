@@ -6,8 +6,8 @@ import { SearchableOptionalDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
-import { ITemplateUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
+import type { ITemplateUpdateDto } from "../interfaces";
 
 export class TemplateUpdateDto extends SearchableOptionalDto implements ITemplateUpdateDto {
   @ApiPropertyOptional({

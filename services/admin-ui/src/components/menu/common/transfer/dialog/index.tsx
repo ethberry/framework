@@ -23,8 +23,6 @@ export interface ITransferDialogProps {
 export const TransferDialog: FC<ITransferDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const contractFeatures = Object.values(ContractFeatures).filter(feature => feature !== ContractFeatures.SOULBOUND);
-
   return (
     <FormDialog
       initialValues={initialValues}
@@ -33,7 +31,8 @@ export const TransferDialog: FC<ITransferDialogProps> = props => {
       testId="ContractTransferForm"
       {...rest}
     >
-      <TokenAssetInput prefix="token" contract={{ data: { contractFeatures } }} />
+      {/* @ts-ignore */}
+      <TokenAssetInput prefix="token" contract={{ data: { excludeFeatures: [ContractFeatures.SOULBOUND] } }} />
       <TextInput name="address" />
     </FormDialog>
   );

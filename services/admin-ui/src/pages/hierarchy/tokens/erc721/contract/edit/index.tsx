@@ -1,4 +1,6 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -6,8 +8,8 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { ContractStatus, IContract } from "@framework/types";
 
-import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
+import { validationSchema } from "./validation";
 
 export interface IErc721ContractEditDialogProps {
   open: boolean;
@@ -38,6 +40,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
     id,
     title,
     address,
+    symbol,
     description,
     contractStatus,
     imageUrl,
@@ -52,21 +55,34 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       message={message}
       testId="Erc721ContractEditForm"
       action={
-        <BlockchainInfoPopover
-          name={name}
-          symbol={symbol}
-          address={address}
-          baseTokenURI={baseTokenURI}
-          royalty={`${royalty / 100}%`}
-          chainId={chainId}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            name={name}
+            symbol={symbol}
+            address={address}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+          />
+        ) : (
+          <Fragment />
+        )
       }
       {...rest}
     >
+      {!id ? (
+        <Alert severity="warning">
+          <FormattedMessage id="form.hints.risk" />
+        </Alert>
+      ) : null}
+      {!id ? <TextInput name="symbol" /> : null}
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      {!id ? <TextInput name="address" /> : null}
+      {id ? (
+        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      ) : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

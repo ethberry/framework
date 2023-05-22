@@ -6,6 +6,8 @@ import { AccountBalanceWallet } from "@mui/icons-material";
 import { useCollection } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
+
+import { CommonActionsMenu } from "../../../../components/menu/mechanics/common";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
 export const SystemContracts: FC = () => {
@@ -51,6 +53,7 @@ export const SystemContracts: FC = () => {
                 <IconButton onClick={handleWithdraw(contract)}>
                   <AccountBalanceWallet />
                 </IconButton>
+                <CommonActionsMenu contract={contract} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

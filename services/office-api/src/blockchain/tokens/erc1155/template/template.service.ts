@@ -3,14 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { AssetService } from "../../../exchange/asset/asset.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
-import { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
+import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { Erc1155TokenService } from "../token/token.service";
-import { AssetService } from "../../../exchange/asset/asset.service";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {

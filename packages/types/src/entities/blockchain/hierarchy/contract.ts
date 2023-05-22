@@ -41,6 +41,7 @@ export enum Erc721ContractFeatures {
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
   "VOTES" = "VOTES",
+  "EXTERNAL" = "EXTERNAL",
 }
 
 export enum Erc721ContractTemplates {
@@ -91,6 +92,7 @@ export enum Erc998ContractTemplates {
 export enum Erc1155ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "SOULBOUND" = "SOULBOUND",
+  "EXTERNAL" = "EXTERNAL",
 }
 
 export enum Erc1155ContractTemplates {
@@ -170,11 +172,11 @@ export enum ContractFeatures {
   // SYSTEM
   "WITHDRAW" = "WITHDRAW",
   "ALLOWANCE" = "ALLOWANCE",
+  "EXTERNAL" = "EXTERNAL",
 
   // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
-  "EXTERNAL" = "EXTERNAL",
 
   // EC721
   "UPGRADEABLE" = "UPGRADEABLE",

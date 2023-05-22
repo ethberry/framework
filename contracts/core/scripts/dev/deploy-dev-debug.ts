@@ -456,13 +456,6 @@ async function main() {
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
-  // const randomContractLotteryName =
-  //   network.name === "besu"
-  //     ? "LotteryRandomBesuV2"
-  //     : network.name === "gemunion"
-  //     ? "LotteryRandomGemunionV2"
-  //     : "LotteryGemunion";
-
   const randomContractLotteryName = getContractName("LotteryRandom", network.name);
 
   // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");

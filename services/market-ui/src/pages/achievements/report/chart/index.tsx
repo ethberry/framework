@@ -15,15 +15,15 @@ export const ReportChart: FC<IReportChartProps> = props => {
   const theme = useTheme();
   const chartRef = useRef<HTMLDivElement | null>(null);
 
-  const level = achievementRule.levels.reduce((foundLevel, nextLevel) => {
+  const maxLevel = achievementRule.levels.reverse().reduce((foundLevel, nextLevel) => {
     if (nextLevel.amount > count.count && nextLevel.id > foundLevel.id) {
       return nextLevel;
     }
     return foundLevel;
   }, achievementRule.levels[0]);
 
-  const done = (100 * count.count) / level?.amount;
-  const rest = 100 - done;
+  const done = Math.ceil((100 * count.count) / maxLevel?.amount);
+  const rest = done > 100 ? 0 : 100 - done;
 
   useEffect(() => {
     if (chartRef.current) {
@@ -32,8 +32,9 @@ export const ReportChart: FC<IReportChartProps> = props => {
           ["done", done],
           ["rest", rest],
         ],
-        level: achievementRule.levels.findIndex(({ id }) => level.id === id) + 1,
-        score: `${count.count} / ${level?.amount}`,
+        // level: achievementRule.levels.findIndex(({ id }) => level.id === id) + 1,
+        level: maxLevel.achievementLevel,
+        score: `${count.count} / ${maxLevel?.amount}`,
         colors: [theme.palette.primary.main, "#BDBDBD"],
       });
 

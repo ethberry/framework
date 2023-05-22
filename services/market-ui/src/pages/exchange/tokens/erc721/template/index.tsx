@@ -3,7 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, TemplateStatus } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
