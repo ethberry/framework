@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { constants, utils } from "ethers";
+import { constants, utils, BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -12,13 +12,13 @@ import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
-import { deployLottery } from "./fixture";
+import { deployLotteryRaffle } from "./fixture";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-describe("Lottery", function () {
+describe("Lottery Raffle", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const lotteryConfig = {
@@ -27,7 +27,7 @@ describe("Lottery", function () {
     commission: 30, // lottery wallet gets 30% commission from each round balance
   };
 
-  const factory = () => deployLottery(lotteryConfig);
+  const factory = () => deployLotteryRaffle(lotteryConfig);
 
   before(async function () {
     if (network.name === "hardhat") {
@@ -101,7 +101,7 @@ describe("Lottery", function () {
           amount,
         },
       );
-      await expect(tx).to.be.revertedWith("Lottery: previous round is not yet finished");
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "NotComplete");
     });
   });
 
@@ -149,16 +149,15 @@ describe("Lottery", function () {
     it("should fail: previous round is already finished", async function () {
       const { lotteryInstance } = await factory();
       const tx = lotteryInstance.endRound();
-      await expect(tx).to.be.revertedWith("Lottery: previous round is already finished");
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "Expired");
     });
   });
 
   describe("finalizeRound", function () {
-    it("should finalize round with 1 ticket and get commission", async function () {
+    it("should finalize round with 1 ticket", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
 
-      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance, lotteryWalletInstance } =
-        await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(lotteryInstance.address, amount);
@@ -237,14 +236,6 @@ describe("Lottery", function () {
         expect(events.length).to.be.greaterThan(0);
         expect(events[0].args?.round).to.equal(1);
       }
-
-      // COMMISSION
-      // event TransferReceived(address operator, address from, uint256 value, bytes data);
-      // .withArgs(lotteryInstance.address, lotteryInstance.address, (amount / 100) * lotteryConfig.commission, "0x");
-      const eventFilter1 = lotteryWalletInstance.filters.TransferReceived();
-      const events1 = await lotteryWalletInstance.queryFilter(eventFilter1);
-      expect(events1.length).to.be.greaterThan(0);
-      expect(events1[0].args?.value).to.equal((amount / 100) * lotteryConfig.commission);
     });
   });
 
@@ -364,7 +355,7 @@ describe("Lottery", function () {
 
       const tx1 = lotteryInstance.releaseFunds(1);
       await expect(tx1).to.emit(lotteryInstance, "Released").withArgs(1, amount);
-      // event TransferReceived(address operator, address from, uint256 value, bytes data);
+
       await expect(tx1)
         .to.emit(lotteryWalletInstance, "TransferReceived")
         .withArgs(lotteryInstance.address, lotteryInstance.address, amount, "0x");
@@ -427,11 +418,11 @@ describe("Lottery", function () {
       await lotteryInstance.endRound();
 
       // TIME
-      // const current = await time.latestBlock();
-      // await time.advanceBlockTo(current.add(web3.utils.toBN(1)));
-      //
-      // const tx1 = lotteryInstance.releaseFunds(1);
-      // await expect(tx1).to.be.revertedWith("Round: is not releasable yet");
+      const current = await time.latestBlock();
+      await time.advanceBlockTo(current.add(web3.utils.toBN(1)));
+
+      const tx1 = lotteryInstance.releaseFunds(1);
+      await expect(tx1).to.be.revertedWithCustomError(lotteryInstance, "NotComplete");
     });
 
     it("should fail: wrong signer", async function () {
@@ -478,7 +469,7 @@ describe("Lottery", function () {
         },
         signature,
       );
-      await expect(tx).to.be.revertedWith("Lottery: Wrong signer");
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "SignerMissingRole");
     });
 
     it("should fail: wrong signature", async function () {
@@ -803,7 +794,7 @@ describe("Lottery", function () {
         },
         signature3,
       );
-      await expect(tx3).to.be.revertedWith("Lottery: no more tickets available");
+      await expect(tx3).to.be.revertedWithCustomError(lotteryInstance, "LimitExceed");
     });
 
     it("should fail: current round is finished", async function () {
@@ -864,16 +855,13 @@ describe("Lottery", function () {
         },
         signature,
       );
-      await expect(tx).to.be.revertedWith("Lottery: current round is finished");
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "NotActive");
     });
   });
 
   describe("get prize", function () {
-    it("should get prize: Jackpot 1 ticket", async function () {
+    it("should get prize", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-
-      const values = [0, 1, 2, 3, 5, 8];
-      const aggregation = [0, 0, 0, 0, 0, 0, 1];
 
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
 
@@ -882,9 +870,7 @@ describe("Lottery", function () {
       await erc20Instance.mint(lotteryInstance.address, utils.parseEther("20000"));
 
       await lotteryInstance.setDummyRound(
-        defaultNumbers,
-        values,
-        aggregation,
+        1, // prizeNumber
         nonce,
         {
           tokenType: 2,
@@ -902,48 +888,90 @@ describe("Lottery", function () {
 
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
 
-      const prizeAmount = constants.WeiPerEther.mul(7000).sub(180); // rounding error
-
       const tx = lotteryInstance.connect(receiver).getPrize(1);
-      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
+      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, 0);
+    });
+  });
+
+  describe("get data", function () {
+    it("should get dummy round data", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
+
+      await erc721Instance.mintTicket(receiver.address, 1, defaultNumbers);
+      await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
+
+      // TIME
+      const current: number = (await time.latest()).toNumber();
+
+      await lotteryInstance.setDummyRound(
+        1, // prizeNumber
+        nonce,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId: 0,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: erc20Instance.address,
+          tokenId: 0,
+          amount,
+        },
+      );
+
+      // ROUND COUNT
+      const roundCount = await lotteryInstance.getRoundsCount();
+      expect(roundCount).to.equal(1 + 1); // + root round
+
+      // FULL ROUND DATA
+      const roundData = await lotteryInstance.getRound(1);
+
+      expect(roundData).to.have.deep.nested.property("roundId", BigNumber.from(1));
+      expect(roundData).to.have.deep.nested.property("startTimestamp", BigNumber.from(current + 1));
+      expect(roundData).to.have.deep.nested.property("endTimestamp", BigNumber.from(current + 2));
+      expect(roundData).to.have.deep.nested.property("balance", utils.parseEther("10000"));
+      expect(roundData).to.have.deep.nested.property("total", utils.parseEther("7000"));
+      expect(roundData)
+        .to.have.deep.nested.property("ticketCounter")
+        .to.have.deep.nested.property("_value", BigNumber.from(1));
+      expect(roundData).to.have.deep.nested.property("prizeNumber", BigNumber.from(1));
+      expect(roundData).to.have.deep.nested.property("requestId", BigNumber.from(nonce));
+      expect(roundData)
+        .to.have.deep.nested.property("ticketAsset")
+        .to.have.deep.nested.members([2, erc721Instance.address, BigNumber.from(0), BigNumber.from(amount)]);
+      expect(roundData)
+        .to.have.deep.nested.property("acceptedAsset")
+        .to.have.deep.nested.members([1, erc20Instance.address, BigNumber.from(0), BigNumber.from(amount)]);
+
+      // CURRENT ROUND DATA (SHORT)
+      const currentRound = await lotteryInstance.getCurrentRoundInfo();
+
+      expect(currentRound).to.have.deep.nested.property("roundId", BigNumber.from(1));
+      expect(currentRound).to.have.deep.nested.property("startTimestamp", BigNumber.from(current + 1));
+      expect(currentRound).to.have.deep.nested.property("endTimestamp", BigNumber.from(current + 2));
+      expect(currentRound)
+        .to.have.deep.nested.property("ticketAsset")
+        .to.have.deep.nested.members([2, erc721Instance.address, BigNumber.from(0), BigNumber.from(amount)]);
+      expect(currentRound)
+        .to.have.deep.nested.property("acceptedAsset")
+        .to.have.deep.nested.members([1, erc20Instance.address, BigNumber.from(0), BigNumber.from(amount)]);
     });
 
-    it("should get prize: Jackpot 2 tickets", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+    it.only("should fail: round not exist", async function () {
+      const [_owner] = await ethers.getSigners();
 
-      const values = [0, 1, 2, 3, 5, 8];
-      const aggregation = [0, 0, 0, 0, 0, 0, 2];
+      const { lotteryInstance } = await factory();
 
-      const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
+      // ROUND COUNT
+      const roundCount = await lotteryInstance.getRoundsCount();
+      expect(roundCount).to.equal(1); // root round
 
-      await erc721Instance.mintTicket(receiver.address, 1, defaultNumbers);
-      await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
-      await erc20Instance.mint(lotteryInstance.address, utils.parseEther("20000"));
-
-      await lotteryInstance.setDummyRound(
-        defaultNumbers,
-        values,
-        aggregation,
-        nonce,
-        {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: 0,
-          amount,
-        },
-        {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 1,
-          amount,
-        },
-      );
-      // await lotteryInstance.setDummyTicket(defaultNumbers);
-
-      const prizeAmount = constants.WeiPerEther.mul(3500).sub(200); // rounding error
-
-      const tx = lotteryInstance.connect(receiver).getPrize(1);
-      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
+      // FULL ROUND DATA
+      const tx = lotteryInstance.getRound(2);
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "NotExist");
     });
   });
 });

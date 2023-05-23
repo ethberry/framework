@@ -27,3 +27,5 @@ error Expired();
 error ZeroBalance();
 error NotComplete();
 error NotActive();
+
+error WrongRound();

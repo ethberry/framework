@@ -13,12 +13,13 @@ import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
+import "../../../utils/errors.sol";
 import "../interfaces/IERC721Ticket.sol";
 import "../../../Exchange/interfaces/IAsset.sol";
 
 contract SignatureValidator is AccessControl, Pausable, EIP712 {
   using ECDSA for bytes32;
-  
+
   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE =
@@ -30,7 +31,11 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
 
   bytes32 private immutable PERMIT_SIGNATURE =
     keccak256(
-      bytes.concat("EIP712(address account,Params params,bool[36] numbers,Asset price)", ASSET_SIGNATURE, PARAMS_SIGNATURE)
+      bytes.concat(
+        "EIP712(address account,Params params,bool[36] numbers,Asset price)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE
+      )
     );
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
@@ -41,11 +46,15 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
     Asset memory price,
     bytes calldata signature
   ) internal returns (address) {
-    require(!_expired[params.nonce], "Lottery: Expired signature");
+    if (_expired[params.nonce]) {
+      revert ExpiredSignature();
+    }
     _expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
-      require(block.timestamp <= params.expiresAt, "Lottery: Expired signature");
+      if (block.timestamp > params.expiresAt) {
+        revert ExpiredSignature();
+      }
     }
 
     address account = _msgSender();

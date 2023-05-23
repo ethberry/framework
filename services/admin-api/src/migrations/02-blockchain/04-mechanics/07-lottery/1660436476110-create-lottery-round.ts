@@ -19,8 +19,17 @@ export class CreateLotteryRoundAt1660436476100 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "number",
+          type: "uint256",
+          isNullable: true,
+        },
+        {
           name: "round_id",
           type: "uint256",
+        },
+        {
+          name: "contract_id",
+          type: "int",
         },
         {
           name: "start_timestamp",
@@ -38,6 +47,14 @@ export class CreateLotteryRoundAt1660436476100 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
         },
       ],
     });

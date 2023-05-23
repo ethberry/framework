@@ -20,6 +20,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       INSERT INTO ${ns}.lottery_round (
         numbers,
         round_id,
+        contract_id,
         start_timestamp,
         end_timestamp,
         created_at,
@@ -27,6 +28,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ) VALUES (
         '${getNumbers()}',
         '1',
+        8,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',

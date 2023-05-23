@@ -454,16 +454,11 @@ async function main() {
   const lotteryWalletFactory = await ethers.getContractFactory("LotteryWallet");
   contracts.lotteryWallet = await lotteryWalletFactory.deploy([owner.address], [100]);
 
+  // LOTTERY
   const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
   // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
-
-  const randomContractLotteryName = getContractName("LotteryRandom", network.name);
-
-  // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
-  const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
-  // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   const lotteryConfig = {
     lotteryWallet: contracts.lotteryWallet.address,
@@ -471,6 +466,11 @@ async function main() {
     maxTickets: 2, // production: 5000 (dev: 2)
     commission: 30, // lottery wallet gets 30% commission from each round balance
   };
+
+  // LOTTERY 6 from 36
+  const randomContractLotteryName = getContractName("LotteryRandom", network.name);
+
+  const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
 
   contracts.lottery = await lotteryFactory.deploy("Lottery", lotteryConfig);
   await debug(contracts);
@@ -481,6 +481,21 @@ async function main() {
   );
 
   await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
+
+  // LOTTERY RAFFLE
+  const raffleContractLotteryName = getContractName("LotteryRaffleRandom", network.name);
+
+  const lotteryRaffleFactory = await ethers.getContractFactory(raffleContractLotteryName);
+
+  contracts.lotteryRaffle = await lotteryRaffleFactory.deploy("Lottery Raffle", lotteryConfig);
+  await debug(contracts);
+
+  await debug(
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lotteryRaffle.address),
+    "vrfInstance.addConsumer",
+  );
+
+  await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lotteryRaffle.address), "grantRole");
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
@@ -510,7 +525,6 @@ async function main() {
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
-  // TODO add pyramid deploy
   const pyramidFactory = await ethers.getContractFactory("Pyramid");
   contracts.pyramid = await pyramidFactory.deploy(
     [

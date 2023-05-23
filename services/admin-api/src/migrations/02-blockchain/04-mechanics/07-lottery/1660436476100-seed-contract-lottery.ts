@@ -9,10 +9,16 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const lotteryAddr = process.env.LOTTERY_ADDR || wallet;
+    const lotteryRaffleAddr = process.env.LOTTERY_RAFFLE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     const lotteryOptions = JSON.stringify({
       schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+      description: "Midnight Lottery",
+    });
+
+    const lotteryOptionsWeekend = JSON.stringify({
+      schedule: CronExpression.EVERY_WEEKEND,
       description: "Midnight Lottery",
     });
 
@@ -43,6 +49,25 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           '${lotteryOptions}',
           '',
           'Lottery',
+          '',
+          '',
+          'ACTIVE',
+          null,
+          '{RANDOM, ALLOWANCE}',
+          'LOTTERY',
+          '${fromBlock}',
+          1,
+          '${currentDateTime}',
+          '${currentDateTime}'
+        ),
+        (
+          10,
+          '${lotteryRaffleAddr}',
+          '${chainId}',
+          'RAFFLE',
+          '${lotteryOptionsWeekend}',
+          '',
+          'Lottery Raffle',
           '',
           '',
           'ACTIVE',
