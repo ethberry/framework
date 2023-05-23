@@ -6,7 +6,7 @@ export interface IAchievementLevelCreateDto extends ISearchableDto {
   achievementRuleId: number;
   item: IAssetDto;
   amount: number;
-  attributes: Record<string, string | number>;
+  parameters: Record<string, string | number>;
   startTimestamp: string;
   endTimestamp: string;
 }
