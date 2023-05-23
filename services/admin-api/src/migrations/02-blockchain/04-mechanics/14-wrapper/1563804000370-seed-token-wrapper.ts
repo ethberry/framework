@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export class SeedWrapperAt1563804000370 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,7 +12,7 @@ export class SeedWrapperAt1563804000370 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,
@@ -22,7 +22,7 @@ export class SeedWrapperAt1563804000370 implements MigrationInterface {
       ) VALUES (
         17010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "170101",
+          [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
         17010101,
@@ -33,7 +33,7 @@ export class SeedWrapperAt1563804000370 implements MigrationInterface {
       ), (
         17010102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "170101",
+          [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
         17010102,
@@ -44,7 +44,7 @@ export class SeedWrapperAt1563804000370 implements MigrationInterface {
       ), (
         17010103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "170101",
+          [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
         17010103,

@@ -36,7 +36,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "attributes",
+          name: "parameters",
           type: "json",
           default: "'{}'",
         },

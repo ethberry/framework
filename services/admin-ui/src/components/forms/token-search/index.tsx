@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -19,19 +19,19 @@ interface ITokenSearchFormProps {
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractType, contractModule } = props;
 
-  const { query, tokenStatus, contractIds, templateIds, tokenId, attributes } = initialValues;
+  const { query, tokenStatus, contractIds, templateIds, tokenId, metadata } = initialValues;
   const fixedValues = {
     query,
     tokenStatus,
     contractIds,
     templateIds,
     tokenId,
-    attributes: Object.assign(
+    metadata: Object.assign(
       {
-        [TokenAttributes.RARITY]: [],
-        [TokenAttributes.GRADE]: [],
+        [TokenMetadata.RARITY]: [],
+        [TokenMetadata.GRADE]: [],
       },
-      attributes,
+      metadata,
     ),
   };
 
@@ -61,11 +61,11 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (
             <Fragment>
               <Grid item xs={6}>
-                <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
+                <SelectInput name={`metadata.${TokenMetadata.RARITY}`} options={TokenRarity} multiple />
               </Grid>
               <Grid item xs={6}>
                 <SelectInput
-                  name={`attributes.${TokenAttributes.GRADE}`}
+                  name={`metadata.${TokenMetadata.GRADE}`}
                   options={new Array(10)
                     .fill(null)
                     .reduce((memo: Record<string, string>, value, i) => Object.assign(memo, { [i + 1]: i + 1 }), {})}

@@ -37,7 +37,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           },
         })
         .then((grade: IGrade) => {
-          const level = token.attributes[attribute];
+          const level = token.metadata[attribute];
 
           const price =
             grade.price?.components.sort(sorter("id")).map(component => ({

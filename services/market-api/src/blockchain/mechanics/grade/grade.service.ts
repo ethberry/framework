@@ -123,7 +123,7 @@ export class GradeService {
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const level = tokenEntity.attributes[attribute];
+    const level = tokenEntity.metadata[attribute];
 
     return this.signerService.getOneToManySignature(
       account,

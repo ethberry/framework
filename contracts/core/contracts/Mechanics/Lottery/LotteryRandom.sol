@@ -50,10 +50,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
   }
 
   constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
-    address account = _msgSender();
-    _grantRole(DEFAULT_ADMIN_ROLE, account);
-    _grantRole(PAUSER_ROLE, account);
-    _grantRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
 
     setTicketFactory(ticketFactory);
     setAcceptedToken(acceptedToken);
@@ -183,7 +182,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     require(currentRound.tickets.length < _maxTicket, "Lottery: no more tickets available");
     currentRound.tickets.push(numbers);
 
-    address account = _msgSender();
 
     _verifySignature(params, numbers, price, signer, signature);
 
@@ -192,9 +190,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
 
-    uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(_msgSender(), roundNumber, numbers);
 
-    emit Purchase(tokenId, account, price, roundNumber, numbers);
+    emit Purchase(tokenId, _msgSender(), price, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {

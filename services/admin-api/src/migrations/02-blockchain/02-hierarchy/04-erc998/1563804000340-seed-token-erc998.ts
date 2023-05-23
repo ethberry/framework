@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export class SeedTokenErc998At1563804000340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,7 +12,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,
@@ -22,7 +22,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ) VALUES (
         14010101, -- Physic rune
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "140101",
         })}',
         100,
         '14010101',
@@ -33,7 +33,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14010102, -- Magic rune
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "140101",
         })}',
         100,
         '14010102',
@@ -44,7 +44,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14010103, -- Poison rune
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "140101",
         })}',
         100,
         '14010103',
@@ -55,7 +55,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14040101, -- Fireball
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140401",
+          [TokenMetadata.TEMPLATE_ID]: "140401",
         })}',
         100,
         '14040101',
@@ -66,7 +66,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14040201, -- Frostbite
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140402",
+          [TokenMetadata.TEMPLATE_ID]: "140402",
         })}',
         100,
         '14040201',
@@ -77,7 +77,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14040301, -- Lightbolt
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140403",
+          [TokenMetadata.TEMPLATE_ID]: "140403",
         })}',
         100,
         '14040301',
@@ -88,7 +88,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14040401, -- Slow
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140404",
+          [TokenMetadata.TEMPLATE_ID]: "140404",
         })}',
         100,
         '14040401',
@@ -99,7 +99,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14040501, -- Fly
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140405",
+          [TokenMetadata.TEMPLATE_ID]: "140405",
         })}',
         100,
         '14040501',
@@ -110,8 +110,8 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14050101, -- Grimoire #1
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140501",
-          [TokenAttributes.GRADE]: "1",
+          [TokenMetadata.TEMPLATE_ID]: "140501",
+          [TokenMetadata.GRADE]: "1",
         })}',
         100,
         '14050101',
@@ -122,8 +122,8 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14050102, -- Grimoire #2
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140502",
-          [TokenAttributes.GRADE]: "10",
+          [TokenMetadata.TEMPLATE_ID]: "140502",
+          [TokenMetadata.GRADE]: "10",
         })}',
         100,
         '14050201',
@@ -134,9 +134,9 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14060101, -- Warrior
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140601",
-          [TokenAttributes.GRADE]: "1",
-          [TokenAttributes.RARITY]: "0", // TokenRarity.COMMON
+          [TokenMetadata.TEMPLATE_ID]: "140601",
+          [TokenMetadata.GRADE]: "1",
+          [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
         })}',
         100,
         '14060101',
@@ -147,9 +147,9 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
          14060102, -- Warrior
          '${JSON.stringify({
-           [TokenAttributes.TEMPLATE_ID]: "40601",
-           [TokenAttributes.GRADE]: "10",
-           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+           [TokenMetadata.TEMPLATE_ID]: "40601",
+           [TokenMetadata.GRADE]: "10",
+           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
          })}',
          100,
          '14060102',
@@ -160,9 +160,9 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14060201, -- Rouge
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140602",
-          [TokenAttributes.GRADE]: "5",
-          [TokenAttributes.RARITY]: "1", // TokenRarity.UNCOMMON
+          [TokenMetadata.TEMPLATE_ID]: "140602",
+          [TokenMetadata.GRADE]: "5",
+          [TokenMetadata.RARITY]: "1", // TokenRarity.UNCOMMON
         })}',
         100,
         '14060201',
@@ -173,9 +173,9 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14060301, -- Mage
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140603",
-          [TokenAttributes.GRADE]: "10",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+          [TokenMetadata.TEMPLATE_ID]: "140603",
+          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '14060301',
@@ -186,10 +186,10 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14070101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140701",
-          [TokenAttributes.GRADE]: "10",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
-          [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+          [TokenMetadata.TEMPLATE_ID]: "140701",
+          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
+          [TokenMetadata.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         100,
         '14070101',
@@ -200,7 +200,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14090101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "140901",
+          [TokenMetadata.TEMPLATE_ID]: "140901",
         })}',
         100,
         '14090101',
@@ -211,7 +211,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14110101, -- erc20 owner
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "141101",
+          [TokenMetadata.TEMPLATE_ID]: "141101",
         })}',
         100,
         '14110101',
@@ -222,7 +222,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14120101, -- erc1155 owner
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "141201",
+          [TokenMetadata.TEMPLATE_ID]: "141201",
         })}',
         100,
         '14120101',
@@ -233,7 +233,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         14130101, -- erc20 + erc1155 owner
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "141301",
+          [TokenMetadata.TEMPLATE_ID]: "141301",
         })}',
         100,
         '14130101',
@@ -244,9 +244,9 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         24010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "240101",
-          [TokenAttributes.GRADE]: "10",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+          [TokenMetadata.TEMPLATE_ID]: "240101",
+          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '24010101',

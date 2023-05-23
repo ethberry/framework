@@ -26,7 +26,7 @@ export class TokenUploadDto {
   @ApiPropertyOptional()
   // @ValidateNested()
   @Allow()
-  public attributes: any;
+  public metadata: any;
 }
 
 export class CollectionUploadDto {

@@ -179,32 +179,30 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
 
   // WITHDRAW
   function withdrawToken(address token, uint256 amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    address account = _msgSender();
     uint256 totalBalance;
     if (token == address(0)) {
       totalBalance = address(this).balance;
       require(totalBalance >= amount, "Pyramid: balance exceeded");
-      Address.sendValue(payable(account), amount);
+      Address.sendValue(payable(_msgSender()), amount);
     } else {
       totalBalance = IERC20(token).balanceOf(address(this));
       require(totalBalance >= amount, "Pyramid: balance exceeded");
-      SafeERC20.safeTransfer(IERC20(token), account, amount);
+      SafeERC20.safeTransfer(IERC20(token), _msgSender(), amount);
     }
     emit WithdrawToken(token, amount);
   }
 
   // FINALIZE
   function finalizeByToken(address token) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    address account = _msgSender();
     uint256 finalBalance;
     if (token == address(0)) {
       finalBalance = address(this).balance;
       require(finalBalance > 0, "Pyramid: 0 balance");
-      Address.sendValue(payable(account), finalBalance);
+      Address.sendValue(payable(_msgSender()), finalBalance);
     } else {
       finalBalance = IERC20(token).balanceOf(address(this));
       require(finalBalance > 0, "Pyramid: 0 balance");
-      SafeERC20.safeTransfer(IERC20(token), account, finalBalance);
+      SafeERC20.safeTransfer(IERC20(token), _msgSender(), finalBalance);
     }
     emit FinalizedToken(token, finalBalance);
   }
@@ -212,18 +210,17 @@ contract PyramidBasic is IPyramid, AccessControl, Pausable {
   function finalizeByRuleId(uint256 ruleId) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Pyramid: rule doesn't exist");
-    address account = _msgSender();
     address token = rule.deposit.token;
     uint256 finalBalance;
 
     if (token == address(0)) {
       finalBalance = address(this).balance;
       require(finalBalance > 0, "Pyramid: 0 balance");
-      Address.sendValue(payable(account), finalBalance);
+      Address.sendValue(payable(_msgSender()), finalBalance);
     } else {
       finalBalance = IERC20(token).balanceOf(address(this));
       require(finalBalance > 0, "Pyramid: 0 balance");
-      SafeERC20.safeTransfer(IERC20(token), account, finalBalance);
+      SafeERC20.safeTransfer(IERC20(token), _msgSender(), finalBalance);
     }
     emit FinalizedToken(token, finalBalance);
   }

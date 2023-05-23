@@ -12,7 +12,7 @@ export interface IAchievementLevel extends ISearchable {
   item?: IAsset;
   itemId: number;
   amount: number;
-  attributes: any;
+  parameters: any;
   startTimestamp: string;
   endTimestamp: string; // OR null ?
   redemptions?: Array<IAchievementRedemption>;

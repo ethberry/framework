@@ -134,7 +134,7 @@ export class MarketplaceService {
     const queryString = `
         SELECT 
             COUNT(token.id)::INTEGER AS count,
-            (token.attributes->>$1)::INTEGER as attribute
+            (token.metadata->>$1)::INTEGER as attribute
         FROM
             ${ns}.token
           LEFT JOIN
@@ -142,7 +142,7 @@ export class MarketplaceService {
           LEFT JOIN
             ${ns}.contract ON contract.id = template.contract_id
         WHERE
-            (token.attributes->>$1) is not null
+            (token.metadata->>$1) is not null
           AND
             contract.contract_type = $2
           AND

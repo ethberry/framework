@@ -19,7 +19,7 @@ import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenAttributes, TokenStatus, TokenType } from "@framework/types";
+import { TokenMetadata, TokenStatus, TokenType } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { MarketplaceGradeSearchForm } from "./form";
@@ -27,7 +27,7 @@ import { MarketplaceGradeSearchForm } from "./form";
 export const MarketplaceGrade: FC = () => {
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
   const [search, setSearch] = useState<IMarketplaceSupplySearchDto>({
-    attribute: TokenAttributes.GRADE,
+    attribute: TokenMetadata.GRADE,
     tokenStatus: TokenStatus.MINTED,
     tokenType: TokenType.ERC721,
     contractIds: [] as Array<number>,
@@ -103,7 +103,7 @@ export const MarketplaceGrade: FC = () => {
                       <Link
                         component={RouterLink}
                         to={`/${search.tokenType.toLowerCase()}-tokens?${stringify({
-                          attributes: { [TokenAttributes.GRADE]: [i + 1] },
+                          metadata: { [TokenMetadata.GRADE]: [i + 1] },
                           tokenStatus: [search.tokenStatus],
                           contractIds: search.contractIds,
                           templateIds: search.templateIds,

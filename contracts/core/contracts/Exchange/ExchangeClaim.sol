@@ -22,10 +22,8 @@ abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
+    ExchangeUtils.acquire(items, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
-
-    emit Claim(account, params.externalId, items);
+    emit Claim(_msgSender(), params.externalId, items);
   }
 }

@@ -2,19 +2,19 @@ import { FC } from "react";
 import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 import { decodeGenes } from "@framework/genes";
 
 export interface ITokenGenesisView {
-  attributes: Record<string, any>;
+  metadata: Record<string, any>;
 }
 
 export const TokenGenesisView: FC<ITokenGenesisView> = props => {
-  const { attributes } = props;
+  const { metadata } = props;
 
   const DND = ["Matron", "Sire"];
 
-  const result = Object.entries(decodeGenes(BigNumber.from(attributes[TokenAttributes.GENES]), DND)).reduce(
+  const result = Object.entries(decodeGenes(BigNumber.from(metadata[TokenMetadata.GENES]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );

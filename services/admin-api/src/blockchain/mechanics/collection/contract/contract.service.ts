@@ -52,15 +52,15 @@ export class CollectionContractService extends ContractService {
   public async upload(address: string, file: Express.Multer.File): Promise<Array<TokenEntity>> {
     const parsed = await csv2json({
       noheader: true,
-      headers: ["tokenId", "imageUrl", "attributes"],
+      headers: ["tokenId", "imageUrl", "metadata"],
     }).fromString(file.buffer.toString());
 
     const files = parsed.map(
-      ({ tokenId, imageUrl, attributes }: { tokenId: string; imageUrl: string; attributes: string }) => {
+      ({ tokenId, imageUrl, metadata }: { tokenId: string; imageUrl: string; metadata: string }) => {
         return Object.assign(new TokenUploadDto(), {
           tokenId,
           imageUrl,
-          attributes,
+          metadata,
         });
       },
     );

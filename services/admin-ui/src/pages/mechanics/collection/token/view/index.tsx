@@ -7,7 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
+import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/tokens/metadata";
 import { TokenTraitsView } from "../../traits";
 
 export interface ICollectionTokenViewDialogProps {
@@ -20,9 +20,9 @@ export interface ICollectionTokenViewDialogProps {
 export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, attributes, balance, imageUrl } = initialValues;
+  const { template, tokenId, metadata, balance, imageUrl } = initialValues;
 
-  const showAttributes = shouldShowAttributes(attributes);
+  const showAttributes = shouldShowAttributes(metadata);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -56,10 +56,10 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
             {showAttributes && (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  <FormattedMessage id="form.labels.attributes" />
+                  <FormattedMessage id="form.labels.metadata" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenAttributesView attributes={attributes} />
+                  <TokenAttributesView metadata={metadata} />
                 </TableCell>
               </TableRow>
             )}
@@ -69,7 +69,7 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
                   <FormattedMessage id="form.labels.traits" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenTraitsView attributes={attributes} />
+                  <TokenTraitsView metadata={metadata} />
                 </TableCell>
               </TableRow>
             ) : null}

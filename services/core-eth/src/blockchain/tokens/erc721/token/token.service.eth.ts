@@ -10,7 +10,7 @@ import {
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   ILevelUp,
-  TokenAttributes,
+  TokenMetadata,
   TokenMintType,
   TokenStatus,
 } from "@framework/types";
@@ -54,8 +54,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
@@ -64,7 +64,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        metadata,
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
       });
@@ -72,7 +72,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.GENES]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
         const mintType = getTokenMintType(txLogs);
@@ -98,10 +98,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
 
       // MODULE:BREEDING
-      if (attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.GENES]) {
         await this.breedServiceEth.newborn(
           tokenEntity.id,
-          attributes[TokenAttributes.GENES],
+          metadata[TokenMetadata.GENES],
           context.transactionHash.toLowerCase(),
         );
       }
@@ -165,7 +165,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await templateEntity.save();
 
       const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
-        attributes: "{}",
+        metadata: "{}",
         tokenId: i.toString(),
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
@@ -226,7 +226,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc721TokenEntity.attributes, { GRADE: grade.toString() });
+    Object.assign(erc721TokenEntity.metadata, { GRADE: grade.toString() });
     await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);

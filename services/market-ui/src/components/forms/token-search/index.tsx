@@ -2,14 +2,7 @@ import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import {
-  ContractFeatures,
-  ITokenSearchDto,
-  ModuleType,
-  TokenAttributes,
-  TokenRarity,
-  TokenType,
-} from "@framework/types";
+import { ContractFeatures, ITokenSearchDto, ModuleType, TokenMetadata, TokenRarity, TokenType } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -25,15 +18,15 @@ interface ITokenSearchFormProps {
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractType, contractModule, contractFeatures } = props;
 
-  const { contractIds = [], attributes } = initialValues;
+  const { contractIds = [], metadata } = initialValues;
   const fixedValues = {
     contractIds,
-    attributes: Object.assign(
+    metadata: Object.assign(
       {
-        [TokenAttributes.RARITY]: [],
-        [TokenAttributes.GRADE]: [],
+        [TokenMetadata.RARITY]: [],
+        [TokenMetadata.GRADE]: [],
       },
-      attributes,
+      metadata,
     ),
   };
 
@@ -59,11 +52,11 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (
             <Fragment>
               <Grid item xs={6}>
-                <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
+                <SelectInput name={`metadata.${TokenMetadata.RARITY}`} options={TokenRarity} multiple />
               </Grid>
               <Grid item xs={6}>
                 <SelectInput
-                  name={`attributes.${TokenAttributes.GRADE}`}
+                  name={`metadata.${TokenMetadata.GRADE}`}
                   options={new Array(10)
                     .fill(null)
                     .reduce((memo: Record<string, string>, value, i) => Object.assign(memo, { [i + 1]: i + 1 }), {})}

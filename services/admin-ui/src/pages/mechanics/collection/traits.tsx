@@ -4,13 +4,13 @@ import { FormattedMessage } from "react-intl";
 
 import { TokenTraits } from "@framework/types";
 
-export interface ITokenAttributesView {
-  attributes: Record<string, any>;
+export interface ITokenMetadataView {
+  metadata: Record<string, any>;
 }
 
-export const TokenTraitsView: FC<ITokenAttributesView> = props => {
-  const { attributes } = props;
-  const result = Object.entries(attributes).reduce((memo, [key, value]) => {
+export const TokenTraitsView: FC<ITokenMetadataView> = props => {
+  const { metadata } = props;
+  const result = Object.entries(metadata).reduce((memo, [key, value]) => {
     switch (key) {
       // MODULE:COLLECTION
       case TokenTraits.CLOTHES:
