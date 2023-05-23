@@ -1,4 +1,5 @@
 export * from "./1563804000130-seed-contract-erc721";
+export * from "./1563804000131-seed-contract-erc721-cryptokitties";
 export * from "./1563804000230-seed-template-erc721";
 export * from "./1563804000330-seed-token-erc721";
 export * from "./1563804000430-seed-balance-erc721";
