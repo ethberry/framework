@@ -499,7 +499,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
           .to.emit(stakingInstance, "WithdrawBalance")
-          .withArgs(attakerInstance.address, [1, constants.AddressZero, tokenId, amount / 2]);
+          .withArgs(attakerInstance.address, [1, erc20Instance.address, tokenId, amount / 2]);
       });
 
       it("should not call twice (ERC721)", async function () {
