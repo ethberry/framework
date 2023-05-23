@@ -115,29 +115,27 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     if (rule.period == 0) revert NotExist();
     if (!rule.active) revert NotActive();
 
-    address account = _msgSender();
-
     // check if user reached the maximum number of stakes, if it is revert transaction.
     if (_maxStake > 0) {
-      if (_stakeCounter[account] >= _maxStake) revert LimitExceed();
+      if (_stakeCounter[_msgSender()] >= _maxStake) revert LimitExceed();
     }
 
     // Increment counters and set a new stake.
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();
-    _stakeCounter[account] = _stakeCounter[account] + 1;
+    _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _stakes[stakeId] = Stake(account, rule.deposit, ruleId, block.timestamp, 0, true);
 
     // Store the new stake in the _stakes mapping.
-    _stakes[stakeId].owner = account;
+    _stakes[stakeId].owner = _msgSender();
     _stakes[stakeId].ruleId = ruleId;
     _stakes[stakeId].startTimestamp = block.timestamp;
     _stakes[stakeId].cycles = 0;
     _stakes[stakeId].activeDeposit = true;
 
-    emit StakingStart(stakeId, ruleId, account, block.timestamp, tokenIds);
+    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
     for (uint256 i = 0; i < length; ) {
@@ -163,7 +161,7 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
       }
 
       // Transfer tokens from user to this contract.
-      ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), account, address(this), _disabledTypes);
+      ExchangeUtils.spendFrom(ExchangeUtils._toArray(depositItem), _msgSender(), address(this), _disabledTypes);
 
       // Do something after purchase with referrer
       if (referrer != address(0)) {
@@ -212,11 +210,9 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
     // Set the receiver of the reward.
     Rule storage rule = _rules[stake.ruleId];
 
-    address account = _msgSender();
-
     // Verify that the stake exists and the caller is the owner of the stake.
     if (stake.owner == address(0)) revert WrongStake();
-    if (stake.owner != account) revert NotAnOwner();
+    if (stake.owner != _msgSender()) revert NotAnOwner();
     if (!stake.activeDeposit) revert Expired();
 
     uint256 stakePeriod = rule.period;
@@ -463,14 +459,13 @@ contract Staking is IStaking, AccessControl, Pausable, LinearReferral, Wallet, T
 
     item.amount = _penalties[item.token][item.tokenId];
     if (item.amount == 0) revert ZeroBalance();
-    address account = _msgSender();
 
     // Emit an event indicating that penalty balance has withdrawn.
-    emit WithdrawBalance(account, item);
+    emit WithdrawBalance(_msgSender(), item);
     // clean penalty balance in _penalties mapping storage
     _penalties[item.token][item.tokenId] = 0;
 
-    ExchangeUtils.spend(ExchangeUtils._toArray(item), account, _disabledTypes);
+    ExchangeUtils.spend(ExchangeUtils._toArray(item), _msgSender(), _disabledTypes);
   }
 
   /**

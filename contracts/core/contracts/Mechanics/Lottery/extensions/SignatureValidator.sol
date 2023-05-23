@@ -42,9 +42,7 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
       require(block.timestamp <= params.expiresAt, "Lottery: Expired signature");
     }
 
-    address account = _msgSender();
-
-    bool isVerified = _verify(signer, _hash(account, params, numbers, price), signature);
+    bool isVerified = _verify(signer, _hash(_msgSender(), params, numbers, price), signature);
     require(isVerified, "Lottery: Invalid signature");
   }
 
