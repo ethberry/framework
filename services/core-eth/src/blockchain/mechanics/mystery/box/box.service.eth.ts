@@ -3,7 +3,7 @@ import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
-import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenAttributes, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
 import { ABI } from "../../../tokens/erc721/token/log/interfaces";
@@ -48,8 +48,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
 
       if (!mysteryboxEntity) {
@@ -64,7 +64,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes: JSON.stringify(attributes),
+        metadata: JSON.stringify(metadata),
         royalty: contractEntity.royalty,
         template: templateEntity,
       });

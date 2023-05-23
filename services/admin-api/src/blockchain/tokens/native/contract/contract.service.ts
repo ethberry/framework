@@ -1,11 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { constants } from "ethers";
 
 import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -22,7 +20,6 @@ export class NativeContractService extends ContractService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
-    protected readonly configService: ConfigService,
   ) {
     super(contractEntityRepository);
   }
@@ -39,7 +36,6 @@ export class NativeContractService extends ContractService {
 
   public async create(dto: INativeContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { symbol, title, description } = dto;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
     const contractEntity = await this.contractEntityRepository
       .create({
@@ -54,7 +50,7 @@ export class NativeContractService extends ContractService {
         name: title,
         title,
         description,
-        chainId,
+        chainId: userEntity.chainId,
         imageUrl: "",
         merchantId: userEntity.merchantId,
       })
@@ -71,7 +67,7 @@ export class NativeContractService extends ContractService {
 
     await this.tokenEntityRepository
       .create({
-        attributes: "{}",
+        metadata: "{}",
         tokenId: "0",
         royalty: 0,
         template: templateEntity,

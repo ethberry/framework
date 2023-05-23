@@ -7,7 +7,7 @@ import {
   ITokenAutocompleteDto,
   ITokenSearchDto,
   ModuleType,
-  TokenAttributes,
+  TokenMetadata,
   TokenRarity,
   TokenStatus,
   TokenType,
@@ -32,7 +32,7 @@ export class TokenService {
   ): Promise<[Array<TokenEntity>, number]> {
     const {
       query,
-      attributes = {},
+      metadata = {},
       contractIds,
       templateIds,
       account = userEntity.wallet?.toLowerCase(),
@@ -90,27 +90,27 @@ export class TokenService {
       queryBuilder.andWhere("balance.account = :account", { account });
     }
 
-    const rarity = attributes[TokenAttributes.RARITY];
+    const rarity = metadata[TokenMetadata.RARITY];
     if (rarity) {
       if (rarity.length === 1) {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.RARITY}' = :rarity`, {
           rarity: Object.values(TokenRarity).findIndex(r => r === rarity[0]),
         });
       } else {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.RARITY}' IN(:...rarity)`, {
           rarity: rarity.map(e => Object.values(TokenRarity).findIndex(r => r === e)),
         });
       }
     }
 
-    const grade = attributes[TokenAttributes.GRADE];
+    const grade = metadata[TokenMetadata.GRADE];
     if (grade) {
       if (grade.length === 1) {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' = :grade`, {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' = :grade`, {
           grade: grade[0],
         });
       } else {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' IN(:...grade)`, { grade });
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' IN(:...grade)`, { grade });
       }
     }
 

@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-
 import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -9,7 +8,7 @@ import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IAchievementLevel, TokenType } from "@framework/types";
+import { IAchievementLevel } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -72,7 +71,7 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
         showLabel={false}
         // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
-      <JsonInput name="attributes" />
+      <JsonInput name="metadata" />
       <Typography variant="inherit">
         <FormattedMessage id="form.labels.amount" />
       </Typography>

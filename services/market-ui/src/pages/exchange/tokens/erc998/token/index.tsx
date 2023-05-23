@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, GradeAttribute, TokenAttributes, TokenRarity } from "@framework/types";
+import { ContractFeatures, GradeAttribute, TokenMetadata, TokenRarity } from "@framework/types";
 
 import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
@@ -75,7 +75,7 @@ export const Erc998Token: FC = () => {
               <Typography>
                 <FormattedMessage
                   id="pages.erc998.token.rarity"
-                  values={{ rarity: Object.values(TokenRarity)[selected.attributes[TokenAttributes.RARITY]] }}
+                  values={{ rarity: Object.values(TokenRarity)[selected.metadata[TokenMetadata.RARITY]] }}
                 />
               </Typography>
             </Paper>
@@ -85,7 +85,7 @@ export const Erc998Token: FC = () => {
               <Typography>
                 <FormattedMessage
                   id="pages.erc998.token.level"
-                  values={{ level: selected.attributes[TokenAttributes.GRADE] }}
+                  values={{ level: selected.metadata[TokenMetadata.GRADE] }}
                 />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
@@ -97,7 +97,7 @@ export const Erc998Token: FC = () => {
               <Typography>
                 <FormattedMessage id="pages.erc998.token.genesis" />
               </Typography>
-              <TokenGenesisView attributes={selected.attributes} />
+              <TokenGenesisView metadata={selected.metadata} />
             </Paper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
@@ -105,7 +105,7 @@ export const Erc998Token: FC = () => {
               <Typography>
                 <FormattedMessage id="pages.erc998.token.genes" />
               </Typography>
-              <TokenAttributesView attributes={selected.attributes} />
+              <TokenAttributesView metadata={selected.metadata} />
             </Paper>
           ) : null}
         </Grid>

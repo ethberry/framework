@@ -7,7 +7,7 @@ import { constants, providers } from "ethers";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
 
-import { IERC721TokenTransferEvent, IUnpackWrapper, TokenAttributes, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IUnpackWrapper, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenService } from "../../hierarchy/token/token.service";
@@ -58,8 +58,8 @@ export class WrapperServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -67,7 +67,7 @@ export class WrapperServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes: JSON.stringify(attributes),
+        metadata: JSON.stringify(metadata),
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
       });

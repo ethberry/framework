@@ -42,7 +42,7 @@ export const Erc721Token: FC = () => {
     baseUrl: "/erc721/tokens",
     empty: {
       template: {} as ITemplate,
-      attributes: "{}",
+      metadata: "{}",
     },
     search: {
       merchantId: user.profile.merchantId,

@@ -2,21 +2,21 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { TokenAttributes, TokenRarity } from "@framework/types";
+import { TokenMetadata, TokenRarity } from "@framework/types";
 
-export interface ITokenAttributesView {
-  attributes: Record<string, any>;
+export interface ITokenMetadataView {
+  metadata: Record<string, any>;
 }
 
-export const getFilteredAttributes = (attributes: Record<string, any>) =>
-  Object.entries(attributes).reduce((memo, [key, value]) => {
+export const getFilteredAttributes = (metadata: Record<string, any>) =>
+  Object.entries(metadata).reduce((memo, [key, value]) => {
     switch (key) {
       // MODULE:GRADE
-      case TokenAttributes.GRADE:
+      case TokenMetadata.GRADE:
         Object.assign(memo, { [key]: value });
         break;
       // MODULE:RANDOM
-      case TokenAttributes.RARITY:
+      case TokenMetadata.RARITY:
         Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
         break;
       // case TokenAttributes.TEMPLATE_ID:
@@ -29,14 +29,14 @@ export const getFilteredAttributes = (attributes: Record<string, any>) =>
     return memo;
   }, {} as Record<string, any>);
 
-export const shouldShowAttributes = (attributes: Record<string, any>) => {
-  return Object.entries(getFilteredAttributes(attributes)).length > 0;
+export const shouldShowAttributes = (metadata: Record<string, any>) => {
+  return Object.entries(getFilteredAttributes(metadata)).length > 0;
 };
 
-export const TokenAttributesView: FC<ITokenAttributesView> = props => {
-  const { attributes } = props;
+export const TokenAttributesView: FC<ITokenMetadataView> = props => {
+  const { metadata } = props;
 
-  const result = getFilteredAttributes(attributes);
+  const result = getFilteredAttributes(metadata);
 
   return (
     <Grid container>

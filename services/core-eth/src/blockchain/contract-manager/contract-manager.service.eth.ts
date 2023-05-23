@@ -117,7 +117,7 @@ export class ContractManagerServiceEth {
     });
 
     await this.tokenService.create({
-      attributes: "{}",
+      metadata: "{}",
       tokenId: "0",
       royalty: 0,
       template: templateEntity,
@@ -240,7 +240,7 @@ export class ContractManagerServiceEth {
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
-      attributes: "{}",
+      metadata: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

@@ -41,14 +41,14 @@ export const Erc721Token: FC = () => {
       template: {
         box: {},
       } as unknown as ITemplate,
-      attributes: "{}",
+      metadata: "{}",
     },
     search: {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
       tokenId: "",
-      attributes: {},
+      metadata: {},
     },
   });
 
