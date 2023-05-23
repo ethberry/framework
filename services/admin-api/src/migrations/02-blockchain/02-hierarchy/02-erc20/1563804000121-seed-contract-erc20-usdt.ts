@@ -33,8 +33,8 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         updated_at
       ) VALUES (
         1215,
-        '0xdac17f958d2ee523a2206206994597c13d831ec7',
-        1,
+        '${usdtAddr}',
+        '${chainId}',
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -71,8 +71,8 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         3215,
-        '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-        137,
+        '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        1,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -90,8 +90,8 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4215,
-        '${usdtAddr}',
-        '${chainId}',
+        '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+        137,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',

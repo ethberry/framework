@@ -33,7 +33,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
       ) VALUES (
         102,
         '${wallet}',
-        '56',
+        56,
         'EXCHANGE (BNB)',
         '${simpleFormatting}',
         '',

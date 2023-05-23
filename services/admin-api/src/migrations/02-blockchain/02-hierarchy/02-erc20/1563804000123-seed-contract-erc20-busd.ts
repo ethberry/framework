@@ -32,7 +32,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        2217,
+        1217,
         '${busdAddr}',
         '${chainId}',
         'BUSD',
@@ -51,7 +51,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4217,
+        2217,
         '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         56,
         'BUSD',

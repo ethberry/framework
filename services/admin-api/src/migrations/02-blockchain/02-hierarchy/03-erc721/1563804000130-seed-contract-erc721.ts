@@ -203,7 +203,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
       ), (
         2301,
         '${wallet}',
-        '56',
+        56,
         'BEP (binance)',
         '${simpleFormatting}',
         '${imageUrl}',

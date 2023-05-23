@@ -18,21 +18,21 @@ export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        12170101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        121701,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         22170101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
         221701,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        42170101,
-        '${defaultJSON}',
-        0,
-        '0',
-        'MINTED',
-        421701,
         '${currentDateTime}',
         '${currentDateTime}'
       );

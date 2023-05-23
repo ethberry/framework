@@ -33,7 +33,7 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
       ), (
         '${vestingCliffAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        22170101,
+        12170101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

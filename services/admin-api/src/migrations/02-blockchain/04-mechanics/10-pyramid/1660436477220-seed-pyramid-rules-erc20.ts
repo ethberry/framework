@@ -37,8 +37,8 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
         90211
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90212
       ), (

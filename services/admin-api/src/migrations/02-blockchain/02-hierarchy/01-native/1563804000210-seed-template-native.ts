@@ -23,19 +23,19 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         updated_at
       ) VALUES (
         110101,
-        'Native token (ETH)',
+        'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        1101,
+        4101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         110201,
-        'Inactive token (ETH)',
+        'Inactive token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -59,6 +59,18 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         310101,
+        'Native token (ETH)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '${constants.WeiPerEther.mul(1e6).toString()}',
+        'ACTIVE',
+        1101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        410101,
         'Native token (MATIC)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -67,18 +79,6 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
         3101,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        410101,
-        'Native token (BESU)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        null,
-        0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
-        'ACTIVE',
-        4101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

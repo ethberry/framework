@@ -33,8 +33,8 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         updated_at
       ) VALUES (
         1216,
-        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-        1,
+        '${wethAddr}',
+        '${chainId}',
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -71,8 +71,8 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         3216,
-        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
-        137,
+        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        1,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -90,8 +90,8 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4216,
-        '${wethAddr}',
-        '${chainId}',
+        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+        137,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
