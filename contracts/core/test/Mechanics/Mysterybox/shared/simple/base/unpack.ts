@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { IERC721Random, VRFCoordinatorMock } from "../../../../../../typechain-types";
+import { VRFCoordinatorMock } from "../../../../../../typechain-types";
 import { templateId, tokenId } from "../../../../../constants";
 import { randomRequest } from "../../../../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../../../../shared/link";
@@ -200,7 +200,7 @@ export function shouldUnpackBox(factory: () => Promise<Contract>) {
           .withArgs(tokenId);
 
         // RANDOM
-        await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
+        await randomRequest(erc721RandomInstance, vrfInstance);
 
         const balance = await erc721RandomInstance.balanceOf(receiver.address);
         expect(balance).to.equal(1);

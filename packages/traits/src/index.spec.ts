@@ -1,6 +1,6 @@
 import { BigNumber } from "ethers";
 
-import { decodeGenes, decodeNumber, encodeGenes, encodeNumbers } from ".";
+import { decodeNumber, decodeTraits, encodeNumbers, encodeTraits } from ".";
 
 const data = {
   strength: 1,
@@ -13,7 +13,7 @@ const data = {
 
 const dna = BigNumber.from("0x010000000200000012000000800000010000000400");
 
-describe("Genes", () => {
+describe("Traits", () => {
   describe("encodeNumbers", () => {
     it("should encode numbers", () => {
       const result = encodeNumbers(Object.values(data));
@@ -28,16 +28,16 @@ describe("Genes", () => {
     });
   });
 
-  describe("encodeGenes", () => {
-    it("should encode genes", () => {
-      const result = encodeGenes(data);
+  describe("encodeTraits", () => {
+    it("should encode traits", () => {
+      const result = encodeTraits(data);
       expect(result).toEqual(dna);
     });
   });
 
-  describe("decodeGenes", () => {
-    it("should decode genes", () => {
-      const result = decodeGenes(dna);
+  describe("decodeTraits", () => {
+    it("should decode traits", () => {
+      const result = decodeTraits(dna);
       expect(result).toMatchObject(data);
     });
   });

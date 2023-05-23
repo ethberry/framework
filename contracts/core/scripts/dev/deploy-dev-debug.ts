@@ -249,7 +249,7 @@ async function main() {
 
   const genes998ContractName = getContractName("ERC998Genes", network.name);
   const erc998GenesFactory = await ethers.getContractFactory(genes998ContractName);
-  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (genes)", "DNA998", royalty, baseTokenURI);
+  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (traits)", "DNA998", royalty, baseTokenURI);
   await debug(contracts);
 
   await debug(

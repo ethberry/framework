@@ -8,7 +8,7 @@ import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
-import { TokenGenesView } from "../../../genes";
+import { TokenTraitsView } from "../../../traits";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -66,10 +66,10 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
             {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  <FormattedMessage id="form.labels.genes" />
+                  <FormattedMessage id="form.labels.traits" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenGenesView metadata={metadata} />
+                  <TokenTraitsView metadata={metadata} />
                 </TableCell>
               </TableRow>
             ) : null}

@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers";
 
-const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
+export const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
+export const SPECIAL = ["strength", "perception", "endurance", "charisma", "intelligence", "agility", "luck"];
 
 export const encodeNumbers = (numbers: Array<number>, size = 32) => {
   let encoded = BigNumber.from(0);
@@ -22,12 +23,12 @@ export const decodeNumber = (encoded: BigNumber, size = 32) => {
     .reverse();
 };
 
-export const encodeGenes = (genes: Record<string, number>) => {
-  return encodeNumbers(Object.values(genes));
+export const encodeTraits = (traits: Record<string, number>) => {
+  return encodeNumbers(Object.values(traits));
 };
 
-export const decodeGenes = (encoded: BigNumber, genes = DND) => {
+export const decodeTraits = (encoded: BigNumber, traits = DND) => {
   return decodeNumber(encoded)
-    .slice(-genes.length)
-    .reduceRight((memo, value, i) => ({ [genes[i]]: value, ...memo }), {} as Record<string, number>);
+    .slice(-traits.length)
+    .reduceRight((memo, value, i) => ({ [traits[i]]: value, ...memo }), {} as Record<string, number>);
 };

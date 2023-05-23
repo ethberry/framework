@@ -418,7 +418,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130700,
-        'DNA (genes)(hidden)',
+        'DNA (traits)(hidden)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,

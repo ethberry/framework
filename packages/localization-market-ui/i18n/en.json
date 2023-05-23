@@ -691,7 +691,7 @@
       },
       "title": "ERC721",
       "token": {
-        "genes": "Genes",
+        "traits": "Traits",
         "genesis": "Genesis",
         "level": "Level: {level}",
         "rarity": "Rarity: {rarity}",
@@ -723,7 +723,7 @@
       "title": "ERC998",
       "token": {
         "genesis": "Genesis",
-        "genes": "Genes",
+        "traits": "Traits",
         "level": "Level: {level}",
         "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",

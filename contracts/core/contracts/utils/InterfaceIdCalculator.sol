@@ -19,5 +19,7 @@ contract InterfaceIdCalculator {
     console.logBytes4(type(IERC721Upgradeable).interfaceId);
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Mysterybox).interfaceId);
+
+    console.logBytes32(keccak256("TRAITS"));
   }
 }

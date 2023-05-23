@@ -498,8 +498,6 @@
         "title": "قوالب ERC721"
       },
       "token": {
-        "genes": "الجينات",
-        "genesis": "منشأ",
         "level": "المستوى: {GRADE}",
         "price": "السعر الأساسي: {amount}",
         "title": "رمز ERC721: {title}"
@@ -527,7 +525,6 @@
         "title": "قوالب ERC998"
       },
       "token": {
-        "genes": "الجينات",
         "level": "المستوى: {GRADE}",
         "price": "السعر الأساسي: {amount}",
         "title": "رمز ERC998: {title}"

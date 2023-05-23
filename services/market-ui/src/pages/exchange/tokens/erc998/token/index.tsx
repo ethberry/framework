@@ -13,7 +13,7 @@ import { ContractFeatures, GradeAttribute, TokenMetadata, TokenRarity } from "@f
 import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../../components/common/token-history";
 import { formatPrice } from "../../../../../utils/money";
-import { TokenAttributesView } from "../../genes";
+import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { Erc998Composition } from "./composition";
 import { useStyles } from "./styles";
@@ -103,9 +103,9 @@ export const Erc998Token: FC = () => {
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
             <Paper className={classes.paper}>
               <Typography>
-                <FormattedMessage id="pages.erc998.token.genes" />
+                <FormattedMessage id="pages.erc998.token.traits" />
               </Typography>
-              <TokenAttributesView metadata={selected.metadata} />
+              <TokenTraitsView metadata={selected.metadata} />
             </Paper>
           ) : null}
         </Grid>

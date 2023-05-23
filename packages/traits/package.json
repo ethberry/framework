@@ -22,7 +22,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@framework/genes",
+  "name": "@framework/traits",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

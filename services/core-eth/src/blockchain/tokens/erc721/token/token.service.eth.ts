@@ -72,7 +72,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.GENES]) {
+      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
         const mintType = getTokenMintType(txLogs);
@@ -98,10 +98,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
 
       // MODULE:BREEDING
-      if (metadata[TokenMetadata.GENES]) {
+      if (metadata[TokenMetadata.TRAITS]) {
         await this.breedServiceEth.newborn(
           tokenEntity.id,
-          metadata[TokenMetadata.GENES],
+          metadata[TokenMetadata.TRAITS],
           context.transactionHash.toLowerCase(),
         );
       }

@@ -9,7 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 
 import { defaultNumbers, expiresAt, externalId, extra, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
-import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
+import { VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
@@ -136,7 +136,7 @@ describe("Lottery", function () {
       }
 
       if (network.name === "hardhat") {
-        await randomRequest(lotteryInstance as IERC721Random, vrfInstance);
+        await randomRequest(lotteryInstance, vrfInstance);
       }
     });
 
@@ -196,7 +196,7 @@ describe("Lottery", function () {
 
       if (network.name === "hardhat") {
         // RANDOM
-        await randomRequest(lotteryInstance as IERC721Random, vrfInstance);
+        await randomRequest(lotteryInstance, vrfInstance);
       } else {
         const eventFilter = lotteryInstance.filters.RoundFinalized();
         const events = await lotteryInstance.queryFilter(eventFilter);

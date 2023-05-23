@@ -189,7 +189,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
           [TokenMetadata.TEMPLATE_ID]: "140701",
           [TokenMetadata.GRADE]: "10",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
-          [TokenMetadata.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         100,
         '14070101',

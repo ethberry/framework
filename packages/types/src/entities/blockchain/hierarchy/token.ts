@@ -14,7 +14,7 @@ export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
   GRADE = "GRADE",
   RARITY = "RARITY",
-  GENES = "GENES",
+  TRAITS = "TRAITS",
 }
 
 export enum TokenGenes {

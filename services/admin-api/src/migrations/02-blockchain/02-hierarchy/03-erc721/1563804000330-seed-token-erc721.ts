@@ -222,7 +222,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13070101, -- Axie
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130701",
-          [TokenMetadata.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -235,7 +235,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13070102,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130701",
-          [TokenMetadata.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -248,7 +248,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13070103,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130701",
-          [TokenMetadata.GENES]: "26959946679704843266901878252702677173524145942006256923769273582592", // 1,2,18,128,256,1024
+          [TokenMetadata.TRAITS]: "26959946679704843266901878252702677173524145942006256923769273582592", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,

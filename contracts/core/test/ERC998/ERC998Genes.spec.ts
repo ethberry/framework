@@ -5,7 +5,7 @@ import { shouldNotMint } from "../ERC721/shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "../ERC721/shared/simple/base/shouldNotSafeMint";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
-import { shouldNotMintCommon } from "../ERC721/shared/genes/shouldNotMintCommon";
+import { shouldNotMintCommon } from "../ERC721/shared/traits/shouldNotMintCommon";
 
 describe("ERC998Genes", function () {
   const factory = () => deployERC721(this.title);

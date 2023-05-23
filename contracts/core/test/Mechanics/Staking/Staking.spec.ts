@@ -14,7 +14,7 @@ import {
   TEMPLATE_ID,
 } from "@gemunion/contracts-constants";
 
-import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
+import { VRFCoordinatorMock } from "../../../typechain-types";
 import { expiresAt, extra, params, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
@@ -1611,7 +1611,7 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
     });
@@ -2051,7 +2051,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance3 = await erc721Instance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles);
       const balance4 = await erc20Instance.balanceOf(owner.address);
@@ -2725,7 +2725,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance3 = await erc721Instance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles + 1);
     });
@@ -3441,7 +3441,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc998RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc998RandomInstance, vrfInstance);
       const balance3 = await erc998RandomInstance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles + 1);
     });
@@ -3826,7 +3826,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance, vrfInstance);
       const balance3 = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance3).to.equal(2);
       const balance4 = await erc1155Instance.balanceOf(owner.address, 1);

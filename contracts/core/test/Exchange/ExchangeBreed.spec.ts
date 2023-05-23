@@ -8,11 +8,11 @@ import { amount } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { VRFCoordinatorMock } from "../../typechain-types";
-import type { IERC721Random } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
-import { decodeGenes, decodeMetadata, decodeNumber } from "../shared/metadata";
+import { decodeMetadata, decodeNumber, decodeTraits } from "../shared/metadata";
 import { isEqualEventArgObj } from "../utils";
+import { TokenMetadata } from "@framework/types";
 
 describe("ExchangeBreed", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -71,7 +71,7 @@ describe("ExchangeBreed", function () {
         );
         await erc721Instance.mintRandom(receiver.address, encodedExternalId1);
 
-        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance, vrfInstance);
 
         const balance1 = await erc721Instance.balanceOf(receiver.address);
         expect(balance1).to.equal(2);
@@ -156,16 +156,16 @@ describe("ExchangeBreed", function () {
           );
 
         // RANDOM
-        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance, vrfInstance);
         const balance2 = await erc721Instance.balanceOf(receiver.address);
         expect(balance2).to.equal(3);
 
         // TEST METADATA
         const decodedMeta = decodeMetadata(await erc721Instance.getTokenMetadata(3));
-        expect(decodedMeta.TEMPLATE_ID).to.equal(genesis.templateId.toString());
+        expect(decodedMeta[TokenMetadata.TEMPLATE_ID]).to.equal(genesis.templateId.toString());
 
-        const genes = decodedMeta.GENES;
-        const decodedParents = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
+        const genes = decodedMeta[TokenMetadata.TRAITS];
+        const decodedParents = decodeTraits(BigNumber.from(genes), ["matronId", "sireId"].reverse());
         expect(decodedParents.matronId).to.equal(genesis.matronId);
         expect(decodedParents.sireId).to.equal(genesis.sireId);
         const random = decodeNumber(BigNumber.from(genes)).slice(0, 6);
@@ -239,7 +239,7 @@ describe("ExchangeBreed", function () {
           );
 
         // RANDOM
-        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance, vrfInstance);
         const balance2 = await erc721Instance.balanceOf(receiver.address);
         expect(balance2).to.equal(3);
 
@@ -405,7 +405,7 @@ describe("ExchangeBreed", function () {
           );
 
         // RANDOM
-        await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+        await randomRequest(erc721Instance, vrfInstance);
         const balance2 = await erc721Instance.balanceOf(receiver.address);
         expect(balance2).to.equal(3);
 

@@ -4,22 +4,23 @@ import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeGenes } from "@framework/genes";
+import { decodeTraits, DND } from "@framework/traits";
 
 export interface ITokenMetadataView {
   metadata: Record<string, any>;
 }
 
-export const TokenGenesView: FC<ITokenMetadataView> = props => {
+export const TokenTraitsView: FC<ITokenMetadataView> = props => {
   const { metadata } = props;
-  const DND = ["matron", "sire", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
 
   const result = Object.entries(metadata).reduce((memo, [key, value]) => {
     switch (key) {
+      // MODULE:DND
       // MODULE:BREEDING
-      case TokenMetadata.GENES:
-        Object.entries(decodeGenes(BigNumber.from(value), DND))
-          .slice(2) // delete sire & matron info from genes
+      // MODULE:COLLECTION
+      case TokenMetadata.TRAITS:
+        Object.entries(decodeTraits(BigNumber.from(value), DND))
+          .slice(2) // delete sire & matron info from traits
           .forEach(([key, value]) => {
             Object.assign(memo, { [key.toUpperCase()]: value });
           });
