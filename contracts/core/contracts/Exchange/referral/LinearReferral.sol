@@ -58,13 +58,12 @@ abstract contract LinearReferral is Context, AccessControl {
   }
 
   function updateReferrers(address initReferrer, Asset[] memory price) internal {
-    address account = _msgSender();
 
-    if (initReferrer == address(0) || initReferrer == account) {
+    if (initReferrer == address(0) || initReferrer == _msgSender()) {
       return;
     }
 
-    _chain[account] = initReferrer;
+    _chain[_msgSender()] = initReferrer;
 
     Ref memory program = _refProgram;
 
@@ -78,11 +77,11 @@ abstract contract LinearReferral is Context, AccessControl {
           uint256 rewardAmount = ((ingredient.amount / 100) * (program._refReward / 100)) /
             program._refDecrease ** (level);
           _rewardBalances[referrer][ingredient.token] += rewardAmount;
-          emit ReferralReward(account, referrer, level, ingredient.token, rewardAmount);
+          emit ReferralReward(_msgSender(), referrer, level, ingredient.token, rewardAmount);
 
           address nxt = _chain[referrer];
 
-          if (_chain[referrer] == address(0) || _chain[referrer] == account) {
+          if (_chain[referrer] == address(0) || _chain[referrer] == _msgSender()) {
             level = program._maxRefs;
           }
           referrer = nxt;
@@ -95,8 +94,7 @@ abstract contract LinearReferral is Context, AccessControl {
   }
 
   function withdrawReward(address token) public returns (bool success) {
-    address account = _msgSender();
-    uint256 rewardAmount = _rewardBalances[account][token];
+    uint256 rewardAmount = _rewardBalances[_msgSender()][token];
     if (rewardAmount == 0) {
       revert BalanceExceed();
     }
@@ -105,18 +103,18 @@ abstract contract LinearReferral is Context, AccessControl {
       if (address(this).balance < rewardAmount) {
         revert BalanceExceed();
       }
-      _rewardBalances[account][token] = 0;
-      emit ReferralWithdraw(account, token, rewardAmount);
-      Address.sendValue(payable(account), rewardAmount);
+      _rewardBalances[_msgSender()][token] = 0;
+      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
+      Address.sendValue(payable(_msgSender()), rewardAmount);
       result = true;
     } else {
       uint256 balanceErc20 = IERC20(token).balanceOf(address(this));
       if (balanceErc20 < rewardAmount) {
         revert BalanceExceed();
       }
-      _rewardBalances[account][token] = 0;
-      emit ReferralWithdraw(account, token, rewardAmount);
-      SafeERC20.safeTransfer(IERC20(token), account, rewardAmount);
+      _rewardBalances[_msgSender()][token] = 0;
+      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
+      SafeERC20.safeTransfer(IERC20(token), _msgSender(), rewardAmount);
       result = true;
     }
     return result;

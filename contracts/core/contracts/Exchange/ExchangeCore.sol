@@ -28,12 +28,11 @@ abstract contract ExchangeCore is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
 
-    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
-    ExchangeUtils.acquire(ExchangeUtils._toArray(item), account, DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(ExchangeUtils._toArray(item), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    emit Purchase(account, params.externalId, item, price);
+    emit Purchase(_msgSender(), params.externalId, item, price);
 
     _afterPurchase(params.referrer, price);
   }

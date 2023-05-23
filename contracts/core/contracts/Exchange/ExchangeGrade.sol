@@ -28,11 +28,9 @@ abstract contract ExchangeGrade is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
-    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
-
-    emit Upgrade(account, params.externalId, item, price);
+    emit Upgrade(_msgSender(), params.externalId, item, price);
 
     IERC721Upgradeable(item.token).upgrade(item.tokenId);
   }

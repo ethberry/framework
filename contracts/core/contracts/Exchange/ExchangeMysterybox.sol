@@ -31,11 +31,9 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
       revert WrongAmount();
     }
 
-    address account = _msgSender();
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
-    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
-
-    emit Mysterybox(account, params.externalId, items, price);
+    emit Mysterybox(_msgSender(), params.externalId, items, price);
 
     Asset memory box = items[items.length - 1];
 
@@ -49,7 +47,7 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
       }
     }
 
-    IERC721Mysterybox(box.token).mintBox(account, box.tokenId, mysteryItems);
+    IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
     _afterPurchase(params.referrer, price);
   }
 
