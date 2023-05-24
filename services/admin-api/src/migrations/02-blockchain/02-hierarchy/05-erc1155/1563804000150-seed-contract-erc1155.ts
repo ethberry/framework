@@ -98,7 +98,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '',
         100,
         '${baseTokenURI}',
-        'NEW',
+        'ACTIVE',
         'ERC1155',
         '{BLACKLIST}',
         '${fromBlock}',
