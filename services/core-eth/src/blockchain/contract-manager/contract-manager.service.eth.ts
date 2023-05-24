@@ -171,7 +171,7 @@ export class ContractManagerServiceEth {
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
-      await this.rentService.create({ contract: contractEntity });
+      await this.rentService.create({ contract: contractEntity }, chainId);
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {

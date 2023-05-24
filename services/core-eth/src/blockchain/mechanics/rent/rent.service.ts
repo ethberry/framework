@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants } from "ethers";
@@ -7,7 +7,8 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { RentEntity } from "./rent.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { TokenType } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class RentService {
@@ -15,6 +16,7 @@ export class RentService {
     @InjectRepository(RentEntity)
     private readonly rentEntityRepository: Repository<RentEntity>,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(dto: IPaginationDto): Promise<[Array<RentEntity>, number]> {
@@ -43,14 +45,34 @@ export class RentService {
     return this.rentEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<RentEntity>): Promise<RentEntity> {
-    // ERC20_SIMPLE 1 ETH
+  public async create(dto: DeepPartial<RentEntity>, chainId: number): Promise<RentEntity> {
+    const contractEntity = await this.contractService.findOne(
+      {
+        chainId,
+        contractType: TokenType.NATIVE,
+        contractStatus: ContractStatus.ACTIVE,
+      },
+      {
+        relations: {
+          templates: true,
+        },
+      },
+    );
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (!contractEntity.templates.length) {
+      throw new NotFoundException("templateNotFound");
+    }
+
     const assetEntity = await this.assetService.create({
       components: [
         {
-          tokenType: TokenType.ERC20,
-          contractId: 1201,
-          templateId: 120101,
+          tokenType: TokenType.NATIVE,
+          contractId: contractEntity.id,
+          templateId: contractEntity.templates[0].id,
           amount: constants.WeiPerEther.toString(),
         },
       ],
