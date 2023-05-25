@@ -102,12 +102,20 @@ export class StakingRulesServiceEth {
       deposit: depositItem,
       reward: rewardItem,
       durationAmount: ~~period,
-      durationUnit: DurationUnit.DAY, // TODO select correct unit depends on period
+      durationUnit: DurationUnit.DAY,
       penalty: ~~penalty,
       recurrent,
       stakingRuleStatus: StakingRuleStatus.NEW,
       externalId: ruleId,
       contractId: contractEntity.id,
+    });
+
+    this.notificatorService.stakingRuleCreated({
+      externalId: ruleId,
+      deposit: depositItem,
+      reward: rewardItem,
+      penalty: ~~penalty,
+      recurrent,
     });
   }
 
@@ -129,9 +137,14 @@ export class StakingRulesServiceEth {
     });
 
     await stakingEntity.save();
+
+    this.notificatorService.stakingRuleUpdated({
+      externalId: ruleId,
+      active,
+    });
   }
 
-  public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
+  public async depositStart(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
     // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
@@ -152,7 +165,7 @@ export class StakingRulesServiceEth {
       stakingRuleId: stakingRuleEntity.id,
     });
 
-    this.notificatorService.stakingStart({
+    this.notificatorService.stakingDepositStart({
       account: owner.toLowerCase(),
       externalId: ~~stakingId,
       startTimestamp: new Date(~~startTimestamp * 1000).getDate(),
@@ -160,18 +173,18 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async withdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
+  public async depositWithdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
+  public async depositFinish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
       args: { stakingId, owner, finishTimestamp, multiplier },
     } = event;
 
-    this.notificatorService.stakingFinish({
+    this.notificatorService.stakingDepositFinish({
       account: owner.toLowerCase(),
       externalId: ~~stakingId,
       startTimestamp: new Date(~~finishTimestamp * 1000).getDate(),
