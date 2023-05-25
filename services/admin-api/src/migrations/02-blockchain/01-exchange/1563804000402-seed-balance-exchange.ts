@@ -9,6 +9,7 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
 
+    // BESU
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
         account,
@@ -19,43 +20,60 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
       ) VALUES (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        21010101,
+        11010101, -- BESU
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        11010101,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        12010101,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        12160101,
+        12010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
-        12150101,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
-        22150101,
+        12150101, -- USDT
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        22170101,
+        12160101, -- WETH
+        '${currentDateTime}',
+        '${currentDateTime}'
+      );
+    `);
+
+    // BINANCE
+    await queryRunner.query(`
+      INSERT INTO ${ns}.balance (
+        account,
+        amount,
+        token_id,
+        created_at,
+        updated_at
+      ) VALUES (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        21010101, -- BNB
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
+        22150101, -- USDT
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
+        22160101, -- WETH
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${exchangeAddress}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        22170101, -- BUSD
         '${currentDateTime}',
         '${currentDateTime}'
       );
