@@ -80,8 +80,11 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     // Retrieve the rule associated with the given rule ID.
     Rule storage rule = _rules[ruleId];
     // Ensure that the rule exists and is active
-    if (rule.period == 0 || !rule.active) {
+    if (rule.period == 0) {
       revert NotExist();
+    }
+    if (!rule.active) {
+      revert NotActive();
     }
 
     // check if user reached the maximum number of stakes, if it is revert transaction.
@@ -140,15 +143,15 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         (, uint256 balance) = _depositBalancesMap.tryGet(depositItem.token);
         _depositBalancesMap.set(depositItem.token, balance + depositItem.amount);
 
+        // Do something with referrer
+        if (referrer != address(0)) {
+          _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
+        }
+
         unchecked {
           i++;
         }
       }
-    }
-
-    // Do something with referrer
-    if (referrer != address(0)) {
-      _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
     }
   }
 
@@ -567,7 +570,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
- * @dev Referral calculations.
+   * @dev Referral calculations.
    * @param referrer The Referrer address.
    * @param price The deposited Asset[].
    */

@@ -15,7 +15,7 @@ import {
 } from "@gemunion/contracts-constants";
 
 import { VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, extra, params, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { expiresAt, params, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -149,7 +149,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721RandomInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [],
@@ -217,7 +217,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [],
@@ -1712,7 +1712,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -2168,7 +2168,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -2262,7 +2262,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -2347,7 +2347,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -2357,7 +2357,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -2821,7 +2821,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721RandomInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -2829,7 +2829,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -2838,7 +2838,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -3215,7 +3215,7 @@ describe("Staking", function () {
             tokenType: 3, // ERC998
             token: erc998Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -3223,7 +3223,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3232,7 +3232,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC998
               token: erc721Instance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -3299,7 +3299,7 @@ describe("Staking", function () {
             tokenType: 3, // ERC998
             token: erc998Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -3307,7 +3307,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3316,7 +3316,7 @@ describe("Staking", function () {
               tokenType: 3, // ERC998
               token: erc998Instance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -3932,7 +3932,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3941,7 +3941,7 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
@@ -4572,7 +4572,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
@@ -4692,7 +4692,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
@@ -4805,7 +4805,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
@@ -4966,7 +4966,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
