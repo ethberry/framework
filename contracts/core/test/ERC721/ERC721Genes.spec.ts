@@ -4,7 +4,7 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 import { deployERC721 } from "./shared/fixtures";
 import { shouldNotMint } from "./shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "./shared/simple/base/shouldNotSafeMint";
-import { shouldNotMintCommon } from "./shared/traits/shouldNotMintCommon";
+import { shouldNotMintCommon } from "./shared/shouldNotMintCommon";
 import { shouldMintRandom } from "./shared/random/mintRandom";
 import { FrameworkInterfaceId } from "../constants";
 
