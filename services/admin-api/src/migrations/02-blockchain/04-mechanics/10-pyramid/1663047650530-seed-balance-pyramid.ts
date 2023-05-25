@@ -19,7 +19,13 @@ export class SeedBalancePyramidAt1663047650530 implements MigrationInterface {
       ) VALUES (
         '${pyramidAddress}',
         '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        12010101,
+        11010101, -- BESU
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${pyramidAddress}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        12010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -37,21 +37,21 @@ export class SeedExchangePayees1663047650510 implements MigrationInterface {
       ), (
         '${wallets[0]}',
         85,
-        402,
+        202,
         '${currentDateTime}',
         '${currentDateTime}'
       ),
       (
         '${wallets[1]}',
         10,
-        402,
+        202,
         '${currentDateTime}',
         '${currentDateTime}'
       ),
       (
         '${wallets[2]}',
         5,
-        402,
+        202,
         '${currentDateTime}',
         '${currentDateTime}'
       );

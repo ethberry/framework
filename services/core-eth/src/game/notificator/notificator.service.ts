@@ -8,8 +8,10 @@ import {
   IPurchaseData,
   IRentData,
   IRentUserUpdateData,
-  IStakingFinishData,
-  IStakingStartData,
+  IStakingDepositFinishData,
+  IStakingDepositStartData,
+  IStakingRuleCreatedData,
+  IStakingRuleUpdatedData,
 } from "./interfaces";
 
 @Injectable()
@@ -44,11 +46,19 @@ export class NotificatorService {
   }
 
   // MODULE:STAKING
-  public stakingStart(data: IStakingStartData): void {
+  public stakingDepositStart(data: IStakingDepositStartData): void {
     this.mobileClientProxy.emit(MobileEventType.STAKING_START, data);
   }
 
-  public stakingFinish(data: IStakingFinishData): void {
+  public stakingDepositFinish(data: IStakingDepositFinishData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  }
+
+  public stakingRuleCreated(data: IStakingRuleCreatedData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  }
+
+  public stakingRuleUpdated(data: IStakingRuleUpdatedData): void {
     this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
   }
 }

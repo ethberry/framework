@@ -37,7 +37,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         '${simpleFormatting}',
         'MARKETPLACE',
         'Purchase',
-         402,
+         102,
          50100101,
         'NEW',
         '${currentDateTime}',
