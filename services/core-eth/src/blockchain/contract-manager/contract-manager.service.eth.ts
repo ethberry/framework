@@ -331,7 +331,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new 1155 contract",
+      title: `${TokenType.ERC1155} (new)`,
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
@@ -402,7 +402,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: `${contractTemplate}-template`,
+      title: contractTemplate,
       description: emptyStateString,
       imageUrl,
       parameters: {
@@ -437,7 +437,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new PYRAMID contract",
+      title: `${ModuleType.PYRAMID} (new)`,
       description: emptyStateString,
       parameters: {
         payees: payees.toString(),
@@ -473,7 +473,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new STAKING contract",
+      title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
       parameters: {
         maxStake,

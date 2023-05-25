@@ -46,7 +46,8 @@ export const StakingRules: FC = () => {
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
-      title: "new STAKING rule",
+      // TODO title and description are not needed on creation
+      title: "STAKING (new)",
       description: emptyStateString,
       stakingRuleStatus: StakingRuleStatus.NEW,
       deposit: emptyPrice,

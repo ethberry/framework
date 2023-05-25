@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { ModuleType, TokenType } from "@framework/types";
 import type { ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
