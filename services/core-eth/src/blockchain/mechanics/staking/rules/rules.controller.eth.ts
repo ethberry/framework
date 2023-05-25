@@ -9,6 +9,7 @@ import {
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
+  IStakingReturnDepositEvent,
   IStakingUpdateEvent,
   IStakingWithdrawEvent,
   StakingEventType,
@@ -38,6 +39,11 @@ export class StakingRulesControllerEth {
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
   public withdraw(@Payload() event: ILogEvent<IStakingWithdrawEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.depositWithdraw(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.ReturnDeposit })
+  public return(@Payload() event: ILogEvent<IStakingReturnDepositEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.return(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })

@@ -5,6 +5,7 @@ export enum StakingEventType {
   StakingWithdraw = "StakingWithdraw",
   StakingFinish = "StakingFinish",
   WithdrawBalance = "WithdrawBalance",
+  ReturnDeposit = "ReturnDeposit",
 }
 
 export type IAssetStruct = [string, string, string, string];
@@ -71,10 +72,16 @@ export interface IStakingFinishEvent {
   multiplier: string;
 }
 
+export interface IStakingReturnDepositEvent {
+  stakingId: string;
+  owner: string;
+}
+
 export type TStakingEvents =
   | IStakingCreateEvent
   | IStakingUpdateEvent
   | IStakingDepositEvent
   | IStakingWithdrawEvent
   | IStakingFinishEvent
-  | IStakingBalanceWithdrawEvent;
+  | IStakingBalanceWithdrawEvent
+  | IStakingReturnDepositEvent;

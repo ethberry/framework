@@ -11,6 +11,7 @@ import {
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
+  IStakingReturnDepositEvent,
   IStakingUpdateEvent,
   IStakingWithdrawEvent,
   StakingRuleStatus,
@@ -174,6 +175,10 @@ export class StakingRulesServiceEth {
   }
 
   public async depositWithdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
+    await this.eventHistoryService.updateHistory(event, context);
+  }
+
+  public async return(event: ILogEvent<IStakingReturnDepositEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
