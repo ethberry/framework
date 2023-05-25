@@ -264,6 +264,7 @@ import {
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedBalanceStakingAt1654751224530 } from "./migrations/02-blockchain/04-mechanics/12-staking/1654751224530-seed-balance-staking";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -464,6 +465,7 @@ const config: PostgresConnectionOptions = {
     SeedStakingDepositErc20NoneAt1654751224329,
     SeedStakingDepositErc721NoneAt1654751224339,
     SeedStakingDepositErc998Erc1155At1654751224345,
+    SeedBalanceStakingAt1654751224530,
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
