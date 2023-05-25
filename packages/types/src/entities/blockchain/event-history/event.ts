@@ -99,6 +99,7 @@ export enum ContractEventType {
   StakingWithdraw = "StakingWithdraw",
   StakingFinish = "StakingFinish",
   WithdrawBalance = "WithdrawBalance",
+  ReturnDeposit = "ReturnDeposit",
 
   // MODULE:EXCHANGE
   // MODULE:CORE

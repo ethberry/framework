@@ -88,6 +88,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'StakingWithdraw',
         'StakingFinish',
         'WithdrawBalance',
+        'ReturnDeposit',
 
         -- MODULE:EXCHANGE
         -- MODULE:CORE
