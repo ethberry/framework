@@ -30,7 +30,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        4101,
+        1101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -66,7 +66,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        1101,
+        3101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -78,7 +78,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        3101,
+        4101,
         '${currentDateTime}',
         '${currentDateTime}'
       );
