@@ -8,8 +8,8 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts-erc721/contracts/preset/ERC721ABRK.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import "@gemunion/contracts-erc721c/contracts/preset/ERC721ABRK.sol";
 
 import "../../utils/errors.sol";
 
