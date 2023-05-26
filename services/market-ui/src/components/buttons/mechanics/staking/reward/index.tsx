@@ -4,7 +4,7 @@ import { IStakingDeposit } from "@framework/types";
 
 import { StakingRewardComplexButton } from "../reward-complex";
 
-// import { StakingRewardSimpleButton } from "../reward-simple";
+import { StakingRewardSimpleButton } from "../reward-simple";
 
 export interface IStakingRewardButtonProps {
   stake: IStakingDeposit;
@@ -17,6 +17,5 @@ export const StakingRewardButton: FC<IStakingRewardButtonProps> = props => {
     return <StakingRewardComplexButton stake={stake} />;
   }
 
-  // return <StakingRewardSimpleButton stake={stake} />;
-  return <StakingRewardComplexButton stake={stake} />;
+  return <StakingRewardSimpleButton stake={stake} />;
 };
