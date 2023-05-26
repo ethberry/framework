@@ -20,3 +20,5 @@ task("flat", "Flattens and prints contracts and their dependencies (Resolves lic
     );
     fs.writeFileSync("flat.sol", flattened, { encoding: "utf-8", flag: "w+" });
   });
+
+// hardhat flat contracts/ERC20/ERC20Simple.sol
