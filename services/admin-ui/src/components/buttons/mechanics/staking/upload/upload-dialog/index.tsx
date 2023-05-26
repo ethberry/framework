@@ -82,6 +82,14 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
           />
         </Grid>
       </Grid>
+      <ContractInput
+        name="contractId"
+        related="address"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.STAKING],
+        }}
+      />
       <DurationInput readOnly={readOnly} />
       <CurrencyInput
         name="penalty"
@@ -92,14 +100,6 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
         readOnly={readOnly}
       />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
-      <ContractInput
-        name="contractId"
-        related="address"
-        controller="contracts"
-        data={{
-          contractModule: [ModuleType.STAKING],
-        }}
-      />
     </FormDialog>
   );
 };

@@ -63,14 +63,6 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <EntityInput
-        name="contractId"
-        controller="contracts"
-        data={{
-          contractModule: [ModuleType.STAKING],
-        }}
-        readOnly={!!id}
-      />
       <SelectInput name="stakingRuleStatus" options={StakingRuleStatus} readOnly />
       <Grid container spacing={2}>
         {readOnly ? (
@@ -100,6 +92,14 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
           />
         </Grid>
       </Grid>
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.STAKING],
+        }}
+        readOnly={!!id}
+      />
       <DurationInput readOnly={readOnly} />
       <CurrencyInput
         name="penalty"
