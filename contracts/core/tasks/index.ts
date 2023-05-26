@@ -6,3 +6,4 @@ import "./decode";
 import "./fund-link";
 import "./get-hash";
 import "./get-uri";
+import "./flat";
