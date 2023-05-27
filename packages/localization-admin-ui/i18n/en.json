@@ -884,6 +884,9 @@
       "deactivate": "Deactivate rule",
       "title": "Craft recipes"
     },
+    "disperse": {
+      "title": "Disperse"
+    },
     "dashboard": {
       "achievements": {
         "levels": "Levels",
@@ -941,6 +944,7 @@
         "coin-market-cap": "CoinMarketCap"
       },
       "mechanics": {
+        "disperse": "Disperse",
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",

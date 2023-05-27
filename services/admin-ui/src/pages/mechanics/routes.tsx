@@ -3,6 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { breedRoutes } from "./breed/routes";
 import { claimRoutes } from "./claim/routes";
 import { craftRoutes } from "./craft/routes";
+import { disperseRoutes } from "./disperse/routes";
 import { collectionRoutes } from "./collection/routes";
 import { dropRoutes } from "./drop/routes";
 import { gradeRoutes } from "./grade/routes";
@@ -19,6 +20,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
   ...collectionRoutes,
   ...craftRoutes,
+  ...disperseRoutes,
   ...dropRoutes,
   ...gradeRoutes,
   ...lotteryRoutes,
