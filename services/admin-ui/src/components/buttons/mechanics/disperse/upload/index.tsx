@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 import csv2json from "csvtojson";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -12,11 +12,17 @@ import { TokenType } from "@framework/types";
 import DisperseABI from "../../../../../abis/components/buttons/mechanics/disperse/disperse.abi.json";
 import { DisperseUploadDialog, IDisperseUploadDto } from "./dialog";
 
-export interface IClaimUploadButtonProps {
+export interface IDisperseRow {
+  account: string;
+  tokenId: string;
+  amount: string;
+}
+
+export interface IDisperseUploadButtonProps {
   className?: string;
 }
 
-export const DisperseUploadButton: FC<IClaimUploadButtonProps> = props => {
+export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
   const { className } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -25,21 +31,25 @@ export const DisperseUploadButton: FC<IClaimUploadButtonProps> = props => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
-        // when the reader is done, the content is in reader.result.
         void csv2json({
           noheader: true,
-          headers: ["account", "amount"],
+          headers: ["account", "tokenId", "amount"],
         })
           .fromString(reader.result as string)
-          .then((data: Array<{ account: string; amount: string }>) => {
+          .then((data: Array<IDisperseRow>) => {
             const accounts = data.map(e => e.account);
+            const tokenIds = data.map(e => e.tokenId);
             const amounts = data.map(e => e.amount);
 
             const contract = new Contract(process.env.DISPERSE_ADDR, DisperseABI, web3Context.provider?.getSigner());
             if (values.tokenType === TokenType.NATIVE) {
               return contract.disperseEther(accounts, amounts) as Promise<any>;
             } else if (values.tokenType === TokenType.ERC20) {
-              return contract.disperseToken(values.address, accounts, amounts) as Promise<any>;
+              return contract.disperseERC20(values.address, accounts, amounts) as Promise<any>;
+            } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
+              return contract.disperseERC721(values.address, accounts, tokenIds) as Promise<any>;
+            } else if (values.tokenType === TokenType.ERC1155) {
+              return contract.disperseERC1155(values.address, accounts, tokenIds, amounts) as Promise<any>;
             } else {
               throw new Error("unsupported token type");
             }

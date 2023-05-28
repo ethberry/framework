@@ -36,11 +36,7 @@ export const DisperseUploadDialog: FC<IDisperseUploadDialogProps> = props => {
       action={<DisperseInfoPopover />}
       {...rest}
     >
-      <SelectInput
-        name="tokenType"
-        options={TokenType}
-        disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
-      />
+      <SelectInput name="tokenType" options={TokenType} />
       <ContractInput name="contractId" />
       <FileInput />
     </FormDialog>

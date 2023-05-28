@@ -2,9 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { IClaimItemUploadDto } from "../interfaces/upload";
 import { ClaimItemCreateDto } from "./create";
 
-export class ClaimUploadDto {
+export class ClaimItemUploadDto implements IClaimItemUploadDto {
   @ApiProperty({
     isArray: true,
     type: ClaimItemCreateDto,
@@ -12,5 +13,5 @@ export class ClaimUploadDto {
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => ClaimItemCreateDto)
-  public files: Array<ClaimItemCreateDto>;
+  public claims: Array<ClaimItemCreateDto>;
 }

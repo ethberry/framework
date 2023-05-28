@@ -10,8 +10,6 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
-import csv2json from "csvtojson";
-import { validateSync } from "class-validator";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
@@ -19,10 +17,8 @@ import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
-import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
+import { IClaimItemCreateDto, IClaimItemUpdateDto, IClaimItemUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { ClaimItemCreateDto, ClaimUploadDto } from "./dto";
 
 @Injectable()
 export class ClaimService {
@@ -200,54 +196,8 @@ export class ClaimService {
     );
   }
 
-  public async upload(file: Express.Multer.File, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    const parsed = await csv2json({
-      noheader: true,
-      headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
-    }).fromString(file.buffer.toString());
-
-    const files = parsed.map(
-      ({
-        account,
-        endTimestamp,
-        tokenType,
-        contractId,
-        templateId,
-        amount,
-      }: {
-        account: string;
-        endTimestamp: string;
-        tokenType: TokenType;
-        contractId: number;
-        templateId: number;
-        amount: string;
-      }) => {
-        return Object.assign(new ClaimItemCreateDto(), {
-          account,
-          endTimestamp,
-          item: Object.assign(new ItemDto(), {
-            components: [
-              Object.assign(new ItemComponentDto(), {
-                tokenType,
-                contractId: ~~contractId,
-                templateId: ~~templateId,
-                amount,
-              }),
-            ],
-          }),
-        });
-      },
-    );
-
-    const schema = new ClaimUploadDto();
-    schema.files = files;
-    const result = validateSync(schema);
-
-    if (result.length) {
-      this.loggerService.log(result, ClaimService.name);
-      throw result;
-    }
-
-    return Promise.all(files.map(row => this.create(row, userEntity)));
+  public async upload(dto: IClaimItemUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+    // TODO wrap in transaction
+    return Promise.all(dto.claims.map(row => this.create(row, userEntity)));
   }
 }
