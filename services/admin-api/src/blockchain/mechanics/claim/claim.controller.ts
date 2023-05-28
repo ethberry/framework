@@ -12,7 +12,6 @@ import {
   Query,
   UseInterceptors,
 } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -39,7 +38,6 @@ export class ClaimController {
   }
 
   @Post("/upload")
-  @UseInterceptors(FileInterceptor("file"))
   public upload(@Body() dto: ClaimItemUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     return this.claimService.upload(dto, userEntity);
   }

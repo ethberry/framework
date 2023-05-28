@@ -5,9 +5,9 @@ import { FormattedMessage } from "react-intl";
 import csv2json from "csvtojson";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { TokenType } from "@framework/types";
 
 import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
-import { TokenType } from "@framework/types";
 
 export interface IClaimRow {
   account: string;

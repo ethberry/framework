@@ -10,19 +10,18 @@ import {
   Post,
   Put,
   Query,
-  UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { FileInterceptor } from "@nestjs/platform-express";
 
 import { AddressPipe, ApiAddress, NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { CollectionContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { CollectionContractService } from "./contract.service";
+import { CollectionUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/collection/contracts")
@@ -57,11 +56,10 @@ export class CollectionContractController {
 
   @ApiAddress("address")
   @Post("/:address/upload")
-  @UseInterceptors(FileInterceptor("file"))
   public upload(
     @Param("address", AddressPipe) address: string,
-    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CollectionUploadDto,
   ): Promise<Array<TokenEntity>> {
-    return this.collectionCollectionService.upload(address, file);
+    return this.collectionCollectionService.upload(address, dto);
   }
 }

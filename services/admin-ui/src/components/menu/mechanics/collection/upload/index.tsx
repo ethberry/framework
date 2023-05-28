@@ -1,16 +1,21 @@
 import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
-
-import { FormattedMessage, useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
+import csv2json from "csvtojson";
+import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { ApiError } from "@gemunion/provider-api-firebase";
-import { IContract } from "@framework/types";
-
+import { IContract, TokenType } from "@framework/types";
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
-import { getFormData } from "./utils";
+
+export interface ICollectionRow {
+  account: string;
+  endTimestamp: string;
+  tokenType: TokenType;
+  contractId: number;
+  templateId: number;
+  amount: string;
+}
 
 export interface ICollectionUploadMenuItemProps {
   contract: IContract;
@@ -21,17 +26,30 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
     contract: { address },
   } = props;
 
-  const { formatMessage } = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
-
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
   const { fn } = useApiCall(
-    (api, { files }: ICollectionUploadDto) => {
-      return api.fetchJson({
-        url: `/collection/contracts/${address}/upload`,
-        data: getFormData({ file: files[0] }),
-        method: "POST",
+    (api, values: ICollectionUploadDto) => {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = function fileReadCompleted() {
+          void csv2json({
+            noheader: true,
+            headers: ["tokenId", "imageUrl", "metadata"],
+          })
+            .fromString(reader.result as string)
+            .then((data: Array<ICollectionRow>) => {
+              return api.fetchJson({
+                url: `/collection/contracts/${address}/upload`,
+                data: {
+                  tokens: data,
+                },
+                method: "POST",
+              });
+            })
+            .then(resolve);
+        };
+        reader.readAsText(values.files[0], "UTF-8");
       });
     },
     { error: false },
@@ -42,33 +60,10 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
   };
 
   const handleUploadConfirm = async (values: ICollectionUploadDto, form: any) => {
-    const name = "files";
-
-    form.resetField(name);
-
-    await fn(form, values)
-      .then(result => {
-        if (!result) {
-          return;
-        }
-        setIsUploadDialogOpen(false);
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          const errors = e.getLocalizedValidationErrors();
-
-          enqueueSnackbar(formatMessage({ id: "form.validations.badInput" }, { label: name }), { variant: "error" });
-
-          Object.keys(errors).forEach(key => {
-            form?.setError(name, { type: "custom", message: errors[key] });
-          });
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+    return fn(form, values).then(() => {
+      // TODO refresh page
+      setIsUploadDialogOpen(false);
+    });
   };
 
   const handleUploadCancel = () => {
