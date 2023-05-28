@@ -7,7 +7,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { formatPenalty, formatPrice } from "../../../../../utils/money";
-import { formatDuration } from "../../../../../utils/time";
+import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakingViewDialogProps {
   open: boolean;
@@ -65,7 +65,7 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
               <TableCell align="right">
                 {formatMessage(
                   { id: `enums.durationUnit.${durationUnit}` },
-                  { count: formatDuration({ durationAmount, durationUnit }) },
+                  { count: normalizeDuration({ durationAmount, durationUnit }) },
                 )}
               </TableCell>
             </TableRow>

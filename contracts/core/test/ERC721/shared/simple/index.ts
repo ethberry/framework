@@ -1,7 +1,7 @@
 import { Contract } from "ethers";
 
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
-import { shouldBehaveLikeERC721Burnable } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+import { shouldBehaveLikeERC721Burnable } from "@gemunion/contracts-erc721e";
 
 import { tokenId } from "../../../constants";
 import { shouldBehaveLikeERC721 } from "./base";

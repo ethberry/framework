@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
-import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABER.sol";
+import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "../utils/constants.sol";
 import "../utils/errors.sol";

@@ -42,6 +42,9 @@ export enum ModuleType {
 }
 
 export enum DurationUnit {
+  YEAR = "YEAR",
+  MONTH = "MONTH",
+  WEEK = "WEEK",
   DAY = "DAY",
   HOUR = "HOUR",
   MINUTE = "MINUTE",

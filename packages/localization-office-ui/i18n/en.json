@@ -93,6 +93,9 @@
       "WHITELIST": "Whitelist"
     },
     "durationUnit": {
+      "YEAR": "Year",
+      "MONTH": "Month",
+      "WEEK": "Week",
       "DAY": "Day",
       "HOUR": "Hour",
       "MINUTE": "Minute"

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
 import { Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import { customMintCommonERC721 } from "../customMintFn";
 import { METADATA_ROLE } from "@gemunion/contracts-constants";
 

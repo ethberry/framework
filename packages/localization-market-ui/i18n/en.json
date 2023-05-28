@@ -82,6 +82,9 @@
       "UNPACKED": "Unpacked"
     },
     "durationUnit": {
+      "YEAR": "{count} {count, plural, =0 {years} one {year} other {years}}",
+      "MONTH": "{count} {count, plural, =0 {months} one {month} other {months}}",
+      "WEEK": "{count} {count, plural, =0 {weeks} one {week} other {weeks}}",
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
       "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
       "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}"
