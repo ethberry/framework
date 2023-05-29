@@ -49,7 +49,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
             <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
           </Grid>
           <Grid item xs={6}>
-            <TemplateInput />
+            <TemplateInput contractType={contractType} contractModule={contractModule} />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="tokenId" />
