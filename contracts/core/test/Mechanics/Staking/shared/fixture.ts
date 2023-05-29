@@ -5,5 +5,5 @@ import { Contract } from "ethers";
 
 export async function deployStaking(name = "Staking"): Promise<Contract> {
   const factory = await ethers.getContractFactory(name);
-  return factory.deploy(1);
+  return factory.deploy();
 }

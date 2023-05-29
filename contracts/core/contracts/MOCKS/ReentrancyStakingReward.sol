@@ -65,7 +65,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
   }
 
   function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) public {
-    // save agruments for Reentracnce
+    // save arguments for Reentrancy
     _stakeId = stakeId;
     _withdrawDeposit = withdrawDeposit;
     _breakLastPeriod = breakLastPeriod;

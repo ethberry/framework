@@ -19,8 +19,8 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
-import "../../Exchange/referral/LinearReferral.sol";
 import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/referral/LinearReferral.sol";
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../utils/errors.sol";
@@ -38,34 +38,37 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   using Address for address;
   using Counters for Counters.Counter;
   using EnumerableMap for EnumerableMap.AddressToUintMap;
+  using EnumerableMap for EnumerableMap.UintToUintMap;
 
   Counters.Counter internal _ruleIdCounter;
   Counters.Counter internal _stakeIdCounter;
 
   EnumerableMap.AddressToUintMap internal _depositBalancesMap;
+  EnumerableMap.AddressToUintMap internal _walletStakeCounterMap;
+  EnumerableMap.UintToUintMap internal _stakeRuleCounterMap;
 
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
   mapping(address /* contract */ => mapping(uint256 /* tokenId */ => uint256 /* amount */)) internal _penalties;
 
-  uint256 private _maxStake = 0;
-  mapping(address => uint256) internal _stakeCounter;
+  //  mapping(address => uint256) internal _stakeCounter;
+  mapping(address => EnumerableMap.UintToUintMap) internal _stakeCounter;
+
 
   DisabledTokenTypes _disabledTypes = DisabledTokenTypes(false, false, false, false, false);
 
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
-
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
   event WithdrawBalance(address account, Asset item);
   event ReturnDeposit(uint256 stakingId, address owner);
+  event RuleCreated(uint256 ruleId, Rule rule);
+  event RuleUpdated(uint256 ruleId, bool active);
 
-  constructor(uint256 maxStake) {
+  constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _grantRole(PAUSER_ROLE, _msgSender());
-
-    setMaxStake(maxStake);
   }
 
   /**
@@ -77,8 +80,10 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     // Retrieve the rule params.
     uint256 ruleId = params.externalId;
     address referrer = params.referrer;
+
     // Retrieve the rule associated with the given rule ID.
     Rule storage rule = _rules[ruleId];
+
     // Ensure that the rule exists and is active
     if (rule.period == 0) {
       revert NotExist();
@@ -87,9 +92,13 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       revert NotActive();
     }
 
+    uint256 _maxStake = rule.maxStake;
+
+    (, uint256 _stakeRuleCounter) = _stakeCounter[_msgSender()].tryGet(ruleId);
+
     // check if user reached the maximum number of stakes, if it is revert transaction.
     if (_maxStake > 0) {
-      if (_stakeCounter[_msgSender()] >= _maxStake) {
+      if (_stakeRuleCounter >= _maxStake) {
         revert LimitExceed();
       }
     }
@@ -97,7 +106,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     // Increment counters and set a new stake.
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();
-    _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
+    _stakeCounter[_msgSender()].set(ruleId, _stakeRuleCounter + 1);
+    (, uint256 _walletStakeCounter) = _walletStakeCounterMap.tryGet(_msgSender());
+    _walletStakeCounterMap.set(_msgSender(), _walletStakeCounter + 1);
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _stakes[stakeId] = Stake(_msgSender(), rule.deposit, ruleId, block.timestamp, 0, true);
@@ -148,9 +159,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
         }
 
-        unchecked {
-          i++;
-        }
+      unchecked {
+        i++;
+      }
       }
     }
   }
@@ -232,9 +243,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         stake.startTimestamp = block.timestamp;
       }
 
-      unchecked {
-        i++;
-      }
+    unchecked {
+      i++;
+    }
     }
 
     // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
@@ -248,9 +259,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         // Transfer the reward.
         withdrawRewardItem(stakeId, j, multiplier, receiver);
 
-        unchecked {
-          j++;
-        }
+      unchecked {
+        j++;
+      }
       }
     }
     // IF the multiplier is zero
@@ -367,9 +378,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
           ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
         }
-        unchecked {
-          k++;
-        }
+      unchecked {
+        k++;
+      }
       }
     } else if (rewardItem.tokenType == TokenType.ERC1155) {
       // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
@@ -414,9 +425,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           _depositBalancesMap.set(depositItemWithdraw.token, balance - depositItemWithdraw.amount);
         }
       }
-      unchecked {
-        m++;
-      }
+    unchecked {
+      m++;
+    }
     }
   }
 
@@ -430,8 +441,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     (, uint256 depositBalance) = _depositBalancesMap.tryGet(rewardItem.token);
     // Get contract balance
     uint256 contractBalance = rewardItem.tokenType == TokenType.NATIVE
-      ? address(this).balance
-      : IERC20(rewardItem.token).balanceOf(address(this));
+    ? address(this).balance
+    : IERC20(rewardItem.token).balanceOf(address(this));
 
     return rewardItem.amount <= contractBalance - depositBalance;
   }
@@ -474,13 +485,6 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
-   * @dev Sets maxStake
-   */
-  function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _maxStake = maxStake;
-  }
-
-  /**
    * @dev Sets the staking rules for the contract.
    * @param rules An array of `Rule` structs defining the staking rules.
    */
@@ -488,9 +492,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     uint256 length = rules.length;
     for (uint256 i; i < length; ) {
       _setRule(rules[i]);
-      unchecked {
-        i++;
-      }
+    unchecked {
+      i++;
+    }
     }
   }
 
@@ -516,18 +520,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     }
     for (uint256 i = 0; i < lengthDeposit; ) {
       p.deposit.push(rule.deposit[i]);
-      unchecked {
-        i++;
-      }
+    unchecked {
+      i++;
+    }
     }
     // p.reward = rule.reward;
     // Store each individual asset in the rule's deposit array
     uint256 lengthReward = rule.reward.length;
     for (uint256 j = 0; j < lengthReward; ) {
       p.reward.push(rule.reward[j]);
-      unchecked {
-        j++;
-      }
+    unchecked {
+      j++;
+    }
     }
 
     // p.content = rule.content;
@@ -538,17 +542,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       uint256 length = rule.content[k].length;
       for (uint256 l = 0; l < length; ) {
         p.content[k].push(rule.content[k][l]);
-        unchecked {
-          l++;
-        }
-      }
       unchecked {
-        k++;
+        l++;
       }
+      }
+    unchecked {
+      k++;
+    }
     }
 
     p.period = rule.period;
     p.penalty = rule.penalty;
+    p.maxStake = rule.maxStake;
     p.recurrent = rule.recurrent;
     p.active = rule.active;
 
@@ -570,19 +575,27 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
-   * @dev Referral calculations.
-   * @param referrer The Referrer address.
-   * @param price The deposited Asset[].
-   */
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
-    return super._afterPurchase(referrer, price);
-  }
-
-  /**
-   * @dev Get Stake
+ * @dev Get Stake
    */
   function getStake(uint256 stakeId) public view returns (Stake memory stake) {
     return _stakes[stakeId];
+  }
+
+  /**
+   * @dev Get Rule Stake Counter
+   */
+  function getCounters(
+    address account,
+    uint256 ruleId
+  ) public view returns (uint256 allUsers, uint256 allStakes, uint256 userStakes, uint256 ruleCounter) {
+    // All users who ever staked
+    allUsers = _walletStakeCounterMap.length();
+    // Total number of stakes
+    allStakes = _stakeIdCounter.current();
+    // User stake counter
+    (, userStakes) = _walletStakeCounterMap.tryGet(account);
+    // User stake counter for given rule
+    (, ruleCounter) = _stakeCounter[account].tryGet(ruleId);
   }
 
   /**
@@ -595,7 +608,10 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   /**
    * @dev Get Penalty
    */
-  function getPenalty(address token, uint256 tokenId) public view returns (uint256 penalty) {
+  function getPenalty(
+    address token,
+    uint256 tokenId
+  ) public view returns (uint256 penalty) {
     return _penalties[token][tokenId];
   }
 
@@ -628,6 +644,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     ExchangeUtils.spend(ExchangeUtils._toArray(item), _msgSender(), _disabledTypes);
   }
 
+
   /**
    * @dev Pauses the contract.
    */
@@ -647,8 +664,17 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    */
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, Wallet, TopUp) returns (bool) {
+  ) public view virtual override(AccessControl, TopUp, Wallet) returns (bool) {
     return super.supportsInterface(interfaceId);
+  }
+
+  /**
+   * @dev Referral calculations.
+   * @param referrer The Referrer address.
+   * @param price The deposited Asset[].
+   */
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+    return super._afterPurchase(referrer, price);
   }
 
   /**

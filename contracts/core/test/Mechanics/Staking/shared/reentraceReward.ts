@@ -12,8 +12,10 @@ import { deployERC721 } from "../../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../../ERC1155/shared/fixtures";
 
 export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
-  const period = 300;
+  const period = 30;
   const cycles = 2;
+  const maxStake = 2;
+
   const params = {
     nonce,
     externalId: 1,
@@ -26,7 +28,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
   const erc721Factory = (name: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
 
-  describe("Reentrance Guard", function () {
+  describe("Reentrancy Guard", function () {
     describe("receiveReward", function () {
       it("should not call twice (NATIVE)", async function () {
         const [owner] = await ethers.getSigners();
@@ -55,7 +57,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -130,7 +132,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -200,7 +202,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -279,7 +281,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -361,7 +363,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [[], [], [], []],
           period,
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -442,7 +444,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 5000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -533,7 +535,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
@@ -631,7 +633,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
-          recurrent: true,
+          maxStake, recurrent: true,
           active: true,
         };
 
