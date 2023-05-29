@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -39,7 +39,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${chainId}',
         'Resources (simple)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fresources.png?alt=media&token=8e3c28ae-b0fc-4eef-ac23-1ebc9fe92bc3',
         '',
         '',
         100,
@@ -93,7 +93,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${chainId}',
         'Potions (blacklist)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fpotions.png?alt=media&token=e736b4fd-0eb1-4bff-b867-4f26601a5ea8',
         '',
         '',
         100,
@@ -109,9 +109,9 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         2501,
         '${wallet}',
         56,
-        'BEP (binance)',
+        'BEP',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         '',
         '',
         100,

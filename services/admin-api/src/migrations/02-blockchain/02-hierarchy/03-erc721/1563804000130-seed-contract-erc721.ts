@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -44,7 +44,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Gems (simple)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgems.png?alt=media&token=587bcbd2-80c6-4a0e-bb14-45e310d96a8a',
         'GEMS',
         'GEMS721',
         100,
@@ -98,7 +98,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Jewelry (blacklist)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fjewelry.png?alt=media&token=13fe207d-b53c-40f7-ba2d-1551584dd30c',
         'ERC721 BLACKLIST',
         'BL721',
         100,
@@ -116,7 +116,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Armour (lvl)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Farmour.png?alt=media&token=32650855-c62b-4ca0-b4f6-bfc01f40e53e',
         'ARMOUR',
         'LVL721',
         100,
@@ -170,7 +170,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Awards (soulbound)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fawards.png?alt=media&token=da1828cc-7345-4286-9d41-fad67db73b3b',
         'SOULBOUND',
         'SB721',
         100,
@@ -188,7 +188,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${chainId}',
         'Transport (rentable)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Ftransport.png?alt=media&token=bd58c0ac-3318-460c-9e11-c66dd4f68e34',
         'RENTABLE',
         'REN721',
         100,
@@ -204,9 +204,9 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         2301,
         '${wallet}',
         56,
-        'BEP (binance)',
+        'BEP',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         'BEP',
         'BEP721',
         100,

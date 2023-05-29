@@ -75,7 +75,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040301, -- Lightbolt
+        14040301, -- Lightning bolt
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "140403",
         })}',

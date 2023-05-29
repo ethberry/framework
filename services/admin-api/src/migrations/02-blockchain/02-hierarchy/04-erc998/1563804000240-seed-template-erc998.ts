@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -102,7 +102,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         140401,
         'Fireball',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls_fireball.png?alt=media&token=2fd8e1db-9b1b-4201-9fc5-76b4619e7c03',
         140401,
         0,
         1,
@@ -114,7 +114,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         140402,
         'Frostbite',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls_frost_bite.png?alt=media&token=a56ead1b-ebf9-498c-98f8-8e3e485d6564',
         140402,
         0,
         1,
@@ -124,9 +124,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         140403,
-        'Lightbolt',
+        'Lightning bolt',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls_lightning_bolt.png?alt=media&token=8d0bbb64-f42c-4ed4-85c3-ae289910f5fb',
         140403,
         0,
         1,
@@ -138,7 +138,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         140404,
         'Slow',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls_slow.png?alt=media&token=f5d97ae9-5e88-452d-8d4b-442948d1ef7f',
         140404,
         0,
         1,
@@ -150,7 +150,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         140405,
         'Fly',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscroll.png?alt=media&token=0aa2fc59-f8cb-4958-99d7-375f0deba161',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fscrolls_fly.png?alt=media&token=52286e06-01ba-4323-b2b1-aa25ee4940e7',
         140405,
         0,
         1,
@@ -220,10 +220,34 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         140901,
-        'T-Shirt',
+        'Archery',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbuildings_archery.png?alt=media&token=c1a2c73a-7309-4086-92b8-760847d776b7',
         140901,
+        0,
+        1,
+        'ACTIVE',
+        1409,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140902,
+        'Barracks',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbuildings_barracks.png?alt=media&token=f5ce7e36-9069-4893-be60-de9e40691968',
+        140902,
+        0,
+        1,
+        'ACTIVE',
+        1409,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        140903,
+        'Mage tower',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbuildings_mage_tower.png?alt=media&token=c142a391-f6de-4d4a-b976-a9937c0d4d7d',
+        140903,
         0,
         1,
         'ACTIVE',

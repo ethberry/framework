@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -158,6 +158,18 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsilver_ring.png?alt=media&token=c0da9303-7581-4ba8-8a94-c411b16e6402',
         130403,
+        0,
+        1,
+        'ACTIVE',
+        1304,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130404,
+        'Pendant',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fpendant.png?alt=media&token=a130587b-550a-42bc-854d-ea845b10f1b0',
+        130404,
         0,
         1,
         'ACTIVE',

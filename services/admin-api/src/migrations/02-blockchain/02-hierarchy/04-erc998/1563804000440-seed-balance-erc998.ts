@@ -48,7 +48,7 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040301, -- Lightbolt
+        14040301, -- Lightning bolt
         14050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
