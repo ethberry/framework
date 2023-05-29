@@ -174,12 +174,12 @@
       "NEW": "New"
     },
     "durationUnit": {
-      "YEAR": "Year",
-      "MONTH": "Month",
-      "WEEK": "Week",
       "DAY": "Day",
       "HOUR": "Hour",
-      "MINUTE": "Minute"
+      "MINUTE": "Minute",
+      "MONTH": "Month",
+      "WEEK": "Week",
+      "YEAR": "Year"
     },
     "emailType": {
       "DUMMY": "Test email",
@@ -887,9 +887,6 @@
       "deactivate": "Deactivate rule",
       "title": "Craft recipes"
     },
-    "disperse": {
-      "title": "Disperse"
-    },
     "dashboard": {
       "achievements": {
         "levels": "Levels",
@@ -947,11 +944,11 @@
         "coin-market-cap": "CoinMarketCap"
       },
       "mechanics": {
-        "disperse": "Disperse",
         "breed": "Breed",
         "claim": "Claim",
         "collection": "Collections",
         "craft": "Craft",
+        "disperse": "Disperse",
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
@@ -964,6 +961,9 @@
         "waitlist": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "disperse": {
+      "title": "Disperse"
     },
     "drop": {
       "title": "Drops"

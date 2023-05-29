@@ -30,9 +30,9 @@
     "blacklist": "أضف إلى القائمة السوداء",
     "breedLimit": "ضع حدود السلالة",
     "claim": "مطالبة",
-    "currentBalance": "الرصيد: {value}",
     "confirmation": "يرجى تأكيد",
     "create": "خلق",
+    "currentBalance": "الرصيد: {value}",
     "delete": "حذف &quot;{title}`؟",
     "deploy": "نشر",
     "edit": "تعديل",
@@ -44,8 +44,8 @@
     "pyramidBalance": "سحب أرصدة الهرم",
     "renounceRole": "نبذ الدور",
     "revokeRole": "إبطال الدور",
-    "setAmount": "حدد كمية",
     "schedule": "حدد جدول جولة اليانصيب",
+    "setAmount": "حدد كمية",
     "topUp": "فوق حتى",
     "unBlacklist": "إزالة من القائمة السوداء",
     "unWhitelist": "إزالة من القائمة البيضاء",
@@ -55,10 +55,6 @@
     "withdraw": "سحب الرصيد"
   },
   "enums": {
-    "gender": {
-      "MALE": "ذكر",
-      "FEMALE": "أنثى"
-    },
     "GRADE": {
       "1": "1",
       "10": "10",
@@ -100,11 +96,11 @@
       "ERC20OWNER": "ERC20OWNER",
       "EXTERNAL": "خارجي",
       "GENES": "الجينات",
-      "REFERRAL": "إحالة خطية",
       "MYSTERYBOX": "الصندوق الغامض",
       "NATIVE": "محلي",
       "PAUSABLE": "متوقف",
       "RANDOM": "عشوائي",
+      "REFERRAL": "إحالة خطية",
       "SOULBOUND": "Soulbound",
       "UPGRADEABLE": "قابل للترقية"
     },
@@ -131,6 +127,10 @@
     "emailType": {
       "DUMMY": "البريد الإلكتروني اختبار",
       "LINK_TOKEN": "إشعار الارتباط"
+    },
+    "gender": {
+      "FEMALE": "أنثى",
+      "MALE": "ذكر"
     },
     "gradeStrategy": {
       "EXPONENTIAL": "متسارع",
@@ -259,11 +259,11 @@
       "revokeRole": "إبطال الدور",
       "royalty": "ملكية",
       "save": "يحفظ",
+      "schedule": "جدول",
       "search": "يبحث",
       "showFilters": "اظهر الفلاتر",
       "signup": "اشتراك",
       "snapshot": "لمحة",
-      "schedule": "جدول",
       "startRound": "ابدأ الجولة",
       "submit": "إرسال",
       "unblacklist": "غير القائمة السوداء",
@@ -333,9 +333,9 @@
       "listId": "معرف القائمة",
       "listenerType": "نوع المستمع",
       "matron": "ماترون",
+      "maxCycles": "عدد الدورات القصوى (0 - بلا حدود)",
       "maxStakes": "ماكس ستيكس",
       "maxTime": "ماكس كولداون",
-      "maxCycles": "عدد الدورات القصوى (0 - بلا حدود)",
       "mysteryboxStatus": "حالة",
       "name": "اسم",
       "numbers": "أعداد",
@@ -352,7 +352,6 @@
       "pyramidDepositStatus": "حالة",
       "pyramidRuleStatus": "حالة",
       "random": "عشوائي",
-      "schedule": "جدول الجولة",
       "recipient": "متلقي",
       "recurrent": "متكرر؟",
       "reward": "جائزه",
@@ -360,6 +359,7 @@
       "roundId": "مستدير",
       "roundIds": "مستدير",
       "royalty": "ملكية",
+      "schedule": "جدول الجولة",
       "sire": "مولى",
       "slug": "سبيكة",
       "stakingDepositStatus": "حالة",
@@ -392,7 +392,6 @@
       "account": "0 × ...",
       "address": "0 × ...",
       "amount": "10",
-      "metadata": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
       "childId": "لمدة",
@@ -416,9 +415,10 @@
       "growthRate": "2",
       "item": "قارورة ماء",
       "listId": "1",
+      "maxCycles": "0",
       "maxStakes": "0",
       "maxTime": "0",
-      "maxCycles": "0",
+      "metadata": "{}",
       "name": "الغبار الوردي",
       "number": "100500",
       "owner": "0 × ...",
@@ -699,10 +699,10 @@
       "rules": {
         "activate": "تفعيل القاعدة",
         "deactivate": "إلغاء تنشيط القاعدة",
-        "title": "قواعد الهرم",
-        "upload": "تحميل القاعدة",
+        "finalizeByRule": "إنهاء القاعدة",
         "finalizeByToken": "إنهاء رمز الإيداع",
-        "finalizeByRule": "إنهاء القاعدة"
+        "title": "قواعد الهرم",
+        "upload": "تحميل القاعدة"
       },
       "title": "هرم"
     },
