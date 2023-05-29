@@ -3,7 +3,7 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
@@ -110,6 +110,7 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
         readOnly={readOnly}
       />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
+      <NumberInput name="maxStake" readOnly={readOnly} />
     </FormDialog>
   );
 };

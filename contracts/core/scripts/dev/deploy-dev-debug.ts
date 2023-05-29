@@ -1,5 +1,6 @@
 import { ethers, network } from "hardhat";
 import { constants, Contract } from "ethers";
+import fs from "fs";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
@@ -22,7 +23,14 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
     await blockAwaitMs(delayMs);
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
+    const tx = Object.values(obj).pop();
+    const contract = await tx.deployed();
     await blockAwait(delay, delayMs);
+    fs.appendFileSync(
+      `${process.cwd()}/log.txt`,
+      // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
+      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract.address ? contract.address  : "--"}\n`,
+    );
   }
 };
 
@@ -343,7 +351,7 @@ async function main() {
   );
 
   const stakingFactory = await ethers.getContractFactory("Staking");
-  const stakingInstance = await stakingFactory.deploy(10);
+  const stakingInstance = await stakingFactory.deploy();
   contracts.staking = stakingInstance;
   await debug(contracts);
 
@@ -370,6 +378,7 @@ async function main() {
         content: [],
         period: 30 * 84600,
         penalty: 1,
+        maxStake: 0,
         recurrent: false,
         active: true,
       },
@@ -400,6 +409,7 @@ async function main() {
         content: [],
         period: 30 * 84600,
         penalty: 1,
+        maxStake: 0,
         recurrent: false,
         active: true,
       },
@@ -439,6 +449,7 @@ async function main() {
         ],
         period: 1 * 84600,
         penalty: 0,
+        maxStake: 0,
         recurrent: true,
         active: true,
       },

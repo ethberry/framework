@@ -95,6 +95,11 @@
             "type": "uint256"
           },
           {
+            "internalType": "uint256",
+            "name": "maxStake",
+            "type": "uint256"
+          },
+          {
             "internalType": "bool",
             "name": "recurrent",
             "type": "bool"

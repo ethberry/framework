@@ -64,6 +64,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
+      maxStake: rule.maxStake,
       active: true, // todo add var in interface
     };
     const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
@@ -122,6 +123,7 @@ export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props 
           durationAmount: 2592000,
           durationUnit: DurationUnit.DAY,
           penalty: 100,
+          maxStake: 0,
           recurrent: false,
         }}
       />
