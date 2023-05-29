@@ -5,7 +5,7 @@ import { IERC721EnumOptions, shouldUserExprires, shouldUserOf } from "@gemunion/
 import { customMintCommonERC721 } from "../customMintFn";
 
 export function shouldBehaveLikeERC721Rentable(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
-  Object.assign(options, { mint: customMintCommonERC721, tokenId: 1 }, options);
+  options = Object.assign({}, { mint: customMintCommonERC721, tokenId: 1 }, options);
 
   shouldSetUser(factory, options);
   shouldUserOf(factory, options);

@@ -11,16 +11,19 @@ import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 import { deployContract } from "../../shared/fixture";
 import { templateId, tokenId } from "../../constants";
+import { shouldNotMintCommon } from "../../ERC721/shared/shouldNotMintCommon";
+import { customMintBoxERC721 } from "../../ERC721/shared/customMintFn";
 
 describe("Wrapper", function () {
-  const factory = () => deployERC721("ERC721WrapperTest");
+  const factory = () => deployERC721("ERC721Wrapper");
   const erc20Factory = (name: string) => deployERC20(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
   const erc1155Factory = (name: string) => deployERC1155(name);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldBehaveLikeERC721Simple(factory);
+  shouldBehaveLikeERC721Simple(factory, { mint: customMintBoxERC721, safeMint: customMintBoxERC721, tokenId: 1 });
+  shouldNotMintCommon(factory);
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
@@ -28,7 +31,41 @@ describe("Wrapper", function () {
     InterfaceId.IERC1155Receiver,
   ]);
 
+  describe("mintBox", function () {
+    it("should fail no content", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const erc721WrapperInstance = await factory();
+
+      const tx = erc721WrapperInstance.mintBox(owner.address, templateId, [], { value: amount });
+      await expect(tx).to.be.rejectedWith("Wrapper: no content");
+    });
+  });
+
   describe("mint/unpack", function () {
+    it("should fail no content", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+
+      const erc721WrapperInstance = await factory();
+
+      const tx = erc721WrapperInstance.mintBox(
+        owner.address,
+        templateId,
+        [
+          {
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: 0,
+            amount,
+          },
+        ],
+        { value: amount },
+      );
+      await expect(tx).to.changeEtherBalances([owner, erc721WrapperInstance], [-amount, amount]);
+
+      const tx1 = erc721WrapperInstance.connect(receiver).unpack(1);
+      await expect(tx1).to.be.rejectedWith("Wrapper: unpack caller is not owner nor approved");
+    });
     describe("NATIVE", function () {
       it("should mint/unpack NATIVE", async function () {
         const [owner] = await ethers.getSigners();
