@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
@@ -20,12 +20,26 @@ import {
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { VRFCoordinatorMock } from "../../typechain-types";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { deployLinkVrfFixture } from "../shared/link";
 
 describe("ExchangeCore", function () {
   const factory = async () => {
     const { contractInstance } = await deployExchangeFixture();
     return contractInstance;
   };
+
+  let vrfInstance: VRFCoordinatorMock;
+
+  before(async function () {
+    await network.provider.send("hardhat_reset");
+
+    // https://github.com/NomicFoundation/hardhat/issues/2980
+    ({ vrfInstance } = await loadFixture(function shouldMintRandom() {
+      return deployLinkVrfFixture();
+    }));
+  });
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
   shouldBehaveLikePausable(factory);
@@ -162,10 +176,10 @@ describe("ExchangeCore", function () {
         );
     });
 
-    it.skip("should purchase RANDOM, spend ETH", async function () {
+    it("should purchase RANDOM, spend ETH", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const erc721Instance = await deployErc721Base("ERC721RandomBesu", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Random", exchangeInstance);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -185,6 +199,9 @@ describe("ExchangeCore", function () {
           },
         ],
       });
+
+      const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,

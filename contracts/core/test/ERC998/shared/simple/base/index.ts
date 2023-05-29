@@ -15,7 +15,7 @@ import { customMintCommonERC721 } from "../../../../ERC721/shared/customMintFn";
 import { tokenId } from "../../../../constants";
 
 export function shouldBehaveLikeERC998(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
-  Object.assign(options, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
+  options = Object.assign({}, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
 
   shouldSafeTransferChild(factory, options);
   shouldTransferChild(factory, options);

@@ -20,14 +20,13 @@ import { shouldTransferFrom } from "./transferFrom";
 import { shouldSafeTransferFrom } from "./safeTransferFrom";
 
 export function shouldBehaveLikeERC721Soulbound(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
-  Object.assign(options, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
+  options = Object.assign({}, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
 
   shouldApprove(factory, options);
   shouldGetBalanceOf(factory, options);
   shouldGetOwnerOf(factory, options);
   shouldSetApprovalForAll(factory, options);
   shouldTransferFrom(factory, options);
-  shouldSafeTransferFrom(factory, options);
   shouldSafeTransferFrom(factory, options);
   shouldSafeMint(factory, options);
 

@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { Contract } from "ethers";
 
 import {
@@ -13,6 +13,7 @@ import {
 
 import { Exchange } from "../../../typechain-types";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
+import { getContractName } from "../../utils";
 
 export async function deployExchangeFixture() {
   const [owner] = await ethers.getSigners();
@@ -43,7 +44,7 @@ export async function deployErc20Base(name: string, exchangeInstance: Contract) 
 }
 
 export async function deployErc721Base(name: string, exchangeInstance: Contract) {
-  const erc721Factory = await ethers.getContractFactory(name);
+  const erc721Factory = await ethers.getContractFactory(getContractName(name, network.name));
   const erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
   await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
   await erc721Instance.grantRole(METADATA_ROLE, exchangeInstance.address);
