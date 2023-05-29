@@ -2,9 +2,9 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { Erc20Contract } from "./contract";
 import { IndexWrapper } from "../../../index-wrapper";
 import { Erc20Section } from "../../../dashboard/hierarchy/erc20";
+import { Erc20Contract } from "./contract";
 
 export const erc20Routes: Array<RouteObject> = [
   {
