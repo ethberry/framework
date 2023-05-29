@@ -6,7 +6,7 @@ import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc721TemplateListItem } from "../../tokens/erc721/template-list/item";
+import { Erc721TemplateListItem } from "../../../hierarchy/erc721/template-list/item";
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 
 export const Erc721: FC<ITabPanelProps> = props => {

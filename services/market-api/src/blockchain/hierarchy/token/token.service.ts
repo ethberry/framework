@@ -26,9 +26,9 @@ export class TokenService {
   public async search(
     dto: ITokenSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType | Array<TokenType>,
-    contractModule: ModuleType,
-    contractFeatures: Array<ContractFeatures> = [],
+    contractType: Array<TokenType>,
+    contractModule: Array<ModuleType>,
+    contractFeatures?: Array<ContractFeatures>,
   ): Promise<[Array<TokenEntity>, number]> {
     const {
       query,
@@ -61,7 +61,7 @@ export class TokenService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    if (Array.isArray(contractType)) {
+    if (contractType.length) {
       queryBuilder.andWhere(`contract.contractType IN(:...contractType)`, { contractType });
     } else {
       queryBuilder.andWhere("contract.contractType = :contractType", {
@@ -69,7 +69,15 @@ export class TokenService {
       });
     }
 
-    if (contractFeatures.length > 0) {
+    if (contractModule.length) {
+      queryBuilder.andWhere(`contract.contractModule IN(:...contractModule)`, { contractModule });
+    } else {
+      queryBuilder.andWhere("contract.contractModule = :contractModule", {
+        contractModule,
+      });
+    }
+
+    if (contractFeatures) {
       if (contractFeatures.length === 1) {
         queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
           contractFeature: contractFeatures[0],
@@ -79,9 +87,6 @@ export class TokenService {
       }
     }
 
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });

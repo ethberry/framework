@@ -11,7 +11,7 @@ export const MarketplaceSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace" />
+            <FormattedMessage id="pages.dashboard.exchange.marketplace" />
           </ListSubheader>
         }
       >

@@ -47,7 +47,7 @@ export class SeedAssetComponentsMysteryboxAt1563804001260 implements MigrationIn
         2217,
         221701, -- busd
         '${constants.WeiPerEther.toString()}',
-        160601
+        260101
       );
     `);
   }

@@ -628,10 +628,12 @@
       "integrations": {
         "1inch": "1inch",
         "coin-gecko": "CoinGecko",
-        "ipfs": "IPFS",
+        "ipfs": "IPFS"
+      },
+      "exchange": {
         "marketplace": "Marketplace",
-        "personal": "My stash",
-        "referral": "Referral program"
+        "referral": "Referral program",
+        "personal": "My stash"
       },
       "mechanics": {
         "breed": "Breed",
@@ -928,6 +930,9 @@
     },
     "token": {
       "priceTitle": "Base price:"
+    },
+    "tokens": {
+      "title": "My tokens"
     },
     "transactions": {
       "emptyText": "",
