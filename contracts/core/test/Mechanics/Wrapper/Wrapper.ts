@@ -334,7 +334,7 @@ describe("Wrapper", function () {
         expect(balanace11).to.be.equal(0);
         const balanace12 = await erc998Instance.balanceOf(owner.address);
         expect(balanace12).to.be.equal(0);
-        const balanace13 = await erc1155Instance.balanceOf(owner.address, 1);
+        const balanace13 = await erc1155Instance.balanceOf(owner.address, tokenId);
         expect(balanace13).to.be.equal(0);
 
         const tx2 = erc721WrapperInstance.unpack(tokenId);
@@ -344,7 +344,7 @@ describe("Wrapper", function () {
         expect(balanace21).to.be.equal(1);
         const balanace22 = await erc998Instance.balanceOf(owner.address);
         expect(balanace22).to.be.equal(1);
-        const balanace23 = await erc1155Instance.balanceOf(owner.address, 1);
+        const balanace23 = await erc1155Instance.balanceOf(owner.address, tokenId);
         expect(balanace23).to.be.equal(amount);
       });
     });
