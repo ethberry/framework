@@ -44,7 +44,7 @@ export class StakingRulesServiceEth {
     } = event;
     const { address } = context;
 
-    const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
+    const [deposit, reward, _content, period, penalty, maxStake, recurrent, active] = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
@@ -97,6 +97,8 @@ export class StakingRulesServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
+    // new ACTIVE rule is NEW to hide it from display in market
+    const stakingRuleStatus = active === true ? StakingRuleStatus.NEW : StakingRuleStatus.INACTIVE;
     await this.stakingRulesService.create({
       title: "new STAKING rule",
       description: emptyStateString,
@@ -105,8 +107,9 @@ export class StakingRulesServiceEth {
       durationAmount: ~~period,
       durationUnit: DurationUnit.DAY,
       penalty: ~~penalty,
+      maxStake: ~~maxStake,
       recurrent,
-      stakingRuleStatus: StakingRuleStatus.NEW,
+      stakingRuleStatus,
       externalId: ruleId,
       contractId: contractEntity.id,
     });
