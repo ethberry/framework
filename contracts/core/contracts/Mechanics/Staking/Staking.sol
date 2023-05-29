@@ -613,7 +613,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    * @dev Withdraw the penalty balance for given token address and tokenId
    * @param item asset to withdraw.
    */
-  function withdrawBalance(Asset memory item) public nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {
+  function withdraw(Asset memory item) public nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {
+    // TODO throw unsupported token type
+
     // Retrieve balance from storage.
     item.amount = _penalties[item.token][item.tokenId];
     if (item.amount == 0) {

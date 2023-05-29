@@ -37,7 +37,7 @@ export class StakingRulesServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
+  public async ruleCreate(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { rule, ruleId },
@@ -178,7 +178,7 @@ export class StakingRulesServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async return(event: ILogEvent<IStakingReturnDepositEvent>, context: Log): Promise<void> {
+  public async depositReturn(event: ILogEvent<IStakingReturnDepositEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
@@ -197,7 +197,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async withdrawBalance(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
+  public async withdraw(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 

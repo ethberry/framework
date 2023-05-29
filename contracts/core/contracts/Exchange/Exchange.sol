@@ -81,6 +81,11 @@ contract Exchange is
     revert();
   }
 
+  function withdraw(Asset[] memory item) external payable {
+    // emit WithdrawBalance
+    ExchangeUtils.spend(item, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+  }
+
   function _afterPurchase(
     address referrer,
     Asset[] memory price

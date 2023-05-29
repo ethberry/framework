@@ -16,7 +16,7 @@ interface IStaking {
 
   function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
 
-  function withdrawBalance(Asset memory item) external;
+  function withdraw(Asset memory item) external;
 }
 
 interface IERC1363Receiver {
@@ -74,10 +74,10 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
     IStaking(Staking).receiveReward(stakeId, withdrawDeposit, breakLastPeriod);
   }
 
-  function withdrawBalance(Asset memory item) public {
+  function withdraw(Asset memory item) public {
     lastMethod = WITHDRAW;
     _item = item;
-    IStaking(Staking).withdrawBalance(item);
+    IStaking(Staking).withdraw(item);
   }
 
   function onTransferReceived(
@@ -141,7 +141,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
         abi.encodeWithSelector(IStaking.receiveReward.selector, _stakeId, _withdrawDeposit, _breakLastPeriod)
       );
     } else {
-      (success, ) = Staking.call(abi.encodeWithSelector(IStaking.withdrawBalance.selector, _item));
+      (success, ) = Staking.call(abi.encodeWithSelector(IStaking.withdraw.selector, _item));
     }
 
     emit Reentered(success);

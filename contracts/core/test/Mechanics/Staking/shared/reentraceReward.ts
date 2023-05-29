@@ -398,7 +398,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
         // WITHDRAW PENALTY
-        const tx4 = attakerInstance.withdrawBalance({
+        const tx4 = attakerInstance.withdraw({
           tokenType: 0,
           token: constants.AddressZero,
           tokenId,
@@ -484,7 +484,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
         // WITHDRAW PENALTY
-        const tx4 = attakerInstance.withdrawBalance({
+        const tx4 = attakerInstance.withdraw({
           tokenType: 1,
           token: erc20Instance.address,
           tokenId,
@@ -583,7 +583,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
         // WITHDRAW PENALTY
-        const tx4 = attakerInstance.withdrawBalance({
+        const tx4 = attakerInstance.withdraw({
           tokenType: 2,
           token: erc721Instance.address,
           tokenId,
@@ -681,7 +681,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         expect(stake).to.have.deep.nested.property("activeDeposit", false);
 
         // WITHDRAW PENALTY
-        const tx4 = attakerInstance.withdrawBalance({
+        const tx4 = attakerInstance.withdraw({
           tokenType: 4,
           token: erc1155Instance.address,
           tokenId,

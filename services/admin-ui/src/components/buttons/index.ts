@@ -18,5 +18,4 @@ export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
 
-export * from "./exchange/releasable";
-export * from "./exchange/release";
+export * from "./exchange/withdraw";

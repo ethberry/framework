@@ -5,6 +5,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
+  Erc1363EventType,
+  IErc1363TransferReceivedEvent,
   IStakingBalanceWithdrawEvent,
   IStakingCreateEvent,
   IStakingDepositEvent,
@@ -22,8 +24,8 @@ export class StakingRulesControllerEth {
   constructor(private readonly stakingServiceEth: StakingRulesServiceEth) {}
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.RuleCreated })
-  public create(@Payload() event: ILogEvent<IStakingCreateEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.create(event, context);
+  public ruleCreate(@Payload() event: ILogEvent<IStakingCreateEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.ruleCreate(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.RuleUpdated })
@@ -32,30 +34,35 @@ export class StakingRulesControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingStart })
-  public start(@Payload() event: ILogEvent<IStakingDepositEvent>, @Ctx() context: Log): Promise<void> {
+  public depositStart(@Payload() event: ILogEvent<IStakingDepositEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.depositStart(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
-  public withdraw(@Payload() event: ILogEvent<IStakingWithdrawEvent>, @Ctx() context: Log): Promise<void> {
+  public depositWithdraw(@Payload() event: ILogEvent<IStakingWithdrawEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.depositWithdraw(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.ReturnDeposit })
-  public return(@Payload() event: ILogEvent<IStakingReturnDepositEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.return(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })
-  public withdrawBalance(
-    @Payload() event: ILogEvent<IStakingBalanceWithdrawEvent>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.stakingServiceEth.withdrawBalance(event, context);
+  public depositReturn(@Payload() event: ILogEvent<IStakingReturnDepositEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.depositReturn(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingFinish })
-  public finish(@Payload() event: ILogEvent<IStakingFinishEvent>, @Ctx() context: Log): Promise<void> {
+  public depositFinish(@Payload() event: ILogEvent<IStakingFinishEvent>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.depositFinish(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })
+  public withdraw(@Payload() event: ILogEvent<IStakingBalanceWithdrawEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.withdraw(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: Erc1363EventType.TransferReceived })
+  public transferReceived(
+    @Payload() event: ILogEvent<IErc1363TransferReceivedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.stakingServiceEth.transferReceived(event, context);
   }
 }

@@ -183,6 +183,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
     emit RuleUpdated(ruleId, active);
   }
 
+  // TODO remove
   // WITHDRAW
   function withdrawToken(address token, uint256 amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
     uint256 totalBalance;
@@ -244,6 +245,11 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid, Pa
 
   receive() external payable override {
     revert();
+  }
+
+  function withdraw(Asset[] memory item) external payable {
+    // emit WithdrawBalance
+    ExchangeUtils.spend(item, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
   }
 
   // PAUSE
