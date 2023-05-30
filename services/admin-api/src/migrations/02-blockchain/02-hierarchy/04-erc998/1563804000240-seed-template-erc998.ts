@@ -39,6 +39,10 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       ), (
         140901
       ), (
+        140902
+      ), (
+        140903
+      ), (
         141101
       ), (
         141201
