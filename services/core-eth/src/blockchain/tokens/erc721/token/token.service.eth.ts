@@ -180,7 +180,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
-    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
+    const balanceArray: Array<DeepPartial<BalanceEntity>> = new Array(tokenArray.length).fill(null).map((_, i) => ({
       account: owner.toLowerCase(),
       amount: "1",
       tokenId: tokenArray[i].id,
