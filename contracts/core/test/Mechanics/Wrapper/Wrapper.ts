@@ -6,7 +6,7 @@ import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
 import { templateId, tokenId } from "../../constants";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { deployContract } from "../../shared/fixture";
@@ -16,7 +16,7 @@ import { customMintBoxERC721 } from "../../ERC721/shared/customMintFn";
 
 describe("Wrapper", function () {
   const factory = () => deployERC721("ERC721Wrapper");
-  const erc20Factory = (name: string) => deployERC20(name);
+  const erc20Factory = (name: string) => deployERC1363(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
   const erc1155Factory = (name: string) => deployERC1155(name);

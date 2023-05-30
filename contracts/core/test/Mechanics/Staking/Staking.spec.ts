@@ -20,7 +20,7 @@ import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { deployStaking } from "./shared/fixture";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
@@ -90,7 +90,7 @@ describe("Staking", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployStaking();
-  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name?: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
 

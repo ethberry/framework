@@ -5,7 +5,7 @@ import { BigNumber, constants, utils } from "ethers";
 import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
-import { deployERC20 } from "../ERC20/shared/fixtures";
+import { deployERC1363 } from "../ERC20/shared/fixtures";
 import { isEqualArray, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
@@ -94,7 +94,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
       await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
@@ -193,7 +193,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
       await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
@@ -265,7 +265,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(owner.address, amount);
       await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -502,7 +502,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
       await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
@@ -605,7 +605,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
       await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
@@ -681,7 +681,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
       await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
@@ -744,7 +744,7 @@ describe("ExchangeRentable", function () {
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const erc20Instance = await deployERC20("ERC20Simple");
+      const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(owner.address, amount);
       await erc20Instance.approve(exchangeInstance.address, amount);
 

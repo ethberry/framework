@@ -11,14 +11,14 @@ import { randomRequest } from "../../../../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../../../../shared/link";
 import { deployERC1155 } from "../../../../../ERC1155/shared/fixtures";
 import { deployERC721 } from "../../../../../ERC721/shared/fixtures";
-import { deployERC20 } from "../../../../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../../../../ERC20/shared/fixtures";
 
 // import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 
 export function shouldUnpackBox(factory: () => Promise<Contract>) {
   let vrfInstance: VRFCoordinatorMock;
 
-  const erc20Factory = (name: string) => deployERC20(name);
+  const erc20Factory = (name: string) => deployERC1363(name);
   const erc721Factory = (name: string) => deployERC721(name);
   const erc998Factory = (name: string) => deployERC721(name);
   const erc1155Factory = (name: string) => deployERC1155(name);

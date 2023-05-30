@@ -10,12 +10,12 @@ import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { tokenId } from "../../constants";
 import { isEqualEventArgArrObj } from "../../utils";
 import { BigNumber } from "ethers";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
 describe("Waitlist", function () {
   const factory = () => deployContract(this.title);
   const erc721factory = () => deployERC721();
-  const erc20Factory = () => deployERC20();
+  const erc20Factory = () => deployERC1363();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
   shouldBehaveLikePausable(factory);

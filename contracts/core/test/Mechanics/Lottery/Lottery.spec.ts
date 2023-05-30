@@ -14,7 +14,7 @@ import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -74,7 +74,7 @@ describe("Lottery", function () {
   describe("setAcceptedToken", function () {
     it("should set factory", async function () {
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20();
+      const newCoinInstance = await deployERC1363();
       const tx = await lotteryInstance.setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.not.be.reverted;
     });
@@ -82,7 +82,7 @@ describe("Lottery", function () {
     it("should fail: account is missing role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20();
+      const newCoinInstance = await deployERC1363();
       const tx = lotteryInstance.connect(receiver).setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,

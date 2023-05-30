@@ -7,7 +7,7 @@ import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce } from "@gemunion/contra
 
 import { expiresAt, extra, templateId, tokenId, tokenIds } from "../../../constants";
 import { IRule } from "../interface/staking";
-import { deployERC20 } from "../../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../../ERC1155/shared/fixtures";
 
@@ -24,7 +24,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
     extra,
   };
 
-  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
 
@@ -57,7 +57,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -132,7 +133,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -202,7 +204,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -281,7 +284,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -363,7 +367,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [[], [], [], []],
           period,
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -444,7 +449,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 5000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -535,7 +541,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 
@@ -633,7 +640,8 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
-          maxStake, recurrent: true,
+          maxStake,
+          recurrent: true,
           active: true,
         };
 

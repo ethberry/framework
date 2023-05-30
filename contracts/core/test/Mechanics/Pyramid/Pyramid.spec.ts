@@ -8,14 +8,14 @@ import { blockAwait } from "@gemunion/contracts-utils";
 import { tokenZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { deployPyramid } from "./fixture";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
 describe("Pyramid", function () {
   const period = 300;
   const penalty = 0;
   const cycles = 2;
 
-  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("1000000000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("1000000000") });
 
   const refProgram = {
     maxRefs: 10,
