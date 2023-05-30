@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGridPremium } from "@mui/x-data-grid-premium";
 import { Clear } from "@mui/icons-material";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -70,14 +70,9 @@ export const ClaimsView: FC<IClaimsViewProps> = props => {
   };
 
   const ResetButton = () => (
-    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mx: 2, py: 1 }}>
-      <Button startIcon={<Clear fontSize="inherit" />} onClick={resetForm} data-testid="ResetFormButton">
-        <FormattedMessage id="form.buttons.reset" />
-      </Button>
-      <Typography variant="caption" fontSize={16} lineHeight="18px" fontWeight={400}>
-        <FormattedMessage id="form.hints.totalRows" values={{ amount: claims.length }} />
-      </Typography>
-    </Box>
+    <Button startIcon={<Clear fontSize="inherit" />} onClick={resetForm} data-testid="ResetFormButton">
+      <FormattedMessage id="form.buttons.reset" />
+    </Button>
   );
 
   return (
@@ -90,7 +85,7 @@ export const ClaimsView: FC<IClaimsViewProps> = props => {
         density="compact"
         onRowOrderChange={handleRowOrderChange}
         slots={{
-          footer: ResetButton,
+          toolbar: ResetButton,
         }}
       />
     </Box>
