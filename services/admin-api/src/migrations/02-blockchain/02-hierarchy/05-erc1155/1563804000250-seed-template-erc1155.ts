@@ -49,7 +49,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         150101,
         'Gold',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgold.png?alt=media&token=4cc3b112-27f5-48b6-8351-029c4bbec0e9',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgold.png?alt=media&token=f5cc1a57-e948-45e0-8e2e-080270b9acb9',
         150101,
         0,
         '${constants.WeiPerEther.toString()}',
