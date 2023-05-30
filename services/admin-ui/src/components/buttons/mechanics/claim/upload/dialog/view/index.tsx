@@ -70,7 +70,12 @@ export const ClaimsView: FC<IClaimsViewProps> = props => {
   };
 
   const ResetButton = () => (
-    <Button startIcon={<Clear fontSize="inherit" />} onClick={resetForm} data-testid="ResetFormButton">
+    <Button
+      variant="outlined"
+      startIcon={<Clear fontSize="inherit" />}
+      onClick={resetForm}
+      data-testid="ResetFormButton"
+    >
       <FormattedMessage id="form.buttons.reset" />
     </Button>
   );
