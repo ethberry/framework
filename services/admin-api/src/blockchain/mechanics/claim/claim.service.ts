@@ -10,6 +10,7 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
+import { mapLimit } from "async";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
@@ -197,7 +198,21 @@ export class ClaimService {
   }
 
   public async upload(dto: IClaimItemUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    // TODO wrap in transaction
-    return Promise.all(dto.claims.map(row => this.create(row, userEntity)));
+    return new Promise((resolve, reject) => {
+      mapLimit(
+        dto.claims,
+        10,
+        async (row: IClaimItemCreateDto) => {
+          return this.create(row, userEntity);
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results as ClaimEntity[]);
+          }
+        },
+      );
+    });
   }
 }
