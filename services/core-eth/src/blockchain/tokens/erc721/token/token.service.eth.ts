@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
 import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
@@ -157,8 +157,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
 
       if (batchLen !== batchSize) {
-        // todo just in case =)
-        throw new NotFoundException("batchLengthError");
+        throw new BadRequestException("batchLengthError");
       }
 
       templateEntity.amount += batchSize;
