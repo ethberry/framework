@@ -10,11 +10,6 @@
         "internalType": "uint256",
         "name": "ruleId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
       }
     ],
     "name": "deposit",

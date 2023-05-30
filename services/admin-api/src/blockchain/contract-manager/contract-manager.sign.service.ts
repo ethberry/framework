@@ -518,16 +518,12 @@ export class ContractManagerSignService {
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
         ],
-        StakingArgs: [
-          { name: "maxStake", type: "uint256" },
-          { name: "contractTemplate", type: "string" },
-        ],
+        StakingArgs: [{ name: "contractTemplate", type: "string" }],
       },
       // Values
       {
         params,
         args: {
-          maxStake: dto.maxStake,
           contractTemplate: Object.values(StakingContractTemplates).indexOf(dto.contractTemplate).toString(),
         },
       },

@@ -10,7 +10,7 @@ import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
 contract StakingFactory is AbstractFactory {
-  bytes private constant STAKING_ARGUMENTS_SIGNATURE = "StakingArgs(uint256 maxStake,string contractTemplate)";
+  bytes private constant STAKING_ARGUMENTS_SIGNATURE = "StakingArgs(string contractTemplate)";
   bytes32 private constant STAKING_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(STAKING_ARGUMENTS_SIGNATURE));
 
   bytes32 private immutable STAKING_PERMIT_SIGNATURE =
@@ -19,7 +19,6 @@ contract StakingFactory is AbstractFactory {
   address[] private _staking;
 
   struct StakingArgs {
-    uint256 maxStake;
     string contractTemplate;
   }
 
@@ -38,7 +37,7 @@ contract StakingFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.maxStake), params.nonce);
+    addr = deploy2(params.bytecode, "", params.nonce);
     _staking.push(addr);
 
     emit StakingDeployed(addr, args);
@@ -52,10 +51,7 @@ contract StakingFactory is AbstractFactory {
   }
 
   function _hashStakingStruct(StakingArgs calldata args) private pure returns (bytes32) {
-    return
-      keccak256(
-        abi.encode(STAKING_ARGUMENTS_TYPEHASH, args.maxStake, keccak256(abi.encodePacked(args.contractTemplate)))
-      );
+    return keccak256(abi.encode(STAKING_ARGUMENTS_TYPEHASH, keccak256(abi.encodePacked(args.contractTemplate))));
   }
 
   function allStaking() external view returns (address[] memory) {

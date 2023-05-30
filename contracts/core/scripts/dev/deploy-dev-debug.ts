@@ -29,7 +29,9 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
     fs.appendFileSync(
       `${process.cwd()}/log.txt`,
       // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
-      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract.address ? contract.address  : "--"}\n`,
+      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${
+        contract.address ? contract.address : "--"
+      }\n`,
     );
   }
 };
@@ -493,6 +495,13 @@ async function main() {
 
   const busdFactory = await ethers.getContractFactory("BEP20Token");
   contracts.busd = await busdFactory.deploy();
+  await debug(contracts);
+
+  const wethFactory = await ethers.getContractFactory("WETH9");
+  contracts.weth =
+    network.name !== "binance_test"
+      ? await wethFactory.deploy()
+      : wethFactory.attach("0x1e33833a035069f42d68D1F53b341643De1C018D"); // binance_test
   await debug(contracts);
 
   const waitlistFactory = await ethers.getContractFactory("Waitlist");

@@ -10,7 +10,16 @@ export enum StakingEventType {
 
 export type IAssetStruct = [string, string, string, string];
 
-export type IStakingRuleStruct = [[IAssetStruct], [IAssetStruct], [IAssetStruct], string, string, string, boolean, boolean];
+export type IStakingRuleStruct = [
+  [IAssetStruct],
+  [IAssetStruct],
+  [IAssetStruct],
+  string,
+  string,
+  string,
+  boolean,
+  boolean,
+];
 
 export interface IStakingCreateEvent {
   ruleId: string;

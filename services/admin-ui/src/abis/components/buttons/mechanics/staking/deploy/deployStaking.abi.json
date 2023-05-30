@@ -21,11 +21,6 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "maxStake",
-            "type": "uint256"
-          },
-          {
             "internalType": "string",
             "name": "contractTemplate",
             "type": "string"

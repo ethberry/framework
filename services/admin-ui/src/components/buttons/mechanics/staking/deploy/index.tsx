@@ -34,7 +34,6 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         },
         // values,
         {
-          maxStake: values.maxStake,
           contractTemplate: Object.values(StakingContractTemplates).indexOf(values.contractTemplate).toString(),
         },
         sign.signature,

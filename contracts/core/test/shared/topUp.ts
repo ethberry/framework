@@ -215,8 +215,9 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
           amount,
         },
       ]);
-
-      await expect(tx).to.revertedWithoutReason();
+      // UnsupportedTokenType
+      // await expect(tx).to.revertedWithoutReason();
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, `UnsupportedTokenType`);
     });
   });
 

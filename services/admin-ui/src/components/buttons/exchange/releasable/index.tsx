@@ -24,11 +24,7 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(
-        process.env.EXCHANGE_ADDR,
-        ExchangeReleasableABI,
-        web3Context.provider?.getSigner(),
-      );
+      const contract = new Contract(balance.account, ExchangeReleasableABI, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address,address)"](
           balance.token.template.contract.address,
@@ -48,7 +44,7 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
     const amount = await metaReleasable(balance);
     alert(
       formatEther(
-        amount.toString(),
+        amount ? amount.toString() : "0",
         balance.token?.template?.contract?.decimals,
         balance.token?.template?.contract?.symbol,
       ),
