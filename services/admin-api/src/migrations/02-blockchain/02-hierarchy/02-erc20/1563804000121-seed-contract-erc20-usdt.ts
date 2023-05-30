@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -37,7 +37,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         '${chainId}',
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=960d7e54-bd41-44dd-9754-3d7902bb84b0',
         'Tether USD',
         'USDT',
         6,
@@ -56,7 +56,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         56,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=960d7e54-bd41-44dd-9754-3d7902bb84b0',
         'Tether USD',
         'USDT',
         6,
@@ -75,7 +75,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         1,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=960d7e54-bd41-44dd-9754-3d7902bb84b0',
         'Tether USD',
         'USDT',
         6,
@@ -94,7 +94,7 @@ export class SeedContractErc20USDTAt1563804000121 implements MigrationInterface 
         137,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=960d7e54-bd41-44dd-9754-3d7902bb84b0',
         'Tether USD',
         'USDT',
         6,

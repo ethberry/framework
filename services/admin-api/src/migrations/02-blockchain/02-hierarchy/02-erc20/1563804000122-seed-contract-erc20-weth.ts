@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -37,7 +37,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${chainId}',
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -56,7 +56,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         56,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -75,7 +75,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         1,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -94,7 +94,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         137,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,

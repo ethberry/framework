@@ -70,7 +70,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         56,
         'Native token (BNB)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbnb.png?alt=media&token=f9eca8af-77b1-4092-8d4e-91fb897efa18',
         'Binance',
         'BNB',
         18,
