@@ -504,6 +504,7 @@
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
+      "reset": "Reset",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
@@ -531,7 +532,8 @@
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "maxValue": "Max {label}: {value}",
       "prompt": "You have unsaved information, are you sure you want to leave this page?",
-      "risk": "You are doing this at your own risk!"
+      "risk": "You are doing this at your own risk!",
+      "totalRows": "Total rows: {amount}"
     },
     "labels": {
       "DUMMY": "Dummy",
@@ -679,7 +681,6 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
-      "traits": "Traits",
       "traits": "Traits",
       "txHash": "txHash",
       "type": "Type",

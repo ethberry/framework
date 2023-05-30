@@ -2,14 +2,15 @@ import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import csv2json from "csvtojson";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { TokenType } from "@framework/types";
 
-import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
+import { ClaimUploadDialog } from "./dialog";
+import { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimRow {
+  id?: string;
   account: string;
   endTimestamp: string;
   tokenType: TokenType;
@@ -27,45 +28,29 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall(
-    (api, values: IClaimUploadDto) => {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = function fileReadCompleted() {
-          void csv2json({
-            noheader: true,
-            headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
-          })
-            .fromString(reader.result as string)
-            .then((data: Array<IClaimRow>) => {
-              return api.fetchJson({
-                url: "/claims/upload",
-                data: {
-                  claims: data.map(e => ({
-                    account: e.account,
-                    endTimestamp: e.endTimestamp,
-                    item: {
-                      components: [
-                        {
-                          tokenType: e.tokenType,
-                          contractId: ~~e.contractId,
-                          templateId: ~~e.templateId,
-                          amount: e.amount,
-                        },
-                      ],
-                    },
-                  })),
-                },
-                method: "POST",
-              });
-            })
-            .then(resolve);
-        };
-        reader.readAsText(values.files[0], "UTF-8");
-      });
-    },
-    { error: false },
-  );
+  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
+    const { claims } = values;
+    return api.fetchJson({
+      url: "/claims/upload",
+      data: {
+        claims: claims.map(e => ({
+          account: e.account,
+          endTimestamp: e.endTimestamp,
+          item: {
+            components: [
+              {
+                tokenType: e.tokenType,
+                contractId: e.contractId,
+                templateId: e.templateId,
+                amount: e.amount,
+              },
+            ],
+          },
+        })),
+      },
+      method: "POST",
+    });
+  });
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
@@ -97,8 +82,9 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
-          files: [],
+          claims: [],
         }}
       />
     </Fragment>

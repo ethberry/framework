@@ -1,25 +1,22 @@
 import React, { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { AutoSave } from "@gemunion/mui-form";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 
 import { validationSchema } from "./validation";
-import { FileInput } from "./file-input";
+import { FileInput, IClaimUploadDto } from "./file-input";
 import { ClaimInfoPopover } from "./popover";
-
-export interface IClaimUploadDto {
-  files: Array<File>;
-}
 
 export interface IClaimUploadDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
+  isLoading: boolean;
   initialValues: IClaimUploadDto;
 }
 
 export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
-  const { initialValues, onConfirm, ...rest } = props;
+  const { isLoading, initialValues, onConfirm, ...rest } = props;
 
   return (
     <FormDialog
@@ -31,8 +28,9 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       action={<ClaimInfoPopover />}
       {...rest}
     >
-      <FileInput />
-      <AutoSave onSubmit={onConfirm} />
+      <ProgressOverlay isLoading={isLoading}>
+        <FileInput />
+      </ProgressOverlay>
     </FormDialog>
   );
 };
