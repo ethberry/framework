@@ -18,7 +18,7 @@ import { ClaimStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { IClaimItemUploadDto } from "./interfaces";
+import type { IClaimItemUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 
 @Injectable()
@@ -92,7 +92,7 @@ export class ClaimService {
   }
 
   public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
-    const { account, endTimestamp, merchantId } = dto;
+    const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
       components: [],
@@ -105,7 +105,7 @@ export class ClaimService {
         signature: "0x",
         nonce: "",
         endTimestamp,
-        merchantId,
+        merchantId: userEntity.merchantId,
       })
       .save();
 

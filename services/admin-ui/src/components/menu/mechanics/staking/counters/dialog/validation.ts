@@ -1,5 +1,6 @@
 import { number, object } from "yup";
 
+// TODO do validation RuleId and wallet instead
 export const validationSchema = object().shape({
   maxStake: number()
     .typeError("form.validations.badInput")

@@ -6,8 +6,15 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useApiCall } from "@gemunion/react-hooks";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IBalance, IContract } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
-import { ExchangeReleasableButton, ExchangeReleaseButton } from "../../../../../components/buttons";
+import {
+  BalanceReleasableButton,
+  BalanceReleaseButton,
+  StakingPenaltyBalanceButton,
+  StakingWithdrawButton,
+} from "../../../../../components/buttons";
+import { formatEther } from "../../../../../utils/money";
 
 export interface IBalanceWithdrawDialogProps {
   open: boolean;
@@ -18,6 +25,9 @@ export interface IBalanceWithdrawDialogProps {
 
 export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
   const { initialValues, ...rest } = props;
+  const { contractModule } = initialValues;
+
+  const isStaking = contractModule === ModuleType.STAKING;
 
   const [rows, setRows] = useState<Array<IBalance>>([]);
 
@@ -45,18 +55,22 @@ export const BalanceWithdrawDialog: FC<IBalanceWithdrawDialogProps> = props => {
   }, [initialValues.address]);
 
   return (
-    <ConfirmationDialog message={"dialogs.withdraw"} {...rest}>
+    <ConfirmationDialog message={!isStaking ? "dialogs.withdraw" : "dialogs.withdrawStaking"} {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((row, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {row.token!.template!.contract!.title}
-                {row.token!.template!.contract!.contractType === "ERC1155" ? ` - ${row.token!.template!.title}` : ""}
+              <ListItemText sx={{ width: 0.6 }}>{row.token!.template!.contract!.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>
+                {formatEther(
+                  row.amount.toString(),
+                  row.token?.template?.contract?.decimals,
+                  row.token?.template?.contract?.symbol,
+                )}
               </ListItemText>
               <ListItemSecondaryAction>
-                <ExchangeReleasableButton balance={row} />
-                <ExchangeReleaseButton balance={row} />
+                {isStaking ? <StakingPenaltyBalanceButton balance={row} /> : <BalanceReleasableButton balance={row} />}
+                {isStaking ? <StakingWithdrawButton balance={row} /> : <BalanceReleaseButton balance={row} />}
               </ListItemSecondaryAction>
             </ListItem>
           ))}

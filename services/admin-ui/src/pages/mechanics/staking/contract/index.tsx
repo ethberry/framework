@@ -89,7 +89,6 @@ export const StakingContracts: FC = () => {
           {rows.map((contract, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemText>{contract.parameters.maxStake}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />
