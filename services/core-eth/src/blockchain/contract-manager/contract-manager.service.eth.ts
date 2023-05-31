@@ -70,7 +70,7 @@ export class ContractManagerServiceEth {
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
-    private readonly mysteryboxLogService: MysteryLogService,
+    private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
@@ -383,7 +383,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
-    this.mysteryboxLogService.addListener({
+    this.mysteryLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
