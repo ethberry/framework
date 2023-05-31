@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import ERC20SnapshotABI from "../../../../../abis/components/menu/hierarchy/contract/snapshot/snapshot.abi.json";
+import ERC20SnapshotABI from "../../../../../abis/hierarchy/erc20/snapshot/snapshot.abi.json";
 
 export interface IErc20TokenSnapshotMenuItemProps {
   contract: IContract;

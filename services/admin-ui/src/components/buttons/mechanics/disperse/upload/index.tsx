@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { TokenType } from "@framework/types";
 
-import DisperseABI from "../../../../../abis/components/buttons/mechanics/disperse/disperse.abi.json";
+import DisperseABI from "../../../../../abis/mechanics/disperse/disperse.abi.json";
 import { DisperseUploadDialog, IDisperseUploadDto } from "./dialog";
 
 export interface IDisperseRow {

@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
 
-import VestingDeployVestingABI from "../../../../../abis/components/buttons/mechanics/vesting/deploy/deployVesting.abi.json";
+import VestingDeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
 import { VestingDeployDialog } from "./dialog";
 

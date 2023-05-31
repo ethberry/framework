@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IDrop, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import DropPurchaseABI from "../../../../../abis/components/buttons/mechanics/drop/purchase/purchase.abi.json";
+import DropPurchaseABI from "../../../../../abis/mechanics/drop/purchase/purchase.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";

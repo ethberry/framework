@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import BreedSetPregnancyLimitsABI from "../../../../../abis/components/common/breed/breed-limits/setPregnancyLimits.abi.json";
+import BreedSetPregnancyLimitsABI from "../../../../../abis/mechanics/breed/breed-limits/setPregnancyLimits.abi.json";
 
 import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
 

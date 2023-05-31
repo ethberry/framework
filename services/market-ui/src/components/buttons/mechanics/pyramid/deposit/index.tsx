@@ -10,7 +10,7 @@ import { useSettings } from "@gemunion/provider-settings";
 
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import PyramidDepositABI from "../../../../../abis/components/buttons/mechanics/pyramid/deposit/deposit.abi.json";
+import PyramidDepositABI from "../../../../../abis/mechanics/pyramid/deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 

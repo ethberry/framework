@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import TopUpABI from "../../../../../abis/components/menu/mechanics/common/top-up/topUp.abi.json";
+import TopUpABI from "../../../../../abis/exchange/top-up/topUp.abi.json";
 
 import { ITopUpDto, TopUpDialog } from "./dialog";
 

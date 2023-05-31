@@ -10,7 +10,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 import { ILendDto, LendDialog } from "./dialog";
-import TemplateLendABI from "../../../../../abis/components/buttons/mechanics/lend/lend.abi.json";
+import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 

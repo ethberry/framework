@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
+import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 
@@ -21,7 +21,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
   const {
     contract: { address },
   } = props;
-  console.log(props);
+
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
   const handleAllowance = (): void => {
@@ -34,7 +34,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     const { amount, contract } = values;
-    console.log(values);
+
     if (contract.contractType === TokenType.ERC20) {
       const contractErc20 = new Contract(contract.address, ERC20ApproveABI, web3Context.provider?.getSigner());
       return contractErc20.approve(address, amount) as Promise<any>;

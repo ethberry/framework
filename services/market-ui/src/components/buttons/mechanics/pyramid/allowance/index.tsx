@@ -10,7 +10,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, TokenType } from "@framework/types";
 
-import AllowanceABI from "../../../../../abis/components/buttons/mechanics/pyramid/allowance/allowance.abi.json";
+import AllowanceABI from "../../../../../abis/mechanics/pyramid/allowance/allowance.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

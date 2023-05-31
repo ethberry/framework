@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import PauseABI from "../../../../../abis/components/common/pause/pause.abi.json";
+import PauseABI from "../../../../../abis/extensions/pause/pause.abi.json";
 
 export interface IPausableMenuItemProps {
   contract: IContract;

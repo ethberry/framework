@@ -11,7 +11,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IBalance, IToken, TokenType } from "@framework/types";
 
-import ERC998TransferABI from "../../../../../abis/pages/exchange/tokens/erc998/token/composition/transfer.abi.json";
+import ERC998TransferABI from "../../../../../abis/hierarchy/erc998/token/composition/transfer.abi.json";
 
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
 

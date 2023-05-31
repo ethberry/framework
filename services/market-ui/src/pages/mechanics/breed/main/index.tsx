@@ -14,7 +14,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { TokenType } from "@framework/types";
 
-import BreedABI from "../../../../abis/pages/mechanics/breed/main/breed.abi.json";
+import BreedABI from "../../../../abis/mechanics/breed/main/breed.abi.json";
 
 import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";

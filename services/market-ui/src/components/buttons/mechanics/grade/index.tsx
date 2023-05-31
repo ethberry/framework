@@ -9,7 +9,7 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
-import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
+import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
 

@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingDepositABI from "../../../../../abis/components/buttons/mechanics/staking/deposit/deposit.abi.json";
+import StakingDepositABI from "../../../../../abis/mechanics/staking/deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 import { IStakingDepositDto, StakingDepositDialog } from "./dialog";
