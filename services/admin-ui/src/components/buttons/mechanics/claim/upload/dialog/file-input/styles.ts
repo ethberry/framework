@@ -5,7 +5,7 @@ export const useStyles = makeStyles<Theme>(
   () => ({
     root: {
       width: "100%",
-      height: 500,
+      height: 440,
     },
   }),
   { name: "ClaimUploadForm" },
