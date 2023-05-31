@@ -38,7 +38,7 @@ export const StakingDeposit: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IStakingDeposit, IStakingDepositSearchDto>({
-    baseUrl: "/staking/stakes",
+    baseUrl: "/staking/deposits",
     search: {
       query: "",
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],

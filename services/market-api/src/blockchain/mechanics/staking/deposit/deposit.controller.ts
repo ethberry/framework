@@ -9,7 +9,7 @@ import { StakingDepositSearchDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/staking/stakes")
+@Controller("/staking/deposits")
 export class StakingDepositController {
   constructor(private readonly stakesService: StakingDepositService) {}
 
