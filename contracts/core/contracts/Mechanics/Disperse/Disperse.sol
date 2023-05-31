@@ -6,18 +6,17 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "./interfaces/IDisperse.sol";
 import "hardhat/console.sol";
 
 /**
  * @title Disperse Contract
  * @dev A contract for dispersing ether, ERC20 tokens, ERC721 tokens, and ERC1155 tokens to multiple recipients.
  */
-contract Disperse is Context, ReentrancyGuard {
+contract Disperse is IDisperse, ERC165, Context, ReentrancyGuard {
   event TransferETH(address receiver, uint value);
   error NotEnoughBalance();
 
@@ -133,5 +132,11 @@ contract Disperse is Context, ReentrancyGuard {
 
   receive() external payable {
     revert();
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return
+      interfaceId == type(IDisperse).interfaceId ||
+      super.supportsInterface(interfaceId);
   }
 }
