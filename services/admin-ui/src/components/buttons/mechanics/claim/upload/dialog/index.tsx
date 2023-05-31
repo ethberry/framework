@@ -29,7 +29,7 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>
-        <FileInput />
+        <FileInput initialValues={initialValues} />
       </ProgressOverlay>
     </FormDialog>
   );

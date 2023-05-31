@@ -38,9 +38,9 @@ export const DisperseInfoPopover: FC<Record<string, string | number>> = () => {
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>account,amount</pre>
+          <pre>account,tokenId,amount</pre>
           <Typography>Example: </Typography>
-          <pre>0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,1000000000000000000</pre>
+          <pre>0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,0,1000000000000000000</pre>
         </Box>
       </Popover>
     </Box>

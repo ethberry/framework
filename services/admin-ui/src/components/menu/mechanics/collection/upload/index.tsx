@@ -1,20 +1,18 @@
 import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
-import csv2json from "csvtojson";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IContract, TokenType } from "@framework/types";
+import { IContract } from "@framework/types";
+
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
 
 export interface ICollectionRow {
-  account: string;
-  endTimestamp: string;
-  tokenType: TokenType;
-  contractId: number;
-  templateId: number;
-  amount: string;
+  id?: string;
+  tokenId: number;
+  imageUrl: string;
+  metadata: string;
 }
 
 export interface ICollectionUploadMenuItemProps {
@@ -28,32 +26,16 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall(
-    (api, values: ICollectionUploadDto) => {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = function fileReadCompleted() {
-          void csv2json({
-            noheader: true,
-            headers: ["tokenId", "imageUrl", "metadata"],
-          })
-            .fromString(reader.result as string)
-            .then((data: Array<ICollectionRow>) => {
-              return api.fetchJson({
-                url: `/collection/contracts/${address}/upload`,
-                data: {
-                  tokens: data,
-                },
-                method: "POST",
-              });
-            })
-            .then(resolve);
-        };
-        reader.readAsText(values.files[0], "UTF-8");
-      });
-    },
-    { error: false },
-  );
+  const { fn, isLoading } = useApiCall((api, values: ICollectionUploadDto) => {
+    const { tokens } = values;
+    return api.fetchJson({
+      url: `/collection/contracts/${address}/upload`,
+      data: {
+        tokens: tokens.map(({ id: _, ...rest }) => rest),
+      },
+      method: "POST",
+    });
+  });
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
@@ -84,8 +66,10 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
           files: [],
+          tokens: [],
         }}
       />
     </Fragment>

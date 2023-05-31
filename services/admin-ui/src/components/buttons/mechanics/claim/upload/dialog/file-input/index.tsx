@@ -1,34 +1,39 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { FormHelperText } from "@mui/material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
 
+import { CsvContentView } from "../../../../../../tables/csv-content";
 import { IClaimRow } from "../../index";
 import { claimsValidationSchema } from "../validation";
-import { ClaimsView } from "../view";
 import { useStyles } from "./styles";
 
 export interface IClaimUploadDto {
   claims: Array<IClaimRow>;
 }
 
-export const FileInput: FC = () => {
-  const classes = useStyles();
-  const form = useFormContext<any>();
-  const claims = useWatch({ name: "claims" });
+export interface IFileInputProps {
+  initialValues: IClaimUploadDto;
+}
 
+export const FileInput: FC<IFileInputProps> = props => {
+  const { initialValues } = props;
+  const classes = useStyles();
+
+  const claimsName = "claims";
+  const filesName = "files";
+
+  const form = useFormContext<any>();
+  const claims = useWatch({ name: claimsName });
   const { formatMessage } = useIntl();
-  const [isValid, setIsValid] = useState<boolean>(true);
 
   const headers = ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"];
 
   const resetForm = () => {
-    setIsValid(true);
-    form.reset({ claims: [] });
+    form.reset(initialValues);
   };
 
   const parseCsv = async (csv: File): Promise<IClaimRow[]> => {
@@ -53,45 +58,80 @@ export const FileInput: FC = () => {
   };
 
   const handleChange = async (files: Array<File>) => {
-    setIsValid(true);
     try {
       const data = await parseCsv(files[0]);
-      claimsValidationSchema.validateSync({ claims: data });
-      form.setValue("claims", data, { shouldDirty: true });
+      claimsValidationSchema.validateSync({ [claimsName]: data });
+      form.setValue(claimsName, data, { shouldDirty: true });
+      form.setValue(filesName, files, { shouldDirty: true });
     } catch (e) {
       console.error(e);
-      form.reset();
-      setIsValid(false);
+      form.reset(initialValues);
+      form.setError(filesName, { type: "custom", message: "form.validations.badInput" });
     }
   };
+
+  const columns = [
+    {
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.account" }),
+      sortable: true,
+      flex: 3,
+      minWidth: 260,
+    },
+    {
+      field: "endTimestamp",
+      headerName: formatMessage({ id: "form.labels.endTimestamp" }),
+      sortable: true,
+      flex: 2,
+      minWidth: 180,
+    },
+    {
+      field: "tokenType",
+      headerName: formatMessage({ id: "form.labels.token" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "contractId",
+      headerName: formatMessage({ id: "form.labels.contractId" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 80,
+    },
+    {
+      field: "templateId",
+      headerName: formatMessage({ id: "form.labels.templateId" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 80,
+    },
+    {
+      field: "amount",
+      headerName: formatMessage({ id: "form.labels.amount" }),
+      sortable: true,
+      flex: 2,
+      minWidth: 200,
+    },
+  ];
 
   useEffect(() => {
     return () => resetForm();
   }, []);
 
   if (claims.length) {
-    return <ClaimsView resetForm={resetForm} />;
+    return <CsvContentView resetForm={resetForm} csvContentName={claimsName} columns={columns} />;
   }
 
   return (
-    <>
-      <AbstractFileInput
-        name="files"
-        onChange={handleChange}
-        classes={classes}
-        minSize={0}
-        accept={{
-          "text/csv": [".csv"],
-        }}
-      />
-      {!isValid ? (
-        <FormHelperText error sx={{ ml: 0 }}>
-          <FormattedMessage
-            id="form.validations.badInput"
-            values={{ label: formatMessage({ id: "form.labels.files" }) }}
-          />
-        </FormHelperText>
-      ) : null}
-    </>
+    <AbstractFileInput
+      name={filesName}
+      onChange={handleChange}
+      classes={classes}
+      minSize={0}
+      accept={{
+        "text/csv": [".csv"],
+      }}
+    />
   );
 };

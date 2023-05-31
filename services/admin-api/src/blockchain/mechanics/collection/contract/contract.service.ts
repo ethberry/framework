@@ -39,7 +39,7 @@ export class CollectionContractService extends ContractService {
     }
 
     // should be only one template per collection
-    if (contractEntity.templates.length > 1) {
+    if (contractEntity.templates.length !== 1) {
       throw new NotFoundException("templateNotFound");
     }
 
