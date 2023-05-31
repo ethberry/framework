@@ -3,7 +3,6 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract } from "ethers";
-import csv2json from "csvtojson";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -26,38 +25,28 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
   const { className } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const metaFn = useMetamask((values: IDisperseUploadDto, web3Context: Web3ContextType) => {
-    return new Promise(resolve => {
-      const reader = new FileReader();
-      reader.onload = function fileReadCompleted() {
-        void csv2json({
-          noheader: true,
-          headers: ["account", "tokenId", "amount"],
-        })
-          .fromString(reader.result as string)
-          .then((data: Array<IDisperseRow>) => {
-            const accounts = data.map(e => e.account);
-            const tokenIds = data.map(e => e.tokenId);
-            const amounts = data.map(e => e.amount);
+    const { address, disperses, tokenType } = values;
 
-            const contract = new Contract(process.env.DISPERSE_ADDR, DisperseABI, web3Context.provider?.getSigner());
-            if (values.tokenType === TokenType.NATIVE) {
-              return contract.disperseEther(accounts, amounts) as Promise<any>;
-            } else if (values.tokenType === TokenType.ERC20) {
-              return contract.disperseERC20(values.address, accounts, amounts) as Promise<any>;
-            } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
-              return contract.disperseERC721(values.address, accounts, tokenIds) as Promise<any>;
-            } else if (values.tokenType === TokenType.ERC1155) {
-              return contract.disperseERC1155(values.address, accounts, tokenIds, amounts) as Promise<any>;
-            } else {
-              throw new Error("unsupported token type");
-            }
-          })
-          .then(resolve);
-      };
-      reader.readAsText(values.files[0], "UTF-8");
-    });
+    const accounts = disperses.map(e => e.account);
+    const tokenIds = disperses.map(e => e.tokenId);
+    const amounts = disperses.map(e => e.amount);
+
+    const contract = new Contract(process.env.DISPERSE_ADDR, DisperseABI, web3Context.provider?.getSigner());
+
+    if (tokenType === TokenType.NATIVE) {
+      return contract.disperseEther(accounts, amounts) as Promise<any>;
+    } else if (tokenType === TokenType.ERC20) {
+      return contract.disperseERC20(address, accounts, amounts) as Promise<any>;
+    } else if (tokenType === TokenType.ERC721 || tokenType === TokenType.ERC998) {
+      return contract.disperseERC721(address, accounts, tokenIds) as Promise<any>;
+    } else if (tokenType === TokenType.ERC1155) {
+      return contract.disperseERC1155(address, accounts, tokenIds, amounts) as Promise<any>;
+    } else {
+      throw new Error("unsupported token type");
+    }
   });
 
   const handleUpload = () => {
@@ -65,8 +54,10 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IDisperseUploadDto) => {
+    setIsLoading(true);
     await metaFn(values).finally(() => {
       setIsUploadDialogOpen(false);
+      setIsLoading(false);
     });
   };
 
@@ -90,11 +81,13 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
           tokenType: TokenType.ERC20,
           contractId: 0,
           address: constants.AddressZero,
           files: [],
+          disperses: [],
         }}
       />
     </Fragment>
