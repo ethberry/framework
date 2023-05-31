@@ -4,7 +4,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 
-import { ISignAchievementsDto } from "../interfaces";
+import type { ISignAchievementsDto } from "../interfaces";
 
 export class SignAchievementDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignAchievementsDto {
   @ApiProperty({

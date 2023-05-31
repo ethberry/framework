@@ -14,11 +14,12 @@ import { mapLimit } from "async";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { IClaimItemCreateDto, IClaimItemUpdateDto, IClaimItemUploadDto } from "./interfaces";
+import { IClaimItemUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 
 @Injectable()

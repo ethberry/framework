@@ -1,4 +1,4 @@
-import { IAssetDto } from "@framework/types";
+import { IAssetDto } from "../../exchange/asset/asset";
 
 export interface IClaimItemCreateDto {
   account: string;

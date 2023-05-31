@@ -1,11 +1,11 @@
 import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 
+import type { IClaimItemCreateDto } from "@framework/types";
 import { GameEventType } from "@framework/types";
 
 import { ClaimServiceRmq } from "./claim.service.rmq";
 import { ClaimEntity } from "./claim.entity";
-import type { IClaimItemCreateDto } from "./interfaces";
 
 @Controller()
 export class ClaimControllerRmq {
