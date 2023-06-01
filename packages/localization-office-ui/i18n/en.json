@@ -52,6 +52,27 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "blockchainError": {
+      "BalanceExceed": "The balance exceeds the limit",
+      "CountExceed": "The count exceeds the limit",
+      "Expired": "The item has expired",
+      "ExpiredSignature": "The signature has expired",
+      "LimitExceed": "The limit has been exceeded",
+      "MethodNotSupported": "The method is not supported",
+      "NotActive": "The item is not active",
+      "NotAnOwner": "The user is not an owner",
+      "NotComplete": "The operation is not complete",
+      "NotExist": "The item does not exist",
+      "RefProgramSet": "The referral program is set",
+      "SignerMissingRole": "The signer is missing a role",
+      "TemplateZero": "The template is zero",
+      "UnsupportedTokenType": "The token type is not supported",
+      "WrongAmount": "The amount is wrong",
+      "WrongRule": "The rule is wrong",
+      "WrongStake": "The stake is wrong",
+      "WrongToken": "The token is wrong",
+      "ZeroBalance": "The balance is zero"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "BESU (remote)",
