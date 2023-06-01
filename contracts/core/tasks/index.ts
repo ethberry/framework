@@ -1,4 +1,5 @@
 import "./accounts";
+import "./allowance-erc20";
 import "./balance-eth";
 import "./balance-erc20";
 import "./balance-erc1155";
