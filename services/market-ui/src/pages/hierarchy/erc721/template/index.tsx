@@ -47,7 +47,8 @@ export const Erc721Template: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          {selected.templateStatus === TemplateStatus.ACTIVE && selected.amount !== selected.cap ? (
+          {selected.templateStatus === TemplateStatus.ACTIVE &&
+          (selected.cap === "0" || selected.amount !== selected.cap) ? (
             <Paper className={classes.paper}>
               <Typography variant="body2" color="textSecondary" component="p">
                 <FormattedMessage id="pages.erc721.template.price" values={{ amount: formatPrice(selected.price) }} />
