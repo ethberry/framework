@@ -1,4 +1,5 @@
 import "./accounts";
+import "./allowance-erc20";
 import "./balance-eth";
 import "./balance-erc20";
 import "./balance-erc1155";
@@ -9,3 +10,4 @@ import "./get-uri";
 import "./flat";
 import "./get-receipt-by-hash";
 import "./parse-disperse-tx";
+import "./get-err";

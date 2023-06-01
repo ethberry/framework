@@ -9,19 +9,19 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeReleaseABI from "../../../../abis/exchange/payment/release/release.abi.json";
+import ReleaseABI from "../../../../abis/exchange/payment/release/release.abi.json";
 
-export interface IExchangeReleaseButtonProps {
+export interface IBalanceReleaseButtonProps {
   balance: IBalance;
 }
 
-export const ExchangeReleaseButton: FC<IExchangeReleaseButtonProps> = props => {
+export const BalanceReleaseButton: FC<IBalanceReleaseButtonProps> = props => {
   const { balance } = props;
 
   const { formatMessage } = useIntl();
 
   const metaRelease = useMetamask(async (balance: IBalance, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeReleaseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(balance.account, ReleaseABI, web3Context.provider?.getSigner());
     if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
       return contract["release(address,address)"](
         balance.token?.template.contract.address,
@@ -40,7 +40,7 @@ export const ExchangeReleaseButton: FC<IExchangeReleaseButtonProps> = props => {
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton onClick={handleClick} data-testid="ExchangeReleaseButton">
+      <IconButton onClick={handleClick} data-testid="BalanceReleaseButton">
         <Redeem />
       </IconButton>
     </Tooltip>

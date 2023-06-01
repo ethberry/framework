@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IClaimItemUploadDto } from "../interfaces/upload";
+import { IClaimItemUploadDto } from "../interfaces";
 import { ClaimItemCreateDto } from "./create";
 
 export class ClaimItemUploadDto implements IClaimItemUploadDto {

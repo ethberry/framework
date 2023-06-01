@@ -9,22 +9,22 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeReleasableABI from "../../../../abis/exchange/payment/releasable/releasable.abi.json";
+import ReleasableABI from "../../../../abis/exchange/payment/releasable/releasable.abi.json";
 
 import { formatEther } from "../../../../utils/money";
 
-export interface IExchangeReleasableButtonProps {
+export interface IBalanceReleasableButtonProps {
   balance: IBalance;
 }
 
-export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = props => {
+export const BalanceReleasableButton: FC<IBalanceReleasableButtonProps> = props => {
   const { balance } = props;
 
   const { formatMessage } = useIntl();
 
   const metaReleasable = useMetamaskValue(
     async (balance: IBalance, web3Context: Web3ContextType) => {
-      const contract = new Contract(balance.account, ExchangeReleasableABI, web3Context.provider?.getSigner());
+      const contract = new Contract(balance.account, ReleasableABI, web3Context.provider?.getSigner());
       if (balance.token?.template?.contract?.contractType === TokenType.ERC20) {
         return contract["releasable(address,address)"](
           balance.token.template.contract.address,
@@ -33,8 +33,7 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
       } else if (balance.token?.template?.contract?.contractType === TokenType.NATIVE) {
         return contract["releasable(address)"](web3Context.account) as Promise<any>;
       } else {
-        alert("unsupported token type");
-        return "0";
+        throw new Error("unsupported token type");
       }
     },
     { success: false },
@@ -53,7 +52,7 @@ export const ExchangeReleasableButton: FC<IExchangeReleasableButtonProps> = prop
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.releasable" })}>
-      <IconButton onClick={handleClick} data-testid="ExchangeReleasableButton">
+      <IconButton onClick={handleClick} data-testid="BalanceReleasableButton">
         <Visibility />
       </IconButton>
     </Tooltip>

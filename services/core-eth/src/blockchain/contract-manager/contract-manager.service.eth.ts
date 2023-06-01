@@ -9,13 +9,7 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
-import {
-  ContractFeatures,
-  Erc1155ContractTemplates,
-  Erc20ContractTemplates,
-  Erc721CollectionTemplates,
-  Erc721ContractTemplates,
-  Erc998ContractTemplates,
+import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
@@ -25,6 +19,14 @@ import {
   IContractManagerPyramidDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
+} from "@framework/types";
+import {
+  ContractFeatures,
+  Erc1155ContractTemplates,
+  Erc20ContractTemplates,
+  Erc721CollectionTemplates,
+  Erc721ContractTemplates,
+  Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
   PyramidContractTemplates,

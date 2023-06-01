@@ -1,12 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ISearchableDto } from "@gemunion/types-collection";
-import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
+import type { IStakingRuleSearchDto } from "@framework/types";
+import { StakingRuleStatus } from "@framework/types";
 
-import { StakingRulesEntity } from "./rules.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { StakingRulesEntity } from "./rules.entity";
+import { IStakingRuleAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class StakingRulesService {
@@ -126,6 +128,33 @@ export class StakingRulesService {
           reward_contract: "reward_components.contract",
           reward_template: "reward_components.template",
         },
+      },
+    });
+  }
+
+  public async autocomplete(dto: Partial<IStakingRuleAutocompleteDto>): Promise<Array<StakingRulesEntity>> {
+    const { stakingRuleStatus = [], stakingId } = dto;
+    const where = {};
+
+    if (stakingId) {
+      Object.assign(where, {
+        contractId: stakingId,
+      });
+    }
+
+    if (stakingRuleStatus.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        stakingRuleStatus: In(stakingRuleStatus),
+      });
+    }
+
+    return this.stakingRuleEntityRepository.find({
+      where,
+      select: {
+        id: true,
+        title: true,
+        externalId: true,
       },
     });
   }

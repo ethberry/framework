@@ -27,10 +27,10 @@ export const stakingRoutes: Array<RouteObject> = [
       },
       { path: "/staking/leaderboard", element: <StakingLeaderboard /> },
       {
-        path: "/staking/stakes",
+        path: "/staking/deposits",
         children: [
           { index: true, element: <StakingDeposit /> },
-          { path: "/staking/stakes/:id", element: <StakingDeposit /> },
+          { path: "/staking/deposits/:id", element: <StakingDeposit /> },
         ],
       },
     ],

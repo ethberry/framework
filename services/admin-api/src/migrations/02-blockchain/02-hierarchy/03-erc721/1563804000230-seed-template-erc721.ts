@@ -63,6 +63,12 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         130606
       ), (
+        130607
+      ), (
+        130608
+      ), (
+        130609
+      ), (
         130701
       ), (
         130801
@@ -399,7 +405,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Two Hand Axe',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Faxe_two_hand.png?alt=media&token=2ad664f0-9104-44fc-9f31-cd287a68158c',
-        130606,
+        130607,
         0,
         1,
         'ACTIVE',
@@ -411,7 +417,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Crossbow',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcrossbow.png?alt=media&token=e7de18c6-ae06-4bc0-9056-f300a1c04f2b',
-        130606,
+        130608,
         0,
         1,
         'ACTIVE',
@@ -423,7 +429,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Spear',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspear.png?alt=media&token=7de855b5-36d8-4fdf-bbc5-6352f39265c8',
-        130606,
+        130609,
         0,
         1,
         'ACTIVE',
