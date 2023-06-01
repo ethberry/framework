@@ -93,16 +93,26 @@ describe("Disperse", function () {
     });
 
     it("should return back remaining ether", async function () {
+      const [owner, receiver] = await ethers.getSigners();
       const contractNonReceiverInstance = await deployJerk();
 
       const contractInstance = await factory();
 
-      const tx = contractInstance.disperseEther([contractNonReceiverInstance.address], [amount], { value: amount });
-      const dontFindLogs = await checkIfInLogs(tx, contractInstance, "TransferETH", [
+      const tx = contractInstance.disperseEther(
+        [receiver.address, contractNonReceiverInstance.address],
+        [amount, amount],
+        { value: amount * 5 },
+      );
+      await expect(tx)
+        .to.changeEtherBalances([owner.address, receiver.address], [-amount, amount])
+        .to.emit(contractInstance, "TransferETH")
+        .withArgs(receiver.address, amount);
+
+      const findLog = await checkIfInLogs(tx, contractInstance, "TransferETH", [
         contractNonReceiverInstance.address,
         amount,
       ]);
-      expect(dontFindLogs).to.be.equal(false);
+      expect(findLog).to.be.equal(false);
     });
   });
 
@@ -352,17 +362,13 @@ describe("Disperse", function () {
     });
   });
 
-  describe.skip("Test gas", function () {
+  describe("Test gas", function () {
     const totalTransfers = 100;
 
     describe("ETH", function () {
       it(`should transfer ETH to ${totalTransfers} receivers`, async function () {
-        const [owner, receiver] = await ethers.getSigners();
+        const [_, receiver] = await ethers.getSigners();
         const contractInstance = await factory();
-        const erc20Instance = await deployERC20();
-
-        await erc20Instance.mint(owner.address, amount);
-        await erc20Instance.approve(contractInstance.address, amount);
 
         const listOfArgs = new Array(totalTransfers).fill(null).map(_ => [receiver.address, amount]);
         const receivers = new Array(totalTransfers).fill(null).map(_ => receiver.address);

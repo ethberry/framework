@@ -8,3 +8,4 @@ import "./get-hash";
 import "./get-uri";
 import "./flat";
 import "./get-receipt-by-hash";
+import "./parse-disperse-tx";

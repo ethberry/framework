@@ -46,7 +46,8 @@ contract Disperse is IDisperse, ERC165, Context, ReentrancyGuard {
       }
     }
     if (remainingValue > 0) {
-      payable(_msgSender()).transfer(remainingValue);
+      (bool success, ) = payable(_msgSender()).call{ value: remainingValue }("");
+
     }
   }
 
