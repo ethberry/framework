@@ -15,6 +15,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         phone_number,
         image_url,
         merchant_status,
+        api_key,
         created_at,
         updated_at
       ) VALUES (
@@ -24,6 +25,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'ACTIVE',
+        '11111111-2222-3333-4444-555555555555',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -33,6 +35,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'INACTIVE',
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       );
