@@ -1,6 +1,6 @@
 import { task } from "hardhat/config";
 
-task("get-err", "Prints Errors enum").setAction(async (args, hre) => {
+task("calc-error-id", "Prints Errors enum").setAction(async (args, hre) => {
   const errFactory = await hre.ethers.getContractFactory("ErrorsIdCalculator");
   const errInstance = await errFactory.deploy();
 

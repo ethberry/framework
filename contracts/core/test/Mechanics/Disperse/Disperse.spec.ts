@@ -1,19 +1,19 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { amount } from "@gemunion/contracts-constants";
-
-import { deployDisperse } from "./shared/fixtures";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
-import { checkIfInLogs } from "./shared/utils";
 import { constants } from "ethers";
-import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
-import { deployERC721 } from "../../ERC721/shared/fixtures";
+
+import { amount } from "@gemunion/contracts-constants";
+import { deployContract, deployJerk, deployWallet } from "@gemunion/contracts-mocks";
+
 import { templateId, tokenId } from "../../constants";
+import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
+import { checkIfInLogs } from "./shared/utils";
 
 describe("Disperse", function () {
-  const factory = () => deployDisperse();
-  describe("Ether", function () {
+  const factory = () => deployContract("Disperse");
+  describe("NATIVE", function () {
     it("should fail: deposit ether", async function () {
       const [owner] = await ethers.getSigners();
 
@@ -43,8 +43,8 @@ describe("Disperse", function () {
     it("should have reentrancy guard", async function () {
       const [_owner] = await ethers.getSigners();
       const contractInstance = await factory();
-      const AttackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
-      const attackerInstance = await AttackerFactory.deploy(contractInstance.address, constants.AddressZero);
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerInstance = await attackerFactory.deploy(contractInstance.address, constants.AddressZero);
 
       const tx = contractInstance.disperseEther([attackerInstance.address], [amount], { value: amount * 2 });
       await expect(tx)
@@ -244,8 +244,8 @@ describe("Disperse", function () {
       const contractInstance = await factory();
       const erc721Instance = await deployERC721();
 
-      const AttackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
-      const attackerInstance = await AttackerFactory.deploy(contractInstance.address, erc721Instance.address);
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerInstance = await attackerFactory.deploy(contractInstance.address, erc721Instance.address);
 
       await erc721Instance.mintCommon(owner.address, templateId);
       await erc721Instance.mintCommon(owner.address, templateId);
@@ -342,8 +342,8 @@ describe("Disperse", function () {
       const contractInstance = await factory();
       const erc1155Instance = await deployERC1155();
 
-      const AttackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
-      const attackerInstance = await AttackerFactory.deploy(contractInstance.address, erc1155Instance.address);
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerInstance = await attackerFactory.deploy(contractInstance.address, erc1155Instance.address);
 
       await erc1155Instance.mint(owner.address, tokenId, amount * 2, "0x");
       await erc1155Instance.setApprovalForAll(contractInstance.address, true);

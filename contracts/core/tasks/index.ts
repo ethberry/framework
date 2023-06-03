@@ -10,4 +10,6 @@ import "./get-uri";
 import "./flat";
 import "./get-receipt-by-hash";
 import "./parse-disperse-tx";
-import "./get-err";
+import "./calc/error-id";
+import "./calc/interface-id";
+import "./calc/string-hash";

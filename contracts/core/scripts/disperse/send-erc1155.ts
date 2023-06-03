@@ -1,16 +1,17 @@
-import { amount } from "@gemunion/contracts-constants";
-import { deployDisperse } from "../../test/Mechanics/Disperse/shared/fixtures";
 import { ethers } from "hardhat";
+
+import { amount } from "@gemunion/contracts-constants";
+import { deployJerk, deployContract } from "@gemunion/contracts-mocks";
+import { blockAwait } from "@gemunion/contracts-utils";
+
 import { tokenId } from "../../test/constants";
 import { deployERC1155 } from "../../test/ERC1155/shared/fixtures";
-import { deployJerk } from "@gemunion/contracts-mocks";
-import { blockAwait } from "@gemunion/contracts-utils";
 
 async function main() {
   const totalTransfers = 10;
 
   const [owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployDisperse();
+  const contractInstance = await deployContract("Disperse");
   await blockAwait();
   const erc1155Instance = await deployERC1155();
   await blockAwait();

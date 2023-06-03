@@ -7,10 +7,11 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+
 import "./interfaces/IDisperse.sol";
-import "hardhat/console.sol";
 
 /**
  * @title Disperse Contract
@@ -25,7 +26,7 @@ contract Disperse is IDisperse, ERC165, Context, ReentrancyGuard {
    * @param recipients An array of recipient addresses.
    * @param amounts An array of corresponding amounts to send to each recipient.
    */
-  function disperseEther(address[] calldata recipients, uint256[] calldata amounts) external payable  {
+  function disperseEther(address[] calldata recipients, uint256[] calldata amounts) external payable {
     require(recipients.length == amounts.length, "Disperse: Invalid input");
     uint remainingValue = msg.value;
 
@@ -47,7 +48,7 @@ contract Disperse is IDisperse, ERC165, Context, ReentrancyGuard {
     }
     if (remainingValue > 0) {
       (bool success, ) = payable(_msgSender()).call{ value: remainingValue }("");
-
+      require(success);
     }
   }
 
@@ -136,8 +137,6 @@ contract Disperse is IDisperse, ERC165, Context, ReentrancyGuard {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return
-      interfaceId == type(IDisperse).interfaceId ||
-      super.supportsInterface(interfaceId);
+    return interfaceId == type(IDisperse).interfaceId || super.supportsInterface(interfaceId);
   }
 }

@@ -2,10 +2,260 @@ import { task } from "hardhat/config";
 import { BigNumber, Transaction, utils } from "ethers";
 import { TransactionReceipt } from "@ethersproject/abstract-provider";
 
-import Disperse from "../artifacts/contracts/Mechanics/Disperse/Disperse.sol/Disperse.json";
-import ERC20 from "../artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC721 from "../artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC1155 from "../artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+const Disperse = {
+  abi: [
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: "address",
+          name: "receiver",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "TransferETH",
+      type: "event",
+    },
+    {
+      inputs: [
+        {
+          internalType: "contract IERC1155",
+          name: "token",
+          type: "address",
+        },
+        {
+          internalType: "address[]",
+          name: "recipients",
+          type: "address[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "tokenIds",
+          type: "uint256[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "amounts",
+          type: "uint256[]",
+        },
+      ],
+      name: "disperseERC1155",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          internalType: "contract IERC20",
+          name: "token",
+          type: "address",
+        },
+        {
+          internalType: "address[]",
+          name: "recipients",
+          type: "address[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "amounts",
+          type: "uint256[]",
+        },
+      ],
+      name: "disperseERC20",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          internalType: "contract IERC721",
+          name: "token",
+          type: "address",
+        },
+        {
+          internalType: "address[]",
+          name: "recipients",
+          type: "address[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "tokenIds",
+          type: "uint256[]",
+        },
+      ],
+      name: "disperseERC721",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          internalType: "address[]",
+          name: "recipients",
+          type: "address[]",
+        },
+        {
+          internalType: "uint256[]",
+          name: "amounts",
+          type: "uint256[]",
+        },
+      ],
+      name: "disperseEther",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+  ],
+};
+
+const ERC20 = {
+  abi: [
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+  ],
+};
+
+const ERC721 = {
+  abi: [
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+  ],
+};
+
+const ERC1155 = {
+  abi: [
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256[]",
+          name: "ids",
+          type: "uint256[]",
+        },
+        {
+          indexed: false,
+          internalType: "uint256[]",
+          name: "values",
+          type: "uint256[]",
+        },
+      ],
+      name: "TransferBatch",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "to",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "id",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "TransferSingle",
+      type: "event",
+    },
+  ],
+};
 
 export function getDisperseLogsFromInput(tx: Transaction) {
   // Get the provider and the transaction receipt
@@ -137,7 +387,7 @@ task("parse-disperse-tx", "Prints success transfers and failed transfers")
     const tx = await hre.ethers.provider.getTransaction(hash);
     const { functionName, eventName, logs } = getDisperseLogsFromInput(tx);
 
-    // Checkt success transfers
+    // Check success transfers
     const receipt = await hre.ethers.provider.getTransactionReceipt(hash);
     const { findLogs, dontFindLogs } = compareLogs(receipt, functionName, eventName, logs);
 

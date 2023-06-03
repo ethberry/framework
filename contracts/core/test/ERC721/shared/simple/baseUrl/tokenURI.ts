@@ -3,10 +3,10 @@ import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
 import { baseTokenURI } from "@gemunion/contracts-constants";
+import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
 import { tokenId } from "../../../../constants";
 import { customMintCommonERC721 } from "../../customMintFn";
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
 
 export function shouldTokenURI(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
   const { mint = customMintCommonERC721, tokenId: defaultTokenId = tokenId } = options;
