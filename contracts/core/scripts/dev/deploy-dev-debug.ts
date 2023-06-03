@@ -9,9 +9,9 @@ import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms
+const delayMs = 1500; // block delay ms
 // const linkAmountInEth = utils.parseEther("1");
-
+const batchSize = 3; // Generative collection size
 interface IObj {
   address?: string;
   hash?: string;
@@ -469,6 +469,18 @@ async function main() {
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
+  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CollectionSimple");
+
+  contracts.erc721Generative = await erc721CollectionFactory.deploy(
+    "COLLECTION SIMPLE",
+    "COLL721",
+    royalty,
+    baseTokenURI,
+    batchSize,
+    owner.address,
+  );
+  await debug(contracts);
+
   const randomContractLotteryName = getContractName("LotteryRandom", network.name);
 
   // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
@@ -550,6 +562,7 @@ async function main() {
       contracts.erc721Rentable.address,
       contracts.erc721Soulbound.address,
       contracts.erc721Genes.address,
+      contracts.erc721Generative.address,
       contracts.erc998Blacklist.address,
       contracts.erc998New.address,
       contracts.erc998Random.address,

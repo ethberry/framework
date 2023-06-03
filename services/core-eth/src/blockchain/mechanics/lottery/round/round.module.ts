@@ -1,7 +1,7 @@
 import { Logger, Module, OnModuleInit } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-import { CronExpression } from "@nestjs/schedule";
+// import { CronExpression } from "@nestjs/schedule";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
@@ -34,6 +34,6 @@ export class LotteryRoundModule implements OnModuleInit {
 
   // start pre-defined lottery round end-start Cron Job
   public onModuleInit(): void {
-    return this.lotteryRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
+    // return this.lotteryRoundServiceCron.setRoundCronJob(CronExpression.EVERY_DAY_AT_MIDNIGHT);
   }
 }
