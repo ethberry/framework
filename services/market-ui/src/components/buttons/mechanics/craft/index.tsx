@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ICraft, TokenType } from "@framework/types";
 
-import CraftABI from "../../../../abis/components/buttons/mechanics/craft/craft.abi.json";
+import CraftABI from "../../../../abis/mechanics/craft/craft.abi.json";
 
 import { getEthPrice } from "../../../../utils/money";
 import { sorter } from "../../../../utils/sorter";
@@ -41,7 +41,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           tokenId:
             component.contract!.contractType === TokenType.ERC1155
               ? component.template!.tokens![0].tokenId
-              : component.templateId.toString(),
+              : (component.templateId || 0).toString(), // suppression types check with 0
           amount: component.amount,
         })),
         craft.price?.components.sort(sorter("id")).map(component => ({

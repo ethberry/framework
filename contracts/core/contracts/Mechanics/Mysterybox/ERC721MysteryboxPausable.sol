@@ -18,7 +18,7 @@ contract ERC721MysteryboxPausable is ERC721MysteryboxSimple, Pausable {
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721MysteryboxSimple(name, symbol, royalty, baseTokenURI) {
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {

@@ -48,11 +48,10 @@ contract Exchange is
     address[] memory payees,
     uint256[] memory shares
   ) SignatureValidator(name) PaymentSplitter(payees, shares) {
-    address account = _msgSender();
-    _setupRole(DEFAULT_ADMIN_ROLE, account);
-    _setupRole(MINTER_ROLE, account);
-    _setupRole(PAUSER_ROLE, account);
-    _setupRole(METADATA_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
+    _grantRole(METADATA_ROLE, _msgSender());
   }
 
   /**

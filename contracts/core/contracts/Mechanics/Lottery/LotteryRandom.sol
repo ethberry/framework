@@ -15,8 +15,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "./extensions/SignatureValidator.sol";
-//import "../../Exchange/SignatureValidator.sol";
-import "./interfaces/IERC721Ticket.sol";
+import "./interfaces/IERC721Lottery.sol";
 import "../../utils/constants.sol";
 
 abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
@@ -51,10 +50,9 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
   }
 
   constructor(string memory name, address ticketFactory, address acceptedToken) SignatureValidator(name) {
-    address account = _msgSender();
-    _setupRole(DEFAULT_ADMIN_ROLE, account);
-    _setupRole(PAUSER_ROLE, account);
-    _setupRole(MINTER_ROLE, account);
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
+    _grantRole(MINTER_ROLE, _msgSender());
 
     setTicketFactory(ticketFactory);
     setAcceptedToken(acceptedToken);
@@ -184,8 +182,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
     require(currentRound.tickets.length < _maxTicket, "Lottery: no more tickets available");
     currentRound.tickets.push(numbers);
 
-    address account = _msgSender();
-
     _verifySignature(params, numbers, price, signer, signature);
 
     currentRound.balance += price;
@@ -193,13 +189,13 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator {
 
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
 
-    uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721Lottery(_ticketFactory).mintTicket(_msgSender(), roundNumber, numbers);
 
-    emit Purchase(tokenId, account, price, roundNumber, numbers);
+    emit Purchase(tokenId, _msgSender(), price, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {
-    IERC721Ticket ticketFactory = IERC721Ticket(_ticketFactory);
+    IERC721Lottery ticketFactory = IERC721Lottery(_ticketFactory);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 

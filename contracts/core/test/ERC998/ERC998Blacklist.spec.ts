@@ -2,7 +2,7 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Blacklist } from "../ERC721/shared/blacklist";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";

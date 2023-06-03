@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { BigNumber } from "ethers";
 
 import { BalanceEntity } from "./balance.entity";
 
@@ -9,6 +10,8 @@ export class BalanceService {
   constructor(
     @InjectRepository(BalanceEntity)
     private readonly balanceEntityRepository: Repository<BalanceEntity>,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
   ) {}
 
   public findOne(
@@ -26,6 +29,10 @@ export class BalanceService {
     return this.balanceEntityRepository.save(dto, { chunk: 1000 });
   }
 
+  public delete(where: FindOptionsWhere<BalanceEntity>): Promise<DeleteResult> {
+    return this.balanceEntityRepository.delete(where);
+  }
+
   public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
@@ -37,7 +44,10 @@ export class BalanceService {
       });
     }
 
-    balanceEntity.amount = (BigInt(balanceEntity.amount) + BigInt(amount)).toString();
+    this.loggerService.log(JSON.stringify(balanceEntity, null, "\t"), BalanceService.name);
+
+    balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
+
     return balanceEntity.save();
   }
 
@@ -47,7 +57,7 @@ export class BalanceService {
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount = (BigInt(balanceEntity.amount) + BigInt(amount)).toString();
+      balanceEntity.amount = BigNumber.from(balanceEntity.amount).sub(amount).toString();
       return balanceEntity.save();
     }
   }

@@ -39,7 +39,7 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>tokenId,imageUrl,attributes</pre>
+          <pre>tokenId,imageUrl,metadata</pre>
           <Typography>Example: </Typography>
           <pre>{sample}</pre>
         </Box>
@@ -47,4 +47,3 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
     </Box>
   );
 };
-// headers: ["tokenId", "imageUrl", "attributes"],

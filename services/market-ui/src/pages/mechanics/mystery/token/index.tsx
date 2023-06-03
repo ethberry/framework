@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -8,10 +8,12 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../components/buttons";
+import { TokenSellButton, TokenTransferButton } from "../../../../components/buttons";
+import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
+import { useStyles } from "./styles";
+import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
 
 export const MysteryboxToken: FC = () => {
   const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
@@ -20,7 +22,8 @@ export const MysteryboxToken: FC = () => {
       template: {
         title: "",
         description: emptyStateString,
-      } as ITemplate,
+        box: {},
+      } as unknown as ITemplate,
     },
   });
 
@@ -38,7 +41,7 @@ export const MysteryboxToken: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.template!.imageUrl} />
+          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
@@ -52,15 +55,21 @@ export const MysteryboxToken: FC = () => {
               />
             </Typography>
             <TokenSellButton token={selected} />
+            <TokenTransferButton token={selected} />
+            <MysteryWrapperUnpackButton token={selected} />
           </Paper>
         </Grid>
-        <TokenHistory
-          token={selected}
-          isLoading={isLoading}
-          search={search}
-          handleChangePaginationModel={handleChangePaginationModel}
-        />
       </Grid>
+
+      {/* @ts-ignore */}
+      <MysteryboxContent mysterybox={selected.template.box} />
+
+      <TokenHistory
+        token={selected}
+        isLoading={isLoading}
+        search={search}
+        handleChangePaginationModel={handleChangePaginationModel}
+      />
     </Fragment>
   );
 };

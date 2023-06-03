@@ -7,7 +7,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { useIntl } from "react-intl";
 
-import VestingTransferOwnershipABI from "../../../../../abis/components/buttons/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
+import VestingTransferOwnershipABI from "../../../../../abis/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

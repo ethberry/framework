@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
@@ -17,15 +17,29 @@ import {
   shouldSupportsInterface,
 } from "@gemunion/contracts-mocha";
 
-import { externalId, extra, params, tokenId, expiresAt } from "../constants";
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { VRFCoordinatorMock } from "../../typechain-types";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { deployLinkVrfFixture } from "../shared/link";
 
 describe("ExchangeCore", function () {
   const factory = async () => {
     const { contractInstance } = await deployExchangeFixture();
     return contractInstance;
   };
+
+  let vrfInstance: VRFCoordinatorMock;
+
+  before(async function () {
+    await network.provider.send("hardhat_reset");
+
+    // https://github.com/NomicFoundation/hardhat/issues/2980
+    ({ vrfInstance } = await loadFixture(function shouldMintRandom() {
+      return deployLinkVrfFixture();
+    }));
+  });
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
   shouldBehaveLikePausable(factory);
@@ -121,6 +135,73 @@ describe("ExchangeCore", function () {
           },
         ],
       });
+
+      const tx1 = exchangeInstance.connect(receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+        signature,
+        { value: BigNumber.from("123000000000000000") },
+      );
+
+      await expect(tx1)
+        .to.emit(exchangeInstance, "Purchase")
+        .withArgs(
+          receiver.address,
+          externalId,
+          isEqualEventArgObj({
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: BigNumber.from(tokenId),
+            amount: BigNumber.from(amount),
+          }),
+          isEqualEventArgArrObj({
+            tokenType: 0,
+            token: constants.AddressZero,
+            tokenId: BigNumber.from("0"),
+            amount: BigNumber.from("123000000000000000"),
+          }),
+        );
+    });
+
+    it("should purchase RANDOM, spend ETH", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const erc721Instance = await deployErc721Base("ERC721Random", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+      });
+
+      const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
+      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,

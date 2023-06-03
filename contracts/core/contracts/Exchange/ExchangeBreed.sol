@@ -43,24 +43,22 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
-
-    // TODO approved
+    // TODO OR approved?
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    if (ownerOf1 != account) {
+    if (ownerOf1 != _msgSender()) {
       revert NotAnOwner();
     }
 
     address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
-    if (ownerOf2 != account) {
+    if (ownerOf2 != _msgSender()) {
       revert NotAnOwner();
     }
 
     pregnancyCheckup(item, price);
 
-    emit Breed(account, params.externalId, item, price);
+    emit Breed(_msgSender(), params.externalId, item, price);
 
-    IERC721Random(item.token).mintRandom(account, params.externalId);
+    IERC721Random(item.token).mintRandom(_msgSender(), params.externalId);
   }
 
   function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {

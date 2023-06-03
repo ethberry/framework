@@ -31,6 +31,18 @@ export class BalanceSearchDto extends SearchDto implements IBalanceSearchDto {
   public templateIds: Array<number>;
 
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public targetIds: Array<number>;
+
+  @ApiPropertyOptional({
     type: String,
     isArray: true,
   })

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { IconButton, Menu, Typography } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ITemplate, TokenType, ModuleType, ContractFeatures } from "@framework/types";
+import { ContractFeatures, ITemplate, ModuleType, TokenType } from "@framework/types";
 
 import { MintMenuItem } from "./mint";
 
@@ -47,7 +47,6 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
       <Menu id="template-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {template.contract!.contractType !== TokenType.NATIVE &&
         template.contract!.contractModule === ModuleType.HIERARCHY &&
-        !template.contract!.contractFeatures.includes(ContractFeatures.RANDOM) &&
         !template.contract!.contractFeatures.includes(ContractFeatures.GENES) ? (
           <MintMenuItem template={template} />
         ) : (

@@ -10,121 +10,145 @@ export class SeedAchievementItem1681273013060 implements MigrationInterface {
       INSERT INTO ${ns}.achievement_item (
         user_id,
         achievement_rule_id,
+        history_id,
         created_at,
         updated_at
       ) VALUES (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301020,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301030,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        2,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
+        1301010,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        1301010,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        1301010,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        1301010,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
+        1301010,
         '${currentDateTime}',
         '${currentDateTime}'
       );

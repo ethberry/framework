@@ -72,10 +72,10 @@ export const StakingRuleEditDialog: FC<IStakingRuleEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="deposit" readOnly={readOnly} />
+          <TemplateAssetInput autoSelect prefix="deposit" readOnly={readOnly} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TemplateAssetInput prefix="reward" readOnly={readOnly} />
+          <TemplateAssetInput autoSelect prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

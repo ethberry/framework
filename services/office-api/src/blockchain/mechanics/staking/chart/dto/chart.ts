@@ -45,9 +45,7 @@ export class StakingChartSearchDto extends SearchDto implements IStakingChartSea
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => {
-    return [true, "true"].includes(value);
-  })
+  @Transform(({ value }) => [true, "true"].includes(value))
   public emptyReward: boolean;
 
   @ApiPropertyOptional()

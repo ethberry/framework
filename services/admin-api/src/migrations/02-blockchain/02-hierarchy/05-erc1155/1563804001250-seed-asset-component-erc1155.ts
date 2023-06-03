@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
+import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -16,55 +16,55 @@ export class SeedAssetComponentsErc1155At1563804001250 implements MigrationInter
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150101
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150102
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150103
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150104
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150105
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150401
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150402
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         150403
       ), (
         'ERC20',
         2217,
-        221701, -- space credit
-        '${WeiPerEther.toString()}',
+        221701, -- busd
+        '${constants.WeiPerEther.toString()}',
         250101
       );
     `);

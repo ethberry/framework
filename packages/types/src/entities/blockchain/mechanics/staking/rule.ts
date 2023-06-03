@@ -18,6 +18,7 @@ export interface IStakingRule extends ISearchable {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxStake: number;
   recurrent: boolean;
   stakingRuleStatus: StakingRuleStatus;
   externalId: string;

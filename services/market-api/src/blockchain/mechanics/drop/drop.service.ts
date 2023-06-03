@@ -41,6 +41,7 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -83,6 +84,7 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -112,8 +114,9 @@ export class DropService {
     if (new Date(dropEntity.endTimestamp).getTime() < now) {
       throw new BadRequestException("dropAlreadyEnded");
     }
-
-    const templateEntity = await this.templateService.findOne({ id: dropEntity.item.components[0].templateId });
+    const templateEntity = await this.templateService.findOne({
+      id: dropEntity.item.components[0].templateId!,
+    });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -150,7 +153,7 @@ export class DropService {
       dropEntity.item.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.templateId.toString(),
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       dropEntity.price.components.sort(sorter("id")).map(component => ({

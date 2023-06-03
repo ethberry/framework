@@ -51,7 +51,7 @@ export class Web3StorageService {
         title: tokenEntity.template.title,
         description: getText(tokenEntity.template.description),
         image: `${web3StorageBaseUrl}/${tokenEntity.template.cid!}`,
-        attributes: tokenEntity.attributes,
+        attributes: tokenEntity.metadata,
       },
       objectName,
     );

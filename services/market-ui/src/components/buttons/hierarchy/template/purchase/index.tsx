@@ -1,16 +1,16 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useSettings } from "@gemunion/provider-settings";
-import { ITemplate, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import TemplatePurchaseABI from "../../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
-
+import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";
@@ -28,6 +28,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const metaFnWithSign = useServerSignature(
     (values: IAmountDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplatePurchaseABI, web3Context.provider?.getSigner());
+
       return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),

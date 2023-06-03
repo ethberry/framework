@@ -2,10 +2,10 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
 
 import { shouldBehaveLikeERC20Simple } from "./shared/simple";
-import { deployERC20 } from "./shared/fixtures";
+import { deployERC1363 } from "./shared/fixtures";
 
 describe("ERC20Simple", function () {
-  const factory = () => deployERC20(this.title);
+  const factory = () => deployERC1363(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
 

@@ -8,7 +8,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import type { IMysteryContractDeployDto } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import MysteryboxDeployMysteryboxABI from "../../../../../abis/components/buttons/mechanics/mysterybox/deploy/deployMysterybox.abi.json";
+import MysteryboxDeployMysteryboxABI from "../../../../../abis/mechanics/mysterybox/deploy/deployMysterybox.abi.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 

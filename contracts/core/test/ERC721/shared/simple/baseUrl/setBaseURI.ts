@@ -2,19 +2,23 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { templateId, tokenId } from "../../../../constants";
+import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
-export function shouldSetBaseURI(factory: () => Promise<Contract>) {
+import { tokenId } from "../../../../constants";
+import { customMintCommonERC721 } from "../../customMintFn";
+
+export function shouldSetBaseURI(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
+  const { mint = customMintCommonERC721, tokenId: defaultTokenId = tokenId } = options;
   describe("setBaseURI", function () {
     it("should set token uri", async function () {
       const newURI = "http://example.com/";
       const [owner] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await contractInstance.mintCommon(owner.address, templateId);
+      await mint(contractInstance, owner, owner.address);
       await contractInstance.setBaseURI(newURI);
-      const uri = await contractInstance.tokenURI(tokenId);
-      expect(uri).to.equal(`${newURI}/${contractInstance.address.toLowerCase()}/${tokenId}`);
+      const uri = await contractInstance.tokenURI(defaultTokenId);
+      expect(uri).to.equal(`${newURI}/${contractInstance.address.toLowerCase()}/${defaultTokenId}`);
     });
   });
 }

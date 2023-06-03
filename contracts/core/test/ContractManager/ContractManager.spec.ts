@@ -201,21 +201,4 @@ describe("ContractManager", function () {
       });
     });
   });
-
-  describe("destroy", function () {
-    it("should destroy", async function () {
-      const contractInstance = await factory();
-      const tx = await contractInstance.destroy();
-      await expect(tx).not.to.be.reverted;
-    });
-
-    it("should fail: wrong role", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const tx = contractInstance.connect(receiver).destroy();
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
-    });
-  });
 });

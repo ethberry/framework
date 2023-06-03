@@ -66,6 +66,27 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "blockchainError": {
+      "BalanceExceed": "The balance exceeds the limit",
+      "CountExceed": "The count exceeds the limit",
+      "Expired": "The item has expired",
+      "ExpiredSignature": "The signature has expired",
+      "LimitExceed": "The limit has been exceeded",
+      "MethodNotSupported": "The method is not supported",
+      "NotActive": "The item is not active",
+      "NotAnOwner": "The user is not an owner",
+      "NotComplete": "The operation is not complete",
+      "NotExist": "The item does not exist",
+      "RefProgramSet": "The referral program is set",
+      "SignerMissingRole": "The signer is missing a role",
+      "TemplateZero": "The template is zero",
+      "UnsupportedTokenType": "The token type is not supported",
+      "WrongAmount": "The amount is wrong",
+      "WrongRule": "The rule is wrong",
+      "WrongStake": "The stake is wrong",
+      "WrongToken": "The token is wrong",
+      "ZeroBalance": "The balance is zero"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "GEMUNION",
@@ -84,7 +105,10 @@
     "durationUnit": {
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
       "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
-      "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}"
+      "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}",
+      "MONTH": "{count} {count, plural, =0 {months} one {month} other {months}}",
+      "WEEK": "{count} {count, plural, =0 {weeks} one {week} other {weeks}}",
+      "YEAR": "{count} {count, plural, =0 {years} one {year} other {years}}"
     },
     "eventDataLabel": {
       "_requestID": "Request ID",
@@ -261,6 +285,7 @@
       "nonce": "Increment nonce",
       "ok": "Ok",
       "redeem": "Redeem",
+      "redeemLvl": "Redeem {level}",
       "release": "Release",
       "save": "Save",
       "search": "Search",
@@ -269,7 +294,7 @@
       "signup": "Sign up",
       "submit": "Submit",
       "transfer": "Transfer",
-      "unwrap": "Unwrap",
+      "unpack": "Unwrap",
       "upgrade": "Upgrade",
       "upload": "Upload",
       "withdraw": "Withdraw"
@@ -332,7 +357,6 @@
       "language": "Language",
       "lendType": "Lend Type",
       "level": "Level",
-      "rentRule": "Rent Rule",
       "listId": "List ID",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
@@ -353,6 +377,7 @@
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
+      "rentRule": "Rent Rule",
       "reward": "Reward",
       "roles": "Roles",
       "roundId": "Round",
@@ -365,6 +390,7 @@
       "startTimestamp": "Start date",
       "state": "State",
       "status": "Status",
+      "template": "Template",
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Text",
@@ -398,7 +424,6 @@
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
-      "rentRule": "Lend Rule",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -407,6 +432,7 @@
       "minPrice": "1",
       "password": "******",
       "query": "Search...",
+      "rentRule": "Lend Rule",
       "roundIds": "Round",
       "search": "Search...",
       "state": "Hamburg",
@@ -539,6 +565,14 @@
       }
     },
     "achievements": {
+      "info": {
+        "contract": "Contract",
+        "description": "Description",
+        "event": "Event",
+        "items": "Items",
+        "level": "Level {level} {achieved} {redeemed}",
+        "levels": "Levels"
+      },
       "report": {
         "title": "Achievements report"
       },
@@ -615,10 +649,12 @@
       "integrations": {
         "1inch": "1inch",
         "coin-gecko": "CoinGecko",
-        "ipfs": "IPFS",
+        "ipfs": "IPFS"
+      },
+      "exchange": {
         "marketplace": "Marketplace",
-        "personal": "My stash",
-        "referral": "Referral program"
+        "referral": "Referral program",
+        "personal": "My stash"
       },
       "mechanics": {
         "breed": "Breed",
@@ -681,12 +717,12 @@
       },
       "title": "ERC721",
       "token": {
-        "genes": "Genes",
         "genesis": "Genesis",
         "level": "Level: {level}",
-        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
-        "title": "ERC721 Token: {title}"
+        "rarity": "Rarity: {rarity}",
+        "title": "ERC721 Token: {title}",
+        "traits": "Traits"
       },
       "tokens": {
         "sort": {
@@ -713,11 +749,11 @@
       "title": "ERC998",
       "token": {
         "genesis": "Genesis",
-        "genes": "Genes",
         "level": "Level: {level}",
-        "rarity": "Rarity: {rarity}",
         "price": "Base price: {amount}",
-        "title": "ERC998 Token: {title}"
+        "rarity": "Rarity: {rarity}",
+        "title": "ERC998 Token: {title}",
+        "traits": "Traits"
       },
       "tokens": {
         "sort": {
@@ -805,6 +841,7 @@
     },
     "mystery": {
       "box": {
+        "content": "Mystery Box Content",
         "price": "Price: {amount}",
         "title": "Mystery Box: {title}"
       },
@@ -819,6 +856,7 @@
       },
       "title": "Mystery",
       "token": {
+        "content": "Mystery Token Content",
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "Mystery Token: {title}"
@@ -914,6 +952,9 @@
     "token": {
       "priceTitle": "Base price:"
     },
+    "tokens": {
+      "title": "My tokens"
+    },
     "transactions": {
       "emptyText": "",
       "title": "My transactions"
@@ -936,6 +977,7 @@
     },
     "wrapper": {
       "token": {
+        "content": "Wrapper Token Content",
         "title": "Wrapped Token: {title}"
       },
       "tokens": {

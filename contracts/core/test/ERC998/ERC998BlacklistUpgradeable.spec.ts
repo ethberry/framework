@@ -2,7 +2,7 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { FrameworkInterfaceId } from "../constants";
@@ -16,7 +16,6 @@ describe("ERC998BlacklistUpgradeable", function () {
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
   shouldBehaveLikeBlackList(factory);
   shouldBehaveLikeERC721Blacklist(factory);
-
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);

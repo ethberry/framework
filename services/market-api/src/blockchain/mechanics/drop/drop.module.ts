@@ -1,4 +1,4 @@
-import { Module, Logger } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";

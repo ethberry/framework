@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { DurationUnit, IStakingRule, StakingRuleStatus } from "@framework/types";
@@ -38,6 +38,9 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
 
   @Column({ type: "int" })
   public penalty: number;
+
+  @Column({ type: "int", nullable: true })
+  public maxStake: number;
 
   @Column({ type: "boolean" })
   public recurrent: boolean;

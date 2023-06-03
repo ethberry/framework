@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "../interfaces/IERC721Ticket.sol";
+import "../interfaces/IERC721Lottery.sol";
 import "../../../Exchange/interfaces/IAsset.sol";
 
 contract SignatureValidator is AccessControl, Pausable, EIP712 {
@@ -42,9 +42,7 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
       require(block.timestamp <= params.expiresAt, "Lottery: Expired signature");
     }
 
-    address account = _msgSender();
-
-    bool isVerified = _verify(signer, _hash(account, params, numbers, price), signature);
+    bool isVerified = _verify(signer, _hash(_msgSender(), params, numbers, price), signature);
     require(isVerified, "Lottery: Invalid signature");
   }
 

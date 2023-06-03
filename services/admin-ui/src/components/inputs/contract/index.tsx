@@ -27,5 +27,5 @@ export const ContractInput: FC<IContractInputProps> = props => {
     form.setValue("contract.decimals", option?.decimals ?? 0);
   };
 
-  return <EntityInput name={name} controller={controller} data={data} onChange={handleChange} />;
+  return <EntityInput name={name} controller={controller} data={data} onChange={handleChange} autoselect />;
 };

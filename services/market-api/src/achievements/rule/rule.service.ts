@@ -19,11 +19,18 @@ export class AchievementRuleService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
+    queryBuilder.leftJoinAndSelect("rule.item", "rule_item");
+    queryBuilder.leftJoinAndSelect("rule_item.components", "rule_item_components");
+    queryBuilder.leftJoinAndSelect("rule_item_components.template", "rule_item_template");
+    queryBuilder.leftJoinAndSelect("rule_item_components.contract", "rule_item_contract");
     queryBuilder.leftJoinAndSelect("rule.levels", "levels");
+    queryBuilder.leftJoinAndSelect("rule.items", "items");
     queryBuilder.leftJoinAndSelect("levels.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -36,9 +43,9 @@ export class AchievementRuleService {
       userId: userEntity.id,
     });
 
-    // queryBuilder.orderBy({
-    //   "levels.amount": "ASC",
-    // });
+    queryBuilder.orderBy({
+      "levels.achievementLevel": "DESC",
+    });
 
     return queryBuilder.getManyAndCount();
   }

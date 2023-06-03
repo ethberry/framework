@@ -1,5 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
@@ -28,6 +29,10 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const pyramidContracts = await contractService.findAllByType(ModuleType.PYRAMID);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+        const cron =
+          Object.values(CronExpression)[
+            Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
+          ];
         return {
           contract: {
             contractType: ContractType.PYRAMID,
@@ -63,7 +68,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           },
           block: {
             fromBlock: pyramidContracts.fromBlock || startingBlock,
-            debug: true,
+            debug: false,
+            cron,
           },
         };
       },

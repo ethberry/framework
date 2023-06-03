@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroAddress } from "ethers";
+import { constants } from "ethers";
 
-import { imageUrl, ns, testChainId } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -30,13 +30,13 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         updated_at
       ) VALUES (
         1101,
-        '${ZeroAddress}',
-        '1',
-        'Native token (ETH)',
+        '${constants.AddressZero}',
+        '${chainId}',
+        'Native token (BESU)',
         '${simpleFormatting}',
-        '${imageUrl}',
-        'Ethereum',
-        'ETH',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        'Besu',
+        'BESU',
         18,
         0,
         '',
@@ -48,11 +48,11 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1102,
-        '${ZeroAddress}',
-        '1',
-        'Inactive token (ETH)',
+        '${constants.AddressZero}',
+        '${chainId}',
+        'Inactive token (BESU)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
         'Ethereum',
         'ETH',
         18,
@@ -66,11 +66,11 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         2101,
-        '${ZeroAddress}',
-        '56',
+        '${constants.AddressZero}',
+        56,
         'Native token (BNB)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbnb.png?alt=media&token=f9eca8af-77b1-4092-8d4e-91fb897efa18',
         'Binance',
         'BNB',
         18,
@@ -84,17 +84,17 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         3101,
-        '${ZeroAddress}',
-        '137',
-        'Native token (MATIC)',
+        '${constants.AddressZero}',
+        '1',
+        'Native token (ETH)',
         '${simpleFormatting}',
-        '${imageUrl}',
-        'Matic',
-        'MATIC',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fethereum.png?alt=media&token=fc22334a-6cc4-4f1e-b41c-4ef3a059f6ff',
+        'Ethereum',
+        'ETH',
         18,
         0,
         '',
-        'INACTIVE',
+        'ACTIVE',
         'NATIVE',
         '{}',
         1,
@@ -102,17 +102,17 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         4101,
-        '${ZeroAddress}',
-        '${chainId}',
-        'Native token (BESU)',
+        '${constants.AddressZero}',
+        '137',
+        'Native token (MATIC)',
         '${simpleFormatting}',
-        '${imageUrl}',
-        'Besu',
-        'BESU',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fpolygon.png?alt=media&token=5eabc13d-8759-4b49-96be-86a0ddf3921f',
+        'Matic',
+        'MATIC',
         18,
         0,
         '',
-        'ACTIVE',
+        'INACTIVE',
         'NATIVE',
         '{}',
         1,

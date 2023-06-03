@@ -14,12 +14,13 @@ import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 import "../Exchange/ExchangeUtils.sol";
 
 contract TopUp is Context, ERC165, ERC1363Receiver {
+
   /**
    * @dev Allows to top-up the contract with tokens.
    * @param price An array of Asset representing the tokens to be transferred.
    */
   function topUp(Asset[] memory price) external payable virtual {
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
   }
 
   receive() external payable virtual {

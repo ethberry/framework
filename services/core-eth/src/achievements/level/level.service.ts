@@ -27,6 +27,7 @@ export class AchievementLevelService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
@@ -40,4 +41,8 @@ export class AchievementLevelService {
     });
     return queryBuilder.getOne();
   }
+
+  // public processEvent(): Promise<number | null> {
+  //   const levels = await
+  // }
 }

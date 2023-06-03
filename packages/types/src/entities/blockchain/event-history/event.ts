@@ -18,12 +18,12 @@ import type { TErc1155Events } from "./erc1155";
 import type { TChainLinkEvents } from "./chain-link";
 import type { TRoyaltyEvents } from "./royalty";
 import type { TErc998Events } from "./erc998";
-import type { TClaimEvents } from "./claim";
 import type { TMysteryEvents } from "./mystery";
 import type { TWrapperEvents } from "./wrapper";
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
 import type { TErc1363Events } from "./erc1363";
 import type { TErc4907Events } from "./erc4907";
+import { IMetadataUpdate, TUpgradeEvents } from "./upgrade";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -91,6 +91,7 @@ export enum ContractEventType {
   StakingWithdraw = "StakingWithdraw",
   StakingFinish = "StakingFinish",
   WithdrawBalance = "WithdrawBalance",
+  ReturnDeposit = "ReturnDeposit",
 
   // MODULE:EXCHANGE
   // MODULE:CORE
@@ -111,6 +112,9 @@ export enum ContractEventType {
   ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
+  // MODULE:GRADE
+  LevelUp = "LevelUp",
+  MetadataUpdate = "MetadataUpdate",
   // MODULE:PAYMENT_SPLITTER
   PayeeAdded = "PayeeAdded",
   PaymentReleased = "PaymentReleased",
@@ -138,7 +142,6 @@ export type TContractEventData =
 
   // mechanics
   | TVestingEvents
-  | TClaimEvents
   | TMysteryEvents
   | TWrapperEvents
   | TStakingEvents
@@ -159,6 +162,10 @@ export type TContractEventData =
 
   // erc4907
   | TErc4907Events
+
+  // Upgrade
+  | TUpgradeEvents
+  | IMetadataUpdate
 
   // exchange
   | TExchangeEvents

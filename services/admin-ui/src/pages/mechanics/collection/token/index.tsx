@@ -14,10 +14,11 @@ import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
+import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 
-import { CollectionTokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { CollectionTokenViewDialog } from "./view";
 
 export const CollectionToken: FC = () => {
   const {
@@ -38,14 +39,14 @@ export const CollectionToken: FC = () => {
     baseUrl: "/collection/tokens",
     empty: {
       template: {} as ITemplate,
-      attributes: "{}",
+      metadata: "{}",
     },
     search: {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
       tokenId: "",
-      attributes: {},
+      metadata: {},
     },
   });
 

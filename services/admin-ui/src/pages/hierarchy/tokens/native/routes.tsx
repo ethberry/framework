@@ -2,9 +2,9 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { NativeContract } from "./contract";
 import { IndexWrapper } from "../../../index-wrapper";
 import { NativeSection } from "../../../dashboard/hierarchy/native";
+import { NativeContract } from "./contract";
 
 export const nativeRoutes: Array<RouteObject> = [
   {

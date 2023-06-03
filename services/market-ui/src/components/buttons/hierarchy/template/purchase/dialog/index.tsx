@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
-// import { validationSchema } from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IAmountDto {
   amount: string;
@@ -22,7 +22,7 @@ export const AmountDialog: FC<IAmountDialogProps> = props => {
   return (
     <FormDialog
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message="dialogs.amount"
       testId="AmountForm"
       {...rest}

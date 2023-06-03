@@ -54,6 +54,7 @@ export class GradeService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
     // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
@@ -122,7 +123,7 @@ export class GradeService {
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const level = tokenEntity.attributes[attribute];
+    const level = tokenEntity.metadata[attribute];
 
     return this.signerService.getOneToManySignature(
       account,

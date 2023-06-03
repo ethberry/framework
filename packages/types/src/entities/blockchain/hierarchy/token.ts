@@ -2,7 +2,6 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { ITemplate } from "./template";
 import type { IBalance } from "./balance";
-import type { IOwnership } from "./ownership";
 import type { IAssetComponentHistory } from "../exchange/asset-component-history";
 import type { IEventHistory } from "../event-history";
 
@@ -11,11 +10,11 @@ export enum TokenStatus {
   BURNED = "BURNED",
 }
 
-export enum TokenAttributes {
+export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
   GRADE = "GRADE",
   RARITY = "RARITY",
-  GENES = "GENES",
+  TRAITS = "TRAITS",
 }
 
 export enum TokenGenes {
@@ -35,7 +34,7 @@ export enum TokenTraits {
 
 export interface IToken extends IIdDateBase {
   imageUrl: string | null;
-  attributes: any;
+  metadata: any;
   tokenId: string;
   royalty: number;
   cid: string | null;
@@ -43,8 +42,6 @@ export interface IToken extends IIdDateBase {
   templateId: number | null;
   template?: ITemplate;
   balance?: Array<IBalance>;
-  parent?: Array<IOwnership>;
-  children?: Array<IOwnership>;
   exchange?: Array<IAssetComponentHistory>;
   history?: Array<IEventHistory>;
 }

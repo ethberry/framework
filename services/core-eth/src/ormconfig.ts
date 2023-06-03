@@ -17,7 +17,6 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
-import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
@@ -28,6 +27,10 @@ import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementItemEntity } from "./achievements/item/item.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -49,7 +52,6 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     AssetEntity,
     CompositionEntity,
-    OwnershipEntity,
     AccessListEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
@@ -62,8 +64,11 @@ const config: PostgresConnectionOptions = {
     BreedEntity,
     PayeesEntity,
     ClaimEntity,
-    // Achievements
-    // AchievementItemEntity,
+    /* achievements */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

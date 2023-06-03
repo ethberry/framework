@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import WhitelistABI from "../../../../abis/components/menu/extensions/whitelist-add/whitelist.abi.json";
+import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 

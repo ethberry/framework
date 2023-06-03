@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { IMysterybox } from "@framework/types";
@@ -11,6 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { useStyles } from "./styles";
+import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 
 export const MysteryBox: FC = () => {
   const { selected, isLoading } = useCollection<IMysterybox>({
@@ -18,6 +19,10 @@ export const MysteryBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      item: {
+        id: 0,
+        components: [],
+      },
     },
   });
 
@@ -35,7 +40,7 @@ export const MysteryBox: FC = () => {
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.imageUrl} />
+          <Box component="img" sx={{ maxWidth: "100%" }} src={selected.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.description} />
           </Typography>
@@ -52,6 +57,8 @@ export const MysteryBox: FC = () => {
           </Paper>
         </Grid>
       </Grid>
+
+      <MysteryboxContent mysterybox={selected} />
     </Fragment>
   );
 };

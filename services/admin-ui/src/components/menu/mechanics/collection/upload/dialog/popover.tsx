@@ -19,7 +19,7 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
 
   const sample = '1,https://firebasestorage.googleapis.com/v0/b/firebase.appspot.com/LOGO.png,{"TEMPLATE_ID":"130103"}';
   return (
-    <Box position="absolute" right={16} top={16} zIndex="1000">
+    <Box sx={{ zIndex: 1000 }}>
       <IconButton aria-describedby={id} onClick={handleClick}>
         <Help />
       </IconButton>
@@ -39,7 +39,7 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>tokenId,imageUrl,attributes</pre>
+          <pre>tokenId,imageUrl,metadata</pre>
           <Typography>Example: </Typography>
           <pre>{sample}</pre>
         </Box>
@@ -47,4 +47,3 @@ export const CollectionInfoPopover: FC<Record<string, string | number>> = () => 
     </Box>
   );
 };
-// headers: ["tokenId", "imageUrl", "attributes"],

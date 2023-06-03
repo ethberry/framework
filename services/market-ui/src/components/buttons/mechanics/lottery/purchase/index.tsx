@@ -9,7 +9,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 
-import LotteryPurchaseABI from "../../../../../abis/components/buttons/mechanics/lottery/purchase/purchase.abi.json";
+import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 
 export interface ILotteryPurchaseButtonProps {
   ticketNumbers: Array<boolean>;

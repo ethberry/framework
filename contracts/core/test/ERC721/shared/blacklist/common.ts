@@ -2,10 +2,10 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+
 import { tokenId } from "../../../constants";
 import { customMintCommonERC721 } from "../customMintFn";
-// import { customMintCommonERC721 } from "../customMintFn";
 
 export function shouldBehaveLikeERC721Blacklist(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
   const { mint = customMintCommonERC721, tokenId: defaultTokenId = tokenId } = options;

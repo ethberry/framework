@@ -2,11 +2,11 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
+import { IndexWrapper } from "../../index-wrapper";
+import { MysterySection } from "../../dashboard/mechanics/mystery";
 import { MysteryBox } from "./box";
 import { MysteryContract } from "./contract";
 import { MysteryToken } from "./token";
-import { IndexWrapper } from "../../index-wrapper";
-import { MysterySection } from "../../dashboard/mechanics/mystery";
 
 export const mysteryRoutes: Array<RouteObject> = [
   {
@@ -15,7 +15,7 @@ export const mysteryRoutes: Array<RouteObject> = [
       {
         index: true,
         element: (
-          <IndexWrapper index="native">
+          <IndexWrapper index="mystery">
             <MysterySection />
           </IndexWrapper>
         ),

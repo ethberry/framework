@@ -1,6 +1,7 @@
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, batchSize } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
+import { shouldBehaveLikeERC721Consecutive } from "@gemunion/contracts-erc721c";
 
 import { deployERC721 } from "./shared/fixtures";
 import { shouldMintCommon } from "./shared/mintCommon";
@@ -15,7 +16,7 @@ describe("ERC721CollectionBlacklist", function () {
   shouldBehaveLikeERC721(factory);
   shouldMintCommon(factory);
 
-  // shouldBehaveLikeERC721Consecutive(factory, { initialBalance: batchSize });
+  shouldBehaveLikeERC721Consecutive(factory, { batchSize });
 
   shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

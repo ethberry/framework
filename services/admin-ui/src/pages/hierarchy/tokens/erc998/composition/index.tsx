@@ -17,11 +17,10 @@ import { Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IComposition, ICompositionSearchDto } from "@framework/types";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-
-import ERC998WhitelistChildABI from "../../../../../abis/pages/hierarchy/tokens/erc998/composition/whitelistChild.abi.json";
+import ERC998WhitelistChildABI from "../../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
 
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionSearchForm } from "./form";

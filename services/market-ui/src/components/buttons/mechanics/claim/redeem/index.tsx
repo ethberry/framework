@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";
 
-import ClaimABI from "../../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
+import ClaimABI from "../../../../../abis/mechanics/claim/redeem/claim.abi.json";
 import { sorter } from "../../../../../utils/sorter";
 
 export interface IClaimRedeemButtonProps {
@@ -36,7 +36,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         tokenId:
           component.contract!.contractType === TokenType.ERC1155
             ? component.template!.tokens![0].tokenId
-            : component.templateId.toString(),
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       claim.signature,

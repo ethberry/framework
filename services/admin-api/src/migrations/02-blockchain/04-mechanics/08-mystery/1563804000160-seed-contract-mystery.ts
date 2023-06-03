@@ -10,6 +10,8 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
     const erc721ContractMysteryboxSimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
     const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
     const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
+    const erc721ContractMysteryboxBlacklistPausableAddress =
+      process.env.ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -94,7 +96,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         1604,
         '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
-        'MYSTERY BOX (hero)',
+        'MYSTERY BOX (pausable)',
         '${simpleFormatting}',
         '${imageUrl}',
         'MYSTERY BOX',
@@ -130,7 +132,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1606,
-        '${erc721ContractMysteryboxSimpleAddress}',
+        '${erc721ContractMysteryboxBlacklistPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (mixed)',
         '${simpleFormatting}',
@@ -141,7 +143,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{BLACKLIST,PAUSABLE}',
         'MYSTERY',
         '${fromBlock}',
         1,
@@ -150,7 +152,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
       ), (
         2601,
         '${erc721ContractMysteryboxSimpleAddress}',
-        '56',
+        56,
         'MYSTERY BOX (BEP)',
         '${simpleFormatting}',
         '${imageUrl}',

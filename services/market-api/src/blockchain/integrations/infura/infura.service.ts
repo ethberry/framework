@@ -52,7 +52,7 @@ export class InfuraService {
         title: tokenEntity.template.title,
         description: getText(tokenEntity.template.description),
         image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
-        attributes: tokenEntity.attributes,
+        attributes: tokenEntity.metadata,
       },
       objectName,
     );

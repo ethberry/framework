@@ -29,8 +29,8 @@ contract Waitlist is AccessControl, Pausable {
   event ClaimReward(address from, uint256 externalId, Asset[] items);
 
   constructor() {
-    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    _setupRole(PAUSER_ROLE, _msgSender());
+    _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _grantRole(PAUSER_ROLE, _msgSender());
   }
 
   function setReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -68,18 +68,17 @@ contract Waitlist is AccessControl, Pausable {
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
     require(_roots[externalId] != "", "Waitlist: Not yet started");
 
-    address account = _msgSender();
-    require(!_expired[externalId][account], "Witlist: Reward already claimed");
-    _expired[externalId][account] = true;
+    require(!_expired[externalId][_msgSender()], "Witlist: Reward already claimed");
+    _expired[externalId][_msgSender()] = true;
 
-    //    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(account)));
-    bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(account)))));
+    //    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(_msgSender())));
+    bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(_msgSender())))));
 
     require(verified, "Waitlist: You are not in the wait list");
 
-    ExchangeUtils.acquire(_items[externalId], account, DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(_items[externalId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    emit ClaimReward(account, externalId, _items[externalId]);
+    emit ClaimReward(_msgSender(), externalId, _items[externalId]);
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

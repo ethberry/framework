@@ -66,6 +66,7 @@ export class AssetService {
         const changedComponents = await Promise.allSettled(
           asset.components
             .filter(oldItem => dto.components.find(newItem => newItem.id === oldItem.id))
+            .filter(oldItem => oldItem.id)
             .map(oldItem => {
               Object.assign(
                 oldItem,
@@ -81,6 +82,7 @@ export class AssetService {
             .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
             .map(c => c.value),
         );
+        // add new
         const newComponents = await Promise.allSettled(
           dto.components
             .filter(newItem => !newItem.id)
@@ -94,6 +96,9 @@ export class AssetService {
             .map(c => c.value),
         );
         Object.assign(asset, { components: [...changedComponents, ...newComponents] });
+      } else {
+        // clear all
+        await Promise.allSettled(asset.components.map(oldItem => queryRunner.manager.remove(oldItem)));
       }
       await queryRunner.manager.save(asset);
 

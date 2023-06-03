@@ -4,7 +4,7 @@
       "file-invalid-type": "You can't upload {type} only {accept} are allowed",
       "file-too-large": "File is {size}, maximum file size is {maxSize}",
       "file-too-small": "File is {size}, minimum file size is {minSize}",
-      "too-many-files": "Too many files"
+      "too-many-files": "To many files"
     },
     "header": {
       "language": {
@@ -28,6 +28,7 @@
     }
   },
   "dialogs": {
+    "addConsumer": "Add VRF Consumer",
     "allowance": "Allowance",
     "blacklist": "Add to blacklist",
     "breedLimit": "Set breed limits",
@@ -52,11 +53,12 @@
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
-    "unsupported": "Unsupported",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
+    "unsupported": "Unsupported",
     "upload": "Upload",
     "view": "View",
+    "vrfConsumer": "Add Chain-Link VRF Consumer",
     "whitelist": "Add to whitelist",
     "withdraw": "Withdraw balance"
   },
@@ -80,6 +82,11 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "achievementStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "achievementType": {
       "COLLECTION": "Collection",
       "CRAFT": "Craft",
@@ -90,6 +97,27 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
+    },
+    "blockchainError": {
+      "BalanceExceed": "The balance exceeds the limit",
+      "CountExceed": "The count exceeds the limit",
+      "Expired": "The item has expired",
+      "ExpiredSignature": "The signature has expired",
+      "LimitExceed": "The limit has been exceeded",
+      "MethodNotSupported": "The method is not supported",
+      "NotActive": "The item is not active",
+      "NotAnOwner": "The user is not an owner",
+      "NotComplete": "The operation is not complete",
+      "NotExist": "The item does not exist",
+      "RefProgramSet": "The referral program is set",
+      "SignerMissingRole": "The signer is missing a role",
+      "TemplateZero": "The template is zero",
+      "UnsupportedTokenType": "The token type is not supported",
+      "WrongAmount": "The amount is wrong",
+      "WrongRule": "The rule is wrong",
+      "WrongStake": "The stake is wrong",
+      "WrongToken": "The token is wrong",
+      "ZeroBalance": "The balance is zero"
     },
     "chainId": {
       "1": "ETHEREUM",
@@ -124,14 +152,10 @@
       "SPLITTER": "Payment Splitter",
       "STATEHASH": "State Hash",
       "UPGRADEABLE": "Upgradeable",
+      "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
-    },
-    "rentStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -155,6 +179,7 @@
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
+      "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
@@ -172,7 +197,10 @@
     "durationUnit": {
       "DAY": "Day",
       "HOUR": "Hour",
-      "MINUTE": "Minute"
+      "MINUTE": "Minute",
+      "MONTH": "Month",
+      "WEEK": "Week",
+      "YEAR": "Year"
     },
     "emailType": {
       "DUMMY": "Test email",
@@ -197,7 +225,8 @@
       "collection": "Collection",
       "contract": "Contract",
       "data": "Data",
-      "endTimestamp": "End date",
+      "endTimestamp": "End Time",
+      "eventType": "Event type",
       "externalId": "External ID",
       "from": "From",
       "fromAddress": "From address",
@@ -253,8 +282,65 @@
       "withdrawTimestamp": "Withdraw date"
     },
     "eventType": {
+      "Approval": "Approval",
+      "ApprovalForAll": "ApprovalForAll",
+      "BatchReceivedChild": "BatchReceivedChild",
+      "BatchTransferChild": "BatchTransferChild",
+      "Blacklisted": "Blacklisted",
+      "Breed": "Breed",
+      "Claim": "Claim",
+      "ClaimReward": "ClaimReward",
+      "ConsecutiveTransfer": "ConsecutiveTransfer",
+      "Craft": "Craft",
+      "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
+      "ERC20PaymentReleased": "ERC20PaymentReleased",
+      "ERC20Released": "ERC20Released",
+      "EtherReceived": "EtherReceived",
+      "EtherReleased": "EtherReleased",
+      "Lend": "Lend",
+      "MintRandom": "MintRandom",
+      "Mysterybox": "Mysterybox",
+      "Paused": "Paused",
+      "PayeeAdded": "PayeeAdded",
+      "PaymentEthReceived": "PaymentEthReceived",
+      "PaymentEthSent": "PaymentEthSent",
+      "PaymentReceived": "PaymentReceived",
+      "PaymentReleased": "PaymentReleased",
       "Purchase": "Purchase",
-      "Transfer": "Transfer"
+      "RandomWordsRequested": "RandomWordsRequested",
+      "RandomnessRequest": "RandomnessRequest",
+      "RandomnessRequestId": "RandomnessRequestId",
+      "ReceivedChild": "ReceivedChild",
+      "RedeemClaim": "RedeemClaim",
+      "RewardSet": "RewardSet",
+      "RoleAdminChanged": "RoleAdminChanged",
+      "RoleGranted": "RoleGranted",
+      "RoleRevoked": "RoleRevoked",
+      "RuleCreated": "RuleCreated",
+      "RuleUpdated": "RuleUpdated",
+      "SetMaxChild": "SetMaxChild",
+      "Snapshot": "Snapshot",
+      "StakingFinish": "StakingFinish",
+      "StakingStart": "StakingStart",
+      "StakingWithdraw": "StakingWithdraw",
+      "TokenRoyaltyInfo": "TokenRoyaltyInfo",
+      "Transfer": "Transfer",
+      "TransferBatch": "TransferBatch",
+      "TransferChild": "TransferChild",
+      "TransferSingle": "TransferSingle",
+      "URI": "URI",
+      "UnBlacklisted": "UnBlacklisted",
+      "UnWhitelisted": "UnWhitelisted",
+      "UnWhitelistedChild": "UnWhitelistedChild",
+      "UnpackClaim": "UnpackClaim",
+      "UnpackMysterybox": "UnpackMysterybox",
+      "UnpackWrapper": "UnpackWrapper",
+      "Unpaused": "Unpaused",
+      "UpdateUser": "UpdateUser",
+      "Upgrade": "Upgrade",
+      "Whitelisted": "Whitelisted",
+      "WhitelistedChild": "WhitelistedChild",
+      "WithdrawBalance": "WithdrawBalance"
     },
     "gender": {
       "FEMALE": "Female",
@@ -333,6 +419,11 @@
       "ACTIVE": "ACTIVE",
       "NEW": "NEW"
     },
+    "rentStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -399,6 +490,7 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
+      "addConsumer": "Add Consumer",
       "addListener": "Add ETH Listener",
       "allowance": "Allowance",
       "archive": "Archive",
@@ -433,6 +525,7 @@
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
+      "reset": "Reset",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
@@ -469,9 +562,12 @@
       "RARITY": "Rarity",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
+      "achievementItem": "Achievement Item",
       "achievementLevel": "Achievement Level",
+      "achievementLevelItem": "Achievement Level Reward",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
+      "achievementStatus": "Achievement status",
       "achievementType": "Achievement type",
       "active": "Active",
       "address": "Address",
@@ -482,7 +578,6 @@
       "allDeposits": "All deposits",
       "amount": "Amount",
       "attribute": "Attribute",
-      "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "batchSize": "Collection size",
       "breeder": "Breeder",
@@ -496,6 +591,7 @@
       "claimStatus": "Status",
       "comment": "Comment",
       "confirm": "Confirm",
+      "content": "Content",
       "contract": "Contract",
       "contractFeatures": "Features",
       "contractId": "Contract",
@@ -519,11 +615,11 @@
       "email": "Email",
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
+      "eventType": "Event type",
       "files": "Files",
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "genes": "Genes",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -541,6 +637,7 @@
       "maxTime": "Max Cooldown",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
+      "metadata": "Attributes",
       "mysteryId": "Mysterybox",
       "mysteryboxStatus": "Status",
       "name": "Name",
@@ -572,10 +669,10 @@
       "pyramidRule": "Pyramid rule",
       "pyramidRuleStatus": "Status",
       "random": "Random",
-      "rentStatus": "Status",
       "recentDeposits": "Recent deposits",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "rentStatus": "Status",
       "reward": "Reward",
       "role": "Role",
       "roundId": "Round",
@@ -622,6 +719,7 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
+      "achievementLevel": "1",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
       "address": "0x...",
@@ -630,7 +728,6 @@
       "addressLine2": "Additional info about address",
       "amount": "10",
       "attribute": "...",
-      "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
       "cap": "10",
@@ -663,6 +760,7 @@
       "maxStakes": "0",
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
+      "metadata": "{}",
       "mysteryId": "Mysterybox",
       "name": "Pink dust",
       "number": "100500",
@@ -749,7 +847,7 @@
         "title": "Report"
       },
       "rules": {
-        "title": "Achievements types"
+        "title": "Achievements rules"
       },
       "title": "Achievements"
     },
@@ -774,6 +872,7 @@
     },
     "chain-link": {
       "fund": "Fund",
+      "subscription": "Subscription",
       "title": "ChainLink"
     },
     "claims": {
@@ -812,8 +911,8 @@
     "dashboard": {
       "achievements": {
         "levels": "Levels",
-        "rules": "Types",
         "report": "Report",
+        "rules": "Rules",
         "title": "Achievements"
       },
       "ecommerce": {
@@ -870,6 +969,7 @@
         "claim": "Claim",
         "collection": "Collections",
         "craft": "Craft",
+        "disperse": "Disperse",
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
@@ -882,6 +982,9 @@
         "waitlist": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "disperse": {
+      "title": "Disperse"
     },
     "drop": {
       "title": "Drops"

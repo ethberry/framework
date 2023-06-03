@@ -4,9 +4,9 @@ import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import {
   ITemplateAsset,
+  ITemplateAssetComponent,
   TemplateAssetInput,
   TokenAssetInput,
-  ITemplateAssetComponent,
 } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
@@ -52,7 +52,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       {contractType === TokenType.ERC1155 ? (
         <TokenAssetInput prefix="token" tokenType={{ disabledOptions }} />
       ) : (
-        <TemplateAssetInput prefix="template" tokenType={{ disabledOptions }} />
+        <TemplateAssetInput autoSelect prefix="template" tokenType={{ disabledOptions }} />
       )}
       <TextInput name="account" />
     </FormDialog>

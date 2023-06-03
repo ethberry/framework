@@ -13,6 +13,21 @@ export enum MetadataHash {
   "0x8e3ddc4aa9e11e826949389b9fc38032713cef66f38657aa6e1599905d26e564" = "GENES",
 }
 
+export enum EventSignature {
+  MintRandom = "MintRandom(uint256,address,uint256,uint256,uint256)",
+  Transfer = "Transfer(address,address,uint256)",
+}
+
+export enum EventSignatureHash {
+  MintRandom = "0xa29d42f2e56701221b7574eaf57e07a4bdd20605c2bdbe1d244c9e9ddd255e00",
+  Transfer = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+}
+
+export enum TokenMintType {
+  MintRandom = "MintRandom",
+  MintCommon = "MintCommon",
+}
+
 export enum ModuleType {
   SYSTEM = "SYSTEM",
   HIERARCHY = "HIERARCHY",
@@ -27,6 +42,9 @@ export enum ModuleType {
 }
 
 export enum DurationUnit {
+  YEAR = "YEAR",
+  MONTH = "MONTH",
+  WEEK = "WEEK",
   DAY = "DAY",
   HOUR = "HOUR",
   MINUTE = "MINUTE",

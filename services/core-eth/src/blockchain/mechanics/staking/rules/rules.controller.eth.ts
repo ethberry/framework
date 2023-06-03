@@ -9,6 +9,7 @@ import {
   IStakingCreateEvent,
   IStakingDepositEvent,
   IStakingFinishEvent,
+  IStakingReturnDepositEvent,
   IStakingUpdateEvent,
   IStakingWithdrawEvent,
   StakingEventType,
@@ -32,12 +33,17 @@ export class StakingRulesControllerEth {
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingStart })
   public start(@Payload() event: ILogEvent<IStakingDepositEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.start(event, context);
+    return this.stakingServiceEth.depositStart(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
   public withdraw(@Payload() event: ILogEvent<IStakingWithdrawEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.withdraw(event, context);
+    return this.stakingServiceEth.depositWithdraw(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.ReturnDeposit })
+  public return(@Payload() event: ILogEvent<IStakingReturnDepositEvent>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.return(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })
@@ -50,6 +56,6 @@ export class StakingRulesControllerEth {
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingFinish })
   public finish(@Payload() event: ILogEvent<IStakingFinishEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.finish(event, context);
+    return this.stakingServiceEth.depositFinish(event, context);
   }
 }

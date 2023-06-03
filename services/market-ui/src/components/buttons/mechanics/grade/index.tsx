@@ -2,17 +2,16 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
-import { Web3ContextType, useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
-import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
-
-import { getEthPrice, getMultiplier } from "./utils";
+import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
+import { getEthPrice, getMultiplier } from "./utils";
 
 interface IUpgradeButtonProps {
   token: IToken;
@@ -38,7 +37,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           },
         })
         .then((grade: IGrade) => {
-          const level = token.attributes[attribute];
+          const level = token.metadata[attribute];
 
           const price =
             grade.price?.components.sort(sorter("id")).map(component => ({

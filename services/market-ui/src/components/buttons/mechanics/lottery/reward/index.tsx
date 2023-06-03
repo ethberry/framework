@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { ILotteryTicket, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import LotteryGetPrizeABI from "../../../../../abis/components/buttons/mechanics/lottery/reward/getPrize.abi.json";
+import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
 
 export interface ILotteryRewardButtonProps {
   ticket: ILotteryTicket;

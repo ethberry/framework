@@ -1,24 +1,24 @@
 import { Contract } from "ethers";
 
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import {
-  shouldGetOwnerOf,
   shouldApprove,
-  shouldSetApprovalForAll,
-  shouldGetBalanceOf,
-  shouldTransferFrom,
-  shouldSafeTransferFrom,
   shouldBehaveLikeERC721Burnable,
-} from "@gemunion/contracts-erc721-enumerable";
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+  shouldGetBalanceOf,
+  shouldGetOwnerOf,
+  shouldSafeTransferFrom,
+  shouldSetApprovalForAll,
+  shouldTransferFrom,
+} from "@gemunion/contracts-erc721e";
 
-import { shouldMint } from "../../../../ERC721/shared/simple/base/mint";
-import { shouldSafeMint } from "../../../../ERC721/shared/simple/base/safeMint";
+import { shouldNotMint } from "../../../../ERC721/shared/simple/base/shouldNotMint";
+import { shouldNotSafeMint } from "../../../../ERC721/shared/simple/base/shouldNotSafeMint";
 import { shouldBaseUrl } from "./baseUrl";
 import { shouldReceive } from "../../../../shared/receive";
 
 export function shouldBehaveLikeERC721(factory: () => Promise<Contract>, options?: IERC721EnumOptions) {
-  shouldMint(factory);
-  shouldSafeMint(factory);
+  shouldNotMint(factory);
+  shouldNotSafeMint(factory);
   shouldGetOwnerOf(factory, options);
   shouldApprove(factory, options);
   shouldSetApprovalForAll(factory, options);

@@ -2,7 +2,7 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/user";
+import { shouldBehaveLikeERC721Rentable } from "../ERC721/shared/rentable";
 import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 

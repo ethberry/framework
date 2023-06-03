@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -21,6 +21,18 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
+        121701,
+        'BUSD',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '31000000000000000000000000',
+        'ACTIVE',
+        1217,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         221701,
         'BUSD',
         '${simpleFormatting}',
@@ -29,7 +41,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         0,
         '31000000000000000000000000',
         'ACTIVE',
-        4217,
+        2217,
         '${currentDateTime}',
         '${currentDateTime}'
       );

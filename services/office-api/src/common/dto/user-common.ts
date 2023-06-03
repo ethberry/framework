@@ -17,9 +17,7 @@ export class UserCommonDto implements IUserCommonDto {
   @MaxLength(displayNameMaxLength, { message: "rangeOverflow" })
   public displayName: string;
 
-  @ApiPropertyOptional({
-    type: String,
-  })
+  @ApiPropertyOptional()
   @IsOptional()
   @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })

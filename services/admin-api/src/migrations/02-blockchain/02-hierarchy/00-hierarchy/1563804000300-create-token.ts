@@ -20,7 +20,7 @@ export class CreateToken1563804000300 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "attributes",
+          name: "metadata",
           type: "json",
         },
         {

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -20,20 +20,20 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${vestingLinearAddress}',
-        '${(100n * WeiPerEther).toString()}',
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
         12010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${vestingGradedAddress}',
-        '${(100n * 1000000n).toString()}', -- USDT has 6 places after decimal
+        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
         12150101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${vestingCliffAddress}',
-        '${(100n * WeiPerEther).toString()}',
-        22170101,
+        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        12170101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

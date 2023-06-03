@@ -5,11 +5,12 @@ import { Typography } from "@mui/material";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { ITemplate, TokenType } from "@framework/types";
+import type { ITemplate } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
+import { Erc721TemplateListItem } from "../../hierarchy/erc721/template-list/item";
 import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
-import { Erc721TemplateListItem } from "../../exchange/tokens/erc721/template-list/item";
+import { useStyles } from "./styles";
 
 export const NewErc721: FC = () => {
   const classes = useStyles();

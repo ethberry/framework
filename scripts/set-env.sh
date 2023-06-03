@@ -48,6 +48,9 @@ echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/admin-api/.e
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/admin-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/admin-api/.env.$WMODE
@@ -63,8 +66,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/admin-api/.env.$WMOD
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/admin-api/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/admin-api/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/admin-api/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/admin-api/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/admin-api/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/admin-api/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/admin-api/.env.$WMODE
 
 touch ./services/admin-ui/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/admin-ui/.env.$WMODE
@@ -89,6 +94,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/admin-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/admin-ui/.env.$WMODE
@@ -104,8 +114,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/admin-ui/.env.$WMODE
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/admin-ui/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/admin-ui/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/admin-ui/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/admin-ui/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/admin-ui/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/admin-ui/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/admin-ui/.env.$WMODE
 
 touch ./services/market-ui/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/market-ui/.env.$WMODE
@@ -130,6 +142,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/market-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/market-ui/.env.$WMODE
@@ -145,8 +162,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/market-ui/.env.$WMOD
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/market-ui/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/market-ui/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/market-ui/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/market-ui/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/market-ui/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/market-ui/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/market-ui/.env.$WMODE
 
 touch ./services/market-api/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/market-api/.env.$WMODE
@@ -171,6 +190,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/market-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/market-api/.env.$WMODE
@@ -186,8 +210,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/market-api/.env.$WMO
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/market-api/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/market-api/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/market-api/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/market-api/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/market-api/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/market-api/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/market-api/.env.$WMODE
 
 
 touch ./services/core-eth/.env.$WMODE
@@ -213,6 +239,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/core-eth/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/core-eth/.env.$WMODE
@@ -228,8 +259,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/core-eth/.env.$WMODE
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/core-eth/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/core-eth/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/core-eth/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/core-eth/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/core-eth/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/core-eth/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/core-eth/.env.$WMODE
 
 
 touch ./services/office-ui/.env.$WMODE
@@ -255,6 +288,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/office-ui/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/office-ui/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/office-ui/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/office-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/office-ui/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/office-ui/.env.$WMODE
@@ -270,8 +308,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/office-ui/.env.$WMOD
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/office-ui/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/office-ui/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/office-ui/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/office-ui/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/office-ui/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/office-ui/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/office-ui/.env.$WMODE
 
 touch ./services/office-api/.env.$WMODE
 echo STARTING_BLOCK=$STARTING_BLOCK >>./services/office-api/.env.$WMODE
@@ -296,6 +336,11 @@ echo ERC998_NEW_ADDR=$ERC998_NEW_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC998_BLACKLIST_ADDR=$ERC998_BLACKLIST_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC998_UPGRADEABLE_ADDR=$ERC998_UPGRADEABLE_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC998_RANDOM_ADDR=$ERC998_RANDOM_ADDR  >>./services/office-api/.env.$WMODE
+echo ERC998_GENES_ADDR=$ERC998_GENES_ADDR  >>./services/office-api/.env.$WMODE
+echo ERC998_RENTABLE_ADDR=$ERC998_RENTABLE_ADDR  >>./services/office-api/.env.$WMODE
+echo ERC998_OWNER_ERC20_ADDR=$ERC998_OWNER_ERC20_ADDR  >>./services/office-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ADDR=$ERC998_OWNER_ERC1155_ADDR  >>./services/office-api/.env.$WMODE
+echo ERC998_OWNER_ERC1155_ERC20_ADDR=$ERC998_OWNER_ERC1155_ERC20_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC1155_SIMPLE_ADDR=$ERC1155_SIMPLE_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC1155_INACTIVE_ADDR=$ERC1155_INACTIVE_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC1155_NEW_ADDR=$ERC1155_NEW_ADDR  >>./services/office-api/.env.$WMODE
@@ -311,8 +356,10 @@ echo ERC721_LOTTERY_ADDR=$ERC721_LOTTERY_ADDR  >>./services/office-api/.env.$WMO
 echo LOTTERY_ADDR=$LOTTERY_ADDR  >>./services/office-api/.env.$WMODE
 echo USDT_ADDR=$USDT_ADDR  >>./services/office-api/.env.$WMODE
 echo BUSD_ADDR=$BUSD_ADDR  >>./services/office-api/.env.$WMODE
+echo WETH_ADDR=$WETH_ADDR  >>./services/office-api/.env.$WMODE
 echo WAITLIST_ADDR=$WAITLIST_ADDR  >>./services/office-api/.env.$WMODE
 echo ERC721_WRAPPER_ADDR=$ERC721_WRAPPER_ADDR  >>./services/office-api/.env.$WMODE
+echo PYRAMID_ADDR=$PYRAMID_ADDR  >>./services/office-api/.env.$WMODE
 
 echo "\033[34mAll done!\n\033[0m"
 

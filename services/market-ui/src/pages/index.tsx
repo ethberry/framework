@@ -15,6 +15,7 @@ import { infrastructureRoutes } from "./infrastructure/routes";
 import { exchangeRoutes } from "./exchange/routes";
 import { ecommerceRoutes } from "./ecommerce/routes";
 import { achievementsRoutes } from "./achievements/routes";
+import { hierarchyRoutes } from "./hierarchy/routes";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       },
       ...loginRoutes,
       ...infrastructureRoutes,
+      ...hierarchyRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,
       ...exchangeRoutes,

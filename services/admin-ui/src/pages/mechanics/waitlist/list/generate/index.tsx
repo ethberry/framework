@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
-import { IAsset, TokenType } from "@framework/types";
+import { IAsset } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -37,7 +37,7 @@ export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
       testId="WaitlistGenerateDialog"
       {...rest}
     >
-      <TemplateAssetInput prefix="item" multiple />
+      <TemplateAssetInput autoSelect multiple prefix="item" />
       <EntityInput name="listId" controller="waitlist/list" />
     </FormDialog>
   );

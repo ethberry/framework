@@ -74,7 +74,7 @@ export class LotteryTicketServiceEth {
 
     const tokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: "{}",
+      metadata: "{}",
       royalty: templateEntity.contract.royalty,
       templateId: templateEntity.id,
       tokenStatus: TokenStatus.MINTED,

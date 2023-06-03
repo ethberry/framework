@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { defaultMintERC721 } from "@gemunion/contracts-erc721-enumerable";
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+import { defaultMintERC721 } from "@gemunion/contracts-erc721e";
 
 export function shouldSetBaseURI(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
   const { mint = defaultMintERC721, tokenId: defaultTokenId = 0 } = options;

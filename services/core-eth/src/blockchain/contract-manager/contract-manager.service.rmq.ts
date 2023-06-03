@@ -20,7 +20,7 @@ export class ContractManagerServiceRmq {
     private readonly erc721LogService: Erc721TokenLogService,
     private readonly erc998LogService: Erc998TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
-    private readonly mysteryboxLogService: MysteryLogService,
+    private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly vestingLogService: VestingLogService,
   ) {}
@@ -68,7 +68,7 @@ export class ContractManagerServiceRmq {
       const contracts = await this.contractService.findAllByType(ModuleType.MYSTERY);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
-      this.mysteryboxLogService.addListener({
+      this.mysteryLogService.addListener({
         address: unique,
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });
@@ -145,7 +145,7 @@ export class ContractManagerServiceRmq {
       const contracts = await this.contractService.findAllByType(ModuleType.MYSTERY);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
-      this.mysteryboxLogService.addListener({
+      this.mysteryLogService.addListener({
         address: unique,
         fromBlock: Math.max(fromBlock || 1, contracts.fromBlock || 1),
       });

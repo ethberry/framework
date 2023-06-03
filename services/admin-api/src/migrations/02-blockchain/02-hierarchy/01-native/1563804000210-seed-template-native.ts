@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -23,7 +23,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         updated_at
       ) VALUES (
         110101,
-        'Native token (ETH)',
+        'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -35,7 +35,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         110201,
-        'Inactive token (ETH)',
+        'Inactive token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -59,7 +59,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         310101,
-        'Native token (MATIC)',
+        'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -71,7 +71,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         410101,
-        'Native token (BESU)',
+        'Native token (MATIC)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,

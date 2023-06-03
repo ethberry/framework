@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-
 import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { DateInput } from "@gemunion/mui-inputs-picker";
+import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IAchievementLevel, TokenType } from "@framework/types";
+import { IAchievementLevel } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -22,8 +22,18 @@ export interface IAchievementLevelEditDialogProps {
 export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, amount, achievementRuleId } = initialValues;
-
+  const {
+    id,
+    title,
+    description,
+    item,
+    amount,
+    parameters,
+    startTimestamp,
+    endTimestamp,
+    achievementRuleId,
+    achievementLevel,
+  } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,6 +41,10 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
     item,
     amount,
     achievementRuleId,
+    parameters: JSON.stringify(parameters),
+    achievementLevel,
+    startTimestamp,
+    endTimestamp,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -46,11 +60,28 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput multiple allowEmpty prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <Typography sx={{ mt: 2 }} variant="inherit">
+        <FormattedMessage id="form.labels.achievementLevelItem" />
+      </Typography>
+      <TemplateAssetInput
+        allowEmpty
+        autoSelect
+        multiple
+        prefix="item"
+        showLabel={false}
+        // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
+      />
+      <JsonInput name="metadata" />
+      <Typography variant="inherit">
+        <FormattedMessage id="form.labels.amount" />
+      </Typography>
+      <NumberInput name="amount" showLabel={false} />
       <Typography variant="inherit">
         <FormattedMessage id="form.labels.achievementLevel" />
       </Typography>
-      <NumberInput name="amount" showLabel={false} />
+      <NumberInput name="achievementLevel" showLabel={false} />
+      <DateInput name="startTimestamp" />
+      <DateInput name="endTimestamp" />
     </FormDialog>
   );
 };

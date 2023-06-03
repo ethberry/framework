@@ -7,7 +7,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IPyramidDeposit } from "@framework/types";
 
 import { formatPenalty, formatPrice } from "../../../../../utils/money";
-import { formatDuration } from "../../../../../utils/time";
+import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -67,7 +67,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                   ? formatMessage(
                       { id: `enums.durationUnit.${pyramidRule.durationUnit}` },
                       {
-                        count: formatDuration({
+                        count: normalizeDuration({
                           durationAmount: pyramidRule.durationAmount,
                           durationUnit: pyramidRule.durationUnit,
                         }),

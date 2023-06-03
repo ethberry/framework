@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisManager } from "@liaoliaots/nestjs-redis";
-import { CacheModule, CacheModuleAsyncOptions, CacheInterceptor } from "@nestjs/cache-manager";
+import { CacheInterceptor, CacheModule, CacheModuleAsyncOptions } from "@nestjs/cache-manager";
 import { redisInsStore } from "cache-manager-ioredis-yet";
 
 import { CACHE_STORE } from "./cache.constants";

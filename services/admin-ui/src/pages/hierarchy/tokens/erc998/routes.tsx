@@ -2,12 +2,12 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
+import { IndexWrapper } from "../../../index-wrapper";
 import { Erc998Contract } from "./contract";
+import { Erc998Section } from "../../../dashboard/hierarchy/erc998";
 import { Erc998Template } from "./template";
 import { Erc998Token } from "./token";
 import { Erc998Composition } from "./composition";
-import { IndexWrapper } from "../../../index-wrapper";
-import { Erc998Section } from "../../../dashboard/hierarchy/erc998";
 
 export const erc998Routes: Array<RouteObject> = [
   {

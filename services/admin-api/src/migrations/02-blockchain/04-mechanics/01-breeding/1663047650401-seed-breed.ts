@@ -9,7 +9,7 @@ export class SeedBreed1663047650401 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.breed (
         id,
-        genes,
+        traits,
         count,
         token_id,
         created_at,

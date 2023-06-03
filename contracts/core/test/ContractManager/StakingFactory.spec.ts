@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 
-import { contractTemplate, maxStake } from "../constants";
+import { contractTemplate } from "../constants";
 import { deployContract } from "../shared/fixture";
 
 describe("StakingFactory", function () {
@@ -36,10 +35,7 @@ describe("StakingFactory", function () {
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
           ],
-          StakingArgs: [
-            { name: "maxStake", type: "uint256" },
-            { name: "contractTemplate", type: "string" },
-          ],
+          StakingArgs: [{ name: "contractTemplate", type: "string" }],
         },
         // Values
         {
@@ -48,7 +44,6 @@ describe("StakingFactory", function () {
             bytecode: staking.bytecode,
           },
           args: {
-            maxStake,
             contractTemplate,
           },
         },
@@ -60,7 +55,6 @@ describe("StakingFactory", function () {
           bytecode: staking.bytecode,
         },
         {
-          maxStake,
           contractTemplate,
         },
         signature,
@@ -68,9 +62,7 @@ describe("StakingFactory", function () {
 
       const [address] = await contractInstance.allStaking();
 
-      await expect(tx)
-        .to.emit(contractInstance, "StakingDeployed")
-        .withArgs(address, [BigNumber.from(maxStake), contractTemplate]);
+      await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, [contractTemplate]);
     });
 
     it("should fail: SignerMissingRole", async function () {
@@ -98,10 +90,7 @@ describe("StakingFactory", function () {
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
           ],
-          StakingArgs: [
-            { name: "maxStake", type: "uint256" },
-            { name: "contractTemplate", type: "string" },
-          ],
+          StakingArgs: [{ name: "contractTemplate", type: "string" }],
         },
         // Values
         {
@@ -110,7 +99,6 @@ describe("StakingFactory", function () {
             bytecode: staking.bytecode,
           },
           args: {
-            maxStake,
             contractTemplate,
           },
         },
@@ -124,7 +112,6 @@ describe("StakingFactory", function () {
           bytecode: staking.bytecode,
         },
         {
-          maxStake,
           contractTemplate,
         },
         signature,

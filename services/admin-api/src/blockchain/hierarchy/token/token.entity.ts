@@ -16,7 +16,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public imageUrl: string | null;
 
   @Column({ type: "json" })
-  public attributes: any;
+  public metadata: any;
 
   @Column({ type: "numeric" })
   public tokenId: string;

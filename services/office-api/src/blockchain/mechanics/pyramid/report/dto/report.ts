@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsArray,
   IsEnum,
@@ -57,10 +57,14 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
-  @ApiPropertyOptional({
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => [true, "true"].includes(value))
+  public emptyReward: boolean;
+
+  @ApiProperty({
     type: PyramidReportItemSearchDto,
   })
-  @IsOptional()
   @ValidateNested()
   @Type(() => PyramidReportItemSearchDto)
   public deposit: PyramidReportItemSearchDto;

@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  Pagination,
+  Pagination
 } from "@mui/material";
 
 import { Create, FilterList } from "@mui/icons-material";
@@ -16,12 +16,10 @@ import { Create, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
-import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
+import { IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { StakingRuleUploadCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
+import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
@@ -42,36 +40,24 @@ export const StakingRules: FC = () => {
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
-    handleDeleteConfirm,
+    handleDeleteConfirm
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
-    empty: {
-      title: "new STAKING rule",
-      description: emptyStateString,
-      stakingRuleStatus: StakingRuleStatus.NEW,
-      deposit: emptyPrice,
-      reward: emptyPrice,
-      durationAmount: 2592000,
-      durationUnit: DurationUnit.DAY,
-      penalty: 100,
-      recurrent: false,
-    },
-    filter: ({ title, description, stakingRuleStatus }) => ({
+    filter: ({ title, description }) => ({
       title,
-      description,
-      stakingRuleStatus,
+      description
     }),
     search: {
       query: "",
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
-        tokenType: [] as Array<TokenType>,
+        tokenType: [] as Array<TokenType>
       } as IStakingRuleItemSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingRuleItemSearchDto,
-    },
+        tokenType: [] as Array<TokenType>
+      } as IStakingRuleItemSearchDto
+    }
   });
 
   return (
@@ -85,7 +71,7 @@ export const StakingRules: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <StakingRuleUploadCreateButton />
+        <StakingRuleCreateButton />
       </PageHeader>
 
       <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />

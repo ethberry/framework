@@ -5,6 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StakingRulesEntity } from "./rules.entity";
 import { IStakingCreateDto } from "./interfaces";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Injectable()
 export class StakingRulesService {
@@ -37,5 +38,11 @@ export class StakingRulesService {
     Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
 
     return this.stakingRulesEntityRepository.create(dto).save();
+  }
+
+  public async createEmptyAsset(): Promise<AssetEntity> {
+    return await this.assetService.create({
+      components: [],
+    });
   }
 }

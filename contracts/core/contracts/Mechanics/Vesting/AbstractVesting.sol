@@ -26,14 +26,6 @@ contract AbstractVesting is VestingWallet, Ownable, Multicall, TopUp {
   }
 
   /**
-   * @dev Allows to top-up the vesting contract with tokens (NATIVE and ERC20 only)
-   * @param price An array of Asset representing the tokens to be transferred.
-   */
-  function topUp(Asset[] memory price) external payable override {
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, true, true, true));
-  }
-
-  /**
    * @dev Restrict the contract to receive Ether (receive via topUp function only).
    */
   receive() external payable override(VestingWallet, TopUp) {

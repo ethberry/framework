@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
+import { constants } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -45,33 +45,33 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         asset_id
       ) VALUES (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80111
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80112
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80121
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${WeiPerEther.toString()}',
+        '${constants.WeiPerEther.toString()}',
         80122
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80131
       ), (
         'ERC721',
@@ -81,9 +81,9 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80132
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80141
       ), (
         'ERC998',
@@ -93,9 +93,9 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80142
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80151
       ), (
         'ERC1155',
@@ -105,9 +105,9 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80152
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
-        '${WeiPerEther.toString()}',
+        1101,
+        110101, -- ETH
+        '${constants.WeiPerEther.toString()}',
         80199
       );
     `);

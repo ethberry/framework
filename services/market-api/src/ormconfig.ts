@@ -25,7 +25,6 @@ import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/rew
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
@@ -71,7 +70,6 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     CompositionEntity,
-    OwnershipEntity,
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,

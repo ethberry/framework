@@ -4,7 +4,7 @@ import { Contract } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-export function shouldBehaveLikeERC20WhiteList(factory: () => Promise<Contract>) {
+export function shouldWhiteList(factory: () => Promise<Contract>) {
   describe("White list", function () {
     it("should fail: transfer from", async function () {
       const [owner, receiver] = await ethers.getSigners();

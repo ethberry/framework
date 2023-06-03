@@ -15,7 +15,6 @@ export interface IStakingDeployDialogProps {
 export const StakingDeployDialog: FC<IStakingDeployDialogProps> = props => {
   const fixedValues: IStakingContractDeployDto = {
     contractTemplate: StakingContractTemplates.SIMPLE,
-    maxStake: 10,
   };
 
   return (
@@ -27,7 +26,6 @@ export const StakingDeployDialog: FC<IStakingDeployDialogProps> = props => {
       {...props}
     >
       <SelectInput name="contractTemplate" options={StakingContractTemplates} />
-      <NumberInput name="maxStake" />
     </FormDialog>
   );
 };

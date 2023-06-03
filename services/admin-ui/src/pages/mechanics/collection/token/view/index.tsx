@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
@@ -7,7 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../../hierarchy/tokens/attributes";
+import { shouldShowAttributes, TokenAttributesView } from "../../../../hierarchy/tokens/metadata";
 import { TokenTraitsView } from "../../traits";
 
 export interface ICollectionTokenViewDialogProps {
@@ -20,7 +20,9 @@ export interface ICollectionTokenViewDialogProps {
 export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, attributes, balance, imageUrl } = initialValues;
+  const { template, tokenId, metadata, balance, imageUrl } = initialValues;
+
+  const showAttributes = shouldShowAttributes(metadata);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -51,21 +53,23 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.attributes" />
-              </TableCell>
-              <TableCell align="right">
-                <TokenAttributesView attributes={attributes} />
-              </TableCell>
-            </TableRow>
+            {showAttributes && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.metadata" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenAttributesView metadata={metadata} />
+                </TableCell>
+              </TableRow>
+            )}
             {template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
                   <FormattedMessage id="form.labels.traits" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenTraitsView attributes={attributes} />
+                  <TokenTraitsView metadata={metadata} />
                 </TableCell>
               </TableRow>
             ) : null}
@@ -82,7 +86,7 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
                 <FormattedMessage id="form.labels.imageUrl" />
               </TableCell>
               <TableCell align="right">
-                <img src={imageUrl || ""} alt={template?.title} />
+                <Box component="img" sx={{ maxWidth: "100%" }} src={imageUrl || ""} alt={template?.title} />
               </TableCell>
             </TableRow>
           </TableBody>

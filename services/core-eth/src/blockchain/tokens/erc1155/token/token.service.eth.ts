@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { ZeroAddress } from "ethers";
+import { Inject, Injectable, LoggerService, Logger, NotFoundException } from "@nestjs/common";
+import { constants } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
@@ -19,11 +19,13 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
   ) {
-    super(tokenService, eventHistoryService);
+    super(loggerService, tokenService, eventHistoryService);
   }
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingleEvent>, context: Log): Promise<void> {
@@ -76,12 +78,12 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    if (from !== ZeroAddress) {
+    if (from !== constants.AddressZero) {
       erc1155TokenEntity.template.amount += ~~amount;
       await this.balanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
-    if (to !== ZeroAddress) {
+    if (to !== constants.AddressZero) {
       // erc1155TokenEntity.instanceCount -= ~~amount;
       await this.balanceService.increment(erc1155TokenEntity.id, to, amount);
     }

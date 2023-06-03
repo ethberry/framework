@@ -7,9 +7,10 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
 
-import ERC721SafeTransferFromABI from "../../../../../abis/components/buttons/hierarchy/token/transfer/erc721.safeTransferFrom.abi.json";
+import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
+import { ContractFeatures } from "@framework/types";
 
 interface ITokenTransferButtonProps {
   token: IToken;
@@ -54,7 +55,11 @@ export const TokenTransferButton: FC<ITokenTransferButtonProps> = props => {
   return (
     <Fragment>
       <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
-        <Button onClick={handleTransfer} data-testid="TokenTransferButton">
+        <Button
+          onClick={handleTransfer}
+          disabled={token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
+          data-testid="TokenTransferButton"
+        >
           <FormattedMessage id="form.buttons.transfer" />
         </Button>
       </Tooltip>

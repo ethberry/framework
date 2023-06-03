@@ -3,10 +3,10 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@ge
 
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { shouldMintCommon } from "./shared/mintCommon";
-import { shouldBehaveLikeERC721Simple } from "./shared/simple";
-import { shouldBehaveLikeERC721Rentable } from "./shared/user";
 import { deployERC721 } from "./shared/fixtures";
+import { shouldBehaveLikeERC721Simple } from "./shared/simple";
+import { shouldBehaveLikeERC721Rentable } from "./shared/rentable";
+import { shouldMintCommon } from "./shared/simple/base/mintCommon";
 
 describe("ERC721UpgradeableRentable", function () {
   const factory = () => deployERC721(this.title);
@@ -16,7 +16,6 @@ describe("ERC721UpgradeableRentable", function () {
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);
-
   shouldBehaveLikeERC721Rentable(factory);
 
   shouldSupportsInterface(factory)([

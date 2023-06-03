@@ -32,14 +32,7 @@ export const MysteryTokenListItem: FC<IMysteryTokenListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Grid
-            item
-            xs={12}
-            sx={{
-              // MODULE:SOULBOUND
-              height: 37,
-            }}
-          >
+          <Grid item xs={12}>
             <TokenSellButton token={token} />
           </Grid>
         </Grid>

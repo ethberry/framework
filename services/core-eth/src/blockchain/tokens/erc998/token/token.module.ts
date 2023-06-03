@@ -3,18 +3,17 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
-import { Erc998TokenControllerEth } from "./token.controller.eth";
-import { Erc998TokenServiceEth } from "./token.service.eth";
-import { Erc998TokenLogModule } from "./log/log.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
-import { OwnershipModule } from "../ownership/ownership.module";
 import { Erc998CompositionModule } from "../composition/composition.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { Erc998TokenControllerEth } from "./token.controller.eth";
+import { Erc998TokenServiceEth } from "./token.service.eth";
+import { Erc998TokenLogModule } from "./log/log.module";
 
 @Module({
   imports: [
@@ -26,7 +25,6 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
     TokenModule,
     BalanceModule,
     ContractModule,
-    OwnershipModule,
     Erc998CompositionModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],

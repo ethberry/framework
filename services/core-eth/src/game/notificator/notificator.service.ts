@@ -1,28 +1,64 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ZeroAddress, WeiPerEther, ZeroHash } from "ethers";
 
-import { GameEventType, RmqProviderType } from "@framework/types";
-
-interface IDummyData {
-  eventType: any;
-  data: Record<string, any>;
-}
+import { MobileEventType, RmqProviderType } from "@framework/types";
+import {
+  IClaimData,
+  IGradeData,
+  IPurchaseData,
+  IRentData,
+  IRentUserUpdateData,
+  IStakingDepositFinishData,
+  IStakingDepositStartData,
+  IStakingRuleCreatedData,
+  IStakingRuleUpdatedData,
+} from "./interfaces";
 
 @Injectable()
 export class NotificatorService {
-  constructor(@Inject(RmqProviderType.MOBILE_SERVICE) private mobileClient: ClientProxy) {}
+  constructor(
+    @Inject(RmqProviderType.MOBILE_SERVICE)
+    private mobileClientProxy: ClientProxy,
+  ) {}
 
-  public dummy(): void {
-    this.mobileClient.emit(GameEventType.DUMMY, {
-      from: ZeroAddress,
-      to: ZeroAddress,
-      value: WeiPerEther,
-      transactionHash: ZeroHash,
-    });
+  // MODULE:CORE
+  public purchase(data: IPurchaseData): void {
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
   }
 
-  public dummyUser(data: any): void {
-    this.mobileClient.emit(GameEventType.DUMMY, data);
+  // MODULE:CLAIM
+  public claim(data: IClaimData): void {
+    this.mobileClientProxy.emit(MobileEventType.CLAIM, data);
+  }
+
+  // MODULE:RENTABLE
+  public rent(data: IRentData): void {
+    this.mobileClientProxy.emit(MobileEventType.RENT, data);
+  }
+
+  public updateUser(data: IRentUserUpdateData): void {
+    this.mobileClientProxy.emit(MobileEventType.RENT_USER, data);
+  }
+
+  // MODULE:GRADE
+  public grade(data: IGradeData): void {
+    this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
+  }
+
+  // MODULE:STAKING
+  public stakingDepositStart(data: IStakingDepositStartData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_START, data);
+  }
+
+  public stakingDepositFinish(data: IStakingDepositFinishData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  }
+
+  public stakingRuleCreated(data: IStakingRuleCreatedData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  }
+
+  public stakingRuleUpdated(data: IStakingRuleUpdatedData): void {
+    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
   }
 }

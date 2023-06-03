@@ -7,7 +7,6 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
-import { OwnershipEntity } from "../../tokens/erc998/ownership/ownership.entity";
 import { AssetComponentHistoryEntity } from "../../exchange/asset/asset-component-history.entity";
 import { BreedEntity } from "../../mechanics/breed/breed.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
@@ -18,7 +17,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public imageUrl: string | null;
 
   @Column({ type: "json" })
-  public attributes: any;
+  public metadata: any;
 
   @Column({ type: "numeric" })
   public tokenId: string;
@@ -44,12 +43,6 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
 
   @OneToMany(_type => BalanceEntity, balance => balance.token)
   public balance: Array<BalanceEntity>;
-
-  @OneToMany(_type => OwnershipEntity, ownership => ownership.child)
-  public parent: Array<OwnershipEntity>;
-
-  @OneToMany(_type => OwnershipEntity, ownership => ownership.parent)
-  public children: Array<OwnershipEntity>;
 
   @OneToMany(_type => AssetComponentHistoryEntity, history => history.token)
   public exchange: Array<AssetComponentHistoryEntity>;

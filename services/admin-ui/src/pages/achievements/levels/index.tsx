@@ -19,10 +19,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
+import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
 import { AchievementLevelSearchForm } from "./search";
-import { TokenType, AchievementType } from "@framework/types";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const emptyAchievementRule = {
@@ -55,28 +55,52 @@ export const AchievementLevels: FC = () => {
       title: "",
       description: emptyStateString,
       amount: 0,
+      parameters: { [TokenMetadata.RARITY]: "0" },
+      achievementLevel: 1,
       achievementRule: emptyAchievementRule,
       item: getEmptyTemplate(TokenType.ERC20),
+      startTimestamp: new Date().toISOString(),
+      endTimestamp: new Date().toISOString(),
     },
     search: {
       query: "",
       achievementRuleIds: [],
     },
-    filter: ({ id, title, description, item, amount, achievementRuleId, achievementRule }) =>
+    filter: ({
+      id,
+      title,
+      description,
+      item,
+      amount,
+      parameters,
+      achievementLevel,
+      achievementRuleId,
+      achievementRule,
+      startTimestamp,
+      endTimestamp,
+    }) =>
       id
         ? {
             title,
             description,
-            item,
+            item: cleanUpAsset(item),
             amount,
+            parameters: JSON.parse(parameters),
             achievementRule,
+            achievementLevel,
+            startTimestamp,
+            endTimestamp,
           }
         : {
             title,
             description,
             amount,
+            parameters: JSON.parse(parameters),
             item: cleanUpAsset(item),
             achievementRuleId,
+            achievementLevel,
+            startTimestamp,
+            endTimestamp,
           },
   });
 

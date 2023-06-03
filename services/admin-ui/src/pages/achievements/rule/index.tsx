@@ -1,14 +1,29 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Add, Create } from "@mui/icons-material";
+
+import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IAchievementRule, IAchievementRuleSearchDto } from "@framework/types";
+import { AchievementRuleStatus, AchievementType, TokenType } from "@framework/types";
 
 import { AchievementRuleEditDialog } from "./edit";
+
+import { cleanUpAsset } from "../../../utils/money";
 
 export const AchievementRules: FC = () => {
   const {
@@ -19,6 +34,7 @@ export const AchievementRules: FC = () => {
     isLoading,
     isEditDialogOpen,
     isDeleteDialogOpen,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -30,25 +46,45 @@ export const AchievementRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      achievementType: AchievementType.MARKETPLACE,
+      achievementStatus: AchievementRuleStatus.NEW,
+      // eventType: """,
+      contractId: 0,
+      item: getEmptyTemplate(TokenType.ERC20),
     },
     search: {
       query: "",
       achievementType: [],
+      achievementStatus: [],
     },
-    filter: ({ title, description }) => ({ title, description }),
+    filter: ({ title, description, contractId, item, achievementStatus, achievementType, eventType }) => ({
+      title,
+      description,
+      contractId: contractId === 0 ? null : contractId,
+      item: item ? cleanUpAsset(item) : { components: [] },
+      achievementStatus,
+      achievementType,
+      eventType,
+    }),
   });
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "achievements", "achievements.rules"]} />
 
-      <PageHeader message="pages.achievements.rules.title" />
+      <PageHeader message="pages.achievements.rules.title">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TemplateCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((rule, i) => (
             <ListItem key={i}>
-              <ListItemText>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>{rule.contract ? rule.contract.title : "-"}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{rule.eventType || "-"}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />

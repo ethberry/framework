@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-
 import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { TableCell, TableRow } from "@mui/material";
@@ -8,7 +7,7 @@ import { TableCell, TableRow } from "@mui/material";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import UserOfABI from "../../../abis/pages/hierarchy/tokens/erc4907.userOf.abi.json";
+import UserOfABI from "../../../abis/mechanics/rentable/erc4907.userOf.abi.json";
 
 export interface ITokenUserView {
   tokenId: string;
@@ -22,8 +21,11 @@ export const TokenUserView: FC<ITokenUserView> = props => {
   const getCurrentUser = useMetamaskValue(
     async (_a: null, web3Context: Web3ContextType) => {
       const contract = new Contract(address, UserOfABI, web3Context.provider?.getSigner());
-      const user = await contract.userOf(tokenId);
-      return user as string;
+      if ((await contract.provider.getCode(address)) !== "0x") {
+        const user = await contract.userOf(tokenId);
+        return user as string;
+      }
+      return constants.AddressZero;
     },
     { success: false },
   );
@@ -48,7 +50,7 @@ export const TokenUserView: FC<ITokenUserView> = props => {
         <FormattedMessage id="form.labels.user" />
       </TableCell>
       <TableCell align="right">
-        <AddressLink address={tokenUser.toLowerCase()} length={42} />
+        <AddressLink address={tokenUser} length={42} />
       </TableCell>
     </TableRow>
   );

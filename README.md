@@ -10,6 +10,7 @@ or, you can just use docker and docker compose :)
 In any case you have to fill up sensitive keys in docker files or .env files
 
 ## DEV setup with Docker-compose and Besu blockchain
+
 0. Stop all containers (if any) and clean existing postgres and besu
 ```shell script
 docker stop $(docker ps -a -q)
@@ -17,10 +18,12 @@ docker compose down -v
 rm -rf postgres
 rm -rf besu
 ```
+
 1. Run prepare script
 ```shell script
 npm run prepare:framework:dev
 ```
+
 2. Run framework services one-by-one in separate terminals for easy monitoring
 
 Admin-api (it will run initpostgres migrations)

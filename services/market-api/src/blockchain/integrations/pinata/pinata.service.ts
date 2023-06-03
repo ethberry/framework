@@ -52,7 +52,7 @@ export class PinataService {
         title: tokenEntity.template.title,
         description: getText(tokenEntity.template.description),
         image: `${pinataBaseUrl}/${tokenEntity.template.cid!}`,
-        attributes: tokenEntity.attributes,
+        attributes: tokenEntity.metadata,
       },
       objectName,
     );

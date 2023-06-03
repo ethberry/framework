@@ -7,8 +7,8 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
 import { ContractFeatures, IToken } from "@framework/types";
 
-import { TokenAttributesView } from "../../../attributes";
-import { TokenGenesView } from "../../../genes";
+import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
+import { TokenTraitsView } from "../../../traits";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -20,11 +20,13 @@ export interface IErc998ViewDialogProps {
 export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, attributes, balance } = initialValues;
+  const { template, tokenId, metadata, balance } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
   };
+
+  const showAttributes = shouldShowAttributes(metadata);
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
@@ -51,21 +53,23 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.attributes" />
-              </TableCell>
-              <TableCell align="right">
-                <TokenAttributesView attributes={attributes} />
-              </TableCell>
-            </TableRow>
+            {showAttributes && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.metadata" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenAttributesView metadata={metadata} />
+                </TableCell>
+              </TableRow>
+            )}
             {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  <FormattedMessage id="form.labels.genes" />
+                  <FormattedMessage id="form.labels.traits" />
                 </TableCell>
                 <TableCell align="right">
-                  <TokenGenesView attributes={attributes} />
+                  <TokenTraitsView metadata={metadata} />
                 </TableCell>
               </TableRow>
             ) : null}

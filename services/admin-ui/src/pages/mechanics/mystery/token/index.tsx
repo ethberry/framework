@@ -13,11 +13,12 @@ import {
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
+import type { ITemplate, IToken, ITokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryTokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
+import { Erc721TokenViewDialog } from "../../../hierarchy/tokens/erc721/token/view";
 
 export const MysteryToken: FC = () => {
   const {
@@ -38,14 +39,14 @@ export const MysteryToken: FC = () => {
     baseUrl: "/mystery/tokens",
     empty: {
       template: {} as ITemplate,
-      attributes: "{}",
+      metadata: "{}",
     },
     search: {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
       tokenId: "",
-      attributes: {},
+      metadata: {},
     },
   });
 
@@ -93,7 +94,7 @@ export const MysteryToken: FC = () => {
         onChange={handleChangePage}
       />
 
-      <MysteryTokenViewDialog
+      <Erc721TokenViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}

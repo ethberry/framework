@@ -15,8 +15,8 @@ export class SeedEventHistoryErc721LendComponentsAt1678931845540 implements Migr
       ) VALUES (
         1303010,
         'ITEM',
-        1301,
-        13010101,
+        1309,
+        13090101,
         1
       ), (
         1303010,
@@ -27,8 +27,8 @@ export class SeedEventHistoryErc721LendComponentsAt1678931845540 implements Migr
       ), (
         1303020,
         'ITEM',
-        1301,
-        13010102,
+        1309,
+        13090201,
         1
       ), (
         1303020,

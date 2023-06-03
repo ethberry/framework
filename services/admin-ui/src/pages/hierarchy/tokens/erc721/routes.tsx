@@ -2,11 +2,11 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
+import { IndexWrapper } from "../../../index-wrapper";
+import { Erc721Section } from "../../../dashboard/hierarchy/erc721";
 import { Erc721Contract } from "./contract";
 import { Erc721Template } from "./template";
 import { Erc721Token } from "./token";
-import { IndexWrapper } from "../../../index-wrapper";
-import { Erc721Section } from "../../../dashboard/hierarchy/erc721";
 
 export const erc721Routes: Array<RouteObject> = [
   {

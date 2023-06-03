@@ -13,8 +13,10 @@ declare global {
       STAKING_ADDR: string;
       CHAIN_ID: string;
       LINK_ADDR: string;
+      VRF_ADDR: string;
       WAITLIST_ADDR: string;
       LOTTERY_ADDR: string;
+      DISPERSE_ADDR: string;
     }
   }
 }

@@ -1,5 +1,6 @@
-import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, batchSize } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeERC721Consecutive } from "@gemunion/contracts-erc721c";
 
 import { deployERC721 } from "./shared/fixtures";
 import { shouldMintCommon } from "./shared/mintCommon";
@@ -13,7 +14,7 @@ describe("ERC721CollectionSimple", function () {
   shouldBehaveLikeERC721(factory);
   shouldMintCommon(factory);
 
-  // shouldBehaveLikeERC721Consecutive(factory, { initialBalance: batchSize });
+  shouldBehaveLikeERC721Consecutive(factory, { batchSize });
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

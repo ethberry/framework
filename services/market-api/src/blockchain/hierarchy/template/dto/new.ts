@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { TokenType } from "@framework/types";
 
-import { ITemplateNewDto } from "../interfaces";
+import type { ITemplateNewDto } from "../interfaces";
 
 export class TemplateNewDto implements ITemplateNewDto {
   @ApiPropertyOptional({

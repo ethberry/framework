@@ -14,6 +14,7 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.achievement_status_enum AS ENUM (
+        'NEW',
         'ACTIVE',
         'INACTIVE'
       );
@@ -40,12 +41,45 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
           type: `${ns}.achievement_type_enum`,
         },
         {
+          name: "event_type",
+          type: `${ns}.event_history_event_enum`,
+          isNullable: true,
+        },
+        {
+          name: "contract_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "item_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "achievement_status",
+          type: `${ns}.achievement_status_enum`,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
         },
       ],
     });

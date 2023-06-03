@@ -5,6 +5,7 @@ export * from "./extensions/access-control";
 export * from "./extensions/access-list";
 
 export * from "./exchange/asset";
+export * from "./exchange/asset-history";
 export * from "./exchange/asset-component";
 export * from "./exchange/asset-component-history";
 export * from "./exchange/payee";
@@ -37,6 +38,5 @@ export * from "./hierarchy/template";
 export * from "./hierarchy/token";
 export * from "./hierarchy/balance";
 export * from "./hierarchy/composition";
-export * from "./hierarchy/ownership";
 
 export * from "./integrations/chain-link";

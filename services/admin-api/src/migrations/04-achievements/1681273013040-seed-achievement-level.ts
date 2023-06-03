@@ -1,11 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays } from "date-fns";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 
 export class SeedAchievementLevel1681273013040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const currentDateTime = new Date().toISOString();
+    const now = new Date();
+    const currentDateTime = now.toISOString();
+    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -35,6 +38,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         achievement_rule_id,
         item_id,
         amount,
+        parameters,
+        achievement_level,
+        start_timestamp,
+        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
@@ -44,6 +51,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         1,
         40100101,
         5,
+        '${defaultJSON}',
+        1,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',                
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -53,6 +64,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         1,
         40100102,
         10,
+        '${defaultJSON}',
+        2,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -62,6 +77,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         1,
         40100103,
         15,
+        '${defaultJSON}',
+        3,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -71,6 +90,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         2,
         40100104,
         5,
+        '${defaultJSON}',
+        1,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -80,6 +103,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         2,
         40100105,
         10,
+        '${defaultJSON}',
+        2,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -89,6 +116,10 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         3,
         40100106,
         5,
+        '${defaultJSON}',
+        1,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -98,10 +129,16 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         4,
         40100107,
         10,
+        '${defaultJSON}',
+        1,
+        '${currentDateTime}',
+        '${addDays(now, 7).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.achievement_level_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

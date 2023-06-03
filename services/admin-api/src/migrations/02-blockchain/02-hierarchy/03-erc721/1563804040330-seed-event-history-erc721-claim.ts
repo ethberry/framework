@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, ZeroAddress } from "ethers";
+import { constants } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -23,7 +23,7 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ) VALUES (
         1302010,
         '${exchangeAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
@@ -36,10 +36,10 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302011,
         '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
-          from: ZeroAddress,
+          from: constants.AddressZero,
           to: wallets[0],
           tokenId: "13010101",
         })}',
@@ -49,12 +49,12 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302020,
         '${exchangeAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130202",
-          items: [[2, erc721ContractSimpleAddress, "130101", "2"]],
+          items: [[2, erc721ContractSimpleAddress, "130101", "1"]],
         })}',
         null,
         '${currentDateTime}',
@@ -62,12 +62,12 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302021,
         '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
-          from: ZeroAddress,
+          from: constants.AddressZero,
           to: wallets[0],
-          tokenId: "13010102",
+          tokenId: "13010201",
         })}',
         1302020,
         '${currentDateTime}',
@@ -75,12 +75,12 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302030,
         '${exchangeAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "130203",
-          items: [[2, erc721ContractSimpleAddress, "130101", "3"]],
+          items: [[2, erc721ContractSimpleAddress, "130101", "1"]],
         })}',
         null,
         '${currentDateTime}',
@@ -88,260 +88,14 @@ export class SeedEventHistoryErc721ClaimAt1563804040330 implements MigrationInte
       ), (
         1302031,
         '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
+        '${constants.HashZero}',
         'Transfer',
         '${JSON.stringify({
-          from: ZeroAddress,
+          from: constants.AddressZero,
           to: wallets[0],
-          tokenId: "13010103",
+          tokenId: "13010301",
         })}',
         1302030,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302040,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[0],
-          externalId: "130204",
-          items: [[2, erc721ContractSimpleAddress, "130101", "4"]],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302041,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "13010104",
-        })}',
-        1302040,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302050,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[0],
-          externalId: "130205",
-          items: [
-            [2, erc721ContractSimpleAddress, "130101", "5"],
-            [2, erc721ContractSimpleAddress, "130101", "1"],
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302051,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "13010105",
-        })}',
-        1302050,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302052,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "13010101",
-        })}',
-        1302050,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302060,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[0],
-          externalId: "130206",
-          items: [
-            [2, erc721ContractSimpleAddress, "130101", "6"],
-            [2, erc721ContractSimpleAddress, "130101", "1"],
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302061,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "13010106",
-        })}',
-        1302060,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302062,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[0],
-          tokenId: "13010101",
-        })}',
-        1302060,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302070,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[1],
-          externalId: "130207",
-          items: [[2, erc721ContractSimpleAddress, "130101", "7"]],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302071,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "13010107",
-        })}',
-        1302070,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302080,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[1],
-          externalId: "130208",
-          items: [
-            [2, erc721ContractSimpleAddress, "130101", "8"],
-            [2, erc721ContractSimpleAddress, "130101", "1"],
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302081,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "13010108",
-        })}',
-        1302080,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302082,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[1],
-          tokenId: "13010101",
-        })}',
-        1302080,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302090,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[2],
-          externalId: "130209",
-          items: [[2, erc721ContractSimpleAddress, "130101", "9"]],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302091,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[2],
-          tokenId: "13010109",
-        })}',
-        1302090,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302100,
-        '${exchangeAddress}',
-        '${ZeroHash}',
-        'Claim',
-        '${JSON.stringify({
-          from: wallets[2],
-          externalId: "130210",
-          items: [
-            [2, erc721ContractSimpleAddress, "130101", "10"],
-            [2, erc721ContractSimpleAddress, "130101", "1"],
-          ],
-        })}',
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302101,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[2],
-          tokenId: "13010110",
-        })}',
-        1302100,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1302102,
-        '${erc721ContractSimpleAddress}',
-        '${ZeroHash}',
-        'Transfer',
-        '${JSON.stringify({
-          from: ZeroAddress,
-          to: wallets[2],
-          tokenId: "13010101",
-        })}',
-        1302100,
         '${currentDateTime}',
         '${currentDateTime}'
       );

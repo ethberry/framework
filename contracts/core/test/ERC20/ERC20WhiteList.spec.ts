@@ -5,9 +5,9 @@ import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunio
 import { amount, DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeWhiteList } from "@gemunion/contracts-access-list";
 
-import { deployERC20 } from "./shared/fixtures";
-import { shouldBehaveLikeERC20WhiteList } from "./shared/whitelist/whitelist";
-import { shouldBehaveLikeERC20Custom } from "./shared/whitelist";
+import { deployERC1363 } from "./shared/fixtures";
+import { shouldWhiteList } from "./shared/whitelist/whitelist";
+import { shouldBehaveLikeERC20Whitelist } from "./shared/whitelist";
 
 const customMint = async (
   contractInstance: Contract,
@@ -21,13 +21,13 @@ const customMint = async (
 };
 
 describe("ERC20Whitelist", function () {
-  const factory = () => deployERC20(this.title);
+  const factory = () => deployERC1363(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
   shouldBehaveLikeWhiteList(factory);
-  shouldBehaveLikeERC20WhiteList(factory);
+  shouldWhiteList(factory);
 
-  shouldBehaveLikeERC20Custom(factory, {
+  shouldBehaveLikeERC20Whitelist(factory, {
     mint: customMint,
   });
 

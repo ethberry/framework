@@ -17,13 +17,12 @@ export class RentTokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    const tokenEntity = await super.search(
+    return super.search(
       dto,
       userEntity,
       [TokenType.ERC721, TokenType.ERC998],
-      ModuleType.HIERARCHY,
+      [ModuleType.HIERARCHY],
       [ContractFeatures.RENTABLE],
     );
-    return tokenEntity;
   }
 }

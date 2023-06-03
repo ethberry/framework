@@ -3,11 +3,12 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 
-import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { Erc721TemplateListItem } from "../../tokens/erc721/template-list/item";
+import { Erc721TemplateListItem } from "../../../hierarchy/erc721/template-list/item";
+import type { ITabPanelProps } from "../tabs";
+import { MarketplaceTabs } from "../tabs";
 
 export const Erc998: FC<ITabPanelProps> = props => {
   const { value } = props;

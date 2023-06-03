@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
-import RoyaltySetDefaultRoyaltyABI from "../../../../abis/components/menu/common/royalty/setDefaultRoyalty.abi.json";
+import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./dialog";
 

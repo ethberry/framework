@@ -1,8 +1,9 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+
 import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
-
 import { ClaimSearchDto } from "./dto";
 
 @Public()

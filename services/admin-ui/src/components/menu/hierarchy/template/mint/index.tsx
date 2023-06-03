@@ -10,11 +10,11 @@ import { IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20MintABI from "../../../../../abis/components/common/mint/erc20.mint.abi.json";
-import ERC721MintCommonABI from "../../../../../abis/components/common/mint/erc721.mintCommon.abi.json";
-import ERC1155MintABI from "../../../../../abis/components/common/mint/erc1155.mint.abi.json";
+import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
+import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
+import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
-import { IMintTokenDto, MintTokenDialog, ITokenAssetComponent } from "./dialog";
+import { IMintTokenDto, ITokenAssetComponent, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   template: ITemplate;

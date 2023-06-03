@@ -9,13 +9,7 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";
-import {
-  ContractFeatures,
-  Erc1155ContractTemplates,
-  Erc20ContractTemplates,
-  Erc721CollectionTemplates,
-  Erc721ContractTemplates,
-  Erc998ContractTemplates,
+import type {
   IContractManagerCollectionDeployedEvent,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
@@ -25,6 +19,14 @@ import {
   IContractManagerPyramidDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
+} from "@framework/types";
+import {
+  ContractFeatures,
+  Erc1155ContractTemplates,
+  Erc20ContractTemplates,
+  Erc721CollectionTemplates,
+  Erc721ContractTemplates,
+  Erc998ContractTemplates,
   ModuleType,
   MysteryContractTemplates,
   PyramidContractTemplates,
@@ -70,7 +72,7 @@ export class ContractManagerServiceEth {
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
-    private readonly mysteryboxLogService: MysteryLogService,
+    private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
@@ -117,7 +119,7 @@ export class ContractManagerServiceEth {
     });
 
     await this.tokenService.create({
-      attributes: "{}",
+      metadata: "{}",
       tokenId: "0",
       royalty: 0,
       template: templateEntity,
@@ -171,7 +173,7 @@ export class ContractManagerServiceEth {
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
-      await this.rentService.create({ contract: contractEntity });
+      await this.rentService.create({ contract: contractEntity }, chainId);
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
@@ -240,7 +242,7 @@ export class ContractManagerServiceEth {
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
-      attributes: "{}",
+      metadata: "{}",
       tokenId: i.toString(),
       royalty: ~~royalty,
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -331,7 +333,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new 1155 contract",
+      title: `${TokenType.ERC1155} (new)`,
       description: emptyStateString,
       imageUrl,
       baseTokenURI,
@@ -383,7 +385,7 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
 
-    this.mysteryboxLogService.addListener({
+    this.mysteryLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -402,7 +404,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: `${contractTemplate}-template`,
+      title: contractTemplate,
       description: emptyStateString,
       imageUrl,
       parameters: {
@@ -437,7 +439,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new PYRAMID contract",
+      title: `${ModuleType.PYRAMID} (new)`,
       description: emptyStateString,
       parameters: {
         payees: payees.toString(),
@@ -473,7 +475,7 @@ export class ContractManagerServiceEth {
 
     await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new STAKING contract",
+      title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
       parameters: {
         maxStake,

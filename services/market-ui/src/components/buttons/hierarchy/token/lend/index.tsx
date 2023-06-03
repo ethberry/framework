@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -10,7 +10,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IToken } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 import { ILendDto, LendDialog } from "./dialog";
-import TemplateLendABI from "../../../../../abis/components/buttons/mechanics/lend/lend.abi.json";
+import TemplateLendABI from "../../../../../abis/mechanics/rentable/lend.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 

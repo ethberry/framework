@@ -12,12 +12,14 @@ import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class MysteryBoxService {
   constructor(
     @InjectRepository(MysteryBoxEntity)
     private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
+    private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
@@ -244,7 +246,20 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
-  public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity> {
-    return this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<void> {
+    const mysteryboxEntity = await this.findOne({ id: where.id });
+
+    if (!mysteryboxEntity) {
+      throw new NotFoundException("mysteryboxNotFound");
+    }
+
+    const count = await this.tokenService.count({ templateId: mysteryboxEntity.templateId });
+
+    if (!count) {
+      await this.templateService.delete({ id: mysteryboxEntity.templateId });
+      // await this.mysteryBoxEntityRepository.delete(where);
+    } else {
+      await this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
+    }
   }
 }

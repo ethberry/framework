@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { ValidateNested, IsEnum, IsOptional, IsString, IsInt, Min } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IRentCreateDto } from "../interfaces";

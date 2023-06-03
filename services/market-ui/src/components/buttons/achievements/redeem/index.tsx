@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IAchievementItemReport, IAchievementRule, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import ClaimABI from "../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
+import ClaimABI from "../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;
@@ -20,19 +20,25 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   const { achievementRule, count = { count: 0 } } = props;
   const settings = useSettings();
 
-  const achievementLevel = achievementRule.levels.reduce((foundLevel, nextLevel) => {
+  const levelsNotRedeemed = achievementRule.levels.filter(lvl => lvl.redemptions?.length === 0);
+
+  const achievementLevel = levelsNotRedeemed.reduce((foundLevel, nextLevel) => {
     if (nextLevel.amount > count.count && nextLevel.id > foundLevel.id) {
       return nextLevel;
     }
     return foundLevel;
-  }, achievementRule.levels[0]);
+  }, levelsNotRedeemed[0]);
 
-  const previousLevels = achievementRule.levels.filter(({ amount }) => amount < achievementLevel.amount);
-
-  const previousLevelsNotRedeemed = previousLevels.some(({ redemptions }) => !redemptions?.length);
+  const previousLevels = achievementLevel
+    ? achievementRule.levels.filter(({ amount }) => amount < achievementLevel.amount)
+    : [];
+  const previousLevelsNotRedeemed = previousLevels.length
+    ? previousLevels.some(({ redemptions }) => !redemptions?.length)
+    : true;
 
   const disabled =
-    !previousLevelsNotRedeemed && (!!achievementLevel.redemptions?.length || count.count !== achievementLevel.amount);
+    !achievementLevel ||
+    (!previousLevelsNotRedeemed && (!!achievementLevel.redemptions?.length || count.count < achievementLevel.amount));
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
@@ -52,10 +58,9 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
         tokenId:
           component.contract!.contractType === TokenType.ERC1155
             ? component.template!.tokens![0].tokenId
-            : component.templateId.toString(),
+            : (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
-      [],
       sign.signature,
     ) as Promise<void>;
   });
@@ -70,7 +75,7 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
         data: {
           account,
           referrer: settings.getReferrer(),
-          achievementLevelId: achievementRule.id,
+          achievementLevelId: achievementLevel.id,
         },
       },
       null,
@@ -79,12 +84,22 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
   });
 
   const handleRedeem = async () => {
-    await metaFn();
+    await metaFn().finally(() => {
+      // TODO reload page
+      // window.location.reload();
+    });
   };
 
   return (
     <Button variant="contained" onClick={handleRedeem} data-testid="AchievementRedeemButton" disabled={disabled}>
-      <FormattedMessage id="form.buttons.redeem" />
+      <FormattedMessage
+        id="form.buttons.redeemLvl"
+        values={
+          !disabled
+            ? { level: achievementLevel ? `LVL: ${achievementLevel.achievementLevel.toString()}` : "" }
+            : { level: "" }
+        }
+      />
     </Button>
   );
 };

@@ -88,6 +88,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'StakingWithdraw',
         'StakingFinish',
         'WithdrawBalance',
+        'ReturnDeposit',
 
         -- MODULE:EXCHANGE
         -- MODULE:CORE
@@ -105,6 +106,9 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'ClaimReward',
         -- MODULE:BREEDING
         'Breed',
+         -- MODULE:GRADE
+        'LevelUp',
+        'MetadataUpdate',
 
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',

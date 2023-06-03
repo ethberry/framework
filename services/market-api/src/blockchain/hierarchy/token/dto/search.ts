@@ -4,10 +4,10 @@ import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
 import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
-import type { ITokenAttributesSearchDto, ITokenSearchDto } from "@framework/types";
-import { TokenAttributes, TokenRarity, TokenStatus } from "@framework/types";
+import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
+import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
 
-export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
+export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({
     enum: TokenRarity,
     isArray: true,
@@ -18,7 +18,7 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @IsArray({ message: "typeMismatch" })
   @Transform(({ value }) => value as Array<TokenRarity>)
   @IsEnum(TokenRarity, { each: true, message: "badInput" })
-  public [TokenAttributes.RARITY]: Array<TokenRarity>;
+  public [TokenMetadata.RARITY]: Array<TokenRarity>;
 
   @ApiPropertyOptional({
     type: Number,
@@ -30,7 +30,7 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public [TokenAttributes.GRADE]: Array<number>;
+  public [TokenMetadata.GRADE]: Array<number>;
 }
 
 export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements ITokenSearchDto {
@@ -63,7 +63,7 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   })
   @ValidateNested()
   @Type(() => TokenAttributesSearchDto)
-  public attributes: TokenAttributesSearchDto;
+  public metadata: TokenAttributesSearchDto;
 
   @ApiPropertyOptional({
     minimum: 1,
