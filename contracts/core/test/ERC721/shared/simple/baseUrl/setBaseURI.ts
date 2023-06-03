@@ -2,8 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
+import { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+
 import { tokenId } from "../../../../constants";
-import { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
 import { customMintCommonERC721 } from "../../customMintFn";
 
 export function shouldSetBaseURI(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {

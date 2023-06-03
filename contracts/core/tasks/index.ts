@@ -9,4 +9,7 @@ import "./get-hash";
 import "./get-uri";
 import "./flat";
 import "./get-receipt-by-hash";
-import "./get-err";
+import "./parse-disperse-tx";
+import "./calc/error-id";
+import "./calc/interface-id";
+import "./calc/string-hash";

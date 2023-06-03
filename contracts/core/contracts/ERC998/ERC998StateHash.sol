@@ -39,18 +39,11 @@ contract ERC998StateHash is ERC998Simple, StateHash {
     return super._localRootId(tokenId);
   }
 
-  function _balanceOfERC1155(
-    uint256 _tokenId,
-    address _erc1155Contract,
-    uint256 childTokenId
-  ) internal view virtual override(StateHash) returns (uint256) {
-    revert("CTD: NS");
+  function _balanceOfERC1155(uint256, address, uint256) internal view virtual override(StateHash) returns (uint256) {
+    return 0;
   }
 
-  function _balanceOfERC20(
-    uint256 _tokenId,
-    address _erc20Contract
-  ) internal view virtual override(StateHash) returns (uint256) {
-    revert("CTD: NS");
+  function _balanceOfERC20(uint256, address) internal view virtual override(StateHash) returns (uint256) {
+    return 0;
   }
 }
