@@ -11,9 +11,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "./interfaces/IERC721Ticket.sol";
+import "./interfaces/IERC721Lottery.sol";
 
-contract ERC721Ticket is IERC721Ticket, ERC721ABER, ERC721ABaseUrl {
+contract ERC721Lottery is IERC721Lottery, ERC721ABER, ERC721ABaseUrl {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Ticket) private _data;
@@ -43,11 +43,11 @@ contract ERC721Ticket is IERC721Ticket, ERC721ABER, ERC721ABaseUrl {
   }
 
   function getTicketData(uint256 tokenId) external view returns (Ticket memory) {
-    require(_exists(tokenId), "ERC721Ticket: invalid token ID");
+    require(_exists(tokenId), "ERC721Lottery: invalid token ID");
     return _data[tokenId];
   }
 
-  function burn(uint256 tokenId) public override(ERC721Burnable, IERC721Ticket) {
+  function burn(uint256 tokenId) public override(ERC721Burnable, IERC721Lottery) {
     super.burn(tokenId);
   }
 
@@ -62,6 +62,6 @@ contract ERC721Ticket is IERC721Ticket, ERC721ABER, ERC721ABaseUrl {
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721Lottery).interfaceId || super.supportsInterface(interfaceId);
   }
 }

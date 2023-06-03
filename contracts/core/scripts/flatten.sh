@@ -59,7 +59,7 @@ hardhat flatten contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol > d
 hardhat flatten contracts/Mechanics/Collection/ERC721CollectionSimple.sol > dist/Mechanics/Collection/ERC721CollectionSimple.sol
 
 mkdir -p dist/Mechanics/Lottery
-hardhat flatten contracts/Mechanics/Lottery/ERC721Ticket.sol > dist/Mechanics/Lottery/ERC721Ticket.sol
+hardhat flatten contracts/Mechanics/Lottery/ERC721Lottery.sol > dist/Mechanics/Lottery/ERC721Lottery.sol
 hardhat flatten contracts/Mechanics/Lottery/LotteryRandom.sol > dist/Mechanics/Lottery/LotteryRandom.sol
 
 mkdir -p dist/Mechanics/Mysterybox

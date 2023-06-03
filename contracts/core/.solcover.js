@@ -7,6 +7,6 @@ module.exports = {
     "Mechanics/Lottery/random",
     "MOCKS",
     "ThirdParty",
-    "utils/InterfaceIdCalculator.sol",
+    "utils/calc",
   ],
 };

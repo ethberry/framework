@@ -20,13 +20,13 @@ export async function deployLottery(): Promise<{
   const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
   const erc20Instance = await deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
-  const erc721TicketInstance = await deployERC721("ERC721Ticket");
+  const erc721LotteryInstance = await deployERC721("ERC721Lottery");
 
-  const lotteryInstance = await factory.deploy(tokenName, erc721TicketInstance.address, erc20Instance.address);
+  const lotteryInstance = await factory.deploy(tokenName, erc721LotteryInstance.address, erc20Instance.address);
 
   return {
     erc20Instance,
-    erc721Instance: erc721TicketInstance,
+    erc721Instance: erc721LotteryInstance,
     lotteryInstance,
     generateSignature: wrapSignature(await ethers.provider.getNetwork(), lotteryInstance, owner),
   };

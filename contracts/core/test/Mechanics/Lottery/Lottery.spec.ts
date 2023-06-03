@@ -5,7 +5,12 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import {
+  shouldBehaveLikeAccessControl,
+  shouldBehaveLikePausable,
+  shouldSupportsInterface,
+} from "@gemunion/contracts-mocha";
+import { delay } from "@gemunion/utils";
 
 import { defaultNumbers, expiresAt, externalId, extra, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -16,11 +21,7 @@ import { deployLottery } from "./fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
-const delay = (milliseconds: number) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
-};
-
-describe("Lottery", function () {
+describe("ERC721Lottery", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployLottery();
@@ -48,7 +49,7 @@ describe("Lottery", function () {
   describe("setTicketFactory", function () {
     it("should set factory", async function () {
       const { lotteryInstance } = await factory();
-      const newTicketInstance = await deployERC721("ERC721Ticket");
+      const newTicketInstance = await deployERC721("ERC721Lottery");
       const tx = await lotteryInstance.setTicketFactory(newTicketInstance.address);
       await expect(tx).to.not.be.reverted;
     });
@@ -57,7 +58,7 @@ describe("Lottery", function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const { lotteryInstance } = await factory();
-      const newTicketInstance = await deployERC721("ERC721Ticket");
+      const newTicketInstance = await deployERC721("ERC721Lottery");
       const tx = lotteryInstance.connect(receiver).setTicketFactory(newTicketInstance.address);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
@@ -554,4 +555,11 @@ describe("Lottery", function () {
       await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
     });
   });
+
+  shouldSupportsInterface(async () => {
+    const { erc721Instance } = await factory();
+    return erc721Instance;
+  })([
+    "0x6525707f", // IERC721Lottery
+  ]);
 });

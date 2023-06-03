@@ -464,7 +464,7 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
+  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Lottery");
   // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);

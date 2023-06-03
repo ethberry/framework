@@ -98,7 +98,7 @@
     "prepublish": "npm run build",
     "solhint": "solhint -f table contracts/**/*.sol",
     "test": "hardhat test",
-    "test:coverage": "hardhat coverage"
+    "coverage": "hardhat coverage"
   },
   "types": "./typechain-types/index.ts",
   "version": "0.0.1"

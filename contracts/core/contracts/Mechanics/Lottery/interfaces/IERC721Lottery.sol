@@ -11,7 +11,7 @@ struct Ticket {
   bool[36] numbers;
 }
 
-interface IERC721Ticket {
+interface IERC721Lottery {
   function mintTicket(address account, uint256 round, bool[36] calldata numbers) external returns (uint256);
 
   function burn(uint256 tokenId) external;
