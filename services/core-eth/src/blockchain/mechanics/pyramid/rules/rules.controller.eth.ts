@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractType, IPyramidCreateEvent, IPyramidUpdateEvent, PyramidEventType } from "@framework/types";

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -47,31 +47,31 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80111
       ), (
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80112
       ), (
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80121
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80122
       ), (
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80131
       ), (
         'ERC721',
@@ -83,7 +83,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80141
       ), (
         'ERC998',
@@ -95,7 +95,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80151
       ), (
         'ERC1155',
@@ -107,7 +107,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80199
       );
     `);

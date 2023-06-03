@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber } from "ethers";
 
 import { BalanceEntity } from "./balance.entity";
 
@@ -46,7 +45,7 @@ export class BalanceService {
 
     this.loggerService.log(JSON.stringify(balanceEntity, null, "\t"), BalanceService.name);
 
-    balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
+    balanceEntity.amount = (BigInt(balanceEntity.amount) + BigInt(amount)).toString();
 
     return balanceEntity.save();
   }
@@ -57,7 +56,7 @@ export class BalanceService {
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount = BigNumber.from(balanceEntity.amount).sub(amount).toString();
+      balanceEntity.amount = (BigInt(balanceEntity.amount) - BigInt(amount)).toString();
       return balanceEntity.save();
     }
   }

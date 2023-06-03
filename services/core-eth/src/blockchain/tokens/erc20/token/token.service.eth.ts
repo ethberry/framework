@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ZeroAddress } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IErc20TokenApproveEvent, IErc20TokenSnapshotEvent, IErc20TokenTransferEvent } from "@framework/types";

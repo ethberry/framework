@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 import { DeepPartial } from "typeorm";
 import { JsonRpcProvider, Wallet } from "ethers";
 

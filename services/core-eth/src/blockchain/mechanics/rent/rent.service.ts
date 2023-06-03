@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 
@@ -73,7 +73,7 @@ export class RentService {
           tokenType: TokenType.NATIVE,
           contractId: contractEntity.id,
           templateId: contractEntity.templates[0].id,
-          amount: constants.WeiPerEther.toString(),
+          amount: WeiPerEther.toString(),
         },
       ],
     });
