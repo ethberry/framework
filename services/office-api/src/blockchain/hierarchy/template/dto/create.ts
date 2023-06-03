@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 import { SearchableDto } from "@gemunion/collection";
 
 import { PriceDto } from "../../../exchange/asset/dto";
@@ -19,7 +19,7 @@ export class TemplateCreateDto extends SearchableDto implements ITemplateCreateD
   @ApiProperty({
     minimum: 0,
   })
-  @IsBigNumber({ minimum: "0" }, { message: "typeMismatch" })
+  @IsBigInt({ minimum: 0 }, { message: "typeMismatch" })
   public amount: string;
 
   @ApiProperty()

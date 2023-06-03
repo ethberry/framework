@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Allow, IsArray, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 
 import { ClaimItemCreateDto } from "../../../claim/dto";
 import { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
@@ -12,7 +12,7 @@ export class TokenUploadDto implements ITokenUploadDto {
     type: Number,
     minimum: 0,
   })
-  @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
 
   @ApiProperty()

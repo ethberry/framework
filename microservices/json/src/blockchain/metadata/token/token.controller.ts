@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common";
 
-import { AddressPipe, ApiAddress, ApiBigNumber, BigIntPipe, Public } from "@gemunion/nest-js-utils";
+import { AddressPipe, ApiAddress, ApiBigInt, BigIntPipe, Public } from "@gemunion/nest-js-utils";
 
 import { MetadataTokenService } from "./token.service";
 import { IOpenSeaMetadata } from "../../../common/interfaces";
@@ -10,7 +10,7 @@ import { IOpenSeaMetadata } from "../../../common/interfaces";
 export class MetadataTokenController {
   constructor(private readonly metadataTokenService: MetadataTokenService) {}
 
-  @ApiBigNumber("tokenId")
+  @ApiBigInt("tokenId")
   @ApiAddress("address")
   @Get("/:address/:tokenId")
   public getTokenMetadata(

@@ -4,6 +4,7 @@ import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount } from "@gemunion/contracts-constants";
+import { TokenMetadata } from "@framework/types";
 
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
@@ -12,7 +13,6 @@ import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { decodeMetadata, decodeNumber, decodeTraits } from "../shared/metadata";
 import { isEqualEventArgObj } from "../utils";
-import { TokenMetadata } from "@framework/types";
 
 describe("ExchangeBreed", function () {
   let vrfInstance: VRFCoordinatorMock;
@@ -165,7 +165,7 @@ describe("ExchangeBreed", function () {
         expect(decodedMeta[TokenMetadata.TEMPLATE_ID]).to.equal(genesis.templateId.toString());
 
         const genes = decodedMeta[TokenMetadata.TRAITS];
-        const decodedParents = decodeTraits(BigNumber.from(genes), ["matronId", "sireId"].reverse());
+        const decodedParents = decodeTraits(BigNumber.from(genes), [TokenMetadata.TRAITS]);
         expect(decodedParents.matronId).to.equal(genesis.matronId);
         expect(decodedParents.sireId).to.equal(genesis.sireId);
         const random = decodeNumber(BigNumber.from(genes)).slice(0, 6);

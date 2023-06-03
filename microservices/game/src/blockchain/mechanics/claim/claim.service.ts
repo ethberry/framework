@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants, utils } from "ethers";
+import { randomBytes, ZeroAddress, hexlify, encodeBytes32String } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
@@ -103,7 +103,7 @@ export class ClaimService {
       throw new NotFoundException("claimNotFound");
     }
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
       account,
@@ -111,15 +111,15 @@ export class ClaimService {
         nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         // @TODO fix to use expiresAt as extra, temporary set to empty
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
 
       claimEntity,
     );
 
-    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 
