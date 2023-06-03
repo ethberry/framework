@@ -7,9 +7,6 @@
   "bugs": {
     "url": "https://github.com/gemunion/framework/issues"
   },
-  "dependencies": {
-    "ethers": "5.7.2"
-  },
   "devDependencies": {
     "@types/jest": "29.5.2",
     "jest": "29.5.0",

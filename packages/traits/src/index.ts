@@ -1,12 +1,10 @@
-import { BigNumber } from "ethers";
-
 export const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
 export const SPECIAL = ["strength", "perception", "endurance", "charisma", "intelligence", "agility", "luck"];
 
 export const encodeNumbers = (numbers: Array<number>, size = 32) => {
-  let encoded = BigNumber.from(0);
+  let encoded = 0n;
   numbers.reverse().forEach((number, i) => {
-    encoded = encoded.or(BigNumber.from(number).shl(i * size));
+    encoded = encoded | (BigInt(number) << BigInt(i * size));
   });
   return encoded;
 };
@@ -20,7 +18,7 @@ export const decodeNumber = (encoded: bigint, size = 32) => {
       //   .shr(i * size)
       //   .mask(size)
       //   .toNumber(),
-      const shr = encoded >> ((i * size) as unknown as bigint);
+      const shr = encoded >> BigInt(i * size);
       const mask = shr * 1n;
       return mask as unknown as number;
     })
