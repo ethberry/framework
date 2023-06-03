@@ -3,13 +3,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { abiEncode, keccak256It } from "@gemunion/contracts-utils";
 import { ContractFeatures } from "@framework/types";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";
 import { ChainLinkLogService } from "./log.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { abiEncode, keccak256It } from "../utils";
 
 @Module({
   imports: [
