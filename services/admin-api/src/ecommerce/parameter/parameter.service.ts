@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 
@@ -22,16 +22,19 @@ export class ParameterService {
     queryBuilder.select();
 
     if (query) {
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("parameter.parameterName ILIKE '%' || :parameterName || '%'", { parameterName: query });
-        }),
-      );
+      queryBuilder.andWhere("parameter.parameterName ILIKE '%' || :parameterName || '%'", { parameterName: query });
     }
 
     queryBuilder.orderBy("parameter.id", "DESC");
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<ParameterEntity>,
+    options?: FindOneOptions<ParameterEntity>,
+  ): Promise<ParameterEntity | null> {
+    return this.parameterEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IParameterCreateDto): Promise<ParameterEntity> {

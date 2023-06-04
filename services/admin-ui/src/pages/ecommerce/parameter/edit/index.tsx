@@ -22,7 +22,7 @@ export const EditParameterDialog: FC<IEditParameterDialogProps> = props => {
     id,
     parameterName,
     parameterType,
-    parameterValue: [{ parameterValue }],
+    parameterValue,
     parameterMinValue,
     parameterMaxValue,
   };

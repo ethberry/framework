@@ -9,19 +9,20 @@ import {
   Post,
   Put,
   Query,
+  ParseIntPipe,
   UseInterceptors,
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { SearchDto } from "@gemunion/collection";
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { ParameterCreateDto, ParameterUpdateDto } from "./dto";
 import { ParameterService } from "./parameter.service";
 import { ParameterEntity } from "./parameter.entity";
 
 @ApiBearerAuth()
-@Controller("/parameter")
+@Controller("/parameters")
 export class ParameterController {
   constructor(private readonly parameterService: ParameterService) {}
 
@@ -34,6 +35,12 @@ export class ParameterController {
   @Post("/")
   public create(@Body() dto: ParameterCreateDto): Promise<ParameterEntity> {
     return this.parameterService.create(dto);
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ParameterEntity | null> {
+    return this.parameterService.findOne({ id });
   }
 
   @Put("/:id")

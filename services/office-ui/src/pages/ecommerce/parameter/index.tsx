@@ -10,7 +10,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { emptyParameter } from "../../../components/common/interfaces/empty-parameter";
+import { emptyParameter } from "../../../components/common/interfaces";
 import { uniqueBy } from "../../../utils/uniqueBy";
 import { EditParameterDialog } from "./edit";
 

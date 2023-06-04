@@ -2,16 +2,15 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
-import { stringify } from "qs";
 
-import { IParameter } from "@framework/types";
+import type { ISearchDto } from "@gemunion/types-collection";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import type { IParameter } from "@framework/types";
 
-import { emptyParameter } from "../../../components/common/interfaces/empty-parameter";
-import { uniqueBy } from "../../../utils/uniqueBy";
+import { emptyParameter } from "../../../components/common/interfaces";
 import { EditParameterDialog } from "./edit";
 
 export const Parameter: FC = () => {
@@ -30,9 +29,11 @@ export const Parameter: FC = () => {
     handleDeleteCancel,
     handleSearch,
     handleDeleteConfirm,
-  } = useCollection<IParameter>({
-    baseUrl: "/parameter",
-    redirect: (_, search) => `/parameters/?${stringify(search)}`,
+  } = useCollection<IParameter, ISearchDto>({
+    baseUrl: "/parameters",
+    search: {
+      query: "",
+    },
     empty: emptyParameter,
   });
 
@@ -50,7 +51,7 @@ export const Parameter: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {uniqueBy<IParameter>(rows, ["parameterName", "parameterType"]).map((parameter, i) => (
+          {rows.map((parameter, i) => (
             <ListItem key={i}>
               <ListItemText>
                 {parameter.parameterName} ({parameter.parameterType})
