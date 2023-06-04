@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, ManyToOne } from "typeorm";
 
 import { IProductItem } from "@framework/types";
 import { ns } from "@framework/constants";
@@ -14,7 +14,7 @@ import { CustomParameterEntity } from "../custom-parameter/custom-parameter.enti
 @Entity({ schema: ns, name: "product_item" })
 export class ProductItemEntity extends IdDateBaseEntity implements IProductItem {
   @JoinColumn()
-  @OneToOne(_type => ProductEntity)
+  @ManyToOne(_type => ProductEntity, product => product.productItems)
   public product: ProductEntity;
 
   @Column({ type: "int" })
@@ -32,9 +32,6 @@ export class ProductItemEntity extends IdDateBaseEntity implements IProductItem 
 
   @Column({ type: "int" })
   public minQuantity: number;
-
-  @Column({ type: "int" })
-  public weight: number;
 
   @Column({ type: "varchar" })
   public sku: string;

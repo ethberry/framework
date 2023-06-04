@@ -2,12 +2,12 @@ import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IParameter, ParameterType } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ProductItemEntity } from "../product-item/product-item.entity";
 
 @Entity({ schema: ns, name: "parameter" })
-export class ParameterEntity extends IdDateBaseEntity implements IParameter {
+export class ParameterEntity extends IdBaseEntity implements IParameter {
   @Column({ type: "varchar" })
   public parameterName: string;
 

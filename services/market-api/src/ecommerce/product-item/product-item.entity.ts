@@ -33,9 +33,6 @@ export class ProductItemEntity extends IdDateBaseEntity implements IProductItem 
   @Column({ type: "int" })
   public minQuantity: number;
 
-  @Column({ type: "int" })
-  public weight: number;
-
   @Column({ type: "varchar" })
   public sku: string;
 

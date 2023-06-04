@@ -9,7 +9,6 @@ import type { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
-import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 
 @Injectable()
 export class ProductService {
@@ -17,7 +16,6 @@ export class ProductService {
     @InjectRepository(ProductEntity)
     private readonly productEntityRepository: Repository<ProductEntity>,
     private readonly photoService: PhotoService,
-    private readonly assetService: AssetService,
   ) {}
 
   public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
@@ -121,25 +119,16 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const { categoryIds, photos, price, ...rest } = dto;
-
-    const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
-
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const { categoryIds, photos, parameters: _parameters, productItems: _productItems, ...rest } = dto;
 
     const productEntity = await this.productEntityRepository
       .create({
         ...rest,
-        merchantId,
+        merchantId: userEntity.merchantId,
         productStatus: ProductStatus.ACTIVE,
         categories: categoryIds.map(id => ({ id })),
-        price: assetEntity,
       })
       .save();
-
-    await this.assetService.update(productEntity.price, price);
 
     // add new
     await Promise.allSettled(
@@ -159,7 +148,7 @@ export class ProductService {
     dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    const { photos, categoryIds, price, ...rest } = dto;
+    const { photos, categoryIds, parameters: _parameters, productItems: _productItems, ...rest } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       where.merchantId = userEntity.merchant.id;
@@ -167,13 +156,6 @@ export class ProductService {
 
     const productEntity = await this.productEntityRepository.findOne({
       where,
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          price: "template.price",
-          components: "price.components",
-        },
-      },
       relations: { photos: true },
     });
 
@@ -232,12 +214,9 @@ export class ProductService {
 
     Object.assign(productEntity, {
       ...rest,
+      merchantId: userEntity.merchantId,
       categories: categoryIds.map(id => ({ id })),
     });
-
-    if (price) {
-      await this.assetService.update(productEntity.price, price);
-    }
 
     return productEntity.save();
   }
@@ -265,9 +244,8 @@ export class ProductService {
       productId: productEntity.id,
     });
 
-    // @TODO check joining tables to return correct orders count
-    queryBuilder.leftJoin("product_item", "productItem");
-    queryBuilder.leftJoin("productItem.orderItems", "orderItems");
+    queryBuilder.leftJoin("product.productItems", "productItems");
+    queryBuilder.leftJoin("productItems.orderItems", "orderItems");
 
     return queryBuilder.getCount();
   }

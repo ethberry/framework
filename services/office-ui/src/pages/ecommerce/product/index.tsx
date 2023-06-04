@@ -60,10 +60,7 @@ export const Product: FC = () => {
       productStatus: [ProductStatus.ACTIVE],
       categoryIds: [],
     },
-    filter: ({ id: _id, photos, ...rest }: Partial<IProduct>) => ({
-      ...rest,
-      photos: photos!.map(({ title, imageUrl }) => ({ title, imageUrl })),
-    }),
+    filter: ({ id: _id, ...rest }: Partial<IProduct>) => rest,
   });
 
   return (
@@ -83,14 +80,14 @@ export const Product: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((row, i) => (
+          {rows.map((product, i) => (
             <ListItem key={i}>
-              <ListItemText>{row.title}</ListItemText>
+              <ListItemText>{product.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(row)}>
+                <IconButton onClick={handleEdit(product)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(row)}>
+                <IconButton onClick={handleDelete(product)} disabled={product.productStatus === ProductStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
