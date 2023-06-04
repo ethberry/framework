@@ -8,6 +8,7 @@ import { Promo } from "./promo";
 import { Order } from "./order";
 import { Photo } from "./photo";
 import { Kanban } from "./kanban";
+import { Parameter } from "./parameter";
 import { Statistics } from "./statistics";
 
 export const ecommerceRoutes: Array<RouteObject> = [
@@ -25,6 +26,14 @@ export const ecommerceRoutes: Array<RouteObject> = [
     children: [
       { index: true, element: <Category /> },
       { path: "/categories/:id", element: <Category /> },
+    ],
+  },
+  {
+    path: "/parameters",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Parameter /> },
+      { path: "/parameters/:id", element: <Parameter /> },
     ],
   },
   {

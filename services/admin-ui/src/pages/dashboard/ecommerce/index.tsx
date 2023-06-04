@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Bookmark, Category, Email, Photo, Storage } from "@mui/icons-material";
+import { BarChart, Bookmark, Category, Email, Photo, Storage, Tune } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -29,6 +29,14 @@ export const EcommerceSection: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.ecommerce.store.products" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/parameters">
+          <ListItemIcon>
+            <Tune />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.ecommerce.store.parameters" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/promos">

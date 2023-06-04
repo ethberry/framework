@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IParameter, IPhoto } from "@framework/types";
+import { IPhoto } from "@framework/types";
 
 import { IProductCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";
@@ -53,9 +53,4 @@ export class ProductCreateDto implements IProductCreateDto {
   @ValidateNested()
   @Type(() => PhotoCreateDto)
   public photos: Array<IPhoto> = [];
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsArray({ message: "patternMismatch" })
-  public parameters: Array<IParameter>;
 }

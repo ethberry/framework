@@ -18,7 +18,7 @@ export class AchievementRuleService {
 
   public search(
     dto: IAchievementRuleSearchDto,
-    userEntity: UserEntity,
+    // userEntity: UserEntity,
   ): Promise<[Array<AchievementRuleEntity>, number]> {
     const { query, achievementType, achievementStatus, contractIds, eventType, skip, take } = dto;
     const queryBuilder = this.achievementRuleEntityRepository.createQueryBuilder("achievement");

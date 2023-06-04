@@ -397,14 +397,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "parameterName": {
-      "COLOR": "Color",
-      "SIZE": "Size"
-    },
     "parameterType": {
-      "date": "Date",
-      "number": "Number",
-      "string": "String"
+      "DATE": "Date",
+      "ENUM": "Enum",
+      "NUMBER": "Number",
+      "STRING": "String"
     },
     "productStatus": {
       "ACTIVE": "Active",
@@ -647,6 +644,7 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parameterMaxValue": "Max Value",
+      "parameterMinValue": "Min Value",
       "parameterName": "Name",
       "parameterType": "Type",
       "parameterValue": "Value",
@@ -766,6 +764,10 @@
       "number": "100500",
       "owner": "0x...",
       "parameters": "Parameters",
+      "parameterMaxValue": "10000",
+      "parameterMinValue": "0",
+      "parameterName": "Color",
+      "parameterValue": "Anything",
       "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
@@ -920,6 +922,7 @@
           "categories": "Categories",
           "kanban": "Orders",
           "orders": "Orders Archive",
+          "parameters": "Parameters",
           "photos": "Photos",
           "products": "Products",
           "promos": "Promos",
@@ -1108,6 +1111,9 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "parameters": {
+      "title": "Parameters"
     },
     "payees": {
       "attach": "Attach",
