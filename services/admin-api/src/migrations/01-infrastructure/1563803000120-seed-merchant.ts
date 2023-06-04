@@ -20,7 +20,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun+merchant1@gmail.com',
-        'MEOW DOA',
+        'GEMUNION',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
@@ -30,6 +30,16 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'trejgun+merchant2@gmail.com',
+        'MEOW DOA',
+        '${simpleFormatting}',
+        '+62 (812) 3919-8760',
+        '${imageUrl}',
+        'ACTIVE',
+        '00010203-0405-0607-0809-0a0b0c0d0e0f',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'trejgun+merchant3@gmail.com',
         'CTAPbIu SHOP',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
