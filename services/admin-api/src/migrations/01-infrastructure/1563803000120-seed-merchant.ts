@@ -35,7 +35,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'INACTIVE',
-        null,
+        '12345678-1234-5678-1234-567812345678',
         '${currentDateTime}',
         '${currentDateTime}'
       );
