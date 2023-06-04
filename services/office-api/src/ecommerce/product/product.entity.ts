@@ -4,11 +4,11 @@ import { IProduct, ProductStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { OrderItemEntity } from "../order-item/order-item.entity";
 import { CategoryEntity } from "../category/category.entity";
 import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";
 import { PhotoEntity } from "../photo/photo.entity";
 import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { ProductItemEntity } from "../product-item/product-item.entity";
 
 @Entity({ schema: ns, name: "product" })
 export class ProductEntity extends SearchableEntity implements IProduct {
@@ -44,11 +44,22 @@ export class ProductEntity extends SearchableEntity implements IProduct {
   })
   public photos: Array<PhotoEntity>;
 
-  @OneToMany(_type => OrderItemEntity, item => item.product, {
-    cascade: ["remove"],
-  })
-  public items: Array<OrderItemEntity>;
+  @OneToMany(_type => ProductItemEntity, productItem => productItem.product)
+  @JoinTable({ name: "product_item" })
+  public productItems: Array<ProductItemEntity>;
 
   // this is not a column
-  public itemsCount: number;
+  public ordersCount: number;
+
+  @Column({ type: "int" })
+  public length: number;
+
+  @Column({ type: "int" })
+  public height: number;
+
+  @Column({ type: "int" })
+  public width: number;
+
+  @Column({ type: "int" })
+  public weight: number;
 }

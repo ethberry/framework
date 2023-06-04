@@ -15,12 +15,10 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { IProduct, ProductStatus } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { cleanUpAsset } from "../../../utils/money";
 import { EditProductDialog } from "./edit";
 import { ProductSearchForm } from "./form";
 
@@ -54,21 +52,17 @@ export const Product: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: getEmptyTemplate(),
-      amount: 0,
       categories: [],
       photos: [],
-      parameters: [],
     },
     search: {
       query: "",
       productStatus: [ProductStatus.ACTIVE],
       categoryIds: [],
     },
-    filter: ({ id: _id, photos, price, ...rest }: Partial<IProduct>) => ({
+    filter: ({ id: _id, photos, ...rest }: Partial<IProduct>) => ({
       ...rest,
       photos: photos!.map(({ title, imageUrl }) => ({ title, imageUrl })),
-      price: cleanUpAsset(price),
     }),
   });
 

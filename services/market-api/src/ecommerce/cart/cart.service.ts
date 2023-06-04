@@ -27,16 +27,16 @@ export class CartService {
     // remove old
     await Promise.allSettled(
       cartEntity.items
-        .filter(oldItem => !data.items.find(newItem => newItem.productId === oldItem.productId))
+        .filter(oldItem => !data.items.find(newItem => newItem.productItemId === oldItem.productItemId))
         .map(oldItem => oldItem.remove()),
     );
 
     // change existing
     const changedItems = await Promise.allSettled(
       cartEntity.items
-        .filter(oldItem => data.items.find(newItem => newItem.productId === oldItem.productId))
+        .filter(oldItem => data.items.find(newItem => newItem.productItemId === oldItem.productItemId))
         .map(oldItem => {
-          oldItem.amount = data.items.find(newItem => newItem.productId === oldItem.productId)!.amount;
+          oldItem.quantity = data.items.find(newItem => newItem.productItemId === oldItem.productItemId)!.quantity;
           return oldItem.save();
         }),
     ).then(values =>
@@ -49,7 +49,7 @@ export class CartService {
     // add new
     const newItems = await Promise.allSettled(
       data.items
-        .filter(newItem => !cartEntity.items.find(oldItem => newItem.productId === oldItem.productId))
+        .filter(newItem => !cartEntity.items.find(oldItem => newItem.productItemId === oldItem.productItemId))
         .map(newItem => this.cartItemService.create(newItem, cartEntity)),
     ).then(values =>
       values
@@ -65,14 +65,14 @@ export class CartService {
   public async alter(data: ICartItemCreateDto, userEntity: UserEntity): Promise<CartEntity> {
     const cartEntity = await this.getCartOrCreate(userEntity);
 
-    const index = cartEntity.items.findIndex(item => item.productId === data.productId);
+    const index = cartEntity.items.findIndex(item => item.productItemId === data.productItemId);
 
     if (index !== -1) {
-      if (data.amount === 0) {
+      if (data.quantity === 0) {
         await cartEntity.items[index].remove();
         cartEntity.items.splice(index, 1);
       } else {
-        cartEntity.items[index].amount = data.amount;
+        cartEntity.items[index].quantity = data.quantity;
         await cartEntity.items[index].save();
       }
     } else {

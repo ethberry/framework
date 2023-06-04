@@ -4,22 +4,22 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ICartItem } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { ProductEntity } from "../product/product.entity";
+import { ProductItemEntity } from "../product-item/product-item.entity";
 import { CartEntity } from "../cart/cart.entity";
 
 @Entity({ schema: ns, name: "cart_item" })
 export class CartItemEntity extends IdDateBaseEntity implements ICartItem {
   @Column({ type: "int" })
-  public amount: number;
+  public quantity: number;
 
   @Column({ type: "int" })
-  public productId: number;
+  public productItemId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => ProductEntity, product => product.items, {
+  @ManyToOne(_type => ProductItemEntity, {
     eager: true,
   })
-  public product: ProductEntity;
+  public productItem: ProductItemEntity;
 
   @Column({ type: "int" })
   public cartId: number;

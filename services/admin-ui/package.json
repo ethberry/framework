@@ -45,6 +45,7 @@
     "@gemunion/provider-picker": "5.0.20",
     "@gemunion/provider-popup": "1.0.20",
     "@gemunion/provider-settings": "4.0.32",
+    "@gemunion/provider-test-id": "1.0.42",
     "@gemunion/provider-theme": "6.0.59",
     "@gemunion/provider-user": "6.0.26",
     "@gemunion/provider-user-firebase": "1.0.28",

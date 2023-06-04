@@ -82,14 +82,12 @@ export class OrderService {
       throw new NotFoundException("cartNotFound");
     }
 
-    // const price = await this.productService.writeOffAndGetPrice(cartEntity.items);
-
     const orderEntity = await this.orderEntityRepository
       .create({
+        user: userEntity,
         orderStatus: OrderStatus.NEW,
-        items: cartEntity.items,
+        orderItems: cartEntity.items,
         address: addressEntity,
-        // price: 100,
       })
       .save();
 

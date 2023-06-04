@@ -1,11 +1,14 @@
 import { v4 } from "uuid";
 import { ZeroAddress } from "ethers";
+import { DeepPartial } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IUser, TokenType, UserRole, UserStatus } from "@framework/types";
 import { baseTokenURI, EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
-export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
+import { UserEntity } from "../infrastructure/user/user.entity";
+
+export const generateTestUser = (data: Partial<IUser> = {}): DeepPartial<UserEntity> => {
   return Object.assign(
     {
       language: EnabledLanguages.EN,
@@ -14,6 +17,7 @@ export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
       password: "97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe", // My5up3r5tr0ngP@55w0rd
       imageUrl,
       comment: "Fraud!",
+      addresses: null,
       sub: v4(),
       userStatus: UserStatus.ACTIVE,
       userRoles: [UserRole.ADMIN],
@@ -30,6 +34,7 @@ export const generateTestContract = (data: Partial<IContract> = {}): Record<stri
       chainId: testChainId,
       title: "Native token",
       description: simpleFormatting,
+      merchantId: 1,
       imageUrl,
       name: "Ethereum",
       symbol: "ETH",

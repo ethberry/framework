@@ -1,16 +1,16 @@
 import { array, mixed, number, object, string } from "yup";
 
+import { ParameterType, ProductParameters } from "@framework/types";
 import { reISO8601 } from "@gemunion/constants";
-import { GradeAttribute } from "@framework/types";
-
-import { PARAMETER_TYPE } from "./type/interface";
 
 const parameterValidationSchema = object().shape({
-  parameterName: mixed<GradeAttribute>().oneOf(Object.values(GradeAttribute)).required("form.validations.valueMissing"),
-  parameterType: mixed<PARAMETER_TYPE>().oneOf(Object.values(PARAMETER_TYPE)).required("form.validations.valueMissing"),
+  parameterName: mixed<ProductParameters>()
+    .oneOf(Object.values(ProductParameters))
+    .required("form.validations.valueMissing"),
+  parameterType: mixed<ParameterType>().oneOf(Object.values(ParameterType)).required("form.validations.valueMissing"),
   parameterValue: mixed()
     .when("parameterType", {
-      is: (parameterType: PARAMETER_TYPE) => parameterType === PARAMETER_TYPE.number,
+      is: (parameterType: ParameterType) => parameterType === ParameterType.NUMBER,
       then: () =>
         number()
           .min(0, "form.validations.rangeUnderflow")
@@ -25,23 +25,33 @@ const parameterValidationSchema = object().shape({
           .required("form.validations.valueMissing"),
     })
     .when("parameterType", {
-      is: (parameterType: PARAMETER_TYPE) => parameterType === PARAMETER_TYPE.string,
+      is: (parameterType: ParameterType) => parameterType === ParameterType.STRING,
       then: () => string().required("form.validations.valueMissing"),
     })
     .when("parameterType", {
-      is: (parameterType: PARAMETER_TYPE) => parameterType === PARAMETER_TYPE.date,
+      is: (parameterType: ParameterType) => parameterType === ParameterType.DATE,
       then: () =>
         string().matches(reISO8601, "form.validations.patternMismatch").required("form.validations.valueMissing"),
     }),
-  parameterMaxValue: number().when("parameterType", {
-    is: (parameterType: PARAMETER_TYPE) => parameterType === PARAMETER_TYPE.number,
+  parameterMinValue: number().when("parameterType", {
+    is: (parameterType: ParameterType) => parameterType === ParameterType.NUMBER,
     then: () =>
       number()
         .min(0, "form.validations.rangeUnderflow")
         .typeError("form.validations.badInput")
         .integer("form.validations.badInput")
         .required("form.validations.valueMissing"),
-    otherwise: schema => schema.notRequired(),
+    otherwise: () => number().notRequired(),
+  }),
+  parameterMaxValue: number().when("parameterType", {
+    is: (parameterType: ParameterType) => parameterType === ParameterType.NUMBER,
+    then: () =>
+      number()
+        .min(0, "form.validations.rangeUnderflow")
+        .typeError("form.validations.badInput")
+        .integer("form.validations.badInput")
+        .required("form.validations.valueMissing"),
+    otherwise: () => number().notRequired(),
   }),
 });
 

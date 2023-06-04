@@ -98,11 +98,7 @@ export class ProductService {
       join: {
         alias: "product",
         leftJoinAndSelect: {
-          price: "product.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          // categories: "product.categories",
-          // photos: "product.photos",
+          productItems: "product.productItems",
         },
       },
       order: {
@@ -262,6 +258,20 @@ export class ProductService {
     return queryBuilder.getMany();
   }
 
+  public async getOrdersCount(productEntity: ProductEntity): Promise<number> {
+    const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
+
+    queryBuilder.andWhere("product.id = :productId", {
+      productId: productEntity.id,
+    });
+
+    // @TODO check joining tables to return correct orders count
+    queryBuilder.leftJoin("product_item", "productItem");
+    queryBuilder.leftJoin("productItem.orderItems", "orderItems");
+
+    return queryBuilder.getCount();
+  }
+
   public async delete(where: FindOptionsWhere<ProductEntity>, userEntity: UserEntity): Promise<void> {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
     queryBuilder.select();
@@ -273,8 +283,6 @@ export class ProductService {
       });
     }
 
-    queryBuilder.loadRelationCountAndMap("product.itemsCount", "product.items");
-
     const productEntity = await queryBuilder.getOne();
 
     if (!productEntity) {
@@ -282,7 +290,9 @@ export class ProductService {
     }
 
     if (productEntity) {
-      if (productEntity.itemsCount) {
+      const ordersCount = await this.getOrdersCount(productEntity);
+
+      if (ordersCount) {
         Object.assign(productEntity, { productStatus: ProductStatus.INACTIVE });
         await productEntity.save();
       } else {
