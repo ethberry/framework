@@ -10,17 +10,13 @@ export const encodeNumbers = (numbers: Array<number>, size = 32) => {
 };
 
 export const decodeNumber = (encoded: bigint, size = 32) => {
+  const mask = (1n << BigInt(size)) - 1n;
   return new Array(256 / size)
     .fill(null)
     .map((_e, i) => {
-      // TODO fixme
-      // encoded
-      //   .shr(i * size)
-      //   .mask(size)
-      //   .toNumber(),
       const shr = encoded >> BigInt(i * size);
-      const mask = shr * 1n;
-      return mask as unknown as number;
+      const masked = shr & mask;
+      return Number(masked);
     })
     .reverse();
 };
