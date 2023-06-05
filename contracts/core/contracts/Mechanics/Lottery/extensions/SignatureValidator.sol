@@ -23,7 +23,7 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE =
-    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer)";
+    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer,bytes32 extra)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -91,7 +91,10 @@ contract SignatureValidator is AccessControl, Pausable, EIP712 {
   }
 
   function _hashParamsStruct(Params memory params) private pure returns (bytes32) {
-    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer));
+    return
+      keccak256(
+        abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer, params.extra)
+      );
   }
 
   function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {

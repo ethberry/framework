@@ -20,11 +20,11 @@ import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 
-import "./extensions/SignatureValidatorRaffle.sol";
+import "./extensions/SignatureValidator.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
-import "./interfaces/ILottery.sol";
+import "./interfaces/IRaffle.sol";
 
-abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValidatorRaffle, Wallet {
+abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValidator, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;
@@ -41,8 +41,7 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
-  // LOTTERY
-
+  // RAFFLE
   struct Round {
     uint256 roundId;
     uint256 startTimestamp;
@@ -68,13 +67,13 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
 
   Round[] internal _rounds;
 
-  constructor(string memory name, Lottery memory config) SignatureValidatorRaffle(name) {
+  constructor(string memory name, Raffle memory config) SignatureValidator(name) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
 
-    // SET Lottery Config
+    // SET Raffle Config
     _lotteryWallet = config.lotteryWallet;
     _maxTicket = config.maxTickets;
     _timeLag = config.timeLagBeforeRelease;

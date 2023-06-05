@@ -45,7 +45,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             eventNames: [
               LotteryEventType.Prize,
               LotteryEventType.RoundEnded,
-              LotteryEventType.Purchase,
+              LotteryEventType.PurchaseLottery,
               LotteryEventType.Released,
               LotteryEventType.RoundStarted,
               LotteryEventType.RoundFinalized,

@@ -12,7 +12,7 @@ export interface IRoundFinalizedEvent {
   winValues: Array<number>;
 }
 
-export interface ILotteryPurchaseLotteryEvent {
+export interface ILotteryPurchaseEvent {
   tokenId: string;
   account: string;
   price: string;
@@ -44,7 +44,7 @@ export interface ILotteryReleaseEvent {
 export type TLotteryEventData =
   | IRoundStartedEvent
   | IRoundEndedEvent
-  | ILotteryPurchaseLotteryEvent
+  | ILotteryPurchaseEvent
   | ILotteryPrizeEvent
   | ILotteryReleaseEvent
   | IRoundFinalizedEvent;

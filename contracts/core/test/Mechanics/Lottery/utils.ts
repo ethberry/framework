@@ -27,6 +27,7 @@ export const wrapSignature = (network: Network, contract: Contract, account: Sig
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
           { name: "referrer", type: "address" },
+          { name: "extra", type: "bytes32" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },

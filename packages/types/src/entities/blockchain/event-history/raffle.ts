@@ -12,7 +12,7 @@ export interface IRaffleRoundFinalizedEvent {
   prizeNumber: string;
 }
 
-export interface IPurchaseRaffleEvent {
+export interface IRafflePurchaseEvent {
   tokenId: string;
   account: string;
   price: string;
@@ -43,7 +43,7 @@ export interface IRaffleReleaseEvent {
 export type TRaffleEventData =
   | IRaffleRoundStartedEvent
   | IRaffleRoundEndedEvent
-  | IPurchaseRaffleEvent
+  | IRafflePurchaseEvent
   | IRafflePrizeEvent
   | IRaffleReleaseEvent
   | IRaffleRoundFinalizedEvent;

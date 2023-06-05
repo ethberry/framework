@@ -6,7 +6,9 @@
 
 pragma solidity ^0.8.13;
 
-struct Lottery {
+import "../../../Exchange/interfaces/IAsset.sol";
+
+struct Raffle {
   address lotteryWallet;
   uint256 timeLagBeforeRelease;
   uint8 maxTickets;

@@ -15,7 +15,7 @@ contract LotteryRaffleRandomGoerli is LotteryRaffleRandom, ChainLinkGoerli {
 
   constructor(
     string memory name,
-    Lottery memory config
+    Raffle memory config
   ) LotteryRaffleRandom(name, config) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRaffleRandom, ChainLinkBase) returns (uint256 requestId) {

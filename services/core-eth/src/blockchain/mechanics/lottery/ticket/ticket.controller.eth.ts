@@ -23,7 +23,7 @@ export class LotteryTicketControllerEth {
     private readonly tokenServiceEth: TokenServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.Purchase })
+  @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.PurchaseLottery })
   public purchase(@Payload() event: ILogEvent<ILotteryPurchaseEvent>, @Ctx() context: Log): Promise<void> {
     return this.ticketServiceEth.purchase(event, context);
   }

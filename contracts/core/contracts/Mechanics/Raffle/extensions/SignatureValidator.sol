@@ -17,7 +17,7 @@ import "../../../utils/errors.sol";
 import "../interfaces/IERC721RaffleTicket.sol";
 import "../../../Exchange/interfaces/IAsset.sol";
 
-contract SignatureValidatorRaffle is AccessControl, Pausable, EIP712 {
+contract SignatureValidator is AccessControl, Pausable, EIP712 {
   using ECDSA for bytes32;
 
   mapping(bytes32 => bool) private _expired;
