@@ -19,7 +19,7 @@ export class WrapperTokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.WRAPPER);
+    return super.search(dto, userEntity, [TokenType.ERC721], [ModuleType.WRAPPER]);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {

@@ -9,7 +9,7 @@ import { TokenEntity } from "../../hierarchy/token/token.entity";
 @Entity({ schema: ns, name: "breed" })
 export class BreedEntity extends IdDateBaseEntity implements IBreed {
   @Column({ type: "varchar" })
-  public genes: string;
+  public traits: string;
 
   @Column({ type: "int" })
   public count: number;

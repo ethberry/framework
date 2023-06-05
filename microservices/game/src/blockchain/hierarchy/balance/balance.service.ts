@@ -19,7 +19,7 @@ export class BalanceService {
     queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoin("balance.token", "token");
-    queryBuilder.addSelect(["token.attributes", "token.tokenId"]);
+    queryBuilder.addSelect(["token.metadata", "token.tokenId"]);
 
     queryBuilder.leftJoin("token.template", "template");
     queryBuilder.addSelect(["template.title", "template.description", "template.imageUrl"]);

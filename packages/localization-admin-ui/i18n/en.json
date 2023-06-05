@@ -100,6 +100,27 @@
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
     },
+    "blockchainError": {
+      "BalanceExceed": "The balance exceeds the limit",
+      "CountExceed": "The count exceeds the limit",
+      "Expired": "The item has expired",
+      "ExpiredSignature": "The signature has expired",
+      "LimitExceed": "The limit has been exceeded",
+      "MethodNotSupported": "The method is not supported",
+      "NotActive": "The item is not active",
+      "NotAnOwner": "The user is not an owner",
+      "NotComplete": "The operation is not complete",
+      "NotExist": "The item does not exist",
+      "RefProgramSet": "The referral program is set",
+      "SignerMissingRole": "The signer is missing a role",
+      "TemplateZero": "The template is zero",
+      "UnsupportedTokenType": "The token type is not supported",
+      "WrongAmount": "The amount is wrong",
+      "WrongRule": "The rule is wrong",
+      "WrongStake": "The stake is wrong",
+      "WrongToken": "The token is wrong",
+      "ZeroBalance": "The balance is zero"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "GEMUNION",
@@ -133,6 +154,7 @@
       "SPLITTER": "Payment Splitter",
       "STATEHASH": "State Hash",
       "UPGRADEABLE": "Upgradeable",
+      "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
     "contractStatus": {
@@ -159,6 +181,7 @@
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
+      "RENTABLE": "Rentable",
       "SIMPLE": "Simple",
       "SOULBOUND": "Soulbound",
       "SOULBOUND_VOTES": "Soulbound + Votes",
@@ -176,7 +199,10 @@
     "durationUnit": {
       "DAY": "Day",
       "HOUR": "Hour",
-      "MINUTE": "Minute"
+      "MINUTE": "Minute",
+      "MONTH": "Month",
+      "WEEK": "Week",
+      "YEAR": "Year"
     },
     "emailType": {
       "DUMMY": "Test email",
@@ -501,6 +527,7 @@
       "reject": "Reject",
       "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
+      "reset": "Reset",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",
@@ -553,7 +580,6 @@
       "allDeposits": "All deposits",
       "amount": "Amount",
       "attribute": "Attribute",
-      "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "batchSize": "Collection size",
       "breeder": "Breeder",
@@ -596,7 +622,6 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
-      "genes": "Genes",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -614,6 +639,7 @@
       "maxTime": "Max Cooldown",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
+      "metadata": "Attributes",
       "mysteryId": "Mysterybox",
       "mysteryboxStatus": "Status",
       "name": "Name",
@@ -705,7 +731,6 @@
       "addressLine2": "Additional info about address",
       "amount": "10",
       "attribute": "...",
-      "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
       "cap": "10",
@@ -738,6 +763,7 @@
       "maxStakes": "0",
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
+      "metadata": "{}",
       "mysteryId": "Mysterybox",
       "name": "Pink dust",
       "number": "100500",
@@ -946,11 +972,13 @@
         "claim": "Claim",
         "collection": "Collections",
         "craft": "Craft",
+        "disperse": "Disperse",
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "pyramid": "Pyramid",
+        "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
@@ -958,6 +986,9 @@
         "waitlist": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "disperse": {
+      "title": "Disperse"
     },
     "drop": {
       "title": "Drops"
@@ -1022,9 +1053,6 @@
       "title": "Orders"
     },
     "lottery": {
-      "kanban": {
-        "title": "Orders"
-      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -1132,6 +1160,18 @@
         "upload": "Upload rule"
       },
       "title": "Pyramid"
+    },
+    "raffle": {
+      "rounds": {
+        "end": "End Round",
+        "start": "Start Round",
+        "title": "Rounds",
+        "wait": "Awaiting round to end"
+      },
+      "tickets": {
+        "title": "Tickets"
+      },
+      "title": "Lottery"
     },
     "rent": {
       "title": "Rent"

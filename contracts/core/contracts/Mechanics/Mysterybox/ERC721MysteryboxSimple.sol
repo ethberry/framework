@@ -52,15 +52,13 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, TopUp {
   }
 
   function unpack(uint256 tokenId) public {
-    address account = _msgSender();
-
-    require(_isApprovedOrOwner(account, tokenId), "Mysterybox: unpack caller is not owner nor approved");
+    require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
 
     emit UnpackMysterybox(tokenId);
 
     _burn(tokenId);
 
-    ExchangeUtils.acquire(_itemData[tokenId], account, DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(_itemData[tokenId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Simple, TopUp) returns (bool) {

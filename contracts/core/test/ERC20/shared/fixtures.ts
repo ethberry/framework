@@ -1,18 +1,16 @@
 import { ethers } from "hardhat";
-import { constants } from "ethers";
 
 import { amount, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-export async function deployERC20(name = "ERC20Simple", options: any = {}) {
+export async function deployERC20(name = "ERC20ABNon1363", options: any = {}) {
   const factory = await ethers.getContractFactory(name);
-  const args = Object.assign({ tokenName, tokenSymbol, amount }, options);
+  const args = Object.assign({ tokenName, tokenSymbol }, options);
   return factory.deploy(...Object.values(args));
 }
 
-export async function deployERC20Bl(name = "ERC20Blacklist", options: any = {}) {
+export async function deployERC1363(name = "ERC20Simple", options: any = {}) {
   const factory = await ethers.getContractFactory(name);
-  const cap = constants.WeiPerEther.mul(amount);
-  const args = Object.assign({ tokenName, tokenSymbol, cap }, options);
+  const args = Object.assign({ tokenName, tokenSymbol, amount }, options);
   return factory.deploy(...Object.values(args));
 }
 

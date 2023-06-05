@@ -11,13 +11,14 @@ import { customMintCommonERC721 } from "../ERC721/shared/customMintFn";
 
 describe("ERC998ERC20Simple", function () {
   const factory = () => deployERC721(this.title);
+  const options = { mint: customMintCommonERC721, tokenId };
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
-  shouldBehaveLikeERC998ERC20(factory, { mint: customMintCommonERC721, tokenId });
+  shouldBehaveLikeERC998ERC20(factory, options);
 
   shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });

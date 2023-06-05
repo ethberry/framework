@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ICraft, TokenType } from "@framework/types";
 
-import CraftABI from "../../../../abis/components/buttons/mechanics/craft/craft.abi.json";
+import CraftABI from "../../../../abis/mechanics/craft/craft.abi.json";
 
 import { getEthPrice } from "../../../../utils/money";
 import { sorter } from "../../../../utils/sorter";

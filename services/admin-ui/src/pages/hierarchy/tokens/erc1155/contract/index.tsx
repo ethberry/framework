@@ -10,17 +10,19 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ContractStatus, Erc1155ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc1155ContractFeatures } from "@framework/types";
 
-import { Erc1155ContractEditDialog } from "./edit";
 import { Erc1155ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
   const {
@@ -33,6 +35,7 @@ export const Erc1155Contract: FC = () => {
     isEditDialogOpen,
     isDeleteDialogOpen,
     handleToggleFilters,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -43,17 +46,31 @@ export const Erc1155Contract: FC = () => {
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc1155/contracts",
+    empty: {
+      title: "",
+      description: emptyStateString,
+      address: "",
+      imageUrl: "",
+    },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, description, imageUrl, contractStatus }) => ({
-      title,
-      description,
-      imageUrl,
-      contractStatus,
-    }),
+    filter: ({ id, title, description, imageUrl, contractStatus, address }) =>
+      id
+        ? {
+            title,
+            description,
+            imageUrl,
+            contractStatus,
+          }
+        : {
+            title,
+            description,
+            address,
+            imageUrl,
+          },
   });
 
   return (
@@ -66,6 +83,9 @@ export const Erc1155Contract: FC = () => {
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TokenCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
         <Erc1155ContractDeployButton />
       </PageHeader>
@@ -94,7 +114,10 @@ export const Erc1155Contract: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+                  }
                 />
               </ListItemSecondaryAction>
             </ListItem>

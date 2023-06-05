@@ -7,7 +7,7 @@ import { RecentActors } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import VrfAddConsumer from "../../../../../abis/components/buttons/integrations/chain-link/subscription/addConsumer.abi.json";
+import VrfAddConsumer from "../../../../../abis/integrations/chain-link/subscription/addConsumer.abi.json";
 
 import { ChainLinkSubscriptionDialog, IChainLinkVrfSubscriptionDDto } from "./dialog";
 

@@ -1,7 +1,7 @@
+import { IClaimItemCreateDto } from "@framework/types";
 import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { MerchantService } from "../../../infrastructure/merchant/merchant.service";
-import type { IClaimItemCreateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 import { ClaimService } from "./claim.service";
 

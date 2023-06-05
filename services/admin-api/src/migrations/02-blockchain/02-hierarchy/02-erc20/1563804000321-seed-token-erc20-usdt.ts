@@ -10,7 +10,7 @@ export class SeedTokenErc20USDTAt1563804000321 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,

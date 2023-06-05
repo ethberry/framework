@@ -16,6 +16,7 @@ export interface IStakingCreateDto {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxStake: number;
   recurrent: boolean;
   stakingRuleStatus?: StakingRuleStatus;
   contractId: number;

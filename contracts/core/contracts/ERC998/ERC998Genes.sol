@@ -7,18 +7,22 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import "../utils/constants.sol";
-import "./ERC998Simple.sol";
+import "../Mechanics/Traits/TraitsDnD.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
-import "../Mechanics/Breed/Breed.sol";
+import "./ERC998Simple.sol";
 
-abstract contract ERC998Genes is IERC721Random, ERC998Simple, Breed {
+abstract contract ERC998Genes is IERC721Random, ERC998Simple, TraitsDnD {
   using Counters for Counters.Counter;
+  using SafeCast for uint;
 
   struct Request {
     address account;
-    uint256 templateId;
+    uint32 templateId;
+    uint32 matronId;
+    uint32 sireId;
   }
 
   mapping(uint256 => Request) internal _queue;
@@ -39,7 +43,9 @@ abstract contract ERC998Genes is IERC721Random, ERC998Simple, Breed {
       revert TemplateZero();
     }
 
-    _queue[getRandomNumber()] = Request(account, templateId);
+    (uint256 childId, uint256 matronId, uint256 sireId) = decodeData(templateId);
+
+    _queue[getRandomNumber()] = Request(account, childId.toUint32(), matronId.toUint32(), sireId.toUint32());
   }
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
@@ -49,11 +55,25 @@ abstract contract ERC998Genes is IERC721Random, ERC998Simple, Breed {
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
+    uint256 traits = encodeData(request, randomWords[0]);
+
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, GENES, randomWords[0]);
+    _upsertRecordField(tokenId, TRAITS, traits);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
+  }
+
+  function decodeData(uint256 externalId) internal pure returns (uint256 childId, uint256 matronId, uint256 sireId) {
+    childId = uint256(uint32(externalId));
+    matronId = uint256(uint32(externalId >> 32));
+    sireId = uint256(uint32(externalId >> 64));
+  }
+
+  function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 traits) {
+    traits |= uint256(req.matronId);
+    traits |= uint256(req.sireId) << 32;
+    traits |= uint256(uint192(randomness)) << 64;
   }
 
   function getRandomNumber() internal virtual returns (uint256 requestId);

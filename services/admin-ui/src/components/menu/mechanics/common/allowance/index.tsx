@@ -9,7 +9,7 @@ import type { IContract } from "@framework/types";
 import { TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
+import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

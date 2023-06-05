@@ -9,7 +9,7 @@ import {
   shouldSafeTransferFrom,
   shouldSetApprovalForAll,
   shouldTransferFrom,
-} from "@gemunion/contracts-erc721-enumerable";
+} from "@gemunion/contracts-erc721e";
 
 import { shouldReceive } from "../../../../shared/receive";
 import { shouldNotMint } from "./shouldNotMint";

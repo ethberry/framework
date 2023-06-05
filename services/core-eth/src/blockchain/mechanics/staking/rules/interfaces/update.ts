@@ -8,5 +8,6 @@ export interface IStakingUpdateDto {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxStake: number;
   recurrent: boolean;
 }

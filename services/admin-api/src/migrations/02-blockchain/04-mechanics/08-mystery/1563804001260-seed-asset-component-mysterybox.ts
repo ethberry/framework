@@ -44,10 +44,10 @@ export class SeedAssetComponentsMysteryboxAt1563804001260 implements MigrationIn
         160601
       ), (
         'ERC20',
-        4217,
-        221701, -- BUSD
+        2217,
+        221701, -- busd
         '${constants.WeiPerEther.toString()}',
-        160601
+        260101
       );
     `);
   }

@@ -81,9 +81,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         ) : null}
 
         <AllowanceMenuItem contract={contract} />
-        {!contract.contractFeatures.includes(ContractFeatures.SOULBOUND) ? (
-          <TransferMenuItem contract={contract} />
-        ) : null}
+        <TransferMenuItem contract={contract} />
 
         <EthListenerAddMenuItem contract={contract} />
         <EthListenerRemoveMenuItem contract={contract} />

@@ -4,7 +4,7 @@ import { Contract, utils } from "ethers";
 import { METADATA_ROLE } from "@gemunion/contracts-constants";
 
 import { templateId, tokenId } from "../../constants";
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export function shouldBehaveLikeUpgradeable(factory: () => Promise<Contract>) {
   describe("upgrade", function () {
@@ -24,7 +24,7 @@ export function shouldBehaveLikeUpgradeable(factory: () => Promise<Contract>) {
 
       const value = await contractInstance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(utils.toUtf8Bytes(TokenAttributes.GRADE)),
+        utils.keccak256(utils.toUtf8Bytes(TokenMetadata.GRADE)),
       );
 
       expect(value).to.equal(1);

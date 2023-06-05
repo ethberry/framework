@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractTemplates } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 export interface IContractInputProps {
   prefix: string;
@@ -19,7 +19,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
       controller="contracts"
       data={{
         contractType: [tokenType],
-        contractFeatures: [ContractTemplates.GENES],
+        contractFeatures: [ContractFeatures.GENES],
       }}
     />
   );

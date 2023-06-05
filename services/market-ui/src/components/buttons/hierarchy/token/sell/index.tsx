@@ -11,6 +11,7 @@ interface ITokenSellButtonProps {
 
 export const TokenSellButton: FC<ITokenSellButtonProps> = props => {
   const { token } = props;
+
   const handleSell = (): void => {
     alert("Not implemented");
   };

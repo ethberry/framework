@@ -92,7 +92,7 @@ export class AchievementLevelService {
   }
 
   public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {
-    const { item, attributes } = dto;
+    const { item, parameters } = dto;
 
     // add new item
     const itemEntity = await this.assetService.create({
@@ -103,8 +103,7 @@ export class AchievementLevelService {
     return await this.achievementLevelEntityRepository
       .create({
         ...dto,
-        // attributes: JSON.parse(attributes),
-        attributes,
+        parameters,
         item: itemEntity,
       })
       .save();
@@ -114,7 +113,7 @@ export class AchievementLevelService {
     where: FindOptionsWhere<AchievementLevelEntity>,
     dto: IAchievementLevelUpdateDto,
   ): Promise<AchievementLevelEntity> {
-    const { item, attributes, ...rest } = dto;
+    const { item, parameters, ...rest } = dto;
     const achievementLevelEntity = await this.findOne(where, {
       join: {
         alias: "level",
@@ -129,8 +128,8 @@ export class AchievementLevelService {
       throw new NotFoundException("achievementLevelNotFound");
     }
 
-    if (attributes) {
-      Object.assign(achievementLevelEntity, { attributes });
+    if (parameters) {
+      Object.assign(achievementLevelEntity, { parameters });
     }
 
     Object.assign(achievementLevelEntity, rest);

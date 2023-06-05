@@ -2,10 +2,10 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { addDays } from "date-fns";
 
-import { GameEventType, IClaim, RmqProviderType, TokenType } from "@framework/types";
+import type { IClaim, IClaimItemCreateDto } from "@framework/types";
+import { GameEventType, RmqProviderType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { IClaimItemCreateDto } from "./interfaces";
 
 @Injectable()
 export class ClaimService {

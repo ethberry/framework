@@ -7,7 +7,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 import type { ITemplate, ITemplateSearchDto } from "@framework/types";
 
-import { Erc1155TemplateListItem } from "../../tokens/erc1155/template-list/item";
+import { Erc1155TemplateListItem } from "../../../hierarchy/erc1155/template-list/item";
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 
 export const Erc1155: FC<ITabPanelProps> = props => {

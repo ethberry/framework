@@ -50,6 +50,11 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "maxStake",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "recurrent",
           type: "boolean",
         },

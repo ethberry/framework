@@ -35,7 +35,7 @@ export class AchievementLevelCreateDto extends SearchableDto implements IAchieve
   @ApiPropertyOptional()
   @IsOptional()
   // @IsJSON({ message: "patternMismatch" })
-  public attributes: Record<string, string | number>;
+  public parameters: Record<string, string | number>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

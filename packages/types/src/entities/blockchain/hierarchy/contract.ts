@@ -41,6 +41,7 @@ export enum Erc721ContractFeatures {
   "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
   "VOTES" = "VOTES",
+  "EXTERNAL" = "EXTERNAL",
 }
 
 export enum Erc721ContractTemplates {
@@ -91,6 +92,7 @@ export enum Erc998ContractTemplates {
 export enum Erc1155ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "SOULBOUND" = "SOULBOUND",
+  "EXTERNAL" = "EXTERNAL",
 }
 
 export enum Erc1155ContractTemplates {
@@ -137,44 +139,15 @@ export enum StakingContractTemplates {
   "SIMPLE" = "SIMPLE",
 }
 
-// waiting for https://github.com/microsoft/TypeScript/issues/17592
-export enum ContractTemplates {
-  "SIMPLE" = "SIMPLE",
-  "BLACKLIST" = "BLACKLIST",
-  "WHITELIST" = "WHITELIST",
-  "EXTERNAL" = "EXTERNAL",
-
-  "GENES" = "GENES",
-  "RANDOM" = "RANDOM",
-  "BLACKLIST_RANDOM" = "BLACKLIST_RANDOM",
-  "BLACKLIST_UPGRADEABLE" = "BLACKLIST_UPGRADEABLE",
-  "BLACKLIST_UPGRADEABLE_RANDOM" = "BLACKLIST_UPGRADEABLE_RANDOM",
-  "SOULBOUND" = "SOULBOUND",
-  "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
-  "UPGRADEABLE" = "UPGRADEABLE",
-  "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
-
-  "ERC20OWNER" = "ERC20OWNER",
-  "ERC1155OWNER" = "ERC1155OWNER",
-  "ERC1155OWNER_ERC20OWNER" = "ERC1155OWNER_ERC20OWNER",
-  "STATE_HASH" = "STATE_HASH",
-
-  "BLACKLIST_PAUSABLE" = "BLACKLIST_PAUSABLE",
-  "PAUSABLE" = "PAUSABLE",
-
-  "REFERRAL" = "REFERRAL",
-  "SPLITTER" = "SPLITTER",
-}
-
 export enum ContractFeatures {
   // SYSTEM
   "WITHDRAW" = "WITHDRAW",
   "ALLOWANCE" = "ALLOWANCE",
+  "EXTERNAL" = "EXTERNAL",
 
   // ERC20
   "BLACKLIST" = "BLACKLIST",
   "WHITELIST" = "WHITELIST",
-  "EXTERNAL" = "EXTERNAL",
 
   // EC721
   "UPGRADEABLE" = "UPGRADEABLE",

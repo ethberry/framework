@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,6 +22,8 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130402
       ), (
         130403
+      ), (
+        130404
       ), (
         130501
       ), (
@@ -60,6 +62,12 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130605
       ), (
         130606
+      ), (
+        130607
+      ), (
+        130608
+      ), (
+        130609
       ), (
         130701
       ), (
@@ -158,6 +166,18 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fsilver_ring.png?alt=media&token=c0da9303-7581-4ba8-8a94-c411b16e6402',
         130403,
+        0,
+        1,
+        'ACTIVE',
+        1304,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        130404,
+        'Pendant',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fpendant.png?alt=media&token=a130587b-550a-42bc-854d-ea845b10f1b0',
+        130404,
         0,
         1,
         'ACTIVE',
@@ -300,7 +320,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130512,
         'Witch Hat',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwitch_hat.png?alt=media&token=e3bcbd32-99d5-4504-8a70-feda7f7b987c',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fwitch_hat.png?alt=media&token=1605a712-a5d5-4313-a643-fd8ed1045f2c',
         130512,
         0,
         1,
@@ -385,7 +405,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Two Hand Axe',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Faxe_two_hand.png?alt=media&token=2ad664f0-9104-44fc-9f31-cd287a68158c',
-        130606,
+        130607,
         0,
         1,
         'ACTIVE',
@@ -397,7 +417,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Crossbow',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcrossbow.png?alt=media&token=e7de18c6-ae06-4bc0-9056-f300a1c04f2b',
-        130606,
+        130608,
         0,
         1,
         'ACTIVE',
@@ -409,7 +429,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         'Spear',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspear.png?alt=media&token=7de855b5-36d8-4fdf-bbc5-6352f39265c8',
-        130606,
+        130609,
         0,
         1,
         'ACTIVE',
@@ -418,7 +438,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         130700,
-        'DNA (genes)(hidden)',
+        'DNA (traits)(hidden)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
@@ -444,7 +464,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130801,
         'Medal',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmedal.png?alt=media&token=7d82f5d2-19eb-4352-b457-84005289a42d',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmedal.png?alt=media&token=b5df04c0-45bb-441f-bfa2-d9c6816797f9',
         130801,
         0,
         1,

@@ -16,6 +16,8 @@ declare global {
       VRF_ADDR: string;
       WAITLIST_ADDR: string;
       LOTTERY_ADDR: string;
+      RAFFLE_ADDR: string;
+      DISPERSE_ADDR: string;
     }
   }
 }

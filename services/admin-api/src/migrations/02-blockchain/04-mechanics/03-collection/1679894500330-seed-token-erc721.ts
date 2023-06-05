@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { imageUrl, ns } from "@framework/constants";
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,7 +12,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         image_url,
         royalty,
         token_id,
@@ -23,7 +23,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
       ) VALUES (
         16110101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "161101",
+          [TokenMetadata.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "1",
@@ -38,7 +38,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
       ), (
         16110102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "161101",
+          [TokenMetadata.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "2",
           MOUTH: "1",
@@ -53,7 +53,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
       ), (
         16110103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "161101",
+          [TokenMetadata.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "2",
@@ -68,7 +68,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
       ), (
         16110104,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "161101",
+          [TokenMetadata.TEMPLATE_ID]: "161101",
           CLOTHES: "1",
           EYES: "3",
           MOUTH: "3",
@@ -83,7 +83,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
       ), (
         16110105,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "161101",
+          [TokenMetadata.TEMPLATE_ID]: "161101",
           CLOTHES: "2",
           EYES: "2",
           MOUTH: "2",

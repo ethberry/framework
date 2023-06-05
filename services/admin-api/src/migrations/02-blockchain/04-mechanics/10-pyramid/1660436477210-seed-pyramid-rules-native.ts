@@ -31,20 +31,20 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         asset_id
       ) VALUES (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90111
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90112
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         90121
       ), (

@@ -1,14 +1,16 @@
 import React, { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { AutoSave } from "@gemunion/mui-form";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 
+import { ICollectionRow } from "../index";
 import { validationSchema } from "./validation";
 import { FileInput } from "./file-input";
 import { CollectionInfoPopover } from "./popover";
 
 export interface ICollectionUploadDto {
   files: Array<File>;
+  tokens: ICollectionRow[];
 }
 
 export interface ICollectionUploadDialogProps {
@@ -16,10 +18,11 @@ export interface ICollectionUploadDialogProps {
   onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
   initialValues: ICollectionUploadDto;
+  isLoading: boolean;
 }
 
 export const CollectionUploadDialog: FC<ICollectionUploadDialogProps> = props => {
-  const { initialValues, onConfirm, ...rest } = props;
+  const { initialValues, isLoading, onConfirm, ...rest } = props;
 
   return (
     <FormDialog
@@ -31,8 +34,9 @@ export const CollectionUploadDialog: FC<ICollectionUploadDialogProps> = props =>
       action={<CollectionInfoPopover />}
       {...rest}
     >
-      <FileInput />
-      <AutoSave onSubmit={onConfirm} />
+      <ProgressOverlay isLoading={isLoading}>
+        <FileInput initialValues={initialValues} />
+      </ProgressOverlay>
     </FormDialog>
   );
 };

@@ -7,13 +7,15 @@ import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce } from "@gemunion/contra
 
 import { expiresAt, extra, templateId, tokenId, tokenIds } from "../../../constants";
 import { IRule } from "../interface/staking";
-import { deployERC20 } from "../../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../../ERC1155/shared/fixtures";
 
 export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
-  const period = 300;
+  const period = 30;
   const cycles = 2;
+  const maxStake = 2;
+
   const params = {
     nonce,
     externalId: 1,
@@ -22,11 +24,11 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
     extra,
   };
 
-  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
 
-  describe("Reentrance Guard", function () {
+  describe("Reentrancy Guard", function () {
     describe("receiveReward", function () {
       it("should not call twice (NATIVE)", async function () {
         const [owner] = await ethers.getSigners();
@@ -55,6 +57,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -130,6 +133,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -200,6 +204,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -279,6 +284,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period, // 60 sec
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -361,6 +367,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [[], [], [], []],
           period,
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -442,6 +449,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 5000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -499,7 +507,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
           .to.emit(stakingInstance, "WithdrawBalance")
-          .withArgs(attakerInstance.address, [1, constants.AddressZero, tokenId, amount / 2]);
+          .withArgs(attakerInstance.address, [1, erc20Instance.address, tokenId, amount / 2]);
       });
 
       it("should not call twice (ERC721)", async function () {
@@ -533,6 +541,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };
@@ -631,6 +640,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<Contract>) {
           content: [],
           period,
           penalty: 10000, // 50%
+          maxStake,
           recurrent: true,
           active: true,
         };

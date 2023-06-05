@@ -15,7 +15,7 @@ import {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
-  TokenAttributes,
+  TokenMetadata,
   TokenMintType,
   TokenStatus,
 } from "@framework/types";
@@ -57,8 +57,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
       if (!templateEntity) {
@@ -67,7 +67,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        metadata,
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });
@@ -76,7 +76,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
         const mintType = getTokenMintType(txLogs);
@@ -353,7 +353,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc998TokenEntity.attributes, { GRADE: grade.toString() });
+    Object.assign(erc998TokenEntity.metadata, { GRADE: grade.toString() });
     await erc998TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);

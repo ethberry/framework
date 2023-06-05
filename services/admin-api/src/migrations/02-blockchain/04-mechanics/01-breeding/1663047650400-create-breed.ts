@@ -13,7 +13,7 @@ export class CreateBreed1663047650400 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "genes",
+          name: "traits",
           type: "varchar",
         },
         {

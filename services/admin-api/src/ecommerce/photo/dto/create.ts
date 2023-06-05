@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { IsString, IsUrl } from "class-validator";
 
 import { IPhotoCreateDto } from "../interfaces";
 
@@ -9,6 +9,7 @@ export class PhotoCreateDto implements IPhotoCreateDto {
   public title: string;
 
   @ApiProperty()
+  @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 

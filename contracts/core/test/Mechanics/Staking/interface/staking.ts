@@ -4,6 +4,7 @@ export interface IRule {
   content: IAsset[][];
   period: number;
   penalty: number;
+  maxStake: number;
   recurrent: boolean;
   active: boolean;
 }

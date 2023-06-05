@@ -3,8 +3,8 @@ import { IsEnum, IsOptional, IsString, IsEthereumAddress } from "class-validator
 import { Transform } from "class-transformer";
 import { CronExpression } from "@nestjs/schedule";
 
-// import { ForbidEnumValues } from "@gemunion/nest-js-validators";
-import { ContractStatus, ILotteryOption } from "@framework/types";
+import { ContractStatus } from "@framework/types";
+import type { ILotteryOption } from "@framework/types";
 
 export class ScheduleUpdateDto implements ILotteryOption {
   @ApiProperty()
@@ -23,6 +23,5 @@ export class ScheduleUpdateDto implements ILotteryOption {
   @IsOptional()
   @Transform(({ value }) => value as CronExpression)
   @IsEnum(CronExpression, { message: "badInput" })
-  // @Validate(ForbidEnumValues, [ContractStatus.NEW])
   public schedule: CronExpression;
 }

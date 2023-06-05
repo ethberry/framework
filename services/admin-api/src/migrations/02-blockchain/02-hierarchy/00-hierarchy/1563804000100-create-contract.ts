@@ -20,6 +20,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'MYSTERY',
         'WRAPPER',
         'LOTTERY',
+        'RAFFLE',
         'STAKING',
         'PYRAMID',
         'WAITLIST',

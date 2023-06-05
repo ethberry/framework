@@ -1,8 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import csv2json from "csvtojson";
-import { validateSync } from "class-validator";
 
 import { IContractSearchDto, ModuleType, TokenType } from "@framework/types";
 
@@ -10,8 +8,8 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { CollectionUploadDto, TokenUploadDto } from "./dto";
 import { CollectionTokenService } from "../token/token.service";
+import { ICollectionUploadDto } from "./interfaces";
 
 @Injectable()
 export class CollectionContractService extends ContractService {
@@ -32,8 +30,8 @@ export class CollectionContractService extends ContractService {
     );
   }
 
-  public async updateTokensBatch(address: string, dto: CollectionUploadDto): Promise<Array<TokenEntity>> {
-    const { files } = dto;
+  public async upload(address: string, dto: ICollectionUploadDto): Promise<Array<TokenEntity>> {
+    const { tokens } = dto;
     const contractEntity = await this.findOne({ address }, { relations: { templates: true } });
 
     if (!contractEntity) {
@@ -41,39 +39,11 @@ export class CollectionContractService extends ContractService {
     }
 
     // should be only one template per collection
-    if (contractEntity.templates.length > 1) {
+    if (contractEntity.templates.length !== 1) {
       throw new NotFoundException("templateNotFound");
     }
 
-    // todo use user.chainID or csv.chainId
-    return this.collectionTokenService.updateTokensBatch(contractEntity.templates[0].id, files);
-  }
-
-  public async upload(address: string, file: Express.Multer.File): Promise<Array<TokenEntity>> {
-    const parsed = await csv2json({
-      noheader: true,
-      headers: ["tokenId", "imageUrl", "attributes"],
-    }).fromString(file.buffer.toString());
-
-    const files = parsed.map(
-      ({ tokenId, imageUrl, attributes }: { tokenId: string; imageUrl: string; attributes: string }) => {
-        return Object.assign(new TokenUploadDto(), {
-          tokenId,
-          imageUrl,
-          attributes,
-        });
-      },
-    );
-
-    const schema = new CollectionUploadDto();
-    schema.files = files;
-    const result = validateSync(schema);
-
-    if (result.length) {
-      this.loggerService.log(result, CollectionContractService.name);
-      throw result;
-    }
-
-    return this.updateTokensBatch(address, { files });
+    // TODO use user.chainID
+    return this.collectionTokenService.updateTokensBatch(contractEntity.templates[0].id, tokens);
   }
 }

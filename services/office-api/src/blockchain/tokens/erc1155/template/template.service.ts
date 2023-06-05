@@ -59,7 +59,7 @@ export class Erc1155TemplateService extends TemplateService {
 
     await this.tokenService.create({
       tokenId: (maxTokenId + 1).toString(),
-      attributes: "{}",
+      metadata: "{}",
       royalty: 0,
       template: templateEntity,
     });

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
 
 import { IStakingRule, ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -25,7 +25,7 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, contract, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } =
+  const { id, title, contract, description, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } =
     initialValues;
   const fixedValues = {
     id,
@@ -38,6 +38,7 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
     durationAmount,
     durationUnit,
     contract,
+    maxStake,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -82,6 +83,14 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
           />
         </Grid>
       </Grid>
+      <ContractInput
+        name="contractId"
+        related="address"
+        controller="contracts"
+        data={{
+          contractModule: [ModuleType.STAKING],
+        }}
+      />
       <DurationInput readOnly={readOnly} />
       <CurrencyInput
         name="penalty"
@@ -91,15 +100,8 @@ export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props 
         }}
         readOnly={readOnly}
       />
+      <NumberInput name="maxStake" readOnly={readOnly} />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
-      <ContractInput
-        name="contractId"
-        related="address"
-        controller="contracts"
-        data={{
-          contractModule: [ModuleType.STAKING],
-        }}
-      />
     </FormDialog>
   );
 };

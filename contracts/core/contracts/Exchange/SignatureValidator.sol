@@ -65,9 +65,7 @@ contract SignatureValidator is EIP712, Context {
       }
     }
 
-    address account = _msgSender();
-
-    return _recoverSigner(_hashOneToOne(account, params, item, price), signature);
+    return _recoverSigner(_hashOneToOne(_msgSender(), params, item, price), signature);
   }
 
   function _recoverOneToManySignature(
@@ -87,9 +85,7 @@ contract SignatureValidator is EIP712, Context {
       }
     }
 
-    address account = _msgSender();
-
-    return _recoverSigner(_hashOneToMany(account, params, item, price), signature);
+    return _recoverSigner(_hashOneToMany(_msgSender(), params, item, price), signature);
   }
 
   function _recoverManyToManySignature(
@@ -109,9 +105,7 @@ contract SignatureValidator is EIP712, Context {
       }
     }
 
-    address account = _msgSender();
-
-    return _recoverSigner(_hashManyToMany(account, params, items, price), signature);
+    return _recoverSigner(_hashManyToMany(_msgSender(), params, items, price), signature);
   }
 
   function _recoverSigner(bytes32 digest, bytes memory signature) private pure returns (address) {

@@ -9,7 +9,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
 import { formatComplexPrice, formatPenalty } from "../../../../../utils/money";
-import { formatDuration } from "../../../../../utils/time";
+import { normalizeDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -69,7 +69,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                   ? formatMessage(
                       { id: `enums.durationUnit.${stakingRule.durationUnit}` },
                       {
-                        count: formatDuration({
+                        count: normalizeDuration({
                           durationAmount: stakingRule.durationAmount,
                           durationUnit: stakingRule.durationUnit,
                         }),

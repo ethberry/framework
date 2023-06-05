@@ -71,7 +71,7 @@ export class NativeContractService extends ContractService {
 
     await this.tokenEntityRepository
       .create({
-        attributes: "{}",
+        metadata: "{}",
         tokenId: "0",
         royalty: 0,
         template: templateEntity,

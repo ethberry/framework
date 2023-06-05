@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { BigNumber } from "ethers";
 import { BreedService } from "./breed.service";
-import { decodeGenes, decodeNumber } from "@framework/genes";
+import { decodeNumber, decodeTraits } from "@framework/traits";
 
 @Injectable()
 export class BreedServiceEth {
@@ -14,9 +14,9 @@ export class BreedServiceEth {
     private readonly breedService: BreedService,
   ) {}
 
-  public async newborn(tokenId: number, genes: string, transactionHash: string): Promise<void> {
-    const { matronId, sireId } = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
-    const randomness = decodeNumber(BigNumber.from(genes)).slice(0, 6).join("");
+  public async newborn(tokenId: number, traits: string, transactionHash: string): Promise<void> {
+    const { matronId, sireId } = decodeTraits(BigNumber.from(traits), ["matronId", "sireId"].reverse());
+    const randomness = decodeNumber(BigNumber.from(traits)).slice(0, 6).join("");
     let newbornGenes = "";
     // GENESIS ITEM
     // TODO better check
@@ -30,8 +30,8 @@ export class BreedServiceEth {
       const dad = await this.breedService.findOne({ id: sireId });
 
       if (!mom || !dad) {
-        this.loggerService.error(new NotFoundException("genesNotFound"), BreedServiceEth.name);
-        throw new NotFoundException("genesNotFound");
+        this.loggerService.error(new NotFoundException("traitsNotFound"), BreedServiceEth.name);
+        throw new NotFoundException("traitsNotFound");
       } else {
         // TODO better gene-mixing;
         // xxxxxxxxxxxx - random
@@ -40,16 +40,16 @@ export class BreedServiceEth {
         // xxxmmmxxxddd - newborn
         // TODO subst deprecated
         const gen1 = randomness.substr(0, randomness.length / 4);
-        const gen2 = mom.genes.substr(0, mom.genes.length / 4);
+        const gen2 = mom.traits.substr(0, mom.traits.length / 4);
         const gen3 = randomness.substr(randomness.length - 1 - randomness.length / 4, randomness.length / 4);
-        const gen4 = dad.genes.substr(dad.genes.length - 1 - dad.genes.length / 4, dad.genes.length / 4);
+        const gen4 = dad.traits.substr(dad.traits.length - 1 - dad.traits.length / 4, dad.traits.length / 4);
         newbornGenes = gen1 + gen2 + gen3 + gen4;
       }
     }
 
     const breedEntity = await this.breedService.create({
       tokenId,
-      genes: newbornGenes,
+      traits: newbornGenes,
       count: 0,
     });
 

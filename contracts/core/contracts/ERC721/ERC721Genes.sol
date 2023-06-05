@@ -9,19 +9,18 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
-import "./ERC721Simple.sol";
-import "./interfaces/IERC721Random.sol";
-import "../Mechanics/Breed/Breed.sol";
-
 import "../utils/constants.sol";
+import "../Mechanics/Traits/TraitsDnD.sol";
+import "./interfaces/IERC721Random.sol";
+import "./ERC721Simple.sol";
 
-abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
+abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD {
   using Counters for Counters.Counter;
   using SafeCast for uint;
 
   struct Request {
     address account;
-    uint32 templateId /* childId */;
+    uint32 templateId;
     uint32 matronId;
     uint32 sireId;
   }
@@ -56,10 +55,10 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    uint256 genes = encodeData(request, randomWords[0]);
+    uint256 traits = encodeData(request, randomWords[0]);
 
-    _upsertRecordField(tokenId, GENES, genes);
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, TRAITS, traits);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
@@ -71,10 +70,10 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, Breed {
     sireId = uint256(uint32(externalId >> 64));
   }
 
-  function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 genes) {
-    genes |= uint256(req.matronId);
-    genes |= uint256(req.sireId) << 32;
-    genes |= uint256(uint192(randomness)) << 64;
+  function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 traits) {
+    traits |= uint256(req.matronId);
+    traits |= uint256(req.sireId) << 32;
+    traits |= uint256(uint192(randomness)) << 64;
   }
 
   function getRandomNumber() internal virtual returns (uint256 requestId);

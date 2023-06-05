@@ -1,3 +1,5 @@
+import { IAssetStruct } from "./staking";
+
 export enum PyramidEventType {
   RuleCreated = "RuleCreated",
   RuleUpdated = "RuleUpdated",
@@ -25,9 +27,11 @@ export interface IFinalizedTokenEvent {
   amount: string;
 }
 
+export type IPyramidRuleStruct = [[IAssetStruct], [IAssetStruct], string, string, string, string, boolean];
+
 export interface IPyramidCreateEvent {
   ruleId: string;
-  rule: IPyramidRule;
+  rule: IPyramidRuleStruct;
   externalId: string;
 }
 
@@ -36,27 +40,27 @@ export interface IPyramidUpdateEvent {
   active: boolean;
 }
 
-interface IPyramidRule {
-  deposit: IPyramidRuleItem;
-  reward: IPyramidRuleItem;
-  period: string;
-  penalty: string;
-  recurrent: boolean;
-  active: boolean;
-  externalId: string;
-}
+// interface IPyramidRule {
+//   deposit: IPyramidRuleItem;
+//   reward: IPyramidRuleItem;
+//   period: string;
+//   maxCycles: string;
+//   penalty: string;
+//   externalId: string;
+//   active: boolean;
+// }
 
-interface IPyramidRuleItem {
-  itemType: PyramidItemType;
-  address: string;
-  tokenId: string;
-  amount: string;
-}
+// interface IPyramidRuleItem {
+//   itemType: PyramidItemType;
+//   address: string;
+//   tokenId: string;
+//   amount: string;
+// }
 
-enum PyramidItemType {
-  NATIVE = "0",
-  ERC20 = "1",
-}
+// enum PyramidItemType {
+//   NATIVE = "0",
+//   ERC20 = "1",
+// }
 
 export interface IPyramidDepositEvent {
   stakingId: string;

@@ -2,7 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { IClaimItemUpdateDto } from "../interfaces";
+import type { IClaimItemUpdateDto } from "@framework/types";
+
 import { ItemDto } from "../../../exchange/asset/dto";
 
 export class ClaimItemUpdateDto implements IClaimItemUpdateDto {

@@ -20,7 +20,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IComposition, ICompositionSearchDto } from "@framework/types";
 
-import ERC998WhitelistChildABI from "../../../../../abis/pages/hierarchy/tokens/erc998/composition/whitelistChild.abi.json";
+import ERC998WhitelistChildABI from "../../../../../abis/hierarchy/erc998/composition/whitelistChild.abi.json";
 
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionSearchForm } from "./form";

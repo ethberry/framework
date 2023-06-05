@@ -45,20 +45,20 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         asset_id
       ) VALUES (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80111
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80112
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80121
       ), (
@@ -69,8 +69,8 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80122
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80131
       ), (
@@ -81,8 +81,8 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80132
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80141
       ), (
@@ -93,8 +93,8 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80142
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80151
       ), (
@@ -105,8 +105,8 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80152
       ), (
         'NATIVE',
-        4101,
-        410101, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80199
       );

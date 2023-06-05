@@ -4,32 +4,41 @@ import { Divider, Grid } from "@mui/material";
 import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { useStyles } from "./styles";
-import { Erc20Section } from "./hierarchy/erc20";
-import { Erc1155Section } from "./hierarchy/erc1155";
-import { Erc721Section } from "./hierarchy/erc721";
-import { Erc998Section } from "./hierarchy/erc998";
-import { MysterySection } from "./mechanics/mystery";
-import { StakingSection } from "./mechanics/staking";
-import { NativeSection } from "./hierarchy/native";
-import { LotterySection } from "./mechanics/lottery";
-import { VestingSection } from "./mechanics/vesting";
-import { ClaimSection } from "./mechanics/claim";
-import { GradeSection } from "./mechanics/grade";
-import { CraftSection } from "./mechanics/craft";
-import { DropSection } from "./mechanics/drop";
+
+import { AchievementsSection } from "./achievements";
+
+import { EcommerceSection } from "./ecommerce";
+
+import { MarketplaceSection } from "./exchange/marketplace";
+import { WalletSection } from "./exchange/wallet";
+
 import { AdminSection } from "./infrastructure";
+
 import { ChainLinkSection } from "./integrations/chain-link";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { CoinMarketCapSection } from "./integrations/coin-market-cap";
-import { MarketplaceSection } from "./exchange/marketplace";
-import { PyramidSection } from "./mechanics/pyramid";
+
+import { NativeSection } from "./hierarchy/native";
+import { Erc20Section } from "./hierarchy/erc20";
+import { Erc721Section } from "./hierarchy/erc721";
+import { Erc998Section } from "./hierarchy/erc998";
+import { Erc1155Section } from "./hierarchy/erc1155";
+
 import { BreedSection } from "./mechanics/breed";
-import { WaitlistSection } from "./mechanics/waitlist";
-import { WalletSection } from "./exchange/wallet";
+import { ClaimSection } from "./mechanics/claim";
 import { Collections } from "./mechanics/collection";
-import { EcommerceSection } from "./ecommerce";
+import { CraftSection } from "./mechanics/craft";
+import { DisperseSection } from "./mechanics/disperse";
+import { DropSection } from "./mechanics/drop";
+import { GradeSection } from "./mechanics/grade";
+import { LotterySection } from "./mechanics/lottery";
+import { RaffleSection } from "./mechanics/raffle";
+import { MysterySection } from "./mechanics/mystery";
+import { PyramidSection } from "./mechanics/pyramid";
 import { RentSection } from "./mechanics/rent";
-import { AchievementsSection } from "./achievements";
+import { StakingSection } from "./mechanics/staking";
+import { VestingSection } from "./mechanics/vesting";
+import { WaitlistSection } from "./mechanics/waitlist";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -50,6 +59,7 @@ export const Dashboard: FC = () => {
           <Collections />
         </Grid>
         <Grid item xs={12} md={4}>
+          <DisperseSection />
           <VestingSection />
           <WaitlistSection />
           <ClaimSection />
@@ -58,6 +68,8 @@ export const Dashboard: FC = () => {
           <CraftSection />
           <GradeSection />
           <BreedSection />
+          <Divider sx={{ m: 2 }} />
+          <RaffleSection />
           <LotterySection />
           <StakingSection />
           <PyramidSection />

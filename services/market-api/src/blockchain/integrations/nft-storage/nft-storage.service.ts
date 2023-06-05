@@ -49,7 +49,7 @@ export class NftstorageService {
       title: tokenEntity.template.title,
       description: getText(tokenEntity.template.description),
       image: `${nftStorageBaseUrl}/${tokenEntity.template.cid!}`,
-      attributes: tokenEntity.attributes,
+      attributes: tokenEntity.metadata,
     });
 
     Object.assign(tokenEntity, { cid });

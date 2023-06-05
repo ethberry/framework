@@ -39,6 +39,9 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
   @Column({ type: "int" })
   public penalty: number;
 
+  @Column({ type: "int", nullable: true })
+  public maxStake: number;
+
   @Column({ type: "boolean" })
   public recurrent: boolean;
 

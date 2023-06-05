@@ -11,6 +11,7 @@ import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { AllowanceMenuItem } from "../common/allowance";
 import { PyramidBalanceMenuItem } from "./pyramid-balances";
+import { TopUpMenuItem } from "../common/top-up";
 
 export interface IPyramidActionsMenu {
   contract: IContract;
@@ -50,6 +51,7 @@ export const PyramidActionsMenu: FC<IPyramidActionsMenu> = props => {
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
+        <TopUpMenuItem contract={contract} />
         <PyramidBalanceMenuItem contract={contract} />
         <EthListenerAddMenuItem contract={contract} />
         <EthListenerRemoveMenuItem contract={contract} />

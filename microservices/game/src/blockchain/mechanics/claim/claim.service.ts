@@ -13,11 +13,11 @@ import { constants, utils } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 
 @Injectable()

@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IAccessList } from "@framework/types";
 
-import UnWhitelistABI from "../../../../../abis/components/menu/extensions/whitelist-remove/unWhitelist.abi.json";
+import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
 
 export interface IAccessListUnWhitelistDialogProps {
   open: boolean;

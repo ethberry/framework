@@ -19,7 +19,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 
 import type { IAchievementLevel, IAchievementLevelSearchDto, IAchievementRule } from "@framework/types";
-import { AchievementType, TokenType } from "@framework/types";
+import { AchievementType, TokenMetadata, TokenType } from "@framework/types";
 
 import { AchievementLevelEditDialog } from "./edit";
 import { AchievementLevelSearchForm } from "./search";
@@ -55,7 +55,7 @@ export const AchievementLevels: FC = () => {
       title: "",
       description: emptyStateString,
       amount: 0,
-      attributes: { RARITY: "0" },
+      parameters: { [TokenMetadata.RARITY]: "0" },
       achievementLevel: 1,
       achievementRule: emptyAchievementRule,
       item: getEmptyTemplate(TokenType.ERC20),
@@ -72,7 +72,7 @@ export const AchievementLevels: FC = () => {
       description,
       item,
       amount,
-      attributes,
+      parameters,
       achievementLevel,
       achievementRuleId,
       achievementRule,
@@ -85,8 +85,7 @@ export const AchievementLevels: FC = () => {
             description,
             item: cleanUpAsset(item),
             amount,
-            attributes: JSON.parse(attributes),
-            // attributes,
+            parameters: JSON.parse(parameters),
             achievementRule,
             achievementLevel,
             startTimestamp,
@@ -96,8 +95,7 @@ export const AchievementLevels: FC = () => {
             title,
             description,
             amount,
-            attributes: JSON.parse(attributes),
-            // attributes,
+            parameters: JSON.parse(parameters),
             item: cleanUpAsset(item),
             achievementRuleId,
             achievementLevel,

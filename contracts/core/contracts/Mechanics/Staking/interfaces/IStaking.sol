@@ -15,6 +15,7 @@ interface IStaking {
     Asset[][] content;
     uint256 period;
     uint256 penalty;
+    uint256 maxStake;
     bool recurrent;
     bool active;
   }
@@ -27,7 +28,4 @@ interface IStaking {
     uint256 cycles;
     bool activeDeposit;
   }
-
-  event RuleCreated(uint256 ruleId, Rule rule);
-  event RuleUpdated(uint256 ruleId, bool active);
 }

@@ -8,7 +8,7 @@ import { params, subscriptionId, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../shared/link";
 import { VRFCoordinatorMock } from "../../typechain-types";
-import { deployBusd, deployERC20Bl, deployUsdt, deployWeth } from "../ERC20/shared/fixtures";
+import { deployBusd, deployERC1363, deployUsdt, deployWeth } from "../ERC20/shared/fixtures";
 import { randomRequest } from "../shared/randomRequest";
 
 describe("ExchangePurchaseV2", function () {
@@ -34,7 +34,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-        const erc20Instance = await deployERC20Bl("ERC20Blacklist");
+        const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -93,7 +93,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
-        const erc20Instance = await deployERC20Bl("ERC20Blacklist");
+        const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -169,7 +169,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
 
-        const erc20Instance = await deployERC20Bl("ERC20Blacklist");
+        const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -245,7 +245,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
-        const usdtInstance = await deployUsdt("TetherToken");
+        const usdtInstance = await deployUsdt();
         await usdtInstance.transfer(receiver.address, amount);
         await usdtInstance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -321,7 +321,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
-        const busdInstance = await deployBusd("BEP20Token");
+        const busdInstance = await deployBusd();
         await busdInstance.transfer(receiver.address, amount);
         await busdInstance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -397,7 +397,7 @@ describe("ExchangePurchaseV2", function () {
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
-        const wethInstance = await deployWeth("WETH9");
+        const wethInstance = await deployWeth();
         await wethInstance.transfer(receiver.address, amount);
         await wethInstance.connect(receiver).approve(exchangeInstance.address, amount);
 
@@ -473,7 +473,7 @@ describe("ExchangePurchaseV2", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
-        const erc20Instance = await deployERC20Bl("ERC20Blacklist");
+        const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
