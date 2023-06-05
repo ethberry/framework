@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingReceiveRewardABI from "../../../../../abis/components/buttons/mechanics/common/reward/receiveReward.abi.json";
+import StakingReceiveRewardABI from "../../../../../abis/mechanics/common/reward/receiveReward.abi.json";
 
 export interface IStakingRewardSimpleButtonProps {
   stake: IStakingDeposit;

@@ -1,6 +1,6 @@
 import { Contract } from "ethers";
 
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
 import { shouldBehaveLikeERC721Simple } from "../../../ERC721/shared/simple";
 

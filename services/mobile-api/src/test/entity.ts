@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IUser, TokenType, UserRole, UserStatus } from "@framework/types";
@@ -26,7 +26,7 @@ export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
 export const generateTestContract = (data: Partial<IContract> = {}): Record<string, any> => {
   return Object.assign(
     {
-      address: constants.AddressZero,
+      address: ZeroAddress,
       chainId: testChainId,
       title: "Native token",
       description: simpleFormatting,

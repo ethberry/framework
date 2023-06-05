@@ -7,6 +7,7 @@ import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { ITokenUploadDto } from "../contract/interfaces";
 
 @Injectable()
 export class CollectionTokenService extends TokenService {
@@ -48,8 +49,8 @@ export class CollectionTokenService extends TokenService {
     return queryBuilder.getMany();
   }
 
-  public async updateTokensBatch(templateId: number, files: Array<any>): Promise<Array<TokenEntity>> {
-    // todo use user.chainID or csv.chainId
+  public async updateTokensBatch(templateId: number, files: Array<ITokenUploadDto>): Promise<Array<TokenEntity>> {
+    // todo use user.chainID
     const tokens = await this.getAllTokens(templateId);
 
     if (!tokens.length) {
@@ -65,13 +66,9 @@ export class CollectionTokenService extends TokenService {
     files.map((file, i) => {
       return Object.assign(tokens[i], {
         imageUrl: file.imageUrl,
-        attributes: JSON.parse(file.attributes),
+        metadata: JSON.parse(file.metadata),
       });
     });
-
-    // const result = await this.tokenEntityRepository.save(tokens, { chunk: 1000 });
-    // this.loggerService.log(`UPLOAD ${result.length} OK`, Erc721CollectionService.name);
-    // return result;
 
     return this.tokenEntityRepository.save(tokens, { chunk: 1000 }).then(res => {
       this.loggerService.log(`UPDATE ${res.length} OK`, CollectionTokenService.name);

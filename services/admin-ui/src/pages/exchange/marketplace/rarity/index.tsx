@@ -19,7 +19,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenAttributes, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import { TokenMetadata, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { MarketplaceRaritySearchForm } from "./form";
@@ -27,7 +27,7 @@ import { MarketplaceRaritySearchForm } from "./form";
 export const MarketplaceRarity: FC = () => {
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
   const [search, setSearch] = useState<IMarketplaceSupplySearchDto>({
-    attribute: TokenAttributes.RARITY,
+    attribute: TokenMetadata.RARITY,
     tokenStatus: TokenStatus.MINTED,
     tokenType: TokenType.ERC721,
     contractIds: [] as Array<number>,
@@ -103,7 +103,7 @@ export const MarketplaceRarity: FC = () => {
                       <Link
                         component={RouterLink}
                         to={`/${search.tokenType.toLowerCase()}-tokens?${stringify({
-                          attributes: { [TokenAttributes.RARITY]: [e] },
+                          metadata: { [TokenMetadata.RARITY]: [e] },
                           tokenStatus: [search.tokenStatus],
                           contractIds: search.contractIds,
                           templateIds: search.templateIds,

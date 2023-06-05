@@ -10,11 +10,11 @@ export enum TokenStatus {
   BURNED = "BURNED",
 }
 
-export enum TokenAttributes {
+export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
   GRADE = "GRADE",
   RARITY = "RARITY",
-  GENES = "GENES",
+  TRAITS = "TRAITS",
 }
 
 export enum TokenGenes {
@@ -34,7 +34,7 @@ export enum TokenTraits {
 
 export interface IToken extends IIdDateBase {
   imageUrl: string | null;
-  attributes: any;
+  metadata: any;
   tokenId: string;
   royalty: number;
   cid: string | null;

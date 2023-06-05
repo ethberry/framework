@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+// uncomment after updating contracts to ethers v6
+// import { abiEncode, keccak256It } from "@gemunion/contracts-utils";
 import { ContractFeatures } from "@framework/types";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";

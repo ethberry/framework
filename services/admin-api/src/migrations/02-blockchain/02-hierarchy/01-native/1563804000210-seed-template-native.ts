@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
-import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -23,24 +23,24 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         updated_at
       ) VALUES (
         110101,
-        'Native token (ETH)',
+        'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         110201,
-        'Inactive token (ETH)',
+        'Inactive token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         1102,
         '${currentDateTime}',
@@ -52,31 +52,31 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         2101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         310101,
-        'Native token (MATIC)',
+        'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         3101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         410101,
-        'Native token (BESU)',
+        'Native token (MATIC)',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
+        '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         4101,
         '${currentDateTime}',

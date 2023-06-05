@@ -39,14 +39,12 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
-
-    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
     uint64 expires = uint256(params.extra).toUint64();
 
     emit Lend(
-      account /* from */,
+      _msgSender() /* from */,
       params.referrer /* to */,
       expires /* lend expires */,
       params.externalId /* lendRule db id */,
@@ -72,16 +70,14 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       revert WrongAmount();
     }
 
-    address account = _msgSender();
-
     if (price.length > 0) {
-      ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
+      ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
     }
 
     uint64 expires = uint256(params.extra).toUint64();
 
     emit LendMany(
-      account /* from */,
+      _msgSender() /* from */,
       params.referrer /* to */,
       expires /* lend expires */,
       params.externalId /* lendRule db id */,

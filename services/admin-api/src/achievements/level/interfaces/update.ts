@@ -7,5 +7,5 @@ export interface IAchievementLevelUpdateDto extends ISearchableDto {
   endTimestamp: string;
   item: IAssetDto;
   amount: number;
-  attributes: Record<string, string | number>;
+  parameters: Record<string, string | number>;
 }

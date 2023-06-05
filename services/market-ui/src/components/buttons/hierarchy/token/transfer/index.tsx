@@ -7,7 +7,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
 
-import ERC721SafeTransferFromABI from "../../../../../abis/components/buttons/hierarchy/token/transfer/erc721.safeTransferFrom.abi.json";
+import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 import { ContractFeatures } from "@framework/types";

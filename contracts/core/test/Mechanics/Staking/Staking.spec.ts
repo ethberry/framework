@@ -14,13 +14,13 @@ import {
   TEMPLATE_ID,
 } from "@gemunion/contracts-constants";
 
-import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
-import { expiresAt, extra, params, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
+import { VRFCoordinatorMock } from "../../../typechain-types";
+import { expiresAt, templateId, tokenId, tokenIds, tokenIdsZero } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { deployStaking } from "./shared/fixture";
-import { deployERC20 } from "../../ERC20/shared/fixtures";
+import { deployERC1363 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
@@ -67,14 +67,30 @@ MULTIPLIER - RECURRENT - WITHDRAW_DEPOSIT - BREAK_LAST_PERIOD === DECISION
 
 describe("Staking", function () {
   this.timeout(120000);
-  const period = 300;
+  const period = 30;
   const penalty = 0;
   const cycles = 2;
+  const maxStake = 2;
+
+  const params = {
+    nonce,
+    externalId: 1,
+    expiresAt,
+    referrer: constants.AddressZero,
+    extra: utils.formatBytes32String("0x"),
+  };
+  const params2 = {
+    nonce,
+    externalId: 2,
+    expiresAt,
+    referrer: constants.AddressZero,
+    extra: utils.formatBytes32String("0x"),
+  };
 
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployStaking();
-  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name?: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155();
 
@@ -121,6 +137,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -149,12 +166,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721RandomInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -188,6 +206,7 @@ describe("Staking", function () {
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -217,12 +236,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -258,16 +278,51 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
-        recurrent: false,
+        maxStake,
+        recurrent: true,
         active: true,
       };
 
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.be.revertedWithCustomError(stakingInstance, "WrongRule");
     });
-  });
 
-  describe("updateRule", function () {
+    it("should edit Rule", async function () {
+      const stakingInstance = await factory();
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty,
+        maxStake,
+        recurrent: true,
+        active: true,
+      };
+
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      const tx1 = stakingInstance.updateRule(1, false);
+      await expect(tx1).to.emit(stakingInstance, "RuleUpdated").withArgs(1, false);
+    });
+
     it("should update Rule", async function () {
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
@@ -292,6 +347,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -303,7 +359,7 @@ describe("Staking", function () {
       await expect(tx1).to.emit(stakingInstance, "RuleUpdated").withArgs(1, false);
     });
 
-    it("should fail: account is missing role", async function () {
+    it("should fail2: account is missing role", async function () {
       const [_, receiver] = await ethers.getSigners();
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
@@ -328,6 +384,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -343,22 +400,11 @@ describe("Staking", function () {
   });
 
   describe("setMaxStake", function () {
-    it("should fail: Account is missing Role", async function () {
-      const [_, receiver] = await ethers.getSigners();
+    it("should fail for limit exceed", async function () {
+      const [_owner] = await ethers.getSigners();
+
       const stakingInstance = await factory();
-
-      const tx = stakingInstance.connect(receiver).setMaxStake(1);
-
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
-    });
-
-    it("should deposit twice if maxStake is 0", async function () {
-      const stakingInstance = await factory();
-      const erc721Instance = await erc721Factory();
-
-      await stakingInstance.setMaxStake(0);
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
 
       const stakeRule: IRule = {
         deposit: [
@@ -372,35 +418,20 @@ describe("Staking", function () {
         reward: [
           {
             tokenType: 2, // ERC721
-            token: erc721Instance.address,
+            token: erc721RandomInstance.address,
             tokenId,
             amount,
           },
         ],
-        content: [],
+        content: [[]],
         period,
         penalty,
+        maxStake: 2,
         recurrent: true,
         active: true,
       };
 
-      const tx = stakingInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(stakingInstance, "RuleCreated");
-
-      const tx1 = stakingInstance.deposit(params, tokenIds, { value: amount });
-      await expect(tx1).to.not.be.reverted;
-
-      const tx2 = stakingInstance.deposit(params, tokenIds, { value: amount });
-      await expect(tx2).to.not.be.reverted;
-    });
-
-    it("should deposit only once if maxStake is 1", async function () {
-      const stakingInstance = await factory();
-      const erc721Instance = await erc721Factory();
-
-      await stakingInstance.setMaxStake(1);
-
-      const stakeRule: IRule = {
+      const stakeRule2: IRule = {
         deposit: [
           {
             tokenType: 0, // NATIVE
@@ -411,27 +442,140 @@ describe("Staking", function () {
         ],
         reward: [
           {
-            tokenType: 2, // ERC721
-            token: erc721Instance.address,
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
             tokenId,
             amount,
           },
         ],
-        content: [],
+        content: [[]],
         period,
         penalty,
+        maxStake: 1,
         recurrent: true,
         active: true,
       };
 
-      const tx = stakingInstance.setRules([stakeRule]);
-      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      const tx = stakingInstance.setRules([stakeRule, stakeRule2]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated"); // 2 times?
 
+      // Deposit for rule 1
       const tx1 = stakingInstance.deposit(params, tokenIds, { value: amount });
       await expect(tx1).to.not.be.reverted;
+
+      const tx11 = stakingInstance.deposit(params, tokenIds, { value: amount });
+      await expect(tx11).to.not.be.reverted;
+
+      // Deposit for rule 2
+      const tx12 = stakingInstance.deposit(params2, tokenIds, { value: amount });
+      await expect(tx12).to.not.be.reverted;
 
       const tx2 = stakingInstance.deposit(params, tokenIds, { value: amount });
       await expect(tx2).to.be.revertedWithCustomError(stakingInstance, "LimitExceed");
+    });
+
+    it("should get counters", async function () {
+      const [_owner, receiver, stranger] = await ethers.getSigners();
+
+      const stakingInstance = await factory();
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
+
+      const stakeRule: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 2, // ERC721
+            token: erc721RandomInstance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty,
+        maxStake: 2,
+        recurrent: true,
+        active: true,
+      };
+
+      const stakeRule2: IRule = {
+        deposit: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        reward: [
+          {
+            tokenType: 0, // NATIVE
+            token: constants.AddressZero,
+            tokenId,
+            amount,
+          },
+        ],
+        content: [[]],
+        period,
+        penalty,
+        maxStake: 2,
+        recurrent: true,
+        active: true,
+      };
+
+      const tx = stakingInstance.setRules([stakeRule, stakeRule2]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated"); // 2 times?
+
+      // Deposit for rule 1
+      const tx1 = stakingInstance.deposit(params, tokenIds, { value: amount });
+      await expect(tx1).to.not.be.reverted;
+      const counter1 = await stakingInstance.getCounters(_owner.address, params.externalId /* rule Id */);
+      expect(counter1).to.have.deep.nested.property("allUsers", BigNumber.from(1));
+      expect(counter1).to.have.deep.nested.property("allStakes", BigNumber.from(1));
+      expect(counter1).to.have.deep.nested.property("userStakes", BigNumber.from(1));
+      expect(counter1).to.have.deep.nested.property("ruleCounter", BigNumber.from(1));
+
+      const tx11 = stakingInstance.deposit(params, tokenIds, { value: amount });
+      await expect(tx11).to.not.be.reverted;
+      const counter2 = await stakingInstance.getCounters(_owner.address, params.externalId /* rule Id */);
+      expect(counter2).to.have.deep.nested.property("allUsers", BigNumber.from(1));
+      expect(counter2).to.have.deep.nested.property("allStakes", BigNumber.from(2));
+      expect(counter2).to.have.deep.nested.property("userStakes", BigNumber.from(2));
+      expect(counter2).to.have.deep.nested.property("ruleCounter", BigNumber.from(2));
+
+      // Deposit for rule 2
+      const tx12 = stakingInstance.deposit(params2, tokenIds, { value: amount });
+      await expect(tx12).to.not.be.reverted;
+      const counter3 = await stakingInstance.getCounters(_owner.address, params2.externalId /* rule Id */);
+      expect(counter3).to.have.deep.nested.property("allUsers", BigNumber.from(1));
+      expect(counter3).to.have.deep.nested.property("allStakes", BigNumber.from(3));
+      expect(counter3).to.have.deep.nested.property("userStakes", BigNumber.from(3));
+      expect(counter3).to.have.deep.nested.property("ruleCounter", BigNumber.from(1));
+
+      const tx2 = stakingInstance.deposit(params, tokenIds, { value: amount });
+      await expect(tx2).to.be.revertedWithCustomError(stakingInstance, "LimitExceed");
+
+      // Deposit user 2
+      const tx3 = stakingInstance.connect(receiver).deposit(params, tokenIds, { value: amount });
+      await expect(tx3).to.not.be.reverted;
+      const counter4 = await stakingInstance.getCounters(receiver.address, params2.externalId /* rule Id */);
+      expect(counter4).to.have.deep.nested.property("allUsers", BigNumber.from(2));
+      expect(counter4).to.have.deep.nested.property("allStakes", BigNumber.from(4));
+      expect(counter4).to.have.deep.nested.property("userStakes", BigNumber.from(1));
+      expect(counter4).to.have.deep.nested.property("ruleCounter", BigNumber.from(0));
+
+      const counter5 = await stakingInstance.getCounters(stranger.address, params.externalId /* rule Id */);
+      expect(counter5).to.have.deep.nested.property("allUsers", BigNumber.from(2));
+      expect(counter5).to.have.deep.nested.property("allStakes", BigNumber.from(4));
+      expect(counter5).to.have.deep.nested.property("userStakes", BigNumber.from(0));
+      expect(counter5).to.have.deep.nested.property("ruleCounter", BigNumber.from(0));
     });
   });
 
@@ -467,6 +611,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: false,
       };
@@ -502,6 +647,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -516,8 +662,6 @@ describe("Staking", function () {
     it("should fail for limit exceed", async function () {
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
-
-      await stakingInstance.setMaxStake(1);
 
       const stakeRule: IRule = {
         deposit: [
@@ -539,6 +683,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake: 1,
         recurrent: true,
         active: true,
       };
@@ -588,6 +733,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -618,8 +764,6 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
 
-      await stakingInstance.setMaxStake(1);
-
       const stakeRule: IRule = {
         deposit: [
           {
@@ -640,6 +784,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -679,6 +824,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -718,6 +864,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -779,6 +926,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -840,6 +988,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -912,6 +1061,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -937,7 +1087,7 @@ describe("Staking", function () {
       await expect(tx1).to.be.revertedWithCustomError(stakingInstance, "WrongToken");
     });
 
-    it("should fail(?) staking not yet finished (non-reccurent)", async function () {
+    it("should fail: staking not yet finished (non-recurrent)", async function () {
       const [owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
@@ -962,7 +1112,8 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
-        recurrent: false,
+        maxStake,
+        recurrent: true,
         active: true,
       };
 
@@ -982,8 +1133,8 @@ describe("Staking", function () {
       // REWARD
 
       const tx2 = stakingInstance.receiveReward(1, false, false);
-      await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [0, 0]);
-      // await expect(tx2).to.be.revertedWithCustomError(stakingInstance, "NotComplete");
+      // await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [0, 0]);
+      await expect(tx2).to.be.revertedWithCustomError(stakingInstance, "NotComplete");
     });
 
     it("should fail first period not yet finished", async function () {
@@ -1011,6 +1162,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1068,6 +1220,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty: 5000, // 50%
+        maxStake,
         recurrent: false,
         active: true,
       };
@@ -1128,6 +1281,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1183,6 +1337,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1254,6 +1409,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: false,
         active: true,
       };
@@ -1322,6 +1478,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1409,6 +1566,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1506,6 +1664,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1579,6 +1738,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1611,7 +1771,7 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(cycles);
     });
@@ -1644,6 +1804,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1712,12 +1873,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1782,6 +1944,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1844,6 +2007,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -1927,6 +2091,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2009,6 +2174,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2051,7 +2217,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance3 = await erc721Instance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles);
       const balance4 = await erc20Instance.balanceOf(owner.address);
@@ -2087,6 +2253,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2168,12 +2335,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2262,12 +2430,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2347,7 +2516,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -2357,12 +2526,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2445,6 +2615,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2522,6 +2693,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2604,6 +2776,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2685,6 +2858,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2725,7 +2899,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721Instance as IERC721Random, vrfInstance);
+      await randomRequest(erc721Instance, vrfInstance);
       const balance3 = await erc721Instance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles + 1);
     });
@@ -2759,6 +2933,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2821,7 +2996,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721RandomInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -2829,7 +3004,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -2838,12 +3013,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2919,6 +3095,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -2994,6 +3171,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3076,6 +3254,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3153,6 +3332,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3215,7 +3395,7 @@ describe("Staking", function () {
             tokenType: 3, // ERC998
             token: erc998Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -3223,7 +3403,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3232,12 +3412,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC998
               token: erc721Instance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3299,7 +3480,7 @@ describe("Staking", function () {
             tokenType: 3, // ERC998
             token: erc998Instance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         reward: [
@@ -3307,7 +3488,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3316,12 +3497,13 @@ describe("Staking", function () {
               tokenType: 3, // ERC998
               token: erc998Instance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3401,6 +3583,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3441,7 +3624,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc998RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc998RandomInstance, vrfInstance);
       const balance3 = await erc998RandomInstance.balanceOf(owner.address);
       expect(balance3).to.equal(cycles + 1);
     });
@@ -3479,6 +3662,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3550,6 +3734,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3622,6 +3807,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3704,6 +3890,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3786,6 +3973,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3826,7 +4014,7 @@ describe("Staking", function () {
         .to.emit(vrfInstance, "RandomWordsRequested");
 
       // RANDOM
-      await randomRequest(erc721RandomInstance as IERC721Random, vrfInstance);
+      await randomRequest(erc721RandomInstance, vrfInstance);
       const balance3 = await erc721RandomInstance.balanceOf(owner.address);
       expect(balance3).to.equal(2);
       const balance4 = await erc1155Instance.balanceOf(owner.address, 1);
@@ -3862,6 +4050,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -3932,7 +4121,7 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: mysteryboxInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [
@@ -3941,12 +4130,13 @@ describe("Staking", function () {
               tokenType: 2, // ERC721
               token: erc721SimpleInstance.address,
               tokenId,
-              amount: 0,
+              amount: 1,
             },
           ],
         ],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4021,6 +4211,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty,
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4094,6 +4285,7 @@ describe("Staking", function () {
         content: [],
         period, // 60 sec
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4158,6 +4350,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4229,6 +4422,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4296,6 +4490,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 10000, // 100%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4360,6 +4555,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4425,6 +4621,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 10000, // 100%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4489,6 +4686,7 @@ describe("Staking", function () {
         content: [],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4572,12 +4770,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4692,12 +4891,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
         period,
         penalty: 10000, // 100%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4805,12 +5005,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -4966,12 +5167,13 @@ describe("Staking", function () {
             tokenType: 2, // ERC721
             token: erc721SimpleInstance.address,
             tokenId,
-            amount: 0,
+            amount: 1,
           },
         ],
         content: [[], [], [], []],
         period,
         penalty: 10000, // 100%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -5109,6 +5311,7 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -5156,6 +5359,7 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 10000, // 100%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -5261,6 +5465,7 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -5332,6 +5537,7 @@ describe("Staking", function () {
         content: [[]],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };
@@ -5440,6 +5646,7 @@ describe("Staking", function () {
         content: [[], [], [], []],
         period,
         penalty: 5000, // 50%
+        maxStake,
         recurrent: true,
         active: true,
       };

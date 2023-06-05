@@ -9,20 +9,18 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants, utils } from "ethers";
-import csv2json from "csvtojson";
-import { validateSync } from "class-validator";
+import { randomBytes, ZeroAddress, hexlify, encodeBytes32String } from "ethers";
+import { mapLimit } from "async";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
+import type { IClaimItemCreateDto, IClaimItemUpdateDto, IClaimSearchDto } from "@framework/types";
+import { ClaimStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { ItemComponentDto, ItemDto } from "../../exchange/asset/dto";
-import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
+import type { IClaimItemUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { ClaimItemCreateDto, ClaimUploadDto } from "./dto";
 
 @Injectable()
 export class ClaimService {
@@ -145,7 +143,7 @@ export class ClaimService {
       throw new NotFoundException("claimNotFound");
     }
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
       account,
@@ -153,15 +151,15 @@ export class ClaimService {
         nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         // @TODO fix to use expiresAt as extra, temporary set to empty
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
 
       claimEntity,
     );
 
-    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 
@@ -200,54 +198,22 @@ export class ClaimService {
     );
   }
 
-  public async upload(file: Express.Multer.File, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    const parsed = await csv2json({
-      noheader: true,
-      headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
-    }).fromString(file.buffer.toString());
-
-    const files = parsed.map(
-      ({
-        account,
-        endTimestamp,
-        tokenType,
-        contractId,
-        templateId,
-        amount,
-      }: {
-        account: string;
-        endTimestamp: string;
-        tokenType: TokenType;
-        contractId: number;
-        templateId: number;
-        amount: string;
-      }) => {
-        return Object.assign(new ClaimItemCreateDto(), {
-          account,
-          endTimestamp,
-          item: Object.assign(new ItemDto(), {
-            components: [
-              Object.assign(new ItemComponentDto(), {
-                tokenType,
-                contractId: ~~contractId,
-                templateId: ~~templateId,
-                amount,
-              }),
-            ],
-          }),
-        });
-      },
-    );
-
-    const schema = new ClaimUploadDto();
-    schema.files = files;
-    const result = validateSync(schema);
-
-    if (result.length) {
-      this.loggerService.log(result, ClaimService.name);
-      throw result;
-    }
-
-    return Promise.all(files.map(row => this.create(row, userEntity)));
+  public async upload(dto: IClaimItemUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+    return new Promise((resolve, reject) => {
+      mapLimit(
+        dto.claims,
+        10,
+        async (row: IClaimItemCreateDto) => {
+          return this.create(row, userEntity);
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results as ClaimEntity[]);
+          }
+        },
+      );
+    });
   }
 }

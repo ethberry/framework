@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { BigNumber, constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -18,8 +18,14 @@ export class SeedBalancePyramidAt1663047650530 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${pyramidAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
-        12010101,
+        '${(100n * WeiPerEther).toString()}',
+        11010101, -- BESU
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${pyramidAddress}',
+        '${(100n * WeiPerEther).toString()}',
+        12010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       );

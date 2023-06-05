@@ -1,9 +1,10 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { ModuleType, TokenType } from "@framework/types";
 
-import { TokenAutocompleteDto } from "./dto";
+import { TokenAutocompleteDto, TokenSearchDto } from "./dto";
 import { TokenService } from "./token.service";
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -16,5 +17,16 @@ export class TokenController {
   @Get("/autocomplete")
   public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
     return this.tokenService.autocomplete(dto, userEntity);
+  }
+
+  @Get("/search")
+  @UseInterceptors(PaginationInterceptor)
+  public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    return this.tokenService.search(
+      dto,
+      userEntity,
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+      [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.COLLECTION, ModuleType.LOTTERY, ModuleType.WRAPPER],
+    );
   }
 }

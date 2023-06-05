@@ -5,10 +5,10 @@ import { Typography } from "@mui/material";
 import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { TokenType } from "@framework/types";
 import type { ITemplate } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import { Erc721TemplateListItem } from "../../exchange/tokens/erc721/template-list/item";
+import { Erc721TemplateListItem } from "../../hierarchy/erc721/template-list/item";
 import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
 import { useStyles } from "./styles";
 

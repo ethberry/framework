@@ -10,7 +10,7 @@ export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,
@@ -18,6 +18,15 @@ export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        12170101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        121701,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         22170101,
         '${defaultJSON}',
         0,

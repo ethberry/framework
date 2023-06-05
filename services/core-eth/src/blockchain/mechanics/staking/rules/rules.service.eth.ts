@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
@@ -44,7 +44,7 @@ export class StakingRulesServiceEth {
     } = event;
     const { address } = context;
 
-    const [deposit, reward, _content, period, penalty, recurrent, _active] = rule;
+    const [deposit, reward, _content, period, penalty, maxStake, recurrent, active] = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
@@ -97,18 +97,29 @@ export class StakingRulesServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
+    // new ACTIVE rule is NEW to hide it from display in market
+    const stakingRuleStatus = active === true ? StakingRuleStatus.NEW : StakingRuleStatus.INACTIVE;
     await this.stakingRulesService.create({
       title: "new STAKING rule",
       description: emptyStateString,
       deposit: depositItem,
       reward: rewardItem,
       durationAmount: ~~period,
-      durationUnit: DurationUnit.DAY, // TODO select correct unit depends on period
+      durationUnit: DurationUnit.DAY,
       penalty: ~~penalty,
+      maxStake: ~~maxStake,
       recurrent,
-      stakingRuleStatus: StakingRuleStatus.NEW,
+      stakingRuleStatus,
       externalId: ruleId,
       contractId: contractEntity.id,
+    });
+
+    this.notificatorService.stakingRuleCreated({
+      externalId: ruleId,
+      deposit: depositItem,
+      reward: rewardItem,
+      penalty: ~~penalty,
+      recurrent,
     });
   }
 
@@ -130,9 +141,14 @@ export class StakingRulesServiceEth {
     });
 
     await stakingEntity.save();
+
+    this.notificatorService.stakingRuleUpdated({
+      externalId: ruleId,
+      active,
+    });
   }
 
-  public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
+  public async depositStart(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
     // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
@@ -153,7 +169,7 @@ export class StakingRulesServiceEth {
       stakingRuleId: stakingRuleEntity.id,
     });
 
-    this.notificatorService.stakingStart({
+    this.notificatorService.stakingDepositStart({
       account: owner.toLowerCase(),
       externalId: ~~stakingId,
       startTimestamp: new Date(~~startTimestamp * 1000).getDate(),
@@ -161,7 +177,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async withdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
+  public async depositWithdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
@@ -169,14 +185,14 @@ export class StakingRulesServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
+  public async depositFinish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
       args: { stakingId, owner, finishTimestamp, multiplier },
     } = event;
 
-    this.notificatorService.stakingFinish({
+    this.notificatorService.stakingDepositFinish({
       account: owner.toLowerCase(),
       externalId: ~~stakingId,
       startTimestamp: new Date(~~finishTimestamp * 1000).getDate(),

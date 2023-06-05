@@ -2,9 +2,16 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TemplateStatus, TokenType } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-export const TemplateInput: FC = () => {
+export interface ITemplateInputProps {
+  contractType: Array<TokenType>;
+  contractModule: Array<ModuleType>;
+}
+
+export const TemplateInput: FC<ITemplateInputProps> = props => {
+  const { contractType = [], contractModule = [] } = props;
+
   const contractIds = useWatch({ name: "contractIds" });
 
   return (
@@ -13,7 +20,8 @@ export const TemplateInput: FC = () => {
       controller="templates"
       data={{
         contractIds,
-        contractType: [TokenType.ERC721],
+        contractType,
+        contractModule,
         templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
       }}
       multiple

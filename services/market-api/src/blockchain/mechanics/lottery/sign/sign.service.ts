@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, utils, Wallet } from "ethers";
+import { ZeroAddress, encodeBytes32String, hexlify, WeiPerEther, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -18,9 +18,9 @@ export class LotterySignService {
   ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, ticketNumbers } = dto;
+    const { account, referrer = ZeroAddress, ticketNumbers } = dto;
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
       account,
@@ -29,16 +29,16 @@ export class LotterySignService {
         externalId: 0,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       ticketNumbers,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(account: string, params: IParams, ticketNumbers: Array<boolean>): Promise<string> {
-    return this.signer._signTypedData(
+    return this.signer.signTypedData(
       // Domain
       {
         name: "Lottery",
@@ -66,7 +66,7 @@ export class LotterySignService {
         account,
         params,
         numbers: ticketNumbers,
-        price: constants.WeiPerEther,
+        price: WeiPerEther,
       },
     );
   }

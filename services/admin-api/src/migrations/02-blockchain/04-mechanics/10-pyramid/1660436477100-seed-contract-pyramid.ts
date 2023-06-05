@@ -40,7 +40,7 @@ export class SeedContractPyramidAt1660436477100 implements MigrationInterface {
         '',
         '',
         'ACTIVE',
-        '{WITHDRAW,SPLITTER,REFERRAL}',
+        '{WITHDRAW,ALLOWANCE,SPLITTER,REFERRAL}',
         'PYRAMID',
         '${fromBlock}',
         1,

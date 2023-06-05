@@ -17,7 +17,7 @@ async function main() {
   const itemRandomInstance = await itemRandomFactory.deploy("ITEMR", "ITEMR", rlNum, baseTokenURI);
   console.info(`ERC721_R_ADDR=${itemRandomInstance.address.toLowerCase()}`);
 
-  // ERC721 contract - genes
+  // ERC721 contract - traits
   const itemGenesFactory = await ethers.getContractFactory("ERC721Genes");
   const itemGenesInstance = await itemGenesFactory.deploy("ITEMG", "ITEMG", rlNum, baseTokenURI);
   console.info(`ERC721_G_ADDR=${itemGenesInstance.address.toLowerCase()}`);
@@ -41,9 +41,9 @@ async function main() {
   console.info("rarityKey", rarityKey);
 
   // ERC721 getRecordField Genes
-  const genesKey = await itemGenesInstance.GENES();
+  const traitsKey = await itemGenesInstance.TRAITS();
   // 0x8e3ddc4aa9e11e826949389b9fc38032713cef66f38657aa6e1599905d26e564
-  console.info("genesKey", genesKey);
+  console.info("traitsKey", traitsKey);
 }
 
 main()

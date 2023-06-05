@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenAttributes, TokenStatus, TokenType } from "@framework/types";
+import { TokenMetadata, TokenStatus, TokenType } from "@framework/types";
 
 export class MarketplaceSupplySearchDto extends SearchDto implements IMarketplaceSupplySearchDto {
   @ApiProperty({
@@ -22,10 +22,10 @@ export class MarketplaceSupplySearchDto extends SearchDto implements IMarketplac
   public tokenType: TokenType;
 
   @ApiProperty({
-    enum: TokenAttributes,
+    enum: TokenMetadata,
   })
-  @IsEnum(TokenAttributes, { message: "badInput" })
-  public attribute: TokenAttributes;
+  @IsEnum(TokenMetadata, { message: "badInput" })
+  public attribute: TokenMetadata;
 
   @ApiPropertyOptional({
     type: Number,

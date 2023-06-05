@@ -72,7 +72,7 @@ export const Product: FC = () => {
             <Box py={2}>
               <Paper className={classes.paper}>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {formatPrice(product.price)}
+                  {formatPrice(product.productItems[0].price)}
                 </Typography>
               </Paper>
             </Box>
@@ -85,7 +85,7 @@ export const Product: FC = () => {
           <Grid item xs={12} md={3}>
             <Paper className={classes.paper}>
               <Typography variant="body2" color="textSecondary" component="p">
-                {formatPrice(product.price)}
+                {formatPrice(product.productItems[0].price)}
               </Typography>
             </Paper>
           </Grid>

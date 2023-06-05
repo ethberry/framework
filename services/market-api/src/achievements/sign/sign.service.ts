@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { constants, utils } from "ethers";
+import { hexlify } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -8,12 +8,12 @@ import { SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../infrastructure/settings/settings.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { AchievementItemService } from "../item/item.service";
-import { ISignAchievementsDto } from "./interfaces";
-import { AchievementLevelService } from "../level/level.service";
-import { AchievementLevelEntity } from "../level/level.entity";
 import { ClaimService } from "../../blockchain/mechanics/claim/claim.service";
 import { AchievementRedemptionService } from "../redemption/redemption.service";
+import { AchievementLevelService } from "../level/level.service";
+import { AchievementItemService } from "../item/item.service";
+import { AchievementLevelEntity } from "../level/level.entity";
+import type { ISignAchievementsDto } from "./interfaces";
 
 @Injectable()
 export class AchievementSignService {
@@ -27,7 +27,7 @@ export class AchievementSignService {
   ) {}
 
   public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { achievementLevelId, account, referrer = constants.AddressZero } = dto;
+    const { achievementLevelId, account } = dto;
 
     const achievementLevelEntity = await this.achievementLevelService.findOneWithRelations({ id: achievementLevelId });
 
@@ -48,18 +48,14 @@ export class AchievementSignService {
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
-    const expiresAt = ttl && ttl + Date.now() / 1000;
-    const zeroDateTime = new Date(0).toISOString();
-
-    const claimEntity = await this.claimService.create({
-      itemId: achievementLevelEntity.itemId,
-      account: account.toLowerCase(),
-      endTimestamp: zeroDateTime, // TODO limit time for achievement's redeem?
-      nonce: utils.hexlify(nonce),
-      signature: "0x",
-      merchantId: userEntity.merchantId,
-    });
+    const claimEntity = await this.claimService.create(
+      {
+        account: account.toLowerCase(),
+        item: achievementLevelEntity.item,
+        endTimestamp: new Date(0).toISOString(),
+      },
+      userEntity,
+    );
 
     await this.achievementRedemptionService.create({
       userId: userEntity.id,
@@ -67,30 +63,12 @@ export class AchievementSignService {
       claimId: claimEntity.id,
     });
 
-    const signature = await this.getSignature(
-      account,
-      {
-        nonce,
-        externalId: claimEntity.id,
-        expiresAt,
-        referrer,
-        extra: utils.hexZeroPad(utils.hexlify(achievementLevelEntity.id), 32),
-      },
-      achievementLevelEntity,
-    );
-
-    await this.claimService.update(
-      { id: claimEntity.id },
-      {
-        itemId: achievementLevelEntity.itemId,
-        account: account.toLowerCase(),
-        nonce: utils.hexlify(nonce),
-        signature,
-        merchantId: userEntity.merchantId,
-      },
-    );
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: claimEntity.id.toString() };
+    return {
+      nonce: hexlify(claimEntity.nonce),
+      signature: claimEntity.signature,
+      expiresAt: ttl && ttl + Date.now() / 1000,
+      bytecode: claimEntity.id.toString(),
+    };
   }
 
   public async getSignature(

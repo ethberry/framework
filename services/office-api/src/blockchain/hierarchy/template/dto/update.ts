@@ -3,7 +3,7 @@ import { IsEnum, IsOptional, IsString, IsUrl, ValidateNested } from "class-valid
 import { Type } from "class-transformer";
 
 import { SearchableOptionalDto } from "@gemunion/collection";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
 import { PriceDto } from "../../../exchange/asset/dto";
@@ -22,7 +22,7 @@ export class TemplateUpdateDto extends SearchableOptionalDto implements ITemplat
     minimum: 0,
   })
   @IsOptional()
-  @IsBigNumber({ minimum: "0" }, { message: "typeMismatch" })
+  @IsBigInt({ minimum: 0 }, { message: "typeMismatch" })
   public amount: string;
 
   @ApiPropertyOptional()

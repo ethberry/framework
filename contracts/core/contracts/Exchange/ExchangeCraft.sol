@@ -27,11 +27,9 @@ abstract contract ExchangeCraft is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.acquire(items, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    ExchangeUtils.spendFrom(price, account, address(this), DisabledTokenTypes(false, false, false, false, false));
-    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
-
-    emit Craft(account, params.externalId, items, price);
+    emit Craft(_msgSender(), params.externalId, items, price);
   }
 }

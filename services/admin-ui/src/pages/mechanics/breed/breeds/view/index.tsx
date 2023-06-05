@@ -5,8 +5,7 @@ import { BigNumber } from "ethers";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IBreed } from "@framework/types";
-
-import { decodeGenes } from "@framework/genes";
+import { decodeTraits, DND } from "@framework/traits";
 
 export interface IBreedItemViewDialogProps {
   open: boolean;
@@ -17,13 +16,10 @@ export interface IBreedItemViewDialogProps {
 
 export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { token, tokenId, genes, children } = initialValues;
+  const { token, tokenId, traits, children } = initialValues;
 
-  // TODO import props[] from settings ???
-  const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
-
-  const result = genes
-    ? Object.entries(decodeGenes(BigNumber.from(genes), DND)).reduce(
+  const result = traits
+    ? Object.entries(decodeTraits(BigInt(traits), DND)).reduce(
         (memo, [key, value]) => Object.assign(memo, { [key]: value }),
         {} as Record<string, any>,
       )
@@ -84,10 +80,10 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.genes" />
+                <FormattedMessage id="form.labels.traits" />
               </TableCell>
               <TableCell align="right">
-                {genes ? (
+                {traits ? (
                   <Grid container>
                     {Object.entries(result).map(([key, value], i) => (
                       <Grid key={i} container>

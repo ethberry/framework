@@ -1,6 +1,6 @@
 import { Contract } from "ethers";
 
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import {
   shouldApprove,
   shouldBehaveLikeERC721Burnable,
@@ -9,7 +9,7 @@ import {
   shouldSafeTransferFrom,
   shouldSetApprovalForAll,
   shouldTransferFrom,
-} from "@gemunion/contracts-erc721-enumerable";
+} from "@gemunion/contracts-erc721e";
 
 import { shouldNotMint } from "../../../../ERC721/shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "../../../../ERC721/shared/simple/base/shouldNotSafeMint";

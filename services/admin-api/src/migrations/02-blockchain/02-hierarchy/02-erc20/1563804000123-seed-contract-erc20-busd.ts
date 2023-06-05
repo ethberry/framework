@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 
-import { imageUrl, ns, testChainId } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -32,12 +32,12 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        2217,
-        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        56,
+        1217,
+        '${busdAddr}',
+        '${chainId}',
         'BUSD',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         'Biance USD',
         'BUSD',
         18,
@@ -51,12 +51,12 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4217,
-        '${busdAddr}',
-        '${chainId}',
+        2217,
+        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        56,
         'BUSD',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         'Biance USD',
         'BUSD',
         18,

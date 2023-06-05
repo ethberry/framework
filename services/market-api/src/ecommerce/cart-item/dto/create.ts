@@ -9,12 +9,12 @@ export class CartItemCreateDto implements ICartItemCreateDto {
   })
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(0, { each: true, message: "valueMissing" })
-  public amount: number;
+  public quantity: number;
 
   @ApiProperty({
     minimum: 1,
   })
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "valueMissing" })
-  public productId: number;
+  public productItemId: number;
 }

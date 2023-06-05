@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
@@ -40,11 +40,21 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
+  @ApiPropertyOptional({
+    enum: ContractFeatures,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
+  public excludeFeatures: Array<ContractFeatures>;
+
   @ApiPropertyOptional()
   @IsOptional()
-  // @IsInt({ message: "typeMismatch" })
-  // @Min(0, { message: "rangeUnderflow" })
-  // @Type(() => Number)
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public contractId: number;
 
   public merchantId: number;

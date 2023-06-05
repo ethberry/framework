@@ -13,7 +13,7 @@ import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
-import { deployERC20 } from "../ERC20/shared/fixtures";
+import { deployERC1363 } from "../ERC20/shared/fixtures";
 
 const enabled = {
   native: false,
@@ -159,7 +159,7 @@ describe("ExchangeUtils", function () {
         const jerkInstance = await deployJerk();
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -187,7 +187,7 @@ describe("ExchangeUtils", function () {
         const walletInstance = await deployWallet();
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -217,7 +217,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -247,7 +247,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -274,7 +274,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         // await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -300,7 +300,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         // await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -328,7 +328,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -357,7 +357,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -387,7 +387,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -417,7 +417,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -899,7 +899,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(owner.address, amount);
         await erc20Instance.approve(exchangeInstance.address, amount);
 
@@ -1074,7 +1074,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1102,7 +1102,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1131,7 +1131,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1158,7 +1158,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         // await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1182,7 +1182,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1209,7 +1209,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1238,7 +1238,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1615,7 +1615,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Mock");
+        const erc20Instance = await deployERC1363("ERC20Mock");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testSpend(
@@ -1753,7 +1753,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testAcquire(
@@ -1979,7 +1979,7 @@ describe("ExchangeUtils", function () {
 
         const exchangeInstance = await deployContract<ExchangeMock>("ExchangeMock");
 
-        const erc20Instance = await deployERC20("ERC20Simple");
+        const erc20Instance = await deployERC1363("ERC20Simple");
         await erc20Instance.mint(exchangeInstance.address, amount);
 
         const tx = exchangeInstance.testAcquire(

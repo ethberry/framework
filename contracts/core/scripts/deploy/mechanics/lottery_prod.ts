@@ -20,7 +20,7 @@ export async function deployLotteryProd(contracts: Record<string, Contract>) {
   await blockAwaitMs(30000);
   await blockAwait();
 
-  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
+  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Lottery");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await blockAwaitMs(30000);
   await blockAwait();

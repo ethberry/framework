@@ -152,7 +152,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
       ), (
         2601,
         '${erc721ContractMysteryboxSimpleAddress}',
-        '56',
+        56,
         'MYSTERY BOX (BEP)',
         '${simpleFormatting}',
         '${imageUrl}',

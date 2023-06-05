@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroHash } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -21,7 +21,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ) VALUES (
         1300001,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
@@ -33,7 +33,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ), (
         1300002,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
@@ -45,7 +45,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ), (
         1300003,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
@@ -57,7 +57,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ), (
         1300004,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
@@ -69,7 +69,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ), (
         1300005,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
@@ -81,7 +81,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
       ), (
         1300006,
         '${erc721ContractSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],

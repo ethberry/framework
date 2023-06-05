@@ -50,6 +50,8 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
+  public excludeFeatures: Array<ContractFeatures>;
+
   @ApiPropertyOptional({
     minimum: 1,
   })

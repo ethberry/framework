@@ -40,14 +40,14 @@ export const Erc998Token: FC = () => {
     baseUrl: "/erc998/tokens",
     empty: {
       template: {} as ITemplate,
-      attributes: "{}",
+      metadata: "{}",
     },
     search: {
       tokenStatus: [TokenStatus.MINTED],
       contractIds: [],
       templateIds: [],
       tokenId: "",
-      attributes: {},
+      metadata: {},
     },
   });
 

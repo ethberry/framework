@@ -1,17 +1,24 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { randomBytes, hexlify, ZeroAddress, encodeBytes32String } from "ethers";
 
+import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
-import { IClaimCreateDto } from "./interfaces";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class ClaimService {
   constructor(
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
+    protected readonly assetService: AssetService,
+    private readonly signerService: SignerService,
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
@@ -71,54 +78,105 @@ export class ClaimService {
     return this.claimEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IClaimCreateDto): Promise<ClaimEntity> {
-    const { account, itemId, endTimestamp, merchantId } = dto;
+  public findOneWithRelations(where: FindOptionsWhere<ClaimEntity>): Promise<ClaimEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+        },
+      },
+    });
+  }
 
-    return await this.claimEntityRepository
+  public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
+    const { account, endTimestamp } = dto;
+
+    const assetEntity = await this.assetService.create({
+      components: [],
+    });
+
+    const claimEntity = await this.claimEntityRepository
       .create({
         account,
-        itemId,
+        item: assetEntity,
         signature: "0x",
         nonce: "",
-        merchantId,
+        merchantId: userEntity.merchantId,
         endTimestamp,
-        claimStatus: ClaimStatus.NEW,
       })
       .save();
+
+    return this.update({ id: claimEntity.id }, dto, userEntity);
   }
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: Partial<ClaimEntity>,
-  ): Promise<ClaimEntity | undefined> {
-    const claimEntity = await this.claimEntityRepository.findOne({ where });
+    dto: IClaimItemUpdateDto,
+    userEntity: UserEntity,
+  ): Promise<ClaimEntity> {
+    const { account, item, endTimestamp } = dto;
+
+    let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
     }
 
-    Object.assign(claimEntity, dto);
+    if (claimEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
+    // Update only NEW Claims
+    if (claimEntity.claimStatus !== ClaimStatus.NEW) {
+      throw new BadRequestException("claimRedeemed");
+    }
+
+    await this.assetService.update(claimEntity.item, item);
+
+    claimEntity = await this.findOneWithRelations(where);
+
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
+    }
+
+    const nonce = randomBytes(32);
+    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
+    const signature = await this.getSignature(
+      account,
+      {
+        nonce,
+        externalId: claimEntity.id,
+        expiresAt,
+        referrer: ZeroAddress,
+        // @TODO fix to use expiresAt as extra, temporary set to empty
+        extra: encodeBytes32String("0x"),
+      },
+
+      claimEntity,
+    );
+
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 
-  // public async updateClaim(dto: Partial<IClaimCreateDto>): Promise<ClaimEntity> {
-  //   const { account, itemId, endTimestamp, nonce, signature, merchantId } = dto;
-  //
-  //   // TODO check user.merchant ?
-  //   // if (merchantId !== userEntity.merchantId) {
-  //   //   throw new ForbiddenException("insufficientPermissions");
-  //   // }
-  //   return await this.claimEntityRepository
-  //     .create({
-  //       account,
-  //       itemId,
-  //       signature,
-  //       nonce,
-  //       merchantId,
-  //       endTimestamp,
-  //       claimStatus: ClaimStatus.NEW,
-  //     })
-  //     .save();
-  // }
+  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
+    return this.signerService.getManyToManySignature(
+      account,
+      params,
+      claimEntity.item.components.map(component => ({
+        tokenType: Object.values(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        tokenId:
+          component.contract.contractType === TokenType.ERC1155
+            ? component.template.tokens[0].tokenId
+            : (component.templateId || 0).toString(), // suppression types check with 0
+        amount: component.amount,
+      })),
+      [],
+    );
+  }
 }

@@ -18,18 +18,18 @@ export class OrderEntity extends IdDateBaseEntity implements IOrder {
   @Column({ type: "int" })
   public userId: number;
 
+  @Column({ type: "int" })
+  public merchantId: number;
+
   @JoinColumn()
   @ManyToOne(_type => MerchantEntity, merchant => merchant.orders)
   public merchant: MerchantEntity;
-
-  @Column({ type: "int" })
-  public merchantId: number;
 
   @OneToMany(_type => OrderItemEntity, item => item.order, {
     eager: true,
     cascade: ["remove", "insert"],
   })
-  public items: Array<OrderItemEntity>;
+  public orderItems: Array<OrderItemEntity>;
 
   @Column({
     type: "enum",

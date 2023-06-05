@@ -8,9 +8,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "../../../../abis/common/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalABI from "../../../../abis/common/allowance/erc721.setApproval.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../abis/common/allowance/erc1155.setApprovalForAll.abi.json";
+import ERC20ApproveABI from "../../../../abis/extensions/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalABI from "../../../../abis/extensions/allowance/erc721.setApproval.abi.json";
+import ERC1155SetApprovalForAllABI from "../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./edit";
 

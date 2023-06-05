@@ -9,18 +9,17 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
 
-import StakingSetRulesABI from "../../../../../abis/components/buttons/mechanics/staking/upload/setRules.abi.json";
+import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
-export interface IStakingRuleUploadCreateButtonProps {
+export interface IStakingRuleCreateButtonProps {
   className?: string;
 }
 
-export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonProps> = props => {
+export const StakingRuleCreateButton: FC<IStakingRuleCreateButtonProps> = props => {
   const { className } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
@@ -65,6 +64,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
+      maxStake: rule.maxStake,
       active: true, // todo add var in interface
     };
     const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
@@ -118,15 +118,13 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
         initialValues={{
-          title: "new STAKING rule",
-          description: emptyStateString,
           deposit: emptyPrice,
           reward: emptyPrice,
           durationAmount: 2592000,
           durationUnit: DurationUnit.DAY,
           penalty: 100,
+          maxStake: 0,
           recurrent: false,
-          // contractId: 3, // STAKING
         }}
       />
     </Fragment>

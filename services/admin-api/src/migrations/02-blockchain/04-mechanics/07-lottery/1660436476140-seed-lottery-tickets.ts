@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -30,7 +30,7 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         1,
         18010101,
-        '${constants.WeiPerEther.mul(5).toString()}',
+        '${(WeiPerEther * 5n).toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -38,7 +38,7 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([1, 2, 3, 4, 5, 6])}',
         1,
         18010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -46,7 +46,7 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([11, 12, 13, 14, 15, 16])}',
         1,
         18010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -54,7 +54,7 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([21, 22, 23, 24, 25, 26])}',
         1,
         18010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -62,7 +62,7 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([31, 32, 33, 34, 35, 36])}',
         1,
         18010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

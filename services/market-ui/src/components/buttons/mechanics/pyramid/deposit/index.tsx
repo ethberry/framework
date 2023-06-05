@@ -10,7 +10,7 @@ import { useSettings } from "@gemunion/provider-settings";
 
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import PyramidDepositABI from "../../../../../abis/components/buttons/mechanics/pyramid/deposit/deposit.abi.json";
+import PyramidDepositABI from "../../../../../abis/mechanics/pyramid/deposit/deposit.abi.json";
 
 import { getEthPrice } from "../../../../../utils/money";
 
@@ -28,11 +28,11 @@ export const PyramidDepositButton: FC<IPyramidDepositButtonProps> = props => {
     const contract = new Contract(rule.contract.address, PyramidDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
     // const tokenId = 0;
-    const tokenId = rule.deposit!.components[0].templateId; // for 1155
+    // const tokenId = rule.deposit!.components[0].templateId; // for 1155
 
     const referrer = settings.getReferrer();
     // TODO check pyramid contract referral feature?
-    return contract.deposit(referrer, rule.externalId, tokenId, {
+    return contract.deposit(referrer, rule.externalId, {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
   });

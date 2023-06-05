@@ -5,6 +5,7 @@ import { MoreVert } from "@mui/icons-material";
 import { IContract } from "@framework/types";
 
 import { TopUpMenuItem } from "./top-up";
+import { AllowanceMenuItem } from "../../../menu/mechanics/common/allowance";
 
 export interface ICommonActionsMenu {
   contract: IContract;
@@ -40,6 +41,7 @@ export const CommonActionsMenu: FC<ICommonActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="common-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <AllowanceMenuItem contract={contract} />
         <TopUpMenuItem contract={contract} />
       </Menu>
     </Fragment>

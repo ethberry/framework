@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber, constants, utils } from "ethers";
+import { ZeroAddress, randomBytes, encodeBytes32String, hexlify } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -74,7 +74,7 @@ export class GradeService {
   }
 
   public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, tokenId, attribute } = dto;
+    const { account, referrer = ZeroAddress, tokenId, attribute } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -97,7 +97,7 @@ export class GradeService {
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
@@ -106,14 +106,14 @@ export class GradeService {
         externalId: gradeEntity.id,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       attribute,
       tokenEntity,
       gradeEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(
@@ -123,7 +123,7 @@ export class GradeService {
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const level = tokenEntity.attributes[attribute];
+    const level = tokenEntity.metadata[attribute];
 
     return this.signerService.getOneToManySignature(
       account,
@@ -145,13 +145,13 @@ export class GradeService {
 
   public getMultiplier(level: number, amount: string, { gradeStrategy, growthRate }: GradeEntity) {
     if (gradeStrategy === GradeStrategy.FLAT) {
-      return BigNumber.from(amount);
+      return BigInt(amount);
     } else if (gradeStrategy === GradeStrategy.LINEAR) {
-      return BigNumber.from(amount).mul(level);
+      return BigInt(amount) * BigInt(level);
     } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
       const exp = (1 + growthRate / 100) ** level;
       const [whole = "", decimals = ""] = exp.toString().split(".");
-      return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
+      return (BigInt(amount) * BigInt(`${whole}${decimals}`)) / BigInt(10) ** BigInt(decimals.length);
     } else {
       throw new BadRequestException("unknownStrategy");
     }

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Post,
   HttpCode,
   HttpStatus,
   Param,
@@ -15,10 +16,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { Erc721ContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { Erc721ContractService } from "./contract.service";
+import { Erc721ContractCreateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc721/contracts")
@@ -32,6 +34,11 @@ export class Erc721ContractController {
     @User() userEntity: UserEntity,
   ): Promise<[Array<ContractEntity>, number]> {
     return this.erc721ContractService.search(dto, userEntity);
+  }
+
+  @Post("/")
+  public create(@Body() dto: Erc721ContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc721ContractService.create(dto, userEntity);
   }
 
   @Put("/:id")

@@ -75,13 +75,11 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   }
 
   function updateReferrers(address initReferrer, Asset[] memory price) internal {
-    address account = _msgSender();
-
-    if (initReferrer == address(0) || initReferrer == account) {
+    if (initReferrer == address(0) || initReferrer == _msgSender()) {
       return;
     }
 
-    _chain[account] = initReferrer;
+    _chain[_msgSender()] = initReferrer;
 
     Ref memory program = _refProgram;
 
@@ -91,17 +89,17 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
       if (ingredient.tokenType == TokenType.NATIVE || ingredient.tokenType == TokenType.ERC20) {
         address referrer = initReferrer;
 
-        uint8 maxRefs = _maxAccountRefs[account] > 0 ? _maxAccountRefs[account] : program._maxRefs;
+        uint8 maxRefs = _maxAccountRefs[_msgSender()] > 0 ? _maxAccountRefs[_msgSender()] : program._maxRefs;
         for (uint8 level = 0; level < maxRefs; level++) {
           uint256 rewardAmount = ((ingredient.amount / 100) * (program._refReward / 100)) /
             program._refDecrease ** (level);
           _rewardBalances[referrer][ingredient.token] += rewardAmount;
           getBonus(referrer);
-          emit ReferralReward(account, referrer, level, ingredient.token, rewardAmount);
+          emit ReferralReward(_msgSender(), referrer, level, ingredient.token, rewardAmount);
 
           address nxt = _chain[referrer];
 
-          if (_chain[referrer] == address(0) || _chain[referrer] == account) {
+          if (_chain[referrer] == address(0) || _chain[referrer] == _msgSender()) {
             level = maxRefs;
           }
           referrer = nxt;
@@ -114,22 +112,21 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   }
 
   function withdrawReward(address token) public returns (bool success) {
-    address account = _msgSender();
-    uint256 rewardAmount = _rewardBalances[account][token];
+    uint256 rewardAmount = _rewardBalances[_msgSender()][token];
     require(rewardAmount > 0, "Referral: Zero balance");
     bool result;
     if (token == address(0)) {
       require(address(this).balance > rewardAmount, "Referral: Insufficient ETH balance");
-      _rewardBalances[account][token] = 0;
-      emit ReferralWithdraw(account, token, rewardAmount);
-      Address.sendValue(payable(account), rewardAmount);
+      _rewardBalances[_msgSender()][token] = 0;
+      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
+      Address.sendValue(payable(_msgSender()), rewardAmount);
       result = true;
     } else {
       uint256 balanceErc20 = IERC20(token).balanceOf(address(this));
       require(balanceErc20 > rewardAmount, "Referral: Insufficient ERC20 balance");
-      _rewardBalances[account][token] = 0;
-      emit ReferralWithdraw(account, token, rewardAmount);
-      SafeERC20.safeTransfer(IERC20(token), account, rewardAmount);
+      _rewardBalances[_msgSender()][token] = 0;
+      emit ReferralWithdraw(_msgSender(), token, rewardAmount);
+      SafeERC20.safeTransfer(IERC20(token), _msgSender(), rewardAmount);
       result = true;
     }
     return result;

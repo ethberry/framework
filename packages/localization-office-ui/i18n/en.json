@@ -52,6 +52,27 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
+    "blockchainError": {
+      "BalanceExceed": "The balance exceeds the limit",
+      "CountExceed": "The count exceeds the limit",
+      "Expired": "The item has expired",
+      "ExpiredSignature": "The signature has expired",
+      "LimitExceed": "The limit has been exceeded",
+      "MethodNotSupported": "The method is not supported",
+      "NotActive": "The item is not active",
+      "NotAnOwner": "The user is not an owner",
+      "NotComplete": "The operation is not complete",
+      "NotExist": "The item does not exist",
+      "RefProgramSet": "The referral program is set",
+      "SignerMissingRole": "The signer is missing a role",
+      "TemplateZero": "The template is zero",
+      "UnsupportedTokenType": "The token type is not supported",
+      "WrongAmount": "The amount is wrong",
+      "WrongRule": "The rule is wrong",
+      "WrongStake": "The stake is wrong",
+      "WrongToken": "The token is wrong",
+      "ZeroBalance": "The balance is zero"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "13377": "BESU (remote)",
@@ -95,7 +116,10 @@
     "durationUnit": {
       "DAY": "Day",
       "HOUR": "Hour",
-      "MINUTE": "Minute"
+      "MINUTE": "Minute",
+      "MONTH": "Month",
+      "WEEK": "Week",
+      "YEAR": "Year"
     },
     "emailType": {
       "DUMMY": "Test email",
@@ -268,7 +292,6 @@
       "addressLine2": "Address (line 2)",
       "allDeposits": "All deposits",
       "amount": "Amount",
-      "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
       "chainId": "Chain",
@@ -319,6 +342,7 @@
       "maxStakes": "Max Stakes",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
+      "metadata": "Attributes",
       "minBalance": "Min. Balance",
       "name": "Name",
       "numbers": "Numbers",
@@ -380,7 +404,6 @@
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
-      "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
       "childId": "Contract",
@@ -409,6 +432,7 @@
       "maxStake": "10",
       "maxStakes": "0",
       "merchantId": "Gemunion",
+      "metadata": "{}",
       "minBalance": "0",
       "name": "Pink dust",
       "number": "100500",

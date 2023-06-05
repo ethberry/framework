@@ -9,7 +9,7 @@ import { useSettings } from "@gemunion/provider-settings";
 import { IAchievementItemReport, IAchievementRule, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import ClaimABI from "../../../../abis/components/buttons/mechanics/claim/redeem/claim.abi.json";
+import ClaimABI from "../../../../abis/mechanics/claim/redeem/claim.abi.json";
 
 interface IAchievementRedeemButtonProps {
   achievementRule: IAchievementRule;

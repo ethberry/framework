@@ -1,6 +1,6 @@
 import { Contract } from "ethers";
 
-import type { IERC721EnumOptions } from "@gemunion/contracts-erc721-enumerable";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import {
   shouldApprove,
   shouldBehaveLikeERC721Burnable,
@@ -8,7 +8,7 @@ import {
   shouldGetOwnerOf,
   shouldSafeMint,
   shouldSetApprovalForAll,
-} from "@gemunion/contracts-erc721-enumerable";
+} from "@gemunion/contracts-erc721e";
 
 import { shouldReceive } from "../../../shared/receive";
 import { tokenId } from "../../../constants";
@@ -20,14 +20,13 @@ import { shouldTransferFrom } from "./transferFrom";
 import { shouldSafeTransferFrom } from "./safeTransferFrom";
 
 export function shouldBehaveLikeERC721Soulbound(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
-  Object.assign(options, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
+  options = Object.assign({}, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
 
   shouldApprove(factory, options);
   shouldGetBalanceOf(factory, options);
   shouldGetOwnerOf(factory, options);
   shouldSetApprovalForAll(factory, options);
   shouldTransferFrom(factory, options);
-  shouldSafeTransferFrom(factory, options);
   shouldSafeTransferFrom(factory, options);
   shouldSafeMint(factory, options);
 

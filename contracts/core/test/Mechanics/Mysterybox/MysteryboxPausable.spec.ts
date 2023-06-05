@@ -1,6 +1,6 @@
 import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
-import { shouldBehaveLikeERC721Pausable } from "@gemunion/contracts-erc721-enumerable";
+import { shouldBehaveLikeERC721Pausable } from "@gemunion/contracts-erc721e";
 
 import { FrameworkInterfaceId, tokenId } from "../../constants";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -9,7 +9,7 @@ import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { shouldBehaveLikeERC721MysteryBox } from "./shared/simple/base";
 import { customMint } from "./shared/simple/customMintFn";
 
-describe.skip("ERC721MysteryboxPausable", function () {
+describe("ERC721MysteryboxPausable", function () {
   const factory = () => deployERC721("ERC721MysteryboxPausable");
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);

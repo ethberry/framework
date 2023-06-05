@@ -10,7 +10,7 @@ import { TokenType } from "@framework/types";
 import type { ITemplate } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 
-import TemplatePurchaseABI from "../../../../../abis/components/buttons/hierarchy/template/purchase/purchase.abi.json";
+import TemplatePurchaseABI from "../../../../../abis/exchange/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 import { AmountDialog, IAmountDto } from "./dialog";

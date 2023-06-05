@@ -29,7 +29,7 @@ export class OrderEntity extends IdDateBaseEntity implements IOrder {
     eager: true,
     cascade: ["remove", "insert"],
   })
-  public items: Array<OrderItemEntity>;
+  public orderItems: Array<OrderItemEntity>;
 
   @Column({
     type: "enum",

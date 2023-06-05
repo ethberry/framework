@@ -59,7 +59,7 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     uint256 _tokenId,
     address _childContract,
     uint256 _childTokenId
-  ) internal override onlyWhiteListedWithDecrement(_childContract) {
+  ) internal override virtual onlyWhiteListedWithDecrement(_childContract) {
     super.removeChild(_tokenId, _childContract, _childTokenId);
   }
 
@@ -68,7 +68,7 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     uint256 _tokenId,
     address _childContract,
     uint256 _childTokenId
-  ) internal override onlyWhiteListedWithIncrement(_childContract) {
+  ) internal override virtual onlyWhiteListedWithIncrement(_childContract) {
     super.receiveChild(_from, _tokenId, _childContract, _childTokenId);
   }
 }

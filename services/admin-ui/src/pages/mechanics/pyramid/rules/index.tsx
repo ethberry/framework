@@ -103,7 +103,9 @@ export const PyramidRules: FC = () => {
             <ListItem key={i} disableGutters>
               <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
               <div></div>
-              <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
+              <ListItemText sx={{ width: 0.4 }}>
+                {rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <PyramidUploadButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>

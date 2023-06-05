@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { ModuleType, TokenType } from "@framework/types";
 import type { ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -59,7 +59,7 @@ export class Erc1155TemplateService extends TemplateService {
 
     await this.tokenService.create({
       tokenId: (maxTokenId + 1).toString(),
-      attributes: "{}",
+      metadata: "{}",
       royalty: 0,
       template: templateEntity,
     });

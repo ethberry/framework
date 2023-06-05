@@ -8,8 +8,8 @@ import { FormattedMessage } from "react-intl";
 
 import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
-import LinkBalanceOfABI from "../../../../../abis/components/buttons/integrations/chain-link/fund/balanceOf.abi.json";
-import LinkTransferAndCallABI from "../../../../../abis/components/buttons/integrations/chain-link/fund/transferAndCall.abi.json";
+import LinkBalanceOfABI from "../../../../../abis/integrations/chain-link/fund/balanceOf.abi.json";
+import LinkTransferAndCallABI from "../../../../../abis/integrations/chain-link/fund/transferAndCall.abi.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
 import { formatEther } from "../../../../../utils/money";

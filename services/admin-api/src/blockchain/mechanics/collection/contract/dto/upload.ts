@@ -1,21 +1,18 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Allow, IsArray, IsString, IsUrl, ValidateNested } from "class-validator";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { Type } from "class-transformer";
+
+import { IsBigInt } from "@gemunion/nest-js-validators";
+
 import { ClaimItemCreateDto } from "../../../claim/dto";
+import { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
 
-export class TokenUploadDto {
-  // @ApiProperty({
-  //   minimum: 1,
-  // })
-  // @IsString({ message: "typeMismatch" })
-  // public contract: string;
-
+export class TokenUploadDto implements ITokenUploadDto {
   @ApiProperty({
     type: Number,
     minimum: 0,
   })
-  @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
 
   @ApiProperty()
@@ -23,13 +20,13 @@ export class TokenUploadDto {
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 
+  // TODO fix, this is actually uint256
   @ApiPropertyOptional()
-  // @ValidateNested()
   @Allow()
-  public attributes: any;
+  public metadata: string;
 }
 
-export class CollectionUploadDto {
+export class CollectionUploadDto implements ICollectionUploadDto {
   @ApiProperty({
     isArray: true,
     type: ClaimItemCreateDto,
@@ -37,5 +34,5 @@ export class CollectionUploadDto {
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
   @Type(() => TokenUploadDto)
-  public files: Array<TokenUploadDto>;
+  public tokens: Array<TokenUploadDto>;
 }

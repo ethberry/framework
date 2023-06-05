@@ -1,13 +1,10 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-
-import { Log } from "@ethersproject/abstract-provider";
-import { constants, providers } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC } from "@gemunion/nestjs-ethers";
-
-import { IERC721TokenTransferEvent, IUnpackWrapper, TokenAttributes, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IUnpackWrapper, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenService } from "../../hierarchy/token/token.service";
@@ -25,7 +22,7 @@ export class WrapperServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -57,9 +54,9 @@ export class WrapperServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+    if (from === ZeroAddress) {
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -67,7 +64,7 @@ export class WrapperServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes: JSON.stringify(attributes),
+        metadata: JSON.stringify(metadata),
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
       });
@@ -83,10 +80,10 @@ export class WrapperServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner

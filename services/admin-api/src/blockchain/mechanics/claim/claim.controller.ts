@@ -10,10 +10,8 @@ import {
   Post,
   Put,
   Query,
-  UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -21,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
-import { ClaimItemCreateDto, ClaimItemUpdateDto, ClaimSearchDto } from "./dto";
+import { ClaimItemCreateDto, ClaimItemUpdateDto, ClaimItemUploadDto, ClaimSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims")
@@ -40,12 +38,8 @@ export class ClaimController {
   }
 
   @Post("/upload")
-  @UseInterceptors(FileInterceptor("file"))
-  public upload(
-    @UploadedFile() file: Express.Multer.File,
-    @User() userEntity: UserEntity,
-  ): Promise<Array<ClaimEntity>> {
-    return this.claimService.upload(file, userEntity);
+  public upload(@Body() dto: ClaimItemUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+    return this.claimService.upload(dto, userEntity);
   }
 
   @Put("/:id")

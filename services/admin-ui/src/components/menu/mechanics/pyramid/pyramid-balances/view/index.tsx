@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IBalance } from "@framework/types";
 
-import PyramidWithdrawTokenABI from "../../../../../../abis/components/menu/mechanics/pyramid/pyramid-balances/withdrawToken.abi.json";
+import PyramidWithdrawTokenABI from "../../../../../../abis/mechanics/pyramid/pyramid-balances/withdrawToken.abi.json";
 
 import { formatEther } from "../../../../../../utils/money";
 import { emptyBalance } from "../../../../../common/interfaces";

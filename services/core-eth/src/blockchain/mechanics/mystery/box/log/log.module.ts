@@ -59,10 +59,10 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
   exports: [MysteryLogService],
 })
 export class MysteryLogModule implements OnModuleDestroy {
-  constructor(private readonly mysteryboxLogService: MysteryLogService) {}
+  constructor(private readonly mysteryLogService: MysteryLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.mysteryboxLogService.updateBlock();
+    return this.mysteryLogService.updateBlock();
   }
 }

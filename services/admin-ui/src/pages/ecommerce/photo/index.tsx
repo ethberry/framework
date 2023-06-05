@@ -24,6 +24,7 @@ export const Photo: FC = () => {
       photoStatus: PhotoStatus.NEW,
       priority: 0,
       productId: 1,
+      productItemId: null,
     },
   });
 

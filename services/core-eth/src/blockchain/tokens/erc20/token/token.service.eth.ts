@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { constants } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { ZeroAddress } from "ethers";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IErc20TokenApproveEvent, IErc20TokenSnapshotEvent, IErc20TokenTransferEvent } from "@framework/types";
@@ -34,9 +34,9 @@ export class Erc20TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), value);
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       await this.balanceService.decrement(tokenEntity.id, to.toLowerCase(), value);
     } else {
       if (value !== "0") {

@@ -1,5 +1,6 @@
 import { ethers, network } from "hardhat";
 import { constants, Contract } from "ethers";
+import fs from "fs";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
@@ -8,9 +9,9 @@ import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms
+const delayMs = 1500; // block delay ms
 // const linkAmountInEth = utils.parseEther("1");
-
+const batchSize = 3; // Generative collection size
 interface IObj {
   address?: string;
   hash?: string;
@@ -22,7 +23,16 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
     await blockAwaitMs(delayMs);
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
+    const tx = Object.values(obj).pop();
+    const contract = await tx.deployed();
     await blockAwait(delay, delayMs);
+    fs.appendFileSync(
+      `${process.cwd()}/log.txt`,
+      // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
+      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${
+        contract.address ? contract.address : "--"
+      }\n`,
+    );
   }
 };
 
@@ -249,7 +259,7 @@ async function main() {
 
   const genes998ContractName = getContractName("ERC998Genes", network.name);
   const erc998GenesFactory = await ethers.getContractFactory(genes998ContractName);
-  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (genes)", "DNA998", royalty, baseTokenURI);
+  contracts.erc998Genes = await erc998GenesFactory.deploy("AXIE (traits)", "DNA998", royalty, baseTokenURI);
   await debug(contracts);
 
   await debug(
@@ -270,7 +280,7 @@ async function main() {
   contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
+  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20");
   contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
     "OWNER FULL",
     "OWNFULL",
@@ -343,7 +353,7 @@ async function main() {
   );
 
   const stakingFactory = await ethers.getContractFactory("Staking");
-  const stakingInstance = await stakingFactory.deploy(10);
+  const stakingInstance = await stakingFactory.deploy();
   contracts.staking = stakingInstance;
   await debug(contracts);
 
@@ -370,6 +380,7 @@ async function main() {
         content: [],
         period: 30 * 84600,
         penalty: 1,
+        maxStake: 0,
         recurrent: false,
         active: true,
       },
@@ -400,6 +411,7 @@ async function main() {
         content: [],
         period: 30 * 84600,
         penalty: 1,
+        maxStake: 0,
         recurrent: false,
         active: true,
       },
@@ -439,6 +451,7 @@ async function main() {
         ],
         period: 1 * 84600,
         penalty: 0,
+        maxStake: 0,
         recurrent: true,
         active: true,
       },
@@ -451,28 +464,34 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const lotteryWalletFactory = await ethers.getContractFactory("LotteryWallet");
-  contracts.lotteryWallet = await lotteryWalletFactory.deploy([owner.address], [100]);
-
-  // LOTTERY
-  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
+  const erc721LotteryFactory = await ethers.getContractFactory("ERC721Lottery");
   // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const lotteryConfig = {
-    lotteryWallet: contracts.lotteryWallet.address,
-    timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
-    maxTickets: 2, // production: 5000 (dev: 2)
-    commission: 30, // lottery wallet gets 30% commission from each round balance
-  };
+  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CollectionSimple");
 
-  // LOTTERY 6 from 36
+  contracts.erc721Generative = await erc721CollectionFactory.deploy(
+    "COLLECTION SIMPLE",
+    "COLL721",
+    royalty,
+    baseTokenURI,
+    batchSize,
+    owner.address,
+  );
+  await debug(contracts);
+
   const randomContractLotteryName = getContractName("LotteryRandom", network.name);
 
+  // const lotteryFactory = await ethers.getContractFactory("LotteryBesu");
   const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
+  // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
-  contracts.lottery = await lotteryFactory.deploy("Lottery", lotteryConfig);
+  contracts.lottery = await lotteryFactory.deploy(
+    "Lottery",
+    contracts.erc721Lottery.address,
+    contracts.erc20Simple.address,
+  );
   await debug(contracts);
 
   await debug(
@@ -482,27 +501,19 @@ async function main() {
 
   await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
 
-  // LOTTERY RAFFLE
-  const raffleContractLotteryName = getContractName("LotteryRaffleRandom", network.name);
-
-  const lotteryRaffleFactory = await ethers.getContractFactory(raffleContractLotteryName);
-
-  contracts.lotteryRaffle = await lotteryRaffleFactory.deploy("Lottery Raffle", lotteryConfig);
-  await debug(contracts);
-
-  await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lotteryRaffle.address),
-    "vrfInstance.addConsumer",
-  );
-
-  await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lotteryRaffle.address), "grantRole");
-
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   await debug(contracts);
 
   const busdFactory = await ethers.getContractFactory("BEP20Token");
   contracts.busd = await busdFactory.deploy();
+  await debug(contracts);
+
+  const wethFactory = await ethers.getContractFactory("WETH9");
+  contracts.weth =
+    network.name !== "binance_test"
+      ? await wethFactory.deploy()
+      : wethFactory.attach("0x1e33833a035069f42d68D1F53b341643De1C018D"); // binance_test
   await debug(contracts);
 
   const waitlistFactory = await ethers.getContractFactory("Waitlist");
@@ -525,6 +536,7 @@ async function main() {
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
 
+  // TODO add pyramid deploy
   const pyramidFactory = await ethers.getContractFactory("Pyramid");
   contracts.pyramid = await pyramidFactory.deploy(
     [
@@ -550,6 +562,7 @@ async function main() {
       contracts.erc721Rentable.address,
       contracts.erc721Soulbound.address,
       contracts.erc721Genes.address,
+      contracts.erc721Generative.address,
       contracts.erc998Blacklist.address,
       contracts.erc998New.address,
       contracts.erc998Random.address,
@@ -557,6 +570,9 @@ async function main() {
       contracts.erc998Upgradeable.address,
       contracts.erc998Genes.address,
       contracts.erc998Rentable.address,
+      contracts.erc998OwnerErc1155Erc20.address,
+      contracts.erc998OwnerErc1155.address,
+      contracts.erc998OwnerErc20.address,
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,

@@ -19,28 +19,10 @@ export class Erc998TokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.HIERARCHY);
+    return super.search(dto, userEntity, [TokenType.ERC998], [ModuleType.HIERARCHY]);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    // return this.findOne(where, {
-    //   join: {
-    //     alias: "token",
-    //     leftJoinAndSelect: {
-    //       // token_parent: "token.parent",
-    //       token_children: "token.children",
-    //       token_children_child: "token_children.child",
-    //       token_children_template: "token_children_child.template",
-    //       token_children_contract: "token_children_template.contract",
-    //       contract_children: "contract.children",
-    //       composition_child: "contract_children.child",
-    //       // breeds: "token.breeds",
-    //       // breed_children: "breeds.children",
-    //       // breed_history: "breed_children.history",
-    //     },
-    //   },
-    // });
-
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.leftJoinAndSelect("token.history", "history");

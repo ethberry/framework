@@ -9,7 +9,7 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
 
-import UpgradeABI from "../../../../abis/components/buttons/mechanics/grade/upgrade.abi.json";
+import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
 
@@ -37,7 +37,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           },
         })
         .then((grade: IGrade) => {
-          const level = token.attributes[attribute];
+          const level = token.metadata[attribute];
 
           const price =
             grade.price?.components.sort(sorter("id")).map(component => ({

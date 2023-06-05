@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import VestingTransferOwnershipABI from "../../../../../abis/components/menu/mechanics/vesting/transfer-ownership/transferOwnership.abi.json";
+import VestingTransferOwnershipABI from "../../../../../abis/extensions/transfer-ownership/transferOwnership.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 

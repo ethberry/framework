@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IStakingContractDeployDto, StakingContractTemplates } from "@framework/types";
 
-import StakingDeployStakingABI from "../../../../../abis/components/buttons/mechanics/staking/deploy/deployStaking.abi.json";
+import StakingDeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
 
 import { StakingDeployDialog } from "./dialog";
 
@@ -34,7 +34,6 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         },
         // values,
         {
-          maxStake: values.maxStake,
           contractTemplate: Object.values(StakingContractTemplates).indexOf(values.contractTemplate).toString(),
         },
         sign.signature,

@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -33,11 +33,11 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         updated_at
       ) VALUES (
         1216,
-        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-        1,
+        '${wethAddr}',
+        '${chainId}',
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -56,7 +56,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         56,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -71,11 +71,11 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         3216,
-        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
-        137,
+        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        1,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,
@@ -90,11 +90,11 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       ), (
         4216,
-        '${wethAddr}',
-        '${chainId}',
+        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+        137,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         'Wrapped ETH',
         'WETH',
         18,

@@ -33,7 +33,7 @@ export class AddressUpdateDto extends SearchableDto implements IAchievementLevel
   @ApiPropertyOptional()
   @IsOptional()
   // @IsJSON({ message: "patternMismatch" })
-  public attributes: Record<string, string | number>;
+  public parameters: Record<string, string | number>;
 
   @ApiPropertyOptional()
   @IsOptional()

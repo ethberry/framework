@@ -4,7 +4,7 @@ import type { IToken } from "../../hierarchy/token";
 import type { IEventHistory } from "../../event-history";
 
 export interface IBreed extends IIdDateBase {
-  genes: string;
+  traits: string;
   count: number;
   tokenId: number;
   token: IToken;

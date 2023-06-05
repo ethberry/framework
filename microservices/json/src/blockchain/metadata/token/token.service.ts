@@ -2,11 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
-import { BigNumber } from "ethers";
 
 import { getText } from "@gemunion/draft-js-utils";
-import { TokenAttributes, TokenRarity } from "@framework/types";
-import { decodeGenes } from "@framework/genes";
+import { TokenMetadata, TokenRarity } from "@framework/types";
+import { decodeTraits } from "@framework/traits";
 
 import { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "../../../common/interfaces";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
@@ -37,7 +36,7 @@ export class MetadataTokenService {
     return queryBuilder.getOne();
   }
 
-  public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaMetadata> {
+  public async getTokenMetadata(address: string, tokenId: bigint): Promise<IOpenSeaMetadata> {
     const tokenEntity = await this.getToken(address, tokenId.toString());
 
     if (!tokenEntity) {
@@ -46,42 +45,44 @@ export class MetadataTokenService {
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
-    const { attributes } = tokenEntity;
+    const { metadata } = tokenEntity;
 
     return {
       description: getText(tokenEntity.template.description),
       external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       image: tokenEntity.template.imageUrl,
       name: tokenEntity.template.title,
-      attributes: this.formatMetadata(attributes),
+      attributes: this.formatMetadata(metadata),
     };
   }
 
-  public formatMetadata(attributes: Record<string, string>): Array<IOpenSeaMetadataAttribute> {
-    return Object.entries(attributes).reduce((memo, [key, value]) => {
+  public formatMetadata(metadata: Record<string, string>): Array<IOpenSeaMetadataAttribute> {
+    return Object.entries(metadata).reduce((memo, [key, value]) => {
       switch (key) {
-        case TokenAttributes.RARITY:
+        case TokenMetadata.RARITY:
           memo.push({
             trait_type: key,
             value: Object.values(TokenRarity)[~~value],
           });
           break;
-        case TokenAttributes.GRADE:
+        case TokenMetadata.GRADE:
           memo.push({
             trait_type: key,
             value,
           });
           break;
+        // MODULE:DND
         // MODULE:BREEDING
-        case TokenAttributes.GENES:
-          Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
+        // MODULE:COLLECTION
+        case TokenMetadata.TRAITS:
+          Object.entries(decodeTraits(BigInt(value))).forEach(([key, value]) => {
             memo.push({
               trait_type: key,
               value,
             });
           });
           break;
-        case TokenAttributes.TEMPLATE_ID:
+        case TokenMetadata.TEMPLATE_ID:
         default:
           break;
       }

@@ -16,6 +16,7 @@ interface IPyramid {
     uint256 maxCycles;
     uint256 penalty;
     uint256 externalId;
+//    uint256 maxDeposit;
     bool active;
   }
 

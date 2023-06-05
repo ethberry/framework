@@ -11,7 +11,7 @@ export class SeedTokenLotteryAt1563804000380 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,

@@ -31,7 +31,7 @@ export class AchievementLevelEntity extends SearchableEntity implements IAchieve
   public amount: number;
 
   @Column({ type: "json" })
-  public attributes: Record<string, string | number>;
+  public parameters: Record<string, string | number>;
 
   @Column({ type: "timestamptz" })
   public startTimestamp: string;

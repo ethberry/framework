@@ -7,7 +7,7 @@ import { SwitchInput } from "@gemunion/mui-inputs-core";
 import { DurationUnit, IAsset } from "@framework/types";
 import { validationSchema } from "./validation";
 import { formatComplexPrice, formatPenalty } from "../../../utils/money";
-import { formatDuration } from "../../../utils/time";
+import { normalizeDuration } from "../../../utils/time";
 
 export interface IDepositRule {
   deposit?: IAsset;
@@ -53,7 +53,7 @@ export const DepositRewardDialog: FC<IRewardDialogProps> = props => {
             period: `${formatMessage(
               { id: `enums.durationUnit.${rule.durationUnit}` },
               {
-                count: formatDuration({
+                count: normalizeDuration({
                   durationAmount: rule.durationAmount,
                   durationUnit: rule.durationUnit,
                 }),

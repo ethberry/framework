@@ -27,10 +27,8 @@ abstract contract ExchangeAchievement is SignatureValidator, AccessControl, Paus
       revert SignerMissingRole();
     }
 
-    address account = _msgSender();
+    ExchangeUtils.acquire(items, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    ExchangeUtils.acquire(items, account, DisabledTokenTypes(false, false, false, false, false));
-
-    emit AchievementClaimed(account, params.externalId, items);
+    emit AchievementClaimed(_msgSender(), params.externalId, items);
   }
 }

@@ -13,6 +13,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.useBodyParser("json", { limit: "500kb" });
 
   const configService = app.get(ConfigService);
   const nodeEnv = configService.get<string>("NODE_ENV", "development");

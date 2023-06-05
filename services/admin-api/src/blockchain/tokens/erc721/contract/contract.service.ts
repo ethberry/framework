@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { IContractSearchDto, ModuleType, TokenType } from "@framework/types";
+import type { IContractSearchDto, IErc721ContractCreateDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class Erc721ContractService extends ContractService {
@@ -25,5 +26,26 @@ export class Erc721ContractService extends ContractService {
       }),
       userEntity,
     );
+  }
+
+  public async create(dto: IErc721ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
+    const { address, symbol, title, description, imageUrl } = dto;
+
+    return this.contractEntityRepository
+      .create({
+        address,
+        symbol,
+        royalty: 0,
+        contractType: TokenType.ERC721,
+        contractFeatures: [ContractFeatures.EXTERNAL],
+        contractStatus: ContractStatus.ACTIVE,
+        name: title,
+        title,
+        description,
+        imageUrl,
+        chainId: userEntity.chainId,
+        merchantId: userEntity.merchantId,
+      })
+      .save();
   }
 }

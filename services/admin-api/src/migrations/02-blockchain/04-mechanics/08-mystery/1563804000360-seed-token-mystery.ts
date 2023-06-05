@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
-import { TokenAttributes } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
 export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,7 +12,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
         id,
-        attributes,
+        metadata,
         royalty,
         token_id,
         token_status,
@@ -22,7 +22,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ) VALUES (
         16010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "160101",
+          [TokenMetadata.TEMPLATE_ID]: "160101",
         })}',
         100,
         '1',
@@ -33,7 +33,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ), (
         16040101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "160401",
+          [TokenMetadata.TEMPLATE_ID]: "160401",
         })}',
         100,
         '1',
@@ -44,7 +44,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ), (
         16050101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "160501",
+          [TokenMetadata.TEMPLATE_ID]: "160501",
         })}',
         100,
         '1',
@@ -55,7 +55,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ), (
         16060101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "160601",
+          [TokenMetadata.TEMPLATE_ID]: "160601",
         })}',
         100,
         '1',
@@ -66,7 +66,7 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ), (
         26010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "260101",
+          [TokenMetadata.TEMPLATE_ID]: "260101",
         })}',
         100,
         '1',

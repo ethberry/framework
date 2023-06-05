@@ -38,7 +38,7 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         achievement_rule_id,
         item_id,
         amount,
-        attributes,
+        parameters,
         achievement_level,
         start_timestamp,
         end_timestamp,

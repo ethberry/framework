@@ -11,7 +11,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import MintBoxABI from "../../../../abis/pages/mechanics/wrapper/token-list/mintBox.abi.json";
+import MintBoxABI from "../../../../abis/mechanics/wrapper/mint/mintBox.abi.json";
 
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 import { ICreateWrappedToken, WrapperEditDialog } from "./edit";

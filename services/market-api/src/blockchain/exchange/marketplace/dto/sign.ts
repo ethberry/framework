@@ -3,7 +3,7 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 
 import { ISignTemplateDto } from "../interfaces";
 
@@ -19,6 +19,6 @@ export class SignTemplateDto extends Mixin(AccountDto, ReferrerOptionalDto) impl
     type: Number,
     minimum: 1,
   })
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public amount: string;
 }

@@ -1,6 +1,6 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { BigNumber, constants, providers } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
+import { JsonRpcProvider } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
@@ -10,7 +10,7 @@ import {
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   ILevelUp,
-  TokenAttributes,
+  TokenMetadata,
   TokenMintType,
   TokenStatus,
 } from "@framework/types";
@@ -34,7 +34,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -53,9 +53,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+    if (from === ZeroAddress) {
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
@@ -64,7 +64,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        metadata,
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
       });
@@ -72,10 +72,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
-        const mintType = getTokenMintType(txLogs);
+        const mintType = getTokenMintType(txLogs as Array<Log>);
 
         if (mintType === TokenMintType.MintRandom) {
           // update Asset history
@@ -98,10 +98,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
 
       // MODULE:BREEDING
-      if (attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.TRAITS]) {
         await this.breedServiceEth.newborn(
           tokenEntity.id,
-          attributes[TokenAttributes.GENES],
+          metadata[TokenMetadata.TRAITS],
           context.transactionHash.toLowerCase(),
         );
       }
@@ -116,10 +116,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
@@ -139,7 +139,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address } = context;
 
     // Mint token create batch
-    if (fromAddress === constants.AddressZero) {
+    if (fromAddress === ZeroAddress) {
       const templateEntity = await this.templateService.findOne(
         { contract: { address } },
         { relations: { contract: true } },
@@ -150,22 +150,21 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
       await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
 
-      const batchSize = JSON.parse(templateEntity.contract.description).batchSize
-        ? JSON.parse(templateEntity.contract.description).batchSize
-        : 0;
+      const description = JSON.parse(templateEntity.contract.description);
+      const batchSize = description.batchSize ? BigInt(description.batchSize) : 0;
 
-      const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+      // const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+      const batchLen = BigInt(toTokenId) - BigInt(fromTokenId);
 
       if (batchLen !== batchSize) {
-        // todo just in case =)
-        throw new NotFoundException("batchLengthError");
+        throw new BadRequestException("batchLengthError");
       }
 
       templateEntity.amount += batchSize;
       await templateEntity.save();
 
       const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
-        attributes: "{}",
+        metadata: "{}",
         tokenId: i.toString(),
         royalty: templateEntity.contract.royalty,
         templateId: templateEntity.id,
@@ -180,7 +179,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
-    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
+    const balanceArray: Array<DeepPartial<BalanceEntity>> = new Array(tokenArray.length).fill(null).map((_, i) => ({
       account: owner.toLowerCase(),
       amount: "1",
       tokenId: tokenArray[i].id,
@@ -226,7 +225,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc721TokenEntity.attributes, { GRADE: grade.toString() });
+    Object.assign(erc721TokenEntity.metadata, { GRADE: grade.toString() });
     await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);

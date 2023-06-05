@@ -3,9 +3,9 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 import { IBalance } from "@framework/types";
-import { emptyContract, emptyTemplate, emptyToken } from "../../../../../common/interfaces";
 
-// import { validationSchema } from "./validation";
+import { emptyContract, emptyTemplate, emptyToken } from "../../../../../common/interfaces";
+import { validationSchema } from "./validation";
 
 export interface IAmountDialogDto {
   balance: IBalance;
@@ -31,7 +31,7 @@ export const AmountDialog: FC<IAmountDialogProps> = props => {
   return (
     <FormDialog
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message={message}
       testId={testId}
       {...rest}

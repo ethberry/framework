@@ -2,10 +2,10 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { Erc1155Template } from "./template";
-import { Erc1155Contract } from "./contract";
 import { IndexWrapper } from "../../../index-wrapper";
 import { Erc1155Section } from "../../../dashboard/hierarchy/erc1155";
+import { Erc1155Template } from "./template";
+import { Erc1155Contract } from "./contract";
 
 export const erc1155Routes: Array<RouteObject> = [
   {

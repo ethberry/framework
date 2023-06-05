@@ -15,12 +15,10 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { IProduct, ProductStatus } from "@framework/types";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { cleanUpAsset } from "../../../utils/money";
 import { EditProductDialog } from "./edit";
 import { ProductSearchForm } from "./form";
 
@@ -54,22 +52,15 @@ export const Product: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: getEmptyTemplate(),
-      amount: 0,
       categories: [],
       photos: [],
-      parameters: [],
     },
     search: {
       query: "",
       productStatus: [ProductStatus.ACTIVE],
       categoryIds: [],
     },
-    filter: ({ id: _id, photos, price, ...rest }: Partial<IProduct>) => ({
-      ...rest,
-      photos: photos!.map(({ title, imageUrl }) => ({ title, imageUrl })),
-      price: cleanUpAsset(price),
-    }),
+    filter: ({ id: _id, ...rest }: Partial<IProduct>) => rest,
   });
 
   return (
@@ -81,7 +72,7 @@ export const Product: FC = () => {
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
-          <FormattedMessage id="form.buttons.add" />
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
@@ -89,14 +80,14 @@ export const Product: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((row, i) => (
+          {rows.map((product, i) => (
             <ListItem key={i}>
-              <ListItemText>{row.title}</ListItemText>
+              <ListItemText>{product.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(row)}>
+                <IconButton onClick={handleEdit(product)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(row)}>
+                <IconButton onClick={handleDelete(product)} disabled={product.productStatus === ProductStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

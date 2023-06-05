@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -15,7 +14,7 @@ import {
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
-  TokenAttributes,
+  TokenMetadata,
   TokenMintType,
   TokenStatus,
 } from "@framework/types";
@@ -37,7 +36,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
@@ -56,9 +55,9 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+    if (from === ZeroAddress) {
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
       if (!templateEntity) {
@@ -67,7 +66,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        metadata,
         royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });
@@ -76,10 +75,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
+      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
-        const mintType = getTokenMintType(txLogs);
+        const mintType = getTokenMintType(txLogs as Array<Log>);
 
         if (mintType === TokenMintType.MintRandom) {
           // update Asset history
@@ -104,13 +103,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc998TokenEntity.template.amount += 1;
       // tokenEntity.template
       //   ? (erc998TokenEntity.template.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Mysterybox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
       erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
@@ -353,7 +352,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc998TokenEntity.attributes, { GRADE: grade.toString() });
+    Object.assign(erc998TokenEntity.metadata, { GRADE: grade.toString() });
     await erc998TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);

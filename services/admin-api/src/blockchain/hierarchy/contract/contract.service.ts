@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Not, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
@@ -103,7 +103,13 @@ export class ContractService {
     dto: Partial<IContractAutocompleteDto>,
     userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [] } = dto;
+    const {
+      contractStatus = [],
+      contractFeatures = [],
+      contractType = [],
+      contractModule = [],
+      excludeFeatures = [],
+    } = dto;
     const where = {
       chainId: userEntity.chainId,
     };
@@ -124,6 +130,14 @@ export class ContractService {
       Object.assign(where, {
         // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
         contractFeatures: ArrayOverlap(contractFeatures),
+      });
+    }
+
+    // this is used only to filter out SOULBOUND from transfer action menu
+    if (excludeFeatures.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: Not(ArrayOverlap(excludeFeatures)),
       });
     }
 
