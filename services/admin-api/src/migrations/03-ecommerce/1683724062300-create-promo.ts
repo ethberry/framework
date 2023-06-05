@@ -16,7 +16,7 @@ export class CreatePromo1683724062300 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "product_item_id",
+          name: "product_id",
           type: "int",
         },
         {
@@ -34,9 +34,9 @@ export class CreatePromo1683724062300 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["product_item_id"],
+          columnNames: ["product_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.product_item`,
+          referencedTableName: `${ns}.product`,
           onDelete: "CASCADE",
         },
       ],

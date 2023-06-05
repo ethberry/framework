@@ -9,7 +9,7 @@ export class SeedPromo1683724062310 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.promo (
         title,
-        product_item_id,
+        product_id,
         image_url,
         created_at,
         updated_at
