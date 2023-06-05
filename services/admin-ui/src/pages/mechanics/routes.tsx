@@ -10,6 +10,7 @@ import { gradeRoutes } from "./grade/routes";
 import { lotteryRoutes } from "./lottery/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { pyramidRoutes } from "./pyramid/routes";
+import { raffleRoutes } from "./raffle/routes";
 import { rentingRoutes } from "./rent/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
@@ -26,6 +27,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...lotteryRoutes,
   ...mysteryRoutes,
   ...pyramidRoutes,
+  ...raffleRoutes,
   ...rentingRoutes,
   ...stakingRoutes,
   ...vestingRoutes,

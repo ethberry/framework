@@ -45,6 +45,8 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
@@ -104,6 +106,8 @@ import {
   CreatePromo1600996093684,
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
+  CreateRaffleRoundAt1685961136110,
+  CreateRaffleTicketAt1685961136130,
   CreateReferralRewardAt1660103709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
@@ -144,12 +148,14 @@ import {
   SeedBalanceErc1155At1563804020450,
   SeedBalanceErc20At1563804020420,
   SeedBalanceErc721At1563804020430,
-  SeedBalanceErc721LotteryAt1563804020480,
   SeedBalanceErc721MysteryAt1563804020460,
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
   SeedBalanceExchangeAt1563804020402,
+  SeedBalanceLotteryAt1563804020480,
   SeedBalancePyramidAt1663047650530,
+  SeedBalanceRaffleAt1685961134480,
+  SeedBalanceStakingAt1654751224530,
   SeedBalanceVestingAt1563804000490,
   SeedBreed1663047650401,
   SeedCategories1593408358860,
@@ -176,6 +182,8 @@ import {
   SeedContractMysteryAt1563804000160,
   SeedContractNativeAt1563804000110,
   SeedContractPyramidAt1660436477100,
+  SeedContractRaffleAt1685961134100,
+  SeedContractRaffleAt1685961134180,
   SeedContractStakingAt1654751224100,
   SeedContractVestingAt1563804000190,
   SeedContractWaitlistAt1663047650100,
@@ -221,6 +229,8 @@ import {
   SeedPyramidPayees1663047650520,
   SeedPyramidRulesErc20At1660436477220,
   SeedPyramidRulesNativeAt1660436477210,
+  SeedRaffleRoundAt1685961136120,
+  SeedRaffleTicketsAt1685961136140,
   SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
@@ -247,6 +257,7 @@ import {
   SeedTemplateLotteryAt1563804000280,
   SeedTemplateMysteryAt1563804000260,
   SeedTemplateNativeAt1563804000210,
+  SeedTemplateRaffleAt1685961134280,
   SeedTemplateWrapperAt1563804000270,
   SeedTokenCollectionAt1679894500330,
   SeedTokenErc1155At1563804000350,
@@ -259,12 +270,12 @@ import {
   SeedTokenLotteryAt1563804000380,
   SeedTokenMysteryAt1563804000360,
   SeedTokenNativeAt1563804000310,
+  SeedTokenRaffleAt1685961134380,
   SeedUser1563803000140,
   SeedWaitlistItemAt1663047650310,
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedBalanceStakingAt1654751224530 } from "./migrations/02-blockchain/04-mechanics/12-staking/1654751224530-seed-balance-staking";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -302,6 +313,8 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
+    RaffleRoundEntity,
+    RaffleTicketEntity,
     MysteryBoxEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
@@ -363,7 +376,6 @@ const config: PostgresConnectionOptions = {
     CreateContract1563804000100,
     SeedContractManagerAt1563804000101,
     SeedContractExchangeAt1563804000102,
-    SeedContractLotteryAt1660436476100,
     SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc20USDTAt1563804000121,
@@ -375,7 +387,6 @@ const config: PostgresConnectionOptions = {
     SeedContractErc1155At1563804000150,
     SeedContractMysteryAt1563804000160,
     SeedContractWrapperAt1563804000170,
-    SeedContractLotteryAt1563804000180,
     SeedContractVestingAt1563804000190,
 
     CreateTemplate1563804000200,
@@ -389,7 +400,6 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc1155At1563804000250,
     SeedTemplateMysteryAt1563804000260,
     SeedTemplateWrapperAt1563804000270,
-    SeedTemplateLotteryAt1563804000280,
 
     CreateToken1563804000300,
     SeedTokenNativeAt1563804000310,
@@ -402,7 +412,6 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc1155At1563804000350,
     SeedTokenMysteryAt1563804000360,
     SeedWrapperAt1563804000370,
-    SeedTokenLotteryAt1563804000380,
 
     CreateBalance1563804000400,
     SeedBalanceExchangeAt1563804020402,
@@ -412,7 +421,6 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc1155At1563804020450,
     SeedBalanceErc721MysteryAt1563804020460,
     SeedBalanceErc721WrapperAt1563804020470,
-    SeedBalanceErc721LotteryAt1563804020480,
     SeedBalanceVestingAt1563804000490,
 
     CreateAssetComponent1563804001220,
@@ -499,10 +507,25 @@ const config: PostgresConnectionOptions = {
     CreateReferralRewardAt1660103709900,
     SeedReferralRewardAt1660103709910,
 
+    SeedContractLotteryAt1660436476100,
+    SeedContractLotteryAt1563804000180,
+    SeedTemplateLotteryAt1563804000280,
+    SeedTokenLotteryAt1563804000380,
+    SeedBalanceLotteryAt1563804020480,
     CreateLotteryRoundAt1660436476100,
     SeedLotteryRoundAt1660436476120,
     CreateLotteryTicketAt1660436476130,
     SeedLotteryTicketsAt1660436476140,
+
+    SeedContractRaffleAt1685961134100,
+    SeedContractRaffleAt1685961134180,
+    SeedTemplateRaffleAt1685961134280,
+    SeedTokenRaffleAt1685961134380,
+    SeedBalanceRaffleAt1685961134480,
+    CreateRaffleRoundAt1685961136110,
+    SeedRaffleRoundAt1685961136120,
+    CreateRaffleTicketAt1685961136130,
+    SeedRaffleTicketsAt1685961136140,
 
     SeedContractPyramidAt1660436477100,
     CreatePyramidRules1660436477200,

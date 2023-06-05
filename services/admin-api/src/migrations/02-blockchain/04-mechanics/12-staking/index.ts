@@ -13,3 +13,4 @@ export * from "./1654751224323-seed-staking-deposit-erc20-erc721";
 export * from "./1654751224329-seed-staking-deposit-erc20-none";
 export * from "./1654751224339-seed-staking-deposit-erc721-none";
 export * from "./1654751224345-seed-staking-deposit-erc998-erc1155";
+export * from "./1654751224530-seed-balance-staking";

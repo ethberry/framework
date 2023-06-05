@@ -32,6 +32,7 @@ import { DisperseSection } from "./mechanics/disperse";
 import { DropSection } from "./mechanics/drop";
 import { GradeSection } from "./mechanics/grade";
 import { LotterySection } from "./mechanics/lottery";
+import { RaffleSection } from "./mechanics/raffle";
 import { MysterySection } from "./mechanics/mystery";
 import { PyramidSection } from "./mechanics/pyramid";
 import { RentSection } from "./mechanics/rent";
@@ -68,6 +69,7 @@ export const Dashboard: FC = () => {
           <GradeSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
+          <RaffleSection />
           <LotterySection />
           <StakingSection />
           <PyramidSection />
