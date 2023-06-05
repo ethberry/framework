@@ -9,6 +9,7 @@ export * from "./erc998";
 export * from "./erc1155";
 export * from "./exchange";
 export * from "./lottery";
+export * from "./raffle";
 export * from "./upgrade";
 export * from "./mystery";
 export * from "./pausable";

@@ -7,18 +7,17 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 
-import { defaultNumbers, expiresAt, externalId, extra, params } from "../../constants";
+import { expiresAt, externalId, extra, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
-import { wrapSignature } from "./utils";
 import { deployLotteryRaffle } from "./fixture";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-describe("Lottery Raffle", function () {
+describe.only("Lottery Raffle", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const lotteryConfig = {
@@ -192,7 +191,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -203,7 +201,6 @@ describe("Lottery Raffle", function () {
 
       const tx0 = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -213,7 +210,7 @@ describe("Lottery Raffle", function () {
         signature,
       );
 
-      await expect(tx0).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx0).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
 
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
@@ -239,7 +236,7 @@ describe("Lottery Raffle", function () {
     });
   });
 
-  describe("purchase", function () {
+  describe("PurchaseRaffle", function () {
     it("should purchase ticket", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
@@ -267,7 +264,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -278,7 +274,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -288,7 +283,7 @@ describe("Lottery Raffle", function () {
         signature,
       );
 
-      await expect(tx).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
     });
 
     it("should release", async function () {
@@ -326,7 +321,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -337,7 +331,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -346,7 +339,7 @@ describe("Lottery Raffle", function () {
         },
         signature,
       );
-      await expect(tx).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
 
       await lotteryInstance.endRound();
       // TIME
@@ -394,7 +387,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -405,7 +397,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -414,7 +405,7 @@ describe("Lottery Raffle", function () {
         },
         signature,
       );
-      await expect(tx).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
       await lotteryInstance.endRound();
 
       // TIME
@@ -426,9 +417,9 @@ describe("Lottery Raffle", function () {
     });
 
     it("should fail: wrong signer", async function () {
-      const [_owner, receiver, stranger] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
 
-      const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
+      const { lotteryInstance, generateSignature, erc20Instance, erc721Instance } = await factory();
 
       await lotteryInstance.startRound(
         {
@@ -445,11 +436,9 @@ describe("Lottery Raffle", function () {
         },
       );
 
-      const generateSignature = wrapSignature(await ethers.provider.getNetwork(), lotteryInstance, stranger);
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: constants.AddressZero,
@@ -460,9 +449,8 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
-          tokenType: 1,
+          tokenType: 2,
           token: constants.AddressZero,
           tokenId: 0,
           amount,
@@ -496,7 +484,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 0,
           token: constants.AddressZero,
@@ -536,7 +523,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -547,7 +533,6 @@ describe("Lottery Raffle", function () {
 
       const tx1 = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -556,11 +541,10 @@ describe("Lottery Raffle", function () {
         },
         signature,
       );
-      await expect(tx1).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx1).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
 
       const tx2 = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -595,7 +579,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -606,7 +589,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -641,7 +623,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -654,7 +635,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -710,7 +690,6 @@ describe("Lottery Raffle", function () {
       const signature1 = await generateSignature({
         account: receiver.address,
         params: params1,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -721,7 +700,6 @@ describe("Lottery Raffle", function () {
 
       const tx1 = lotteryInstance.connect(receiver).purchase(
         params1,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -730,7 +708,7 @@ describe("Lottery Raffle", function () {
         },
         signature1,
       );
-      await expect(tx1).to.emit(lotteryInstance, "Purchase").withArgs(1, receiver.address, amount, 1, defaultNumbers);
+      await expect(tx1).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(1, receiver.address, amount, 1);
 
       const params2 = {
         nonce: utils.randomBytes(32),
@@ -742,7 +720,6 @@ describe("Lottery Raffle", function () {
       const signature2 = await generateSignature({
         account: stranger.address,
         params: params2,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -753,7 +730,6 @@ describe("Lottery Raffle", function () {
 
       const tx2 = lotteryInstance.connect(stranger).purchase(
         params2,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -762,7 +738,7 @@ describe("Lottery Raffle", function () {
         },
         signature2,
       );
-      await expect(tx2).to.emit(lotteryInstance, "Purchase").withArgs(2, stranger.address, amount, 1, defaultNumbers);
+      await expect(tx2).to.emit(lotteryInstance, "PurchaseRaffle").withArgs(2, stranger.address, amount, 1);
 
       const params3 = {
         nonce: utils.randomBytes(32),
@@ -774,7 +750,6 @@ describe("Lottery Raffle", function () {
       const signature3 = await generateSignature({
         account: stranger.address,
         params: params3,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -785,7 +760,6 @@ describe("Lottery Raffle", function () {
 
       const tx3 = lotteryInstance.connect(stranger).purchase(
         params3,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -835,7 +809,6 @@ describe("Lottery Raffle", function () {
       const signature = await generateSignature({
         account: receiver.address,
         params,
-        numbers: defaultNumbers,
         price: {
           tokenType: 1,
           token: erc20Instance.address,
@@ -846,7 +819,6 @@ describe("Lottery Raffle", function () {
 
       const tx = lotteryInstance.connect(receiver).purchase(
         params,
-        defaultNumbers,
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -865,7 +837,7 @@ describe("Lottery Raffle", function () {
 
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
 
-      await erc721Instance.mintTicket(receiver.address, 1, defaultNumbers);
+      await erc721Instance.mintTicket(receiver.address, 1);
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
       await erc20Instance.mint(lotteryInstance.address, utils.parseEther("20000"));
 
@@ -899,7 +871,7 @@ describe("Lottery Raffle", function () {
 
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
 
-      await erc721Instance.mintTicket(receiver.address, 1, defaultNumbers);
+      await erc721Instance.mintTicket(receiver.address, 1);
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
 
       // TIME
@@ -960,7 +932,7 @@ describe("Lottery Raffle", function () {
         .to.have.deep.nested.members([1, erc20Instance.address, BigNumber.from(0), BigNumber.from(amount)]);
     });
 
-    it.only("should fail: round not exist", async function () {
+    it("should fail: round not exist", async function () {
       const [_owner] = await ethers.getSigners();
 
       const { lotteryInstance } = await factory();

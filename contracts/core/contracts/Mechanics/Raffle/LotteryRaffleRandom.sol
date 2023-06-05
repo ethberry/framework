@@ -20,11 +20,11 @@ import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 
-import "./extensions/SignatureValidator.sol";
-import "./interfaces/IERC721Ticket.sol";
+import "./extensions/SignatureValidatorRaffle.sol";
+import "./interfaces/IERC721RaffleTicket.sol";
 import "./interfaces/ILottery.sol";
 
-abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValidator, Wallet {
+abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValidatorRaffle, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;
@@ -37,7 +37,7 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeNumber);
-  event Purchase(uint256 tokenId, address account, uint256 price, uint256 round, bool[36] numbers);
+  event PurchaseRaffle(uint256 tokenId, address account, uint256 price, uint256 round);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -49,7 +49,6 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
-    //    uint256 ticketCounter; // all round tickets counter
     Counters.Counter ticketCounter; // all round tickets counter
     uint256 prizeNumber; // prize number
     uint256 requestId;
@@ -69,7 +68,7 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
 
   Round[] internal _rounds;
 
-  constructor(string memory name, Lottery memory config) SignatureValidator(name) {
+  constructor(string memory name, Lottery memory config) SignatureValidatorRaffle(name) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
@@ -187,14 +186,9 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
 
   // MARKETPLACE
 
-  function purchase(
-    Params memory params,
-    bool[36] calldata numbers,
-    Asset memory price,
-    bytes calldata signature
-  ) external whenNotPaused {
+  function purchase(Params memory params, Asset memory price, bytes calldata signature) external whenNotPaused {
     // Verify signature and recover signer
-    address signer = _verifySignature(params, numbers, price, signature);
+    address signer = _verifySignature(params, price, signature);
     // check signer for MINTER_ROLE
     if (!hasRole(MINTER_ROLE, signer)) {
       revert SignerMissingRole();
@@ -227,9 +221,9 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
       DisabledTokenTypes(false, false, true, true, false)
     );
 
-    uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundNumber);
 
-    emit Purchase(tokenId, account, price.amount, roundNumber, numbers);
+    emit PurchaseRaffle(tokenId, account, price.amount, roundNumber);
   }
 
   function getPrize(uint256 tokenId) external {
@@ -237,7 +231,7 @@ abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValid
     Round storage currentRound = _rounds[roundNumber];
     uint256 prizeNumber = currentRound.prizeNumber;
 
-    IERC721Ticket ticketFactory = IERC721Ticket(currentRound.ticketAsset.token);
+    IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(currentRound.ticketAsset.token);
     ticketFactory.burn(tokenId);
 
     if (tokenId == prizeNumber) {

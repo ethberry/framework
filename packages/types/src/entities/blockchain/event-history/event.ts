@@ -24,6 +24,7 @@ import type { IAssetComponentHistory } from "../exchange/asset-component-history
 import type { TErc1363Events } from "./erc1363";
 import type { TErc4907Events } from "./erc4907";
 import { IMetadataUpdate, TUpgradeEvents } from "./upgrade";
+import { TRaffleEventData } from "./raffle";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -62,7 +63,8 @@ export enum ContractEventType {
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
-  // Purchase = "Purchase",
+  PurchaseLottery = "PurchaseLottery",
+  PurchaseRaffle = "PurchaseRaffle",
   Released = "Released",
   Prize = "Prize",
 
@@ -154,6 +156,7 @@ export type TContractEventData =
   | TWrapperEvents
   | TStakingEvents
   | TLotteryEventData
+  | TRaffleEventData
   | TPyramidEventData
 
   // extensions

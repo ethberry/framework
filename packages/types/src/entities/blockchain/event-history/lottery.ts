@@ -2,7 +2,7 @@ export enum LotteryEventType {
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
-  Purchase = "Purchase",
+  PurchaseLottery = "PurchaseLottery",
   Released = "Released",
   Prize = "Prize",
 }
@@ -12,7 +12,7 @@ export interface IRoundFinalizedEvent {
   winValues: Array<number>;
 }
 
-export interface ILotteryPurchaseEvent {
+export interface ILotteryPurchaseLotteryEvent {
   tokenId: string;
   account: string;
   price: string;
@@ -44,7 +44,7 @@ export interface ILotteryReleaseEvent {
 export type TLotteryEventData =
   | IRoundStartedEvent
   | IRoundEndedEvent
-  | ILotteryPurchaseEvent
+  | ILotteryPurchaseLotteryEvent
   | ILotteryPrizeEvent
   | ILotteryReleaseEvent
   | IRoundFinalizedEvent;

@@ -111,11 +111,14 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'MetadataUpdate',
         
         -- MODULE:LOTTERY
+        -- MODULE:RAFFLE
         'RoundFinalized',
         'RoundStarted',
         'RoundEnded',
         'Released',
         'Prize',
+        'PurchaseLottery',
+        'PurchaseRaffle',
 
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',

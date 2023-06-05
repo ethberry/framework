@@ -33,7 +33,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
-  event Purchase(uint256 tokenId, address account, uint256 price, uint256 round, bool[36] numbers);
+  event PurchaseLottery(uint256 tokenId, address account, uint256 price, uint256 round, bool[36] numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -225,7 +225,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
     uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
-    emit Purchase(tokenId, account, price.amount, roundNumber, numbers);
+    emit PurchaseLottery(tokenId, account, price.amount, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {

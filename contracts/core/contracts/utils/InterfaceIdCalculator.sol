@@ -12,6 +12,7 @@ import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Upgradeable.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../Mechanics/Lottery/interfaces/IERC721Ticket.sol";
 
 contract InterfaceIdCalculator {
   constructor() {
@@ -19,5 +20,6 @@ contract InterfaceIdCalculator {
     console.logBytes4(type(IERC721Upgradeable).interfaceId);
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Mysterybox).interfaceId);
+    console.logBytes4(type(IERC721Ticket).interfaceId);
   }
 }
