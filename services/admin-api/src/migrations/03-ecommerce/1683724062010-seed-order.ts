@@ -12,6 +12,7 @@ export class SeedOrder1683724062010 implements MigrationInterface {
         address_id,
         merchant_id,
         user_id,
+        is_archived,
         created_at,
         updated_at
       ) VALUES (
@@ -19,6 +20,7 @@ export class SeedOrder1683724062010 implements MigrationInterface {
         1,
         1,
         1,
+        false,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -26,6 +28,7 @@ export class SeedOrder1683724062010 implements MigrationInterface {
         1,
         1,
         2,
+        false,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -33,27 +36,23 @@ export class SeedOrder1683724062010 implements MigrationInterface {
         1,
         1,
         3,
+        false,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         1,
-        2,
         1,
+        1,
+        false,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'CLOSED',
         1,
-        2,
         1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'CLOSED',
-        2,
         1,
-        3,
+        true,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -61,6 +60,15 @@ export class SeedOrder1683724062010 implements MigrationInterface {
         2,
         2,
         3,
+        false,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'CLOSED',
+        2,
+        2,
+        3,
+        true,
         '${currentDateTime}',
         '${currentDateTime}'
       );

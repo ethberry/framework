@@ -48,7 +48,7 @@ export const Product: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IProduct, IProductSearchDto>({
-    baseUrl: "/products",
+    baseUrl: "/ecommerce/products",
     empty: {
       title: "",
       description: emptyStateString,
@@ -65,7 +65,7 @@ export const Product: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "products"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "products"]} />
 
       <PageHeader message="pages.products.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>

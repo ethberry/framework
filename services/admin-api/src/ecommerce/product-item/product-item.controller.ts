@@ -15,13 +15,13 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ProductItemService } from "./product-item.service";
 import { ProductItemEntity } from "./product-item.entity";
 import { ProductItemCreateDto, ProductItemSearchDto, ProductItemUpdateDto } from "./dto";
-import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/product-item")
+@Controller("/ecommerce/product-item")
 export class ProductItemController {
   constructor(private readonly productItemService: ProductItemService) {}
 

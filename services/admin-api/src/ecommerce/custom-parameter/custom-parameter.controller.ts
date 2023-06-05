@@ -21,7 +21,7 @@ import { CustomParameterService } from "./custom-parameter.service";
 import { CustomParameterEntity } from "./custom-parameter.entity";
 
 @ApiBearerAuth()
-@Controller("/custom-parameter")
+@Controller("/ecommerce/custom-parameter")
 export class CustomParameterController {
   constructor(private readonly customParameterService: CustomParameterService) {}
 

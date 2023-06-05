@@ -41,13 +41,13 @@ export const Promo: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IPromo, ISearchDto>({
-    baseUrl: "/promos",
+    baseUrl: "/ecommerce/promos",
     empty: emptyPromo,
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "promos"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "promos"]} />
 
       <PageHeader message="pages.promos.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>

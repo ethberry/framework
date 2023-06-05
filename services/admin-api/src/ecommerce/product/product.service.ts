@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { PhotoStatus, ProductStatus, UserRole } from "@framework/types";
+import { PhotoStatus, ProductStatus } from "@framework/types";
 
-import { ProductEntity } from "./product.entity";
-import type { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
+import type { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";
+import { ProductEntity } from "./product.entity";
 
 @Injectable()
 export class ProductService {
@@ -25,13 +25,9 @@ export class ProductService {
 
     queryBuilder.select();
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      // OWNER, MANAGER
-      queryBuilder.leftJoinAndSelect("product.merchant", "merchant");
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (categoryIds) {
       queryBuilder.leftJoinAndSelect("product.categories", "category");
@@ -150,9 +146,7 @@ export class ProductService {
   ): Promise<ProductEntity> {
     const { photos, categoryIds, parameters: _parameters, productItems: _productItems, ...rest } = dto;
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      where.merchantId = userEntity.merchant.id;
-    }
+    where.merchantId = userEntity.merchantId;
 
     const productEntity = await this.productEntityRepository.findOne({
       where,
@@ -228,11 +222,9 @@ export class ProductService {
 
     queryBuilder.where("product.productStatus = :productStatus", { productStatus: ProductStatus.ACTIVE });
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     return queryBuilder.getMany();
   }
@@ -255,11 +247,9 @@ export class ProductService {
     queryBuilder.select();
     queryBuilder.where(where);
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     const productEntity = await queryBuilder.getOne();
 

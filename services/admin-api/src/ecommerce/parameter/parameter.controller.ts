@@ -22,7 +22,7 @@ import { ParameterService } from "./parameter.service";
 import { ParameterEntity } from "./parameter.entity";
 
 @ApiBearerAuth()
-@Controller("/parameters")
+@Controller("/ecommerce/parameters")
 export class ParameterController {
   constructor(private readonly parameterService: ParameterService) {}
 

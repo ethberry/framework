@@ -21,7 +21,7 @@ import { CategoryEntity } from "./category.entity";
 import { CategoryCreateDto, CategoryUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/categories")
+@Controller("/ecommerce/categories")
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

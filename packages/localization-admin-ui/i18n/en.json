@@ -639,6 +639,7 @@
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
+      "orderItems": "Items",
       "orderStatus": "Status",
       "orderType": "Type",
       "owner": "Owner",
@@ -662,6 +663,7 @@
       "photos": "Photos",
       "price": "Price",
       "productId": "Product",
+      "productItemId": "Item",
       "productStatus": "Status",
       "pyramidDepositStatus": "Status",
       "pyramidRule": "Pyramid rule",
@@ -763,11 +765,11 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
-      "parameters": "Parameters",
       "parameterMaxValue": "10000",
       "parameterMinValue": "0",
       "parameterName": "Color",
       "parameterValue": "Anything",
+      "parameters": "Parameters",
       "parentCategoryId": "Root",
       "parentId": "Contract",
       "parentIds": "Contract",
@@ -777,6 +779,7 @@
       "penalty": "1",
       "price": "1000",
       "productId": "Bottle of water",
+      "productItemId": "Item",
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
@@ -991,6 +994,9 @@
     },
     "drop": {
       "title": "Drops"
+    },
+    "ecommerce": {
+      "title": "Ecommerce"
     },
     "emails": {
       "title": "Emails"

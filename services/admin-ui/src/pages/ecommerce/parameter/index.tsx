@@ -30,7 +30,7 @@ export const Parameter: FC = () => {
     handleSearch,
     handleDeleteConfirm,
   } = useCollection<IParameter, ISearchDto>({
-    baseUrl: "/parameters",
+    baseUrl: "/ecommerce/parameters",
     search: {
       query: "",
     },
@@ -39,7 +39,7 @@ export const Parameter: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "parameters"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "parameters"]} />
 
       <PageHeader message="pages.parameters.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>

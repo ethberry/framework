@@ -1,5 +1,5 @@
 import { DateRange } from "@mui/x-date-pickers-pro";
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfDay, startOfDay, startOfMonth, endOfMonth } from "date-fns";
 
 import { IOrder, OrderStatus } from "@framework/types";
 
@@ -16,7 +16,9 @@ export const groupOrdersByStatus = (array: Array<IOrder>): OrdersObject => {
 };
 
 export const parseDateRange = (dateRange = ""): DateRange<Date> => {
-  const [start, end] = dateRange ? dateRange.split("/").map(date => new Date(date)) : [new Date(), new Date()];
+  const [start, end] = dateRange
+    ? dateRange.split("/").map(date => new Date(date))
+    : [startOfMonth(new Date()), endOfMonth(new Date())];
   return [startOfDay(start), endOfDay(end)];
 };
 
