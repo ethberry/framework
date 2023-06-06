@@ -32,7 +32,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   function mintTicket(
     address account,
     uint256 round,
-    bool[36] calldata numbers
+    bytes32 numbers
   ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

@@ -16,7 +16,7 @@ import "./ExchangeUtils.sol";
 abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausable {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
-  function mysterybox(
+  function purchaseMystery(
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,

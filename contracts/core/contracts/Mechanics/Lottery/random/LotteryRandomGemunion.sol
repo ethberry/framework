@@ -28,7 +28,7 @@ contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunion {
   }
 
   function setDummyRound(
-    bool[] calldata ticket,
+    bytes32 ticket,
     uint8[6] calldata values,
     uint8[7] calldata aggregation,
     uint256 requestId
@@ -51,7 +51,7 @@ contract LotteryRandomGemunion is LotteryRandom, ChainLinkGemunion {
     currentRound.requestId = requestId;
   }
 
-  function setDummyTicket(bool[] calldata ticket) external {
+  function setDummyTicket(bytes32 ticket) external {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
     currentRound.tickets.push(ticket);

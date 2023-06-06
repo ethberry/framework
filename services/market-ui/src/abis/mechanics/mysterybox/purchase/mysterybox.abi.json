@@ -93,7 +93,7 @@
         "type": "bytes"
       }
     ],
-    "name": "mysterybox",
+    "name": "purchaseMystery",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"

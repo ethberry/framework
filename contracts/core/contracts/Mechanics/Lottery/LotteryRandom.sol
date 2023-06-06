@@ -17,11 +17,11 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
-import "./extensions/SignatureValidator.sol";
+import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721LotteryTicket.sol";
 import "./interfaces/ILottery.sol";
 
-abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, Wallet {
+abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
 
@@ -33,7 +33,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
-  event PurchaseLottery(uint256 tokenId, address account, uint256 price, uint256 round, bool[36] numbers);
+  event PurchaseLottery(address account, uint256 tokenId, Asset[] item, Asset price, uint256 round, bytes32 numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -49,7 +49,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     // TODO Asset[]
     Asset acceptedAsset;
     Asset ticketAsset;
-    bool[][] tickets; // all round tickets
+    bytes32[] tickets; // all round tickets
     uint8[6] values; // prize numbers
     uint8[7] aggregation; // prize counts
     uint256 requestId;
@@ -102,11 +102,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
     emit RoundStarted(roundNumber, block.timestamp);
   }
-
-  // TODO could be too much data to return
-  //  function getAllRounds() public view returns (Round[] memory) {
-  //    return _rounds;
-  //  }
 
   function getCurrentRoundInfo() public view returns (RoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
@@ -180,9 +175,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     for (uint8 l = 0; l < len; l++) {
       uint8 tmp2 = 0;
       for (uint8 j = 0; j < 6; j++) {
-        if (currentRound.tickets[l][currentRound.values[j]]) {
-          tmp2++;
-        }
+        // TODO fixme bitwise operations
+        // if (currentRound.tickets[l][currentRound.values[j]]) {
+        tmp2++;
+        // }
       }
       currentRound.aggregation[tmp2]++;
     }
@@ -192,14 +188,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
   // MARKETPLACE
 
-  function purchase(
-    Params memory params,
-    bool[36] calldata numbers,
-    Asset memory price,
-    bytes calldata signature
-  ) external whenNotPaused {
+  function purchase(Params memory params, Asset memory price, bytes calldata signature) external whenNotPaused {
     // Verify signature and recover signer
-    address signer = _verifySignature(params, numbers, price, signature);
+    // TOD fix _recoverOneToOneSignature
+    address signer = _recoverOneToManySignature(params, price, new Asset[](0), signature);
     // chech signer for MINTER_ROLE
     require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
 
@@ -209,9 +201,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     require(currentRound.endTimestamp == 0, "Lottery: current round is finished");
 
     require(currentRound.tickets.length < _maxTicket, "Lottery: no more tickets available");
-    currentRound.tickets.push(numbers);
-
-    address account = _msgSender();
+    currentRound.tickets[currentRound.tickets.length] = params.extra;
 
     currentRound.balance += price.amount;
     currentRound.total += price.amount;
@@ -223,9 +213,13 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    uint256 tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(
+      _msgSender(),
+      roundNumber,
+      params.extra
+    );
 
-    emit PurchaseLottery(tokenId, account, price.amount, roundNumber, numbers);
+    emit PurchaseLottery(_msgSender(), params.externalId, new Asset[](0), price, roundNumber, params.extra);
   }
 
   function getPrize(uint256 tokenId) external {
@@ -260,9 +254,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
 
     uint8 result = 0;
     for (uint8 j = 0; j < 6; j++) {
-      if (data.numbers[currentRound.values[j]]) {
-        result++;
-      }
+      // TODO fixme bitwise operations
+      // if (data.numbers[currentRound.values[j]]) {
+      result++;
+      // }
     }
 
     uint256 amount = point * coefficient[result];
