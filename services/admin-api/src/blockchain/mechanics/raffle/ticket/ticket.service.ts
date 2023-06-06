@@ -18,6 +18,7 @@ export class RaffleTicketService {
 
     const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
     queryBuilder.leftJoinAndSelect("ticket.round", "round");
+    queryBuilder.leftJoinAndSelect("ticket.token", "token");
 
     queryBuilder.select();
 
@@ -34,7 +35,10 @@ export class RaffleTicketService {
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    queryBuilder.orderBy("ticket.createdAt", "DESC");
+    queryBuilder.orderBy({
+      "ticket.roundId": "ASC",
+      "ticket.createdAt": "DESC",
+    });
 
     return queryBuilder.getManyAndCount();
   }

@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-struct Ticket {
+struct TicketRaffle {
   uint256 round;
 }
 
@@ -15,5 +15,5 @@ interface IERC721RaffleTicket {
 
   function burn(uint256 tokenId) external;
 
-  function getTicketData(uint256 tokenId) external view returns (Ticket memory);
+  function getTicketData(uint256 tokenId) external view returns (TicketRaffle memory);
 }

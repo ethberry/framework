@@ -11,24 +11,24 @@ export const RaffleSection: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.lottery" />
+            <FormattedMessage id="pages.dashboard.mechanics.raffle" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/rounds">
+        <ListItem button component={RouterLink} to="/raffle/rounds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.lottery.rounds.title" />
+            <FormattedMessage id="pages.raffle.rounds.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/lottery/tickets">
+        <ListItem button component={RouterLink} to="/raffle/tickets">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.lottery.tickets.title" />
+            <FormattedMessage id="pages.raffle.tickets.title" />
           </ListItemText>
         </ListItem>
       </List>

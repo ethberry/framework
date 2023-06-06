@@ -46,11 +46,6 @@ export class StakingRulesControllerEth {
     return this.stakingServiceEth.return(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.ReturnDeposit })
-  public return(@Payload() event: ILogEvent<IStakingReturnDepositEvent>, @Ctx() context: Log): Promise<void> {
-    return this.stakingServiceEth.return(event, context);
-  }
-
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.WithdrawBalance })
   public withdrawBalance(
     @Payload() event: ILogEvent<IStakingBalanceWithdrawEvent>,

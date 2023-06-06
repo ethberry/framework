@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 import "../../../utils/errors.sol";
-import "../interfaces/IERC721Ticket.sol";
+import "../interfaces/IERC721LotteryTicket.sol";
 import "../../../Exchange/interfaces/IAsset.sol";
 
 contract SignatureValidator is AccessControl, Pausable, EIP712 {

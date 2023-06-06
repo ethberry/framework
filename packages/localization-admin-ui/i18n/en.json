@@ -698,6 +698,7 @@
       "templateStatus": "Status",
       "time": "Cooldown time",
       "ticket": "Ticket",
+      "ticketNumber": "Ticket Number",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
@@ -715,6 +716,7 @@
       "userRoles": "Roles",
       "userStatus": "Status",
       "winNumbers": "Win numbers",
+      "winNumber": "Win number",
       "year": "Year",
       "zip": "ZIP code"
     },
@@ -1171,7 +1173,7 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Lottery"
+      "title": "Raffle"
     },
     "rent": {
       "title": "Rent"

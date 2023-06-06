@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ILotteryOption, ModuleType } from "@framework/types";
+import { ILotteryOption } from "@framework/types";
 
 import { LotteryRoundServiceCron } from "./round.service.cron";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

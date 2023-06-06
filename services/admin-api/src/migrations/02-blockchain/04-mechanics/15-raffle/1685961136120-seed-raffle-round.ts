@@ -3,14 +3,6 @@ import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 
-const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
-  const numbers: Array<boolean> = new Array(36).fill(false);
-  selected.forEach(s => {
-    numbers[s] = true;
-  });
-  return `{${numbers.join(",")}}`;
-};
-
 export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
@@ -20,27 +12,31 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       INSERT INTO ${ns}.raffle_round (
         numbers,
         round_id,
+        contract_id,
         start_timestamp,
         end_timestamp,
         created_at,
         updated_at
       ) VALUES (
-        '${getNumbers()}',
+        '{${[1].join(",")}}',
         '1',
+        15,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${getNumbers()}',
+        '{${[2].join(",")}}',
         '2',
+        15,
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${getNumbers()}',
+        '{${[3].join(",")}}',
         '3',
+        15,
         '${addDays(now, 1).toISOString()}',
         '${addDays(now, 3).toISOString()}',
         '${currentDateTime}',

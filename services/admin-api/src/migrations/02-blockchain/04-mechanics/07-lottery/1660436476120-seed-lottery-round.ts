@@ -28,7 +28,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ) VALUES (
         '${getNumbers()}',
         '1',
-        8,
+        11,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -36,7 +36,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '2',
-        8,
+        11,
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -44,7 +44,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '3',
-        8,
+        11,
         '${addDays(now, 1).toISOString()}',
         '${addDays(now, 3).toISOString()}',
         '${currentDateTime}',

@@ -31,7 +31,7 @@ export class SeedContractLotteryWalletAt1563804000179 implements MigrationInterf
         created_at,
         updated_at
       ) VALUES (
-        9,
+        10,
         '${lotteryWalletAddr}',
         '${chainId}',
         'LOTTERY WALLET',

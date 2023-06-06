@@ -2,12 +2,12 @@ import { Column, Entity, OneToMany } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { ILotteryRound } from "@framework/types";
+import { IRaffleRound } from "@framework/types";
 
-import { LotteryTicketEntity } from "../ticket/ticket.entity";
+import { RaffleTicketEntity } from "../ticket/ticket.entity";
 
-@Entity({ schema: ns, name: "lottery_round" })
-export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRound {
+@Entity({ schema: ns, name: "raffle_round" })
+export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound {
   @Column({ type: "boolean", array: true })
   public numbers: Array<boolean>;
 
@@ -23,6 +23,6 @@ export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRoun
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
 
-  @OneToMany(_type => LotteryTicketEntity, ticket => ticket.round)
-  public tickets: Array<LotteryTicketEntity>;
+  @OneToMany(_type => RaffleTicketEntity, ticket => ticket.round)
+  public tickets: Array<RaffleTicketEntity>;
 }

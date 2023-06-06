@@ -11,9 +11,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "./interfaces/IERC721Lottery.sol";
+import "./interfaces/IERC721LotteryTicket.sol";
 
-contract ERC721Lottery is IERC721Lottery, ERC721ABER, ERC721ABaseUrl {
+contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Ticket) private _data;
@@ -47,7 +47,7 @@ contract ERC721Lottery is IERC721Lottery, ERC721ABER, ERC721ABaseUrl {
     return _data[tokenId];
   }
 
-  function burn(uint256 tokenId) public override(ERC721Burnable, IERC721Lottery) {
+  function burn(uint256 tokenId) public override(ERC721Burnable, IERC721LotteryTicket) {
     super.burn(tokenId);
   }
 
@@ -62,6 +62,6 @@ contract ERC721Lottery is IERC721Lottery, ERC721ABER, ERC721ABaseUrl {
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
-    return interfaceId == type(IERC721Lottery).interfaceId || super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721LotteryTicket).interfaceId || super.supportsInterface(interfaceId);
   }
 }

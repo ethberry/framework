@@ -16,7 +16,8 @@ export interface IRaffleTicketViewDialogProps {
 export const RaffleTicketViewDialog: FC<IRaffleTicketViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
   const { id, account, token, round } = initialValues;
-
+  console.log("RaffleTicketViewDialogValues", initialValues);
+  console.log("round!.numbers.length", round!.numbers.length);
   const handleConfirm = (): void => {
     onConfirm();
   };
@@ -34,15 +35,17 @@ export const RaffleTicketViewDialog: FC<IRaffleTicketViewDialogProps> = props =>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.winNumbers" />
+                <FormattedMessage id="form.labels.winNumber" />
               </TableCell>
-              <TableCell align="right">{round ? "round not yet finished" : ""}</TableCell>
+              <TableCell align="right">
+                {round!.numbers.length ? round!.numbers[0] : "round not yet finished"}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.numbers" />
+                <FormattedMessage id="form.labels.ticketNumber" />
               </TableCell>
-              <TableCell align="right">{"winner?"}</TableCell>
+              <TableCell align="right">{token!.tokenId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

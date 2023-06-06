@@ -31,6 +31,8 @@ import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
+import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -57,6 +59,8 @@ const config: PostgresConnectionOptions = {
     AssetComponentHistoryEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
+    RaffleRoundEntity,
+    RaffleTicketEntity,
     PyramidDepositEntity,
     PyramidRulesEntity,
     WaitlistListEntity,

@@ -10,7 +10,7 @@ import { emptyPrice, emptyItem } from "@gemunion/mui-inputs-asset";
 
 import { TokenType } from "@framework/types";
 
-import LotteryStartRoundABI from "../../../../../../abis/components/buttons/mechanics/lottery/round/start/startRound.abi.json";
+import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
 export const LotteryRoundStartButton: FC = () => {

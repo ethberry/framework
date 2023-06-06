@@ -4,10 +4,10 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
-export class SeedContractRaffleAt1685961134180 implements MigrationInterface {
+export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_ADDR || wallet;
+    const erc721ContractRaffleAddress = process.env.ERC721_RAFFLE_TICKET_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

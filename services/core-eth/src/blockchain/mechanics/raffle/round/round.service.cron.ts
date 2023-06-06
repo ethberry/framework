@@ -5,14 +5,14 @@ import { ConfigService } from "@nestjs/config";
 import { Contract, providers, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 
 import { blockAwait, getCurrentRound } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ILotteryOption, ModuleType } from "@framework/types";
+import { IRaffleOption, ModuleType } from "@framework/types";
 
 @Injectable()
-export class LotteryRoundServiceCron {
+export class RaffleRoundServiceCron {
   constructor(
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
@@ -25,9 +25,10 @@ export class LotteryRoundServiceCron {
     private readonly contractService: ContractService,
   ) {}
 
-  public async lotteryRound(address: string): Promise<void> {
-    const contract = new Contract(address, LotterySol.abi, this.signer);
-    const currentRound = await getCurrentRound(address, LotterySol.abi, this.jsonRpcProvider);
+  public async raffleRound(address: string): Promise<void> {
+    // const raffleAddr = this.configService.get<string>("RAFFLE_ADDR", "");
+    const contract = new Contract(address, RaffleSol.abi, this.signer);
+    const currentRound = await getCurrentRound(address, RaffleSol.abi, this.jsonRpcProvider);
     const { endTimestamp, acceptedAsset, ticketAsset } = currentRound;
 
     try {
@@ -36,7 +37,7 @@ export class LotteryRoundServiceCron {
         await contract.endRound();
       }
     } catch (e) {
-      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+      this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
     } finally {
       // wait block
       await blockAwait(1, this.jsonRpcProvider);
@@ -46,47 +47,47 @@ export class LotteryRoundServiceCron {
     }
   }
 
-  public setRoundCronJob(dto: { cron: CronExpression; lottery: string }): void {
+  public setRoundCronJob(dto: { cron: CronExpression; raffle: string }): void {
     const job = new CronJob(dto.cron, async () => {
-      await this.lotteryRound(dto.lottery);
+      await this.raffleRound(dto.raffle);
     });
 
-    this.schedulerRegistry.addCronJob(`lotteryRound@${dto.lottery}`, job);
+    this.schedulerRegistry.addCronJob(`raffleRound@${dto.raffle}`, job);
     job.start();
   }
 
   public updateOrCreateRoundCronJob(dto: { cron: CronExpression; address: string }): void {
     try {
-      this.schedulerRegistry.deleteCronJob(`lotteryRound@${dto.address}`);
+      this.schedulerRegistry.deleteCronJob(`raffleRound@${dto.address}`);
     } catch (e) {
-      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+      this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
     } finally {
       const job = new CronJob(dto.cron, async () => {
-        await this.lotteryRound(dto.address);
+        await this.raffleRound(dto.address);
       });
-      this.schedulerRegistry.addCronJob(`lotteryRound@${dto.address}`, job);
+      this.schedulerRegistry.addCronJob(`raffleRound@${dto.address}`, job);
       job.start();
-      this.loggerService.log(JSON.stringify(dto, null, "\t"), LotteryRoundServiceCron.name);
+      this.loggerService.log(JSON.stringify(dto, null, "\t"), RaffleRoundServiceCron.name);
     }
   }
 
   public async updateRoundCronJobDb(): Promise<void> {
-    const lotteryEntity = await this.contractService.findOne({
-      contractModule: ModuleType.LOTTERY,
+    const raffleEntity = await this.contractService.findOne({
+      contractModule: ModuleType.RAFFLE,
       contractType: undefined,
     });
 
-    if (!lotteryEntity) {
+    if (!raffleEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    const { schedule }: ILotteryOption = JSON.parse(lotteryEntity.description);
+    const { schedule }: IRaffleOption = JSON.parse(raffleEntity.description);
 
-    this.schedulerRegistry.deleteCronJob(`lotteryRound@${lotteryEntity.address}`);
+    this.schedulerRegistry.deleteCronJob(`raffleRound@${raffleEntity.address}`);
     const job = new CronJob(schedule, async () => {
-      await this.lotteryRound(lotteryEntity.address);
+      await this.raffleRound(raffleEntity.address);
     });
-    this.schedulerRegistry.addCronJob(`lotteryRound@${lotteryEntity.address}`, job);
+    this.schedulerRegistry.addCronJob(`raffleRound@${raffleEntity.address}`, job);
     job.start();
   }
 }

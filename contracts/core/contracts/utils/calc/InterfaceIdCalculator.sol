@@ -14,7 +14,8 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 
 import "../../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../Mechanics/Disperse/interfaces/IDisperse.sol";
-import "../../Mechanics/Lottery/interfaces/IERC721Lottery.sol";
+import "../../Mechanics/Lottery/interfaces/IERC721LotteryTicket.sol";
+import "../../Mechanics/Raffle/interfaces/IERC721RaffleTicket.sol";
 
 contract InterfaceIdCalculator {
   function test() public view {
@@ -23,7 +24,8 @@ contract InterfaceIdCalculator {
     console.logBytes4(type(IERC721Random).interfaceId);
 
     console.logBytes4(type(IERC721Mysterybox).interfaceId);
-    console.logBytes4(type(IERC721Lottery).interfaceId);
+    console.logBytes4(type(IERC721LotteryTicket).interfaceId);
+    console.logBytes4(type(IERC721RaffleTicket).interfaceId);
     console.logBytes4(type(IDisperse).interfaceId);
   }
 }

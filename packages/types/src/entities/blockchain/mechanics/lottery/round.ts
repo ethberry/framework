@@ -7,7 +7,7 @@ export interface ILotteryRound extends IIdDateBase {
   numbers: Array<boolean>;
   tickets?: Array<ILotteryTicket>;
   roundId: string;
-  contract_id: number;
+  contractId: number;
   startTimestamp: string;
   endTimestamp: string;
 }

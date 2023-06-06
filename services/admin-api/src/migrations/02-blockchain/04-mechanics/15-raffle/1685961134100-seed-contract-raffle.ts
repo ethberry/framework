@@ -12,8 +12,8 @@ export class SeedContractRaffleAt1685961134100 implements MigrationInterface {
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     const raffleOptions = JSON.stringify({
-      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-      description: "Midnight Raffle",
+      schedule: CronExpression.EVERY_WEEKEND,
+      description: "Weekend Raffle",
     });
 
     await queryRunner.query(`

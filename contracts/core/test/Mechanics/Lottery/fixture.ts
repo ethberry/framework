@@ -29,7 +29,7 @@ export async function deployLottery(config: ILotteryConfig): Promise<{
   const walletFactory = await ethers.getContractFactory("LotteryWallet");
 
   const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-  const erc721TicketInstance = await deployERC721("ERC721Ticket");
+  const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
 
   const lotteryWalletInstance = await walletFactory.deploy([owner.address], [100]);
 
@@ -54,7 +54,7 @@ export async function deployLotteryRaffle(config: ILotteryConfig): Promise<{
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
-  const factory = await ethers.getContractFactory(getContractName("LotteryRaffleRandom", network.name));
+  const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
   const walletFactory = await ethers.getContractFactory("RaffleWallet");
 
   const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });

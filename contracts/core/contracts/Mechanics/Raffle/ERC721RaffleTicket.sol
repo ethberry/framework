@@ -9,14 +9,14 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABER.sol";
+import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721RaffleTicket.sol";
 
 contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
   using Counters for Counters.Counter;
 
-  mapping(uint256 => Ticket) private _data;
+  mapping(uint256 => TicketRaffle) private _data;
 
   constructor(
     string memory name,
@@ -33,7 +33,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = Ticket(round);
+    _data[tokenId] = TicketRaffle(round);
 
     _safeMint(account, tokenId);
   }
@@ -42,7 +42,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
     super.burn(tokenId);
   }
 
-  function getTicketData(uint256 tokenId) external view returns (Ticket memory) {
+  function getTicketData(uint256 tokenId) external view returns (TicketRaffle memory) {
     require(_exists(tokenId), "ERC721Ticket: invalid token ID");
     return _data[tokenId];
   }
@@ -58,6 +58,6 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
-    return super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721RaffleTicket).interfaceId || super.supportsInterface(interfaceId);
   }
 }

@@ -6,27 +6,27 @@
 
 pragma solidity ^0.8.13;
 
-import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhat.sol";
+import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion.sol";
 
-import "../LotteryRaffleRandom.sol";
+import "../RaffleRandom.sol";
 
-contract LotteryRaffleRandomHardhat is LotteryRaffleRandom, ChainLinkHardhat {
+contract RaffleRandomGemunion is RaffleRandom, ChainLinkGemunion {
   using Counters for Counters.Counter;
 
   constructor(
     string memory name,
     Raffle memory config
-  ) LotteryRaffleRandom(name, config) ChainLinkHardhat(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  ) RaffleRandom(name, config) ChainLinkGemunion(uint64(2), uint16(6), uint32(600000), uint32(1)) {}
 
-  function getRandomNumber() internal override(LotteryRaffleRandom, ChainLinkBase) returns (uint256 requestId) {
+  function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
   }
 
   function fulfillRandomWords(
     uint256 requestId,
     uint256[] memory randomWords
-  ) internal override(LotteryRaffleRandom, VRFConsumerBaseV2) {
-    return super.fulfillRandomWords(requestId, randomWords);
+  ) internal override(RaffleRandom, VRFConsumerBaseV2) {
+    super.fulfillRandomWords(requestId, randomWords);
   }
 
   function setDummyRound(uint256 prizeNumber, uint256 requestId, Asset memory item, Asset memory price) external {

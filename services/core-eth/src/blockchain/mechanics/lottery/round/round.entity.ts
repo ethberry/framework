@@ -14,6 +14,9 @@ export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRoun
   @Column({ type: "numeric" })
   public roundId: string;
 
+  @Column({ type: "numeric" })
+  public contractId: number;
+
   @Column({ type: "timestamptz" })
   public startTimestamp: string;
 

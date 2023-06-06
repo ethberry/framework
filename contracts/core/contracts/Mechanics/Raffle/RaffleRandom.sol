@@ -24,7 +24,7 @@ import "./extensions/SignatureValidator.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
 import "./interfaces/IRaffle.sol";
 
-abstract contract LotteryRaffleRandom is AccessControl, Pausable, SignatureValidator, Wallet {
+abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;

@@ -8,11 +8,14 @@ import { RaffleTicketEntity } from "../ticket/ticket.entity";
 
 @Entity({ schema: ns, name: "raffle_round" })
 export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound {
-  @Column({ type: "boolean", array: true })
-  public numbers: Array<boolean>;
+  @Column({ type: "numeric", array: true })
+  public numbers: Array<number>;
 
   @Column({ type: "numeric" })
   public roundId: string;
+
+  @Column({ type: "numeric" })
+  public contractId: number;
 
   @Column({ type: "timestamptz" })
   public startTimestamp: string;

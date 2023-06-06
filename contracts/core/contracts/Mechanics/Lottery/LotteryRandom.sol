@@ -18,7 +18,7 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "./extensions/SignatureValidator.sol";
-import "./interfaces/IERC721Ticket.sol";
+import "./interfaces/IERC721LotteryTicket.sol";
 import "./interfaces/ILottery.sol";
 
 abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, Wallet {
@@ -223,7 +223,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    uint256 tokenId = IERC721Ticket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(account, roundNumber, numbers);
 
     emit PurchaseLottery(tokenId, account, price.amount, roundNumber, numbers);
   }
@@ -232,7 +232,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, SignatureValidator, 
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
-    IERC721Ticket ticketFactory = IERC721Ticket(currentRound.ticketAsset.token);
+    IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(currentRound.ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 

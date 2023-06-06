@@ -2,12 +2,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
-export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterface {
+export class SeedContractRaffleWalletAt1685961134099 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_TICKET_ADDR || wallet;
+    const raffleWalletAddr = process.env.RAFFLE_WALLET_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -21,7 +21,6 @@ export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterf
         image_url,
         name,
         symbol,
-        royalty,
         base_token_uri,
         contract_status,
         contract_type,
@@ -32,20 +31,19 @@ export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterf
         created_at,
         updated_at
       ) VALUES (
-        12101,
-        '${erc721ContractLotteryAddress}',
+        14,
+        '${raffleWalletAddr}',
         '${chainId}',
-        'LOTTERY TICKET',
+        'LOTTERY WALLET',
         '${simpleFormatting}',
-        '${imageUrl}',
-        'LOTT',
-        'LOTT721',
-        100,
-        '${baseTokenURI}',
+        '',
+        'Lottery Wallet',
+        '',
+        '',
         'ACTIVE',
-        'ERC721',
-        '{}',
-        'LOTTERY',
+        null,
+        '{WITHDRAW,SPLITTER}',
+        'SYSTEM',
         '${fromBlock}',
         1,
         '${currentDateTime}',

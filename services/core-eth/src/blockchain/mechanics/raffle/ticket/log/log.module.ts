@@ -6,10 +6,10 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
 
 // system contract
-import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
+import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
-import { LotteryTicketLogService } from "./log.service";
+import { RaffleTicketLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -19,18 +19,18 @@ import { LotteryTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryTicketAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "");
+        const raffleTicketAddr = configService.get<string>("ERC721_RAFFLE_ADDR", "");
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(lotteryTicketAddr)) || startingBlock;
+        const fromBlock = (await contractService.getLastBlock(raffleTicketAddr)) || startingBlock;
         return {
           contract: {
-            contractType: ContractType.LOTTERY,
-            contractAddress: [lotteryTicketAddr],
-            contractInterface: LotteryTicketSol.abi,
+            contractType: ContractType.RAFFLE,
+            contractAddress: [raffleTicketAddr],
+            contractInterface: RaffleTicketSol.abi,
             // prettier-ignore
             eventNames: [
               // TODO add other events
@@ -53,14 +53,14 @@ import { LotteryTicketLogService } from "./log.service";
       },
     }),
   ],
-  providers: [LotteryTicketLogService, Logger],
-  exports: [LotteryTicketLogService],
+  providers: [RaffleTicketLogService, Logger],
+  exports: [RaffleTicketLogService],
 })
-export class LotteryTicketLogModule implements OnModuleDestroy {
-  constructor(private readonly lotteryTicketLogService: LotteryTicketLogService) {}
+export class RaffleTicketLogModule implements OnModuleDestroy {
+  constructor(private readonly raffleTicketLogService: RaffleTicketLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.lotteryTicketLogService.updateBlock();
+    return this.raffleTicketLogService.updateBlock();
   }
 }

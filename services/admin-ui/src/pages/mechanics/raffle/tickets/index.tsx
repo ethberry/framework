@@ -41,7 +41,7 @@ export const RaffleTickets: FC = () => {
     },
     empty: {},
   });
-
+  console.log("RAFFLErows", rows);
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "raffle", "raffle.tickets"]} />
@@ -62,7 +62,7 @@ export const RaffleTickets: FC = () => {
           {rows.map((ticket, i) => (
             <ListItem key={i}>
               <ListItemText>{ticket.id}</ListItemText>
-              <ListItemText>{"winner?"}</ListItemText>
+              <ListItemText>{~~ticket.token!.tokenId === ticket.round!.numbers[0] ? "winner" : ""}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(ticket)}>
                   <Visibility />

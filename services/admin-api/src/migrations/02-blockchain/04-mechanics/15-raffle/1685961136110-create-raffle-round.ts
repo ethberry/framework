@@ -14,13 +14,17 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
         },
         {
           name: "numbers",
-          type: "boolean",
+          type: "int",
           isArray: true,
           isNullable: true,
         },
         {
           name: "round_id",
           type: "uint256",
+        },
+        {
+          name: "contract_id",
+          type: "int",
         },
         {
           name: "start_timestamp",
