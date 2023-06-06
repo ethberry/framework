@@ -1,6 +1,6 @@
 import { BigNumber } from "ethers";
 
-import { decodeNumber, decodeTraits, encodeNumbers, encodeTraits } from ".";
+import { decodeNumber, decodeTraits, encodeNumbers, encodeTraits } from "./traits";
 
 const data = {
   strength: 1,
