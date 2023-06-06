@@ -4,7 +4,6 @@ import type { IRaffleTicket } from "./ticket";
 import { CronExpression } from "../../../common";
 
 export interface IRaffleRound extends IIdDateBase {
-  numbers: Array<number>;
   tickets?: Array<IRaffleTicket>;
   roundId: string;
   contractId: number;

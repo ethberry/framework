@@ -1,8 +1,9 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { constants } from "ethers";
+
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-
 import { CronExpression, ILotteryOption } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
@@ -17,6 +18,7 @@ export const LotteryPurchase: FC = () => {
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
   const [lottery, setLottery] = useState<ILotteryOption>({
+    address: constants.AddressZero,
     description: "Lottery",
     schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
   });

@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { LotteryRoundEntity } from "./round.entity";
-import { CronExpression, ILotteryOption, ModuleType } from "@framework/types";
+import { RaffleRoundEntity } from "./round.entity";
+import { CronExpression, IRaffleOption, ModuleType } from "@framework/types";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class LotteryRoundService {
+export class RaffleRoundService {
   constructor(
-    @InjectRepository(LotteryRoundEntity)
-    private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
+    @InjectRepository(RaffleRoundEntity)
+    private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
     private readonly contractService: ContractService,
   ) {}
 
-  public async autocomplete(): Promise<Array<LotteryRoundEntity>> {
+  public async autocomplete(): Promise<Array<RaffleRoundEntity>> {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
 
     queryBuilder.select(["id", "id::VARCHAR as title"]);
@@ -26,21 +26,21 @@ export class LotteryRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<ILotteryOption> {
-    const lotteryEntity = await this.contractService.findOne({
-      contractModule: ModuleType.LOTTERY,
+  public async options(): Promise<IRaffleOption> {
+    const raffleEntity = await this.contractService.findOne({
+      contractModule: ModuleType.RAFFLE,
       contractType: undefined,
     });
 
-    if (!lotteryEntity) {
+    if (!raffleEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    const descriptionJson: ILotteryOption = JSON.parse(lotteryEntity.description);
+    const descriptionJson: IRaffleOption = JSON.parse(raffleEntity.description);
 
     return Object.assign(
       {
-        description: "Lottery",
+        description: "Raffle",
         schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
       },
       descriptionJson,

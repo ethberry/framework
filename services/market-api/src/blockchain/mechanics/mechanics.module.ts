@@ -8,6 +8,7 @@ import { GradeModule } from "./grade/grade.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { MysteryModule } from "./mystery/mystery.module";
 import { PyramidModule } from "./pyramid/pyramid.module";
+import { RaffleModule } from "./raffle/raffle.module";
 import { ReferralModule } from "./referral/referral.module";
 import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
@@ -25,6 +26,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
     LotteryModule,
     MysteryModule,
     PyramidModule,
+    RaffleModule,
     ReferralModule,
     RentModule,
     StakingModule,

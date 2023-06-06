@@ -1,0 +1,73 @@
+import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { constants, utils, Wallet } from "ethers";
+
+import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import type { IServerSignature } from "@gemunion/types-blockchain";
+import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { testChainId } from "@framework/constants";
+
+import { ISignRaffleDto } from "./interfaces";
+
+@Injectable()
+export class RaffleSignService {
+  constructor(
+    @Inject(ETHERS_SIGNER)
+    private readonly signer: Wallet,
+    private readonly configService: ConfigService,
+  ) {}
+
+  public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
+    const { account, referrer = constants.AddressZero, ticketNumbers } = dto;
+
+    const nonce = utils.randomBytes(32);
+    const expiresAt = 0;
+    const signature = await this.getSignature(
+      account,
+      {
+        nonce,
+        externalId: 0,
+        expiresAt,
+        referrer,
+        extra: utils.formatBytes32String("0x"),
+      },
+      ticketNumbers,
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(account: string, params: IParams, ticketNumbers: Array<boolean>): Promise<string> {
+    return this.signer._signTypedData(
+      // Domain
+      {
+        name: "Raffle",
+        version: "1.0.0",
+        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
+        verifyingContract: this.configService.get<string>("RAFFLE_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "account", type: "address" },
+          { name: "params", type: "Params" },
+          { name: "numbers", type: "bool[36]" },
+          { name: "price", type: "uint256" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "externalId", type: "uint256" },
+          { name: "expiresAt", type: "uint256" },
+          { name: "referrer", type: "address" },
+        ],
+      },
+      // Value
+      {
+        account,
+        params,
+        numbers: ticketNumbers,
+        price: constants.WeiPerEther,
+      },
+    );
+  }
+}
