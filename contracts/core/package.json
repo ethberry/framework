@@ -38,7 +38,7 @@
     "@openzeppelin/merkle-tree": "1.0.4",
     "@openzeppelin/test-helpers": "0.5.16",
     "dotenv": "16.1.4",
-    "ethers": "5.7.2",
+    "ethers": "6.5.1",
     "hardhat": "2.15.0",
     "hardhat-contract-sizer": "2.9.0",
     "hardhat-deploy": "0.11.30",
