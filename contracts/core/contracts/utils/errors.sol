@@ -29,3 +29,4 @@ error NotComplete();
 error NotActive();
 
 error WrongRound();
+error WrongPrice();

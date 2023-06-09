@@ -17,23 +17,21 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
-import "../../Exchange/SignatureValidator.sol";
 import "./interfaces/IERC721LotteryTicket.sol";
 import "./interfaces/ILottery.sol";
 
-abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, Wallet {
+abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
 
-  address internal immutable _lotteryWallet;
   uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
-  uint8 internal immutable _maxTicket; // TODO change for 5000 in production or add to constructor (dev: 2, prod: 5000)
-  uint8 internal immutable comm; // commission 30%
+  uint256 internal immutable _maxTicket; // TODO change for 5000 in production or add to constructor (dev: 2, prod: 5000)
+  uint256 internal immutable comm; // commission 30%
 
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
-  event PurchaseLottery(address account, uint256 tokenId, Asset[] item, Asset price, uint256 round, bytes32 numbers);
+  //  event PurchaseLottery(address account, uint256 tokenId, Asset item, Asset price, uint256 round, bytes32 numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -46,7 +44,7 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
-    // TODO Asset[]
+    // TODO Asset[]?
     Asset acceptedAsset;
     Asset ticketAsset;
     bytes32[] tickets; // all round tickets
@@ -55,25 +53,15 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     uint256 requestId;
   }
 
-  // TODO add more data?
-  struct RoundInfo {
-    uint256 roundId;
-    uint256 startTimestamp;
-    uint256 endTimestamp;
-    Asset acceptedAsset;
-    Asset ticketAsset;
-  }
-
   Round[] internal _rounds;
 
-  constructor(string memory name, Lottery memory config) SignatureValidator(name) {
+  constructor(Lottery memory config) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
 
     // SET Lottery Config
-    _lotteryWallet = config.lotteryWallet;
     _maxTicket = config.maxTickets;
     _timeLag = config.timeLagBeforeRelease;
     comm = config.commission;
@@ -85,9 +73,39 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     _rounds.push(rootRound);
   }
 
+  // TICKET
+  function printTicket(
+    address account,
+    bytes32 numbers
+  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+    roundId = _rounds.length - 1;
+    Round storage currentRound = _rounds[roundId];
+
+    if (currentRound.endTimestamp != 0) {
+      revert WrongRound();
+    }
+
+    if (currentRound.tickets.length >= _maxTicket) {
+      revert LimitExceed();
+    }
+
+    //    currentRound.tickets[currentRound.tickets.length] = numbers;
+    currentRound.tickets.push(numbers);
+
+    currentRound.balance += currentRound.acceptedAsset.amount;
+    currentRound.total += currentRound.acceptedAsset.amount;
+
+    tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, numbers);
+  }
+
+  // ROUND
   function startRound(Asset memory ticket, Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
-    require(prevRound.endTimestamp != 0, "Lottery: previous round is not yet finished");
+    // TODO custom error
+    if (prevRound.endTimestamp == 0) {
+      revert NotComplete();
+    }
+    //    require(prevRound.endTimestamp != 0, "Lottery: previous round is not yet finished");
 
     Round memory nextRound;
     _rounds.push(nextRound);
@@ -103,18 +121,18 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     emit RoundStarted(roundNumber, block.timestamp);
   }
 
-  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
-    Round storage round = _rounds[_rounds.length - 1];
-    return RoundInfo(round.roundId, round.startTimestamp, round.endTimestamp, round.acceptedAsset, round.ticketAsset);
-  }
-
-  function getRandomNumber() internal virtual returns (uint256 requestId);
-
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
-    require(currentRound.roundId == roundNumber, "Lottery: wrong roundId");
-    require(currentRound.endTimestamp == 0, "Lottery: previous round is already finished");
+
+    // TODO should never happen?
+    if (currentRound.roundId != roundNumber) {
+      revert WrongRound();
+    }
+
+    if (currentRound.endTimestamp != 0) {
+      revert NotActive();
+    }
 
     currentRound.endTimestamp = block.timestamp;
     currentRound.requestId = getRandomNumber();
@@ -122,22 +140,33 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     uint256 commission = (currentRound.total * comm) / 100;
     currentRound.total -= commission;
 
-    if (commission != 0) {
-      currentRound.acceptedAsset.amount = commission;
-      ExchangeUtils.spend(
-        ExchangeUtils._toArray(currentRound.acceptedAsset),
-        _lotteryWallet,
-        DisabledTokenTypes(false, false, false, false, false)
-      );
-    }
+    //    if (commission != 0) {
+    //      currentRound.acceptedAsset.amount = commission;
+    //      ExchangeUtils.spend(
+    //        ExchangeUtils._toArray(currentRound.acceptedAsset),
+    //        _lotteryWallet,
+    //        DisabledTokenTypes(false, false, false, false, false)
+    //      );
+    //    }
 
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
+  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
+    Round storage round = _rounds[_rounds.length - 1];
+    return RoundInfo(round.roundId, round.startTimestamp, round.endTimestamp, round.acceptedAsset, round.ticketAsset);
+  }
+
+  // RELEASE
   function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
     Round storage currentRound = _rounds[roundNumber];
-    require(currentRound.endTimestamp + _timeLag < block.timestamp, "Round: is not releasable yet");
-    require(currentRound.balance != 0, "Round: Nothing to Release");
+
+    if (block.timestamp < currentRound.endTimestamp + _timeLag) {
+      revert NotComplete();
+    }
+    if (currentRound.balance == 0) {
+      revert ZeroBalance();
+    }
 
     uint256 roundBalance = currentRound.balance;
     currentRound.balance = 0;
@@ -145,15 +174,14 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     currentRound.acceptedAsset.amount = roundBalance;
     ExchangeUtils.spend(
       ExchangeUtils._toArray(currentRound.acceptedAsset),
-      _lotteryWallet,
+      _msgSender(),
       DisabledTokenTypes(false, false, false, false, false)
     );
 
     emit Released(roundNumber, roundBalance);
   }
 
-  // ROUND
-
+  // RANDOM
   function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
     Round storage currentRound = _rounds[_rounds.length - 1];
 
@@ -166,7 +194,8 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;
-        i++; // TODO unchecked
+        i++;
+        // TODO unchecked
       }
     }
 
@@ -186,42 +215,9 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     emit RoundFinalized(currentRound.roundId, currentRound.values);
   }
 
-  // MARKETPLACE
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 
-  function purchase(Params memory params, Asset memory price, bytes calldata signature) external whenNotPaused {
-    // Verify signature and recover signer
-    // TOD fix _recoverOneToOneSignature
-    address signer = _recoverOneToManySignature(params, price, new Asset[](0), signature);
-    // chech signer for MINTER_ROLE
-    require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
-
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
-
-    require(currentRound.endTimestamp == 0, "Lottery: current round is finished");
-
-    require(currentRound.tickets.length < _maxTicket, "Lottery: no more tickets available");
-    currentRound.tickets[currentRound.tickets.length] = params.extra;
-
-    currentRound.balance += price.amount;
-    currentRound.total += price.amount;
-
-    ExchangeUtils.spendFrom(
-      ExchangeUtils._toArray(price),
-      _msgSender(),
-      address(this),
-      DisabledTokenTypes(false, false, false, false, false)
-    );
-
-    uint256 tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(
-      _msgSender(),
-      roundNumber,
-      params.extra
-    );
-
-    emit PurchaseLottery(_msgSender(), params.externalId, new Asset[](0), price, roundNumber, params.extra);
-  }
-
+  // PRIZE
   function getPrize(uint256 tokenId) external {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
@@ -230,6 +226,7 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 
+    // only owner can burn
     ticketFactory.burn(tokenId);
 
     uint8[] memory coefficient = new uint8[](7);
@@ -253,11 +250,15 @@ abstract contract LotteryRandom is SignatureValidator, AccessControl, Pausable, 
     uint256 point = currentRound.total / sumc;
 
     uint8 result = 0;
+
+    // TODO fixme bitwise operations
     for (uint8 j = 0; j < 6; j++) {
-      // TODO fixme bitwise operations
-      // if (data.numbers[currentRound.values[j]]) {
-      result++;
-      // }
+      for (uint8 k = 0; k < 6; k++) {
+        if (uint8(data.numbers[31 - k]) == currentRound.values[j]) {
+          result++;
+          break;
+        }
+      }
     }
 
     uint256 amount = point * coefficient[result];

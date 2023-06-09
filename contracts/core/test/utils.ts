@@ -1,4 +1,5 @@
 import { snakeToCamelCase } from "@gemunion/utils";
+import { utils } from "ethers";
 
 export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   const numbers: Array<boolean> = new Array(36).fill(false);
@@ -6,6 +7,14 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
     numbers[s] = true;
   });
   return numbers;
+};
+
+export const getNumbersBytes = (selected = [0, 1, 2, 3, 5, 8]) => {
+  const numbers: Array<string> = [];
+  selected.forEach(s => {
+    numbers.push(utils.hexlify(s));
+  });
+  return utils.hexZeroPad(utils.hexConcat(numbers), 32);
 };
 
 export const getContractName = (base: string, network: string) => {

@@ -44,7 +44,7 @@ describe("ExchangeMysterybox", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
@@ -140,7 +140,7 @@ describe("ExchangeMysterybox", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
@@ -267,7 +267,7 @@ describe("ExchangeMysterybox", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
@@ -388,7 +388,7 @@ describe("ExchangeMysterybox", function () {
 
         await exchangeInstance.pause();
 
-        const tx1 = exchangeInstance.mysterybox(
+        const tx1 = exchangeInstance.purchaseMystery(
           params,
           [
             {
