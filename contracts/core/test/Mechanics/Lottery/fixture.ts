@@ -3,8 +3,6 @@ import "@nomicfoundation/hardhat-toolbox";
 import { ethers, network } from "hardhat";
 import { Contract, utils } from "ethers";
 
-import { tokenName } from "@gemunion/contracts-constants";
-
 import { getContractName } from "../../utils";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
@@ -12,7 +10,6 @@ import { wrapRaffleSignature, wrapSignature } from "./utils";
 
 interface ILotteryConfig {
   timeLagBeforeRelease: number;
-  maxTickets: number;
   commission: number;
 }
 
@@ -38,31 +35,24 @@ export async function deployLottery(config: ILotteryConfig): Promise<{
   };
 }
 
-export async function deployLotteryRaffle(config: ILotteryConfig): Promise<{
+export async function deployRaffle(config: ILotteryConfig): Promise<{
   erc20Instance: Contract;
   erc721Instance: Contract;
-  lotteryInstance: Contract;
-  lotteryWalletInstance: Contract;
+  raffleInstance: Contract;
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
   const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
-  const walletFactory = await ethers.getContractFactory("RaffleWallet");
 
   const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-  const lotteryWalletInstance = await walletFactory.deploy([owner.address], [100]);
-
-  Object.assign(config, { lotteryWallet: lotteryWalletInstance.address });
-
-  const lotteryInstance = await factory.deploy(tokenName, config);
+  const raffleInstance = await factory.deploy(config);
 
   return {
     erc20Instance,
     erc721Instance: erc721TicketInstance,
-    lotteryInstance,
-    lotteryWalletInstance,
-    generateSignature: wrapRaffleSignature(await ethers.provider.getNetwork(), lotteryInstance, owner),
+    raffleInstance,
+    generateSignature: wrapRaffleSignature(await ethers.provider.getNetwork(), raffleInstance, owner),
   };
 }

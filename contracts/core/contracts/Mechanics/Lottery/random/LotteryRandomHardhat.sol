@@ -32,7 +32,8 @@ contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
     uint8[7] calldata aggregation,
     uint256 requestId,
     Asset memory item,
-    Asset memory price
+    Asset memory price,
+    uint256 maxTicket
   ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);
@@ -40,6 +41,7 @@ contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
+    currentRound.maxTicket = maxTicket;
     currentRound.startTimestamp = block.timestamp;
     currentRound.endTimestamp = block.timestamp + 1;
     currentRound.balance = 10000 ether;

@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
-import "./ExchangeAchievement.sol";
 import "./ExchangeCore.sol";
 import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
@@ -20,6 +19,7 @@ import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
 import "./ExchangeRentable.sol";
 import "./ExchangeLottery.sol";
+import "./ExchangeRaffle.sol";
 import "./referral/LinearReferral.sol";
 import "./interfaces/IAsset.sol";
 import "../utils/TopUp.sol";
@@ -36,10 +36,10 @@ contract Exchange is
   ExchangeGrade,
   ExchangeBreed,
   ExchangeMysterybox,
-  ExchangeAchievement,
   ExchangeClaim,
   ExchangeRentable,
   ExchangeLottery,
+  ExchangeRaffle,
   PaymentSplitter,
   LinearReferral,
   Wallet,
@@ -86,7 +86,7 @@ contract Exchange is
   function _afterPurchase(
     address referrer,
     Asset[] memory price
-  ) internal override(ExchangeCore, ExchangeMysterybox, ExchangeLottery, LinearReferral) {
+  ) internal override(ExchangeCore, ExchangeMysterybox, ExchangeLottery, ExchangeRaffle, LinearReferral) {
     return super._afterPurchase(referrer, price);
   }
 }

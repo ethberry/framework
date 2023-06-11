@@ -9,8 +9,16 @@ pragma solidity ^0.8.13;
 import "../../../Exchange/interfaces/IAsset.sol";
 
 struct Raffle {
-  address lotteryWallet;
   uint256 timeLagBeforeRelease;
-  uint8 maxTickets;
-  uint8 commission;
+  uint256 commission;
+}
+
+// TODO add more data?
+struct RoundInfo {
+  uint256 roundId;
+  uint256 startTimestamp;
+  uint256 endTimestamp;
+  uint256 maxTicket;
+  Asset acceptedAsset;
+  Asset ticketAsset;
 }

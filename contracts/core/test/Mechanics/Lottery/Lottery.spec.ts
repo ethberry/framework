@@ -4,15 +4,17 @@ import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount, MINTER_ROLE, nonce, tokenName } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+
+import { amount, MINTER_ROLE, DEFAULT_ADMIN_ROLE, PAUSER_ROLE, nonce, tokenName } from "@gemunion/contracts-constants";
 
 import { expiresAt, extra, params } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLottery } from "./fixture";
-import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
-import { getNumbersBytes, isEqualEventArgObj } from "../../utils";
+import { wrapManyToManySignature } from "../../Exchange/shared/utils";
+import { getNumbersBytes, isEqualEventArgArrObj, isEqualEventArgObj } from "../../utils";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -40,15 +42,15 @@ describe("Lottery", function () {
     }
   });
 
-  // shouldBehaveLikeAccessControl(async () => {
-  //   const { lotteryInstance } = await factory();
-  //   return lotteryInstance;
-  // })(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-  //
-  // shouldBehaveLikePausable(async () => {
-  //   const { lotteryInstance } = await factory();
-  //   return lotteryInstance;
-  // });
+  shouldBehaveLikeAccessControl(async () => {
+    const { lotteryInstance } = await factory();
+    return lotteryInstance;
+  })(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+
+  shouldBehaveLikePausable(async () => {
+    const { lotteryInstance } = await factory();
+    return lotteryInstance;
+  });
 
   describe("Start Round", function () {
     it("should start new round", async function () {
@@ -66,7 +68,9 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
+
       const current: number = (await time.latest()).toNumber();
       await expect(tx).to.emit(lotteryInstance, "RoundStarted").withArgs(1, current);
     });
@@ -86,6 +90,7 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
       const tx = lotteryInstance.startRound(
         {
@@ -100,6 +105,7 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
       await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "NotComplete");
     });
@@ -121,6 +127,7 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
 
       if (network.name !== "hardhat") {
@@ -192,13 +199,14 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, owner);
+      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
 
-      const signature = await generateOneToOneSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce"),
@@ -207,18 +215,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -229,12 +247,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -247,12 +273,20 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
-          isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(1), // ticketId = 1
-            amount: BigNumber.from(1),
-          }),
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0,
+              token: lotteryInstance.address,
+              tokenId: BigNumber.from(0),
+              amount: BigNumber.from(0),
+            },
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1), // ticketId = 1
+              amount: BigNumber.from(1),
+            },
+          ),
           isEqualEventArgObj({
             tokenType: 1,
             token: erc20Instance.address,
@@ -327,13 +361,14 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, owner);
+      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
 
-      const signature = await generateOneToOneSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce"),
@@ -342,18 +377,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -364,12 +409,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -382,12 +435,20 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
-          isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(1), // ticketId = 1
-            amount: BigNumber.from(1),
-          }),
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0,
+              token: lotteryInstance.address,
+              tokenId: BigNumber.from(0),
+              amount: BigNumber.from(0),
+            },
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1), // ticketId = 1
+              amount: BigNumber.from(1),
+            },
+          ),
           isEqualEventArgObj({
             tokenType: 1,
             token: erc20Instance.address,
@@ -469,13 +530,14 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        2, // maxTicket count
       );
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, owner);
+      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
 
-      const signature = await generateOneToOneSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce"),
@@ -484,18 +546,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -506,12 +578,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -524,12 +604,20 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
-          isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(1), // ticketId = 1
-            amount: BigNumber.from(1),
-          }),
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0,
+              token: lotteryInstance.address,
+              tokenId: BigNumber.from(0),
+              amount: BigNumber.from(0),
+            },
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(1), // ticketId = 1
+              amount: BigNumber.from(1),
+            },
+          ),
           isEqualEventArgObj({
             tokenType: 1,
             token: erc20Instance.address,
@@ -541,7 +629,7 @@ describe("Lottery", function () {
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
 
-      const signature1 = await generateOneToOneSignature({
+      const signature1 = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce1"),
@@ -550,18 +638,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
       const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
         {
@@ -571,12 +669,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -589,12 +695,20 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
-          isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(2), // ticketId = 1
-            amount: BigNumber.from(1),
-          }),
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0,
+              token: lotteryInstance.address,
+              tokenId: BigNumber.from(0),
+              amount: BigNumber.from(0),
+            },
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId: BigNumber.from(2), // ticketId = 2
+              amount: BigNumber.from(1),
+            },
+          ),
           isEqualEventArgObj({
             tokenType: 1,
             token: erc20Instance.address,
@@ -606,7 +720,7 @@ describe("Lottery", function () {
         );
       await expect(tx1).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
 
-      const signature2 = await generateOneToOneSignature({
+      const signature2 = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce2"),
@@ -615,18 +729,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
       const tx2 = exchangeInstance.connect(receiver).purchaseLottery(
         {
@@ -636,12 +760,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -685,6 +817,7 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
 
       const tx0 = await lotteryInstance.endRound();
@@ -693,9 +826,9 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, owner);
+      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
 
-      const signature = await generateOneToOneSignature({
+      const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
           nonce: utils.formatBytes32String("nonce"),
@@ -704,18 +837,28 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        item: {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
-        price: {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: 0,
-          amount,
-        },
+        items: [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId: 0,
+            amount,
+          },
+        ],
       });
 
       const tx = exchangeInstance.connect(receiver).purchaseLottery(
@@ -726,12 +869,20 @@ describe("Lottery", function () {
           referrer: constants.AddressZero,
           extra,
         },
-        {
-          tokenType: 0,
-          token: lotteryInstance.address,
-          tokenId: 0,
-          amount: 0,
-        },
+        [
+          {
+            tokenType: 0,
+            token: lotteryInstance.address,
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
         {
           tokenType: 1,
           token: erc20Instance.address,
@@ -775,6 +926,7 @@ describe("Lottery", function () {
           tokenId: 0,
           amount,
         },
+        0, // maxTicket count
       );
 
       await erc721Instance.connect(receiver).approve(lotteryInstance.address, 1);
@@ -815,6 +967,7 @@ describe("Lottery", function () {
           tokenId: 1,
           amount,
         },
+        0, // maxTicket count
       );
 
       const prizeAmount = constants.WeiPerEther.mul(3500).sub(200); // rounding error

@@ -10,7 +10,6 @@ import "../../../Exchange/interfaces/IAsset.sol";
 
 struct Lottery {
   uint256 timeLagBeforeRelease;
-  uint256 maxTickets;
   uint256 commission;
 }
 
@@ -19,12 +18,7 @@ struct RoundInfo {
   uint256 roundId;
   uint256 startTimestamp;
   uint256 endTimestamp;
+  uint256 maxTicket;
   Asset acceptedAsset;
   Asset ticketAsset;
-}
-
-interface ILottery {
-  function printTicket(address account, bytes32 numbers) external returns (uint256 tokenId, uint256 roundId);
-
-  function getCurrentRoundInfo() external view returns (RoundInfo memory);
 }

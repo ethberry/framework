@@ -14,10 +14,10 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 import "./interfaces/ILottery.sol";
 
-abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable {
-  event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
+abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable {
+  event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
 
-  function purchaseLottery(
+  function purchaseRaffle(
     Params memory params,
     Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
     Asset memory price,
@@ -39,15 +39,12 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(
-      _msgSender(),
-      params.extra // selected numbers
-    );
+    (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(_msgSender());
 
     // set tokenID = ticketID
     items[1].tokenId = tokenId;
 
-    emit PurchaseLottery(_msgSender(), items, price, roundId, params.extra);
+    emit PurchaseRaffle(_msgSender(), items, price, roundId);
 
     _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }

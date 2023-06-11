@@ -58,14 +58,13 @@ abstract contract LinearReferral is Context, AccessControl {
   }
 
   function updateReferrers(address initReferrer, Asset[] memory price) internal {
-
     if (initReferrer == address(0) || initReferrer == _msgSender()) {
       return;
     }
 
     _chain[_msgSender()] = initReferrer;
 
-    Ref memory program = _refProgram;
+    Ref storage program = _refProgram;
 
     uint256 length = price.length;
     for (uint256 i = 0; i < length; ) {
@@ -79,12 +78,10 @@ abstract contract LinearReferral is Context, AccessControl {
           _rewardBalances[referrer][ingredient.token] += rewardAmount;
           emit ReferralReward(_msgSender(), referrer, level, ingredient.token, rewardAmount);
 
-          address nxt = _chain[referrer];
-
           if (_chain[referrer] == address(0) || _chain[referrer] == _msgSender()) {
             level = program._maxRefs;
           }
-          referrer = nxt;
+          referrer = _chain[referrer];
         }
       }
       unchecked {

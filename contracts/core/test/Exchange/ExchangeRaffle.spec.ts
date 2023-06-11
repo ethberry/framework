@@ -4,29 +4,29 @@ import { BigNumber, constants, utils } from "ethers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { expiresAt, extra, params } from "../constants";
+import { expiresAt, extra } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 
-describe("ExchangeLottery", function () {
-  describe("Lottery", function () {
+describe("ExchangeRaffle", function () {
+  describe("Raffle", function () {
     describe("Purchase", function () {
-      it("should purchase lottery ticket", async function () {
+      it("should purchase Raffle ticket", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -45,8 +45,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -60,7 +60,7 @@ describe("ExchangeLottery", function () {
           items: [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -80,7 +80,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -91,7 +91,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -110,16 +110,16 @@ describe("ExchangeLottery", function () {
           },
           signature,
         );
-        // event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
+        // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "PurchaseLottery")
+          .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
             isEqualEventArgArrObj(
               {
                 tokenType: 0,
-                token: lotteryInstance.address,
+                token: raffleInstance.address,
                 tokenId: BigNumber.from(0),
                 amount: BigNumber.from(0),
               },
@@ -137,10 +137,9 @@ describe("ExchangeLottery", function () {
               amount: BigNumber.from(amount),
             }),
             BigNumber.from(1),
-            params.extra,
           );
 
-        const balance = await erc20Instance.balanceOf(lotteryInstance.address);
+        const balance = await erc20Instance.balanceOf(raffleInstance.address);
         expect(balance).to.equal(BigNumber.from(amount));
       });
 
@@ -149,15 +148,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -176,8 +175,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -198,7 +197,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -224,15 +223,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -251,8 +250,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -266,7 +265,7 @@ describe("ExchangeLottery", function () {
           items: [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -286,7 +285,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -297,7 +296,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -325,15 +324,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance /* generateManyToManySignature */ } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -351,7 +350,7 @@ describe("ExchangeLottery", function () {
 
         const signature = utils.formatBytes32String("signature");
 
-        const tx = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -362,7 +361,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -389,15 +388,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -416,8 +415,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, amount);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -431,7 +430,7 @@ describe("ExchangeLottery", function () {
           items: [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -451,7 +450,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -462,7 +461,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -481,21 +480,15 @@ describe("ExchangeLottery", function () {
           },
           signature,
         );
-        // event PurchaseLottery(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
+        // event PurchaseRaffle(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
         await expect(tx1)
-          .to.emit(exchangeInstance, "PurchaseLottery")
+          .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
-            // isEqualEventArgObj({
-            //   tokenType: 2,
-            //   token: erc721TicketInstance.address,
-            //   tokenId: BigNumber.from(1), // ticketId = 1
-            //   amount: BigNumber.from(1),
-            // }),
             isEqualEventArgArrObj(
               {
                 tokenType: 0,
-                token: lotteryInstance.address,
+                token: raffleInstance.address,
                 tokenId: BigNumber.from(0),
                 amount: BigNumber.from(0),
               },
@@ -513,10 +506,9 @@ describe("ExchangeLottery", function () {
               amount: BigNumber.from(amount),
             }),
             BigNumber.from(1),
-            params.extra,
           );
 
-        const tx2 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx2 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -527,7 +519,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -554,15 +546,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -581,8 +573,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, amount);
         // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -596,7 +588,7 @@ describe("ExchangeLottery", function () {
           items: [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -616,7 +608,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -627,7 +619,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -654,15 +646,15 @@ describe("ExchangeLottery", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
 
         const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-        const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+        const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
 
-        const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
-        const lotteryConfig = {
+        const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+        const raffleConfig = {
           timeLagBeforeRelease: 2592, // production: release after 2592000 seconds = 30 days
           commission: 30, // lottery wallet gets 30% commission from each round balance
         };
-        const lotteryInstance = await factory.deploy(lotteryConfig);
-        await lotteryInstance.startRound(
+        const raffleInstance = await factory.deploy(raffleConfig);
+        await raffleInstance.startRound(
           {
             tokenType: 2,
             token: erc721TicketInstance.address,
@@ -681,8 +673,8 @@ describe("ExchangeLottery", function () {
         await erc20Instance.mint(receiver.address, 1);
         await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-        await erc721TicketInstance.grantRole(MINTER_ROLE, lotteryInstance.address);
+        await raffleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+        await erc721TicketInstance.grantRole(MINTER_ROLE, raffleInstance.address);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -696,7 +688,7 @@ describe("ExchangeLottery", function () {
           items: [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },
@@ -716,7 +708,7 @@ describe("ExchangeLottery", function () {
             },
           ],
         });
-        const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
+        const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: utils.formatBytes32String("nonce"),
             externalId: 0,
@@ -727,7 +719,7 @@ describe("ExchangeLottery", function () {
           [
             {
               tokenType: 0,
-              token: lotteryInstance.address,
+              token: raffleInstance.address,
               tokenId: 0,
               amount: 0,
             },

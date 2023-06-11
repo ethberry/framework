@@ -25,13 +25,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   using SafeERC20 for IERC20;
 
   uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
-  uint256 internal immutable _maxTicket; // TODO change for 5000 in production or add to constructor (dev: 2, prod: 5000)
   uint256 internal immutable comm; // commission 30%
 
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
-  //  event PurchaseLottery(address account, uint256 tokenId, Asset item, Asset price, uint256 round, bytes32 numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -44,6 +42,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
+    uint256 maxTicket;
     // TODO Asset[]?
     Asset acceptedAsset;
     Asset ticketAsset;
@@ -62,7 +61,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     _grantRole(MINTER_ROLE, account);
 
     // SET Lottery Config
-    _maxTicket = config.maxTickets;
     _timeLag = config.timeLagBeforeRelease;
     comm = config.commission;
 
@@ -85,11 +83,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       revert WrongRound();
     }
 
-    if (currentRound.tickets.length >= _maxTicket) {
+    if (currentRound.maxTicket > 0 && currentRound.tickets.length >= currentRound.maxTicket) {
       revert LimitExceed();
     }
 
-    //    currentRound.tickets[currentRound.tickets.length] = numbers;
     currentRound.tickets.push(numbers);
 
     currentRound.balance += currentRound.acceptedAsset.amount;
@@ -99,7 +96,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   }
 
   // ROUND
-  function startRound(Asset memory ticket, Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
     // TODO custom error
     if (prevRound.endTimestamp == 0) {
@@ -115,6 +112,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     Round storage currentRound = _rounds[roundNumber];
     currentRound.roundId = roundNumber;
     currentRound.startTimestamp = block.timestamp;
+    currentRound.maxTicket = maxTicket;
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
@@ -140,21 +138,20 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     uint256 commission = (currentRound.total * comm) / 100;
     currentRound.total -= commission;
 
-    //    if (commission != 0) {
-    //      currentRound.acceptedAsset.amount = commission;
-    //      ExchangeUtils.spend(
-    //        ExchangeUtils._toArray(currentRound.acceptedAsset),
-    //        _lotteryWallet,
-    //        DisabledTokenTypes(false, false, false, false, false)
-    //      );
-    //    }
-
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
   function getCurrentRoundInfo() public view returns (RoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
-    return RoundInfo(round.roundId, round.startTimestamp, round.endTimestamp, round.acceptedAsset, round.ticketAsset);
+    return
+      RoundInfo(
+        round.roundId,
+        round.startTimestamp,
+        round.endTimestamp,
+        round.maxTicket,
+        round.acceptedAsset,
+        round.ticketAsset
+      );
   }
 
   // RELEASE
@@ -251,7 +248,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
 
     uint8 result = 0;
 
-    // TODO fixme bitwise operations
     for (uint8 j = 0; j < 6; j++) {
       for (uint8 k = 0; k < 6; k++) {
         if (uint8(data.numbers[31 - k]) == currentRound.values[j]) {

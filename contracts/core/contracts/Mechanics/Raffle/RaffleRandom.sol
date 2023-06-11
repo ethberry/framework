@@ -20,24 +20,20 @@ import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 
-import "./extensions/SignatureValidator.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
 import "./interfaces/IRaffle.sol";
 
-abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, Wallet {
+abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   using Address for address;
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;
 
-  address internal immutable _lotteryWallet;
   uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
-  uint8 internal immutable _maxTicket; // TODO change for 5000 in production or add to constructor (dev: 2, prod: 5000)
-  uint8 internal immutable comm; // commission 30%
+  uint256 internal immutable comm; // commission 30%
 
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeNumber);
-  event PurchaseRaffle(uint256 tokenId, address account, uint256 price, uint256 round);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -51,31 +47,21 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
     Counters.Counter ticketCounter; // all round tickets counter
     uint256 prizeNumber; // prize number
     uint256 requestId;
+    uint256 maxTicket;
     // TODO Asset[]?
-    Asset acceptedAsset;
-    Asset ticketAsset;
-  }
-
-  // TODO add more data?
-  struct RoundInfo {
-    uint256 roundId;
-    uint256 startTimestamp;
-    uint256 endTimestamp;
     Asset acceptedAsset;
     Asset ticketAsset;
   }
 
   Round[] internal _rounds;
 
-  constructor(string memory name, Raffle memory config) SignatureValidator(name) {
+  constructor(Raffle memory config) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
 
     // SET Raffle Config
-    _lotteryWallet = config.lotteryWallet;
-    _maxTicket = config.maxTickets;
     _timeLag = config.timeLagBeforeRelease;
     comm = config.commission;
 
@@ -85,7 +71,32 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
     _rounds.push(rootRound);
   }
 
-  function startRound(Asset memory ticket, Asset memory price) public onlyRole(DEFAULT_ADMIN_ROLE) {
+  // TICKET
+  function printTicket(
+    address account
+  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+    roundId = _rounds.length - 1;
+    Round storage currentRound = _rounds[roundId];
+
+    if (currentRound.endTimestamp != 0) {
+      revert WrongRound();
+    }
+
+    // allow all
+    if (currentRound.maxTicket > 0 && currentRound.ticketCounter.current() >= currentRound.maxTicket) {
+      revert LimitExceed();
+    }
+
+    // workaround for struct
+    Counters.increment(currentRound.ticketCounter);
+
+    currentRound.balance += currentRound.acceptedAsset.amount;
+    currentRound.total += currentRound.acceptedAsset.amount;
+
+    tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId);
+  }
+
+  function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
     if (prevRound.endTimestamp == 0) revert NotComplete();
 
@@ -97,6 +108,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
     Round storage currentRound = _rounds[roundNumber];
     currentRound.roundId = roundNumber;
     currentRound.startTimestamp = block.timestamp;
+    currentRound.maxTicket = maxTicket;
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
@@ -120,7 +132,15 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
 
   function getCurrentRoundInfo() public view returns (RoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
-    return RoundInfo(round.roundId, round.startTimestamp, round.endTimestamp, round.acceptedAsset, round.ticketAsset);
+    return
+      RoundInfo(
+        round.roundId,
+        round.startTimestamp,
+        round.endTimestamp,
+        round.maxTicket,
+        round.acceptedAsset,
+        round.ticketAsset
+      );
   }
 
   // RANDOM
@@ -129,23 +149,21 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
-    if (currentRound.roundId != roundNumber) revert WrongRound();
-    if (currentRound.endTimestamp != 0) revert Expired();
+
+    // TODO should never happen?
+    if (currentRound.roundId != roundNumber) {
+      revert WrongRound();
+    }
+
+    if (currentRound.endTimestamp != 0) {
+      revert NotActive();
+    }
 
     currentRound.endTimestamp = block.timestamp;
     currentRound.requestId = getRandomNumber();
 
     uint256 commission = (currentRound.total * comm) / 100;
     currentRound.total -= commission;
-
-    if (commission != 0) {
-      currentRound.acceptedAsset.amount = commission;
-      ExchangeUtils.spend(
-        ExchangeUtils._toArray(currentRound.acceptedAsset),
-        _lotteryWallet,
-        DisabledTokenTypes(false, false, false, false, false)
-      );
-    }
 
     emit RoundEnded(roundNumber, block.timestamp);
   }
@@ -161,7 +179,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
     currentRound.acceptedAsset.amount = roundBalance;
     ExchangeUtils.spend(
       ExchangeUtils._toArray(currentRound.acceptedAsset),
-      _lotteryWallet,
+      _msgSender(),
       DisabledTokenTypes(false, false, false, false, false)
     );
 
@@ -181,48 +199,6 @@ abstract contract RaffleRandom is AccessControl, Pausable, SignatureValidator, W
     currentRound.prizeNumber = prizeNumber == 0 ? prizeNumber + 1 : prizeNumber;
 
     emit RoundFinalized(currentRound.roundId, prizeNumber);
-  }
-
-  // MARKETPLACE
-
-  function purchase(Params memory params, Asset memory price, bytes calldata signature) external whenNotPaused {
-    // Verify signature and recover signer
-    address signer = _verifySignature(params, price, signature);
-    // check signer for MINTER_ROLE
-    if (!hasRole(MINTER_ROLE, signer)) {
-      revert SignerMissingRole();
-    }
-
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
-
-    if (currentRound.endTimestamp != 0) {
-      revert NotActive();
-    }
-
-    // allow all
-    if (_maxTicket > 0 && _maxTicket <= currentRound.ticketCounter.current()) {
-      revert LimitExceed();
-    }
-
-    // workaround for struct
-    Counters.increment(currentRound.ticketCounter);
-
-    address account = _msgSender();
-
-    currentRound.balance += price.amount;
-    currentRound.total += price.amount;
-
-    ExchangeUtils.spendFrom(
-      ExchangeUtils._toArray(price),
-      _msgSender(),
-      address(this),
-      DisabledTokenTypes(false, false, true, true, false)
-    );
-
-    uint256 tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundNumber);
-
-    emit PurchaseRaffle(tokenId, account, price.amount, roundNumber);
   }
 
   function getPrize(uint256 tokenId) external {

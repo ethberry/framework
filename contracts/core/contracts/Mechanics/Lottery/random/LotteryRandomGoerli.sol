@@ -30,7 +30,10 @@ contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
     bytes32 ticket,
     uint8[6] calldata values,
     uint8[7] calldata aggregation,
-    uint256 requestId
+    uint256 requestId,
+    Asset memory item,
+    Asset memory price,
+    uint256 maxTicket
   ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);
@@ -38,6 +41,7 @@ contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
+    currentRound.maxTicket = maxTicket;
     currentRound.startTimestamp = block.timestamp;
     currentRound.endTimestamp = block.timestamp + 1;
     currentRound.balance = 10000 ether;
@@ -45,6 +49,8 @@ contract LotteryRandomGoerli is LotteryRandom, ChainLinkGoerli {
     currentRound.total -= (currentRound.total * comm) / 100;
     currentRound.tickets.push(ticket);
     currentRound.values = values;
+    currentRound.ticketAsset = item;
+    currentRound.acceptedAsset = price;
     // prize numbers
     currentRound.aggregation = aggregation;
     currentRound.requestId = requestId;

@@ -17,8 +17,7 @@ abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
   event Claim(address from, uint256 externalId, Asset[] items);
 
   function claim(Params memory params, Asset[] memory items, bytes calldata signature) external payable whenNotPaused {
-    address signer = _recoverManyToManySignature(params, items, new Asset[](0), signature);
-    if (!hasRole(MINTER_ROLE, signer)) {
+    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, new Asset[](0), signature))) {
       revert SignerMissingRole();
     }
 

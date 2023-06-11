@@ -22,8 +22,7 @@ abstract contract ExchangeCraft is SignatureValidator, AccessControl, Pausable {
     Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverManyToManySignature(params, items, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) {
+    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, price, signature))) {
       revert SignerMissingRole();
     }
 

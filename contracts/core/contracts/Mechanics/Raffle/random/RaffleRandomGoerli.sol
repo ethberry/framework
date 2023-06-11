@@ -14,9 +14,8 @@ contract RaffleRandomGoerli is RaffleRandom, ChainLinkGoerli {
   using Counters for Counters.Counter;
 
   constructor(
-    string memory name,
     Raffle memory config
-  ) RaffleRandom(name, config) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  ) RaffleRandom(config) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
@@ -29,13 +28,20 @@ contract RaffleRandomGoerli is RaffleRandom, ChainLinkGoerli {
     return super.fulfillRandomWords(requestId, randomWords);
   }
 
-  function setDummyRound(uint256 prizeNumber, uint256 requestId, Asset memory item, Asset memory price) external {
+  function setDummyRound(
+    uint256 prizeNumber,
+    uint256 requestId,
+    Asset memory item,
+    Asset memory price,
+    uint256 maxTicket
+  ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);
 
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
+    currentRound.maxTicket = maxTicket;
     currentRound.roundId = roundNumber;
     currentRound.startTimestamp = block.timestamp;
     currentRound.endTimestamp = block.timestamp + 1;
