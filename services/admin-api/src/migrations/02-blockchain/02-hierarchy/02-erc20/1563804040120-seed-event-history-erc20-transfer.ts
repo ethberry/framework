@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroHash, WeiPerEther } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -21,72 +21,72 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
       ) VALUES (
         1200001,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: wallets[1],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1200002,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: wallets[2],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1200003,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: wallets[0],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1200004,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: wallets[2],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1200005,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: wallets[0],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1200006,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: wallets[1],
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         '${currentDateTime}',
         '${currentDateTime}'

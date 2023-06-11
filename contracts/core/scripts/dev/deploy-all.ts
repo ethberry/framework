@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { constants, Contract } from "ethers";
+import { Contract } from "ethers";
 import fs from "fs";
 import { wallet, wallets } from "@gemunion/constants";
 
@@ -10,7 +10,7 @@ import { getContractName } from "../../test/utils";
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
 const delayMs = 1500; // block delay ms
-// const linkAmountInEth = utils.parseEther("1");
+// const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 interface IObj {
   address?: string;
@@ -54,8 +54,8 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
   }
 };
 
-const contracts: Record<string, Contract> = {};
-const amount = constants.WeiPerEther.mul(1e12);
+const contracts: Record<string, any> = {};
+const amount = WeiPerEther.mul(1e12);
 const timestamp = Math.ceil(Date.now() / 1000);
 let currentBlock: { number: number } = { number: 1 };
 
@@ -111,12 +111,12 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(exchangeInstance.address, MINTER_ROLE),
+    await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
   await debug(
-    await contracts.contractManager.addFactory(exchangeInstance.address, METADATA_ROLE),
+    await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE),
     "contractManager.addFactory",
   );
 
@@ -364,17 +364,17 @@ async function main() {
         deposit: [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
         reward: [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: constants.WeiPerEther.div(100).mul(5), // 5%
+            amount: WeiPerEther.div(100).mul(5), // 5%
           },
         ],
         content: [],
@@ -397,7 +397,7 @@ async function main() {
             tokenType: 1,
             token: contracts.erc20Simple.address,
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
         reward: [
@@ -460,7 +460,7 @@ async function main() {
   );
 
   await debug(
-    await contracts.contractManager.addFactory(stakingInstance.address, MINTER_ROLE),
+    await contracts.contractManager.addFactory(await stakingInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 

@@ -1,18 +1,16 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Network } from "@ethersproject/networks";
-import { Contract } from "ethers";
+import { Network, Signer } from "ethers";
 
 import { tokenName } from "@gemunion/contracts-constants";
 
-export const wrapSignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
-  return (values: Record<string, any>) => {
-    return account._signTypedData(
+export const wrapSignature = (network: Network, contract: any, account: Signer) => {
+  return async (values: Record<string, any>) => {
+    return account.signTypedData(
       // Domain
       {
         name: tokenName,
         version: "1.0.0",
         chainId: network.chainId,
-        verifyingContract: contract.address,
+        verifyingContract: await contract.getAddress(),
       },
       // Types
       {

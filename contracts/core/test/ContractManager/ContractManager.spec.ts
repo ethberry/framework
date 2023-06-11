@@ -2,10 +2,8 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-
 import { DEFAULT_ADMIN_ROLE, METADATA_ROLE, MINTER_ROLE, PREDICATE_ROLE } from "@gemunion/contracts-constants";
-
-import { deployContract } from "../shared/fixture";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 describe("ContractManager", function () {
   const factory = () => deployContract(this.title);

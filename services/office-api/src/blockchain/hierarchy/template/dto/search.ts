@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 import type { ITemplateSearchDto } from "@framework/types";
 import { TemplateStatus } from "@framework/types";
 
@@ -25,7 +25,7 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
     minimum: 1,
   })
   @IsOptional()
-  @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
 
   @ApiProperty({
@@ -40,14 +40,14 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
     type: Number,
   })
   @IsOptional()
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public minPrice: string;
 
   @ApiPropertyOptional({
     type: Number,
   })
   @IsOptional()
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
   @ApiPropertyOptional({

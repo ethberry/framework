@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { BigNumber } from "ethers";
+import {} from "ethers";
 import { BreedService } from "./breed.service";
 import { decodeNumber, decodeTraits } from "@framework/traits";
 
@@ -15,8 +15,8 @@ export class BreedServiceEth {
   ) {}
 
   public async newborn(tokenId: number, traits: string, transactionHash: string): Promise<void> {
-    const { matronId, sireId } = decodeTraits(BigNumber.from(traits), ["matronId", "sireId"].reverse());
-    const randomness = decodeNumber(BigNumber.from(traits)).slice(0, 6).join("");
+    const { matronId, sireId } = decodeTraits(BigInt(traits), ["matronId", "sireId"].reverse());
+    const randomness = decodeNumber(BigInt(traits)).slice(0, 6).join("");
     let newbornGenes = "";
     // GENESIS ITEM
     // TODO better check

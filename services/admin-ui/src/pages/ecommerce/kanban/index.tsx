@@ -28,7 +28,7 @@ export const Kanban: FC = () => {
     api =>
       api
         .fetchJson({
-          url: "/orders",
+          url: "/ecommerce/orders",
           data: {
             orderStatus: [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED],
             isArchived: false,
@@ -48,7 +48,7 @@ export const Kanban: FC = () => {
     (api, data: { id: string; orderStatus: OrderStatus }) => {
       const { id, orderStatus } = data;
       return api.fetchJson({
-        url: `/orders/${id}/move`,
+        url: `/ecommerce/orders/${id}/move`,
         method: "POST",
         data: {
           orderStatus,
@@ -65,7 +65,7 @@ export const Kanban: FC = () => {
   const handleEdit = (order: IOrder) => {
     setSelectedOrder(order);
     setIsEditDialogOpen(true);
-    navigate(`/kanban/${order.id}`);
+    navigate(`/ecommerce/kanban/${order.id}`);
   };
 
   const handleCreate = () => {
@@ -115,7 +115,7 @@ export const Kanban: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "kanban"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "kanban"]} />
 
       <PageHeader message="pages.kanban.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>

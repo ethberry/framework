@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
-import { constants, utils } from "ethers";
+import { parseEther, WeiPerEther, ZeroAddress } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
 import { blockAwait } from "@gemunion/contracts-utils";
@@ -15,12 +15,12 @@ describe("Pyramid", function () {
   const penalty = 0;
   const cycles = 2;
 
-  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: utils.parseEther("1000000000") });
+  const erc20Factory = () => deployERC1363("ERC20Simple", { amount: parseEther("1000000000") });
 
   const refProgram = {
-    maxRefs: 10,
-    refReward: 10 * 100, // 10.00 %
-    refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
+    maxRefs: 10n,
+    refReward: 10n * 100n, // 10.00 %
+    refDecrease: 10n, // 10% - 1% - 0.1% - 0.01% etc.
   };
 
   describe("setRule", function () {
@@ -32,13 +32,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -65,13 +65,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -95,13 +95,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -117,13 +117,13 @@ describe("Pyramid", function () {
         externalId: 2,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -147,13 +147,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -183,13 +183,13 @@ describe("Pyramid", function () {
       const stakeRule: IRule = {
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -219,13 +219,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -254,13 +254,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -289,13 +289,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -324,13 +324,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -348,13 +348,13 @@ describe("Pyramid", function () {
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
 
       const tx1 = pyramidInstance.deposit(owner.address, 1);
       await expect(tx1)
         .to.emit(pyramidInstance, "StakingStart")
         .to.emit(erc20Instance, "Transfer")
-        .withArgs(owner.address, pyramidInstance.address, 100);
+        .withArgs(owner.address, await pyramidInstance.getAddress(), 100);
       const balance2 = await erc20Instance.balanceOf(owner.address);
       expect(balance2).to.equal(0);
     });
@@ -370,13 +370,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -399,7 +399,7 @@ describe("Pyramid", function () {
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
 
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
       // TIME
       const current = await time.latestBlock();
@@ -409,23 +409,23 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       await pyramidInstance.topUp(
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       const tx2 = pyramidInstance.connect(receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWithCustomError(pyramidInstance, "WrongStake");
@@ -440,13 +440,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -466,7 +466,7 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
       // TIME
       const current = await time.latestBlock();
@@ -476,12 +476,12 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       const tx2 = pyramidInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWithCustomError(pyramidInstance, "NotAnOwner");
@@ -496,13 +496,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -522,7 +522,7 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
       // TIME
       const current = await time.latestBlock();
@@ -532,12 +532,12 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       const tx2 = await pyramidInstance.connect(receiver).receiveReward(1, true, true);
       await expect(tx2)
@@ -547,14 +547,14 @@ describe("Pyramid", function () {
           receiver,
           {
             tokenType: 0, // NATIVE
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
             amount: 1000,
           }.amount *
             2 +
             {
               tokenType: 0, // NATIVE
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId: 0,
               amount: 1000,
             }.amount,
@@ -573,13 +573,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -599,7 +599,7 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
       // TIME
       const current = await time.latestBlock();
@@ -609,12 +609,12 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       const tx2 = await pyramidInstance.receiveReward(1, true, true);
       await expect(tx2)
@@ -624,14 +624,14 @@ describe("Pyramid", function () {
           owner,
           {
             tokenType: 0, // NATIVE
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
             amount: 1000,
           }.amount *
             cycles +
             {
               tokenType: 0, // NATIVE
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId: 0,
               amount: 1000,
             }.amount,
@@ -648,13 +648,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -674,14 +674,14 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
-      await erc20Instance.mint(pyramidInstance.address, 100 * cycles);
-      const balance1 = await erc20Instance.balanceOf(pyramidInstance.address);
+      await erc20Instance.mint(await pyramidInstance.getAddress(), 100 * cycles);
+      const balance1 = await erc20Instance.balanceOf(await pyramidInstance.getAddress());
       expect(balance1).to.equal(100 * cycles);
       const tx2 = await pyramidInstance.receiveReward(1, true, true);
       await expect(tx2)
@@ -704,13 +704,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -729,7 +729,7 @@ describe("Pyramid", function () {
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx1 = pyramidInstance.deposit(owner.address, 1);
       await expect(tx1).to.emit(pyramidInstance, "StakingStart").to.emit(erc20Instance, "Transfer");
       const balance2 = await erc20Instance.balanceOf(owner.address);
@@ -742,12 +742,12 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
       const tx2 = await pyramidInstance.receiveReward(1, true, true);
       await expect(tx2)
@@ -757,7 +757,7 @@ describe("Pyramid", function () {
           owner,
           {
             tokenType: 0, // NATIVE
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
             amount: 1000,
           }.amount * cycles,
@@ -776,13 +776,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -801,7 +801,7 @@ describe("Pyramid", function () {
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx1 = pyramidInstance.deposit(owner.address, 1);
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
@@ -811,7 +811,7 @@ describe("Pyramid", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
-      await erc20Instance.mint(pyramidInstance.address, 100 * cycles);
+      await erc20Instance.mint(await pyramidInstance.getAddress(), 100 * cycles);
       const tx2 = await pyramidInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(pyramidInstance, "StakingWithdraw");
       await expect(tx2).to.emit(pyramidInstance, "StakingFinish");
@@ -827,8 +827,8 @@ describe("Pyramid", function () {
       const pyramidInstance = await deployPyramid();
 
       const tx = owner.sendTransaction({
-        to: pyramidInstance.address,
-        value: constants.WeiPerEther,
+        to: await pyramidInstance.getAddress(),
+        value: WeiPerEther,
       });
 
       await expect(tx).to.be.reverted;
@@ -843,15 +843,17 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
-      const lib = await ethers.getContractAt("ExchangeUtils", pyramidInstance.address, owner);
-      await expect(tx).to.emit(lib, "PaymentEthReceived").withArgs(pyramidInstance.address, constants.WeiPerEther);
+      const lib = await ethers.getContractAt("ExchangeUtils", await pyramidInstance.getAddress(), owner);
+      await expect(tx)
+        .to.emit(lib, "PaymentEthReceived")
+        .withArgs(await pyramidInstance.getAddress(), WeiPerEther);
     });
 
     it("should finalize by selfdestruct", async function () {
@@ -863,18 +865,18 @@ describe("Pyramid", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("1.0"),
+            amount: parseEther("1.0"),
           },
         ],
-        { value: utils.parseEther("1.0") },
+        { value: parseEther("1.0") },
       );
 
-      await expect(tx).to.changeEtherBalance(pyramidInstance, constants.WeiPerEther);
+      await expect(tx).to.changeEtherBalance(pyramidInstance, WeiPerEther);
 
       const tx1 = pyramidInstance.finalize();
-      await expect(tx1).to.changeEtherBalance(owner, constants.WeiPerEther);
+      await expect(tx1).to.changeEtherBalance(owner, WeiPerEther);
     });
 
     it("should finalize by Rule", async function () {
@@ -887,13 +889,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -909,13 +911,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -936,14 +938,14 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
 
       // STAKE 2
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx2 = pyramidInstance.deposit(owner.address, 2);
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
@@ -969,13 +971,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -991,13 +993,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1018,14 +1020,14 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
 
       // STAKE 2
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx2 = pyramidInstance.deposit(owner.address, 2);
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
@@ -1037,7 +1039,7 @@ describe("Pyramid", function () {
       await expect(tx3).to.changeEtherBalance(owner, 1000);
 
       // FINALIZE 2
-      const tx4 = pyramidInstance.finalizeByToken(erc20Instance.address);
+      const tx4 = pyramidInstance.finalizeByToken(await erc20Instance.getAddress());
       await expect(tx4).to.changeTokenBalance(erc20Instance, owner, 100);
     });
 
@@ -1049,13 +1051,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1071,13 +1073,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1110,13 +1112,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1132,13 +1134,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1159,7 +1161,7 @@ describe("Pyramid", function () {
       await expect(tx3).to.be.revertedWithCustomError(pyramidInstance, "ZeroBalance");
 
       // FINALIZE 2
-      const tx4 = pyramidInstance.finalizeByToken(erc20Instance.address);
+      const tx4 = pyramidInstance.finalizeByToken(await erc20Instance.getAddress());
       await expect(tx4).to.be.revertedWithCustomError(pyramidInstance, "ZeroBalance");
     });
   });
@@ -1168,15 +1170,15 @@ describe("Pyramid", function () {
     it("should Fund and Withdraw ETH", async function () {
       const pyramidInstance = await deployPyramid();
 
-      const amnt = utils.parseEther("99.0");
-      const amnt1 = utils.parseEther("9.0");
+      const amnt = parseEther("99.0");
+      const amnt1 = parseEther("9.0");
       await pyramidInstance.topUp(
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId: 0,
-            amount: utils.parseEther("99.0"),
+            amount: parseEther("99.0"),
           },
         ],
         { value: amnt },
@@ -1184,11 +1186,11 @@ describe("Pyramid", function () {
 
       await blockAwait();
       // WITHDRAW ETH
-      const estimateGas = await pyramidInstance.estimateGas.withdrawToken(tokenZero, amnt1);
+      const estimateGas: bigint = await pyramidInstance.withdrawToken.estimateGas(tokenZero, amnt1);
       const tx3 = pyramidInstance.withdrawToken(tokenZero, amnt1, {
-        gasLimit: estimateGas.add(estimateGas.div(100).mul(10)),
+        gasLimit: estimateGas + (estimateGas / 100n) * 10n,
       });
-      await expect(tx3).to.emit(pyramidInstance, "WithdrawToken").withArgs(constants.AddressZero, amnt1);
+      await expect(tx3).to.emit(pyramidInstance, "WithdrawToken").withArgs(ZeroAddress, amnt1);
     });
 
     it("should Withdraw after Deposit", async function () {
@@ -1201,13 +1203,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1223,13 +1225,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1250,14 +1252,14 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
 
       // STAKE 2
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx2 = pyramidInstance.deposit(owner.address, 2);
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
@@ -1269,7 +1271,7 @@ describe("Pyramid", function () {
         tokenZero,
         {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         }.amount / 2,
@@ -1278,14 +1280,14 @@ describe("Pyramid", function () {
         owner,
         {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         }.amount / 2,
       );
 
       // WITHDRAW 2
-      const tx4 = pyramidInstance.withdrawToken(erc20Instance.address, 100 / 2);
+      const tx4 = pyramidInstance.withdrawToken(await erc20Instance.getAddress(), 100 / 2);
       await expect(tx4).to.changeTokenBalance(erc20Instance, owner, 100 / 2);
     });
 
@@ -1299,13 +1301,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1321,13 +1323,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1348,14 +1350,14 @@ describe("Pyramid", function () {
         value: 1000,
       });
       await expect(tx1).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance).to.equal(1000);
 
       // STAKE 2
       await erc20Instance.mint(owner.address, 100);
       const balance1 = await erc20Instance.balanceOf(owner.address);
       expect(balance1).to.equal(100);
-      await erc20Instance.approve(pyramidInstance.address, 100);
+      await erc20Instance.approve(await pyramidInstance.getAddress(), 100);
       const tx2 = pyramidInstance.deposit(owner.address, 2);
       await expect(tx2).to.emit(pyramidInstance, "StakingStart");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
@@ -1367,7 +1369,7 @@ describe("Pyramid", function () {
         tokenZero,
         {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         }.amount * 2,
@@ -1375,7 +1377,7 @@ describe("Pyramid", function () {
       await expect(tx3).to.be.revertedWithCustomError(pyramidInstance, "BalanceExceed");
 
       // WITHDRAW 2
-      const tx4 = pyramidInstance.withdrawToken(erc20Instance.address, 100 * 2);
+      const tx4 = pyramidInstance.withdrawToken(await erc20Instance.getAddress(), 100 * 2);
       await expect(tx4).to.be.revertedWithCustomError(pyramidInstance, "BalanceExceed");
     });
   });
@@ -1396,13 +1398,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
-          amount: constants.WeiPerEther,
+          amount: WeiPerEther,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1418,13 +1420,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1445,7 +1447,7 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx11).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance1 = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance1 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
       expect(stakeBalance1).to.equal(stakeRule1.deposit.amount);
       await expect(tx11)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -1454,9 +1456,7 @@ describe("Pyramid", function () {
           receiver.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       // STAKE 1-2
@@ -1464,8 +1464,8 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx12).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance2 = await ethers.provider.getBalance(pyramidInstance.address);
-      expect(stakeBalance2).to.equal(stakeRule1.deposit.amount.mul(2));
+      const stakeBalance2 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
+      expect(stakeBalance2).to.equal(stakeRule1.deposit.amount * 2n);
       await expect(tx12)
         .to.emit(pyramidInstance, "ReferralReward")
         .withArgs(
@@ -1473,9 +1473,7 @@ describe("Pyramid", function () {
           owner.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
       await expect(tx12)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -1484,9 +1482,7 @@ describe("Pyramid", function () {
           receiver.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       // STAKE 1-3
@@ -1494,8 +1490,8 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx13).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance3 = await ethers.provider.getBalance(pyramidInstance.address);
-      expect(stakeBalance3).to.equal(stakeRule1.deposit.amount.mul(3));
+      const stakeBalance3 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
+      expect(stakeBalance3).to.equal(stakeRule1.deposit.amount * 3n);
       await expect(tx13)
         .to.emit(pyramidInstance, "ReferralReward")
         .withArgs(
@@ -1503,9 +1499,7 @@ describe("Pyramid", function () {
           stranger.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
       await expect(tx13)
         .to.emit(pyramidInstance, "ReferralReward")
@@ -1514,22 +1508,14 @@ describe("Pyramid", function () {
           owner.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       // WITHDRAW REF REWARD 1
       const refBalance0 = await pyramidInstance.connect(receiver).getBalance(receiver.address, tokenZero);
       expect(refBalance0).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0)
-          .add(
-            constants.WeiPerEther.div(100)
-              .mul((refProgram.refReward / 100) | 0)
-              .div(refProgram.refDecrease ** 1),
-          ),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
       );
       const tx2 = pyramidInstance.connect(receiver).withdrawReward(tokenZero);
       await expect(tx2).to.emit(pyramidInstance, "ReferralWithdraw").withArgs(receiver.address, tokenZero, refBalance0);
@@ -1538,14 +1524,8 @@ describe("Pyramid", function () {
       // WITHDRAW REF REWARD 2
       const refBalance1 = await pyramidInstance.connect(owner).getBalance(owner.address, tokenZero);
       expect(refBalance1).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0)
-          .add(
-            constants.WeiPerEther.div(100)
-              .mul((refProgram.refReward / 100) | 0)
-              .div(refProgram.refDecrease ** 1),
-          ),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
       );
       const tx21 = pyramidInstance.connect(owner).withdrawReward(tokenZero);
       await expect(tx21).to.emit(pyramidInstance, "ReferralWithdraw").withArgs(owner.address, tokenZero, refBalance1);
@@ -1554,9 +1534,7 @@ describe("Pyramid", function () {
       // WITHDRAW REF REWARD 3
       const refBalance2 = await pyramidInstance.connect(owner).getBalance(stranger.address, tokenZero);
       expect(refBalance2).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
       const tx22 = pyramidInstance.connect(stranger).withdrawReward(tokenZero);
       await expect(tx22)
@@ -1580,13 +1558,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
-          amount: constants.WeiPerEther,
+          amount: WeiPerEther,
         },
         reward: {
           tokenType: 0, // NATIVE
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId: 0,
           amount: 1000,
         },
@@ -1601,13 +1579,13 @@ describe("Pyramid", function () {
         externalId: 1,
         deposit: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
         reward: {
           tokenType: 1, // ERC20
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId: 0,
           amount: 100,
         },
@@ -1619,13 +1597,15 @@ describe("Pyramid", function () {
         active: true,
       };
 
-      const refReward0 = constants.WeiPerEther.div(100) // level 0
-        .mul((refProgram.refReward / 100) | 0)
-        .div(refProgram.refDecrease ** 0);
+      const refReward0 =
+        ((WeiPerEther / 100n) * // level 0
+          ((refProgram.refReward / 100n) | 0n)) /
+        refProgram.refDecrease ** 0n;
 
-      const refReward1 = constants.WeiPerEther.div(100) // level 1
-        .mul((refProgram.refReward / 100) | 0)
-        .div(refProgram.refDecrease ** 1);
+      const refReward1 =
+        ((WeiPerEther / 100n) * // level 1
+          ((refProgram.refReward / 100n) | 0n)) /
+        refProgram.refDecrease ** 1n;
 
       // SET RULES
       const tx = pyramidInstance.setRules([stakeRule1, stakeRule2]);
@@ -1639,9 +1619,9 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx11).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance1 = await ethers.provider.getBalance(pyramidInstance.address);
+      const stakeBalance1 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
 
-      expect(stakeBalance1).to.equal(stakeRule1.deposit.amount.sub(refReward0));
+      expect(stakeBalance1).to.equal(stakeRule1.deposit.amount - refReward0);
       await expect(tx11)
         .to.emit(pyramidInstance, "ReferralReward")
         .withArgs(owner.address, receiver.address, 0, tokenZero, refReward0);
@@ -1653,8 +1633,8 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx12).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance2 = await ethers.provider.getBalance(pyramidInstance.address);
-      expect(stakeBalance2).to.equal(stakeRule1.deposit.amount.mul(2).sub(refReward0.mul(2)));
+      const stakeBalance2 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
+      expect(stakeBalance2).to.equal(stakeRule1.deposit.amount * 2n - refReward0 * 2n);
       await expect(tx12)
         .to.emit(pyramidInstance, "ReferralReward")
         .withArgs(stranger.address, owner.address, 0, tokenZero, refReward0);
@@ -1669,8 +1649,8 @@ describe("Pyramid", function () {
         value: stakeRule1.deposit.amount,
       });
       await expect(tx13).to.emit(pyramidInstance, "StakingStart");
-      const stakeBalance3 = await ethers.provider.getBalance(pyramidInstance.address);
-      expect(stakeBalance3).to.equal(stakeRule1.deposit.amount.mul(3).sub(refReward0.mul(3)));
+      const stakeBalance3 = await ethers.provider.getBalance(await pyramidInstance.getAddress());
+      expect(stakeBalance3).to.equal(stakeRule1.deposit.amount * 3n - refReward0 * 3n);
       await expect(tx13)
         .to.emit(pyramidInstance, "ReferralReward")
         .withArgs(receiver.address, stranger.address, 0, tokenZero, refReward0);

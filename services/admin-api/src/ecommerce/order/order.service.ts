@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IOrderSearchDto, UserRole } from "@framework/types";
+import type { IOrderSearchDto } from "@framework/types";
 
-import { OrderEntity } from "./order.entity";
-import { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
-import { OrderItemService } from "../order-item/order-item.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { OrderItemService } from "../order-item/order-item.service";
+import type { IOrderCreateDto, IOrderMoveDto, IOrderUpdateDto } from "./interfaces";
+import { OrderEntity } from "./order.entity";
 
 @Injectable()
 export class OrderService {
@@ -18,16 +18,20 @@ export class OrderService {
   ) {}
 
   public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
-    const { orderStatus, dateRange, merchantId, isArchived } = dto;
+    const { orderStatus, dateRange, isArchived } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
+
+    queryBuilder.leftJoinAndSelect("order.orderItems", "orderItems");
+    queryBuilder.leftJoinAndSelect("order.address", "address");
+    queryBuilder.leftJoinAndSelect("order.merchant", "merchant");
+    queryBuilder.leftJoinAndSelect("orderItems.productItem", "productItems");
+    queryBuilder.leftJoinAndSelect("productItems.product", "product");
 
     queryBuilder.select();
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId: userEntity.merchantId });
-    } else if (merchantId) {
-      queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId });
-    }
+    queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId: userEntity.merchantId });
+
+    queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
 
     if (orderStatus && orderStatus.length) {
       if (orderStatus.length === 1) {
@@ -42,15 +46,8 @@ export class OrderService {
       queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", { begin, end });
     }
 
-    if (isArchived === true || isArchived === false) {
-      queryBuilder.andWhere("order.isArchived = :isArchived", { isArchived });
-    }
-
-    queryBuilder.leftJoinAndSelect("order.items", "items");
-    queryBuilder.leftJoinAndSelect("order.address", "address");
-    queryBuilder.leftJoinAndSelect("order.merchant", "merchant");
-    queryBuilder.leftJoinAndSelect("items.product", "product");
     queryBuilder.orderBy("order.createdAt", "DESC");
+
     return queryBuilder.getManyAndCount();
   }
 

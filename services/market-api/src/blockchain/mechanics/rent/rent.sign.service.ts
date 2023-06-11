@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { utils } from "ethers";
+import { hexlify, zeroPadValue, toBeHex, randomBytes } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -38,9 +38,9 @@ export class RentSignService {
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
-    const lendExpires = utils.hexZeroPad(utils.hexlify(expires), 32);
+    const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
       account, // from
@@ -55,7 +55,7 @@ export class RentSignService {
       rentEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public getSignature(

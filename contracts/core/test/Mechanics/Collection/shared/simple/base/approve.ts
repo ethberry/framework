@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldApprove(factory: () => Promise<Contract>) {
+export function shouldApprove(factory: () => Promise<any>) {
   describe("approve", function () {
     it("should fail: not an owner", async function () {
       const [owner, receiver] = await ethers.getSigners();
@@ -43,7 +43,7 @@ export function shouldApprove(factory: () => Promise<Contract>) {
       const tx1 = contractInstance.connect(receiver).burn(batchSize + tokenId);
       await expect(tx1)
         .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, constants.AddressZero, batchSize + tokenId);
+        .withArgs(owner.address, ZeroAddress, batchSize + tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(batchSize);

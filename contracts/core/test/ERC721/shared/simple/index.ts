@@ -1,5 +1,3 @@
-import { Contract } from "ethers";
-
 import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import { shouldBehaveLikeERC721Burnable } from "@gemunion/contracts-erc721e";
 
@@ -8,7 +6,7 @@ import { shouldBehaveLikeERC721 } from "./base";
 import { shouldBaseUrl } from "./baseUrl";
 import { customMintCommonERC721 } from "../customMintFn";
 
-export function shouldBehaveLikeERC721Simple(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
+export function shouldBehaveLikeERC721Simple(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   options = Object.assign({}, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
 
   shouldBehaveLikeERC721(factory, options);

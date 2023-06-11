@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IBlacklistedEvent, IUnBlacklistedEvent, IUnWhitelistedEvent, IWhitelistedEvent } from "@framework/types";

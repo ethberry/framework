@@ -3,13 +3,13 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
+import { OrderCreateDto, OrderMoveDto, OrderSearchDto, OrderUpdateDto } from "./dto";
 import { OrderService } from "./order.service";
 import { OrderEntity } from "./order.entity";
-import { OrderCreateDto, OrderMoveDto, OrderSearchDto, OrderUpdateDto } from "./dto";
-import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/orders")
+@Controller("/ecommerce/orders")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

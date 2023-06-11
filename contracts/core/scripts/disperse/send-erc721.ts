@@ -22,16 +22,16 @@ async function main() {
     await erc721Instance.mintCommon(owner.address, templateId);
     await blockAwait();
   }
-  await erc721Instance.setApprovalForAll(contractInstance.address, true);
+  await erc721Instance.setApprovalForAll(await contractInstance.getAddress(), true);
   await blockAwait();
 
-  const receivers = new Array(totalTransfers).fill(null).map(_ => receiver.address);
+  const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
   receivers.push(nonReceiverInstance.address); // fail: non receiver
   receivers.push(receiver.address); // fail: tokenId is not exist
-  const tokenIds = new Array(totalTransfers + 2).fill(null).map((_, i) => i + 1);
+  const tokenIds = new Array(Number(totalTransfers + 2)).fill(null).map((_, i) => i + 1);
 
   // Call the function and capture the transaction response
-  const tx = await contractInstance.disperseERC721(erc721Instance.address, receivers, tokenIds, {
+  const tx = await contractInstance.disperseERC721(await erc721Instance.getAddress(), receivers, tokenIds, {
     gasLimit: 10000000,
   });
   await blockAwait();

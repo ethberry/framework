@@ -42,10 +42,10 @@ export const OrderItem: FC<IOrderItemProps> = props => {
             <FormattedMessage id="pages.orders.products" />
             :&nbsp;
             <ul>
-              {order.items.map(item => (
+              {order.orderItems.map(item => (
                 <li key={item.id}>
-                  <Link component={RouterLink} to={`/ecommerce/products/${item.product!.id}`}>
-                    {item.product!.title}
+                  <Link component={RouterLink} to={`/ecommerce/products/${item.productItem!.product!.id}`}>
+                    {item.productItem!.product!.title}
                   </Link>
                 </li>
               ))}

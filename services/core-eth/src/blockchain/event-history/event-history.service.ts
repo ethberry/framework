@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundExceptio
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {

@@ -47,6 +47,9 @@ import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
+import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
+import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-parameter.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -93,6 +96,9 @@ const config: PostgresConnectionOptions = {
     OrderItemEntity,
     PhotoEntity,
     ProductEntity,
+    ProductItemEntity,
+    ParameterEntity,
+    CustomParameterEntity,
     PromoEntity,
     CartEntity,
     CartItemEntity,

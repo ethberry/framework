@@ -399,14 +399,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "parameterName": {
-      "COLOR": "Color",
-      "SIZE": "Size"
-    },
     "parameterType": {
-      "date": "Date",
-      "number": "Number",
-      "string": "String"
+      "DATE": "Date",
+      "ENUM": "Enum",
+      "NUMBER": "Number",
+      "STRING": "String"
     },
     "productStatus": {
       "ACTIVE": "Active",
@@ -644,11 +641,13 @@
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
+      "orderItems": "Items",
       "orderStatus": "Status",
       "orderType": "Type",
       "owner": "Owner",
       "pageStatus": "Status",
       "parameterMaxValue": "Max Value",
+      "parameterMinValue": "Min Value",
       "parameterName": "Name",
       "parameterType": "Type",
       "parameterValue": "Value",
@@ -666,6 +665,7 @@
       "photos": "Photos",
       "price": "Price",
       "productId": "Product",
+      "productItemId": "Item",
       "productStatus": "Status",
       "pyramidDepositStatus": "Status",
       "pyramidRule": "Pyramid rule",
@@ -770,6 +770,10 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameterMaxValue": "10000",
+      "parameterMinValue": "0",
+      "parameterName": "Color",
+      "parameterValue": "Anything",
       "parameters": "Parameters",
       "parentCategoryId": "Root",
       "parentId": "Contract",
@@ -780,6 +784,7 @@
       "penalty": "1",
       "price": "1000",
       "productId": "Bottle of water",
+      "productItemId": "Item",
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
@@ -925,6 +930,7 @@
           "categories": "Categories",
           "kanban": "Orders",
           "orders": "Orders Archive",
+          "parameters": "Parameters",
           "photos": "Photos",
           "products": "Products",
           "promos": "Promos",
@@ -994,6 +1000,9 @@
     },
     "drop": {
       "title": "Drops"
+    },
+    "ecommerce": {
+      "title": "Ecommerce"
     },
     "emails": {
       "title": "Emails"
@@ -1111,6 +1120,9 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "parameters": {
+      "title": "Parameters"
     },
     "payees": {
       "attach": "Attach",

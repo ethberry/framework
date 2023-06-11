@@ -8,56 +8,76 @@ import { Promo } from "./promo";
 import { Order } from "./order";
 import { Photo } from "./photo";
 import { Kanban } from "./kanban";
+import { Parameter } from "./parameter";
 import { Statistics } from "./statistics";
+import { IndexWrapper } from "../index-wrapper";
+import { EcommerceSection } from "../dashboard/ecommerce";
 
 export const ecommerceRoutes: Array<RouteObject> = [
   {
-    path: "/products",
+    path: "/ecommerce",
+    index: true,
+    element: (
+      <IndexWrapper index="ecommerce">
+        <EcommerceSection />
+      </IndexWrapper>
+    ),
+  },
+  {
+    path: "/ecommerce/products",
     element: <Protected />,
     children: [
       { index: true, element: <Product /> },
-      { path: "/products/:id", element: <Product /> },
+      { path: "/ecommerce/products/:id", element: <Product /> },
     ],
   },
   {
-    path: "/categories",
+    path: "/ecommerce/categories",
     element: <Protected />,
     children: [
       { index: true, element: <Category /> },
-      { path: "/categories/:id", element: <Category /> },
+      { path: "/ecommerce/categories/:id", element: <Category /> },
     ],
   },
   {
-    path: "/promos",
+    path: "/ecommerce/parameters",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Parameter /> },
+      { path: "/ecommerce/parameters/:id", element: <Parameter /> },
+    ],
+  },
+  {
+    path: "/ecommerce/promos",
     element: <Protected />,
     children: [
       { index: true, element: <Promo /> },
-      { path: "/promos/:id", element: <Promo /> },
+      { path: "/ecommerce/promos/:id", element: <Promo /> },
     ],
   },
   {
-    path: "/kanban",
+    path: "/ecommerce/kanban",
     element: <Protected />,
     children: [
       { index: true, element: <Kanban /> },
-      { path: "/kanban/:id", element: <Kanban /> },
+      { path: "/ecommerce/kanban/:id", element: <Kanban /> },
     ],
   },
   {
-    path: "/orders",
+    path: "/ecommerce/orders",
     element: <Protected />,
     children: [
       { index: true, element: <Order /> },
-      { path: "/orders/:id", element: <Order /> },
+      { path: "/ecommerce/orders/:id", element: <Order /> },
     ],
   },
   {
-    path: "/photos",
+    path: "/ecommerce/photos",
     element: <Protected />,
     children: [{ index: true, element: <Photo /> }],
   },
   {
-    path: "/statistics",
+    path: "/ecommerce/statistics",
     element: <Protected />,
     children: [{ index: true, element: <Statistics /> }],
   },

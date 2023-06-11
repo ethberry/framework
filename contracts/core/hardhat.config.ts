@@ -13,8 +13,8 @@ export default {
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true,
-      blockGasLimit: 1e10, // default: 3e7
-      gas: 7000000,
+      blockGasLimit: 40966424, // default: 3e7
+      gas: "auto",
     },
     besu: {
       url: process.env.JSON_RPC_ADDR_BESU,

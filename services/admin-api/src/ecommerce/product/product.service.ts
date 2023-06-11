@@ -2,14 +2,13 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { PhotoStatus, ProductStatus, UserRole } from "@framework/types";
+import { PhotoStatus, ProductStatus } from "@framework/types";
 
-import { ProductEntity } from "./product.entity";
-import type { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
-import { AssetService } from "../../blockchain/exchange/asset/asset.service";
+import type { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";
+import { ProductEntity } from "./product.entity";
 
 @Injectable()
 export class ProductService {
@@ -17,7 +16,6 @@ export class ProductService {
     @InjectRepository(ProductEntity)
     private readonly productEntityRepository: Repository<ProductEntity>,
     private readonly photoService: PhotoService,
-    private readonly assetService: AssetService,
   ) {}
 
   public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
@@ -27,13 +25,9 @@ export class ProductService {
 
     queryBuilder.select();
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      // OWNER, MANAGER
-      queryBuilder.leftJoinAndSelect("product.merchant", "merchant");
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (categoryIds) {
       queryBuilder.leftJoinAndSelect("product.categories", "category");
@@ -98,11 +92,7 @@ export class ProductService {
       join: {
         alias: "product",
         leftJoinAndSelect: {
-          price: "product.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          // categories: "product.categories",
-          // photos: "product.photos",
+          productItems: "product.productItems",
         },
       },
       order: {
@@ -125,25 +115,16 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const { categoryIds, photos, price, ...rest } = dto;
-
-    const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
-
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const { categoryIds, photos, parameters: _parameters, productItems: _productItems, ...rest } = dto;
 
     const productEntity = await this.productEntityRepository
       .create({
         ...rest,
-        merchantId,
+        merchantId: userEntity.merchantId,
         productStatus: ProductStatus.ACTIVE,
         categories: categoryIds.map(id => ({ id })),
-        price: assetEntity,
       })
       .save();
-
-    await this.assetService.update(productEntity.price, price);
 
     // add new
     await Promise.allSettled(
@@ -163,21 +144,12 @@ export class ProductService {
     dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    const { photos, categoryIds, price, ...rest } = dto;
+    const { photos, categoryIds, parameters: _parameters, productItems: _productItems, ...rest } = dto;
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      where.merchantId = userEntity.merchant.id;
-    }
+    where.merchantId = userEntity.merchantId;
 
     const productEntity = await this.productEntityRepository.findOne({
       where,
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          price: "template.price",
-          components: "price.components",
-        },
-      },
       relations: { photos: true },
     });
 
@@ -236,12 +208,9 @@ export class ProductService {
 
     Object.assign(productEntity, {
       ...rest,
+      merchantId: userEntity.merchantId,
       categories: categoryIds.map(id => ({ id })),
     });
-
-    if (price) {
-      await this.assetService.update(productEntity.price, price);
-    }
 
     return productEntity.save();
   }
@@ -253,13 +222,24 @@ export class ProductService {
 
     queryBuilder.where("product.productStatus = :productStatus", { productStatus: ProductStatus.ACTIVE });
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     return queryBuilder.getMany();
+  }
+
+  public async getOrdersCount(productEntity: ProductEntity): Promise<number> {
+    const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
+
+    queryBuilder.andWhere("product.id = :productId", {
+      productId: productEntity.id,
+    });
+
+    queryBuilder.leftJoin("product.productItems", "productItems");
+    queryBuilder.leftJoin("productItems.orderItems", "orderItems");
+
+    return queryBuilder.getCount();
   }
 
   public async delete(where: FindOptionsWhere<ProductEntity>, userEntity: UserEntity): Promise<void> {
@@ -267,13 +247,9 @@ export class ProductService {
     queryBuilder.select();
     queryBuilder.where(where);
 
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
-
-    queryBuilder.loadRelationCountAndMap("product.itemsCount", "product.items");
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     const productEntity = await queryBuilder.getOne();
 
@@ -282,7 +258,9 @@ export class ProductService {
     }
 
     if (productEntity) {
-      if (productEntity.itemsCount) {
+      const ordersCount = await this.getOrdersCount(productEntity);
+
+      if (ordersCount) {
         Object.assign(productEntity, { productStatus: ProductStatus.INACTIVE });
         await productEntity.save();
       } else {

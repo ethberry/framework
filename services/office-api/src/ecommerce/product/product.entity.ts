@@ -1,33 +1,19 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 
-import { IParameter, IProduct, ProductStatus } from "@framework/types";
+import { IProduct, ProductStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { OrderItemEntity } from "../order-item/order-item.entity";
-import { CategoryEntity } from "../category/category.entity";
 import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";
+import { CategoryEntity } from "../category/category.entity";
 import { PhotoEntity } from "../photo/photo.entity";
-import { AssetEntity } from "../../blockchain/exchange/asset/asset.entity";
+import { ProductItemEntity } from "../product-item/product-item.entity";
 
 @Entity({ schema: ns, name: "product" })
 export class ProductEntity extends SearchableEntity implements IProduct {
-  @Column({ type: "json" })
-  public parameters: Array<IParameter>;
-
   @ManyToMany(_type => CategoryEntity, category => category.products)
   @JoinTable({ name: "product_to_category" })
   public categories: Array<CategoryEntity>;
-
-  @JoinColumn()
-  @OneToOne(_type => AssetEntity)
-  public price: AssetEntity;
-
-  @Column({ type: "int" })
-  public priceId: number;
-
-  @Column({ type: "int" })
-  public amount: number;
 
   @Column({
     type: "enum",
@@ -47,11 +33,18 @@ export class ProductEntity extends SearchableEntity implements IProduct {
   })
   public photos: Array<PhotoEntity>;
 
-  @OneToMany(_type => OrderItemEntity, item => item.product, {
-    cascade: ["remove"],
-  })
-  public items: Array<OrderItemEntity>;
+  @OneToMany(_type => ProductItemEntity, productItem => productItem.product)
+  public productItems: Array<ProductItemEntity>;
 
-  // this is not a column
-  public itemsCount: number;
+  @Column({ type: "int" })
+  public length: number;
+
+  @Column({ type: "int" })
+  public height: number;
+
+  @Column({ type: "int" })
+  public width: number;
+
+  @Column({ type: "int" })
+  public weight: number;
 }

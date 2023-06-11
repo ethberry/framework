@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -23,7 +23,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1401020,
         'ITEM',
@@ -35,7 +35,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1401030,
         'ITEM',
@@ -47,7 +47,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1404010,
         'ITEM',
@@ -59,7 +59,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1404020,
         'ITEM',
@@ -71,7 +71,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1404030,
         'ITEM',
@@ -83,7 +83,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1404040,
         'ITEM',
@@ -95,7 +95,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1404050,
         'ITEM',
@@ -107,7 +107,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1405010,
         'ITEM',
@@ -119,7 +119,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       ), (
         1405020,
         'ITEM',
@@ -131,7 +131,7 @@ export class SeedEventHistoryErc998PurchaseComponentsAt1563804040240 implements 
         'PRICE',
         1201,
         12010101,
-        '${constants.WeiPerEther.toString()}'
+        '${WeiPerEther.toString()}'
       );
     `);
   }

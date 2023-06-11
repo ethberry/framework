@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { randomBytes, ZeroAddress } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
@@ -9,9 +9,9 @@ import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shar
 
 describe("ExchangeReferral", function () {
   const refProgram = {
-    maxRefs: 10,
-    refReward: 10 * 100, // 10.00 %
-    refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
+    maxRefs: 10n,
+    refReward: 10n * 100n, // 10.00 %
+    refDecrease: 10n, // 10% - 1% - 0.1% - 0.01% etc.
   };
 
   describe("exchange purchase", function () {
@@ -28,10 +28,10 @@ describe("ExchangeReferral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       const refParams1 = {
-        nonce: utils.randomBytes(32),
+        nonce: randomBytes(32),
         externalId,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         extra,
       };
 
@@ -40,14 +40,14 @@ describe("ExchangeReferral", function () {
         params: refParams1,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -55,20 +55,20 @@ describe("ExchangeReferral", function () {
       });
 
       await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.connect(owner).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(owner).approve(await exchangeInstance.getAddress(), amount);
 
       const tx1 = exchangeInstance.connect(owner).purchase(
         refParams1,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -79,7 +79,7 @@ describe("ExchangeReferral", function () {
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
 
       const refParams2 = {
-        nonce: utils.randomBytes(32),
+        nonce: randomBytes(32),
         externalId,
         expiresAt,
         referrer: owner.address,
@@ -91,14 +91,14 @@ describe("ExchangeReferral", function () {
         params: refParams2,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -106,20 +106,20 @@ describe("ExchangeReferral", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).purchase(
         refParams2,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -134,15 +134,12 @@ describe("ExchangeReferral", function () {
           receiver.address,
           owner.address,
           0,
-          erc20Instance.address,
-          BigNumber.from(amount)
-            .div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          await erc20Instance.getAddress(),
+          ((amount / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       const refParams3 = {
-        nonce: utils.randomBytes(32),
+        nonce: randomBytes(32),
         externalId,
         expiresAt,
         referrer: receiver.address,
@@ -154,14 +151,14 @@ describe("ExchangeReferral", function () {
         params: refParams3,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -169,20 +166,20 @@ describe("ExchangeReferral", function () {
       });
 
       await erc20Instance.mint(stranger.address, amount);
-      await erc20Instance.connect(stranger).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(stranger).approve(await exchangeInstance.getAddress(), amount);
 
       const tx3 = exchangeInstance.connect(stranger).purchase(
         refParams3,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -197,22 +194,16 @@ describe("ExchangeReferral", function () {
           stranger.address,
           owner.address,
           1,
-          erc20Instance.address,
-          BigNumber.from(amount)
-            .div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          await erc20Instance.getAddress(),
+          ((amount / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         )
         .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(
           stranger.address,
           receiver.address,
           0,
-          erc20Instance.address,
-          BigNumber.from(amount)
-            .div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          await erc20Instance.getAddress(),
+          ((amount / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
     });
   });
@@ -239,7 +230,7 @@ describe("ExchangeReferral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       const params = {
-        nonce: utils.randomBytes(32),
+        nonce: randomBytes(32),
         externalId,
         expiresAt,
         referrer: owner.address,
@@ -251,14 +242,14 @@ describe("ExchangeReferral", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -266,20 +257,20 @@ describe("ExchangeReferral", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -294,21 +285,13 @@ describe("ExchangeReferral", function () {
           receiver.address,
           owner.address,
           0,
-          erc20Instance.address,
-          BigNumber.from(amount)
-            .div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          await erc20Instance.getAddress(),
+          ((amount / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
-      // .withArgs(receiver.address, owner.address, 0, constants.WeiPerEther);
+      // .withArgs(receiver.address, owner.address, 0, WeiPerEther);
 
-      const balance = await exchangeInstance.getBalance(owner.address, erc20Instance.address);
-      expect(balance).to.equal(
-        BigNumber.from(amount)
-          .div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
-      );
+      const balance = await exchangeInstance.getBalance(owner.address, await erc20Instance.getAddress());
+      expect(balance).to.equal(((amount / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n);
     });
   });
 });

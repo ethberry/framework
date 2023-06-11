@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -88,7 +88,7 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${constants.AddressZero}',
+        '${ZeroAddress}',
         1,
         13060102, -- Sword
         null,

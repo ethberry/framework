@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, tokenId } from "../constants";
-import { deployContract } from "../shared/fixture";
 
 describe("ERC1155Factory", function () {
   const factory = () => deployContract(this.title);
@@ -14,17 +14,18 @@ describe("ERC1155Factory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc1155 = await ethers.getContractFactory("ERC1155Simple");
+      const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -45,7 +46,7 @@ describe("ERC1155Factory", function () {
         // Values
         {
           params: {
-            bytecode: erc1155.bytecode,
+            bytecode: erc1155Factory.bytecode,
             nonce,
           },
           args: {
@@ -58,7 +59,7 @@ describe("ERC1155Factory", function () {
 
       const tx = await contractInstance.deployERC1155Token(
         {
-          bytecode: erc1155.bytecode,
+          bytecode: erc1155Factory.bytecode,
           nonce,
         },
         {
@@ -75,9 +76,9 @@ describe("ERC1155Factory", function () {
         .to.emit(contractInstance, "ERC1155TokenDeployed")
         .withArgs(address, [royalty, baseTokenURI, contractTemplate]);
 
-      const erc1155Instance = erc1155.attach(address);
+      const erc1155Instance = await ethers.getContractAt("ERC1155Simple", address);
 
-      const hasRole1 = await erc1155Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
+      const hasRole1 = await erc1155Instance.hasRole(DEFAULT_ADMIN_ROLE, await contractInstance.getAddress());
       expect(hasRole1).to.equal(false);
 
       const hasRole2 = await erc1155Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
@@ -86,13 +87,13 @@ describe("ERC1155Factory", function () {
       const tx2 = erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
       await expect(tx2)
         .to.emit(erc1155Instance, "TransferSingle")
-        .withArgs(owner.address, constants.AddressZero, receiver.address, tokenId, amount);
+        .withArgs(owner.address, ZeroAddress, receiver.address, tokenId, amount);
 
       const balance = await erc1155Instance.balanceOf(receiver.address, tokenId);
       expect(balance).to.equal(amount);
 
       const uri = await erc1155Instance.uri(0);
-      expect(uri).to.equal(`${baseTokenURI}/${erc1155Instance.address.toLowerCase()}/{id}`);
+      expect(uri).to.equal(`${baseTokenURI}/${(await erc1155Instance.getAddress()).toLowerCase()}/{id}`);
     });
 
     it("should fail: SignerMissingRole", async function () {
@@ -101,14 +102,15 @@ describe("ERC1155Factory", function () {
       const erc1155 = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

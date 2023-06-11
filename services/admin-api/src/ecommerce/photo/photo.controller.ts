@@ -9,7 +9,7 @@ import { PhotoEntity } from "./photo.entity";
 import { PhotoUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/photos")
+@Controller("/ecommerce/photos")
 export class PhotosController {
   constructor(private readonly photosService: PhotoService) {}
 

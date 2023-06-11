@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
@@ -48,19 +48,19 @@ describe("GradeService", () => {
   describe("getMultiplier", () => {
     describe("FLAT", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = gradeService.getMultiplier(i, constants.WeiPerEther.toString(), {
+        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
           gradeStrategy: GradeStrategy.FLAT,
         } as GradeEntity);
-        expect(multiplier.toString()).toEqual(constants.WeiPerEther.toString());
+        expect(multiplier.toString()).toEqual(WeiPerEther.toString());
       });
     });
 
     describe("LINEAR", () => {
       it.each(new Array(5).fill(null).map((e, i) => i))("should get multiplier for %i", i => {
-        const multiplier = gradeService.getMultiplier(i, constants.WeiPerEther.toString(), {
+        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
           gradeStrategy: GradeStrategy.LINEAR,
         } as GradeEntity);
-        expect(multiplier.toString()).toEqual(constants.WeiPerEther.mul(i).toString());
+        expect(multiplier.toString()).toEqual((WeiPerEther * BigInt(i)).toString());
       });
     });
 
@@ -72,7 +72,7 @@ describe("GradeService", () => {
         [3, "1030301000000000100"],
         [4, "1040604010000000000"],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = gradeService.getMultiplier(i, constants.WeiPerEther.toString(), {
+        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
           gradeStrategy: GradeStrategy.EXPONENTIAL,
           growthRate: 1,
         } as GradeEntity);
@@ -88,7 +88,7 @@ describe("GradeService", () => {
         [3, "8000000000000000000"],
         [4, "16000000000000000000"],
       ])("should get multiplier for %i", (i, j) => {
-        const multiplier = gradeService.getMultiplier(i, constants.WeiPerEther.toString(), {
+        const multiplier = gradeService.getMultiplier(i, WeiPerEther.toString(), {
           gradeStrategy: GradeStrategy.EXPONENTIAL,
           growthRate: 100,
         } as GradeEntity);

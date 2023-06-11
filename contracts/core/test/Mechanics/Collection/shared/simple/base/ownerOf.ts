@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldGetOwnerOf(factory: () => Promise<Contract>) {
+export function shouldGetOwnerOf(factory: () => Promise<any>) {
   describe("ownerOf", function () {
     it("should get owner of token", async function () {
       const [owner] = await ethers.getSigners();

@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { templateId } from "../../../../../constants";
-import { Contract } from "ethers";
+
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-export function shouldMintBox(factory: () => Promise<Contract>) {
+import { templateId } from "../../../../../constants";
+
+export function shouldMintBox(factory: () => Promise<any>) {
   describe("mint", function () {
     it("should fail: No content", async function () {
       const [_owner, receiver] = await ethers.getSigners();

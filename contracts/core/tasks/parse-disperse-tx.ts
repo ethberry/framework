@@ -1,6 +1,5 @@
 import { task } from "hardhat/config";
-import { BigNumber, Transaction, utils } from "ethers";
-import { TransactionReceipt } from "@ethersproject/abstract-provider";
+import { Interface, Transaction, TransactionReceipt } from "ethers";
 
 const Disperse = {
   abi: [
@@ -261,7 +260,7 @@ export function getDisperseLogsFromInput(tx: Transaction) {
   // Get the provider and the transaction receipt
 
   // Retrieve the contract interface
-  const iface = new utils.Interface(Disperse.abi);
+  const iface = new Interface(Disperse.abi);
 
   // Parse the input data of the transaction to determine the disperse function used
   const inputData = tx.data;
@@ -333,19 +332,19 @@ export function compareLogs(
     throw new Error("Transaction was reverted");
   }
 
-  let iface: utils.Interface;
+  let iface: Interface;
   switch (functionName) {
     case "disperseEther":
-      iface = new utils.Interface(Disperse.abi);
+      iface = new Interface(Disperse.abi);
       break;
     case "disperseERC20":
-      iface = new utils.Interface(ERC20.abi);
+      iface = new Interface(ERC20.abi);
       break;
     case "disperseERC721":
-      iface = new utils.Interface(ERC721.abi);
+      iface = new Interface(ERC721.abi);
       break;
     case "disperseERC1155":
-      iface = new utils.Interface(ERC1155.abi);
+      iface = new Interface(ERC1155.abi);
       break;
     default:
       throw new Error(`Unrecognized function name ${functionName}`);

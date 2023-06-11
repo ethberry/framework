@@ -14,7 +14,7 @@ export const TokenGenesisView: FC<ITokenGenesisView> = props => {
 
   const DND = ["Matron", "Sire"];
 
-  const result = Object.entries(decodeTraits(BigNumber.from(metadata[TokenMetadata.TRAITS]), DND)).reduce(
+  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );

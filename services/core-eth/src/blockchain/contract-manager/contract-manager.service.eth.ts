@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 import { DeepPartial } from "typeorm";
-import { providers, Wallet } from "ethers";
+import { JsonRpcProvider, Wallet } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -62,7 +62,7 @@ export class ContractManagerServiceEth {
     @Inject(ETHERS_SIGNER)
     protected readonly ethersSignerProvider: Wallet,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,

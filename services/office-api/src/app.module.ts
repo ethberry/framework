@@ -16,7 +16,6 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { EcommerceModule } from "./ecommerce/ecommecre.module";
 import { InfrastructureModule } from "./infrastructure/infrastructure.module";
 
 @Module({
@@ -77,7 +76,6 @@ import { InfrastructureModule } from "./infrastructure/infrastructure.module";
     GemunionThrottlerModule,
     BlockchainModule,
     InfrastructureModule,
-    EcommerceModule,
   ],
   controllers: [AppController],
 })

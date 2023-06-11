@@ -1,16 +1,16 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { utils } from "ethers";
+import { toBeHex, WeiPerEther, zeroPadValue } from "ethers";
 
 export async function deployLinkVrfFixture() {
   // Deploy Chainlink & Vrf contracts
   const link = await ethers.getContractFactory("LinkToken");
   const linkInstance = await link.deploy();
-  await linkInstance.deployed();
+  await linkInstance.waitForDeployment();
   // console.info(`LINK_ADDR=${linkInstance.address}`);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  const vrfInstance = await vrfFactory.deploy(linkInstance.address);
-  await vrfInstance.deployed();
+  const vrfInstance = await vrfFactory.deploy(await linkInstance.getAddress());
+  await vrfInstance.waitForDeployment();
   // GET CHAIN_LINK V2 TO WORK
   await vrfInstance.setConfig(3, 1000000, 1, 1, 1);
   await vrfInstance.createSubscription();
@@ -20,14 +20,14 @@ export async function deployLinkVrfFixture() {
   expect(subsriptionId).to.equal(1);
 
   const tx01 = linkInstance.transferAndCall(
-    vrfInstance.address,
-    ethers.constants.WeiPerEther.mul(18),
-    utils.hexZeroPad(utils.hexlify(~~subsriptionId.toString()), 32),
+    await vrfInstance.getAddress(),
+    WeiPerEther * 18n,
+    zeroPadValue(toBeHex(subsriptionId.toString()), 32),
   );
   await expect(tx01)
     .to.emit(vrfInstance, "SubscriptionFunded")
-    .withArgs(subsriptionId, 0, ethers.constants.WeiPerEther.mul(18));
+    .withArgs(subsriptionId, 0, WeiPerEther * 18n);
 
-  // console.info(`VRF_ADDR=${vrfInstance.address}`);
+  // console.info(`VRF_ADDR=${await vrfInstance.getAddress()}`);
   return { linkInstance, vrfInstance };
 }
