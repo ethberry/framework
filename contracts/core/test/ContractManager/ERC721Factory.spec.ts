@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import {
   baseTokenURI,
@@ -10,9 +10,9 @@ import {
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, templateId, tokenId } from "../constants";
-import { deployContract } from "../shared/fixture";
 
 describe("ERC721Factory", function () {
   const factory = () => deployContract(this.title);
@@ -21,17 +21,18 @@ describe("ERC721Factory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721Simple");
+      const erc721Factory = await ethers.getContractFactory("ERC721Simple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -55,7 +56,7 @@ describe("ERC721Factory", function () {
         {
           params: {
             nonce,
-            bytecode: erc721.bytecode,
+            bytecode: erc721Factory.bytecode,
           },
           args: {
             name: tokenName,
@@ -70,7 +71,7 @@ describe("ERC721Factory", function () {
       const tx = await contractInstance.deployERC721Token(
         {
           nonce,
-          bytecode: erc721.bytecode,
+          bytecode: erc721Factory.bytecode,
         },
         {
           name: tokenName,
@@ -88,22 +89,22 @@ describe("ERC721Factory", function () {
         .to.emit(contractInstance, "ERC721TokenDeployed")
         .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
-      const erc721Instance = erc721.attach(address);
+      const erc721Instance = await ethers.getContractAt("ERC721Simple", address);
 
-      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
+      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, await contractInstance.getAddress());
       expect(hasRole1).to.equal(false);
 
       const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx2).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx2).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const balance = await erc721Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
 
       const uri = await erc721Instance.tokenURI(tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${erc721Instance.address.toLowerCase()}/${tokenId}`);
+      expect(uri).to.equal(`${baseTokenURI}/${(await erc721Instance.getAddress()).toLowerCase()}/${tokenId}`);
     });
 
     it("should fail: SignerMissingRole", async function () {
@@ -112,14 +113,15 @@ describe("ERC721Factory", function () {
       const erc721 = await ethers.getContractFactory("ERC721Simple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

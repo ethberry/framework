@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { ZeroAddress, ZeroHash } from "ethers";
 
 import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
 
@@ -18,21 +18,21 @@ describe("ExchangeGrade", function () {
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
-      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -40,20 +40,20 @@ describe("ExchangeGrade", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -67,20 +67,20 @@ describe("ExchangeGrade", function () {
           receiver.address,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
           }),
           isEqualEventArgArrObj({
-            tokenType: 1,
-            token: erc20Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
           }),
         )
         .to.emit(erc721Instance, "LevelUp")
-        .withArgs(exchangeInstance.address, tokenId, 1);
+        .withArgs(await exchangeInstance.getAddress(), tokenId, 1);
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -91,21 +91,21 @@ describe("ExchangeGrade", function () {
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
-      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -113,20 +113,20 @@ describe("ExchangeGrade", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      // await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -145,21 +145,21 @@ describe("ExchangeGrade", function () {
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
-      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -167,13 +167,13 @@ describe("ExchangeGrade", function () {
       });
 
       // await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -181,7 +181,7 @@ describe("ExchangeGrade", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -203,14 +203,14 @@ describe("ExchangeGrade", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -218,13 +218,13 @@ describe("ExchangeGrade", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -232,7 +232,7 @@ describe("ExchangeGrade", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -252,19 +252,19 @@ describe("ExchangeGrade", function () {
         params,
         {
           tokenType: 0,
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId,
           amount,
         },
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
         ],
-        constants.HashZero,
+        ZeroHash,
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
@@ -278,21 +278,21 @@ describe("ExchangeGrade", function () {
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
-      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx1).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -300,7 +300,7 @@ describe("ExchangeGrade", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       await exchangeInstance.renounceRole(METADATA_ROLE, owner.address);
 
@@ -308,14 +308,14 @@ describe("ExchangeGrade", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },

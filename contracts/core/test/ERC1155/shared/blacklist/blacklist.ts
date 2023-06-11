@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../constants";
 
-export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<any>) {
   describe("Black list", function () {
     it("should fail: safeTransferFrom from", async function () {
       const [owner, receiver] = await ethers.getSigners();

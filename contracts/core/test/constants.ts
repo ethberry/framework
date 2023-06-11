@@ -1,18 +1,17 @@
-import { BigNumber, constants, utils } from "ethers";
+import { encodeBytes32String, WeiPerEther, ZeroAddress } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
 import { getNumbers } from "./utils";
 
-export const tokenId = 1;
+export const tokenId = 1n;
 export const tokenIds = [1];
 export const tokenIdsZero = [0];
 export const templateId = 1;
 export const templateIds = [1];
-export const cap = constants.WeiPerEther.mul(1000000000);
+export const cap = WeiPerEther * 1000000000n;
 
-export const amountWei = "10000000000000000";
-export const amountWeiEth = BigNumber.from("10000000000000000");
+export const amountWei = 10000000000000000n;
 export const tokenZero = "0x0000000000000000000000000000000000000000";
 export const period = 60 * 60 * 24 * 365; // a year in seconds
 export const _stakePeriod = 300; // 5 minutes in seconds
@@ -24,13 +23,13 @@ export const maxStake = 5;
 // EXCHANGE
 export const externalId = 1;
 export const expiresAt = 0;
-export const extra = utils.formatBytes32String("0x");
+export const extra = encodeBytes32String("0x");
 
 export const params = {
   nonce,
   externalId,
   expiresAt,
-  referrer: constants.AddressZero,
+  referrer: ZeroAddress,
   extra,
 };
 

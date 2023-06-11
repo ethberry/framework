@@ -1,5 +1,3 @@
-import { Contract } from "ethers";
-
 import type { IERC20Options } from "@gemunion/contracts-erc20";
 import {
   shouldApprove,
@@ -14,7 +12,7 @@ import { shouldReceive } from "../../../shared/receive";
 import { shouldTransfer } from "./transfer";
 import { shouldTransferFrom } from "./transferFrom";
 
-export function shouldBehaveLikeERC20Whitelist(factory: () => Promise<Contract>, options: IERC20Options = {}) {
+export function shouldBehaveLikeERC20Whitelist(factory: () => Promise<any>, options: IERC20Options = {}) {
   shouldMint(factory, options);
   shouldBalanceOf(factory, options);
   shouldTransfer(factory, options);

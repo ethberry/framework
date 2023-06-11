@@ -1,5 +1,3 @@
-import { Contract } from "ethers";
-
 import { shouldGetBalanceOf } from "./balanceOf";
 import { shouldTransferFrom } from "./transferFrom";
 import { shouldApprove } from "./approve";
@@ -9,7 +7,7 @@ import { shouldSetApprovalForAll } from "./setApprovalForAll";
 import { shouldMint } from "./mint";
 import { shouldSafeMint } from "./safeMint";
 
-export function shouldBehaveLikeERC721(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC721(factory: () => Promise<any>) {
   shouldApprove(factory);
   shouldGetBalanceOf(factory);
   shouldGetOwnerOf(factory);

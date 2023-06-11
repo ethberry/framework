@@ -8,7 +8,6 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
-    "@ethersproject/abstract-signer": "5.7.0",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",

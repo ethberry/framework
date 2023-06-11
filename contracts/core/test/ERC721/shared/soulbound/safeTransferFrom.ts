@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 
 import { tokenId } from "../../../constants";
 import { customMintCommonERC721 } from "../customMintFn";
 
-export function shouldSafeTransferFrom(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
+export function shouldSafeTransferFrom(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   const { mint = customMintCommonERC721, tokenId: defaultTokenId = tokenId } = options;
 
   describe("safeTransferFrom", function () {

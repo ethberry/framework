@@ -1,6 +1,5 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import {
@@ -23,15 +22,18 @@ export async function factoryDeployErc721(
 ): Promise<ERC721Simple> {
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
-  const erc721 = await ethers.getContractFactory("ERC721Simple");
+  const erc721Factory = await ethers.getContractFactory("ERC721Simple");
 
-  const signature = await owner._signTypedData(
+  const verifyingContract = await factoryInstance.getAddress();
+  const exchangeAddress = await exchangeInstance.getAddress();
+
+  const signature = await owner.signTypedData(
     // Domain
     {
       name: "ContractManager",
       version: "1.0.0",
       chainId: network.chainId,
-      verifyingContract: factoryInstance.address,
+      verifyingContract,
     },
     // Types
     {
@@ -55,7 +57,7 @@ export async function factoryDeployErc721(
     {
       params: {
         nonce,
-        bytecode: erc721.bytecode,
+        bytecode: erc721Factory.bytecode,
       },
       args: {
         name: tokenName,
@@ -70,7 +72,7 @@ export async function factoryDeployErc721(
   const tx = await factoryInstance.deployERC721Token(
     {
       nonce,
-      bytecode: erc721.bytecode,
+      bytecode: erc721Factory.bytecode,
     },
     {
       name: tokenName,
@@ -90,17 +92,17 @@ export async function factoryDeployErc721(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC721TokenDeployed")
-    .withArgs(address, [tokenName, tokenSymbol, BigNumber.from(royalty), baseTokenURI, contractTemplate]);
+    .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
-  const erc721Instance = erc721.attach(address);
+  const erc721Instance = await ethers.getContractAt("ERC721Simple", address);
 
-  const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, factoryInstance.address);
+  const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, verifyingContract);
   expect(hasRole1).to.equal(false);
 
   const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
   expect(hasRole2).to.equal(true);
 
-  const hasRole3 = await erc721Instance.hasRole(MINTER_ROLE, exchangeInstance.address);
+  const hasRole3 = await erc721Instance.hasRole(MINTER_ROLE, exchangeAddress);
   expect(hasRole3).to.equal(true);
 
   return erc721Instance;

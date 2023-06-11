@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-export function shouldNotMintCommon(factory: () => Promise<Contract>) {
+export function shouldNotMintCommon(factory: () => Promise<any>) {
   describe("mintCommon", function () {
     it("should fail: MethodNotSupported", async function () {
       const [_owner, receiver] = await ethers.getSigners();

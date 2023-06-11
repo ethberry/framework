@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import {
   baseTokenURI,
@@ -11,9 +11,9 @@ import {
   tokenName,
   tokenSymbol,
 } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, templateId, tokenId } from "../constants";
-import { deployContract } from "../shared/fixture";
 
 describe("CollectionFactory", function () {
   const factory = () => deployContract(this.title);
@@ -22,17 +22,18 @@ describe("CollectionFactory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721CollectionSimple");
+      const erc721Factory = await ethers.getContractFactory("ERC721CollectionSimple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -57,7 +58,7 @@ describe("CollectionFactory", function () {
         {
           params: {
             nonce,
-            bytecode: erc721.bytecode,
+            bytecode: erc721Factory.bytecode,
           },
           args: {
             name: tokenName,
@@ -73,7 +74,7 @@ describe("CollectionFactory", function () {
       const tx = await contractInstance.deployCollection(
         {
           nonce,
-          bytecode: erc721.bytecode,
+          bytecode: erc721Factory.bytecode,
         },
         {
           name: tokenName,
@@ -90,19 +91,15 @@ describe("CollectionFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "CollectionDeployed")
-        .withArgs(
-          address,
-          [tokenName, tokenSymbol, BigNumber.from(royalty), baseTokenURI, BigNumber.from(batchSize), contractTemplate],
-          owner.address,
-        );
+        .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, batchSize, contractTemplate], owner.address);
 
-      const erc721Instance = erc721.attach(address);
+      const erc721Instance = await ethers.getContractAt("ERC721CollectionSimple", address);
 
       await expect(tx)
         .to.emit(erc721Instance, "ConsecutiveTransfer")
-        .withArgs(0, batchSize - 1, constants.AddressZero, owner.address);
+        .withArgs(0, batchSize - 1n, ZeroAddress, owner.address);
 
-      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
+      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, await contractInstance.getAddress());
       expect(hasRole1).to.equal(false);
 
       const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
@@ -115,7 +112,7 @@ describe("CollectionFactory", function () {
       expect(balance).to.equal(batchSize);
 
       const uri = await erc721Instance.tokenURI(tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${erc721Instance.address.toLowerCase()}/${tokenId}`);
+      expect(uri).to.equal(`${baseTokenURI}/${(await erc721Instance.getAddress()).toLowerCase()}/${tokenId}`);
     });
 
     it("should fail: SignerMissingRole", async function () {
@@ -124,14 +121,15 @@ describe("CollectionFactory", function () {
       const erc721 = await ethers.getContractFactory("ERC721CollectionSimple");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

@@ -1,7 +1,7 @@
 import "@nomicfoundation/hardhat-toolbox";
 
 import { ethers, network } from "hardhat";
-import { Contract, utils } from "ethers";
+import { parseEther } from "ethers";
 
 import { tokenName } from "@gemunion/contracts-constants";
 
@@ -11,18 +11,22 @@ import { deployERC1363 } from "../../ERC20/shared/fixtures";
 import { wrapSignature } from "./utils";
 
 export async function deployLottery(): Promise<{
-  erc20Instance: Contract;
-  erc721Instance: Contract;
-  lotteryInstance: Contract;
+  erc20Instance: any;
+  erc721Instance: any;
+  lotteryInstance: any;
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
   const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
-  const erc20Instance = await deployERC1363("ERC20Simple", { amount: utils.parseEther("200000") });
+  const erc20Instance = await deployERC1363("ERC20Simple", { amount: parseEther("200000") });
   const erc721LotteryInstance = await deployERC721("ERC721Lottery");
 
-  const lotteryInstance = await factory.deploy(tokenName, erc721LotteryInstance.address, erc20Instance.address);
+  const lotteryInstance = await factory.deploy(
+    tokenName,
+    await erc721LotteryInstance.getAddress(),
+    await erc20Instance.getAddress(),
+  );
 
   return {
     erc20Instance,

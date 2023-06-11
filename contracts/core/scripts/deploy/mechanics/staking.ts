@@ -1,10 +1,10 @@
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { WeiPerEther, ZeroAddress } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-export async function deployStaking(contracts: Record<string, Contract>) {
+export async function deployStaking(contracts: Record<string, any>) {
   const stakingFactory = await ethers.getContractFactory("Staking");
   const stakingInstance = await stakingFactory.deploy(10);
   await blockAwait();
@@ -16,15 +16,15 @@ export async function deployStaking(contracts: Record<string, Contract>) {
       externalId: 1, // NATIVE > NATIVE
       deposit: {
         tokenType: 0,
-        token: constants.AddressZero,
+        token: ZeroAddress,
         tokenId: 0,
-        amount: constants.WeiPerEther,
+        amount: WeiPerEther,
       },
       reward: {
         tokenType: 0,
-        token: constants.AddressZero,
+        token: ZeroAddress,
         tokenId: 0,
-        amount: constants.WeiPerEther.div(100).mul(5), // 5%
+        amount: (WeiPerEther / 100n) * 5n, // 5%
       },
       content: [
         {
@@ -49,7 +49,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenType: 1,
         token: contracts.erc20Simple.address,
         tokenId: 0,
-        amount: constants.WeiPerEther,
+        amount: WeiPerEther,
       },
       reward: {
         tokenType: 2,
@@ -103,6 +103,6 @@ export async function deployStaking(contracts: Record<string, Contract>) {
     },
   ]);
   await blockAwait();
-  await contracts.contractManager.addFactory(stakingInstance.address, MINTER_ROLE);
+  await contracts.contractManager.addFactory(await stakingInstance.getAddress(), MINTER_ROLE);
   await blockAwait();
 }

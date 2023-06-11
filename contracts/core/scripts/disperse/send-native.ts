@@ -12,8 +12,8 @@ async function main() {
   await blockAwait();
   await blockAwait();
 
-  const receivers = new Array(totalTransfers + 1).fill(null).map(_ => receiver.address);
-  const amounts = new Array(totalTransfers + 1).fill(null).map(_ => amount);
+  const receivers = new Array(Number(totalTransfers + 1)).fill(null).map(_ => receiver.address);
+  const amounts = new Array(Number(totalTransfers + 1)).fill(null).map(_ => amount);
 
   // Call the function and capture the transaction response
   const tx = await contractInstance.disperseEther(receivers, amounts, { value: amount * (totalTransfers + 1) });

@@ -1,14 +1,13 @@
-import { TransactionResponse } from "@ethersproject/abstract-provider";
-import { BigNumber, Contract } from "ethers";
+import { TransactionResponse } from "ethers";
 
 export async function checkIfInLogs(
   tx: Promise<TransactionResponse>,
-  contractInstance: Contract,
+  contractInstance: any,
   eventName: string,
   args: Array<any>,
 ) {
   const receipt = await (await tx).wait();
-  for (const log of receipt.logs) {
+  for (const log of receipt!.logs) {
     const parseLog = contractInstance.interface.parseLog(log);
 
     // Args.length have to be equal to Log.args.length
@@ -17,7 +16,8 @@ export async function checkIfInLogs(
       // Check all args with Log.args, and calculate matches
       for (let i = 0; i < args.length; i++) {
         // If log.arg is BigNumber
-        if (BigNumber.isBigNumber(parseLog.args[i])) {
+        // TODO fixme
+        if (parseLog.args[i]) {
           if (Number(parseLog.args[i]) !== args[i]) {
             // If values are not equal break for
             break;

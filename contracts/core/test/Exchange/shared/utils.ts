@@ -1,18 +1,17 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Network } from "@ethersproject/networks";
-import { Contract } from "ethers";
+import { Network, Signer } from "ethers";
 
 import { tokenName } from "@gemunion/contracts-constants";
 
-export const wrapOneToOneSignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
-  return (values: Record<string, any>) => {
-    return account._signTypedData(
+export const wrapOneToOneSignature = (network: Network, contractInstance: any, account: Signer) => {
+  return async (values: Record<string, any>) => {
+    const verifyingContract = await contractInstance.getAddress();
+    return account.signTypedData(
       // Domain
       {
         name: tokenName,
         version: "1.0.0",
         chainId: network.chainId,
-        verifyingContract: contract.address,
+        verifyingContract,
       },
       // Types
       {
@@ -42,15 +41,16 @@ export const wrapOneToOneSignature = (network: Network, contract: Contract, acco
   };
 };
 
-export const wrapOneToManySignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
-  return (values: Record<string, any>) => {
-    return account._signTypedData(
+export const wrapOneToManySignature = (network: Network, contractInstance: any, account: Signer) => {
+  return async (values: Record<string, any>) => {
+    const verifyingContract = await contractInstance.getAddress();
+    return account.signTypedData(
       // Domain
       {
         name: tokenName,
         version: "1.0.0",
         chainId: network.chainId,
-        verifyingContract: contract.address,
+        verifyingContract,
       },
       // Types
       {
@@ -80,15 +80,16 @@ export const wrapOneToManySignature = (network: Network, contract: Contract, acc
   };
 };
 
-export const wrapManyToManySignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
-  return (values: Record<string, any>) => {
-    return account._signTypedData(
+export const wrapManyToManySignature = (network: Network, contractInstance: any, account: Signer) => {
+  return async (values: Record<string, any>) => {
+    const verifyingContract = await contractInstance.getAddress();
+    return account.signTypedData(
       // Domain
       {
         name: tokenName,
         version: "1.0.0",
         chainId: network.chainId,
-        verifyingContract: contract.address,
+        verifyingContract,
       },
       // Types
       {

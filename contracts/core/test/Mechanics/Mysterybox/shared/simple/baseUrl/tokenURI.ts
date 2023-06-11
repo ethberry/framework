@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { baseTokenURI } from "@gemunion/contracts-constants";
 import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import { defaultMintERC721 } from "@gemunion/contracts-erc721e";
 
-export function shouldTokenURI(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
+export function shouldTokenURI(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   const { mint = defaultMintERC721, tokenId: defaultTokenId = 0 } = options;
 
   describe("tokenURI", function () {
@@ -16,7 +15,7 @@ export function shouldTokenURI(factory: () => Promise<Contract>, options: IERC72
 
       await mint(contractInstance, owner, owner.address);
       const uri = await contractInstance.tokenURI(defaultTokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${contractInstance.address.toLowerCase()}/${defaultTokenId}`);
+      expect(uri).to.equal(`${baseTokenURI}/${(await contractInstance.getAddress()).toLowerCase()}/${defaultTokenId}`);
     });
 
     // setTokenURI is not supported

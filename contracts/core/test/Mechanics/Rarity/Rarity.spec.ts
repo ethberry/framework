@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { deployContract } from "../../shared/fixture";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 describe("Rarity", function () {
   const factory = () => deployContract("Dispersion");

@@ -1,10 +1,9 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-export async function deploySystem(contracts: Record<string, Contract>) {
+export async function deploySystem(contracts: Record<string, any>) {
   const vestFactory = await ethers.getContractFactory("ContractManager");
   contracts.contractManager = await vestFactory.deploy();
   await blockAwait();
@@ -13,7 +12,7 @@ export async function deploySystem(contracts: Record<string, Contract>) {
   contracts.exchange = exchangeInstance;
   await blockAwait();
 
-  await contracts.contractManager.addFactory(exchangeInstance.address, MINTER_ROLE);
-  await contracts.contractManager.addFactory(exchangeInstance.address, METADATA_ROLE);
+  await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE);
+  await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE);
   await blockAwait();
 }

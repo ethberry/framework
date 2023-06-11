@@ -1,7 +1,20 @@
 import { snakeToCamelCase } from "@gemunion/utils";
 
+// Patch BigNumber
+// https://github.com/GoogleChromeLabs/jsbi/issues/30
+// eslint-disable-next-line no-extend-native
+Object.defineProperty(BigInt.prototype, "toJSON", {
+  value: function () {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this.toString();
+  },
+  configurable: true,
+  enumerable: false,
+  writable: true,
+});
+
 export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
-  const numbers: Array<boolean> = new Array(36).fill(false);
+  const numbers: Array<boolean> = new Array(Number(36)).fill(false);
   selected.forEach(s => {
     numbers[s] = true;
   });
