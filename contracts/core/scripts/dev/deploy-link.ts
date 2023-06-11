@@ -1,8 +1,7 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { Contract, TransactionReceipt, TransactionResponse } from "ethers";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
-import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
@@ -26,7 +25,7 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
   }
 };
 
-const contracts: Record<string, Contract> = {};
+const contracts: Record<string, any> = {};
 
 async function main() {
   // LINK & VRF

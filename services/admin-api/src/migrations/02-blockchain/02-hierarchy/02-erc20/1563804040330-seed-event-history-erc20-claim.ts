@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { ZeroHash, WeiPerEther } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -23,12 +23,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ) VALUES (
         1202010,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120201",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -36,12 +36,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202011,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202010,
         '${currentDateTime}',
@@ -49,12 +49,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202020,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120202",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -62,12 +62,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202021,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202020,
         '${currentDateTime}',
@@ -75,12 +75,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202030,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120203",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -88,12 +88,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202031,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202030,
         '${currentDateTime}',
@@ -101,12 +101,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202040,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120204",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -114,12 +114,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202041,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202040,
         '${currentDateTime}',
@@ -127,14 +127,14 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202050,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120205",
           items: [
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
           ],
         })}',
         null,
@@ -143,12 +143,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202051,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202050,
         '${currentDateTime}',
@@ -156,12 +156,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202052,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202050,
         '${currentDateTime}',
@@ -169,14 +169,14 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202060,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
           externalId: "120206",
           items: [
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
           ],
         })}',
         null,
@@ -185,12 +185,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202061,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202060,
         '${currentDateTime}',
@@ -198,12 +198,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202062,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[0],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202060,
         '${currentDateTime}',
@@ -211,12 +211,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202070,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[1],
           externalId: "120207",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -224,12 +224,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202071,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202070,
         '${currentDateTime}',
@@ -237,14 +237,14 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202080,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[1],
           externalId: "120208",
           items: [
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
           ],
         })}',
         null,
@@ -253,12 +253,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202081,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202080,
         '${currentDateTime}',
@@ -266,12 +266,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202082,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[1],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202080,
         '${currentDateTime}',
@@ -279,12 +279,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202090,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[2],
           externalId: "120209",
-          items: [[1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()]],
+          items: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
         })}',
         null,
         '${currentDateTime}',
@@ -292,12 +292,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202091,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202090,
         '${currentDateTime}',
@@ -305,14 +305,14 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202100,
         '${exchangeAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Claim',
         '${JSON.stringify({
           from: wallets[2],
           externalId: "120210",
           items: [
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
-            [1, erc20TokenSimpleAddress, "120101", constants.WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
+            [1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()],
           ],
         })}',
         null,
@@ -321,12 +321,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202101,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202100,
         '${currentDateTime}',
@@ -334,12 +334,12 @@ export class SeedEventHistoryErc20ClaimAt1563804040330 implements MigrationInter
       ), (
         1202102,
         '${erc20TokenSimpleAddress}',
-        '${constants.HashZero}',
+        '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
           from: wallets[2],
           to: exchangeAddress,
-          value: constants.WeiPerEther.toString(),
+          value: WeiPerEther.toString(),
         })}',
         1202100,
         '${currentDateTime}',

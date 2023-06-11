@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 
 import { amount, METADATA_ROLE, nonce } from "@gemunion/contracts-constants";
 
@@ -17,15 +17,15 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -38,7 +38,7 @@ describe("ExchangeRentable", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
@@ -54,7 +54,7 @@ describe("ExchangeRentable", function () {
         },
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
@@ -70,10 +70,10 @@ describe("ExchangeRentable", function () {
           endTimestamp,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(1),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1n,
           }),
           isEqualArray([[]]),
         )
@@ -92,18 +92,18 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -116,14 +116,14 @@ describe("ExchangeRentable", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -140,14 +140,14 @@ describe("ExchangeRentable", function () {
         },
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -164,16 +164,16 @@ describe("ExchangeRentable", function () {
           endTimestamp,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(1),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1n,
           }),
           isEqualEventArgArrObj({
-            tokenType: 1,
-            token: erc20Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
           }),
         )
         .to.emit(erc721Instance, "UpdateUser")
@@ -191,18 +191,18 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateOneToManySignature({
         account: stranger.address,
@@ -215,14 +215,14 @@ describe("ExchangeRentable", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -239,14 +239,14 @@ describe("ExchangeRentable", function () {
         },
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -263,17 +263,17 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.approve(exchangeInstance.address, amount);
+      await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateOneToManySignature({
         account: owner.address,
@@ -286,14 +286,14 @@ describe("ExchangeRentable", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -310,14 +310,14 @@ describe("ExchangeRentable", function () {
         },
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -337,19 +337,19 @@ describe("ExchangeRentable", function () {
         params,
         {
           tokenType: 0,
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId,
           amount,
         },
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
         ],
-        constants.HashZero,
+        ZeroHash,
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
@@ -361,15 +361,15 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(ethers.utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -382,7 +382,7 @@ describe("ExchangeRentable", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
@@ -401,7 +401,7 @@ describe("ExchangeRentable", function () {
         },
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: 1,
         },
@@ -420,15 +420,15 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -442,7 +442,7 @@ describe("ExchangeRentable", function () {
         items: [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -461,7 +461,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -478,10 +478,10 @@ describe("ExchangeRentable", function () {
           endTimestamp,
           externalId,
           isEqualEventArgArrObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(1),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1n,
           }),
           isEqualArray([[]]),
         )
@@ -500,18 +500,18 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -525,7 +525,7 @@ describe("ExchangeRentable", function () {
         items: [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -533,7 +533,7 @@ describe("ExchangeRentable", function () {
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -551,7 +551,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -559,7 +559,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -576,16 +576,16 @@ describe("ExchangeRentable", function () {
           endTimestamp,
           externalId,
           isEqualEventArgArrObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(1),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount: 1n,
           }),
           isEqualEventArgArrObj({
-            tokenType: 1,
-            token: erc20Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
           }),
         )
         .to.emit(erc721Instance, "UpdateUser")
@@ -603,18 +603,18 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: stranger.address,
@@ -628,7 +628,7 @@ describe("ExchangeRentable", function () {
         items: [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -636,7 +636,7 @@ describe("ExchangeRentable", function () {
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -654,7 +654,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -662,7 +662,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -679,18 +679,18 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -705,7 +705,7 @@ describe("ExchangeRentable", function () {
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -725,7 +725,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -742,17 +742,17 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
       const erc20Instance = await deployERC1363("ERC20Simple");
       await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.approve(exchangeInstance.address, amount);
+      await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: owner.address,
@@ -766,7 +766,7 @@ describe("ExchangeRentable", function () {
         items: [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -774,7 +774,7 @@ describe("ExchangeRentable", function () {
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -793,7 +793,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -801,7 +801,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -822,7 +822,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
@@ -830,12 +830,12 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
         ],
-        constants.HashZero,
+        ZeroHash,
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
@@ -847,15 +847,15 @@ describe("ExchangeRentable", function () {
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
 
-      await erc721Instance.connect(receiver).approve(exchangeInstance.address, tokenId);
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
 
       // lend TIME
       const date = new Date();
       date.setDate(date.getDate() + 1);
       const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
-      const expires = utils.hexZeroPad(utils.hexlify(endTimestamp), 32);
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
 
       const signature = await generateManyToManySignature({
         account: receiver.address,
@@ -869,7 +869,7 @@ describe("ExchangeRentable", function () {
         items: [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
@@ -891,7 +891,7 @@ describe("ExchangeRentable", function () {
         [
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },

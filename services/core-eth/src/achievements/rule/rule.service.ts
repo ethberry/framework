@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { AchievementRuleStatus, ContractEventType, TokenType } from "@framework/types";
 
@@ -104,7 +104,7 @@ export class AchievementsRuleService {
       const wallet = eventData.from;
       // TODO filter all db.contracts or limit rule events
       // Check only user events
-      if (wallet !== constants.AddressZero) {
+      if (wallet !== ZeroAddress) {
         const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
         // find event User

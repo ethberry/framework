@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
 
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
@@ -43,7 +43,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -56,7 +56,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -71,10 +71,10 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount,
             }),
             isEqualArray([]),
           );
@@ -93,7 +93,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -106,7 +106,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -121,10 +121,10 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
             isEqualArray([]),
           );
@@ -143,7 +143,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -151,7 +151,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -163,7 +163,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -171,7 +171,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -189,20 +189,20 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(1),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount: 1n,
             }),
             isEqualEventArgArrObj({
-              tokenType: 0,
-              token: constants.AddressZero,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 0n,
+              token: ZeroAddress,
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId);
+          .withArgs(ZeroAddress, receiver.address, tokenId);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -216,7 +216,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -224,7 +224,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -236,7 +236,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -244,7 +244,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -272,7 +272,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -280,7 +280,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -288,14 +288,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -303,7 +303,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -317,22 +317,22 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(1),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount: 1n,
             }),
             isEqualEventArgArrObj({
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 1n,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId)
+          .withArgs(ZeroAddress, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(receiver.address, exchangeInstance.address, amount);
+          .withArgs(receiver.address, await exchangeInstance.getAddress(), amount);
       });
 
       it("should fail: insufficient allowance", async function () {
@@ -347,7 +347,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -355,7 +355,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -363,14 +363,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc20Instance.mint(receiver.address, amount);
-        // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        // await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -378,7 +378,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -401,7 +401,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -409,7 +409,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -417,14 +417,14 @@ describe("ExchangeCraft", function () {
         });
 
         // await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -432,7 +432,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -457,7 +457,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -465,7 +465,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -473,14 +473,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -488,7 +488,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -503,16 +503,16 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount,
             }),
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           );
       });
@@ -529,7 +529,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -537,7 +537,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -545,14 +545,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
-        // await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        // await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -560,7 +560,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -583,7 +583,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -591,7 +591,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -599,14 +599,14 @@ describe("ExchangeCraft", function () {
         });
 
         // await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -614,7 +614,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -638,7 +638,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -646,7 +646,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -658,7 +658,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -666,7 +666,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -684,20 +684,20 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
             isEqualEventArgArrObj({
-              tokenType: 0,
-              token: constants.AddressZero,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 0n,
+              token: ZeroAddress,
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
+          .withArgs(await exchangeInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -711,7 +711,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -719,7 +719,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -731,7 +731,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -739,7 +739,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -767,7 +767,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -775,7 +775,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -783,14 +783,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -798,7 +798,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -812,22 +812,22 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
             isEqualEventArgArrObj({
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 1n,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount)
+          .withArgs(await exchangeInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(receiver.address, exchangeInstance.address, amount);
+          .withArgs(receiver.address, await exchangeInstance.getAddress(), amount);
       });
 
       it("should fail: insufficient allowance", async function () {
@@ -842,7 +842,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -850,7 +850,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -858,14 +858,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc20Instance.mint(receiver.address, amount);
-        // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        // await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -873,7 +873,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -896,7 +896,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -904,7 +904,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -912,14 +912,14 @@ describe("ExchangeCraft", function () {
         });
 
         // await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -927,7 +927,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -951,7 +951,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount: 1,
             },
@@ -959,7 +959,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -967,14 +967,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount: 1,
             },
@@ -982,7 +982,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -996,16 +996,16 @@ describe("ExchangeCraft", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(2),
-              amount: BigNumber.from(1),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId: 2n,
+              amount: 1n,
             }),
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           );
       });
@@ -1021,7 +1021,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 1,
               amount,
             },
@@ -1029,7 +1029,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount,
             },
@@ -1037,14 +1037,14 @@ describe("ExchangeCraft", function () {
         });
 
         await erc1155Instance.mint(receiver.address, 2, amount, "0x");
-        // await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        // await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 1,
               amount,
             },
@@ -1052,7 +1052,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount,
             },
@@ -1074,7 +1074,7 @@ describe("ExchangeCraft", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 1,
               amount,
             },
@@ -1082,7 +1082,7 @@ describe("ExchangeCraft", function () {
           price: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount,
             },
@@ -1090,14 +1090,14 @@ describe("ExchangeCraft", function () {
         });
 
         // await erc1155Instance.mint(receiver.address, 2, amount, "0x");
-        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 1,
               amount,
             },
@@ -1105,7 +1105,7 @@ describe("ExchangeCraft", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId: 2,
               amount,
             },
@@ -1142,7 +1142,7 @@ describe("ExchangeCraft", function () {
       const [_owner] = await ethers.getSigners();
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
-      const tx = exchangeInstance.craft(params, [], [], utils.formatBytes32String("signature").padEnd(132, "0"));
+      const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature").padEnd(132, "0"));
 
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature");
     });
@@ -1151,7 +1151,7 @@ describe("ExchangeCraft", function () {
       const [_owner] = await ethers.getSigners();
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
-      const tx = exchangeInstance.craft(params, [], [], utils.formatBytes32String("signature"));
+      const tx = exchangeInstance.craft(params, [], [], encodeBytes32String("signature"));
 
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
     });
@@ -1166,7 +1166,7 @@ describe("ExchangeCraft", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
@@ -1174,12 +1174,12 @@ describe("ExchangeCraft", function () {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
         ],
-        constants.HashZero,
+        ZeroHash,
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");
@@ -1196,7 +1196,7 @@ describe("ExchangeCraft", function () {
         items: [
           {
             tokenType: 4,
-            token: erc1155Instance.address,
+            token: await erc1155Instance.getAddress(),
             tokenId: 2,
             amount: 1,
           },
@@ -1204,7 +1204,7 @@ describe("ExchangeCraft", function () {
         price: [
           {
             tokenType: 4,
-            token: erc1155Instance.address,
+            token: await erc1155Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -1212,7 +1212,7 @@ describe("ExchangeCraft", function () {
       });
 
       await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
-      await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
+      await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
       await exchangeInstance.renounceRole(MINTER_ROLE, owner.address);
 
@@ -1221,7 +1221,7 @@ describe("ExchangeCraft", function () {
         [
           {
             tokenType: 4,
-            token: erc1155Instance.address,
+            token: await erc1155Instance.getAddress(),
             tokenId: 2,
             amount: 1,
           },
@@ -1229,7 +1229,7 @@ describe("ExchangeCraft", function () {
         [
           {
             tokenType: 4,
-            token: erc1155Instance.address,
+            token: await erc1155Instance.getAddress(),
             tokenId,
             amount,
           },

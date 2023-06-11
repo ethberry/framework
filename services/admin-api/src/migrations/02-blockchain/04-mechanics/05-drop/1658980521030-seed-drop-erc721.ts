@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 import { subMonths } from "date-fns";
 
 import { ns } from "@framework/constants";
@@ -36,7 +36,7 @@ export class SeedDropErc721At1658980521030 implements MigrationInterface {
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         63111
       );
     `);

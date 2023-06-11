@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
 import { IEventHistorySearchDto } from "@framework/types";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class EventHistorySearchDto extends PaginationDto implements IEventHistorySearchDto {
   @ApiProperty()
@@ -17,6 +17,6 @@ export class EventHistorySearchDto extends PaginationDto implements IEventHistor
     type: Number,
     minimum: 1,
   })
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public tokenId: string;
 }

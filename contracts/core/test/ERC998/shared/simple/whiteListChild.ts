@@ -1,19 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "../../../ERC721/shared/fixtures";
 
-export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<any>) {
   describe("WhiteListChild", function () {
     describe("isWhitelisted", function () {
       it("should not in whiteListChild", async function () {
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        const tx1 = await erc721Instance.isWhitelisted(erc721InstanceMock.address);
+        const tx1 = await erc721Instance.isWhitelisted(await erc721InstanceMock.getAddress());
         expect(tx1).to.equal(false);
       });
     });
@@ -23,10 +22,12 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        const tx1 = erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
-        await expect(tx1).to.emit(erc721Instance, "WhitelistedChild").withArgs(erc721InstanceMock.address, 0);
+        const tx1 = erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
+        await expect(tx1)
+          .to.emit(erc721Instance, "WhitelistedChild")
+          .withArgs(await erc721InstanceMock.getAddress(), 0);
 
-        const isWhitelisted = await erc721Instance.isWhitelisted(erc721InstanceMock.address);
+        const isWhitelisted = await erc721Instance.isWhitelisted(await erc721InstanceMock.getAddress());
         expect(isWhitelisted).to.equal(true);
       });
 
@@ -35,7 +36,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        const tx = erc721Instance.connect(receiver).whiteListChild(erc721InstanceMock.address, 0);
+        const tx = erc721Instance.connect(receiver).whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await expect(tx).to.be.revertedWith(
           `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
         );
@@ -47,16 +48,20 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        const tx1 = erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
-        await expect(tx1).to.emit(erc721Instance, "WhitelistedChild").withArgs(erc721InstanceMock.address, 0);
+        const tx1 = erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
+        await expect(tx1)
+          .to.emit(erc721Instance, "WhitelistedChild")
+          .withArgs(await erc721InstanceMock.getAddress(), 0);
 
-        const isWhitelisted1 = await erc721Instance.isWhitelisted(erc721InstanceMock.address);
+        const isWhitelisted1 = await erc721Instance.isWhitelisted(await erc721InstanceMock.getAddress());
         expect(isWhitelisted1).to.equal(true);
 
-        const tx2 = erc721Instance.unWhitelistChild(erc721InstanceMock.address);
-        await expect(tx2).to.emit(erc721Instance, "UnWhitelistedChild").withArgs(erc721InstanceMock.address);
+        const tx2 = erc721Instance.unWhitelistChild(await erc721InstanceMock.getAddress());
+        await expect(tx2)
+          .to.emit(erc721Instance, "UnWhitelistedChild")
+          .withArgs(await erc721InstanceMock.getAddress());
 
-        const isWhitelisted2 = await erc721Instance.isWhitelisted(erc721InstanceMock.address);
+        const isWhitelisted2 = await erc721Instance.isWhitelisted(await erc721InstanceMock.getAddress());
         expect(isWhitelisted2).to.equal(false);
       });
 
@@ -65,11 +70,11 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
-        const tx1 = await erc721Instance.isWhitelisted(erc721InstanceMock.address);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
+        const tx1 = await erc721Instance.isWhitelisted(await erc721InstanceMock.getAddress());
         expect(tx1).to.equal(true);
 
-        const tx = erc721Instance.connect(receiver).unWhitelistChild(erc721InstanceMock.address);
+        const tx = erc721Instance.connect(receiver).unWhitelistChild(await erc721InstanceMock.getAddress());
         await expect(tx).to.be.revertedWith(
           `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
         );
@@ -82,7 +87,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
           const erc721Instance = await factory();
           const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-          const maxChild = await erc721Instance.getMaxChild(erc721InstanceMock.address);
+          const maxChild = await erc721Instance.getMaxChild(await erc721InstanceMock.getAddress());
           expect(maxChild).to.equal(0);
         });
       });
@@ -95,9 +100,9 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const max = 10;
         const tx1 = await erc721Instance.setDefaultMaxChild(max);
-        await expect(tx1).to.emit(erc721Instance, "SetMaxChild").withArgs(ethers.constants.AddressZero, max);
+        await expect(tx1).to.emit(erc721Instance, "SetMaxChild").withArgs(ethers.ZeroAddress, max);
 
-        const maxChild = await erc721Instance.getMaxChild(erc721InstanceMock.address);
+        const maxChild = await erc721Instance.getMaxChild(await erc721InstanceMock.getAddress());
         expect(maxChild).to.equal(max);
       });
 
@@ -118,10 +123,12 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
         const max = 10;
-        const tx1 = await erc721Instance.setMaxChild(erc721InstanceMock.address, max);
-        await expect(tx1).to.emit(erc721Instance, "SetMaxChild").withArgs(erc721InstanceMock.address, max);
+        const tx1 = await erc721Instance.setMaxChild(await erc721InstanceMock.getAddress(), max);
+        await expect(tx1)
+          .to.emit(erc721Instance, "SetMaxChild")
+          .withArgs(await erc721InstanceMock.getAddress(), max);
 
-        const maxChild = await erc721Instance.getMaxChild(erc721InstanceMock.address);
+        const maxChild = await erc721Instance.getMaxChild(await erc721InstanceMock.getAddress());
         expect(maxChild).to.equal(max);
       });
 
@@ -130,7 +137,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        const tx = erc721Instance.connect(receiver).setMaxChild(erc721InstanceMock.address, 0);
+        const tx = erc721Instance.connect(receiver).setMaxChild(await erc721InstanceMock.getAddress(), 0);
         await expect(tx).to.be.revertedWith(
           `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
         );
@@ -143,7 +150,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(0); // unlimited
         await erc721InstanceMock.mint(owner.address);
         await erc721Instance.mint(owner.address); // this is edge case
@@ -151,13 +158,13 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           0, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx2).to.equal(1);
       });
     });
@@ -168,7 +175,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(0);
         await erc721InstanceMock.mint(owner.address);
         await erc721InstanceMock.mint(owner.address);
@@ -177,24 +184,24 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           0, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx2).to.equal(1);
 
         const tx3 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           1, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx3).to.not.be.reverted;
 
-        const tx4 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx4 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx4).to.equal(2);
       });
 
@@ -203,7 +210,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(0);
         await erc721InstanceMock.mint(owner.address);
         await erc721InstanceMock.mint(owner.address);
@@ -212,26 +219,26 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           0, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx2).to.equal(1);
 
         const tx3 = erc721Instance["safeTransferChild(uint256,address,address,uint256)"](
           1,
           receiver.address,
-          erc721InstanceMock.address,
+          await erc721InstanceMock.getAddress(),
           0,
         );
         await expect(tx3)
           .to.emit(erc721Instance, "TransferChild")
-          .withArgs(1, receiver.address, erc721InstanceMock.address, 0, 1);
+          .withArgs(1, receiver.address, await erc721InstanceMock.getAddress(), 0, 1);
 
-        const tx4 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx4 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx4).to.equal(0);
       });
 
@@ -240,7 +247,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(1);
         await erc721InstanceMock.mint(owner.address);
         await erc721InstanceMock.mint(owner.address);
@@ -249,18 +256,18 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           0, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx2).to.equal(1);
 
         const tx3 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           1, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
@@ -272,7 +279,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const erc721Instance = await factory();
         const erc721InstanceMock = await deployERC721("ERC721ABEC");
 
-        await erc721Instance.whiteListChild(erc721InstanceMock.address, 0);
+        await erc721Instance.whiteListChild(await erc721InstanceMock.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(0);
         await erc721InstanceMock.mint(owner.address);
         await erc721Instance.mint(owner.address); // this is edge case
@@ -280,26 +287,26 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721InstanceMock["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           0, // erc721 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000001", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx2).to.equal(1);
 
         const tx3 = erc721Instance["safeTransferChild(uint256,address,address,uint256)"](
           1,
           receiver.address,
-          erc721InstanceMock.address,
+          await erc721InstanceMock.getAddress(),
           0,
         );
         await expect(tx3)
           .to.emit(erc721Instance, "TransferChild")
-          .withArgs(1, receiver.address, erc721InstanceMock.address, 0, 1);
+          .withArgs(1, receiver.address, await erc721InstanceMock.getAddress(), 0, 1);
 
-        const tx4 = await erc721Instance.getChildCount(erc721InstanceMock.address);
+        const tx4 = await erc721Instance.getChildCount(await erc721InstanceMock.getAddress());
         expect(tx4).to.equal(0);
       });
 
@@ -307,7 +314,7 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
         const [owner, receiver] = await ethers.getSigners();
         const erc721Instance = await factory();
 
-        await erc721Instance.whiteListChild(erc721Instance.address, 0);
+        await erc721Instance.whiteListChild(await erc721Instance.getAddress(), 0);
         await erc721Instance.setDefaultMaxChild(0);
         await erc721Instance.mint(owner.address); // this is edge case
         await erc721Instance.mint(owner.address);
@@ -315,21 +322,21 @@ export function shouldBehaveLikeERC998WhiteListChild(factory: () => Promise<Cont
 
         const tx1 = erc721Instance["safeTransferFrom(address,address,uint256,bytes)"](
           owner.address,
-          erc721Instance.address,
+          await erc721Instance.getAddress(),
           1, // erc998 tokenId
           "0x0000000000000000000000000000000000000000000000000000000000000002", // erc998 tokenId
         );
         await expect(tx1).to.not.be.reverted;
 
-        const tx2 = await erc721Instance.getChildCount(erc721Instance.address);
+        const tx2 = await erc721Instance.getChildCount(await erc721Instance.getAddress());
         expect(tx2).to.equal(1);
 
-        const tx3 = erc721Instance.transferChild(2, receiver.address, erc721Instance.address, 1);
+        const tx3 = erc721Instance.transferChild(2, receiver.address, await erc721Instance.getAddress(), 1);
         await expect(tx3)
           .to.emit(erc721Instance, "TransferChild")
-          .withArgs(2, receiver.address, erc721Instance.address, 1, 1);
+          .withArgs(2, receiver.address, await erc721Instance.getAddress(), 1, 1);
 
-        const tx4 = await erc721Instance.getChildCount(erc721Instance.address);
+        const tx4 = await erc721Instance.getChildCount(await erc721Instance.getAddress());
         expect(tx4).to.equal(0);
       });
     });

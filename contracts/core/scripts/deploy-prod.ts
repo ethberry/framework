@@ -1,14 +1,12 @@
-import { Contract } from "ethers";
-
 import { deployLotteryProd } from "./deploy/mechanics/lottery_prod";
 import { deployWaitlist } from "./deploy/mechanics/waitlist";
 import { deployWrapper } from "./deploy/mechanics/wrapper";
 import { deployStakingProd } from "./deploy/mechanics/staking_prod";
 import { deploySystem } from "./deploy/system";
 
-const contracts: Record<string, Contract> = {};
+const contracts: Record<string, any> = {};
 
-async function deployMechanics(contracts: Record<string, Contract>) {
+async function deployMechanics(contracts: Record<string, any>) {
   await deployStakingProd(contracts);
   await deployLotteryProd(contracts);
   await deployWaitlist(contracts);

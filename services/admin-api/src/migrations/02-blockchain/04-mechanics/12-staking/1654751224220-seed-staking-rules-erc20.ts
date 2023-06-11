@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -47,43 +47,43 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80211
       ), (
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80212
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80221
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80222
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80231
       ), (
         'ERC721',
         1301,
         130101, -- rune
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80232
       ), (
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80241
       ), (
         'ERC998',
@@ -95,7 +95,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80251
       ), (
         'ERC1155',
@@ -107,7 +107,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80299
       );
     `);

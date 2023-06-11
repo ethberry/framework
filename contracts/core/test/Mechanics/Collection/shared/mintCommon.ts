@@ -1,13 +1,13 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { deployJerk, deployWallet } from "@gemunion/contracts-mocks";
 import { batchSize, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../constants";
 
-export function shouldMintCommon(factory: () => Promise<Contract>) {
+export function shouldMintCommon(factory: () => Promise<any>) {
   describe("mintCommon", function () {
     it("should mint to wallet", async function () {
       const [_owner, receiver] = await ethers.getSigners();
@@ -16,7 +16,7 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
       const tx = contractInstance.mintCommon(receiver.address, batchSize + tokenId);
       await expect(tx)
         .to.emit(contractInstance, "Transfer")
-        .withArgs(constants.AddressZero, receiver.address, batchSize + tokenId);
+        .withArgs(ZeroAddress, receiver.address, batchSize + tokenId);
 
       const balance = await contractInstance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
@@ -26,12 +26,12 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
       const erc721ReceiverInstance = await deployWallet();
 
-      const tx = contractInstance.mintCommon(erc721ReceiverInstance.address, batchSize + tokenId);
+      const tx = contractInstance.mintCommon(await erc721ReceiverInstance.getAddress(), batchSize + tokenId);
       await expect(tx)
         .to.emit(contractInstance, "Transfer")
-        .withArgs(constants.AddressZero, erc721ReceiverInstance.address, batchSize + tokenId);
+        .withArgs(ZeroAddress, await erc721ReceiverInstance.getAddress(), batchSize + tokenId);
 
-      const balance = await contractInstance.balanceOf(erc721ReceiverInstance.address);
+      const balance = await contractInstance.balanceOf(await erc721ReceiverInstance.getAddress());
       expect(balance).to.equal(1);
     });
 
@@ -49,7 +49,7 @@ export function shouldMintCommon(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
       const erc721NonReceiverInstance = await deployJerk();
 
-      const tx = contractInstance.mintCommon(erc721NonReceiverInstance.address, batchSize + tokenId);
+      const tx = contractInstance.mintCommon(await erc721NonReceiverInstance.getAddress(), batchSize + tokenId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
     });
   });

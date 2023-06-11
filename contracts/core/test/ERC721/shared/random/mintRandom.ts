@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { constants, Contract } from "ethers";
+import { WeiPerEther } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { MINTER_ROLE } from "@gemunion/contracts-constants";
@@ -10,7 +10,7 @@ import { deployLinkVrfFixture } from "../../../shared/link";
 import { templateId } from "../../../constants";
 import { randomRequest } from "../../../shared/randomRequest";
 
-export function shouldMintRandom(factory: () => Promise<Contract>) {
+export function shouldMintRandom(factory: () => Promise<any>) {
   describe("mintRandom", function () {
     let linkInstance: LinkToken;
     let vrfInstance: VRFCoordinatorMock;
@@ -29,8 +29,10 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
 
       // Add Consumer to VRFV2
-      const tx02 = vrfInstance.addConsumer(1, contractInstance.address);
-      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, contractInstance.address);
+      const tx02 = vrfInstance.addConsumer(1, await contractInstance.getAddress());
+      await expect(tx02)
+        .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+        .withArgs(1, await contractInstance.getAddress());
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {
@@ -58,7 +60,7 @@ export function shouldMintRandom(factory: () => Promise<Contract>) {
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await linkInstance.transfer(contractInstance.address, constants.WeiPerEther);
+      await linkInstance.transfer(await contractInstance.getAddress(), WeiPerEther);
 
       const tx = contractInstance.mintRandom(receiver.address, 0);
       await expect(tx).to.be.revertedWithCustomError(contractInstance, "TemplateZero");

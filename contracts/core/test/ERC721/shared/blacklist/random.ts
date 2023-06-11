@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { Contract } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { subscriptionId, templateId } from "../../../constants";
@@ -8,7 +7,7 @@ import { deployLinkVrfFixture } from "../../../shared/link";
 import { VRFCoordinatorMock } from "../../../../typechain-types";
 import { randomRequest } from "../../../shared/randomRequest";
 
-export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<any>) {
   describe("Black list", function () {
     let vrfInstance: VRFCoordinatorMock;
 
@@ -25,7 +24,7 @@ export function shouldBehaveLikeERC721BlacklistRandom(factory: () => Promise<Con
       const [_owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
-      await vrfInstance.addConsumer(subscriptionId, contractInstance.address);
+      await vrfInstance.addConsumer(subscriptionId, await contractInstance.getAddress());
 
       await contractInstance.blacklist(receiver.address);
       const tx = contractInstance.mintRandom(receiver.address, templateId);

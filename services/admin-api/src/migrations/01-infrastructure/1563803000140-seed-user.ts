@@ -76,7 +76,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
       ), (
         'test1@gemunion.io',
         'qwerty',
-        'Trej Gun',
+        'Yuri',
         '${imageUrl}',
         'EN',
         'US',
@@ -92,7 +92,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
       ), (
         'test2@gemunion.io',
         'qwerty',
-        'Trej Gun',
+        'Arthur',
         '${imageUrl}',
         'EN',
         'US',
@@ -102,6 +102,22 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '{CUSTOMER}',
         1,
         '0x02',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'test3@gemunion.io',
+        'qwerty',
+        'Jenya',
+        '${imageUrl}',
+        'EN',
+        'US',
+        'MALE',
+        '',
+        'ACTIVE',
+        '{CUSTOMER}',
+        1,
+        '0x03',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

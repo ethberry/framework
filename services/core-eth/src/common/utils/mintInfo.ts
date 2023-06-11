@@ -1,4 +1,5 @@
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
+
 import { EventSignatureHash, TokenMintType } from "@framework/types";
 
 export const getTokenMintType = (logs: Array<Log>): TokenMintType => {

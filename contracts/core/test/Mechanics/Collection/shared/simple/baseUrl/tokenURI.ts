@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { baseTokenURI, batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldTokenURI(factory: () => Promise<Contract>) {
+export function shouldTokenURI(factory: () => Promise<any>) {
   describe("tokenURI", function () {
     it("should get token uri", async function () {
       const [owner] = await ethers.getSigners();
@@ -14,7 +13,9 @@ export function shouldTokenURI(factory: () => Promise<Contract>) {
 
       await contractInstance.mintCommon(owner.address, batchSize + tokenId);
       const uri = await contractInstance.tokenURI(batchSize + tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${contractInstance.address.toLowerCase()}/${batchSize + tokenId}`);
+      expect(uri).to.equal(
+        `${baseTokenURI}/${(await contractInstance.getAddress()).toLowerCase()}/${batchSize + tokenId}`,
+      );
     });
 
     // setTokenURI is not supported

@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldMint(factory: () => Promise<Contract>) {
+export function shouldMint(factory: () => Promise<any>) {
   describe("mint", function () {
     it("should fail: MethodNotSupported", async function () {
       const [_owner, receiver] = await ethers.getSigners();

@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -41,7 +53,7 @@ export class CategoryController {
   }
 
   @Delete("/:id")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id") id: number): Promise<void> {
     await this.categoryService.delete({ id });
   }

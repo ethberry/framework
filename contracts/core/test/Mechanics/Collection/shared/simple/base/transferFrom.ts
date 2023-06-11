@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldTransferFrom(factory: () => Promise<Contract>) {
+export function shouldTransferFrom(factory: () => Promise<any>) {
   describe("transferFrom", function () {
     it("should fail: not an owner", async function () {
       const [owner, receiver] = await ethers.getSigners();
@@ -23,7 +23,7 @@ export function shouldTransferFrom(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, batchSize + tokenId);
-      const tx = contractInstance.transferFrom(owner.address, constants.AddressZero, batchSize + tokenId);
+      const tx = contractInstance.transferFrom(owner.address, ZeroAddress, batchSize + tokenId);
 
       await expect(tx).to.be.revertedWith(`ERC721: transfer to the zero address`);
     });

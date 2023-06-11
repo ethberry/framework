@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { ZeroAddress, ZeroHash } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
@@ -34,7 +34,7 @@ describe("ExchangeClaim", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
+        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -42,7 +42,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -55,7 +55,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -69,14 +69,14 @@ describe("ExchangeClaim", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 1n,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(exchangeInstance.address, receiver.address, amount);
+          .withArgs(await exchangeInstance.getAddress(), receiver.address, amount);
 
         const balance = await erc20Instance.balanceOf(receiver.address);
         expect(balance).to.equal(amount);
@@ -95,7 +95,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -108,7 +108,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -122,14 +122,14 @@ describe("ExchangeClaim", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId);
+          .withArgs(ZeroAddress, receiver.address, tokenId);
 
         const balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(1);
@@ -140,10 +140,10 @@ describe("ExchangeClaim", function () {
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
-        const tx02 = await vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = await vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -151,7 +151,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -164,7 +164,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -178,10 +178,10 @@ describe("ExchangeClaim", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.not.emit(erc721Instance, "Transfer");
@@ -205,7 +205,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -218,7 +218,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -232,14 +232,14 @@ describe("ExchangeClaim", function () {
             receiver.address,
             externalId,
             isEqualEventArgArrObj({
-              tokenType: 4,
-              token: erc1155Instance.address,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 4n,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
             }),
           )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
+          .withArgs(await exchangeInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount);
 
         const balance = await erc1155Instance.balanceOf(receiver.address, tokenId);
         expect(balance).to.equal(amount);
@@ -251,7 +251,7 @@ describe("ExchangeClaim", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
+        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -259,13 +259,13 @@ describe("ExchangeClaim", function () {
             nonce,
             externalId,
             expiresAt: 1,
-            referrer: constants.AddressZero,
+            referrer: ZeroAddress,
             extra,
           },
           items: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -278,13 +278,13 @@ describe("ExchangeClaim", function () {
             nonce,
             externalId,
             expiresAt: 1,
-            referrer: constants.AddressZero,
+            referrer: ZeroAddress,
             extra,
           },
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -299,7 +299,7 @@ describe("ExchangeClaim", function () {
         const [_owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
+        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -307,7 +307,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -320,7 +320,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -335,7 +335,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -350,7 +350,7 @@ describe("ExchangeClaim", function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(exchangeInstance.address, amount);
+        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -358,7 +358,7 @@ describe("ExchangeClaim", function () {
           items: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -373,7 +373,7 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -394,12 +394,12 @@ describe("ExchangeClaim", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
           ],
-          constants.HashZero,
+          ZeroHash,
         );
 
         await expect(tx1).to.be.revertedWith("Pausable: paused");

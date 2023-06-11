@@ -40,13 +40,13 @@ export const Category: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<ICategory>({
-    baseUrl: "/categories",
+    baseUrl: "/ecommerce/categories",
     empty: emptyCategory,
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "category"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "category"]} />
 
       <PageHeader message="pages.category.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>

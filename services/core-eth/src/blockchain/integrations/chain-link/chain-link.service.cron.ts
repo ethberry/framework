@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
-import { constants, Contract, Wallet } from "ethers";
+import { WeiPerEther, Contract, Wallet } from "ethers";
 import { ClientProxy } from "@nestjs/microservices";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
@@ -29,11 +29,11 @@ export class ChainLinkServiceCron {
     const adminEmail = this.configService.get<string>("ADMIN_EMAIL", "");
 
     const contract = new Contract(vrfAddr, VrfSol.abi, this.signer);
-    const minimum = constants.WeiPerEther.mul(5); // TODO set(get) subID and minBalance in VRF contract parameters?
+    const minimum = WeiPerEther * 5n; // TODO set(get) subID and minBalance in VRF contract parameters?
 
     try {
       const { balance } = await contract.getSubscription(subscriptionId);
-      if (minimum.gte(balance)) {
+      if (minimum >= BigInt(balance)) {
         return this.emailClientProxy
           .emit<void>(EmailType.LINK_TOKEN, {
             user: { email: adminEmail },

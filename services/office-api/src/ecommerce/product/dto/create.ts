@@ -1,12 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { IsArray, IsInt, IsJSON, IsOptional, IsString, Min, ValidateNested, Allow } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IParameter, IPhoto } from "@framework/types";
+import { IPhoto } from "@framework/types";
 
 import { IProductCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";
-import { PriceDto } from "../../../blockchain/exchange/asset/dto";
 
 export class ProductCreateDto implements IProductCreateDto {
   @ApiProperty()
@@ -25,28 +24,6 @@ export class ProductCreateDto implements IProductCreateDto {
   @Min(1, { each: true, message: "valueMissing" })
   public categoryIds: Array<number>;
 
-  @ApiProperty({
-    type: PriceDto,
-  })
-  @ValidateNested()
-  @Type(() => PriceDto)
-  public price: PriceDto;
-
-  @ApiProperty({
-    minimum: 0,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
-  public amount: number;
-
-  @ApiPropertyOptional({
-    minimum: 1,
-  })
-  @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "valueMissing" })
-  public merchantId: number;
-
   @ApiPropertyOptional({ type: () => [PhotoCreateDto] })
   @IsOptional()
   @IsArray()
@@ -54,8 +31,9 @@ export class ProductCreateDto implements IProductCreateDto {
   @Type(() => PhotoCreateDto)
   public photos: Array<IPhoto> = [];
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsArray({ message: "patternMismatch" })
-  public parameters: Array<IParameter>;
+  @Allow()
+  public parameters: Array<any> = [];
+
+  @Allow()
+  public productItems: Array<any> = [];
 }

@@ -1,5 +1,3 @@
-import { Contract } from "ethers";
-
 import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
 import {
   shouldApprove,
@@ -19,7 +17,7 @@ import { shouldBaseUrl } from "../simple/baseUrl";
 import { shouldTransferFrom } from "./transferFrom";
 import { shouldSafeTransferFrom } from "./safeTransferFrom";
 
-export function shouldBehaveLikeERC721Soulbound(factory: () => Promise<Contract>, options: IERC721EnumOptions = {}) {
+export function shouldBehaveLikeERC721Soulbound(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
   options = Object.assign({}, { mint: customMintCommonERC721, safeMint: customMintCommonERC721, tokenId }, options);
 
   shouldApprove(factory, options);

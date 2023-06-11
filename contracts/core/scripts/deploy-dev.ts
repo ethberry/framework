@@ -1,5 +1,3 @@
-import { Contract } from "ethers";
-
 import { deploySystem } from "./deploy/system";
 import { deployERC20 } from "./deploy/hierarchy/erc20";
 import { deployERC721 } from "./deploy/hierarchy/erc721";
@@ -14,23 +12,23 @@ import { deployLottery } from "./deploy/mechanics/lottery";
 import { deployWeth } from "./deploy/integrations/weth";
 import { deployBusd } from "./deploy/integrations/busd";
 
-const contracts: Record<string, Contract> = {};
+const contracts: Record<string, any> = {};
 
-async function deployHierarchy(contracts: Record<string, Contract>) {
+async function deployHierarchy(contracts: Record<string, any>) {
   await deployERC20(contracts);
   await deployERC721(contracts);
   await deployERC998(contracts);
   await deployERC1155(contracts);
 }
 
-async function deployMechanics(contracts: Record<string, Contract>) {
+async function deployMechanics(contracts: Record<string, any>) {
   await deployVesting(contracts);
   await deployStaking(contracts);
   await deployMysterybox(contracts);
   await deployLottery(contracts);
 }
 
-async function deployIntegrations(contracts: Record<string, Contract>) {
+async function deployIntegrations(contracts: Record<string, any>) {
   await deployChainLink(contracts);
   await deployUsdt(contracts);
   await deployWeth(contracts);

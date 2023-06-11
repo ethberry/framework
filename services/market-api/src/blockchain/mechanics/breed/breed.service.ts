@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
-import { BigNumber, constants, utils } from "ethers";
+import { ZeroAddress, hexlify, concat, encodeBytes32String, toBeHex, zeroPadValue, randomBytes } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -71,7 +70,7 @@ export class BreedService {
   }
 
   public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, momId, dadId } = dto;
+    const { account, referrer = ZeroAddress, momId, dadId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
@@ -85,19 +84,19 @@ export class BreedService {
       sireId: dadTokenEntity.id,
     };
 
-    const encodedExternalId = BigNumber.from(
-      utils.hexlify(
-        utils.concat([
-          utils.zeroPad(utils.hexlify(genesis.sireId), 3),
-          utils.zeroPad(utils.hexlify(genesis.matronId), 4),
-          utils.zeroPad(utils.hexlify(genesis.templateId), 4),
+    const encodedExternalId = BigInt(
+      hexlify(
+        concat([
+          zeroPadValue(toBeHex(genesis.sireId), 3),
+          zeroPadValue(toBeHex(genesis.matronId), 4),
+          zeroPadValue(toBeHex(genesis.templateId), 4),
         ]),
       ),
     );
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
@@ -106,13 +105,13 @@ export class BreedService {
         externalId: encodedExternalId.toString(),
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       momTokenEntity.token,
       dadTokenEntity.token,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: encodedExternalId.toString() };
+    return { nonce: hexlify(nonce), signature, expiresAt, bytecode: encodedExternalId.toString() };
   }
 
   public async getSignature(

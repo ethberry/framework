@@ -2,14 +2,13 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, amount } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
+import { deployContract } from "@gemunion/contracts-mocks";
 
-import { deployContract } from "../../shared/fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { tokenId } from "../../constants";
 import { isEqualEventArgArrObj } from "../../utils";
-import { BigNumber } from "ethers";
 import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
 describe("Waitlist", function () {
@@ -27,7 +26,7 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const leavesEntities = [[owner.address], [receiver.address], ["0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"]];
 
@@ -47,14 +46,14 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: BigNumber.from(tokenId),
-          amount: BigNumber.from(0),
+          tokenType: 2n,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 0n,
         },
       ];
 
@@ -76,14 +75,14 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: BigNumber.from(tokenId),
-          amount: BigNumber.from(0),
+          tokenType: 2n,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 0n,
         },
       ];
 
@@ -110,7 +109,7 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const leavesEntities = [[owner.address], [receiver.address], ["0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"]];
 
@@ -130,14 +129,14 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
           tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: BigNumber.from(tokenId),
-          amount: BigNumber.from(0),
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 0,
         },
       ];
 
@@ -158,14 +157,14 @@ describe("Waitlist", function () {
       const erc721Instance = await erc721factory();
       const erc20Instance = await erc20Factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: BigNumber.from(tokenId),
-          amount: BigNumber.from(0),
+          tokenType: 2n,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 0n,
         },
       ];
 
@@ -182,10 +181,10 @@ describe("Waitlist", function () {
 
       const items2 = [
         {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId: BigNumber.from(0),
-          amount: BigNumber.from(amount),
+          tokenType: 1n,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0n,
+          amount,
         },
       ];
 
@@ -203,7 +202,7 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const leavesEntities = [[owner.address], [receiver.address], ["0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"]];
 
@@ -227,7 +226,7 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const leavesEntities = [[owner.address], [receiver.address], ["0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"]];
 
@@ -250,12 +249,12 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: "0",
         },
@@ -287,12 +286,12 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: "0",
         },
@@ -324,12 +323,12 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: "0",
         },
@@ -361,12 +360,12 @@ describe("Waitlist", function () {
       const contractInstance = await factory();
       const erc721Instance = await erc721factory();
 
-      await erc721Instance.grantRole(MINTER_ROLE, contractInstance.address);
+      await erc721Instance.grantRole(MINTER_ROLE, await contractInstance.getAddress());
 
       const items = [
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount: "0",
         },

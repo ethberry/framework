@@ -1,5 +1,5 @@
 export interface IOrderItemCreateDto {
-  amount: number;
-  productId: number;
+  quantity: number;
+  productItemId: number;
   orderId: number;
 }

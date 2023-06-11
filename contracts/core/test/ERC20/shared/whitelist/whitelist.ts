@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
-export function shouldWhiteList(factory: () => Promise<Contract>) {
+export function shouldWhiteList(factory: () => Promise<any>) {
   describe("White list", function () {
     it("should fail: transfer from", async function () {
       const [owner, receiver] = await ethers.getSigners();

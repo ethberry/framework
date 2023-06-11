@@ -10,7 +10,7 @@ import { PromoCreateDto, PromoSearchDto, PromoUpdateDto } from "./dto";
 
 @Public()
 @Roles(UserRole.ADMIN)
-@Controller("/promos")
+@Controller("/ecommerce/promos")
 export class PromoController {
   constructor(private readonly promoService: PromoService) {}
 

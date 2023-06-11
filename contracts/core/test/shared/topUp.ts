@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
@@ -11,7 +11,7 @@ import { deployERC1155 } from "../ERC1155/shared/fixtures";
 import { templateId, tokenId } from "../constants";
 import { shouldReceive } from "./receive";
 
-export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeTopUp(factory: () => Promise<any>) {
   describe("topUp", function () {
     it("should top-up with NATIVE token", async function () {
       const [owner] = await ethers.getSigners();
@@ -21,7 +21,7 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
@@ -29,9 +29,11 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
         { value: amount },
       );
 
-      const lib = await ethers.getContractAt("ExchangeUtils", contractInstance.address, owner);
+      const lib = await ethers.getContractAt("ExchangeUtils", await contractInstance.getAddress(), owner);
 
-      await expect(tx).to.emit(lib, "PaymentEthReceived").withArgs(contractInstance.address, amount);
+      await expect(tx)
+        .to.emit(lib, "PaymentEthReceived")
+        .withArgs(await contractInstance.getAddress(), amount);
       await expect(tx).to.changeEtherBalances([owner, contractInstance], [-amount, amount]);
     });
 
@@ -42,12 +44,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const erc20Instance = await deployERC20();
       await erc20Instance.mint(owner.address, amount);
 
-      await erc20Instance.approve(contractInstance.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 1,
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -63,12 +65,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const erc20Instance = await deployERC1363();
       await erc20Instance.mint(owner.address, amount);
 
-      await erc20Instance.approve(contractInstance.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 1,
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -76,7 +78,7 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
 
       await expect(tx)
         .to.emit(contractInstance, "TransferReceived")
-        .withArgs(contractInstance.address, owner.address, amount, "0x");
+        .withArgs(await contractInstance.getAddress(), owner.address, amount, "0x");
 
       await expect(tx).changeTokenBalances(erc20Instance, [owner, contractInstance], [-amount, amount]);
     });
@@ -87,12 +89,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
 
       const erc20Instance = await deployUsdt();
 
-      await erc20Instance.approve(contractInstance.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 1,
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -107,12 +109,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
 
       const erc20Instance = await deployBusd();
 
-      await erc20Instance.approve(contractInstance.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 1,
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -127,12 +129,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
 
       const erc20Instance = await deployWeth();
 
-      await erc20Instance.approve(contractInstance.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 1,
-          token: erc20Instance.address,
+          token: await erc20Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -148,12 +150,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const erc721Instance = await deployERC721();
       await erc721Instance.mintCommon(owner.address, templateId);
 
-      await erc721Instance.approve(contractInstance.address, tokenId);
+      await erc721Instance.approve(await contractInstance.getAddress(), tokenId);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -169,12 +171,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const erc998Instance = await deployERC998();
       await erc998Instance.mintCommon(owner.address, templateId);
 
-      await erc998Instance.approve(contractInstance.address, tokenId);
+      await erc998Instance.approve(await contractInstance.getAddress(), tokenId);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 3,
-          token: erc998Instance.address,
+          token: await erc998Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -190,12 +192,12 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const erc1155Instance = await deployERC1155();
       await erc1155Instance.mint(owner.address, templateId, amount, "0x");
 
-      await erc1155Instance.setApprovalForAll(contractInstance.address, true);
+      await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
       const tx = contractInstance.topUp([
         {
           tokenType: 4,
-          token: erc1155Instance.address,
+          token: await erc1155Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -210,7 +212,7 @@ export function shouldBehaveLikeTopUp(factory: () => Promise<Contract>) {
       const tx = contractInstance.topUp([
         {
           tokenType: 5,
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId,
           amount,
         },

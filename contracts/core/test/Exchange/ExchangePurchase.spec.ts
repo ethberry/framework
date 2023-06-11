@@ -36,9 +36,9 @@ describe("ExchangePurchaseV2", function () {
 
         const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const erc20Allowance = await erc20Instance.allowance(receiver.address, exchangeInstance.address);
+        const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(erc20Allowance).to.equal(amount);
 
         const signature = await generateOneToManySignature({
@@ -46,14 +46,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -64,14 +64,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -95,29 +95,29 @@ describe("ExchangePurchaseV2", function () {
 
         const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const erc20Allowance = await erc20Instance.allowance(receiver.address, exchangeInstance.address);
+        const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(erc20Allowance).to.equal(amount);
 
-        const tx02 = vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -128,14 +128,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -171,29 +171,29 @@ describe("ExchangePurchaseV2", function () {
 
         const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const erc20Allowance = await erc20Instance.allowance(receiver.address, exchangeInstance.address);
+        const erc20Allowance = await erc20Instance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(erc20Allowance).to.equal(amount);
 
-        const tx02 = vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -204,14 +204,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -247,30 +247,30 @@ describe("ExchangePurchaseV2", function () {
 
         const usdtInstance = await deployUsdt();
         await usdtInstance.transfer(receiver.address, amount);
-        await usdtInstance.connect(receiver).approve(exchangeInstance.address, amount);
+        await usdtInstance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const usdtAllowance = await usdtInstance.allowance(receiver.address, exchangeInstance.address);
+        const usdtAllowance = await usdtInstance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(usdtAllowance).to.equal(amount);
 
         // ADD CONSUMER TO VRFV2
-        const tx02 = vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: usdtInstance.address,
+              token: await usdtInstance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -281,14 +281,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: usdtInstance.address,
+              token: await usdtInstance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -323,30 +323,30 @@ describe("ExchangePurchaseV2", function () {
 
         const busdInstance = await deployBusd();
         await busdInstance.transfer(receiver.address, amount);
-        await busdInstance.connect(receiver).approve(exchangeInstance.address, amount);
+        await busdInstance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const busdAllowance = await busdInstance.allowance(receiver.address, exchangeInstance.address);
+        const busdAllowance = await busdInstance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(busdAllowance).to.equal(amount);
 
         // ADD CONSUMER TO VRFV2
-        const tx02 = vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: busdInstance.address,
+              token: await busdInstance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -357,14 +357,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: busdInstance.address,
+              token: await busdInstance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -399,30 +399,30 @@ describe("ExchangePurchaseV2", function () {
 
         const wethInstance = await deployWeth();
         await wethInstance.transfer(receiver.address, amount);
-        await wethInstance.connect(receiver).approve(exchangeInstance.address, amount);
+        await wethInstance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-        const wethAllowance = await wethInstance.allowance(receiver.address, exchangeInstance.address);
+        const wethAllowance = await wethInstance.allowance(receiver.address, await exchangeInstance.getAddress());
         expect(wethAllowance).to.equal(amount);
 
         // ADD CONSUMER TO VRFV2
-        const tx02 = vrfInstance.addConsumer(subscriptionId, erc721Instance.address);
+        const tx02 = vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
         await expect(tx02)
           .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: wethInstance.address,
+              token: await wethInstance.getAddress(),
               tokenId: 0,
               amount: 1,
             },
@@ -433,20 +433,20 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: wethInstance.address,
+              token: await wethInstance.getAddress(),
               tokenId: 0,
               amount: 1,
             },
           ],
           signature,
-          { gasLimit: 10000000000 }, // block gasLimit
+          { gasLimit: 40966424 }, // block gasLimit
         );
 
         await expect(tx1).to.emit(exchangeInstance, "Purchase");
@@ -475,27 +475,27 @@ describe("ExchangePurchaseV2", function () {
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         const erc20Instance = await deployERC1363("ERC20Blacklist");
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         // DO NOT ADD SUBSCRIPTION CONSUMER FOR THIS TEST
-        // const tx02 = vrfInstance.addConsumer(subId, erc721Instance.address);
+        // const tx02 = vrfInstance.addConsumer(subId, await erc721Instance.getAddress());
         // await expect(tx02)
         //   .to.emit(vrfInstance, "SubscriptionConsumerAdded")
-        //   .withArgs(subId, erc721Instance.address);
+        //   .withArgs(subId, await erc721Instance.getAddress());
 
         const signature = await generateOneToManySignature({
           account: receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           price: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -506,14 +506,14 @@ describe("ExchangePurchaseV2", function () {
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: await erc721Instance.getAddress(),
             tokenId,
             amount: 1,
           },
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId: 0,
               amount,
             },
@@ -523,7 +523,7 @@ describe("ExchangePurchaseV2", function () {
 
         await expect(tx1)
           .to.be.revertedWithCustomError(vrfInstance, `InvalidConsumer`)
-          .withArgs(subscriptionId, erc721Instance.address);
+          .withArgs(subscriptionId, await erc721Instance.getAddress());
       });
     });
   });

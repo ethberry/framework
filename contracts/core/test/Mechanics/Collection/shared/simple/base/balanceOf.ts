@@ -1,17 +1,17 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { batchSize } from "@gemunion/contracts-constants";
 
 import { tokenId } from "../../../../../constants";
 
-export function shouldGetBalanceOf(factory: () => Promise<Contract>) {
+export function shouldGetBalanceOf(factory: () => Promise<any>) {
   describe("balanceOf", function () {
     it("should fail for zero addr", async function () {
       const contractInstance = await factory();
 
-      const tx = contractInstance.balanceOf(constants.AddressZero);
+      const tx = contractInstance.balanceOf(ZeroAddress);
       await expect(tx).to.be.revertedWith(`ERC721: address zero is not a valid owner`);
     });
 
@@ -21,7 +21,7 @@ export function shouldGetBalanceOf(factory: () => Promise<Contract>) {
 
       await contractInstance.mintCommon(owner.address, batchSize + tokenId);
       const balance = await contractInstance.balanceOf(owner.address);
-      expect(balance).to.equal(batchSize + 1);
+      expect(balance).to.equal(batchSize + 1n);
     });
 
     it("should get balance of not owner", async function () {

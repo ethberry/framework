@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { TokenMetadata } from "@framework/types";
 
 export enum MetadataHash {
@@ -14,38 +13,8 @@ export const decodeMetadata = function (tokenMetaData: Array<any>): Record<strin
   return tokenMetaData.reduce(
     (memo: Record<string, string>, current: { key: keyof typeof MetadataHash; value: string }) =>
       Object.assign(memo, {
-        [MetadataHash[current.key]]: BigNumber.from(current.value).toString(),
+        [MetadataHash[current.key]]: current.value,
       }),
     {} as Record<string, string>,
   ) as Record<string, string>;
-};
-
-export const encodeNumbers = (numbers: Array<number>, size = 32) => {
-  let encoded = BigNumber.from(0);
-  numbers.reverse().forEach((number, i) => {
-    encoded = encoded.or(BigNumber.from(number).shl(i * size));
-  });
-  return encoded;
-};
-
-export const decodeNumber = (encoded: BigNumber, size = 32) => {
-  return new Array(256 / size)
-    .fill(null)
-    .map((_e, i) =>
-      encoded
-        .shr(i * size)
-        .mask(size)
-        .toNumber(),
-    )
-    .reverse();
-};
-
-export const encodeTraits = (traits: Record<string, number>) => {
-  return encodeNumbers(Object.values(traits));
-};
-
-export const decodeTraits = (encoded: BigNumber, traits = metadataKeysArray) => {
-  return decodeNumber(encoded)
-    .slice(-traits.length)
-    .reduceRight((memo, value, i) => ({ [traits[i]]: value, ...memo }), {} as Record<string, number>);
 };

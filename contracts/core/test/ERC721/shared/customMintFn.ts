@@ -1,16 +1,18 @@
-import { Contract, Signer, constants } from "ethers";
-import { templateId } from "../../constants";
+import { Signer, ZeroAddress } from "ethers";
+
 import { amount } from "@gemunion/contracts-constants";
 
-export async function customMintCommonERC721(contractInstance: Contract, signer: Signer, receiver: string) {
+import { templateId } from "../../constants";
+
+export async function customMintCommonERC721(contractInstance: any, signer: Signer, receiver: string) {
   return contractInstance.connect(signer).mintCommon(receiver, templateId) as Promise<any>;
 }
 
-export async function customMintBoxERC721(contractInstance: Contract, signer: Signer, receiver: string) {
+export async function customMintBoxERC721(contractInstance: any, signer: Signer, receiver: string) {
   const items = [
     {
       tokenType: 0,
-      token: constants.AddressZero,
+      token: ZeroAddress,
       tokenId: 0,
       amount,
     },

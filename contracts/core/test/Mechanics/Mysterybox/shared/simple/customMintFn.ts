@@ -1,12 +1,12 @@
-import { constants, Contract, Signer } from "ethers";
+import { Signer, ZeroAddress } from "ethers";
 import { amount } from "@gemunion/contracts-constants";
 import { templateId } from "../../../../constants";
 
-export const customMint = (contractInstance: Contract, signer: Signer, receiver: string) => {
+export const customMint = (contractInstance: any, signer: Signer, receiver: string) => {
   return contractInstance.connect(signer).mintBox(receiver, templateId, [
     {
       tokenType: 0,
-      token: constants.AddressZero,
+      token: ZeroAddress,
       tokenId: templateId,
       amount,
     },

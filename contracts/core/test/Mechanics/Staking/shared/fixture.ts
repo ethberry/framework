@@ -1,9 +1,8 @@
 import "@nomicfoundation/hardhat-toolbox";
 
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
-export async function deployStaking(name = "Staking"): Promise<Contract> {
+export async function deployStaking(name = "Staking"): Promise<any> {
   const factory = await ethers.getContractFactory(name);
   return factory.deploy();
 }
