@@ -981,6 +981,7 @@
         "lottery": "Lottery",
         "mystery": "Mystery",
         "pyramid": "Pyramid",
+        "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
         "title": "Mechanics",
@@ -1058,9 +1059,6 @@
       "title": "Orders"
     },
     "lottery": {
-      "kanban": {
-        "title": "Orders"
-      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -1171,6 +1169,18 @@
         "upload": "Upload rule"
       },
       "title": "Pyramid"
+    },
+    "raffle": {
+      "rounds": {
+        "end": "End Round",
+        "start": "Start Round",
+        "title": "Rounds",
+        "wait": "Awaiting round to end"
+      },
+      "tickets": {
+        "title": "Tickets"
+      },
+      "title": "Lottery"
     },
     "rent": {
       "title": "Rent"
