@@ -1,7 +1,7 @@
 import "@nomicfoundation/hardhat-toolbox";
 
 import { ethers, network } from "hardhat";
-import { Contract, utils } from "ethers";
+import { Contract, parseEther } from "ethers";
 
 import { getContractName } from "../../utils";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
@@ -14,18 +14,18 @@ interface ILotteryConfig {
 }
 
 export async function deployLottery(config: ILotteryConfig): Promise<{
-  erc20Instance: Contract;
-  erc721Instance: Contract;
-  lotteryInstance: Contract;
+  erc20Instance: any;
+  erc721Instance: any;
+  lotteryInstance: any;
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
   const factory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
-  const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-  const erc721TicketInstance = await deployERC721("ERC721LotteryTicket");
+  const erc20Instance: any = await deployERC20("ERC20Simple", { amount: parseEther("200000") });
+  const erc721TicketInstance: any = await deployERC721("ERC721LotteryTicket");
 
-  const lotteryInstance = await factory.deploy(config);
+  const lotteryInstance: any = await factory.deploy(config);
 
   return {
     erc20Instance,
@@ -36,18 +36,18 @@ export async function deployLottery(config: ILotteryConfig): Promise<{
 }
 
 export async function deployRaffle(config: ILotteryConfig): Promise<{
-  erc20Instance: Contract;
-  erc721Instance: Contract;
-  raffleInstance: Contract;
+  erc20Instance: any;
+  erc721Instance: any;
+  raffleInstance: any;
   generateSignature: any;
 }> {
   const [owner] = await ethers.getSigners();
   const factory = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
 
-  const erc20Instance = await deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
-  const erc721TicketInstance = await deployERC721("ERC721RaffleTicket");
+  const erc20Instance: any = await deployERC20("ERC20Simple", { amount: parseEther("200000") });
+  const erc721TicketInstance: any = await deployERC721("ERC721RaffleTicket");
 
-  const raffleInstance = await factory.deploy(config);
+  const raffleInstance: any = await factory.deploy(config);
 
   return {
     erc20Instance,
