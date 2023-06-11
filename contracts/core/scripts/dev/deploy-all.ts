@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Contract } from "ethers";
+import { Contract, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
 import { wallet, wallets } from "@gemunion/constants";
 
@@ -9,7 +9,7 @@ import { getContractName } from "../../test/utils";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
-const delayMs = 1500; // block delay ms
+const delayMs = 900; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 interface IObj {
@@ -24,14 +24,12 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
     const tx = Object.values(obj).pop();
-    const contract = await tx.deployed();
+    const contract = tx;
     await blockAwait(delay, delayMs);
     fs.appendFileSync(
       `${process.cwd()}/log.txt`,
       // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
-      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${
-        contract.address ? contract.address : "--"
-      }\n`,
+      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract.getAddress() || "--"}\n`,
     );
   }
 };
@@ -43,8 +41,7 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
       for (let k = 0; k < roles.length; k++) {
         if (contracts[i] !== grantee[j]) {
           const max = contracts.length * grantee.length * roles.length;
-          const accessFabric = await ethers.getContractFactory("ERC721Simple");
-          const accessInstance = accessFabric.attach(contracts[i]);
+          const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
           await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
@@ -55,13 +52,14 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
 };
 
 const contracts: Record<string, any> = {};
-const amount = WeiPerEther.mul(1e12);
+const amount = WeiPerEther * 1000000000000n; // ?
 const timestamp = Math.ceil(Date.now() / 1000);
-let currentBlock: { number: number } = { number: 1 };
+const currentBlock: { number: number } = { number: 1 };
 
 async function main() {
   const [owner] = await ethers.getSigners();
-  currentBlock = await ethers.provider.getBlock("latest");
+  const block = await ethers.provider.getBlock("latest");
+  currentBlock.number = block!.number;
 
   // LINK & VRF
   // const decimals = BigNumber.from(10).pow(18);
@@ -80,14 +78,13 @@ async function main() {
   // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  const vrf = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfAddr =
     network.name === "besu"
       ? "0xa50a51c09a5c451C52BB714527E1974b686D8e77" // vrf besu localhost
       : network.name === "gemunion"
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
       : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
-  const vrfInstance = vrf.attach(vrfAddr); // localhost BESU or GEMUNION
+  const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
   // contracts.contractManager = cmFactory.attach("0x690579e4b583dd87db51361e30e0b3493d5c5e6c");
@@ -128,7 +125,10 @@ async function main() {
 
   await debug(await erc20SimpleInstance.mint(owner.address, amount), "erc20SimpleInstance.mint");
 
-  await debug(await erc20SimpleInstance.approve(contracts.exchange.address, amount), "erc20SimpleInstance.approve");
+  await debug(
+    await erc20SimpleInstance.approve(contracts.exchange.getAddress(), amount),
+    "erc20SimpleInstance.approve",
+  );
 
   const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
   contracts.erc20Inactive = await erc20InactiveFactory.deploy("ERC20 INACTIVE", "OFF20", amount);
@@ -146,7 +146,6 @@ async function main() {
   await debug(await erc20BlacklistInstance.blacklist(wallets[1]), "erc20BlacklistInstance.blacklist");
 
   await debug(await erc20BlacklistInstance.blacklist(wallets[2]), "erc20BlacklistInstance.blacklist");
-
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
   contracts.erc721Simple = await erc721SimpleFactory.deploy("RUNE", "GEM721", royalty, baseTokenURI);
   await debug(contracts);
@@ -185,7 +184,7 @@ async function main() {
 
   // await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Random.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -199,7 +198,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Genes.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc721Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -242,18 +241,18 @@ async function main() {
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998Random");
-  const erc998RandomInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
+  const erc998RandomInstance: any = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
   contracts.erc998Random = erc998RandomInstance;
   await debug(contracts);
 
-  // await debug(await linkInstance.transfer(contracts.erc998Random.address, linkAmountInEth), "linkInstance.transfer");
+  // await debug(await linkInstance.transfer(contracts.erc998Random.getAddress(), linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Random.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Random.getAddress()),
     "vrfInstance.addConsumer",
   );
 
   await debug(
-    await erc998RandomInstance.whiteListChild(contracts.erc721Random.address, 5),
+    await erc998RandomInstance.whiteListChild(contracts.erc721Random.getAddress(), 5),
     "erc998RandomInstance.whiteListChild",
   );
 
@@ -263,7 +262,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Genes.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.erc998Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -323,7 +322,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(mysteryboxSimpleInstance.address, MINTER_ROLE),
+    await contracts.contractManager.addFactory(mysteryboxSimpleInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -333,7 +332,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(mysteryboxPausableInstance.address, MINTER_ROLE),
+    await contracts.contractManager.addFactory(mysteryboxPausableInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -348,7 +347,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(mysteryboxBlacklistInstance.address, MINTER_ROLE),
+    await contracts.contractManager.addFactory(mysteryboxBlacklistInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -374,7 +373,7 @@ async function main() {
             tokenType: 0,
             token: ZeroAddress,
             tokenId: 0,
-            amount: WeiPerEther.div(100).mul(5), // 5%
+            amount: (WeiPerEther / 100n) * 5n, // 5%
           },
         ],
         content: [],
@@ -395,7 +394,7 @@ async function main() {
         deposit: [
           {
             tokenType: 1,
-            token: contracts.erc20Simple.address,
+            token: contracts.erc20Simple.getAddress(),
             tokenId: 0,
             amount: WeiPerEther,
           },
@@ -403,7 +402,7 @@ async function main() {
         reward: [
           {
             tokenType: 2,
-            token: contracts.erc721Random.address,
+            token: contracts.erc721Random.getAddress(),
             tokenId: 306001,
             amount: 1,
           },
@@ -426,7 +425,7 @@ async function main() {
         deposit: [
           {
             tokenType: 3,
-            token: contracts.erc998Random.address,
+            token: contracts.erc998Random.getAddress(),
             tokenId: 0,
             amount: 1,
           },
@@ -434,7 +433,7 @@ async function main() {
         reward: [
           {
             tokenType: 2,
-            token: contracts.erc721MysteryboxSimple.address,
+            token: contracts.erc721MysteryboxSimple.getAddress(),
             tokenId: 601001,
             amount: 1,
           },
@@ -443,7 +442,7 @@ async function main() {
           [
             {
               tokenType: 2,
-              token: contracts.erc721Random.address,
+              token: contracts.erc721Random.getAddress(),
               tokenId: 306001,
               amount: 1,
             },
@@ -473,24 +472,19 @@ async function main() {
     baseTokenURI,
   );
   await debug(contracts);
-  const erc721LotteryWalletFactory = await ethers.getContractFactory("LotteryWallet");
-  contracts.lotteryWallet = await erc721LotteryWalletFactory.deploy([owner.address], [100]);
-  await debug(contracts);
 
   const randomContractLotteryName = getContractName("LotteryRandom", network.name);
   const lotteryFactory = await ethers.getContractFactory(randomContractLotteryName);
-  contracts.lottery = await lotteryFactory.deploy("Lottery", {
-    lotteryWallet: contracts.lotteryWallet.address,
+  contracts.lottery = await lotteryFactory.deploy({
     timeLagBeforeRelease: 3600,
-    maxTickets: 10,
     commission: 30,
   });
   await debug(contracts);
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lottery.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.lottery.getAddress()),
     "vrfInstance.addConsumer",
   );
-  await debug(await contracts.erc721LotteryTicket.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
+  await debug(await contracts.erc721LotteryTicket.grantRole(MINTER_ROLE, contracts.lottery.getAddress()), "grantRole");
 
   // RAFFLE
   const erc721RaffleTicketFactory = await ethers.getContractFactory("ERC721RaffleTicket");
@@ -501,24 +495,19 @@ async function main() {
     baseTokenURI,
   );
   await debug(contracts);
-  const erc721RaffleWalletFactory = await ethers.getContractFactory("RaffleWallet");
-  contracts.raffleWallet = await erc721RaffleWalletFactory.deploy([owner.address], [100]);
-  await debug(contracts);
 
   const randomContractRaffleName = getContractName("RaffleRandom", network.name);
   const raffleFactory = await ethers.getContractFactory(randomContractRaffleName);
-  contracts.raffle = await raffleFactory.deploy("Raffle", {
-    lotteryWallet: contracts.raffleWallet.address,
+  contracts.raffle = await raffleFactory.deploy({
     timeLagBeforeRelease: 3600,
-    maxTickets: 10,
     commission: 30,
   });
   await debug(contracts);
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.raffle.address),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, contracts.raffle.getAddress()),
     "vrfInstance.addConsumer",
   );
-  await debug(await contracts.erc721RaffleTicket.grantRole(MINTER_ROLE, contracts.raffle.address), "grantRole");
+  await debug(await contracts.erc721RaffleTicket.grantRole(MINTER_ROLE, contracts.raffle.getAddress()), "grantRole");
 
   // GENERATIVE
   const erc721CollectionFactory = await ethers.getContractFactory("ERC721CollectionSimple");
@@ -544,8 +533,9 @@ async function main() {
   contracts.weth =
     network.name !== "binance_test"
       ? await wethFactory.deploy()
-      : wethFactory.attach("0x1e33833a035069f42d68D1F53b341643De1C018D"); // binance_test
+      : await ethers.getContractAt("WETH9", "0x1e33833a035069f42d68D1F53b341643De1C018D"); // binance_test
   await debug(contracts);
+  // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
   const waitlistFactory = await ethers.getContractFactory("Waitlist");
   contracts.waitlist = await waitlistFactory.deploy();
@@ -555,7 +545,7 @@ async function main() {
   const items = [
     {
       tokenType: 2,
-      token: contracts.erc721Simple.address,
+      token: contracts.erc721Simple.getAddress(),
       tokenId: 301002,
       amount: "0",
     },
@@ -581,53 +571,57 @@ async function main() {
   // GRANT ROLES
   await grantRoles(
     [
-      contracts.erc1155Blacklist.address,
-      contracts.erc1155New.address,
-      contracts.erc1155Simple.address,
-      contracts.erc721New.address,
-      contracts.erc721Random.address,
-      contracts.erc721Simple.address,
-      contracts.erc721Blacklist.address,
-      contracts.erc721Upgradeable.address,
-      contracts.erc721Rentable.address,
-      contracts.erc721Soulbound.address,
-      contracts.erc721Genes.address,
-      contracts.erc721Generative.address,
-      contracts.erc998Blacklist.address,
-      contracts.erc998New.address,
-      contracts.erc998Random.address,
-      contracts.erc998Simple.address,
-      contracts.erc998Upgradeable.address,
-      contracts.erc998Genes.address,
-      contracts.erc998Rentable.address,
-      contracts.erc998OwnerErc1155Erc20.address,
-      contracts.erc998OwnerErc1155.address,
-      contracts.erc998OwnerErc20.address,
-      mysteryboxBlacklistInstance.address,
-      mysteryboxPausableInstance.address,
-      mysteryboxSimpleInstance.address,
-      contracts.erc721LotteryTicket.address,
-      contracts.erc721RaffleTicket.address,
+      await contracts.erc1155Blacklist.getAddress(),
+      await contracts.erc1155New.getAddress(),
+      await contracts.erc1155Simple.getAddress(),
+      await contracts.erc721New.getAddress(),
+      await contracts.erc721Random.getAddress(),
+      await contracts.erc721Simple.getAddress(),
+      await contracts.erc721Blacklist.getAddress(),
+      await contracts.erc721Upgradeable.getAddress(),
+      await contracts.erc721Rentable.getAddress(),
+      await contracts.erc721Soulbound.getAddress(),
+      await contracts.erc721Genes.getAddress(),
+      await contracts.erc721Generative.getAddress(),
+      await contracts.erc998Blacklist.getAddress(),
+      await contracts.erc998New.getAddress(),
+      await contracts.erc998Random.getAddress(),
+      await contracts.erc998Simple.getAddress(),
+      await contracts.erc998Upgradeable.getAddress(),
+      await contracts.erc998Genes.getAddress(),
+      await contracts.erc998Rentable.getAddress(),
+      await contracts.erc998OwnerErc1155Erc20.getAddress(),
+      await contracts.erc998OwnerErc1155.getAddress(),
+      await contracts.erc998OwnerErc20.getAddress(),
+      await contracts.erc721MysteryboxBlacklist.getAddress(),
+      await contracts.erc721MysteryboxPausable.getAddress(),
+      await contracts.erc721MysteryboxSimple.getAddress(),
+      await contracts.erc721LotteryTicket.getAddress(),
+      await contracts.erc721RaffleTicket.getAddress(),
     ],
     [
-      contracts.erc721Wrapper.address,
-      contracts.exchange.address,
-      contracts.staking.address,
-      contracts.waitlist.address,
-      mysteryboxBlacklistInstance.address,
-      mysteryboxPausableInstance.address,
-      mysteryboxSimpleInstance.address,
-      contracts.lottery.address,
-      contracts.raffle.address,
-      contracts.pyramid.address,
+      await contracts.erc721Wrapper.getAddress(),
+      await contracts.exchange.getAddress(),
+      await contracts.staking.getAddress(),
+      await contracts.waitlist.getAddress(),
+      await contracts.erc721MysteryboxBlacklist.getAddress(),
+      await contracts.erc721MysteryboxPausable.getAddress(),
+      await contracts.erc721MysteryboxSimple.getAddress(),
+      await contracts.lottery.getAddress(),
+      await contracts.raffle.getAddress(),
+      await contracts.pyramid.getAddress(),
     ],
     [MINTER_ROLE],
   );
 
   // GRANT METADATA ROLES
   await grantRoles(
-    [contracts.erc721Random.address, contracts.erc721Upgradeable.address, contracts.erc998Upgradeable.address],
-    [contracts.exchange.address],
+    [
+      await contracts.erc721Random.getAddress(),
+      await contracts.erc721Upgradeable.getAddress(),
+      await contracts.erc998Upgradeable.getAddress(),
+    ],
+    [await contracts.exchange.getAddress()],
     [METADATA_ROLE],
   );
 }
@@ -636,7 +630,7 @@ main()
   .then(() => {
     console.info(`STARTING_BLOCK=${currentBlock.number}`);
     Object.entries(contracts).map(([key, value]) =>
-      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.address.toLowerCase()}`),
+      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.target}`),
     );
     process.exit(0);
   })
