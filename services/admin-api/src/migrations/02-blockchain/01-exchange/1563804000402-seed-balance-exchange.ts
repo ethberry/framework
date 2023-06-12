@@ -44,7 +44,7 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         12170101, -- BUSD
         '${currentDateTime}',
         '${currentDateTime}'

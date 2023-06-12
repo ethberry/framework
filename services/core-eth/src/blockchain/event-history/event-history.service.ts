@@ -108,7 +108,7 @@ export class EventHistoryService {
     this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
     this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;

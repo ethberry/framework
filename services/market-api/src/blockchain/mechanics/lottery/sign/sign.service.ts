@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ZeroAddress, encodeBytes32String, hexlify, WeiPerEther, randomBytes, Wallet } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, Wallet, WeiPerEther, ZeroAddress } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -43,7 +43,7 @@ export class LotterySignService {
       {
         name: "Lottery",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", Number(testChainId)),
         verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
       },
       // Types

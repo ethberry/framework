@@ -52,7 +52,7 @@ export class ContractService {
   }
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractEntity = await this.findOne({ address: address.toLowerCase(), chainId });
     if (contractEntity) {
       return contractEntity.fromBlock;
@@ -61,7 +61,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       address,
@@ -82,7 +82,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByType(contractModule: ModuleType, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       contractModule,
@@ -102,7 +102,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByTokenType(contractType: TokenType, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       contractType,
@@ -126,7 +126,7 @@ export class ContractService {
     contractModule: ModuleType,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<IContractListenerResult> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const where = { contractModule, chainId };
 
     if (contractFeatures && contractFeatures.length) {
@@ -151,7 +151,7 @@ export class ContractService {
     contractType?: TokenType,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<IContractListenerResult> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const queryBuilder = this.contractEntityRepository
       .createQueryBuilder("contract")

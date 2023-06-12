@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, utils, Wallet } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, Wallet, WeiPerEther, ZeroAddress } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -18,9 +18,9 @@ export class RaffleSignService {
   ) {}
 
   public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, ticketNumbers } = dto;
+    const { account, referrer = ZeroAddress, ticketNumbers } = dto;
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
       account,
@@ -29,21 +29,21 @@ export class RaffleSignService {
         externalId: 0,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       ticketNumbers,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(account: string, params: IParams, ticketNumbers: Array<boolean>): Promise<string> {
-    return this.signer._signTypedData(
+    return this.signer.signTypedData(
       // Domain
       {
         name: "Raffle",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", Number(testChainId)),
         verifyingContract: this.configService.get<string>("RAFFLE_ADDR", ""),
       },
       // Types
@@ -66,7 +66,7 @@ export class RaffleSignService {
         account,
         params,
         numbers: ticketNumbers,
-        price: constants.WeiPerEther,
+        price: WeiPerEther,
       },
     );
   }

@@ -1,8 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "ethers";
+import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
-import { JsonRpcProvider, Wallet } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -90,7 +89,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -140,7 +139,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -202,7 +201,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -271,7 +270,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -329,7 +328,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -363,7 +362,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -400,7 +399,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -435,7 +434,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -471,7 +470,7 @@ export class ContractManagerServiceEth {
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),

@@ -36,7 +36,7 @@ export class AuthMetamaskService {
     if (!userEntity) {
       const userFb = await this.admin.auth().createUser({});
 
-      const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+      const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
       userEntity = await this.userService.import({
         displayName: wallet,

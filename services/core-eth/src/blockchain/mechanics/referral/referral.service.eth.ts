@@ -27,7 +27,7 @@ export class ReferralServiceEth {
     const { args } = event;
     const { token } = args;
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.findOne({ chainId, address: token });
 

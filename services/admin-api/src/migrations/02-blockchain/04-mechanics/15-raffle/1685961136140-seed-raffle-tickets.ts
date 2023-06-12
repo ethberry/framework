@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -20,35 +20,35 @@ export class SeedRaffleTicketsAt1685961136140 implements MigrationInterface {
         '${wallets[0]}',
         1,
         111010101,
-        '${constants.WeiPerEther.mul(5).toString()}',
+        '${WeiPerEther * 5n}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

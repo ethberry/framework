@@ -1,8 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Wallet } from "ethers";
+import { Log, Wallet } from "ethers";
 
-import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {

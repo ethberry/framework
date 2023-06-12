@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "@ethersproject/abstract-provider";
-import { constants } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IERC721TokenTransferEvent, IRafflePurchaseEvent, TokenStatus } from "@framework/types";
@@ -91,7 +90,7 @@ export class RaffleTicketServiceEth {
     const { address } = context;
 
     // create token at RAFFLE PURCHASE EVENT
-    if (from !== constants.AddressZero) {
+    if (from !== ZeroAddress) {
       const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
       if (!erc721TokenEntity) {
@@ -100,9 +99,9 @@ export class RaffleTicketServiceEth {
 
       await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-      if (from === constants.AddressZero) {
+      if (from === ZeroAddress) {
         // RAFFLE PURCHASE EVENT
-      } else if (to === constants.AddressZero) {
+      } else if (to === ZeroAddress) {
         erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
       } else {
         // change token's owner
