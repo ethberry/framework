@@ -24,9 +24,7 @@ export const RaffleRounds: FC = () => {
     handleChangePage,
   } = useCollection<IRaffleRound, ISearchDto>({
     baseUrl: "/raffle/rounds",
-    empty: {
-      numbers: [],
-    },
+    empty: {},
   });
 
   return (
@@ -43,9 +41,7 @@ export const RaffleRounds: FC = () => {
         <List>
           {rows.map((round, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {round.roundId} - {round.numbers || "awaiting results"}
-              </ListItemText>
+              <ListItemText>{"awaiting results"}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>
                   <Visibility />
