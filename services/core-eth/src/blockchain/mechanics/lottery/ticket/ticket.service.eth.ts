@@ -1,10 +1,9 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "ethers";
-import { ZeroAddress } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IERC721TokenTransferEvent, ILotteryPurchaseEvent, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, TokenStatus } from "@framework/types";
 
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryRoundService } from "../round/round.service";
@@ -34,33 +33,32 @@ export class LotteryTicketServiceEth {
     this.lotteryAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "0x");
   }
 
-  public async purchase(event: ILogEvent<ILotteryPurchaseEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const {
-      args: { tokenId, account, price, round, numbers },
-    } = event;
-
-    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
-
-    if (!roundEntity) {
-      throw new NotFoundException("roundNotFound");
-    }
-
-    const tokenEntity = await this.createTicketToken(tokenId, account);
-
-    await this.lotteryTicketService.create({
-      account: account.toLowerCase(),
-      numbers,
-      amount: price,
-      roundId: roundEntity.id,
-      tokenId: tokenEntity.id,
-    });
-  }
+  // public async purchase(event: ILogEvent<ILotteryPurchaseEvent>, context: Log): Promise<void> {
+  //   await this.eventHistoryService.updateHistory(event, context);
+  //
+  //   const {
+  //     args: { tokenId, account, price, round, numbers },
+  //   } = event;
+  //
+  //   const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
+  //
+  //   if (!roundEntity) {
+  //     throw new NotFoundException("roundNotFound");
+  //   }
+  //
+  //   const tokenEntity = await this.createTicketToken(tokenId, account);
+  //
+  //   await this.lotteryTicketService.create({
+  //     account: account.toLowerCase(),
+  //     numbers,
+  //     amount: price,
+  //     roundId: roundEntity.id,
+  //     tokenId: tokenEntity.id,
+  //   });
+  // }
 
   public async createTicketToken(tokenId: string, account: string): Promise<TokenEntity> {
     // LOTTERY Ticket Template 801001
-    // const templateEntity = await this.templateService.findOne({ id: 801001 }, { relations: { contract: true } });
     const templateEntity = await this.templateService.findOne(
       {
         contract: { address: this.lotteryAddr.toLowerCase() },
@@ -93,7 +91,9 @@ export class LotteryTicketServiceEth {
 
     // create token at LOTTERY PURCHASE EVENT
     if (from !== ZeroAddress) {
-      const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+      const erc721TokenEntity = await this.createTicketToken(tokenId, to);
+
+      // const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
       if (!erc721TokenEntity) {
         throw new NotFoundException("tokenNotFound");

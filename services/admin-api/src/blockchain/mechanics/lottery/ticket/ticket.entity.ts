@@ -28,7 +28,4 @@ export class LotteryTicketEntity extends IdDateBaseEntity implements ILotteryTic
   @JoinColumn()
   @OneToOne(_type => TokenEntity)
   public token: TokenEntity;
-
-  @Column({ type: "numeric" })
-  public amount: string;
 }

@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { RaffleRoundEntity } from "./round.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class RaffleRoundService {
@@ -20,5 +21,29 @@ export class RaffleRoundService {
 
   public async create(dto: DeepPartial<RaffleRoundEntity>): Promise<RaffleRoundEntity> {
     return this.roundEntityRepository.create(dto).save();
+  }
+
+  public getRound(roundId: string, address: string, chainId?: number): Promise<RaffleRoundEntity | null> {
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
+
+    queryBuilder.andWhere("round.roundId = :roundId", {
+      roundId,
+    });
+
+    queryBuilder.andWhere("contract.address = :address", {
+      address,
+    });
+
+    if (chainId) {
+      queryBuilder.andWhere("contract.chainId = :chainId", {
+        chainId,
+      });
+    }
+
+    return queryBuilder.getOne();
   }
 }

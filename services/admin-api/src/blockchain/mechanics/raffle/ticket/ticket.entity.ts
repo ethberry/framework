@@ -25,7 +25,4 @@ export class RaffleTicketEntity extends IdDateBaseEntity implements IRaffleTicke
   @JoinColumn()
   @OneToOne(_type => TokenEntity)
   public token: TokenEntity;
-
-  @Column({ type: "numeric" })
-  public amount: string;
 }

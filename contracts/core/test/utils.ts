@@ -1,5 +1,5 @@
 import { snakeToCamelCase } from "@gemunion/utils";
-import { zeroPadValue, concat, toBeHex } from "ethers";
+import { concat, Result, toBeHex, toQuantity, zeroPadValue } from "ethers";
 
 // Patch BigNumber
 // https://github.com/GoogleChromeLabs/jsbi/issues/30
@@ -28,6 +28,10 @@ export const getNumbersBytes = (selected = [0, 1, 2, 3, 5, 8]) => {
     numbers.push(toBeHex(s));
   });
   return zeroPadValue(concat(numbers), 32);
+};
+
+export const getBytesNumbers = (selected = 4328719624n) => {
+  return toQuantity(selected);
 };
 
 export const getContractName = (base: string, network: string) => {
@@ -73,4 +77,24 @@ export const isEqualEventArgArrObj = (...args: any[]): any => {
     }
     return true;
   };
+};
+
+export const recursivelyDecodeResult = (result: Result): Record<string, any> => {
+  if (typeof result !== "object") {
+    // Raw primitive value
+    return result;
+  }
+  try {
+    const obj = result.toObject();
+    if (obj._) {
+      throw new Error("Decode as array, not object");
+    }
+    Object.keys(obj).forEach(key => {
+      obj[key] = recursivelyDecodeResult(obj[key]);
+    });
+    return obj;
+  } catch (err) {
+    // Result is array.
+    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
+  }
 };

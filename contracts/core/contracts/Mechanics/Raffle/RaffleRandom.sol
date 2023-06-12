@@ -138,6 +138,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
         round.startTimestamp,
         round.endTimestamp,
         round.maxTicket,
+        round.prizeNumber,
         round.acceptedAsset,
         round.ticketAsset
       );
@@ -187,16 +188,16 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   }
 
   // ROUND
-
   function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
     Round storage currentRound = _rounds[_rounds.length - 1];
 
     // calculate wining numbers
     uint256 len = currentRound.ticketCounter.current();
-    uint256 prizeNumber = randomWords[0] % len;
+
+    uint256 prizeNumber = len > 0 ? randomWords[0] % len : 0; // if no tickets sold
 
     // in case number is Zero - winner tokenId is 1
-    currentRound.prizeNumber = prizeNumber == 0 ? prizeNumber + 1 : prizeNumber;
+    currentRound.prizeNumber = prizeNumber == 0 && len > 0 ? prizeNumber + 1 : prizeNumber;
 
     emit RoundFinalized(currentRound.roundId, prizeNumber);
   }

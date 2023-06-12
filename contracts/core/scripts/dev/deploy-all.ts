@@ -26,10 +26,11 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
     const tx = Object.values(obj).pop();
     const contract = tx;
     await blockAwait(delay, delayMs);
+    const address = await await contract.getAddress();
     fs.appendFileSync(
       `${process.cwd()}/log.txt`,
       // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
-      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract.getAddress() || "--"}\n`,
+      `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${address.toLowerCase() || "--"}\n`,
     );
   }
 };
@@ -60,6 +61,11 @@ async function main() {
   const [owner] = await ethers.getSigners();
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
+  fs.appendFileSync(
+    `${process.cwd()}/log.txt`,
+    // `${camelToSnakeCase(Object.keys(obj).pop() || "none").toUpperCase()}_ADDR=${contract && contract.address ? contract.address.toLowerCase : "--"}\n`,
+    `STARTING_BLOCK=${currentBlock.number}\n`,
+  );
 
   // LINK & VRF
   // const decimals = BigNumber.from(10).pow(18);
@@ -630,7 +636,7 @@ main()
   .then(() => {
     console.info(`STARTING_BLOCK=${currentBlock.number}`);
     Object.entries(contracts).map(([key, value]) =>
-      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.target}`),
+      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.target.toLowerCase()}`),
     );
     process.exit(0);
   })

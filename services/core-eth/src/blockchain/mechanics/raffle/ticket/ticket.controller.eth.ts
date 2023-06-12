@@ -9,8 +9,8 @@ import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  IRafflePurchaseEvent,
-  RaffleEventType,
+  // IRafflePurchaseEvent,
+  // RaffleEventType,
 } from "@framework/types";
 
 import { RaffleTicketServiceEth } from "./ticket.service.eth";
@@ -23,10 +23,10 @@ export class RaffleTicketControllerEth {
     private readonly tokenServiceEth: TokenServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.PurchaseRaffle })
-  public purchase(@Payload() event: ILogEvent<IRafflePurchaseEvent>, @Ctx() context: Log): Promise<void> {
-    return this.ticketServiceEth.purchase(event, context);
-  }
+  // @EventPattern({ contractType: ContractType.RAFFLE, eventName: RaffleEventType.PurchaseRaffle })
+  // public purchase(@Payload() event: ILogEvent<IRafflePurchaseEvent>, @Ctx() context: Log): Promise<void> {
+  //   return this.ticketServiceEth.purchase(event, context);
+  // }
 
   @EventPattern({ contractType: ContractType.RAFFLE, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {

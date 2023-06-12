@@ -32,6 +32,11 @@ export class CreateLotteryRoundAt1660436476100 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "max_tickets",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "start_timestamp",
           type: "timestamptz",
         },

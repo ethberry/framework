@@ -1,23 +1,21 @@
+import { IExchangeItem } from "./exchange";
+
 export enum LotteryEventType {
   RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
-  PurchaseLottery = "PurchaseLottery",
   Released = "Released",
   Prize = "Prize",
 }
+// event RoundStarted(uint256 round, uint256 startTimestamp);
+// event RoundEnded(uint256 round, uint256 endTimestamp);
+// event RoundFinalized(uint256 round, uint8[6] winValues);
+// event Released(uint256 round, uint256 amount);
+// event Prize(address account, uint256 ticketId, uint256 amount);
 
 export interface IRoundFinalizedEvent {
   round: string;
   winValues: Array<number>;
-}
-
-export interface ILotteryPurchaseEvent {
-  tokenId: string;
-  account: string;
-  price: string;
-  round: string;
-  numbers: Array<boolean>;
 }
 
 export interface IRoundStartedEvent {
@@ -41,10 +39,20 @@ export interface ILotteryReleaseEvent {
   amount: string;
 }
 
+export interface ILotteryRoundInfo {
+  roundId: string;
+  startTimestamp: string;
+  endTimestamp: string;
+  maxTicket: string;
+  values: Array<string>; // uint8[6] prize numbers
+  aggregation: Array<string>; // uint8[7] prize counts
+  acceptedAsset: IExchangeItem;
+  ticketAsset: IExchangeItem;
+}
+
 export type TLotteryEventData =
   | IRoundStartedEvent
   | IRoundEndedEvent
-  | ILotteryPurchaseEvent
   | ILotteryPrizeEvent
   | ILotteryReleaseEvent
   | IRoundFinalizedEvent;

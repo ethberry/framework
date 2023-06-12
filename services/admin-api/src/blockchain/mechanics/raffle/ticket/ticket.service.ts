@@ -15,7 +15,6 @@ export class RaffleTicketService {
 
   public async search(dto: Partial<IRaffleTicketSearchDto>): Promise<[Array<RaffleTicketEntity>, number]> {
     const { roundIds, skip, take } = dto;
-
     const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
     queryBuilder.leftJoinAndSelect("ticket.round", "round");
     queryBuilder.leftJoinAndSelect("ticket.token", "token");

@@ -110,6 +110,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'LevelUp',
         'MetadataUpdate',
         
+        'PurchaseLottery',
+        'PurchaseRaffle',
         -- MODULE:LOTTERY
         -- MODULE:RAFFLE
         'RoundFinalized',
@@ -117,8 +119,6 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'RoundEnded',
         'Released',
         'Prize',
-        'PurchaseLottery',
-        'PurchaseRaffle',
 
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',

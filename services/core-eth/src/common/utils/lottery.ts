@@ -21,7 +21,7 @@ export const getLotteryNumbers = (selected: Array<number>) => {
 export const getCurrentRound = async function (
   address: string,
   abi: any,
-  provider: ethers.providers.JsonRpcProvider,
+  provider: ethers.JsonRpcProvider,
 ): Promise<ILotteryCurrentRound> {
   const contract = new ethers.Contract(address, abi, provider);
 

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IERC721TokenTransferEvent, IRafflePurchaseEvent, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IExchangePurchaseRaffleEvent, TokenStatus } from "@framework/types";
 
 import { RaffleTicketService } from "./ticket.service";
 import { RaffleRoundService } from "../round/round.service";
@@ -11,7 +11,6 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
@@ -33,55 +32,54 @@ export class RaffleTicketServiceEth {
     this.raffleAddr = configService.get<string>("ERC721_RAFFLE_ADDR", "0x");
   }
 
-  public async purchase(event: ILogEvent<IRafflePurchaseEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
-    const {
-      args: { tokenId, account, price, round },
-    } = event;
-
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
-
-    if (!roundEntity) {
-      throw new NotFoundException("roundNotFound");
-    }
-
-    const tokenEntity = await this.createTicketToken(tokenId, account);
-
-    await this.raffleTicketService.create({
-      account: account.toLowerCase(),
-      amount: price,
-      roundId: roundEntity.id,
-      tokenId: tokenEntity.id,
-    });
-  }
-
-  public async createTicketToken(tokenId: string, account: string): Promise<TokenEntity> {
-    // RAFFLE Ticket Template 801001
-    // const templateEntity = await this.templateService.findOne({ id: 801001 }, { relations: { contract: true } });
-    const templateEntity = await this.templateService.findOne(
-      {
-        contract: { address: this.raffleAddr.toLowerCase() },
-      },
-      { relations: { contract: true } },
-    );
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const tokenEntity = await this.tokenService.create({
-      tokenId,
-      metadata: "{}",
-      royalty: templateEntity.contract.royalty,
-      templateId: templateEntity.id,
-      tokenStatus: TokenStatus.MINTED,
-    });
-
-    await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), "1");
-
-    return tokenEntity;
-  }
+  // // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
+  // public async purchase(event: ILogEvent<IExchangePurchaseRaffleEvent>): Promise<void> {
+  //   const {
+  //     args: { account, roundId, items, price },
+  //   } = event;
+  //
+  //   const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+  //
+  //   if (!roundEntity) {
+  //     throw new NotFoundException("roundNotFound");
+  //   }
+  //
+  //   const tokenEntity = await this.createTicketToken(tokenId, account);
+  //
+  //   await this.raffleTicketService.create({
+  //     account: account.toLowerCase(),
+  //     amount: price,
+  //     roundId: roundEntity.id,
+  //     tokenId: tokenEntity.id,
+  //   });
+  // }
+  //
+  // public async createTicketToken(tokenId: string, account: string): Promise<TokenEntity> {
+  //   // RAFFLE Ticket Template 801001
+  //   // const templateEntity = await this.templateService.findOne({ id: 801001 }, { relations: { contract: true } });
+  //   const templateEntity = await this.templateService.findOne(
+  //     {
+  //       contract: { address: this.raffleAddr.toLowerCase() },
+  //     },
+  //     { relations: { contract: true } },
+  //   );
+  //
+  //   if (!templateEntity) {
+  //     throw new NotFoundException("templateNotFound");
+  //   }
+  //
+  //   const tokenEntity = await this.tokenService.create({
+  //     tokenId,
+  //     metadata: "{}",
+  //     royalty: templateEntity.contract.royalty,
+  //     templateId: templateEntity.id,
+  //     tokenStatus: TokenStatus.MINTED,
+  //   });
+  //
+  //   await this.balanceService.increment(tokenEntity.id, account.toLowerCase(), "1");
+  //
+  //   return tokenEntity;
+  // }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {

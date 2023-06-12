@@ -7,6 +7,8 @@ export interface IRaffleRound extends IIdDateBase {
   tickets?: Array<IRaffleTicket>;
   roundId: string;
   contractId: number;
+  maxTickets: number;
+  number: string | null; // winner
   startTimestamp: string;
   endTimestamp: string;
 }

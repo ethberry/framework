@@ -149,6 +149,8 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
         round.startTimestamp,
         round.endTimestamp,
         round.maxTicket,
+        round.values,
+        round.aggregation,
         round.acceptedAsset,
         round.ticketAsset
       );

@@ -13,98 +13,84 @@ export class SeedRaffleTicketsAt1685961136140 implements MigrationInterface {
         account,
         round_id,
         token_id,
-        amount,
         created_at,
         updated_at
       ) VALUES (
         '${wallets[0]}',
         1,
         111010101,
-        '${WeiPerEther * 5n}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
         111010101,
-        '${WeiPerEther}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         1,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         1,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         2,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         2,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         2,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         3,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         3,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         3,
         111010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       );

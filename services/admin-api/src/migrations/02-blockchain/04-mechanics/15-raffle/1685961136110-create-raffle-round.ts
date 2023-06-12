@@ -13,9 +13,8 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "numbers",
-          type: "int",
-          isArray: true,
+          name: "number",
+          type: "uint256",
           isNullable: true,
         },
         {
@@ -25,6 +24,11 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
         {
           name: "contract_id",
           type: "int",
+        },
+        {
+          name: "max_tickets",
+          type: "int",
+          isNullable: true,
         },
         {
           name: "start_timestamp",

@@ -10,7 +10,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.raffle_round (
-        numbers,
+        number,
         round_id,
         contract_id,
         start_timestamp,
@@ -18,7 +18,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        '{${[1].join(",")}}',
+        '1',
         '1',
         15,
         '${subDays(now, 3).toISOString()}',
@@ -26,7 +26,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '{${[2].join(",")}}',
+        '2',
         '2',
         15,
         '${subDays(now, 1).toISOString()}',
@@ -34,7 +34,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '{${[3].join(",")}}',
+        null,
         '3',
         15,
         '${addDays(now, 1).toISOString()}',

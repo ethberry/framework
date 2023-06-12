@@ -9,8 +9,7 @@ import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  ILotteryPurchaseEvent,
-  LotteryEventType,
+  // LotteryEventType,
 } from "@framework/types";
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
@@ -22,11 +21,6 @@ export class LotteryTicketControllerEth {
     private readonly ticketServiceEth: LotteryTicketServiceEth,
     private readonly tokenServiceEth: TokenServiceEth,
   ) {}
-
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.PurchaseLottery })
-  public purchase(@Payload() event: ILogEvent<ILotteryPurchaseEvent>, @Ctx() context: Log): Promise<void> {
-    return this.ticketServiceEth.purchase(event, context);
-  }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {

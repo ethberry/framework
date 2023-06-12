@@ -28,7 +28,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
+        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, []);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -45,7 +45,6 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             eventNames: [
               LotteryEventType.Prize,
               LotteryEventType.RoundEnded,
-              LotteryEventType.PurchaseLottery,
               LotteryEventType.Released,
               LotteryEventType.RoundStarted,
               LotteryEventType.RoundFinalized,

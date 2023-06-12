@@ -63,6 +63,10 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.Upgrade,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
+              // MODULE:LOTTERY
+              ExchangeEventType.PurchaseLottery,
+              // MODULE:RAFFLE
+              ExchangeEventType.PurchaseRaffle,
               // MODULE:PAYMENT_SPLITTER
               ExchangeEventType.PayeeAdded,
               ExchangeEventType.PaymentReceived,

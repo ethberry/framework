@@ -12,9 +12,6 @@ export class RaffleTicketEntity extends IdDateBaseEntity implements IRaffleTicke
   @Column({ type: "varchar" })
   public account: string;
 
-  @Column({ type: "boolean", array: true })
-  public numbers: Array<boolean>;
-
   @Column({ type: "int" })
   public roundId: number;
 
@@ -28,7 +25,4 @@ export class RaffleTicketEntity extends IdDateBaseEntity implements IRaffleTicke
   @JoinColumn()
   @OneToOne(_type => TokenEntity)
   public token: TokenEntity;
-
-  @Column({ type: "numeric" })
-  public amount: string;
 }

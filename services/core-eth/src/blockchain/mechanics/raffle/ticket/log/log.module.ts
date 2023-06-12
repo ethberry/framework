@@ -3,7 +3,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  ModuleType,
+} from "@framework/types";
 
 // system contract
 import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
@@ -19,17 +25,18 @@ import { RaffleTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const raffleTicketAddr = configService.get<string>("ERC721_RAFFLE_ADDR", "");
+        const raffleTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(raffleTicketAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.RAFFLE,
-            contractAddress: [raffleTicketAddr],
+            contractAddress: raffleTicketAddr.address || [],
             contractInterface: RaffleTicketSol.abi,
             // prettier-ignore
             eventNames: [
@@ -45,7 +52,7 @@ import { RaffleTicketLogService } from "./log.service";
             ],
           },
           block: {
-            fromBlock,
+            fromBlock: raffleTicketAddr.fromBlock || startingBlock,
             debug: false,
             cron,
           },

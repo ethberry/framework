@@ -19,6 +19,7 @@ struct RoundInfo {
   uint256 startTimestamp;
   uint256 endTimestamp;
   uint256 maxTicket;
+  uint256 prizeNumber; // prize number
   Asset acceptedAsset;
   Asset ticketAsset;
 }

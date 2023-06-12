@@ -97,7 +97,7 @@ export class AchievementsRuleService {
     if (!event) {
       throw new NotFoundException("eventNotFound");
     }
-    // console.log("processEvent", event);
+
     const { contractId, eventType, eventData } = event;
 
     if (eventData && "from" in eventData) {

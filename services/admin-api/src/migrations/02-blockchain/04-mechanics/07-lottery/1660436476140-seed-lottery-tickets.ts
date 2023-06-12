@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
@@ -22,7 +21,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         numbers,
         round_id,
         token_id,
-        amount,
         created_at,
         updated_at
       ) VALUES (
@@ -30,7 +28,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         1,
         121010101,
-        '${(WeiPerEther * 5n).toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -38,7 +35,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([1, 2, 3, 4, 5, 6])}',
         1,
         121010101,
-        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -46,7 +42,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([11, 12, 13, 14, 15, 16])}',
         1,
         121010101,
-        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -54,7 +49,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([21, 22, 23, 24, 25, 26])}',
         1,
         121010101,
-        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -62,7 +56,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers([31, 32, 33, 34, 35, 36])}',
         1,
         121010101,
-        '${WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -70,7 +63,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         1,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -78,7 +70,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         1,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -86,7 +77,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         2,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -94,7 +84,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         2,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -102,7 +91,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         2,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -110,7 +98,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         3,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -118,7 +105,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         3,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -126,7 +112,6 @@ export class SeedLotteryTicketsAt1660436476140 implements MigrationInterface {
         '${getNumbers()}',
         3,
         121010101,
-        '0',
         '${currentDateTime}',
         '${currentDateTime}'
       );

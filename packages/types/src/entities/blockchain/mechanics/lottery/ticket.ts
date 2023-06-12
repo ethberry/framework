@@ -10,5 +10,4 @@ export interface ILotteryTicket extends IIdDateBase {
   round?: ILotteryRound;
   tokenId: number;
   token?: IToken;
-  amount: string;
 }

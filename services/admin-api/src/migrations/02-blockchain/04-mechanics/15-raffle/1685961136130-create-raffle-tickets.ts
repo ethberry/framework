@@ -25,10 +25,6 @@ export class CreateRaffleTicketAt1685961136130 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "amount",
-          type: "uint256",
-        },
-        {
           name: "created_at",
           type: "timestamptz",
         },

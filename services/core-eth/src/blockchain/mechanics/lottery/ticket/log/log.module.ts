@@ -3,7 +3,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  ModuleType,
+} from "@framework/types";
 
 // system contract
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
@@ -19,17 +25,17 @@ import { LotteryTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryTicketAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "");
+        const lotteryTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(lotteryTicketAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: [lotteryTicketAddr],
+            contractAddress: lotteryTicketAddr.address || [],
             contractInterface: LotteryTicketSol.abi,
             // prettier-ignore
             eventNames: [
@@ -45,7 +51,7 @@ import { LotteryTicketLogService } from "./log.service";
             ],
           },
           block: {
-            fromBlock,
+            fromBlock: lotteryTicketAddr.fromBlock || startingBlock,
             debug: false,
             cron,
           },

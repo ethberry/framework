@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
-import { ArrayOverlap, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, In, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
 
@@ -129,11 +129,18 @@ export class ContractService {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const where = { contractModule, chainId };
 
-    if (contractFeatures && contractFeatures.length) {
-      Object.assign(where, {
-        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
-        contractFeatures: ArrayOverlap(contractFeatures),
-      });
+    if (contractFeatures) {
+      if (contractFeatures.length) {
+        Object.assign(where, {
+          // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+          contractFeatures: ArrayOverlap(contractFeatures),
+        });
+      } else {
+        Object.assign(where, {
+          // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+          contractFeatures: In([]),
+        });
+      }
     }
 
     const contractEntities = await this.findAll(where);

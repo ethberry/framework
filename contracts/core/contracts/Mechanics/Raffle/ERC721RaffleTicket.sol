@@ -9,14 +9,17 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721RaffleTicket.sol";
 
-contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
+contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
   using Counters for Counters.Counter;
 
   mapping(uint256 => TicketRaffle) private _data;
+
+  bytes32 constant ROUND = keccak256("ROUND");
 
   constructor(
     string memory name,
@@ -34,6 +37,8 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl {
     _tokenIdTracker.increment();
 
     _data[tokenId] = TicketRaffle(round);
+
+    _upsertRecordField(tokenId, ROUND, round);
 
     _safeMint(account, tokenId);
   }

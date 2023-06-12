@@ -9,6 +9,10 @@ export enum ExchangeEventType {
   Mysterybox = "Mysterybox",
   // MODULE:GRADE
   Upgrade = "Upgrade",
+  // MODULE:LOTTERY
+  PurchaseLottery = "PurchaseLottery",
+  // MODULE:RAFFLE
+  PurchaseRaffle = "PurchaseRaffle",
   // MODULE:WAITLIST
   RewardSet = "RewardSet",
   ClaimReward = "ClaimReward",
@@ -32,6 +36,26 @@ export interface IExchangePurchaseEvent {
   externalId: string;
   item: IExchangeItem;
   price: Array<IExchangeItem>;
+}
+
+// MODULE:LOTTERY
+// event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
+
+export interface IExchangePurchaseLotteryEvent {
+  account: string;
+  items: Array<IExchangeItem>;
+  price: IExchangeItem;
+  roundId: string;
+  numbers: string;
+}
+
+// MODULE:RAFFLE
+// event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
+export interface IExchangePurchaseRaffleEvent {
+  account: string;
+  items: Array<IExchangeItem>;
+  price: IExchangeItem;
+  roundId: string;
 }
 
 // MODULE:CLAIM
@@ -138,4 +162,6 @@ export type TExchangeEvents =
   | IExchangePaymentReceivedEvent
   | IExchangePaymentReleasedEvent
   | IExchangeErc20PaymentReleasedEvent
-  | IExchangeLendEvent;
+  | IExchangeLendEvent
+  | IExchangePurchaseLotteryEvent
+  | IExchangePurchaseRaffleEvent;
