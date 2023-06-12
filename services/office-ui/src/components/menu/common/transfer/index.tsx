@@ -9,9 +9,9 @@ import { getEmptyToken } from "@gemunion/mui-inputs-asset";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, IContract, TokenType } from "@framework/types";
 
-import ERC20TransferABI from "../../../../abis/components/menu/common/transfer/erc20.transfer.abi.json";
-import ERC721SafeTransferFromABI from "../../../../abis/components/menu/common/transfer/erc721.safeTransferFrom.abi.json";
-import ERC1155SafeTransferFromABI from "../../../../abis/components/menu/common/transfer/erc1155.safeTransferFrom.abi.json";
+import ERC20TransferABI from "../../../../abis/hierarchy/erc20/transfer/erc20.transfer.abi.json";
+import ERC721SafeTransferFromABI from "../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
+import ERC1155SafeTransferFromABI from "../../../../abis/hierarchy/erc1155/transfer/erc1155.safeTransferFrom.abi.json";
 
 import { ITransferDto, TransferDialog } from "./dialog";
 
@@ -35,7 +35,7 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
       }) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC20) {
       const contract = new Contract(address, ERC20TransferABI, web3Context.provider?.getSigner());
-      return contract.transfer(web3Context.account, values.address, asset.amount) as Promise<any>;
+      return contract.transfer(values.address, asset.amount) as Promise<any>;
     } else if (asset.tokenType === TokenType.ERC721 || asset.tokenType === TokenType.ERC998) {
       const contract = new Contract(address, ERC721SafeTransferFromABI, web3Context.provider?.getSigner());
       return contract["safeTransferFrom(address,address,uint256)"](

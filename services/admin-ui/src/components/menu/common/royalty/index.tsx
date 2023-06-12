@@ -7,7 +7,7 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { ContractFeatures } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import RoyaltySetDefaultRoyaltyABI from "../../../../abis/extensions/royalty/setDefaultRoyalty.abi.json";
 
@@ -19,7 +19,7 @@ export interface IRoyaltyMenuItemProps {
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const {
-    contract: { address, contractFeatures, royalty },
+    contract: { address, contractFeatures, royalty, contractType },
   } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
@@ -42,6 +42,10 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
       setIsRoyaltyDialogOpen(false);
     });
   };
+
+  if (contractType === TokenType.NATIVE || contractType === TokenType.ERC20) {
+    return null;
+  }
 
   return (
     <Fragment>

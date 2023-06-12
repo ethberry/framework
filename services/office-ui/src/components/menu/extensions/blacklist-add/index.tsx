@@ -7,8 +7,9 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
-import BlacklistABI from "../../../../abis/components/menu/extensions/blacklist-add/blacklist.abi.json";
+import BlacklistABI from "../../../../abis/extensions/blacklist-add/blacklist.abi.json";
 
 import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
@@ -18,7 +19,7 @@ export interface IBlacklistMenuItemProps {
 
 export const BlacklistMenuItem: FC<IBlacklistMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractFeatures },
   } = props;
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
@@ -41,6 +42,10 @@ export const BlacklistMenuItem: FC<IBlacklistMenuItemProps> = props => {
       setIsBlacklistDialogOpen(false);
     });
   };
+
+  if (!contractFeatures.includes(ContractFeatures.BLACKLIST)) {
+    return null;
+  }
 
   return (
     <Fragment>

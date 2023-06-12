@@ -13,7 +13,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { DurationUnit, IMysterybox, IStakingRule, TokenType } from "@framework/types";
 
-import StakingSetRulesABI from "../../../../../abis/components/buttons/mechanics/staking/upload/setRules.abi.json";
+import StakingSetRulesABI from "../../../../../abis/mechanics/staking/upload/setRules.abi.json";
 import { StakingRuleUploadDialog } from "./upload-dialog";
 
 export interface IStakingRuleUploadCreateButtonProps {

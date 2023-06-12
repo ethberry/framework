@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IStakingContractDeployDto } from "@framework/types";
 
-import StakingDeployStakingABI from "../../../../../abis/components/buttons/mechanics/staking/deploy/deployStaking.abi.json";
+import StakingDeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
 
 import { StakingDeployDialog } from "./dialog";
 

@@ -6,7 +6,7 @@ import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { IContract } from "@framework/types";
-import { IUser, TokenType } from "@framework/types";
+import { ContractFeatures, IUser, TokenType } from "@framework/types";
 
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -23,7 +23,7 @@ export interface IMintMenuItemProps {
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
-    contract: { address, id: contractId, contractType, decimals },
+    contract: { address, id: contractId, contractType, decimals, contractFeatures },
   } = props;
 
   const user = useUser<IUser>();
@@ -78,6 +78,10 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       setIsMintTokenDialogOpen(false);
     });
   };
+
+  if (contractType === TokenType.NATIVE || !contractFeatures.includes(ContractFeatures.GENES)) {
+    return null;
+  }
 
   return (
     <Fragment>

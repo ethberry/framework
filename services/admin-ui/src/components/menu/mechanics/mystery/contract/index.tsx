@@ -2,7 +2,7 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ContractFeatures, IContract } from "@framework/types";
+import { IContract } from "@framework/types";
 
 import { EthListenerAddMenuItem } from "../../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../../common/eth-remove";
@@ -12,12 +12,13 @@ import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role"
 import { RoyaltyMenuItem } from "../../../common/royalty";
 import { TransferMenuItem } from "../../../common/transfer";
 import { AllowanceMenuItem } from "../../../hierarchy/contract/allowance";
-import { PausableMenuItem } from "../../common/pausable";
+import { PauseMenuItem } from "../../common/pause";
 import { BlacklistMenuItem } from "../../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../../extensions/blacklist-remove";
 import { WhitelistMenuItem } from "../../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../../extensions/whitelist-remove";
 import { MintMenuItem } from "./mint";
+import { UnPauseMenuItem } from "../../common/unpause";
 
 export interface IMysteryActionsMenu {
   contract: IContract;
@@ -61,21 +62,12 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
         <RoyaltyMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
 
-        {contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? (
-          <PausableMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <BlacklistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <UnBlacklistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <WhitelistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <UnWhitelistMenuItem contract={contract} />
-        ) : null}
+        <PauseMenuItem contract={contract} />
+        <UnPauseMenuItem contract={contract} />
+        <BlacklistMenuItem contract={contract} />
+        <UnBlacklistMenuItem contract={contract} />
+        <WhitelistMenuItem contract={contract} />
+        <UnWhitelistMenuItem contract={contract} />
 
         <EthListenerAddMenuItem contract={contract} />
         <EthListenerRemoveMenuItem contract={contract} />

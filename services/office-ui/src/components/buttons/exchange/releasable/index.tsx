@@ -9,7 +9,7 @@ import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeReleasableABI from "../../../../abis/components/buttons/exchange/releasable/releasable.abi.json";
+import ExchangeReleasableABI from "../../../../abis/exchange/payment/releasable/releasable.abi.json";
 
 import { formatEther } from "../../../../utils/money";
 

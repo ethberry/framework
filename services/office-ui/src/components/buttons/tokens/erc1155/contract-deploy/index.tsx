@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155ContractTemplates, IErc1155ContractDeployDto } from "@framework/types";
 
-import ERC1155DeployERC1155TokenABI from "../../../../../abis/components/buttons/tokens/erc1155/contract-deploy/deployERC1155Token.abi.json";
+import ERC1155DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
 
 import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 

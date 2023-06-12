@@ -4,15 +4,17 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
-import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { RoyaltyMenuItem } from "../../common/royalty";
+import { EthListenerAddMenuItem } from "../../common/eth-add";
 import { TransferMenuItem } from "../../common/transfer";
+import { RoyaltyMenuItem } from "../../common/royalty";
+import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { AllowanceMenuItem } from "../../hierarchy/contract/allowance";
 import { CollectionUploadMenuItem } from "./upload";
+import { BlacklistMenuItem } from "../../extensions/blacklist-add";
+import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
 
 export interface ICollectionActionsMenu {
   contract: IContract;
@@ -53,6 +55,10 @@ export const CollectionActionsMenu: FC<ICollectionActionsMenu> = props => {
         <ContractRenounceRoleMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
+
+        <BlacklistMenuItem contract={contract} />
+        <UnBlacklistMenuItem contract={contract} />
+
         <TransferMenuItem contract={contract} />
         <CollectionUploadMenuItem contract={contract} />
         <EthListenerAddMenuItem contract={contract} />

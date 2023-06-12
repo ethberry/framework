@@ -11,16 +11,16 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IAccessList } from "@framework/types";
 
-import UnWhitelistABI from "../../../../../abis/components/menu/extensions/whitelist-remove/unWhitelist.abi.json";
+import UnWhitelistABI from "../../../../../abis/extensions/whitelist-remove/unWhitelist.abi.json";
 
-export interface IWhitelistRemoveDialogProps {
+export interface IAccessListUnWhitelistDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   data: { address: string };
 }
 
-export const AccessListUnWhitelistDialog: FC<IWhitelistRemoveDialogProps> = props => {
+export const AccessListUnWhitelistDialog: FC<IAccessListUnWhitelistDialogProps> = props => {
   const { data, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);

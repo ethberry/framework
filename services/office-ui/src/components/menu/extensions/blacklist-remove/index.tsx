@@ -4,6 +4,7 @@ import { DoNotDisturbOff } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import type { IContract } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import { AccessListUnBlacklistDialog } from "./dialog";
 
@@ -13,7 +14,7 @@ export interface IUnBlacklistMenuItemProps {
 
 export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractFeatures },
   } = props;
 
   const [isUnBlacklistDialogOpen, setIsUnBlacklistDialogOpen] = useState(false);
@@ -29,6 +30,10 @@ export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
   const handleUnBlacklistConfirm = () => {
     setIsUnBlacklistDialogOpen(false);
   };
+
+  if (!contractFeatures.includes(ContractFeatures.BLACKLIST)) {
+    return null;
+  }
 
   return (
     <Fragment>

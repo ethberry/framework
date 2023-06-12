@@ -1,16 +1,19 @@
 import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
-
-import { FormattedMessage, useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
+import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { ApiError } from "@gemunion/provider-api-firebase";
 import { IContract } from "@framework/types";
 
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
-import { getFormData } from "./utils";
+
+export interface ICollectionRow {
+  id?: string;
+  tokenId: number;
+  imageUrl: string;
+  metadata: string;
+}
 
 export interface ICollectionUploadMenuItemProps {
   contract: IContract;
@@ -21,54 +24,28 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
     contract: { address },
   } = props;
 
-  const { formatMessage } = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
-
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall(
-    (api, { files }: ICollectionUploadDto) => {
-      return api.fetchJson({
-        url: `/collections/contracts/${address}/upload`,
-        data: getFormData({ file: files[0] }),
-        method: "POST",
-      });
-    },
-    { error: false },
-  );
+  const { fn, isLoading } = useApiCall((api, values: ICollectionUploadDto) => {
+    const { tokens } = values;
+    return api.fetchJson({
+      url: `/collection/contracts/${address}/upload`,
+      data: {
+        tokens: tokens.map(({ id: _, ...rest }) => rest),
+      },
+      method: "POST",
+    });
+  });
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
   };
 
   const handleUploadConfirm = async (values: ICollectionUploadDto, form: any) => {
-    const name = "files";
-
-    form.resetField(name);
-
-    await fn(form, values)
-      .then(result => {
-        if (!result) {
-          return;
-        }
-        setIsUploadDialogOpen(false);
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          const errors = e.getLocalizedValidationErrors();
-
-          enqueueSnackbar(formatMessage({ id: "form.validations.badInput" }, { label: name }), { variant: "error" });
-
-          Object.keys(errors).forEach(key => {
-            form?.setError(name, { type: "custom", message: errors[key] });
-          });
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+    return fn(form, values).then(() => {
+      // TODO refresh page
+      setIsUploadDialogOpen(false);
+    });
   };
 
   const handleUploadCancel = () => {
@@ -89,8 +66,10 @@ export const CollectionUploadMenuItem: FC<ICollectionUploadMenuItemProps> = prop
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
           files: [],
+          tokens: [],
         }}
       />
     </Fragment>

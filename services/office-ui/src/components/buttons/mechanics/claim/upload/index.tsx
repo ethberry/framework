@@ -4,9 +4,20 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { TokenType } from "@framework/types";
 
-import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
-import { getFormData } from "./utils";
+import { ClaimUploadDialog } from "./dialog";
+import { IClaimUploadDto } from "./dialog/file-input";
+
+export interface IClaimRow {
+  id?: string;
+  account: string;
+  endTimestamp: string;
+  tokenType: TokenType;
+  contractId: number;
+  templateId: number;
+  amount: string;
+}
 
 export interface IClaimUploadButtonProps {
   className?: string;
@@ -17,10 +28,26 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall((api, { files }: IClaimUploadDto) => {
+  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
+    const { claims } = values;
     return api.fetchJson({
       url: "/claims/upload",
-      data: getFormData({ file: files[0] }),
+      data: {
+        claims: claims.map(e => ({
+          account: e.account,
+          endTimestamp: e.endTimestamp,
+          item: {
+            components: [
+              {
+                tokenType: e.tokenType,
+                contractId: e.contractId,
+                templateId: e.templateId,
+                amount: e.amount,
+              },
+            ],
+          },
+        })),
+      },
       method: "POST",
     });
   });
@@ -30,8 +57,10 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    await fn(form, values);
-    setIsUploadDialogOpen(false);
+    return fn(form, values).then(() => {
+      // TODO refresh page
+      setIsUploadDialogOpen(false);
+    });
   };
 
   const handleUploadCancel = () => {
@@ -53,8 +82,9 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
-          files: [],
+          claims: [],
         }}
       />
     </Fragment>

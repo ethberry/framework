@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IBalance } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import ExchangeReleaseABI from "../../../../abis/components/buttons/exchange/release/release.abi.json";
+import ExchangeReleaseABI from "../../../../abis/exchange/payment/release/release.abi.json";
 
 export interface IExchangeReleaseButtonProps {
   balance: IBalance;

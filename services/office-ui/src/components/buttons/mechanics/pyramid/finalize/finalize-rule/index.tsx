@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 
-import PyramidFinalizeByRuleIdABI from "../../../../../../abis/components/buttons/mechanics/pyramid/finalize/finalize-rule/finalizeByRuleId.abi.json";
+import PyramidFinalizeByRuleIdABI from "../../../../../../abis/mechanics/pyramid/finalize/finalize-rule/finalizeByRuleId.abi.json";
 
 export interface IPyramidFinalizeRuleButtonProps {
   rule: IPyramidRule;

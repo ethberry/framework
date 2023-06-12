@@ -1,20 +1,131 @@
-import React, { FC } from "react";
-import { useFormContext } from "react-hook-form";
+import React, { FC, useEffect } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useIntl } from "react-intl";
+import csv2json from "csvtojson";
+import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+
+import { CsvContentView } from "../../../../../../tables/csv-content";
+import { IClaimRow } from "../../index";
+import { claimsValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
-export const FileInput: FC = () => {
-  const form = useFormContext<any>();
+export interface IClaimUploadDto {
+  claims: Array<IClaimRow>;
+}
+
+export interface IFileInputProps {
+  initialValues: IClaimUploadDto;
+}
+
+export const FileInput: FC<IFileInputProps> = props => {
+  const { initialValues } = props;
   const classes = useStyles();
 
-  const handleChange = (files: Array<File>): void => {
-    form.setValue("files", files, { shouldTouch: true });
+  const claimsName = "claims";
+  const filesName = "files";
+
+  const form = useFormContext<any>();
+  const claims = useWatch({ name: claimsName });
+  const { formatMessage } = useIntl();
+
+  const headers = ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"];
+
+  const resetForm = () => {
+    form.reset(initialValues);
   };
+
+  const parseCsv = async (csv: File): Promise<IClaimRow[]> => {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = function fileReadCompleted() {
+        void csv2json({
+          noheader: true,
+          headers,
+          colParser: {
+            amount: "string",
+          },
+          checkType: true,
+        })
+          .fromString(reader.result as string)
+          .then((data: IClaimRow[]) => {
+            resolve(data.map(claim => ({ ...claim, id: v4() })));
+          });
+      };
+      reader.readAsText(csv, "UTF-8");
+    });
+  };
+
+  const handleChange = async (files: Array<File>) => {
+    try {
+      const data = await parseCsv(files[0]);
+      claimsValidationSchema.validateSync({ [claimsName]: data });
+      form.setValue(claimsName, data, { shouldDirty: true });
+      form.setValue(filesName, files, { shouldDirty: true });
+    } catch (e) {
+      console.error(e);
+      form.reset(initialValues);
+      form.setError(filesName, { type: "custom", message: "form.validations.badInput" });
+    }
+  };
+
+  const columns = [
+    {
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.account" }),
+      sortable: true,
+      flex: 3,
+      minWidth: 260,
+    },
+    {
+      field: "endTimestamp",
+      headerName: formatMessage({ id: "form.labels.endTimestamp" }),
+      sortable: true,
+      flex: 2,
+      minWidth: 180,
+    },
+    {
+      field: "tokenType",
+      headerName: formatMessage({ id: "form.labels.token" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "contractId",
+      headerName: formatMessage({ id: "form.labels.contractId" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 80,
+    },
+    {
+      field: "templateId",
+      headerName: formatMessage({ id: "form.labels.templateId" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 80,
+    },
+    {
+      field: "amount",
+      headerName: formatMessage({ id: "form.labels.amount" }),
+      sortable: true,
+      flex: 2,
+      minWidth: 200,
+    },
+  ];
+
+  useEffect(() => {
+    return () => resetForm();
+  }, []);
+
+  if (claims.length) {
+    return <CsvContentView resetForm={resetForm} csvContentName={claimsName} columns={columns} />;
+  }
 
   return (
     <AbstractFileInput
-      name="files"
+      name={filesName}
       onChange={handleChange}
       classes={classes}
       minSize={0}

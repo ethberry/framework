@@ -1,8 +1,9 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
+
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import type { ITemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 
 import { MintMenuItem } from "./mint";
 
