@@ -40,7 +40,7 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractType={[TokenType.ERC721]}
+        contractType={[TokenType.ERC1155]}
         contractModule={[ModuleType.HIERARCHY]}
       />
 
