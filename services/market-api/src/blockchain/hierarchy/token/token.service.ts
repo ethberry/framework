@@ -224,7 +224,10 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+  public findOneWithRelations(
+    where: FindOptionsWhere<TokenEntity>,
+    userEntity?: UserEntity,
+  ): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
     queryBuilder.leftJoinAndSelect("token.history", "history");
     queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
@@ -253,6 +256,20 @@ export class TokenService {
       `rent_price_components_contract.contractType IN(:...tokenTypes)`,
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
+    if (userEntity) {
+      queryBuilder.leftJoinAndSelect(
+        "token.balance",
+        "balance",
+        "contract.contract_module = :moduleType AND contract.contract_type = :tokenType AND balance.token_id = :tokenId AND balance.account = :account",
+        {
+          moduleType: ModuleType.HIERARCHY,
+          tokenType: TokenType.ERC1155,
+          tokenId: where.id,
+          account: userEntity.wallet,
+        },
+      );
+    }
 
     // MODULE:BREED
     // queryBuilder.leftJoinAndSelect("token.breeds", "breeds", "ANY(contract.contractFeatures) = :contractFeature", {

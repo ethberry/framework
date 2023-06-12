@@ -3,13 +3,13 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import type { ITemplate, IToken } from "@framework/types";
+import type { IBalance, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../components/buttons";
+import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
 
@@ -17,6 +17,11 @@ export const Erc1155Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<IToken>({
     baseUrl: "/erc1155/tokens",
     empty: {
+      balance: [
+        {
+          amount: "0",
+        } as IBalance,
+      ],
       template: {
         title: "",
         description: emptyStateString,
@@ -58,7 +63,10 @@ export const Erc1155Token: FC = () => {
                   <li key={index}>{item}</li>
                 ))}
             </ul>
+            <FormattedMessage id="pages.token.balanceTitle" />
+            <p className={classes.price}>{selected.balance?.at(0)?.amount}</p>
             <TokenSellButton token={selected} />
+            <Erc1155TransferButton token={selected} />
           </Paper>
         </Grid>
         <TokenHistory

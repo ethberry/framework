@@ -458,7 +458,8 @@
       "releasable": "Check releasable amount",
       "release": "Release",
       "reward": "Reward",
-      "transfer": "Transfer ownership",
+      "transfer": "Transfer",
+      "transferOwnership": "Transfer ownership",
       "view": "View",
       "waitlist": "Waitlist"
     },
@@ -950,7 +951,8 @@
       "title": "Staking"
     },
     "token": {
-      "priceTitle": "Base price:"
+      "priceTitle": "Base price:",
+      "balanceTitle": "Balance:"
     },
     "tokens": {
       "title": "My tokens"
