@@ -21,6 +21,10 @@ abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
       revert SignerMissingRole();
     }
 
+    if (block.timestamp > uint256(params.extra)) {
+      revert ExpiredSignature();
+    }
+
     ExchangeUtils.acquire(items, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Claim(_msgSender(), params.externalId, items);
