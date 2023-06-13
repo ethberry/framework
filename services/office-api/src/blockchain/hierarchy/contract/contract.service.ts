@@ -24,10 +24,11 @@ export class ContractService {
 
     queryBuilder.select();
 
-    // we need to get single template for erc20 to display cap
-    queryBuilder.leftJoinAndSelect("contract.templates", "templates", "contract.contractType = :erc20", {
-      erc20: TokenType.ERC20,
+    // get single template for ERC20, to display token cap
+    queryBuilder.leftJoin("contract.templates", "templates", "contract.contractType IN(:...tokenTypes)", {
+      tokenTypes: [TokenType.ERC20],
     });
+    queryBuilder.addSelect(["templates.id", "templates.amount"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
