@@ -31,7 +31,6 @@ export class AchievementRuleService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
       "item_tokens",

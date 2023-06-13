@@ -76,7 +76,6 @@ export class RentService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",

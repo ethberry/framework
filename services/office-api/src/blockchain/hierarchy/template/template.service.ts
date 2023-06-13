@@ -43,8 +43,8 @@ export class TemplateService {
     ]);
 
     // get single token for ERC1155, to use in mint dialog
-    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
-      tokenTypes: [TokenType.ERC1155],
+    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
     });
     queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
 
@@ -117,8 +117,8 @@ export class TemplateService {
     queryBuilder.addSelect(["contract.address", "contract.decimals", "contract.contractType"]);
 
     // get single token for ERC1155, to use in mint dialog
-    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
-      tokenTypes: [TokenType.ERC1155],
+    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
     });
     queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
 
