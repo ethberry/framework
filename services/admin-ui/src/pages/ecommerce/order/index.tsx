@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
+import { stringify } from "qs";
 
 import { IOrder, OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -56,6 +57,7 @@ export const Order: FC = () => {
   } = useCollection<IOrder, IOrderSearchDto>({
     baseUrl: "/ecommerce/orders",
     empty: emptyOrder,
+    redirect: (_baseUrl, search) => `/ecommerce/orders?${stringify(search)}`,
     search: {
       take: 10,
       isArchived: true,

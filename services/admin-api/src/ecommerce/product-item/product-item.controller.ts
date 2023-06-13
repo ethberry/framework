@@ -13,9 +13,8 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
-import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ProductItemService } from "./product-item.service";
 import { ProductItemEntity } from "./product-item.entity";
 import { ProductItemCreateDto, ProductItemSearchDto, ProductItemUpdateDto } from "./dto";
@@ -26,8 +25,8 @@ export class ProductItemController {
   constructor(private readonly productItemService: ProductItemService) {}
 
   @Get("/autocomplete")
-  public autocomplete(@User() userEntity: UserEntity): Promise<Array<ProductItemEntity>> {
-    return this.productItemService.autocomplete(userEntity);
+  public autocomplete(): Promise<Array<ProductItemEntity>> {
+    return this.productItemService.autocomplete();
   }
 
   @Get("/")

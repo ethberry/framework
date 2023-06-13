@@ -2,11 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ProductStatus, UserRole } from "@framework/types";
+import { ProductStatus } from "@framework/types";
 
 import { ProductItemEntity } from "./product-item.entity";
 import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDto } from "./interfaces";
-import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
 import { AssetService } from "../../blockchain/exchange/asset/asset.service";
@@ -172,18 +171,12 @@ export class ProductItemService {
     return productItemEntity.save();
   }
 
-  public async autocomplete(userEntity: UserEntity): Promise<Array<ProductItemEntity>> {
-    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product");
+  public async autocomplete(): Promise<Array<ProductItemEntity>> {
+    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("productItem");
 
-    queryBuilder.select(["product.id", "product.title"]);
-
-    queryBuilder.where("product.productStatus = :productStatus", { productStatus: ProductStatus.ACTIVE });
-
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.leftJoinAndSelect("productItem.product", "product");
+    queryBuilder.leftJoinAndSelect("productItem.parameters", "parameters");
+    queryBuilder.select(["productItem.id", "product.title", "parameters"]);
 
     return queryBuilder.getMany();
   }
