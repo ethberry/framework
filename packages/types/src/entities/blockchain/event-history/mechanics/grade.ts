@@ -1,5 +1,4 @@
 // event LevelUp(address from, uint256 tokenId, uint256 grade);
-
 export interface ILevelUp {
   from: string;
   tokenId: string;

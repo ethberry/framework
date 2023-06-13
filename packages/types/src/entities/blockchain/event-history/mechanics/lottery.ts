@@ -1,4 +1,4 @@
-import { IExchangeItem } from "./exchange";
+import { IExchangeItem } from "../exchange/common";
 
 export enum LotteryEventType {
   RoundFinalized = "RoundFinalized",
@@ -7,6 +7,7 @@ export enum LotteryEventType {
   Released = "Released",
   Prize = "Prize",
 }
+
 // event RoundStarted(uint256 round, uint256 startTimestamp);
 // event RoundEnded(uint256 round, uint256 endTimestamp);
 // event RoundFinalized(uint256 round, uint8[6] winValues);

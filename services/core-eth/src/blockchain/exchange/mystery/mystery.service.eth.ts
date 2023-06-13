@@ -2,16 +2,16 @@ import { Injectable } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangeMysteryEvent } from "@framework/types";
+import { IExchangePurchaseMysteryEvent } from "@framework/types";
 
-import { AssetService } from "../asset/asset.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class ExchangeMysteryServiceEth {
   constructor(private readonly assetService: AssetService, private readonly eventHistoryService: EventHistoryService) {}
 
-  public async log(event: ILogEvent<IExchangeMysteryEvent>, context: Log): Promise<void> {
+  public async log(event: ILogEvent<IExchangePurchaseMysteryEvent>, context: Log): Promise<void> {
     const {
       args: { items, price },
     } = event;

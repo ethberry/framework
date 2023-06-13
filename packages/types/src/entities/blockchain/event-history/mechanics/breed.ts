@@ -1,6 +1,6 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import type { IBreed } from "../mechanics/breed/breed";
+import type { IBreed } from "../../mechanics/breed/breed";
 
 export interface IBreedHistory extends IIdDateBase {
   account: string;

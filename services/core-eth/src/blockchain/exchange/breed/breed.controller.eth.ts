@@ -3,7 +3,8 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, ExchangeEventType, IExchangeBreedEvent } from "@framework/types";
+import type { IExchangeBreedEvent } from "@framework/types";
+import { ContractType, ExchangeEventType } from "@framework/types";
 
 import { ExchangeBreedServiceEth } from "./breed.service.eth";
 

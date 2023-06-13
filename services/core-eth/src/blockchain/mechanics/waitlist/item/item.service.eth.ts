@@ -3,7 +3,8 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IClaimRewardEvent, IRewardSetEvent } from "@framework/types";
+import type { IClaimRewardEvent, IRewardSetEvent } from "@framework/types";
+
 import { EventHistoryService } from "../../../event-history/event-history.service";
 
 @Injectable()
