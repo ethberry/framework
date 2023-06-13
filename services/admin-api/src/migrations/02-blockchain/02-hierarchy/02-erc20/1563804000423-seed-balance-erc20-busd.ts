@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
-import { wallets } from "@gemunion/constants";
+import { wallet } from "@gemunion/constants";
 
-export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
+export class SeedBalanceErc20BusdAt1563804020423 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -17,23 +17,9 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        '${wallets[0]}',
+        '${wallet}',
         '${WeiPerEther.toString()}',
-        12010101,
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[1]}',
-        '${WeiPerEther.toString()}',
-        12010101,
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[2]}',
-        '${WeiPerEther.toString()}',
-        12010101,
+        12170101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'

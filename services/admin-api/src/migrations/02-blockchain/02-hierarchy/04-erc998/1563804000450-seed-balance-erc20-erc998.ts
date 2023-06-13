@@ -2,11 +2,13 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
-import { wallets } from "@gemunion/constants";
+import { wallet } from "@gemunion/constants";
 
-export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
+export class SeedBalanceErc20Erc998At1563804020450 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const erc998ContractOwnerErc20Address = process.env.ERC998_OWNER_ERC20_ADDR || wallet;
+    const erc998ContractOwnerErc1155Erc20Address = process.env.ERC998_OWNER_ERC1155_ERC20_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -17,24 +19,17 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        '${wallets[0]}',
+        '${erc998ContractOwnerErc20Address}',
         '${WeiPerEther.toString()}',
         12010101,
-        null,
+        14110101, -- erc20 owner
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${wallets[1]}',
+        '${erc998ContractOwnerErc1155Erc20Address}',
         '${WeiPerEther.toString()}',
         12010101,
-        null,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${wallets[2]}',
-        '${WeiPerEther.toString()}',
-        12010101,
-        null,
+        14130101, -- erc20 + erc1155 owner
         '${currentDateTime}',
         '${currentDateTime}'
       );

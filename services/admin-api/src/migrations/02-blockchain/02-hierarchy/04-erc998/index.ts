@@ -2,6 +2,7 @@ export * from "./1563804000140-seed-contract-erc998";
 export * from "./1563804000240-seed-template-erc998";
 export * from "./1563804000340-seed-token-erc998";
 export * from "./1563804000440-seed-balance-erc998";
+export * from "./1563804000450-seed-balance-erc20-erc998";
 export * from "./1563804001240-seed-asset-component-erc998";
 export * from "./1563804040230-seed-event-history-erc998-purchase";
 export * from "./1563804040240-seed-event-history-erc998-purchase-components";

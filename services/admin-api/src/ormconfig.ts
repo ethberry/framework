@@ -79,11 +79,11 @@ import { AchievementRedemptionEntity } from "./achievements/redemption/redemptio
 import {
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
-  CreateAddress1683724061900,
   CreateAchievementItem1681273013050,
   CreateAchievementLevel1681273013030,
   CreateAchievementRedemption1681273013070,
   CreateAchievementRule1681273013010,
+  CreateAddress1683724061900,
   CreateAsset1563804000100,
   CreateAssetComponent1563804001220,
   CreateAuth1563803000150,
@@ -160,6 +160,9 @@ import {
   SeedBalanceCollectionAt1679894500430,
   SeedBalanceErc1155At1563804020450,
   SeedBalanceErc20At1563804020420,
+  SeedBalanceErc20BusdAt1563804020423,
+  SeedBalanceErc20UsdtAt1563804020421,
+  SeedBalanceErc20WethAt1563804020422,
   SeedBalanceErc721At1563804020430,
   SeedBalanceErc721MysteryAt1563804020460,
   SeedBalanceErc721WrapperAt1563804020470,
@@ -233,7 +236,6 @@ import {
   SeedMysteryboxErc998At1653616447940,
   SeedMysteryboxMixedAt1653616447970,
   SeedOrder1683724062010,
-  // SeedOrderItems1683724062110,
   SeedPages1563803000220,
   SeedParameter1683724061610,
   SeedPhoto1683724061810,
@@ -294,8 +296,9 @@ import {
   SeedWaitlistItemAt1663047650310,
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
+  SeedContractRaffleWalletAt1685961134099,
+  SeedBalanceErc20Erc998At1563804020450,
 } from "./migrations";
-import { SeedContractRaffleWalletAt1685961134099 } from "./migrations/02-blockchain/04-mechanics/15-raffle/1685961134099-seed-contract-raffle-wallet";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -441,8 +444,12 @@ const config: PostgresConnectionOptions = {
     CreateBalance1563804000400,
     SeedBalanceExchangeAt1563804020402,
     SeedBalanceErc20At1563804020420,
+    SeedBalanceErc20UsdtAt1563804020421,
+    SeedBalanceErc20WethAt1563804020422,
+    SeedBalanceErc20BusdAt1563804020423,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
+    SeedBalanceErc20Erc998At1563804020450,
     SeedBalanceErc1155At1563804020450,
     SeedBalanceErc721MysteryAt1563804020460,
     SeedBalanceErc721WrapperAt1563804020470,
