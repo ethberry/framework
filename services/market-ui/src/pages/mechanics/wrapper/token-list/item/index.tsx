@@ -5,9 +5,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { TokenSellButton, WrapperUnpackButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
+import { formatTokenTitle } from "../../../../../utils/token";
+import { useStyles } from "./styles";
 
 interface IWrapperTokenListItemProps {
   token: IToken;
@@ -22,7 +23,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/wrapper-tokens/${token.id}`}>
         <RarityBadge token={token} />
-        <CardHeader title={`${token.template!.title} #${token.tokenId}`} />
+        <CardHeader title={formatTokenTitle(token)} />
         <CardMedia className={classes.media} image={token.template!.imageUrl} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
