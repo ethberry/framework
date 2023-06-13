@@ -47,7 +47,7 @@ export interface IRaffleRoundInfo {
   ticketAsset: IExchangeItem;
 }
 
-export type TRaffleEventData =
+export type TRaffleEvents =
   | IRaffleRoundStartedEvent
   | IRaffleRoundEndedEvent
   | IRafflePrizeEvent

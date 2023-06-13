@@ -53,7 +53,7 @@ export interface ILotteryRoundInfo {
   ticketAsset: IExchangeItem;
 }
 
-export type TLotteryEventData =
+export type TLotteryEvents =
   | IRoundStartedEvent
   | IRoundEndedEvent
   | ILotteryPrizeEvent

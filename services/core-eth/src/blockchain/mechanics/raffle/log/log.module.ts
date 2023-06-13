@@ -3,7 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractEventType,
@@ -12,14 +13,11 @@ import {
   ModuleType,
   RaffleEventType,
 } from "@framework/types";
-
-import { RaffleLogService } from "./log.service";
-
-// system contract
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { RaffleLogService } from "./log.service";
 
 @Module({
   imports: [

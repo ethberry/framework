@@ -1,30 +1,36 @@
 import type { IDeployable } from "@gemunion/types-blockchain";
 
-import type { IContract } from "../hierarchy/contract";
+import type { IAssetComponentHistory } from "../exchange/asset-component-history";
 import type { IToken } from "../hierarchy/token";
-import type { TVestingEvents } from "./mechanics/vesting";
+import type { IContract } from "../hierarchy/contract";
+
 import type { TExchangeEvents } from "./exchange/exchange";
+import type { TReferralEventData } from "./exchange/referral";
+
 import type { TAccessControlEvents } from "./extensions/access-control";
 import type { TAccessListEvents } from "./extensions/access-list";
-import type { TContractManagerEventData } from "./contract-manager";
-import type { TStakingEvents } from "./mechanics/staking";
-import type { TLotteryEventData } from "./mechanics/lottery";
-import type { TPyramidEventData } from "./mechanics/pyramid";
-import type { TReferralEventData } from "./exchange/referral";
 import type { TPausableEvents } from "./extensions/pausable";
+import type { TRoyaltyEvents } from "./extensions/royalty";
+
 import type { TErc20Events } from "./hierarchy/erc20";
 import type { TErc721Events } from "./hierarchy/erc721";
 import type { TErc1155Events } from "./hierarchy/erc1155";
-import type { TChainLinkEvents } from "./integrations/chain-link";
-import type { TRoyaltyEvents } from "./extensions/royalty";
 import type { TErc998Events } from "./hierarchy/erc998";
+import type { TErc1363Events } from "./hierarchy/erc1363";
+
+import type { TChainLinkEvents } from "./integrations/chain-link";
+
+import type { TVestingEvents } from "./mechanics/vesting";
+import type { TContractManagerEventData } from "./contract-manager";
+import type { TStakingEvents } from "./mechanics/staking";
+import type { TLotteryEvents } from "./mechanics/lottery";
+import type { TPyramidEvents } from "./mechanics/pyramid";
 import type { TMysteryEvents } from "./mechanics/mystery";
 import type { TWrapperEvents } from "./mechanics/wrapper";
-import type { IAssetComponentHistory } from "../exchange/asset-component-history";
-import type { TErc1363Events } from "./hierarchy/erc1363";
 import type { TErc4907Events } from "./extensions/erc4907";
-import { IMetadataUpdate, TUpgradeEvents } from "./mechanics/grade";
-import { TRaffleEventData } from "./mechanics/raffle";
+import type { TUpgradeEvents } from "./mechanics/grade";
+import type { TRaffleEvents } from "./mechanics/raffle";
+import type { TWaitlistEvents } from "./mechanics/waitlist";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -159,9 +165,10 @@ export type TContractEventData =
   | TMysteryEvents
   | TWrapperEvents
   | TStakingEvents
-  | TLotteryEventData
-  | TRaffleEventData
-  | TPyramidEventData
+  | TLotteryEvents
+  | TRaffleEvents
+  | TPyramidEvents
+  | TWaitlistEvents
 
   // extensions
   | TRoyaltyEvents
@@ -177,7 +184,6 @@ export type TContractEventData =
 
   // Upgrade
   | TUpgradeEvents
-  | IMetadataUpdate
 
   // exchange
   | TExchangeEvents

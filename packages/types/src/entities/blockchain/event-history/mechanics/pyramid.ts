@@ -109,7 +109,7 @@ export interface IPyramidErc20PaymentReleasedEvent {
   externalId: 0;
 }
 
-export type TPyramidEventData =
+export type TPyramidEvents =
   | IPyramidCreateEvent
   | IPyramidUpdateEvent
   | IPyramidDepositEvent

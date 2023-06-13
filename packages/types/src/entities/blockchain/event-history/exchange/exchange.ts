@@ -7,7 +7,6 @@ import type { IExchangeBreedEvent } from "./breeding";
 import type { IExchangePurchaseLotteryEvent } from "./lottery";
 import type { IExchangePurchaseRaffleEvent } from "./raffle";
 import type { IExchangeGradeEvent } from "./grade";
-import type { IClaimRewardEvent, IRewardSetEvent } from "./waitlist";
 
 export enum ExchangeEventType {
   // MODULE:CORE
@@ -24,9 +23,6 @@ export enum ExchangeEventType {
   PurchaseLottery = "PurchaseLottery",
   // MODULE:RAFFLE
   PurchaseRaffle = "PurchaseRaffle",
-  // MODULE:WAITLIST
-  RewardSet = "RewardSet",
-  ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
   // MODULE:RENTABLE
@@ -72,8 +68,6 @@ export type TExchangeEvents =
   | IExchangeCraftEvent
   | IExchangeGradeEvent
   | IExchangePurchaseMysteryEvent
-  | IRewardSetEvent
-  | IClaimRewardEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent

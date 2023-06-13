@@ -3,15 +3,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType, ExchangeEventType } from "@framework/types";
-
-import { WaitlistLogService } from "./log.service";
-
-// system contract
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { AccessControlEventType, ContractEventType, ContractType, WaitlistEventType } from "@framework/types";
 import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
+
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { WaitlistLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -35,8 +34,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             contractInterface: new Interface(WaitlistSol.abi),
             // prettier-ignore
             eventNames: [
-              ExchangeEventType.RewardSet,
-              ExchangeEventType.ClaimReward,
+              WaitlistEventType.RewardSet,
+              WaitlistEventType.ClaimReward,
               ContractEventType.Paused,
               ContractEventType.Unpaused,
               AccessControlEventType.RoleAdminChanged,

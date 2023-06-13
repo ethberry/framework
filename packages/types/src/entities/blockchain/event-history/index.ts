@@ -12,7 +12,7 @@ export * from "./exchange/mystery";
 export * from "./exchange/raffle";
 export * from "./exchange/referral";
 export * from "./exchange/rentable";
-export * from "./exchange/waitlist";
+export * from "./mechanics/waitlist";
 
 export * from "./extensions/access-control";
 export * from "./extensions/access-list";

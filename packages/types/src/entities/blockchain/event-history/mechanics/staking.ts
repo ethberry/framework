@@ -1,11 +1,11 @@
 export enum StakingEventType {
   RuleCreated = "RuleCreated",
   RuleUpdated = "RuleUpdated",
-  StakingStart = "StakingStart",
-  StakingWithdraw = "StakingWithdraw",
-  StakingFinish = "StakingFinish",
-  WithdrawBalance = "WithdrawBalance",
-  ReturnDeposit = "ReturnDeposit",
+  DepositStart = "DepositStart",
+  DepositWithdraw = "DepositWithdraw",
+  DepositFinish = "DepositFinish",
+  BalanceWithdraw = "BalanceWithdraw",
+  DepositReturn = "DepositReturn",
 }
 
 export type IAssetStruct = [string, string, string, string];
@@ -21,12 +21,12 @@ export type IStakingRuleStruct = [
   boolean,
 ];
 
-export interface IStakingCreateEvent {
+export interface IStakingRuleCreateEvent {
   ruleId: string;
   rule: IStakingRuleStruct;
 }
 
-export interface IStakingUpdateEvent {
+export interface IStakingRuleUpdateEvent {
   ruleId: string;
   active: boolean;
 }
@@ -55,7 +55,7 @@ export enum StakingItemType {
   ERC1155 = "4",
 }
 
-export interface IStakingDepositEvent {
+export interface IStakingDepositStartEvent {
   stakingId: string;
   ruleId: string;
   owner: string;
@@ -63,7 +63,7 @@ export interface IStakingDepositEvent {
   tokenIds: Array<string>;
 }
 
-export interface IStakingWithdrawEvent {
+export interface IStakingDepositWithdrawEvent {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
@@ -74,23 +74,23 @@ export interface IStakingBalanceWithdrawEvent {
   item: IAssetStruct;
 }
 
-export interface IStakingFinishEvent {
+export interface IStakingDepositFinishEvent {
   stakingId: string;
   owner: string;
   finishTimestamp: string;
   multiplier: string;
 }
 
-export interface IStakingReturnDepositEvent {
+export interface IStakingDepositReturnEvent {
   stakingId: string;
   owner: string;
 }
 
 export type TStakingEvents =
-  | IStakingCreateEvent
-  | IStakingUpdateEvent
-  | IStakingDepositEvent
-  | IStakingWithdrawEvent
-  | IStakingFinishEvent
+  | IStakingRuleCreateEvent
+  | IStakingRuleUpdateEvent
+  | IStakingDepositStartEvent
+  | IStakingDepositWithdrawEvent
+  | IStakingDepositFinishEvent
   | IStakingBalanceWithdrawEvent
-  | IStakingReturnDepositEvent;
+  | IStakingDepositReturnEvent;

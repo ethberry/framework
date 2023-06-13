@@ -1,21 +1,20 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  DurationUnit,
+import type {
   IAssetDto,
   IErc1363TransferReceivedEvent,
   IStakingBalanceWithdrawEvent,
-  IStakingCreateEvent,
-  IStakingDepositEvent,
-  IStakingFinishEvent,
-  IStakingReturnDepositEvent,
-  IStakingUpdateEvent,
-  IStakingWithdrawEvent,
-  StakingRuleStatus,
+  IStakingRuleCreateEvent,
+  IStakingDepositStartEvent,
+  IStakingDepositFinishEvent,
+  IStakingDepositReturnEvent,
+  IStakingRuleUpdateEvent,
+  IStakingDepositWithdrawEvent,
 } from "@framework/types";
+import { DurationUnit, StakingRuleStatus } from "@framework/types";
 
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -37,7 +36,7 @@ export class StakingRulesServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
+  public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { rule, ruleId },
@@ -123,7 +122,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
+  public async ruleUpdate(event: ILogEvent<IStakingRuleUpdateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { ruleId, active },
@@ -148,7 +147,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async depositStart(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
+  public async depositStart(event: ILogEvent<IStakingDepositStartEvent>, context: Log): Promise<void> {
     // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
@@ -177,15 +176,15 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async depositWithdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
+  public async depositWithdraw(event: ILogEvent<IStakingDepositWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async return(event: ILogEvent<IStakingReturnDepositEvent>, context: Log): Promise<void> {
+  public async depositReturn(event: ILogEvent<IStakingDepositReturnEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async depositFinish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
+  public async depositFinish(event: ILogEvent<IStakingDepositFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
@@ -200,7 +199,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async withdrawBalance(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
+  public async balanceWithdraw(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
