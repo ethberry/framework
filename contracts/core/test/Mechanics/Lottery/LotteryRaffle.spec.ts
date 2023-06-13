@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { encodeBytes32String, getUint, parseEther, ZeroAddress } from "ethers";
+import { encodeBytes32String, getUint, parseEther, ZeroAddress, toQuantity } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -76,7 +76,25 @@ describe("Raffle", function () {
       );
 
       const current: number = (await time.latest()).toNumber();
-      await expect(tx).to.emit(raffleInstance, "RoundStarted").withArgs(1, current);
+      await expect(tx)
+        .to.emit(raffleInstance, "RoundStarted")
+        .withArgs(
+          1n,
+          toQuantity(current),
+          0n,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
     });
 
     it("should fail: not yet finished", async function () {
@@ -179,7 +197,25 @@ describe("Raffle", function () {
       );
       const timeStart: number = (await time.latest()).toNumber();
 
-      await expect(tx0).to.emit(raffleInstance, "RoundStarted").withArgs(1, timeStart);
+      await expect(tx0)
+        .to.emit(raffleInstance, "RoundStarted")
+        .withArgs(
+          1n,
+          toQuantity(timeStart),
+          0n,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
 
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
@@ -209,7 +245,7 @@ describe("Raffle", function () {
       const eventFilter = raffleInstance.filters.RoundFinalized();
       const events = await raffleInstance.queryFilter(eventFilter);
       const { prizeNumber } = recursivelyDecodeResult(events[0].args);
-
+      expect(Number(prizeNumber)).to.equal(0);
       const roundInfo = await raffleInstance.getCurrentRoundInfo();
 
       expect(recursivelyDecodeResult(roundInfo)).deep.include({
@@ -542,6 +578,260 @@ describe("Raffle", function () {
       const tx1 = raffleInstance.releaseFunds(1);
       await expect(tx1).to.emit(raffleInstance, "Released").withArgs(1, amount);
       await expect(tx1).changeTokenBalances(erc20Instance, [owner, raffleInstance], [amount, -amount]);
+    });
+
+    it("should finish round with 2 tickets and release funds", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+
+      const { raffleInstance, erc20Instance, erc721Instance } = await factory();
+
+      const exchangeFactory = await ethers.getContractFactory("Exchange");
+      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+
+      await erc20Instance.mint(receiver.address, amount * 2n);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount * 2n);
+
+      await raffleInstance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
+      await erc721Instance.grantRole(MINTER_ROLE, await raffleInstance.getAddress());
+
+      if (network.name === "hardhat") {
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, await raffleInstance.getAddress());
+        await expect(tx02)
+          .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+          .withArgs(1, await raffleInstance.getAddress());
+      }
+      await raffleInstance.startRound(
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 1,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        0, // maxTicket count
+      );
+
+      // BUY TICKET @EXCHANGE
+      const networkE = await ethers.provider.getNetwork();
+      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
+        params: {
+          nonce: encodeBytes32String("nonce"),
+          externalId: 0, // wtf?
+          expiresAt,
+          referrer: ZeroAddress,
+          extra,
+        },
+        items: [
+          {
+            tokenType: 0,
+            token: await raffleInstance.getAddress(),
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0,
+            amount,
+          },
+        ],
+      });
+
+      const tx0 = exchangeInstance.connect(receiver).purchaseRaffle(
+        {
+          nonce: encodeBytes32String("nonce"),
+          externalId: 0,
+          expiresAt,
+          referrer: ZeroAddress,
+          extra,
+        },
+        [
+          {
+            tokenType: 0,
+            token: await raffleInstance.getAddress(),
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        signature,
+      );
+      await expect(tx0)
+        .to.emit(exchangeInstance, "PurchaseRaffle")
+        .withArgs(
+          receiver.address,
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0n,
+              token: await raffleInstance.getAddress(),
+              tokenId: 0n,
+              amount: 0n,
+            },
+            {
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId: 1n, // ticketId = 1
+              amount: 1n,
+            },
+          ),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount: amount * 1n,
+          }),
+          1n,
+        );
+      await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
+
+      const signature1 = await generateManyToManySignature({
+        account: receiver.address,
+        params: {
+          nonce: encodeBytes32String("nonce1"),
+          externalId: 0, // wtf?
+          expiresAt,
+          referrer: ZeroAddress,
+          extra,
+        },
+        items: [
+          {
+            tokenType: 0,
+            token: await raffleInstance.getAddress(),
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        price: [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0,
+            amount,
+          },
+        ],
+      });
+      const tx01 = exchangeInstance.connect(receiver).purchaseRaffle(
+        {
+          nonce: encodeBytes32String("nonce1"),
+          externalId: 0,
+          expiresAt,
+          referrer: ZeroAddress,
+          extra,
+        },
+        [
+          {
+            tokenType: 0,
+            token: await raffleInstance.getAddress(),
+            tokenId: 0,
+            amount: 0,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 0,
+            amount: 1,
+          },
+        ],
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        signature1,
+      );
+      await expect(tx01)
+        .to.emit(exchangeInstance, "PurchaseRaffle")
+        .withArgs(
+          receiver.address,
+          isEqualEventArgArrObj(
+            {
+              tokenType: 0n,
+              token: await raffleInstance.getAddress(),
+              tokenId: 0n,
+              amount: 0n,
+            },
+            {
+              tokenType: 2n,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2n, // ticketId = 2
+              amount: 1n,
+            },
+          ),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount: amount * 1n,
+          }),
+          1n,
+        );
+      await expect(tx01).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
+
+      const tx = await raffleInstance.endRound();
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(raffleInstance, "RoundEnded").withArgs(1, current);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+      if (network.name === "hardhat") {
+        // RANDOM
+        await randomRequest(raffleInstance as IERC721Random, vrfInstance);
+      } else {
+        const eventFilter = raffleInstance.filters.RoundFinalized();
+        const events = await raffleInstance.queryFilter(eventFilter);
+        expect(events.length).to.be.greaterThan(0);
+        expect(events[0].args?.round).to.equal(1);
+      }
+
+      const eventFilter = raffleInstance.filters.RoundFinalized();
+      const events = await raffleInstance.queryFilter(eventFilter);
+      const { prizeNumber } = recursivelyDecodeResult(events[0].args);
+      expect(Number(prizeNumber)).to.be.greaterThan(0).to.be.lessThan(2);
+      // WAIT for RELEASE
+      const latest = await time.latestBlock();
+      await time.advanceBlockTo(latest.add(web3.utils.toBN(lotteryConfig.timeLagBeforeRelease + 1)));
+
+      const tx1 = raffleInstance.releaseFunds(1);
+      await expect(tx1)
+        .to.emit(raffleInstance, "Released")
+        .withArgs(1, amount * 2n);
+      await expect(tx1).changeTokenBalances(erc20Instance, [owner, raffleInstance], [2n * amount, -amount * 2n]);
     });
 
     it("should fail: is not releasable yet", async function () {

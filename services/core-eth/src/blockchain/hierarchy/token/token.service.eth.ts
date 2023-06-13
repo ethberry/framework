@@ -22,7 +22,7 @@ export class TokenServiceEth {
       args: { tokenId },
     } = event;
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), context.address.toLowerCase());
 
     if (!tokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, context.address.toLowerCase(), TokenServiceEth.name);

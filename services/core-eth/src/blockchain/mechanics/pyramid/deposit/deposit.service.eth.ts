@@ -59,7 +59,7 @@ export class PyramidDepositServiceEth {
     await this.pyramidDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       pyramidRuleId: pyramidRuleEntity.id,
     });
   }

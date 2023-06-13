@@ -9,7 +9,7 @@ import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, Ves
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
 // custom contracts
-import { VestingAbi } from "./interfaces";
+import { VestingInterface } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
@@ -33,7 +33,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
           contract: {
             contractType: ContractType.VESTING,
             contractAddress: vestingContracts.address || [],
-            contractInterface: VestingAbi,
+            contractInterface: VestingInterface,
             // prettier-ignore
             eventNames: [
               VestingEventType.ERC20Released,

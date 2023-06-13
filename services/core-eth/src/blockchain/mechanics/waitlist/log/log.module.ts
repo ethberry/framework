@@ -1,6 +1,7 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, ExchangeEventType } from "@framework/types";
@@ -31,7 +32,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.WAITLIST,
             contractAddress: [waitlistAddr],
-            contractInterface: WaitlistSol.abi,
+            contractInterface: new Interface(WaitlistSol.abi),
             // prettier-ignore
             eventNames: [
               ExchangeEventType.RewardSet,

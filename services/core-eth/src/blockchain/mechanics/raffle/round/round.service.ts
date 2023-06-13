@@ -3,13 +3,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { RaffleRoundEntity } from "./round.entity";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
+// import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
+    protected readonly assetService: AssetService,
   ) {}
 
   public findOne(
@@ -45,5 +48,11 @@ export class RaffleRoundService {
     }
 
     return queryBuilder.getOne();
+  }
+
+  public async createEmptyAsset(): Promise<AssetEntity> {
+    return await this.assetService.create({
+      components: [],
+    });
   }
 }

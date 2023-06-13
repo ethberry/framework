@@ -1,6 +1,7 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
@@ -28,8 +29,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, []);
-
+        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -40,7 +40,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.LOTTERY,
             contractAddress: lotteryContracts.address || [],
-            contractInterface: LotterySol.abi,
+            contractInterface: new Interface(LotterySol.abi),
             // prettier-ignore
             eventNames: [
               LotteryEventType.Prize,

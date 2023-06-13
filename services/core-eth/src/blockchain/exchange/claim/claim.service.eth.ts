@@ -29,7 +29,7 @@ export class ExchangeClaimServiceEth {
     const history = await this.eventHistoryService.updateHistory(event, context);
 
     const claimEntity = await this.claimService.findOne(
-      { id: ~~externalId },
+      { id: Number(externalId) },
       {
         join: {
           alias: "claim",

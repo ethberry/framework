@@ -56,8 +56,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
+      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
+      const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
       if (!templateEntity) {
@@ -95,7 +95,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       }
     }
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -133,7 +133,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       args: { tokenId, childContract, childTokenId },
     } = event;
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      context.address.toLowerCase(),
+    );
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
@@ -146,7 +149,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       erc998TokenEntity.id,
     );
 
-    const tokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(childTokenId).toString(), childContract.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -165,7 +168,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       args: { tokenId, childContract, childTokenIds, amounts },
     } = event;
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      context.address.toLowerCase(),
+    );
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
@@ -179,7 +185,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     );
 
     childTokenIds.map(async (childTokenId, i) => {
-      const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+      const childTokenEntity = await this.tokenService.getToken(
+        Number(childTokenId).toString(),
+        childContract.toLowerCase(),
+      );
 
       if (!childTokenEntity) {
         throw new NotFoundException("childTokenNotFound");
@@ -199,7 +208,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       args: { childContract, childTokenId },
     } = event;
 
-    const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(
+      Number(childTokenId).toString(),
+      childContract.toLowerCase(),
+    );
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("token721NotFound");
@@ -226,7 +238,10 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     await Promise.all(
       childTokenIds.map(async (childTokenId, i) => {
-        const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+        const childTokenEntity = await this.tokenService.getToken(
+          Number(childTokenId).toString(),
+          childContract.toLowerCase(),
+        );
 
         if (!childTokenEntity) {
           throw new NotFoundException("childTokenNotFound");
@@ -276,7 +291,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.erc998CompositionService.upsert({
       parentId: parentContractEntity.id,
       childId: childContractEntity.id,
-      amount: ~~maxCount,
+      amount: Number(maxCount),
     });
   }
 
@@ -335,7 +350,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("compositionNotFound");
     }
 
-    Object.assign(compositionEntity, { amount: ~~maxCount });
+    Object.assign(compositionEntity, { amount: Number(maxCount) });
     await compositionEntity.save();
   }
 
@@ -345,7 +360,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address } = context;
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc998TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);

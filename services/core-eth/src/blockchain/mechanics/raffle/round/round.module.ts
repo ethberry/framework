@@ -14,9 +14,18 @@ import { RoundControllerRmq } from "./round.controller.rmq";
 import { RoundServiceRmq } from "./round.service.rmq";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
+import { TemplateModule } from "../../../hierarchy/template/template.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, EventHistoryModule, TypeOrmModule.forFeature([RaffleRoundEntity])],
+  imports: [
+    ConfigModule,
+    AssetModule,
+    TemplateModule,
+    ContractModule,
+    EventHistoryModule,
+    TypeOrmModule.forFeature([RaffleRoundEntity]),
+  ],
   controllers: [RoundControllerRmq, RaffleRoundControllerEth],
   providers: [
     Logger,

@@ -54,8 +54,8 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
+      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
+      const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
@@ -107,10 +107,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc721TokenEntity) {
-      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
+      this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
@@ -151,10 +151,10 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
 
       const description = JSON.parse(templateEntity.contract.description);
-      const batchSize = description.batchSize ? BigInt(description.batchSize) : 0;
+      const batchSize = description.batchSize ? Number(description.batchSize) : 0;
 
       // const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
-      const batchLen = BigInt(toTokenId) - BigInt(fromTokenId);
+      const batchLen = Number(toTokenId) - Number(fromTokenId);
 
       if (batchLen !== batchSize) {
         throw new BadRequestException("batchLengthError");
@@ -218,7 +218,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address } = context;
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);

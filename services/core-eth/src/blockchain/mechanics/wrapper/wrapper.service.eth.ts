@@ -38,7 +38,7 @@ export class WrapperServiceEth {
       args: { tokenId },
     } = event;
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), context.address.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -55,8 +55,8 @@ export class WrapperServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
+      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
+      const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");

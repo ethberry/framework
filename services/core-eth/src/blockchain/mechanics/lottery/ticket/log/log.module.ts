@@ -1,15 +1,10 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import {
-  AccessControlEventType,
-  ContractEventType,
-  ContractFeatures,
-  ContractType,
-  ModuleType,
-} from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
 // system contract
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
@@ -25,7 +20,8 @@ import { LotteryTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
+        const lotteryTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, []);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -36,7 +32,7 @@ import { LotteryTicketLogService } from "./log.service";
           contract: {
             contractType: ContractType.LOTTERY,
             contractAddress: lotteryTicketAddr.address || [],
-            contractInterface: LotteryTicketSol.abi,
+            contractInterface: new Interface(LotteryTicketSol.abi),
             // prettier-ignore
             eventNames: [
               // TODO add other events

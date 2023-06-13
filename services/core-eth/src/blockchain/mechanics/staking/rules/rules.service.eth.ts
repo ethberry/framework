@@ -52,7 +52,7 @@ export class StakingRulesServiceEth {
     for (const dep of deposit) {
       const [_tokenType, _token, templateId, amount] = dep;
       const depositTemplate = await this.templateService.findOne(
-        { id: ~~templateId },
+        { id: Number(templateId) },
         { relations: { contract: true } },
       );
 
@@ -75,7 +75,7 @@ export class StakingRulesServiceEth {
       const [_tokenType, _token, templateId, amount] = rew;
 
       const rewardTemplate = await this.templateService.findOne(
-        { id: ~~templateId },
+        { id: Number(templateId) },
         { relations: { contract: true } },
       );
 
@@ -104,10 +104,10 @@ export class StakingRulesServiceEth {
       description: emptyStateString,
       deposit: depositItem,
       reward: rewardItem,
-      durationAmount: ~~period,
+      durationAmount: Number(period),
       durationUnit: DurationUnit.DAY,
-      penalty: ~~penalty,
-      maxStake: ~~maxStake,
+      penalty: Number(penalty),
+      maxStake: Number(maxStake),
       recurrent,
       stakingRuleStatus,
       externalId: ruleId,
@@ -118,7 +118,7 @@ export class StakingRulesServiceEth {
       externalId: ruleId,
       deposit: depositItem,
       reward: rewardItem,
-      penalty: ~~penalty,
+      penalty: Number(penalty),
       recurrent,
     });
   }
@@ -165,14 +165,14 @@ export class StakingRulesServiceEth {
     await this.stakingDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       stakingRuleId: stakingRuleEntity.id,
     });
 
     this.notificatorService.stakingDepositStart({
       account: owner.toLowerCase(),
-      externalId: ~~stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).getDate(),
+      externalId: Number(stakingId),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).getDate(),
       stakingRuleId: stakingRuleEntity.id,
     });
   }
@@ -194,9 +194,9 @@ export class StakingRulesServiceEth {
 
     this.notificatorService.stakingDepositFinish({
       account: owner.toLowerCase(),
-      externalId: ~~stakingId,
-      startTimestamp: new Date(~~finishTimestamp * 1000).getDate(),
-      multiplier: ~~multiplier,
+      externalId: Number(stakingId),
+      startTimestamp: new Date(Number(finishTimestamp) * 1000).getDate(),
+      multiplier: Number(multiplier),
     });
   }
 

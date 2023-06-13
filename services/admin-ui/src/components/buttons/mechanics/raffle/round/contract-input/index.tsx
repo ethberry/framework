@@ -17,7 +17,7 @@ export const ContractInput: FC = () => {
       name="contractId"
       controller="contracts"
       data={{
-        contractModule: [ModuleType.LOTTERY],
+        contractModule: [ModuleType.RAFFLE],
         contractFeatures: [ContractFeatures.RANDOM],
       }}
       onChange={handleChange}

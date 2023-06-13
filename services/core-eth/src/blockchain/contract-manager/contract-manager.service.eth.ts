@@ -102,7 +102,7 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc20ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc20ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC20,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -151,10 +151,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc721ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -217,11 +217,11 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc721CollectionTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc721CollectionTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -240,10 +240,10 @@ export class ContractManagerServiceEth {
     const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
 
     const currentDateTime = new Date().toISOString();
-    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
+    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
       metadata: "{}",
       tokenId: i.toString(),
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       imageUrl: `${imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
@@ -282,10 +282,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc998ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC998,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -339,10 +339,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
@@ -374,11 +374,11 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(MysteryContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(MysteryContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -408,10 +408,10 @@ export class ContractManagerServiceEth {
       imageUrl,
       parameters: {
         account: account.toLowerCase(),
-        startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-        duration: ~~duration * 1000,
+        startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
+        duration: Number(duration) * 1000,
       },
-      contractFeatures: Object.values(VestingContractTemplate)[~~contractTemplate].split(
+      contractFeatures: Object.values(VestingContractTemplate)[Number(contractTemplate)].split(
         "_",
       ) as Array<ContractFeatures>,
       contractModule: ModuleType.VESTING,
@@ -448,7 +448,7 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(PyramidContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(PyramidContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.PYRAMID,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -483,7 +483,7 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(StakingContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(StakingContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

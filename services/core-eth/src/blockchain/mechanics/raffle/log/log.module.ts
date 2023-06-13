@@ -1,9 +1,17 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType, ModuleType, RaffleEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  ModuleType,
+  RaffleEventType,
+} from "@framework/types";
 
 import { RaffleLogService } from "./log.service";
 
@@ -21,7 +29,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const raffleContracts = await contractService.findAllByType(ModuleType.RAFFLE, []);
+        const raffleContracts = await contractService.findAllByType(ModuleType.RAFFLE, [ContractFeatures.RANDOM]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -33,7 +41,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.RAFFLE,
             contractAddress: raffleContracts.address || [],
-            contractInterface: RaffleSol.abi,
+            contractInterface: new Interface(RaffleSol.abi),
             // prettier-ignore
             eventNames: [
               RaffleEventType.Prize,

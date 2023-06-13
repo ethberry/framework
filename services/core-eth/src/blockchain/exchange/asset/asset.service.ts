@@ -176,7 +176,10 @@ export class AssetService {
 
         const templateEntity = await this.templateService.findOne(
           {
-            id: itemType === 4 ? ~~(eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId : ~~itemTokenId,
+            id:
+              itemType === 4
+                ? Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId)
+                : Number(itemTokenId),
           },
           { relations: { tokens: true } },
         );
@@ -201,7 +204,10 @@ export class AssetService {
           amount: priceAmount,
         };
 
-        const tokenEntity = await this.tokenService.getToken(priceTokenId, priceTokenAddr.toLowerCase());
+        const tokenEntity = await this.tokenService.getToken(
+          Number(priceTokenId).toString(),
+          priceTokenAddr.toLowerCase(),
+        );
         if (!tokenEntity) {
           this.loggerService.error(new NotFoundException("tokenNotFound"), AssetService.name);
           throw new NotFoundException("tokenNotFound");

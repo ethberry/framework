@@ -8,14 +8,17 @@ export enum RaffleEventType {
   Prize = "Prize",
 }
 
+export interface IRaffleRoundStartedEvent {
+  roundId: string;
+  startTimestamp: string;
+  maxTicket: string;
+  ticket: IExchangeItem;
+  price: IExchangeItem;
+}
+
 export interface IRaffleRoundFinalizedEvent {
   round: string;
   prizeNumber: string;
-}
-
-export interface IRaffleRoundStartedEvent {
-  round: string;
-  startTimestamp: string;
 }
 
 export interface IRaffleRoundEndedEvent {

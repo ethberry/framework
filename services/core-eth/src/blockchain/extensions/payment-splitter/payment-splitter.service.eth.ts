@@ -44,7 +44,7 @@ export class PaymentSplitterServiceEth {
 
     await this.payeesService.create({
       account: account.toLowerCase(),
-      shares: ~~shares,
+      shares: Number(shares),
       contractId: contractEntity.id,
     });
   }

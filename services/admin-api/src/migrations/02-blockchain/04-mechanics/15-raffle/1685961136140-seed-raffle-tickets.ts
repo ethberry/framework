@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { WeiPerEther } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";

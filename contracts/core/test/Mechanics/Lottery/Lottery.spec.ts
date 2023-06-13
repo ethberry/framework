@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { encodeBytes32String, getUint, parseEther, toBeHex, WeiPerEther, ZeroAddress } from "ethers";
+import { encodeBytes32String, getUint, parseEther, toBeHex, WeiPerEther, ZeroAddress, toQuantity } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -75,7 +75,26 @@ describe("Lottery", function () {
       );
 
       const current: number = (await time.latest()).toNumber();
-      await expect(tx).to.emit(lotteryInstance, "RoundStarted").withArgs(1, current);
+      // emit RoundStarted(roundNumber, block.timestamp, maxTicket, ticket, price);
+      await expect(tx)
+        .to.emit(lotteryInstance, "RoundStarted")
+        .withArgs(
+          1n,
+          toQuantity(current),
+          0n,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
     });
 
     it("should fail: not yet finished", async function () {
@@ -178,7 +197,25 @@ describe("Lottery", function () {
       );
       const timeStart: number = (await time.latest()).toNumber();
 
-      await expect(tx0).to.emit(lotteryInstance, "RoundStarted").withArgs(1, timeStart);
+      await expect(tx0)
+        .to.emit(lotteryInstance, "RoundStarted")
+        .withArgs(
+          1n,
+          toQuantity(timeStart),
+          0n,
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
+          isEqualEventArgObj({
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 0n,
+            amount,
+          }),
+        );
 
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));

@@ -27,7 +27,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
   uint256 internal immutable comm; // commission 30%
 
-  event RoundStarted(uint256 round, uint256 startTimestamp);
+  event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
   event Released(uint256 round, uint256 amount);
@@ -102,7 +102,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     if (prevRound.endTimestamp == 0) {
       revert NotComplete();
     }
-    //    require(prevRound.endTimestamp != 0, "Lottery: previous round is not yet finished");
 
     Round memory nextRound;
     _rounds.push(nextRound);
@@ -116,7 +115,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
-    emit RoundStarted(roundNumber, block.timestamp);
+    emit RoundStarted(roundNumber, block.timestamp, maxTicket, ticket, price);
   }
 
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {

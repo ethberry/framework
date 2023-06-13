@@ -35,7 +35,7 @@ export class PyramidRulesServiceEth {
     }
 
     const pyramidRuleEntity = await this.pyramidRulesService.findOne({
-      id: ~~externalId,
+      id: Number(externalId),
       contractId: contractEntity.id,
     });
 

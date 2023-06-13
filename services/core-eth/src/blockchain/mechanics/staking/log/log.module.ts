@@ -1,6 +1,7 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
@@ -17,6 +18,7 @@ import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import { StakingLogService } from "./log.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 
 @Module({
   imports: [
@@ -39,7 +41,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.STAKING,
             contractAddress: stakingContracts.address || [],
-            contractInterface: StakingSol.abi,
+            contractInterface: new Interface(StakingSol.abi),
             // prettier-ignore
             eventNames: [
               StakingEventType.RuleCreated,

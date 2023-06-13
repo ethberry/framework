@@ -1,6 +1,7 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
@@ -12,6 +13,7 @@ import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/Co
 import { ContractManagerLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 @Module({
   imports: [
@@ -28,11 +30,12 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
         const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
             contractAddress: [contractManagerAddr],
-            contractInterface: ContractManagerSol.abi,
+            contractInterface: new Interface(ContractManagerSol.abi),
             // prettier-ignore
             eventNames: [
               ContractManagerEventType.VestingDeployed,

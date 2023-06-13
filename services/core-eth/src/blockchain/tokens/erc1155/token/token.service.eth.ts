@@ -33,7 +33,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address } = context;
 
-    const tokenEntity = await this.tokenService.getToken(id, address);
+    const tokenEntity = await this.tokenService.getToken(Number(id).toString(), address);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -78,7 +78,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     }
 
     if (from !== ZeroAddress) {
-      erc1155TokenEntity.template.amount += ~~amount;
+      erc1155TokenEntity.template.amount += Number(amount);
       await this.balanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 

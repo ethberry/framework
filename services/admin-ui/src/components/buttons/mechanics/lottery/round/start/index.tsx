@@ -31,11 +31,13 @@ export const LotteryRoundStartButton: FC = () => {
       tokenId: values.price.components[0].templateId || 0,
       amount: values.price.components[0].amount,
     };
-    return contract.startRound(ticket, price) as Promise<void>;
+    return contract.startRound(ticket, price, values.maxTicket) as Promise<void>;
   });
 
   const handleStartRoundConfirm = async (values: ILotteryRound): Promise<void> => {
-    return metaFn(values);
+    return metaFn(values).finally(() => {
+      setIsStartRoundDialogOpen(false);
+    });
   };
 
   const handleStartRound = () => {
@@ -63,6 +65,7 @@ export const LotteryRoundStartButton: FC = () => {
           address: "",
           ticket: emptyItem,
           price: emptyPrice,
+          maxTicket: 0,
         }}
       />
     </Fragment>

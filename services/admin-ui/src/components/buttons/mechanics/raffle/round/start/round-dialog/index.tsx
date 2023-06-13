@@ -9,21 +9,21 @@ import { IAsset, ModuleType, TokenType } from "@framework/types";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ContractInput } from "../../contract-input";
 
-export interface ILotteryRound {
+export interface IRaffleRound {
   address: string;
   maxTicket: number;
   ticket: IAsset;
   price: IAsset;
 }
 
-export interface ILotteryStartRoundDialogProps {
+export interface IRaffleStartRoundDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: ILotteryRound, form?: any) => Promise<void>;
-  initialValues: Partial<ILotteryRound>;
+  onConfirm: (values: IRaffleRound, form?: any) => Promise<void>;
+  initialValues: Partial<IRaffleRound>;
 }
 
-export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props => {
+export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { ticket, price, address, maxTicket } = initialValues;
@@ -39,7 +39,7 @@ export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props 
       initialValues={fixedValues}
       // validationSchema={validationSchema}
       message={"dialogs.startRound"}
-      testId="LotteryRoundStartForm"
+      testId="RaffleRoundStartForm"
       {...rest}
     >
       <ContractInput />
@@ -49,7 +49,7 @@ export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props 
             autoSelect
             prefix="ticket"
             tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC998, TokenType.ERC1155] }}
-            contract={{ data: { contractModule: [ModuleType.LOTTERY] } }}
+            contract={{ data: { contractModule: [ModuleType.RAFFLE] } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

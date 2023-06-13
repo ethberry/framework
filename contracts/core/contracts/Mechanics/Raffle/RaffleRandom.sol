@@ -31,7 +31,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
   uint256 internal immutable comm; // commission 30%
 
-  event RoundStarted(uint256 round, uint256 startTimestamp);
+  event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
@@ -112,7 +112,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
-    emit RoundStarted(roundNumber, block.timestamp);
+    emit RoundStarted(roundNumber, block.timestamp, maxTicket, ticket, price);
   }
 
   // TODO could be too much data to return
@@ -194,7 +194,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     // calculate wining numbers
     uint256 len = currentRound.ticketCounter.current();
 
-    uint256 prizeNumber = len > 0 ? randomWords[0] % len : 0; // if no tickets sold
+    uint256 prizeNumber = len > 0 ? uint256(uint8(randomWords[0] % len) + 1) : 0; // if no tickets sold
 
     // in case number is Zero - winner tokenId is 1
     currentRound.prizeNumber = prizeNumber == 0 && len > 0 ? prizeNumber + 1 : prizeNumber;

@@ -36,7 +36,7 @@ export class ExchangeRaffleServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    const tokenEntity = await this.tokenService.getToken(ticketId, ticket.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(ticketId).toString(), ticket.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

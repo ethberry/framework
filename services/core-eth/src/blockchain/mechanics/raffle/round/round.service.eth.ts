@@ -5,6 +5,7 @@ import { Log, Wallet } from "ethers";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {
+  IAssetDto,
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
@@ -14,6 +15,9 @@ import {
 
 import { RaffleRoundService } from "./round.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { testChainId } from "@framework/constants";
+import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class RaffleRoundServiceEth {
@@ -22,6 +26,8 @@ export class RaffleRoundServiceEth {
     private readonly loggerService: LoggerService,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly templateService: TemplateService,
+    private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
@@ -30,12 +36,55 @@ export class RaffleRoundServiceEth {
   public async start(event: ILogEvent<IRaffleRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
-      args: { round, startTimestamp },
+      args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
+    const { address } = context;
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    // LOTTERY CONTRACT
+    const lotteryContract = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+
+    if (!lotteryContract) {
+      throw new NotFoundException("lotteryContractNotFound");
+    }
+
+    // TICKET CONTRACT
+    const [_tokenTypeT, ticketAddr, _templateId, _amount] = ticket;
+    const ticketContract = await this.contractService.findOne({ address: ticketAddr.toLowerCase(), chainId });
+
+    if (!ticketContract) {
+      throw new NotFoundException("ticketContractNotFound");
+    }
+
+    // PRICE ASSET
+    const priceAsset: IAssetDto = await this.raffleRoundService.createEmptyAsset();
+
+    const [_tokenTypeP, _token, templateId, amount] = price;
+
+    const priceTemplate = await this.templateService.findOne(
+      { id: Number(templateId) },
+      { relations: { contract: true } },
+    );
+
+    if (!priceTemplate) {
+      throw new NotFoundException("priceTemplateNotFound");
+    }
+
+    priceAsset.components.push({
+      tokenType: priceTemplate.contract.contractType,
+      contractId: priceTemplate.contract.id,
+      templateId: priceTemplate.id,
+      amount: Number(amount).toString(),
+    });
 
     await this.raffleRoundService.create({
-      roundId: round,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      roundId,
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
+      contractId: lotteryContract.id,
+      ticketContractId: ticketContract.id,
+      price: priceAsset,
+      maxTickets: Number(maxTicket),
     });
   }
 
@@ -45,13 +94,14 @@ export class RaffleRoundServiceEth {
       args: { round, prizeNumber },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+    const roundEntity = await this.raffleRoundService.findOne({ roundId: Number(round).toString() });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    Object.assign(roundEntity, { numbers: [prizeNumber] });
+    // TODO BigInt ?
+    Object.assign(roundEntity, { number: Number(prizeNumber).toString() });
     await roundEntity.save();
   }
 
@@ -62,14 +112,14 @@ export class RaffleRoundServiceEth {
       args: { round, endTimestamp },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+    const roundEntity = await this.raffleRoundService.findOne({ roundId: Number(round).toString() });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
     Object.assign(roundEntity, {
-      endTimestamp: new Date(~~endTimestamp * 1000).toISOString(),
+      endTimestamp: new Date(Number(endTimestamp) * 1000).toISOString(),
     });
 
     await roundEntity.save();

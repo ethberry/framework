@@ -95,7 +95,7 @@ export class AccessControlServiceEth {
       args: { tokenId, user, expires },
     } = event;
     const { address } = context;
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

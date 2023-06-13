@@ -32,7 +32,7 @@ export class ExchangeGradeServiceEth {
 
     const [itemType, itemTokenAddr, itemTokenId, itemAmount] = item;
 
-    const tokenEntity = await this.tokenService.getToken(itemTokenId, itemTokenAddr.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(itemTokenId).toString(), itemTokenAddr.toLowerCase());
 
     if (!tokenEntity) {
       this.loggerService.error("tokenNotFound", itemTokenId, itemTokenAddr.toLowerCase(), ExchangeGradeServiceEth.name);
