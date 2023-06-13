@@ -10,7 +10,8 @@ import {
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, IsNull, Repository } from "typeorm";
 
-import { ExchangeType, IAssetDto, IExchangeItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
+import { ExchangeType, IAssetDto, IExchangePurchaseEvent, TokenType } from "@framework/types";
+import type { IExchangeItem } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";

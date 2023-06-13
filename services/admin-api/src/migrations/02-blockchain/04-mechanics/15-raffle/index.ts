@@ -7,4 +7,3 @@ export * from "./1685961134180-seed-contract-raffle-ticket";
 export * from "./1685961134280-seed-template-raffle";
 export * from "./1685961134380-seed-token-raffle";
 export * from "./1685961134480-seed-balance-raffle";
-export * from "./1685961134099-seed-contract-raffle-wallet";

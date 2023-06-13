@@ -2,6 +2,7 @@ export * from "./contract-manager";
 
 export * from "./exchange/exchange";
 export * from "./exchange/breeding";
+export * from "./exchange/common";
 export * from "./exchange/claim";
 export * from "./exchange/core";
 export * from "./exchange/craft";

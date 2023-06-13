@@ -295,7 +295,6 @@ import {
   SeedWaitlistItemAt1663047650310,
   SeedWaitlistListAt1663047650210,
   SeedWrapperAt1563804000370,
-  SeedContractRaffleWalletAt1685961134099,
   SeedBalanceErc20Erc998At1563804020450,
 } from "./migrations";
 
