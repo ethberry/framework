@@ -1,3 +1,5 @@
+import { camelToSnakeCase } from "@gemunion/contracts-utils";
+
 import { deploySystem } from "./deploy/system";
 import { deployERC20 } from "./deploy/hierarchy/erc20";
 import { deployERC721 } from "./deploy/hierarchy/erc721";
@@ -41,8 +43,6 @@ async function main() {
   await deployMechanics(contracts);
   await deployIntegrations(contracts);
 }
-
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 
 main()
   .then(() => {

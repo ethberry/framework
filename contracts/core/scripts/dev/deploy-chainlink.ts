@@ -1,9 +1,8 @@
 import { ethers, network } from "hardhat";
 import { Contract, toBeHex, TransactionReceipt, TransactionResponse, WeiPerEther, zeroPadValue } from "ethers";
 
-import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
 
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
 const subscriptionId = 1; // besu
@@ -49,26 +48,27 @@ async function main() {
   // const linkInstance = linkFactory.attach(linkAddr);
   const linkInstance = await linkFactory.deploy();
   contracts.link = linkInstance;
+  const linkAddress = await contracts.link.getAddress();
   await debug(contracts);
   // console.info(`LINK_ADDR=${contracts.link.address}`);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  const vrfInstance = await vrfFactory.deploy(contracts.link.address);
+  const vrfInstance = await vrfFactory.deploy(linkAddress);
   // const vrfInstance = vrfFactory.attach(vrfAddr);
   contracts.vrf = vrfInstance;
   await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);
 
-  if (contracts.link.address !== linkAddr) {
+  if (linkAddress !== linkAddr) {
     console.info("LINK_ADDR address mismatch, clean BESU, then try again");
   }
-  if (contracts.vrf.address !== vrfAddr) {
+  if (linkAddress !== vrfAddr) {
     console.info("VRF_ADDR address mismatch, clean BESU, then try again");
   }
   // BESU gemunion
   // address(0x86C86939c631D53c6D812625bD6Ccd5Bf5BEb774), // vrfCoordinator
   //   address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
   // SETUP CHAIN_LINK VRF-V2 TO WORK
-  const linkAmount = WeiPerEther.mul(10);
+  const linkAmount = WeiPerEther * 10n;
 
   await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
   await debug(await vrfInstance.createSubscription(), "createSubscription");
@@ -79,10 +79,10 @@ async function main() {
 }
 
 main()
-  .then(() => {
-    Object.entries(contracts).map(([key, value]) =>
-      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.address.toLowerCase()}`),
-    );
+  .then(async () => {
+    for (const [key, value] of Object.entries(contracts)) {
+      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${(await value.getAddress()).toLowerCase()}`);
+    }
     process.exit(0);
   })
   .catch(error => {

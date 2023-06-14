@@ -1,3 +1,5 @@
+import { camelToSnakeCase } from "@gemunion/contracts-utils";
+
 import { deployLotteryProd } from "./deploy/mechanics/lottery_prod";
 import { deployWaitlist } from "./deploy/mechanics/waitlist";
 import { deployWrapper } from "./deploy/mechanics/wrapper";
@@ -17,8 +19,6 @@ async function main() {
   await deploySystem(contracts);
   await deployMechanics(contracts);
 }
-
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 
 main()
   .then(() => {
