@@ -4,7 +4,7 @@ import { CronExpression } from "@nestjs/schedule";
 import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
 
-export class SeedContractRaffleAt1685961134100 implements MigrationInterface {
+export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;

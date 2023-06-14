@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
+export class SeedTemplateRaffleTicketAt1685961134280 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -11,7 +11,7 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1210101
+        1110101
       );
     `);
 
@@ -29,15 +29,15 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1210101,
-        'Lottery ticket',
+        1110101,
+        'Raffle ticket',
         '${simpleFormatting}',
         '${imageUrl}',
-        1210101,
+        1110101,
         0,
         1,
         'ACTIVE',
-        12101,
+        11101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -3,7 +3,7 @@ import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 
-export class SeedTokenRaffleAt1685961134380 implements MigrationInterface {
+export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const now = new Date();
@@ -19,12 +19,12 @@ export class SeedTokenRaffleAt1685961134380 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        111010101,
+        121010101,
         '${JSON.stringify({})}',
         100,
         '1',
         'MINTED',
-        1110101,
+        1210101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );
