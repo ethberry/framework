@@ -6,7 +6,9 @@ import "hardhat-contract-sizer";
 
 import "./tasks";
 
-config();
+config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 
 export default {
   defaultNetwork: "hardhat",
@@ -53,7 +55,7 @@ export default {
     },
     goerli: {
       url: process.env.JSON_RPC_ADDR_GORLY,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      accounts: [process.env.PRIVATE_KEY],
       timeout: 142000,
     },
   },
