@@ -18,7 +18,7 @@ export const themeProps: IThemeProviderProps = {
       MuiCard: {
         styleOverrides: {
           root: {
-            background: "red",
+            flex: 1,
           },
         },
       },
