@@ -1,10 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IRaffleRound } from "@framework/types";
 
-import { RaffleTicketEntity } from "../ticket/ticket.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
@@ -45,7 +44,4 @@ export class RaffleRoundEntity extends IdDateBaseEntity implements IRaffleRound 
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
-
-  @OneToMany(_type => RaffleTicketEntity, ticket => ticket.round)
-  public tickets: Array<RaffleTicketEntity>;
 }

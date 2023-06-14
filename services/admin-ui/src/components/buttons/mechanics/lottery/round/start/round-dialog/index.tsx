@@ -49,7 +49,7 @@ export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props 
             autoSelect
             prefix="ticket"
             tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC998, TokenType.ERC1155] }}
-            contract={{ data: { contractModule: [ModuleType.LOTTERY] } }}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

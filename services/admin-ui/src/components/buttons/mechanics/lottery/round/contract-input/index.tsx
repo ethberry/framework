@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractFeatures, ModuleType } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 export const ContractInput: FC = () => {
   const form = useFormContext<any>();
@@ -18,7 +18,6 @@ export const ContractInput: FC = () => {
       controller="contracts"
       data={{
         contractModule: [ModuleType.LOTTERY],
-        contractFeatures: [ContractFeatures.RANDOM],
       }}
       onChange={handleChange}
       autoselect

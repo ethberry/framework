@@ -1,5 +1,5 @@
 import { snakeToCamelCase } from "@gemunion/utils";
-import { concat, Result, toBeHex, toQuantity, zeroPadValue } from "ethers";
+import { concat, Result, toBeHex, toBeArray, zeroPadValue } from "ethers";
 
 // Patch BigNumber
 // https://github.com/GoogleChromeLabs/jsbi/issues/30
@@ -22,7 +22,7 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   return numbers;
 };
 
-export const getNumbersBytes = (selected = [0, 1, 2, 3, 5, 8]) => {
+export const getNumbersBytes = (selected = [8, 5, 3, 2, 1, 0]) => {
   const numbers: Array<any> = [];
   selected.forEach(s => {
     numbers.push(toBeHex(s));
@@ -30,8 +30,13 @@ export const getNumbersBytes = (selected = [0, 1, 2, 3, 5, 8]) => {
   return zeroPadValue(concat(numbers), 32);
 };
 
-export const getBytesNumbers = (selected = 4328719624n) => {
-  return toQuantity(selected);
+export const getBytesNumbersArr = (selected = "4328719624n"): Array<number> => {
+  const arrStr = toBeArray(selected);
+  const arr = [];
+  for (let i = 0; i < arrStr.length; i++) {
+    arr.push(Number(arrStr[i]));
+  }
+  return arr;
 };
 
 export const getContractName = (base: string, network: string) => {

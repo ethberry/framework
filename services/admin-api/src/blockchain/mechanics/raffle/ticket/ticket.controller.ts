@@ -21,6 +21,7 @@ export class RaffleTicketController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<RaffleTicketEntity | null> {
-    return this.raffleTicketService.findOne({ id }, { relations: { token: true, round: true } });
+    // return this.raffleTicketService.findOne({ id }, { relations: { token: true, round: true } });
+    return this.raffleTicketService.findOne({ id });
   }
 }

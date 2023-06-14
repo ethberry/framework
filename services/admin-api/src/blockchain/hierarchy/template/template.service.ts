@@ -146,11 +146,11 @@ export class TemplateService {
 
     if (contractType) {
       if (contractType.length === 1) {
-        queryBuilder.andWhere("manager.contractType = :contractType", {
+        queryBuilder.andWhere("contract.contractType = :contractType", {
           contractType: contractType[0],
         });
       } else {
-        queryBuilder.andWhere("manager.contractType IN(:...contractType)", { contractType });
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
     }
 

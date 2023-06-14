@@ -466,7 +466,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [maxStake, contractTemplate] = args;
+    const [contractTemplate] = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -476,9 +476,6 @@ export class ContractManagerServiceEth {
       address: addr.toLowerCase(),
       title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
-      parameters: {
-        maxStake,
-      },
       imageUrl,
       contractFeatures:
         contractTemplate === "0"

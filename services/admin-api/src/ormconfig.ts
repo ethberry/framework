@@ -44,10 +44,8 @@ import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 /* lottery */
-import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 /* raffle */
-import { RaffleTicketEntity } from "./blockchain/mechanics/raffle/ticket/ticket.entity";
 import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 /* pyramid */
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
@@ -102,7 +100,6 @@ import {
   CreateEventHistoryComponents1563804040020,
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
-  CreateLotteryTicketAt1660436476130,
   CreateMerchant1563803000110,
   CreateMysterybox1653616447910,
   CreateOrder1683724062000,
@@ -119,7 +116,6 @@ import {
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
   CreateRaffleRoundAt1685961136110,
-  CreateRaffleTicketAt1685961136130,
   CreateReferralRewardAt1660103709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
@@ -332,9 +328,7 @@ const config: PostgresConnectionOptions = {
     DropEntity,
     GradeEntity,
     LotteryRoundEntity,
-    LotteryTicketEntity,
     RaffleRoundEntity,
-    RaffleTicketEntity,
     MysteryBoxEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
@@ -544,9 +538,8 @@ const config: PostgresConnectionOptions = {
     SeedBalanceLotteryTicketAt1563804020480,
     SeedContractLotteryAt1660436476100,
     CreateLotteryRoundAt1660436476100,
-    SeedLotteryRoundAt1660436476120,
-    CreateLotteryTicketAt1660436476130,
-    SeedLotteryTicketsAt1660436476140,
+    // SeedLotteryRoundAt1660436476120,
+    // SeedLotteryTicketsAt1660436476140,
 
     // RAFFLE
     SeedContractRaffleAt1685961136100,
@@ -556,7 +549,6 @@ const config: PostgresConnectionOptions = {
     SeedBalanceRaffleTicketAt1685961134480,
     CreateRaffleRoundAt1685961136110,
     // SeedRaffleRoundAt1685961136120,
-    CreateRaffleTicketAt1685961136130,
     // SeedRaffleTicketsAt1685961136140,
 
     SeedContractPyramidAt1660436477100,

@@ -1,6 +1,15 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { encodeBytes32String, getUint, parseEther, toBeHex, WeiPerEther, ZeroAddress, toQuantity } from "ethers";
+import {
+  encodeBytes32String,
+  getUint,
+  parseEther,
+  toBeArray,
+  toBeHex,
+  toQuantity,
+  WeiPerEther,
+  ZeroAddress,
+} from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -14,7 +23,13 @@ import { VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLottery } from "./fixture";
 import { wrapManyToManySignature } from "../../Exchange/shared/utils";
-import { getNumbersBytes, isEqualEventArgArrObj, isEqualEventArgObj, recursivelyDecodeResult } from "../../utils";
+import {
+  getBytesNumbersArr,
+  getNumbersBytes,
+  isEqualEventArgArrObj,
+  isEqualEventArgObj,
+  recursivelyDecodeResult,
+} from "../../utils";
 import { decodeMetadata } from "../../shared/metadata";
 
 const delay = (milliseconds: number) => {
@@ -316,7 +331,7 @@ describe("Lottery", function () {
       const networkE = await ethers.provider.getNetwork();
       const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
 
-      const values = [0, 1, 2, 3, 5, 8];
+      const values = [8, 5, 3, 2, 1, 0];
       const ticketNumbers = getNumbersBytes(values);
 
       const signature = await generateManyToManySignature({
@@ -418,6 +433,7 @@ describe("Lottery", function () {
       const decodedMeta = decodeMetadata(metadata as any[]);
       expect(decodedMeta.ROUND).to.equal(1n);
       expect(toBeHex(decodedMeta.NUMBERS, 32)).to.equal(ticketNumbers);
+      expect(getBytesNumbersArr(decodedMeta.NUMBERS)).to.have.all.members(values);
     });
 
     it("should finish round with 1 ticket and release funds", async function () {
@@ -1160,7 +1176,7 @@ describe("Lottery", function () {
     it("should get prize: Jackpot 1 ticket", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const values = [0, 1, 2, 3, 5, 8];
+      const values = [8, 5, 3, 2, 1, 0];
       const aggregation = [0, 0, 0, 0, 0, 0, 1];
 
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
@@ -1201,7 +1217,7 @@ describe("Lottery", function () {
     it("should get prize: Jackpot 2 tickets", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
-      const values = [0, 1, 2, 3, 5, 8];
+      const values = [8, 5, 3, 2, 1, 0];
       const aggregation = [0, 0, 0, 0, 0, 0, 2];
 
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();

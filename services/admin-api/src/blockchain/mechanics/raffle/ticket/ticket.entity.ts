@@ -15,10 +15,6 @@ export class RaffleTicketEntity extends IdDateBaseEntity implements IRaffleTicke
   @Column({ type: "int" })
   public roundId: number;
 
-  @JoinColumn()
-  @ManyToOne(_type => RaffleRoundEntity, round => round.tickets)
-  public round: RaffleRoundEntity;
-
   @Column({ type: "int" })
   public tokenId: number;
 

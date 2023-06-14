@@ -17,7 +17,7 @@ declare global {
       WAITLIST_ADDR: string;
       LOTTERY_ADDR: string;
       RAFFLE_ADDR: string;
-      DISPERSE_ADDR: string;
+      DISPERSION_ADDR: string;
     }
   }
 }

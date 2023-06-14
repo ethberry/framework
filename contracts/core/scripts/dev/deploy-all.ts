@@ -45,7 +45,8 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          await accessInstance.grantRole(roles[k], grantee[j]);
+          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }
@@ -472,6 +473,7 @@ async function main() {
     commission: 30,
   });
   await debug(contracts);
+
   await debug(
     await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.lottery.getAddress()),
     "vrfInstance.addConsumer",
@@ -564,6 +566,10 @@ async function main() {
     ],
     [1, 5, 95],
   );
+  await debug(contracts);
+
+  const dispersionFactory = await ethers.getContractFactory("Dispersion");
+  contracts.dispersion = await dispersionFactory.deploy();
   await debug(contracts);
 
   // GRANT ROLES

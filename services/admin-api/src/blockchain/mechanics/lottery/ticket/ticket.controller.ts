@@ -5,7 +5,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { LotteryTicketSearchDto } from "./dto";
 import { LotteryTicketService } from "./ticket.service";
-import { LotteryTicketEntity } from "./ticket.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
 @Controller("/lottery/tickets")
@@ -14,13 +14,13 @@ export class LotteryTicketController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: LotteryTicketSearchDto): Promise<[Array<LotteryTicketEntity>, number]> {
+  public search(@Query() dto: LotteryTicketSearchDto): Promise<[Array<TokenEntity>, number]> {
     return this.lotteryTicketService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<LotteryTicketEntity | null> {
-    return this.lotteryTicketService.findOne({ id }, { relations: { token: true, round: true } });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
+    return this.lotteryTicketService.findOneWithRelations({ id });
   }
 }

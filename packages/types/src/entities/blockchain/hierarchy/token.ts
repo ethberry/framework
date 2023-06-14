@@ -15,6 +15,8 @@ export enum TokenMetadata {
   GRADE = "GRADE",
   RARITY = "RARITY",
   TRAITS = "TRAITS",
+  ROUND = "ROUND",
+  NUMBERS = "NUMBERS",
 }
 
 export enum TokenGenes {

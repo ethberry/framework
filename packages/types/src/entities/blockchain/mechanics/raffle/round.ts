@@ -1,13 +1,13 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import type { IRaffleTicket } from "./ticket";
 import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
+import { IToken } from "../../hierarchy/token";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner
-  tickets?: Array<IRaffleTicket>;
+  tickets?: Array<IToken>;
   roundId: string;
   contractId: number; // lottery contract
   ticketContractId: number; // ticket contract

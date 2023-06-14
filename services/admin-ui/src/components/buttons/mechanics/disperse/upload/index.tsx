@@ -34,7 +34,7 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
     const tokenIds = disperses.map(e => e.tokenId);
     const amounts = disperses.map(e => e.amount);
 
-    const contract = new Contract(process.env.DISPERSE_ADDR, DisperseABI, web3Context.provider?.getSigner());
+    const contract = new Contract(process.env.DISPERSION_ADDR, DisperseABI, web3Context.provider?.getSigner());
 
     if (tokenType === TokenType.NATIVE) {
       return contract.disperseEther(accounts, amounts) as Promise<any>;
