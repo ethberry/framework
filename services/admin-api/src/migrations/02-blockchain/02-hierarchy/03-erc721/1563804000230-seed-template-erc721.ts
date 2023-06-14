@@ -472,7 +472,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         130610,
         'Mjölnir',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmjolnir.jpg?alt=media&token=52eac398-38e0-4219-a698-d16f7aec882b',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmjolnir.png?alt=media&token=f66bf9fc-7b59-40ad-bbec-67645f5e9326',
         130610,
         0,
         1,
