@@ -46,7 +46,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${chainId}',
         'Runes (simple)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Frunes.png?alt=media&token=93968402-77ec-436f-8c3d-099939b37997',
         'RUNE',
         'RUNE998',
         100,

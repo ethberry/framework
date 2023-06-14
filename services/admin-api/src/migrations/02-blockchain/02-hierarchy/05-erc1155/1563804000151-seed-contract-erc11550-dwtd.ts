@@ -1,12 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns } from "@framework/constants";
 
-export class SeedContractErc721CryptoKittiesAt1563804000131 implements MigrationInterface {
+export class SeedContractErc1155DumbWayToDieAt1563804000151 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -28,20 +27,20 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
         created_at,
         updated_at
       ) VALUES (
-        1315,
-        '0x06012c8cf97bead5deae237070f9587f8e7a266d',
+        1515,
+        '0x0cd925f268678d03057d184ded76d98552d7d837',
         1,
-        'CryptoKitties (external)',
+        'Dumb Ways To Die (external)',
         '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcrypto_kitties.png?alt=media&token=df69f93c-8892-4456-92f8-34dc3703b64b',
-        'CK',
-        'CK',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fdumb_way_to_die.png?alt=media&token=c2a14ec3-434e-4d03-894b-db851bef9c93',
+        'DWTD',
+        'DWTD',
         0,
-        'https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/{tokenId}.png',
+        'https://dwtd.playsidestudios-devel.com/loot/founders/images/{tokenId}.png',
         'ACTIVE',
-        'ERC721',
+        'ERC1155',
         '{EXTERNAL}',
-        '${fromBlock}',
+        14498221,
         1,
         '${currentDateTime}',
         '${currentDateTime}'

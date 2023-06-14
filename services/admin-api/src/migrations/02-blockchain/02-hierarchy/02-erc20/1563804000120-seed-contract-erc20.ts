@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -41,7 +41,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'Space Credits',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'Space Credits',
         'GEM20',
         18,
@@ -60,7 +60,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (inactive)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 INACTIVE',
         'OFF20',
         18,
@@ -79,7 +79,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (new)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 NEW',
         'NEW20',
         18,
@@ -98,7 +98,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (blacklist)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 BLACKLIST',
         'BL20',
         18,
@@ -117,7 +117,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${chainId}',
         'ERC20 (whitelist)',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'ERC20 WHITELIST',
         'WL20',
         18,
