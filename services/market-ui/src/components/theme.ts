@@ -10,8 +10,15 @@ export const themeProps: IThemeProviderProps = {
           },
           title: {
             whiteSpace: "nowrap",
-            overflow: "auto",
+            overflow: "hidden",
             textOverflow: "ellipsis",
+          },
+        },
+      },
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            background: "red",
           },
         },
       },
