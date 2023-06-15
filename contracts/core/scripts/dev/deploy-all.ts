@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Contract, WeiPerEther, ZeroAddress } from "ethers";
+import { Contract, WeiPerEther, ZeroAddress, Result } from "ethers";
 import fs from "fs";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -16,6 +16,26 @@ interface IObj {
   address?: string;
   hash?: string;
 }
+
+const recursivelyDecodeResult = (result: Result): Record<string, any> => {
+  if (typeof result !== "object") {
+    // Raw primitive value
+    return result;
+  }
+  try {
+    const obj = result.toObject();
+    if (obj._) {
+      throw new Error("Decode as array, not object");
+    }
+    Object.keys(obj).forEach(key => {
+      obj[key] = recursivelyDecodeResult(obj[key]);
+    });
+    return obj;
+  } catch (err) {
+    // Result is array.
+    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
+  }
+};
 
 const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   if (obj && obj.hash) {
@@ -187,9 +207,14 @@ async function main() {
 
   // await debug(await linkInstance.transfer(contracts.erc721Random.address, linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.erc721Random.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
+  await blockAwait(delay, delayMs);
+  const eventFilter = vrfInstance.filters.SubscriptionConsumerAdded();
+  const events = await vrfInstance.queryFilter(eventFilter);
+  const { subId, consumer } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  console.info("SubscriptionConsumerAdded", subId, consumer);
 
   const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
@@ -201,7 +226,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.erc721Genes.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -240,7 +265,7 @@ async function main() {
 
   // await debug(await linkInstance.transfer(contracts.erc998Random.getAddress(), linkAmountInEth), "linkInstance.transfer");
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.erc998Random.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc998Random.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -255,7 +280,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.erc998Genes.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc998Genes.getAddress()),
     "vrfInstance.addConsumer",
   );
 
@@ -475,7 +500,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.lottery.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.lottery.getAddress()),
     "vrfInstance.addConsumer",
   );
   await debug(
@@ -501,7 +526,7 @@ async function main() {
   });
   await debug(contracts);
   await debug(
-    await vrfInstance.addConsumer(network.name === "besu" ? 1 : 2, await contracts.raffle.getAddress()),
+    await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.raffle.getAddress()),
     "vrfInstance.addConsumer",
   );
   await debug(

@@ -23,7 +23,9 @@ export const LotteryRoundEndButton: FC = () => {
   };
 
   const handleEndRoundConfirm = async (values: ILotteryEndRound) => {
-    return metaFn(values);
+    return metaFn(values).finally(() => {
+      setIsEndRoundDialogOpen(false);
+    });
   };
 
   const handleEndRoundCancel = () => {

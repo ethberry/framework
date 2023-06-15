@@ -5,7 +5,13 @@ export enum ReferralProgramEventType {
   ReferralBonus = "ReferralBonus",
 }
 
-export type IReferralProgram = [string, string, string, boolean];
+// export type IReferralProgram = [string, string, string, boolean];
+export interface IReferralProgram {
+  _refReward: string;
+  _refDecrease: string;
+  _maxRefs: string;
+  init: boolean;
+}
 
 export interface IRProgram {
   refProgram: IReferralProgram;

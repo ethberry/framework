@@ -1,8 +1,8 @@
-import { IExchangeItem } from "./common";
+import { IAssetItem } from "./common";
 
 export interface IExchangePurchaseMysteryEvent {
   from: string;
   externalId: string;
-  items: Array<IExchangeItem>;
-  price: Array<IExchangeItem>;
+  items: Array<IAssetItem>;
+  price: Array<IAssetItem>;
 }

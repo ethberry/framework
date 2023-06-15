@@ -8,6 +8,7 @@ import "./tasks";
 
 config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
+  // path: `.env`,
 });
 
 export default {
@@ -54,7 +55,7 @@ export default {
       },
     },
     goerli: {
-      url: process.env.JSON_RPC_ADDR_GORLY,
+      url: process.env.JSON_RPC_ADDR_GOERLY,
       accounts: [process.env.PRIVATE_KEY],
       timeout: 142000,
     },

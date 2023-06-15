@@ -1,12 +1,12 @@
-import { IExchangeItem } from "@framework/types";
+import { IAssetItem } from "@framework/types";
 
 export interface IRentData {
   from: string;
   to: string;
   expires: string;
   externalId: string;
-  item: IExchangeItem;
-  price: Array<IExchangeItem>;
+  item: IAssetItem;
+  price: Array<IAssetItem>;
 }
 
 export interface IRentUserUpdateData {

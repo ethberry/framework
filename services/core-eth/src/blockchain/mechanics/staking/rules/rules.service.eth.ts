@@ -43,15 +43,15 @@ export class StakingRulesServiceEth {
     } = event;
     const { address } = context;
 
-    const [deposit, reward, _content, period, penalty, maxStake, recurrent, active] = rule;
+    const { deposit, reward, period, penalty, maxStake, recurrent, active } = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const dep of deposit) {
-      const [_tokenType, _token, templateId, amount] = dep;
+      const { tokenId, amount } = dep;
       const depositTemplate = await this.templateService.findOne(
-        { id: Number(templateId) },
+        { id: Number(tokenId) },
         { relations: { contract: true } },
       );
 
@@ -71,10 +71,10 @@ export class StakingRulesServiceEth {
     const rewardItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const rew of reward) {
-      const [_tokenType, _token, templateId, amount] = rew;
+      const { tokenId, amount } = rew;
 
       const rewardTemplate = await this.templateService.findOne(
-        { id: Number(templateId) },
+        { id: Number(tokenId) },
         { relations: { contract: true } },
       );
 

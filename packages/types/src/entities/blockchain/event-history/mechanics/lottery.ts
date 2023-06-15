@@ -1,4 +1,4 @@
-import { IExchangeItem } from "../exchange/common";
+import { IAssetItem } from "../exchange/common";
 
 export enum LotteryEventType {
   RoundFinalized = "RoundFinalized",
@@ -17,8 +17,8 @@ export interface IRoundStartedEvent {
   roundId: string;
   startTimestamp: string;
   maxTicket: string;
-  ticket: IExchangeItem;
-  price: IExchangeItem;
+  ticket: IAssetItem;
+  price: IAssetItem;
 }
 
 export interface IRoundFinalizedEvent {
@@ -49,8 +49,8 @@ export interface ILotteryRoundInfo {
   maxTicket: string;
   values: Array<string>; // uint8[6] prize numbers
   aggregation: Array<string>; // uint8[7] prize counts
-  acceptedAsset: IExchangeItem;
-  ticketAsset: IExchangeItem;
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
 }
 
 export type TLotteryEvents =

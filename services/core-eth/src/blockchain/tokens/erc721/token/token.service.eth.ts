@@ -193,6 +193,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { tokenId, to },
     } = event;
     const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+
     const entityWithRelations = await this.eventHistoryService.findOne(
       { id: eventHistoryEntity.id },
       { relations: { parent: true } },

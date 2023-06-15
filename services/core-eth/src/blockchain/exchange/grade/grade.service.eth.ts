@@ -30,12 +30,12 @@ export class ExchangeGradeServiceEth {
     } = event;
     const { transactionHash } = context;
 
-    const [itemType, itemTokenAddr, itemTokenId, itemAmount] = item;
+    const { tokenType, token, tokenId, amount } = item;
 
-    const tokenEntity = await this.tokenService.getToken(Number(itemTokenId).toString(), itemTokenAddr.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());
 
     if (!tokenEntity) {
-      this.loggerService.error("tokenNotFound", itemTokenId, itemTokenAddr.toLowerCase(), ExchangeGradeServiceEth.name);
+      this.loggerService.error("tokenNotFound", tokenId, token.toLowerCase(), ExchangeGradeServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
@@ -43,7 +43,7 @@ export class ExchangeGradeServiceEth {
     await this.assetService.saveAssetHistory(
       history,
       // we have to change tokenId to templateId for proper asset history
-      [[itemType, itemTokenAddr, tokenEntity.template.id.toString(), itemAmount]],
+      [{ tokenType, token, tokenId: tokenEntity.template.id.toString(), amount }],
       price,
     );
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
@@ -58,7 +58,7 @@ export class ExchangeGradeServiceEth {
     // Notify about Grade
     this.notificatorService.grade({
       account: from,
-      tokenId: itemTokenId,
+      tokenId: tokenId,
       gradeType: gradeEntity.attribute,
       transactionHash,
     });

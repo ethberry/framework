@@ -166,21 +166,21 @@ export class AchievementsRuleService {
         templateId: parent.token.template.id,
       });
     } else {
-      // try to parse eventData
+      // try to parse eventData//
       if (eventData && "item" in eventData) {
-        const [tokenType, token, templateId, _amount] = eventData.item;
+        const { tokenType, token, tokenId } = eventData.item;
         eventTokenAsset.push({
           tokenType: Object.values(TokenType)[~~tokenType],
           contract: token.toLowerCase(),
-          templateId: ~~templateId,
+          templateId: ~~tokenId,
         });
       } else if (eventData && "items" in eventData) {
         eventData.items.map(item => {
-          const [tokenType, token, templateId, _amount] = item;
+          const { tokenType, token, tokenId } = item;
           return eventTokenAsset.push({
             tokenType: Object.values(TokenType)[~~tokenType],
             contract: token.toLowerCase(),
-            templateId: ~~templateId,
+            templateId: ~~tokenId,
           });
         });
       }

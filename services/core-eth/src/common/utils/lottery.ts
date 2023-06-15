@@ -1,13 +1,13 @@
 import { ethers } from "ethers";
-import { IExchangeItem } from "@framework/types";
+import { IAssetItem } from "@framework/types";
 
 // TODO move to @types
 export interface ILotteryCurrentRound {
   roundId: string;
   startTimestamp: string;
   endTimestamp: string;
-  acceptedAsset: IExchangeItem;
-  ticketAsset: IExchangeItem;
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
 }
 
 export const getLotteryNumbers = (selected: Array<number>) => {

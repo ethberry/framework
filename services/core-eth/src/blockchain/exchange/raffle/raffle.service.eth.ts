@@ -27,16 +27,16 @@ export class ExchangeRaffleServiceEth {
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const [_raffleType, raffle, _raffleToken, _raffleAmount] = items[0]; // Raffle contract
-    const [_type, ticket, ticketId, _amount] = items[1]; // Ticket contract
+    const { token } = items[0]; // Raffle contract
+    const { tokenId } = items[1]; // Ticket contract
 
-    const roundEntity = await this.raffleRoundService.getRound(roundId, raffle.toLowerCase());
+    const roundEntity = await this.raffleRoundService.getRound(roundId, token.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    const tokenEntity = await this.tokenService.getToken(Number(ticketId).toString(), ticket.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
