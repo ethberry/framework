@@ -18,38 +18,38 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { Erc721RecipeSearchDto, Erc721RecipeUpdateDto, ExchangeCreateDto } from "./dto";
+import { CraftSearchDto, CraftUpdateDto, CraftCreateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/craft")
 export class CraftController {
-  constructor(private readonly recipeService: CraftService) {}
+  constructor(private readonly craftService: CraftService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721RecipeSearchDto): Promise<[Array<CraftEntity>, number]> {
-    return this.recipeService.search(dto);
+  public search(@Query() dto: CraftSearchDto): Promise<[Array<CraftEntity>, number]> {
+    return this.craftService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<CraftEntity | null> {
-    return this.recipeService.findOneWithRelations({ id });
+    return this.craftService.findOneWithRelations({ id });
   }
 
   @Post("/")
-  public create(@Body() dto: ExchangeCreateDto): Promise<CraftEntity> {
-    return this.recipeService.create(dto);
+  public create(@Body() dto: CraftCreateDto): Promise<CraftEntity> {
+    return this.craftService.create(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc721RecipeUpdateDto): Promise<CraftEntity> {
-    return this.recipeService.update({ id }, dto);
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: CraftUpdateDto): Promise<CraftEntity> {
+    return this.craftService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.recipeService.delete({ id });
+    await this.craftService.delete({ id });
   }
 }

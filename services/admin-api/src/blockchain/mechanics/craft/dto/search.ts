@@ -5,7 +5,7 @@ import { Transform } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
-export class Erc721RecipeSearchDto extends SearchDto implements ICraftSearchDto {
+export class CraftSearchDto extends SearchDto implements ICraftSearchDto {
   @ApiPropertyOptional({
     enum: CraftStatus,
     isArray: true,
