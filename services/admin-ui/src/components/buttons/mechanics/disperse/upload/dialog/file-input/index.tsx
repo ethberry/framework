@@ -27,7 +27,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   const disperses = useWatch({ name: dispersesName });
   const form = useFormContext<any>();
 
-  const headers = ["account", "tokenId", "amount"];
+  const headers = ["account", "tokenType", "address", "tokenId", "amount"];
 
   const resetForm = () => {
     form.reset(initialValues);

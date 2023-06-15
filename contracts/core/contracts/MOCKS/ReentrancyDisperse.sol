@@ -14,20 +14,12 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "../Mechanics/Disperse/interfaces/IDisperse.sol";
 
 contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
-  IDisperse Disperse;
-  address Token;
+  IDisperse disperse;
+  address token;
 
-  address[] receivers;
-  uint256[] amounts;
-  uint256[] tokenIds;
-  event Reentered(bool success);
-
-  constructor(IDisperse _disperse, address token) {
-    Disperse = _disperse;
-    Token = token;
-    receivers.push(address(this));
-    tokenIds.push(2);
-    amounts.push(1000);
+  constructor(IDisperse _disperse, address _token) {
+    disperse = _disperse;
+    token = _token;
   }
 
   function onERC721Received(
@@ -36,10 +28,13 @@ contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
     uint256 tokenId,
     bytes calldata data
   ) public override returns (bytes4) {
-    (bool success, ) = address(Disperse).call(
-      abi.encodeWithSelector(IDisperse(Disperse).disperseERC721.selector, Token, receivers, tokenIds)
+    Asset[] memory items = new Asset[](1);
+    items[0] = Asset(TokenType.ERC721, token, 2, 1);
+    address[] memory receivers = new address[](1);
+    receivers[0] = address(this);
+    (bool success, bytes memory data) = address(disperse).call(
+      abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
     );
-    emit Reentered(success);
     return super.onERC721Received(operator, from, tokenId, data);
   }
 
@@ -50,18 +45,27 @@ contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
     uint256 value,
     bytes calldata data
   ) public virtual override returns (bytes4) {
-    (bool success, ) = address(Disperse).call(
-      abi.encodeWithSelector(IDisperse(Disperse).disperseERC1155.selector, Token, receivers, tokenIds, amounts)
+    Asset[] memory items = new Asset[](1);
+    items[0] = Asset(TokenType.ERC1155, token, 1, 100000);
+    address[] memory receivers = new address[](1);
+    receivers[0] = address(this);
+    (bool success, bytes memory data) = address(disperse).call(
+      abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
     );
-    emit Reentered(success);
     return super.onERC1155Received(operator, from, id, value, data);
   }
 
   receive() external payable {
-    (bool success, ) = address(Disperse).call{ value: msg.value }(
-      abi.encodeWithSelector(IDisperse(Disperse).disperseEther.selector, receivers, amounts)
-    );
-    emit Reentered(success);
+    uint256 balance = address(msg.sender).balance;
+    if (balance > 0) {
+      Asset[] memory items = new Asset[](1);
+      items[0] = Asset(TokenType.NATIVE, address(0), 0, balance);
+      address[] memory receivers = new address[](1);
+      receivers[0] = address(this);
+      (bool success, bytes memory data) = address(disperse).call(
+        abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
+      );
+    }
   }
 
   /**

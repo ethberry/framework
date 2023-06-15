@@ -6,21 +6,8 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "../../../Exchange/interfaces/IAsset.sol";
 
 interface IDisperse {
-  function disperseEther(address[] calldata recipients, uint256[] calldata amounts) external payable;
-
-  function disperseERC20(IERC20 token, address[] calldata recipients, uint256[] calldata amounts) external;
-
-  function disperseERC721(IERC721 token, address[] calldata recipients, uint256[] calldata tokenIds) external;
-
-  function disperseERC1155(
-    IERC1155 token,
-    address[] calldata recipients,
-    uint256[] calldata tokenIds,
-    uint256[] calldata amounts
-  ) external;
+  function disperse(Asset[] memory items, address[] calldata receivers) external payable;
 }

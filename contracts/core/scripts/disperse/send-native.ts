@@ -1,22 +1,27 @@
 import { ethers } from "hardhat";
+import { ZeroAddress } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 import { blockAwait } from "@gemunion/contracts-utils";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 async function main() {
-  const totalTransfers = 10;
+  const totalTransfers = 10n;
 
-  const [_, receiver] = await ethers.getSigners();
+  const [_owner, receiver] = await ethers.getSigners();
   const contractInstance = await deployContract("Disperse");
   await blockAwait();
   await blockAwait();
 
-  const receivers = new Array(Number(totalTransfers + 1)).fill(null).map(_ => receiver.address);
-  const amounts = new Array(Number(totalTransfers + 1)).fill(null).map(_ => amount);
+  const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
+  const items = new Array(Number(totalTransfers)).fill(null).map(_ => ({
+    tokenType: 0,
+    token: ZeroAddress,
+    tokenId: 0,
+    amount,
+  }));
 
-  // Call the function and capture the transaction response
-  const tx = await contractInstance.disperseEther(receivers, amounts, { value: amount * (totalTransfers + 1) });
+  const tx = await contractInstance.disperse(items, receivers, { value: amount * totalTransfers });
   await blockAwait();
 
   console.info("TX HASH :::", tx?.hash);

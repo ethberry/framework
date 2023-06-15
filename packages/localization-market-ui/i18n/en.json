@@ -98,6 +98,7 @@
       "97": "BINANCE (testnet)"
     },
     "claimStatus": {
+      "EXPIRED": "Expired",
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"

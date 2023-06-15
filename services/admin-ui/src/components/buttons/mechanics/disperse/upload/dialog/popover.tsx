@@ -38,9 +38,15 @@ export const DisperseInfoPopover: FC<Record<string, string | number>> = () => {
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>account,tokenId,amount</pre>
+          <pre>account,tokenType,address,templateId,amount</pre>
           <Typography>Example: </Typography>
-          <pre>0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,0,1000000000000000000</pre>
+          <pre>
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,NATIVE,0x0000000000000000000000000000000000000000,0,1000000000000000000
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC20,0x0000000000000000000000000000000000C0FFEE,0,1000000000000000000
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC721,0x0000000000000000000000000000000000C0FFEE,1,1
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC998,0x0000000000000000000000000000000000C0FFEE,1,1
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC1155,0x0000000000000000000000000000000000C0FFEE,1,1000000000000000000
+          </pre>
         </Box>
       </Popover>
     </Box>

@@ -2,268 +2,232 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ZeroAddress } from "ethers";
 
-import { amount } from "@gemunion/contracts-constants";
-import { deployContract, deployJerk, deployWallet } from "@gemunion/contracts-mocks";
+import { amount, InterfaceId } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 import { shouldSupportsInterface } from "@gemunion/contracts-mocha";
 
-import { templateId, tokenId } from "../../constants";
+import { FrameworkInterfaceId, templateId, tokenId } from "../../constants";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
-import { checkIfInLogs } from "./shared/utils";
+import { shouldReceive } from "../../shared/receive";
 
 describe("Disperse", function () {
   const factory = () => deployContract("Disperse");
+
+  shouldReceive(factory);
+
   describe("NATIVE", function () {
-    it("should fail: deposit ether", async function () {
-      const [owner] = await ethers.getSigners();
+    it("should send ETH", async function () {
+      const [owner, receiver] = await ethers.getSigners();
 
       const contractInstance = await factory();
-      const tx = owner.sendTransaction({ to: await contractInstance.getAddress(), value: amount });
-      await expect(tx).to.be.revertedWithoutReason();
+
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address],
+        { value: amount },
+      );
+
+      const lib = await ethers.getContractAt("ExchangeUtils", await contractInstance.getAddress(), owner);
+      await expect(tx).to.emit(lib, "PaymentEthSent").withArgs(receiver.address, amount);
+
+      await expect(tx).to.changeEtherBalances([owner, receiver], [-amount, amount]);
     });
 
-    it("should fail: not enough ether", async function () {
-      const [_, receiver] = await ethers.getSigners();
+    it("should send ETH (multiple)", async function () {
+      const [owner, receiver, stranger] = await ethers.getSigners();
 
       const contractInstance = await factory();
 
-      const tx = contractInstance.disperseEther([receiver.address], [amount], { value: amount / 2n });
-      await expect(tx).to.be.revertedWithCustomError(contractInstance, "NotEnoughBalance");
-    });
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address, stranger.address],
+        { value: amount * 2n },
+      );
 
-    it("should fail: invalid Input", async function () {
-      const [_, receiver] = await ethers.getSigners();
-
-      const contractInstance = await factory();
-
-      const tx = contractInstance.disperseEther([receiver.address], [], { value: amount });
-      await expect(tx).to.be.revertedWith("Disperse: Invalid input");
-    });
-
-    // this test fails in coverage mode
-    it.skip("should have reentrancy guard", async function () {
-      const [_owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
-      const attackerInstance = await attackerFactory.deploy(await contractInstance.getAddress(), ZeroAddress);
-
-      const tx = contractInstance.disperseEther([await attackerInstance.getAddress()], [amount], {
-        value: amount * 2n,
-      });
+      const lib = await ethers.getContractAt("ExchangeUtils", await contractInstance.getAddress(), owner);
       await expect(tx)
-        .to.changeEtherBalances([await attackerInstance.getAddress()], [amount])
-        .to.emit(attackerInstance, "Reentered")
-        .withArgs(false);
+        .to.emit(lib, "PaymentEthSent")
+        .withArgs(receiver.address, amount)
+        .to.emit(lib, "PaymentEthSent")
+        .withArgs(stranger.address, amount);
     });
 
-    it("should transfer ether to AOE", async function () {
+    it("should fail: WrongAmount", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const contractInstance = await factory();
 
-      const tx = contractInstance.disperseEther([receiver.address], [amount], { value: amount });
-      await expect(tx).to.changeEtherBalances([receiver.address], [amount]);
-    });
-
-    it("should not transfer to non receiver", async function () {
-      const contractNonReceiverInstance = await deployJerk();
-
-      const contractInstance = await factory();
-
-      const tx = contractInstance.disperseEther([await contractNonReceiverInstance.getAddress()], [amount], {
-        value: amount,
-      });
-      const dontFindLogs = await checkIfInLogs(tx, contractInstance, "TransferETH", [
-        await contractNonReceiverInstance.getAddress(),
-        amount,
-      ]);
-      expect(dontFindLogs).to.be.equal(false);
-    });
-
-    it("should transfer to contract receiver", async function () {
-      const [owner, receiver] = await ethers.getSigners();
-      const contractNonReceiverInstance = await deployJerk();
-
-      const contractInstance = await factory();
-
-      const tx = contractInstance.disperseEther(
-        [receiver.address, await contractNonReceiverInstance.getAddress()],
-        [amount, amount],
-        { value: amount * 2n },
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address],
+        { value: amount / 2n },
       );
-      await expect(tx)
-        .to.emit(contractInstance, "TransferETH")
-        .withArgs(receiver.address, amount)
-        .to.changeEtherBalances([owner.address, receiver.address], [-amount, amount]);
+
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "WrongAmount");
     });
 
-    it("should return back remaining ether", async function () {
-      const [owner, receiver] = await ethers.getSigners();
-      const contractNonReceiverInstance = await deployJerk();
+    it("should fail: insufficient balance", async function () {
+      const [_owner, receiver, stranger] = await ethers.getSigners();
 
       const contractInstance = await factory();
 
-      const tx = contractInstance.disperseEther(
-        [receiver.address, await contractNonReceiverInstance.getAddress()],
-        [amount, amount],
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address, stranger.address],
+        { value: amount },
+      );
+
+      await expect(tx).to.be.revertedWith("Address: insufficient balance");
+    });
+
+    it("should fail: WrongArrayLength", async function () {
+      const [_owner, receiver, stranger] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address, stranger.address],
+        { value: amount },
+      );
+
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "WrongArrayLength");
+    });
+
+    it("should have reentrancy guard", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const contractInstance = await factory();
+
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerInstance = await attackerFactory.deploy(await contractInstance.getAddress(), ZeroAddress);
+      await owner.sendTransaction({
+        to: await attackerInstance.getAddress(),
+        value: amount * 5n,
+      });
+
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        [await attackerInstance.getAddress()],
         { value: amount * 5n },
       );
-      await expect(tx)
-        .to.changeEtherBalances([owner.address, receiver.address], [-amount, amount])
-        .to.emit(contractInstance, "TransferETH")
-        .withArgs(receiver.address, amount);
 
-      const findLog = await checkIfInLogs(tx, contractInstance, "TransferETH", [
-        await contractNonReceiverInstance.getAddress(),
-        amount,
-      ]);
-      expect(findLog).to.be.equal(false);
+      const lib = await ethers.getContractAt("ExchangeUtils", await contractInstance.getAddress(), owner);
+      await expect(tx)
+        .to.emit(lib, "PaymentEthSent")
+        .withArgs(await attackerInstance.getAddress(), amount);
+
+      await expect(tx).to.changeEtherBalances(
+        [owner, await contractInstance.getAddress(), await attackerInstance.getAddress()],
+        [-amount * 5n, amount * 4n, amount],
+      );
     });
   });
 
   describe("ERC20", function () {
-    it("should fail: invalid Input", async function () {
-      const [owner] = await ethers.getSigners();
-
-      const contractInstance = await factory();
-      const erc20Instance = await deployERC20();
-
-      await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.approve(await contractInstance.getAddress(), amount);
-
-      const tx = contractInstance.disperseERC20(await erc20Instance.getAddress(), [owner.address], []);
-      await expect(tx).to.be.revertedWith("Disperse: Invalid input");
-    });
-
-    it("should transfer to AOE", async function () {
+    it("should send ERC20", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const erc20Instance = await deployERC20();
 
+      const contractInstance = await factory();
+
+      const erc20Instance = await deployERC20();
       await erc20Instance.mint(owner.address, amount);
       await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
-      const tx = contractInstance.disperseERC20(await erc20Instance.getAddress(), [receiver.address], [amount]);
-
-      await expect(tx)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(owner.address, await contractInstance.getAddress(), amount)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(await contractInstance.getAddress(), receiver.address, amount);
-    });
-
-    it("should transfer to non Receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractNonReceiver = await deployJerk();
-      const erc20Instance = await deployERC20();
-
-      await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.approve(await contractInstance.getAddress(), amount);
-
-      const tx = contractInstance.disperseERC20(
-        await erc20Instance.getAddress(),
-        [await contractNonReceiver.getAddress()],
-        [amount],
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address],
       );
 
-      await expect(tx)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(owner.address, await contractInstance.getAddress(), amount)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(await contractInstance.getAddress(), await contractNonReceiver.getAddress(), amount);
-    });
-
-    it("should transfer to Receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractReceiver = await deployWallet();
-      const erc20Instance = await deployERC20();
-
-      await erc20Instance.mint(owner.address, amount);
-      await erc20Instance.approve(await contractInstance.getAddress(), amount);
-
-      const tx = contractInstance.disperseERC20(
-        await erc20Instance.getAddress(),
-        [await contractReceiver.getAddress()],
-        [amount],
-      );
-
-      await expect(tx)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(owner.address, await contractInstance.getAddress(), amount)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(await contractInstance.getAddress(), await contractReceiver.getAddress(), amount);
+      await expect(tx).to.emit(erc20Instance, "Transfer").withArgs(owner.address, receiver.address, amount);
     });
   });
 
   describe("ERC721", function () {
-    it("should fail: invalid Input", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const erc721Instance = await deployERC721();
-
-      const tx = contractInstance.disperseERC721(await erc721Instance.getAddress(), [owner.address], []);
-      await expect(tx).to.be.revertedWith("Disperse: Invalid input");
-    });
-
     it("should transfer to AOE", async function () {
       const [owner, receiver] = await ethers.getSigners();
+
       const contractInstance = await factory();
+
       const erc721Instance = await deployERC721();
-
       await erc721Instance.mintCommon(owner.address, templateId);
-      await erc721Instance.approve(await contractInstance.getAddress(), 1);
+      await erc721Instance.approve(await contractInstance.getAddress(), tokenId);
 
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC721(await erc721Instance.getAddress(), [receiver.address], [1]);
-
-      await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(owner.address, receiver.address, 1);
-    });
-
-    it("should not transfer to non receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractNonReceiver = await deployJerk();
-      const erc721Instance = await deployERC721();
-
-      await erc721Instance.mintCommon(owner.address, templateId);
-      await erc721Instance.approve(await contractInstance.getAddress(), 1);
-
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC721(
-        await erc721Instance.getAddress(),
-        [await contractNonReceiver.getAddress()],
-        [1],
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
+        [receiver.address],
       );
 
-      const dontFindLogs = await checkIfInLogs(tx, erc721Instance, "Transfer", [
-        await contractNonReceiver.getAddress(),
-        1,
-      ]);
-      expect(dontFindLogs).to.be.equal(false);
-    });
-
-    it("should transfer to receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractReceiver = await deployWallet();
-      const erc721Instance = await deployERC721();
-
-      await erc721Instance.mintCommon(owner.address, templateId);
-      await erc721Instance.approve(await contractInstance.getAddress(), 1);
-
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC721(
-        await erc721Instance.getAddress(),
-        [await contractReceiver.getAddress()],
-        [1],
-      );
-
-      await expect(tx)
-        .to.emit(erc721Instance, "Transfer")
-        .withArgs(owner.address, await contractReceiver.getAddress(), 1);
+      await expect(tx).to.emit(erc721Instance, "Transfer").withArgs(owner.address, receiver.address, tokenId);
     });
 
     it("should have reentrancy guard", async function () {
@@ -281,105 +245,52 @@ describe("Disperse", function () {
       await erc721Instance.mintCommon(owner.address, templateId);
       await erc721Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
-      const tx = contractInstance.disperseERC721(
-        await erc721Instance.getAddress(),
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
         [await attackerInstance.getAddress()],
-        [1],
       );
+
       await expect(tx)
         .to.emit(erc721Instance, "Transfer")
-        .withArgs(owner.address, await attackerInstance.getAddress(), 1)
-        .to.emit(attackerInstance, "Reentered")
-        .withArgs(false);
+        .withArgs(owner.address, await attackerInstance.getAddress(), tokenId);
+
+      const ownerOf = await erc721Instance.ownerOf(2);
+      expect(ownerOf).to.be.equal(owner.address);
     });
   });
 
   describe("ERC1155", function () {
-    it("should fail: invalid Input", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const erc1155Instance = await deployERC1155();
-
-      const tx = contractInstance.disperseERC1155(await erc1155Instance.getAddress(), [owner.address], [], [amount]);
-      await expect(tx).to.be.revertedWith("Disperse: Invalid input");
-      const tx2 = contractInstance.disperseERC1155(await erc1155Instance.getAddress(), [owner.address], [tokenId], []);
-      await expect(tx2).to.be.revertedWith("Disperse: Invalid input");
-    });
-
     it("should transfer to AOE", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const erc1155Instance = await deployERC1155();
 
+      const contractInstance = await factory();
+
+      const erc1155Instance = await deployERC1155();
       await erc1155Instance.mint(owner.address, tokenId, amount, "0x");
       await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC1155(
-        await erc1155Instance.getAddress(),
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 4,
+            token: await erc1155Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
         [receiver.address],
-        [tokenId],
-        [amount],
       );
 
       await expect(tx)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(await contractInstance.getAddress(), owner.address, receiver.address, tokenId, amount);
-    });
-
-    it("should not transfer to non receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractNonReceiver = await deployJerk();
-      const erc1155Instance = await deployERC1155();
-
-      await erc1155Instance.mint(owner.address, tokenId, amount, "0x");
-      await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
-
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC1155(
-        await erc1155Instance.getAddress(),
-        [await contractNonReceiver.getAddress()],
-        [tokenId],
-        [amount],
-      );
-
-      const findLogs = await checkIfInLogs(tx, erc1155Instance, "TransferSingle", [
-        await contractInstance.getAddress(),
-        owner.address,
-        await contractNonReceiver.getAddress(),
-        tokenId,
-        amount,
-      ]);
-      expect(findLogs).to.be.equal(false);
-    });
-
-    it("should transfer to receiver", async function () {
-      const [owner] = await ethers.getSigners();
-      const contractInstance = await factory();
-      const contractReceiver = await deployWallet();
-      const erc1155Instance = await deployERC1155();
-
-      await erc1155Instance.mint(owner.address, tokenId, amount, "0x");
-      await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
-
-      // Call the function and capture the transaction response
-      const tx = contractInstance.disperseERC1155(
-        await erc1155Instance.getAddress(),
-        [await contractReceiver.getAddress()],
-        [tokenId],
-        [amount],
-      );
-
-      await expect(tx)
-        .to.emit(erc1155Instance, "TransferSingle")
-        .withArgs(
-          await contractInstance.getAddress(),
-          owner.address,
-          await contractReceiver.getAddress(),
-          tokenId,
-          amount,
-        );
     });
 
     it("should have reentrancy guard", async function () {
@@ -396,12 +307,18 @@ describe("Disperse", function () {
       await erc1155Instance.mint(owner.address, tokenId, amount * 2n, "0x");
       await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
-      const tx = contractInstance.disperseERC1155(
-        await erc1155Instance.getAddress(),
+      const tx = contractInstance.disperse(
+        [
+          {
+            tokenType: 4,
+            token: await erc1155Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
         [await attackerInstance.getAddress()],
-        [tokenId],
-        [amount],
       );
+
       await expect(tx)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -410,124 +327,9 @@ describe("Disperse", function () {
           await attackerInstance.getAddress(),
           tokenId,
           amount,
-        )
-        .to.emit(attackerInstance, "Reentered")
-        .withArgs(false);
+        );
     });
   });
 
-  describe("Test gas", function () {
-    const totalTransfers = 100n;
-
-    describe("ETH", function () {
-      it(`should transfer ETH to ${totalTransfers} receivers`, async function () {
-        const [_, receiver] = await ethers.getSigners();
-        const contractInstance = await factory();
-
-        const listOfArgs = new Array(Number(totalTransfers)).fill(null).map(_ => [receiver.address, amount]);
-        const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
-        const amounts = new Array(Number(totalTransfers)).fill(null).map(_ => amount);
-
-        // Call the function and capture the transaction response
-        const tx = contractInstance.disperseEther(receivers, amounts, { value: amount * totalTransfers });
-
-        for (const args of listOfArgs) {
-          await expect(tx)
-            .to.emit(contractInstance, "TransferETH")
-            .withArgs(...args);
-        }
-      });
-    });
-
-    describe("ERC20", function () {
-      it(`should transfer to ${totalTransfers} signers`, async function () {
-        const [owner, receiver] = await ethers.getSigners();
-        const contractInstance = await factory();
-        const erc20Instance = await deployERC20();
-
-        await erc20Instance.mint(owner.address, amount);
-        await erc20Instance.approve(await contractInstance.getAddress(), amount);
-
-        const address: string = await contractInstance.getAddress();
-        const listOfArgs = new Array(Number(totalTransfers))
-          .fill(null)
-          .map(_ => [address, receiver.address, amount / totalTransfers]);
-        const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
-        const amounts = new Array(Number(totalTransfers)).fill(null).map(_ => amount / totalTransfers);
-
-        // Call the function and capture the transaction response
-        const tx = contractInstance.disperseERC20(await erc20Instance.getAddress(), receivers, amounts);
-
-        for (const args of listOfArgs) {
-          await expect(tx)
-            .to.emit(erc20Instance, "Transfer")
-            .withArgs(...args);
-        }
-      });
-    });
-
-    describe("ERC721", function () {
-      it(`should transfer to ${totalTransfers} signers`, async function () {
-        const [owner, receiver] = await ethers.getSigners();
-        const contractInstance = await factory();
-        const erc721Instance = await deployERC721();
-
-        for (let i = 0; i < totalTransfers; i++) {
-          await erc721Instance.mintCommon(owner.address, templateId);
-        }
-        await erc721Instance.setApprovalForAll(await contractInstance.getAddress(), true);
-
-        const listOfArgs = new Array(Number(totalTransfers))
-          .fill(null)
-          .map((_, i) => [owner.address, receiver.address, i + 1]);
-        const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
-        const tokenIds = new Array(Number(totalTransfers)).fill(null).map((_, i) => i + 1);
-
-        // Call the function and capture the transaction response
-        const tx = contractInstance.disperseERC721(await erc721Instance.getAddress(), receivers, tokenIds, {
-          gasLimit: 40966424,
-        });
-
-        for (const args of listOfArgs) {
-          await expect(tx)
-            .to.emit(erc721Instance, "Transfer")
-            .withArgs(...args);
-        }
-      });
-    });
-
-    describe("ERC1155", function () {
-      it(`should transfer to ${totalTransfers} signers`, async function () {
-        const [owner, receiver] = await ethers.getSigners();
-        const contractInstance = await factory();
-        const erc1155Instance = await deployERC1155();
-
-        await erc1155Instance.mint(owner.address, tokenId, amount * totalTransfers, "0x");
-        await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
-
-        const address: string = await contractInstance.getAddress();
-        const listOfArgs = new Array(Number(totalTransfers))
-          .fill(null)
-          .map(_ => [address, owner.address, receiver.address, 1, amount]);
-        const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
-        const tokenIds = new Array(Number(totalTransfers)).fill(null).map((_, i) => i + 1);
-        const amounts = new Array(Number(totalTransfers)).fill(null).map(_ => amount);
-
-        // Call the function and capture the transaction response
-        const tx = contractInstance.disperseERC1155(await erc1155Instance.getAddress(), receivers, tokenIds, amounts, {
-          gasLimit: 40966424,
-        });
-
-        for (const args of listOfArgs) {
-          await expect(tx)
-            .to.emit(erc1155Instance, "TransferSingle")
-            .withArgs(...args);
-        }
-      });
-    });
-  });
-
-  shouldSupportsInterface(factory)([
-    "0x99ac1b00", // IDisperse
-  ]);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, FrameworkInterfaceId.Disperse]);
 });

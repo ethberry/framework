@@ -12,14 +12,20 @@ async function main() {
   const contractInstance = await deployContract("Disperse");
   const erc20Instance = await deployERC20();
 
-  await erc20Instance.mint(owner.address, amount);
+  await erc20Instance.mint(owner.address, amount * totalTransfers);
   await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
   const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
-  const amounts = new Array(Number(totalTransfers)).fill(null).map(_ => amount / totalTransfers);
+  const items = await Promise.all(
+    new Array(Number(totalTransfers)).fill(null).map(async _ => ({
+      tokenType: 0,
+      token: await erc20Instance.getAddress(),
+      tokenId: 0,
+      amount,
+    })),
+  );
 
-  // Call the function and capture the transaction response
-  const tx = await contractInstance.disperseERC20(await erc20Instance.getAddress(), receivers, amounts, {
+  const tx = await contractInstance.disperse(items, receivers, {
     gasLimit: 10000000,
   });
 

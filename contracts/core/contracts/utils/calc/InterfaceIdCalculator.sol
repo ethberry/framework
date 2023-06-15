@@ -26,6 +26,7 @@ contract InterfaceIdCalculator {
     console.logBytes4(type(IERC721Mysterybox).interfaceId);
     console.logBytes4(type(IERC721LotteryTicket).interfaceId);
     console.logBytes4(type(IERC721RaffleTicket).interfaceId);
+
     console.logBytes4(type(IDisperse).interfaceId);
   }
 }

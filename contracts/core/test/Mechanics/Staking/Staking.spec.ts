@@ -360,7 +360,7 @@ describe("Staking", function () {
     });
 
     it("should fail2: account is missing role", async function () {
-      const [_, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
 
@@ -800,7 +800,7 @@ describe("Staking", function () {
     });
 
     it("should deposit with referral", async function () {
-      const [_, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory();
 
@@ -5701,7 +5701,7 @@ describe("Staking", function () {
     });
 
     it("should fail for wrong role", async function () {
-      const [_, receiver] = await ethers.getSigners();
+      const [_owner, receiver] = await ethers.getSigners();
 
       const stakingInstance = await factory();
 
