@@ -3,11 +3,11 @@ import { IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { AccountDto } from "@gemunion/collection";
-import type { IClaimItemCreateDto } from "@framework/types";
+import type { IClaimCreateDto } from "@framework/types";
 
 import { ItemDto } from "../../../exchange/asset/dto";
 
-export class ClaimItemCreateDto extends AccountDto implements IClaimItemCreateDto {
+export class ClaimCreateDto extends AccountDto implements IClaimCreateDto {
   @ApiProperty({
     type: ItemDto,
   })

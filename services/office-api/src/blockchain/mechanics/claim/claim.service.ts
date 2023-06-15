@@ -9,17 +9,19 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes, ZeroAddress, encodeBytes32String } from "ethers";
+import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { mapLimit } from "async";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto, IClaimSearchDto } from "@framework/types";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import type { IClaimItemUploadDto } from "./interfaces";
+import type { IClaimRow, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ClaimService {
@@ -30,6 +32,7 @@ export class ClaimService {
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
@@ -91,7 +94,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -104,8 +107,8 @@ export class ClaimService {
         item: assetEntity,
         signature: "0x",
         nonce: "",
-        endTimestamp,
         merchantId: userEntity.merchantId,
+        endTimestamp,
       })
       .save();
 
@@ -114,7 +117,7 @@ export class ClaimService {
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: IClaimItemUpdateDto,
+    dto: IClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;
@@ -151,8 +154,7 @@ export class ClaimService {
         externalId: claimEntity.id,
         expiresAt,
         referrer: ZeroAddress,
-        // @TODO fix to use expiresAt as extra, temporary set to empty
-        extra: encodeBytes32String("0x"),
+        extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
       },
 
       claimEntity,
@@ -187,18 +189,54 @@ export class ClaimService {
       claimEntity.item.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId:
-          component.contract.contractType === TokenType.ERC1155
-            ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       [],
     );
   }
 
-  public async upload(dto: IClaimItemUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    // TODO wrap in transaction
-    return Promise.all(dto.claims.map(row => this.create(row, userEntity)));
+  public async upload(dto: IClaimUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+    return new Promise((resolve, reject) => {
+      mapLimit(
+        dto.claims,
+        10,
+        async (row: IClaimRow) => {
+          const contractEntity = await this.contractService.findOne({
+            address: row.address,
+            merchantId: userEntity.merchantId,
+          });
+
+          if (!contractEntity) {
+            throw new NotFoundException("contractNotFound");
+          }
+
+          return this.create(
+            {
+              account: row.account,
+              endTimestamp: row.endTimestamp,
+              item: {
+                components: [
+                  {
+                    tokenType: row.tokenType,
+                    contractId: contractEntity.id,
+                    templateId: row.templateId,
+                    amount: row.amount,
+                  },
+                ],
+              },
+            },
+            userEntity,
+          );
+        },
+        (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results as ClaimEntity[]);
+          }
+        },
+      );
+    });
   }
 }

@@ -9,11 +9,11 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { randomBytes, ZeroAddress, hexlify, encodeBytes32String } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
+import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
@@ -52,7 +52,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto, merchantEntity: MerchantEntity): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, merchantEntity: MerchantEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -75,7 +75,7 @@ export class ClaimService {
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: IClaimItemUpdateDto,
+    dto: IClaimUpdateDto,
     merchantEntity: MerchantEntity,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;

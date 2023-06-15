@@ -20,7 +20,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.2",
     "@gemunion/nest-js-module-winston": "1.0.32",
     "@gemunion/nest-js-utils": "3.0.2",
-    "@gemunion/nest-js-validators": "3.0.2",
+    "@gemunion/nest-js-validators": "3.0.3",
     "@gemunion/nestjs-ethers": "4.0.5",
     "@gemunion/types-collection": "1.5.7",
     "@nestjs/axios": "2.0.0",

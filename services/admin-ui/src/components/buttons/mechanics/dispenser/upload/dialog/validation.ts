@@ -6,7 +6,7 @@ import { TokenType } from "@framework/types";
 export const rowValidationSchema = object().shape({
   account: addressValidationSchema,
   tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
-  token: addressValidationSchema,
+  address: addressValidationSchema,
   tokenId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")

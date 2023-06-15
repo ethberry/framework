@@ -1,11 +1,11 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { randomBytes, hexlify, ZeroAddress, encodeBytes32String } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
+import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
@@ -91,7 +91,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -114,7 +114,7 @@ export class ClaimService {
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: IClaimItemUpdateDto,
+    dto: IClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;

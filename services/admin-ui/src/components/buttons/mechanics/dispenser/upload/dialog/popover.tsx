@@ -42,10 +42,15 @@ export const DispenserInfoPopover: FC<Record<string, string | number>> = () => {
           <Typography>Example: </Typography>
           <pre>
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,NATIVE,0x0000000000000000000000000000000000000000,0,1000000000000000000
+            <br />
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC20,0x0000000000000000000000000000000000C0FFEE,0,1000000000000000000
+            <br />
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC721,0x0000000000000000000000000000000000C0FFEE,1,1
+            <br />
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC998,0x0000000000000000000000000000000000C0FFEE,1,1
+            <br />
             0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC1155,0x0000000000000000000000000000000000C0FFEE,1,1000000000000000000
+            <br />
           </pre>
         </Box>
       </Popover>

@@ -9,8 +9,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { ClaimStatus, IClaim, IClaimSearchDto } from "@framework/types";
 
-import { ClaimUploadButton } from "../../../../components/buttons/mechanics/claim/upload";
 import { cleanUpAsset } from "../../../../utils/money";
+import { ClaimUploadButton } from "../../../../components/buttons";
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
 

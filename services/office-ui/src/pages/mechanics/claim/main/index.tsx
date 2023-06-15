@@ -10,10 +10,10 @@ import { useUser } from "@gemunion/provider-user";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { ClaimStatus, IClaim, IClaimSearchDto, IUser } from "@framework/types";
 
+import { cleanUpAsset } from "../../../../utils/money";
+import { ClaimUploadButton } from "../../../../components/buttons";
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
-import { cleanUpAsset } from "../../../../utils/money";
-import { ClaimUploadButton } from "../../../../components/buttons/mechanics/claim/upload";
 
 export const Claim: FC = () => {
   const user = useUser<IUser>();

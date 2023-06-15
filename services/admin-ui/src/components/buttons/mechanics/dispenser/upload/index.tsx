@@ -6,18 +6,10 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { TokenType } from "@framework/types";
 
 import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
-import { DispenserUploadDialog, IDispenserUploadDto } from "./dialog";
-
-export interface IDispenserRow {
-  account: string;
-  tokenType: TokenType;
-  address: string;
-  tokenId: string;
-  amount: string;
-}
+import { DispenserUploadDialog } from "./dialog";
+import type { IDispenserRow, IDispenserUploadDto } from "./dialog/file-input";
 
 export interface IDispenserUploadButtonProps {
   className?: string;

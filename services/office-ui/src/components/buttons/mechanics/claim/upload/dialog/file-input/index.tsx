@@ -5,11 +5,17 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+import { IBCAssetDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
-import { IClaimRow } from "../../index";
 import { claimsValidationSchema } from "../validation";
 import { useStyles } from "./styles";
+
+export interface IClaimRow extends IBCAssetDto {
+  id?: string;
+  account: string;
+  endTimestamp: string;
+}
 
 export interface IClaimUploadDto {
   claims: Array<IClaimRow>;
@@ -30,7 +36,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   const claims = useWatch({ name: claimsName });
   const { formatMessage } = useIntl();
 
-  const headers = ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"];
+  const headers = ["account", "tokenType", "address", "templateId", "amount", "endTimestamp"];
 
   const resetForm = () => {
     form.reset(initialValues);
@@ -79,22 +85,15 @@ export const FileInput: FC<IFileInputProps> = props => {
       minWidth: 260,
     },
     {
-      field: "endTimestamp",
-      headerName: formatMessage({ id: "form.labels.endTimestamp" }),
-      sortable: true,
-      flex: 2,
-      minWidth: 180,
-    },
-    {
       field: "tokenType",
-      headerName: formatMessage({ id: "form.labels.token" }),
+      headerName: formatMessage({ id: "form.labels.tokenType" }),
       sortable: true,
       flex: 1,
       minWidth: 100,
     },
     {
-      field: "contractId",
-      headerName: formatMessage({ id: "form.labels.contractId" }),
+      field: "address",
+      headerName: formatMessage({ id: "form.labels.address" }),
       sortable: true,
       flex: 1,
       minWidth: 80,
@@ -112,6 +111,13 @@ export const FileInput: FC<IFileInputProps> = props => {
       sortable: true,
       flex: 2,
       minWidth: 200,
+    },
+    {
+      field: "endTimestamp",
+      headerName: formatMessage({ id: "form.labels.endTimestamp" }),
+      sortable: true,
+      flex: 2,
+      minWidth: 180,
     },
   ];
 

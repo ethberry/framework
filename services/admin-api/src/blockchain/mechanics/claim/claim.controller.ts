@@ -19,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
-import { ClaimItemCreateDto, ClaimItemUpdateDto, ClaimItemUploadDto, ClaimSearchDto } from "./dto";
+import { ClaimCreateDto, ClaimSearchDto, ClaimUpdateDto, ClaimUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims")
@@ -33,19 +33,19 @@ export class ClaimController {
   }
 
   @Post("/")
-  public create(@Body() dto: ClaimItemCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
+  public create(@Body() dto: ClaimCreateDto, @User() userEntity: UserEntity): Promise<ClaimEntity> {
     return this.claimService.create(dto, userEntity);
   }
 
   @Post("/upload")
-  public upload(@Body() dto: ClaimItemUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public upload(@Body() dto: ClaimUploadDto, @User() userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     return this.claimService.upload(dto, userEntity);
   }
 
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: ClaimItemUpdateDto,
+    @Body() dto: ClaimUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ClaimEntity | null> {
     return this.claimService.update({ id }, dto, userEntity);

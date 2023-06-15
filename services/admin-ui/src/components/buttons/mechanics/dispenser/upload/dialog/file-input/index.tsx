@@ -5,12 +5,20 @@ import csv2json from "csvtojson";
 import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+import { IBCAssetDto } from "@framework/types";
 
-import { IDispenserRow } from "../../index";
-import { IDispenserUploadDto } from "../index";
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { dispenserValidationSchema } from "../validation";
 import { useStyles } from "./styles";
+
+export interface IDispenserRow extends IBCAssetDto {
+  account: string;
+}
+
+export interface IDispenserUploadDto {
+  files: Array<File>;
+  rows: IDispenserRow[];
+}
 
 export interface IFileInputProps {
   initialValues: IDispenserUploadDto;

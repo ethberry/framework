@@ -5,14 +5,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 
 import { validationSchema } from "./validation";
+import type { IDispenserUploadDto } from "./file-input";
 import { FileInput } from "./file-input";
 import { DispenserInfoPopover } from "./popover";
-import { IDispenserRow } from "../index";
-
-export interface IDispenserUploadDto {
-  files: Array<File>;
-  rows: IDispenserRow[];
-}
 
 export interface IDispenserUploadDialogProps {
   open: boolean;

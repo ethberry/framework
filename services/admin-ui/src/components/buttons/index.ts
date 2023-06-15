@@ -3,6 +3,7 @@ export * from "./tokens/erc721/contract-deploy";
 export * from "./tokens/erc998/contract-deploy";
 export * from "./tokens/erc1155/contract-deploy";
 
+export * from "./mechanics/claim/upload";
 export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/collection/contract-deploy";
 export * from "./mechanics/lottery/round/end";

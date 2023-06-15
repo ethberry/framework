@@ -38,9 +38,20 @@ export const ClaimInfoPopover: FC<Record<string, string | number>> = () => {
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>account,endTimestamp,tokenType,contractId,templateId,amount</pre>
+          <pre>account,tokenType,address,templateId,amount,endTimestamp</pre>
           <Typography>Example: </Typography>
-          <pre>0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,2025-01-01T00:00:00.000Z,ERC20,201,,1000000000000000000</pre>
+          <pre>
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,NATIVE,0x0000000000000000000000000000000000000000,0,1000000000000000000,2025-01-01T00:00:00.000Z
+            <br />
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC20,0x0000000000000000000000000000000000C0FFEE,0,1000000000000000000,2025-01-01T00:00:00.000Z
+            <br />
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC721,0x0000000000000000000000000000000000C0FFEE,1,1,2025-01-01T00:00:00.000Z
+            <br />
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC998,0x0000000000000000000000000000000000C0FFEE,1,1,2025-01-01T00:00:00.000Z
+            <br />
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,ERC1155,0x0000000000000000000000000000000000C0FFEE,1,1000000000000000000,2025-01-01T00:00:00.000Z
+            <br />
+          </pre>
         </Box>
       </Popover>
     </Box>

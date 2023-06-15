@@ -4,20 +4,9 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { TokenType } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";
-import { IClaimUploadDto } from "./dialog/file-input";
-
-export interface IClaimRow {
-  id?: string;
-  account: string;
-  endTimestamp: string;
-  tokenType: TokenType;
-  contractId: number;
-  templateId: number;
-  amount: string;
-}
+import type { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimUploadButtonProps {
   className?: string;
@@ -33,20 +22,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
     return api.fetchJson({
       url: "/claims/upload",
       data: {
-        claims: claims.map(e => ({
-          account: e.account,
-          endTimestamp: e.endTimestamp,
-          item: {
-            components: [
-              {
-                tokenType: e.tokenType,
-                contractId: e.contractId,
-                templateId: e.templateId,
-                amount: e.amount,
-              },
-            ],
-          },
-        })),
+        claims: claims.map(({ id: _id, ...rest }) => rest),
       },
       method: "POST",
     });

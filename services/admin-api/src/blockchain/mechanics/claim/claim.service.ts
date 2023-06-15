@@ -14,13 +14,14 @@ import { mapLimit } from "async";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto, IClaimSearchDto } from "@framework/types";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import type { IClaimItemUploadDto } from "./interfaces";
+import type { IClaimRow, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ClaimService {
@@ -31,6 +32,7 @@ export class ClaimService {
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
@@ -92,7 +94,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -115,7 +117,7 @@ export class ClaimService {
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: IClaimItemUpdateDto,
+    dto: IClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;
@@ -194,13 +196,38 @@ export class ClaimService {
     );
   }
 
-  public async upload(dto: IClaimItemUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
+  public async upload(dto: IClaimUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
     return new Promise((resolve, reject) => {
       mapLimit(
         dto.claims,
         10,
-        async (row: IClaimItemCreateDto) => {
-          return this.create(row, userEntity);
+        async (row: IClaimRow) => {
+          const contractEntity = await this.contractService.findOne({
+            address: row.address,
+            merchantId: userEntity.merchantId,
+          });
+
+          if (!contractEntity) {
+            throw new NotFoundException("contractNotFound");
+          }
+
+          return this.create(
+            {
+              account: row.account,
+              endTimestamp: row.endTimestamp,
+              item: {
+                components: [
+                  {
+                    tokenType: row.tokenType,
+                    contractId: contractEntity.id,
+                    templateId: row.templateId,
+                    amount: row.amount,
+                  },
+                ],
+              },
+            },
+            userEntity,
+          );
         },
         (err, results) => {
           if (err) {

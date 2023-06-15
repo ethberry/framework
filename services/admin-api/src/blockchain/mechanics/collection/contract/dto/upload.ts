@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
-import { ClaimItemCreateDto } from "../../../claim/dto";
+import { ClaimCreateDto } from "../../../claim/dto";
 import { ICollectionUploadDto, ITokenUploadDto } from "../interfaces";
 
 export class TokenUploadDto implements ITokenUploadDto {
@@ -29,7 +29,7 @@ export class TokenUploadDto implements ITokenUploadDto {
 export class CollectionUploadDto implements ICollectionUploadDto {
   @ApiProperty({
     isArray: true,
-    type: ClaimItemCreateDto,
+    type: ClaimCreateDto,
   })
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
