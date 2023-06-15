@@ -2,12 +2,12 @@ import { array, mixed, number, object, string } from "yup";
 
 import { TokenType } from "@framework/types";
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
-import { reISO8601 } from "@gemunion/constants";
+import { reISO8601, reEthAddress } from "@gemunion/constants";
 
 export const claimValidationSchema = object().shape({
   account: addressValidationSchema,
   tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
-  address: string().required("form.validations.valueMissing"),
+  address: string().matches(reEthAddress, "form.validations.patternMismatch").required("form.validations.valueMissing"),
   templateId: number()
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
