@@ -168,7 +168,7 @@ export class AssetService {
     price: Array<IExchangeItem>,
   ): Promise<void> {
     await Promise.allSettled(
-      items.map(async ([itemType, _itemTokenAddr, itemTokenId, itemAmount]) => {
+      items.map(async ([tokenType, _itemTokenAddr, itemTokenId, itemAmount]) => {
         const assetComponentHistoryItem = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.ITEM,
@@ -178,7 +178,7 @@ export class AssetService {
         const templateEntity = await this.templateService.findOne(
           {
             id:
-              itemType === 4
+              tokenType === 4
                 ? Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId)
                 : Number(itemTokenId),
           },
@@ -189,7 +189,7 @@ export class AssetService {
           throw new NotFoundException("templateNotFound");
         }
         Object.assign(assetComponentHistoryItem, {
-          tokenId: itemType === 0 || itemType === 1 || itemType === 4 ? templateEntity.tokens[0].id : null,
+          tokenId: tokenType === 0 || tokenType === 1 || tokenType === 4 ? templateEntity.tokens[0].id : null,
           contractId: templateEntity.contractId,
         });
 

@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
@@ -55,6 +56,24 @@ async function bootstrap(): Promise<void> {
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();
   }
+
+  const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+  const rmqQueueMobile = configService.get<string>("RMQ_QUEUE_MOBILE", "mobile");
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [rmqUrl],
+      queue: rmqQueueMobile,
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
+
+  await app
+    .startAllMicroservices()
+    .then(() => console.info(`Email service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<string>("PORT", "3000");

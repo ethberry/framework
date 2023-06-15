@@ -27,6 +27,7 @@ import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
+import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 import { AchievementLevelEntity } from "./achievements/level/level.entity";
@@ -40,6 +41,7 @@ const config: PostgresConnectionOptions = {
   type: "postgres",
   entities: [
     UserEntity,
+    MerchantEntity,
     // Blockchain
     EventHistoryEntity,
     AccessControlEntity,

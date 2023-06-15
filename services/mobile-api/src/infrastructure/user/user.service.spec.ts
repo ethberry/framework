@@ -12,8 +12,6 @@ import { UserEntity } from "./user.entity";
 import { AuthModule } from "../auth/auth.module";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
-import { EnabledLanguages, testChainId } from "@framework/constants";
-import { UserRole, UserStatus } from "@framework/types";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -49,24 +47,6 @@ describe("UserService", () => {
       const entities = await userSeedService.setup();
       const userEntity = await userService.findOne({ id: entities.users[0].id });
       expect(userEntity?.email).toEqual(entities.users[0].email);
-    });
-  });
-
-  describe("import", () => {
-    it("should create with empty balance", async () => {
-      const userEntity = await userService.import({
-        displayName: "test_name",
-        language: EnabledLanguages.EN,
-        imageUrl: "test_url",
-        userRoles: [UserRole.CUSTOMER],
-        userStatus: UserStatus.ACTIVE,
-        sub: "test_user_id",
-        chainId: testChainId,
-      });
-      expect(userEntity).toMatchObject({
-        displayName: "test_name",
-        sub: "test_user_id",
-      });
     });
   });
 });

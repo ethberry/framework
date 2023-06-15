@@ -1,20 +1,10 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import {
-  encodeBytes32String,
-  getUint,
-  parseEther,
-  toBeArray,
-  toBeHex,
-  toQuantity,
-  WeiPerEther,
-  ZeroAddress,
-} from "ethers";
+import { encodeBytes32String, getUint, parseEther, toBeHex, toQuantity, WeiPerEther, ZeroAddress } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
-
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE, tokenName } from "@gemunion/contracts-constants";
 
 import { expiresAt, extra, params, tokenId } from "../../constants";
