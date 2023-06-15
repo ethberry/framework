@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc721c/contracts/preset/ERC721ABRK.sol";
 import "../../utils/errors.sol";
 
 contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
-  uint96 _maxBatch;
+  uint96 _batchSize;
 
   constructor(
     string memory name,
@@ -24,13 +24,14 @@ contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
     uint96 batchSize,
     address owner
   ) ERC721ABRK(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
-    _maxBatch = batchSize;
+    _batchSize = batchSize;
     _mintConsecutive2(owner, batchSize);
   }
 
-  //  * OpenZeppelin: These batches are limited to 5000 in tokens at a time by default to accommodate off-chain indexers.
+  // Default limit of 5k comes from this discussion
+  // https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2355#issuecomment-1200144796
   function _maxBatchSize() internal view override returns (uint96) {
-    return _maxBatch;
+    return _batchSize;
   }
 
   function _mintConsecutive2(address owner, uint96 batchSize) internal override returns (uint96) {
