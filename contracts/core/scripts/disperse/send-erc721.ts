@@ -8,7 +8,7 @@ async function main() {
   const totalTransfers = 3;
 
   const [_owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployContract("Disperse");
+  const contractInstance = await deployContract("Dispenser");
   const erc721Instance = await deployCollection();
 
   await erc721Instance.setApprovalForAll(await contractInstance.getAddress(), true);

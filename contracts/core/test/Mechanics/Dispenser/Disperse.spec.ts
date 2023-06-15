@@ -12,8 +12,8 @@ import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC1155 } from "../../ERC1155/shared/fixtures";
 import { shouldReceive } from "../../shared/receive";
 
-describe("Disperse", function () {
-  const factory = () => deployContract("Disperse");
+describe("Dispenser", function () {
+  const factory = () => deployContract("Dispenser");
 
   shouldReceive(factory);
 
@@ -147,7 +147,7 @@ describe("Disperse", function () {
 
       const contractInstance = await factory();
 
-      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDispenser");
       const attackerInstance = await attackerFactory.deploy(await contractInstance.getAddress(), ZeroAddress);
       await owner.sendTransaction({
         to: await attackerInstance.getAddress(),
@@ -235,7 +235,7 @@ describe("Disperse", function () {
       const contractInstance = await factory();
       const erc721Instance = await deployERC721();
 
-      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDispenser");
       const attackerInstance = await attackerFactory.deploy(
         await contractInstance.getAddress(),
         await erc721Instance.getAddress(),
@@ -298,7 +298,7 @@ describe("Disperse", function () {
       const contractInstance = await factory();
       const erc1155Instance = await deployERC1155();
 
-      const attackerFactory = await ethers.getContractFactory("ReentrancyDisperse");
+      const attackerFactory = await ethers.getContractFactory("ReentrancyDispenser");
       const attackerInstance = await attackerFactory.deploy(
         await contractInstance.getAddress(),
         await erc1155Instance.getAddress(),
@@ -331,5 +331,5 @@ describe("Disperse", function () {
     });
   });
 
-  shouldSupportsInterface(factory)([InterfaceId.IERC165, FrameworkInterfaceId.Disperse]);
+  shouldSupportsInterface(factory)([InterfaceId.IERC165, FrameworkInterfaceId.Dispenser]);
 });

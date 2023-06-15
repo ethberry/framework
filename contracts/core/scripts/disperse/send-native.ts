@@ -9,7 +9,7 @@ async function main() {
   const totalTransfers = 10n;
 
   const [_owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployContract("Disperse");
+  const contractInstance = await deployContract("Dispenser");
   await blockAwait();
   await blockAwait();
 

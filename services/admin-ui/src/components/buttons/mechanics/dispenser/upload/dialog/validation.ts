@@ -3,7 +3,7 @@ import { array, mixed, number, object } from "yup";
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 import { TokenType } from "@framework/types";
 
-export const disperseValidationSchema = object().shape({
+export const rowValidationSchema = object().shape({
   account: addressValidationSchema,
   tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
   token: addressValidationSchema,
@@ -14,8 +14,8 @@ export const disperseValidationSchema = object().shape({
   amount: bigNumberValidationSchema,
 });
 
-export const dispersesValidationSchema = object().shape({
-  disperses: array().of(disperseValidationSchema).required("form.validations.valueMissing"),
+export const dispenserValidationSchema = object().shape({
+  rows: array().of(rowValidationSchema).required("form.validations.valueMissing"),
 });
 
 export const validationSchema = object().shape({

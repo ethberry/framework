@@ -9,7 +9,7 @@ async function main() {
   const totalTransfers = 10n;
 
   const [owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployContract("Disperse");
+  const contractInstance = await deployContract("Dispenser");
   const erc20Instance = await deployERC20();
 
   await erc20Instance.mint(owner.address, amount * totalTransfers);

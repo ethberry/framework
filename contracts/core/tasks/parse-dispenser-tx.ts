@@ -1,115 +1,44 @@
 import { task } from "hardhat/config";
 import { Interface, Transaction, TransactionReceipt } from "ethers";
 
-const Disperse = {
+const Dispenser = {
   abi: [
     {
-      anonymous: false,
       inputs: [
         {
-          indexed: false,
-          internalType: "address",
-          name: "receiver",
-          type: "address",
-        },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "value",
-          type: "uint256",
-        },
-      ],
-      name: "TransferETH",
-      type: "event",
-    },
-    {
-      inputs: [
-        {
-          internalType: "contract IERC1155",
-          name: "token",
-          type: "address",
+          components: [
+            {
+              internalType: "enum TokenType",
+              name: "tokenType",
+              type: "uint8",
+            },
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          internalType: "struct Asset[]",
+          name: "items",
+          type: "tuple[]",
         },
         {
           internalType: "address[]",
-          name: "recipients",
+          name: "receivers",
           type: "address[]",
         },
-        {
-          internalType: "uint256[]",
-          name: "tokenIds",
-          type: "uint256[]",
-        },
-        {
-          internalType: "uint256[]",
-          name: "amounts",
-          type: "uint256[]",
-        },
       ],
-      name: "disperseERC1155",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "contract IERC20",
-          name: "token",
-          type: "address",
-        },
-        {
-          internalType: "address[]",
-          name: "recipients",
-          type: "address[]",
-        },
-        {
-          internalType: "uint256[]",
-          name: "amounts",
-          type: "uint256[]",
-        },
-      ],
-      name: "disperseERC20",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "contract IERC721",
-          name: "token",
-          type: "address",
-        },
-        {
-          internalType: "address[]",
-          name: "recipients",
-          type: "address[]",
-        },
-        {
-          internalType: "uint256[]",
-          name: "tokenIds",
-          type: "uint256[]",
-        },
-      ],
-      name: "disperseERC721",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "address[]",
-          name: "recipients",
-          type: "address[]",
-        },
-        {
-          internalType: "uint256[]",
-          name: "amounts",
-          type: "uint256[]",
-        },
-      ],
-      name: "disperseEther",
+      name: "disperse",
       outputs: [],
       stateMutability: "payable",
       type: "function",
@@ -256,11 +185,11 @@ const ERC1155 = {
   ],
 };
 
-export function getDisperseLogsFromInput(tx: Transaction) {
+export function getDispenserLogsFromInput(tx: Transaction) {
   // Get the provider and the transaction receipt
 
   // Retrieve the contract interface
-  const iface = new Interface(Disperse.abi);
+  const iface = new Interface(Dispenser.abi);
 
   // Parse the input data of the transaction to determine the disperse function used
   const inputData = tx.data;
@@ -335,7 +264,7 @@ export function compareLogs(
   let iface: Interface;
   switch (functionName) {
     case "disperseEther":
-      iface = new Interface(Disperse.abi);
+      iface = new Interface(Dispenser.abi);
       break;
     case "disperseERC20":
       iface = new Interface(ERC20.abi);
@@ -377,14 +306,14 @@ export function compareLogs(
   return { findLogs, dontFindLogs };
 }
 
-task("parse-disperse-tx", "Prints success transfers and failed transfers")
+task("parse-dispenser-tx", "Prints success transfers and failed transfers")
   .addParam("hash", "The transaction hash")
   .setAction(async (args, hre) => {
     const { hash } = args;
 
     // Parse tx Input
     const tx = await hre.ethers.provider.getTransaction(hash);
-    const { functionName, eventName, logs } = getDisperseLogsFromInput(tx);
+    const { functionName, eventName, logs } = getDispenserLogsFromInput(tx);
 
     // Check success transfers
     const receipt = await hre.ethers.provider.getTransactionReceipt(hash);

@@ -3,7 +3,7 @@ import { FC, MouseEvent, useState } from "react";
 import { Box, IconButton, Popover, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
-export const DisperseInfoPopover: FC<Record<string, string | number>> = () => {
+export const DispenserInfoPopover: FC<Record<string, string | number>> = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -15,7 +15,7 @@ export const DisperseInfoPopover: FC<Record<string, string | number>> = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "disperse-info" : undefined;
+  const id = open ? "dispenser-info" : undefined;
 
   return (
     <Box sx={{ zIndex: 1000 }}>

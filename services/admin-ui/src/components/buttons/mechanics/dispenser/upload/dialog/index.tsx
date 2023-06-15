@@ -6,23 +6,23 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 
 import { validationSchema } from "./validation";
 import { FileInput } from "./file-input";
-import { DisperseInfoPopover } from "./popover";
-import { IDisperseRow } from "../index";
+import { DispenserInfoPopover } from "./popover";
+import { IDispenserRow } from "../index";
 
-export interface IDisperseUploadDto {
+export interface IDispenserUploadDto {
   files: Array<File>;
-  disperses: IDisperseRow[];
+  rows: IDispenserRow[];
 }
 
-export interface IDisperseUploadDialogProps {
+export interface IDispenserUploadDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: any, form: any) => Promise<void>;
-  initialValues: IDisperseUploadDto;
+  initialValues: IDispenserUploadDto;
   isLoading: boolean;
 }
 
-export const DisperseUploadDialog: FC<IDisperseUploadDialogProps> = props => {
+export const DispenserUploadDialog: FC<IDispenserUploadDialogProps> = props => {
   const { initialValues, isLoading, onConfirm, ...rest } = props;
 
   return (
@@ -32,7 +32,7 @@ export const DisperseUploadDialog: FC<IDisperseUploadDialogProps> = props => {
       message="dialogs.upload"
       testId="ClaimUploadDialog"
       onConfirm={onConfirm}
-      action={<DisperseInfoPopover />}
+      action={<DispenserInfoPopover />}
       {...rest}
     >
       <ProgressOverlay isLoading={isLoading}>

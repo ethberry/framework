@@ -11,13 +11,13 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
-import "./interfaces/IDisperse.sol";
+import "./interfaces/IDispenser.sol";
 
 /**
- * @title Disperse Contract
+ * @title Dispenser Contract
  * @dev A contract for dispersing ether, ERC20 tokens, ERC721 tokens, and ERC1155 tokens to multiple recipients.
  */
-contract Disperse is IDisperse, ERC165, Context {
+contract Dispenser is IDispenser, ERC165, Context {
   function disperse(Asset[] memory items, address[] calldata receivers) external payable override {
     if (items.length != receivers.length) {
       revert WrongArrayLength();
@@ -42,6 +42,6 @@ contract Disperse is IDisperse, ERC165, Context {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return interfaceId == type(IDisperse).interfaceId || super.supportsInterface(interfaceId);
+    return interfaceId == type(IDispenser).interfaceId || super.supportsInterface(interfaceId);
   }
 }

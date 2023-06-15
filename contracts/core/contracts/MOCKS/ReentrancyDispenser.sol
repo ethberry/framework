@@ -11,14 +11,14 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-import "../Mechanics/Disperse/interfaces/IDisperse.sol";
+import "../Mechanics/Dispenser/interfaces/IDispenser.sol";
 
-contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
-  IDisperse disperse;
+contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
+  IDispenser dispenser;
   address token;
 
-  constructor(IDisperse _disperse, address _token) {
-    disperse = _disperse;
+  constructor(IDispenser _dispenser, address _token) {
+    dispenser = _dispenser;
     token = _token;
   }
 
@@ -32,8 +32,8 @@ contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
     items[0] = Asset(TokenType.ERC721, token, 2, 1);
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
-    (bool success, bytes memory data) = address(disperse).call(
-      abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
+    (bool success, bytes memory data) = address(dispenser).call(
+      abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
     );
     return super.onERC721Received(operator, from, tokenId, data);
   }
@@ -49,8 +49,8 @@ contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
     items[0] = Asset(TokenType.ERC1155, token, 1, 100000);
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
-    (bool success, bytes memory data) = address(disperse).call(
-      abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
+    (bool success, bytes memory data) = address(dispenser).call(
+      abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
     );
     return super.onERC1155Received(operator, from, id, value, data);
   }
@@ -62,8 +62,8 @@ contract ReentrancyDisperse is ERC165, ERC721Holder, ERC1155Holder {
       items[0] = Asset(TokenType.NATIVE, address(0), 0, balance);
       address[] memory receivers = new address[](1);
       receivers[0] = address(this);
-      (bool success, bytes memory data) = address(disperse).call(
-        abi.encodeWithSelector(disperse.disperse.selector, items, receivers)
+      (bool success, bytes memory data) = address(dispenser).call(
+        abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
       );
     }
   }

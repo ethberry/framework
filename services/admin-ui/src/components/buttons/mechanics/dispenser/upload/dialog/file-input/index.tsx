@@ -6,25 +6,25 @@ import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
 
-import { IDisperseRow } from "../../index";
-import { IDisperseUploadDto } from "../index";
+import { IDispenserRow } from "../../index";
+import { IDispenserUploadDto } from "../index";
 import { CsvContentView } from "../../../../../../tables/csv-content";
-import { dispersesValidationSchema } from "../validation";
+import { dispenserValidationSchema } from "../validation";
 import { useStyles } from "./styles";
 
 export interface IFileInputProps {
-  initialValues: IDisperseUploadDto;
+  initialValues: IDispenserUploadDto;
 }
 
 export const FileInput: FC<IFileInputProps> = props => {
   const { initialValues } = props;
   const classes = useStyles();
 
-  const dispersesName = "disperses";
+  const rowsName = "rows";
   const filesName = "files";
 
   const { formatMessage } = useIntl();
-  const disperses = useWatch({ name: dispersesName });
+  const rows = useWatch({ name: rowsName });
   const form = useFormContext<any>();
 
   const headers = ["account", "tokenType", "address", "tokenId", "amount"];
@@ -33,7 +33,7 @@ export const FileInput: FC<IFileInputProps> = props => {
     form.reset(initialValues);
   };
 
-  const parseCsv = async (csv: File): Promise<IDisperseRow[]> => {
+  const parseCsv = async (csv: File): Promise<IDispenserRow[]> => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
@@ -46,8 +46,8 @@ export const FileInput: FC<IFileInputProps> = props => {
           checkType: true,
         })
           .fromString(reader.result as string)
-          .then((data: IDisperseRow[]) => {
-            resolve(data.map(disperse => ({ ...disperse, id: v4() })));
+          .then((data: IDispenserRow[]) => {
+            resolve(data.map(row => ({ ...row, id: v4() })));
           });
       };
       reader.readAsText(csv, "UTF-8");
@@ -57,8 +57,8 @@ export const FileInput: FC<IFileInputProps> = props => {
   const handleChange = async (files: Array<File>) => {
     try {
       const data = await parseCsv(files[0]);
-      dispersesValidationSchema.validateSync({ [dispersesName]: data });
-      form.setValue(dispersesName, data, { shouldDirty: true });
+      dispenserValidationSchema.validateSync({ [rowsName]: data });
+      form.setValue(rowsName, data, { shouldDirty: true });
       form.setValue(filesName, files, { shouldDirty: true });
     } catch (e) {
       console.error(e);
@@ -80,6 +80,20 @@ export const FileInput: FC<IFileInputProps> = props => {
       minWidth: 260,
     },
     {
+      field: "tokenType",
+      headerName: formatMessage({ id: "form.labels.tokenType" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "address",
+      headerName: formatMessage({ id: "form.labels.address" }),
+      sortable: true,
+      flex: 1,
+      minWidth: 100,
+    },
+    {
       field: "tokenId",
       headerName: formatMessage({ id: "form.labels.tokenId" }),
       sortable: true,
@@ -95,8 +109,8 @@ export const FileInput: FC<IFileInputProps> = props => {
     },
   ];
 
-  if (disperses.length) {
-    return <CsvContentView resetForm={resetForm} csvContentName={dispersesName} columns={columns} />;
+  if (rows.length) {
+    return <CsvContentView resetForm={resetForm} csvContentName={rowsName} columns={columns} />;
   }
 
   return (

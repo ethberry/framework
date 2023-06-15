@@ -568,8 +568,8 @@ async function main() {
   );
   await debug(contracts);
 
-  const dispersionFactory = await ethers.getContractFactory("Dispersion");
-  contracts.dispersion = await dispersionFactory.deploy();
+  const dispenserFactory = await ethers.getContractFactory("Dispenser");
+  contracts.dispenser = await dispenserFactory.deploy();
   await debug(contracts);
 
   // GRANT ROLES

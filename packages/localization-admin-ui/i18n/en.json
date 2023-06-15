@@ -982,7 +982,7 @@
         "claim": "Claim",
         "collection": "Collections",
         "craft": "Craft",
-        "disperse": "Disperse",
+        "dispenser": "Dispenser",
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
@@ -997,8 +997,8 @@
       },
       "title": "Dashboard"
     },
-    "disperse": {
-      "title": "Disperse"
+    "dispenser": {
+      "title": "Dispenser"
     },
     "drop": {
       "title": "Drops"

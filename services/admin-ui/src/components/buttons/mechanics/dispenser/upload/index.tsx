@@ -8,10 +8,10 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { TokenType } from "@framework/types";
 
-import DisperseABI from "../../../../../abis/mechanics/disperse/disperse.abi.json";
-import { DisperseUploadDialog, IDisperseUploadDto } from "./dialog";
+import DispenserABI from "../../../../../abis/mechanics/dispenser/dispenser.abi.json";
+import { DispenserUploadDialog, IDispenserUploadDto } from "./dialog";
 
-export interface IDisperseRow {
+export interface IDispenserRow {
   account: string;
   tokenType: TokenType;
   address: string;
@@ -19,20 +19,20 @@ export interface IDisperseRow {
   amount: string;
 }
 
-export interface IDisperseUploadButtonProps {
+export interface IDispenserUploadButtonProps {
   className?: string;
 }
 
-export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
+export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
   const { className } = props;
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const metaFn = useMetamask((values: IDisperseUploadDto, web3Context: Web3ContextType) => {
-    const { disperses } = values;
+  const metaFn = useMetamask((values: IDispenserUploadDto, web3Context: Web3ContextType) => {
+    const { rows } = values;
 
-    const rows = disperses.reduce<[Array<Omit<IDisperseRow, "account">>, Array<string>]>(
+    const [items, receivers] = rows.reduce<[Array<Omit<IDispenserRow, "account">>, Array<string>]>(
       ([items, receivers], { account, ...rest }) => {
         receivers.push(account);
         items.push(rest);
@@ -41,15 +41,15 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
       [[], []],
     );
 
-    const contract = new Contract(process.env.DISPERSION_ADDR, DisperseABI, web3Context.provider?.getSigner());
-    return contract.disperse(rows) as Promise<any>;
+    const contract = new Contract(process.env.DISPENSER_ADDR, DispenserABI, web3Context.provider?.getSigner());
+    return contract.disperse(items, receivers) as Promise<any>;
   });
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
   };
 
-  const handleUploadConfirm = async (values: IDisperseUploadDto) => {
+  const handleUploadConfirm = async (values: IDispenserUploadDto) => {
     setIsLoading(true);
     await metaFn(values).finally(() => {
       setIsUploadDialogOpen(false);
@@ -67,20 +67,20 @@ export const DisperseUploadButton: FC<IDisperseUploadButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleUpload}
-        data-testid="DisperseUploadButton"
+        data-testid="DispenserUploadButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.upload" />
       </Button>
 
-      <DisperseUploadDialog
+      <DispenserUploadDialog
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
         isLoading={isLoading}
         initialValues={{
           files: [],
-          disperses: [],
+          rows: [],
         }}
       />
     </Fragment>
