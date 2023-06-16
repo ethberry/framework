@@ -8,7 +8,11 @@ import { tokenId } from "../../../../constants";
 import { customMintCommonERC721 } from "../../customMintFn";
 
 export function shouldTokenURI(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
-  const { mint = customMintCommonERC721, tokenId: defaultTokenId = tokenId } = options;
+  const {
+    mint = customMintCommonERC721,
+    tokenId: defaultTokenId = tokenId,
+    batchSize: defaultBatchSize = 0n,
+  } = options;
   describe("tokenURI", function () {
     it("should get token uri", async function () {
       const [owner] = await ethers.getSigners();
@@ -24,7 +28,7 @@ export function shouldTokenURI(factory: () => Promise<any>, options: IERC721Enum
     it("should fail: URI query for nonexistent token", async function () {
       const contractInstance = await factory();
 
-      const uri = contractInstance.tokenURI(tokenId);
+      const uri = contractInstance.tokenURI(defaultBatchSize + tokenId);
       await expect(uri).to.be.revertedWith("ERC721: invalid token ID");
     });
   });

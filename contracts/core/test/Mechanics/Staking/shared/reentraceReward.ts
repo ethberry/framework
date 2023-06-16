@@ -71,7 +71,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await attakerInstance.deposit(params, tokenIds, { value: amount });
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, tokenId, await attakerInstance.getAddress(), startTimestamp, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
         // return
@@ -101,7 +101,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         await expect(tx2).to.changeEtherBalances([attakerInstance, stakingInstance], [amount, -amount]);
         await expect(tx2).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingFinish")
+          .to.emit(stakingInstance, "DepositFinish")
           .withArgs(1, await attakerInstance.getAddress(), endTimestamp, 1);
       });
 
@@ -147,7 +147,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await attakerInstance.deposit(params, tokenIds, { value: amount });
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, tokenId, await attakerInstance.getAddress(), startTimestamp, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
         // return
@@ -170,7 +170,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         );
         await expect(tx2).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingFinish")
+          .to.emit(stakingInstance, "DepositFinish")
           .withArgs(1, await attakerInstance.getAddress(), endTimestamp, 1);
       });
 
@@ -218,7 +218,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await attakerInstance.deposit(params, tokenIds, { value: amount });
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, tokenId, await attakerInstance.getAddress(), startTimestamp, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
         // return
@@ -248,7 +248,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         expect(balance).to.be.equal(1);
         await expect(tx2).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingFinish")
+          .to.emit(stakingInstance, "DepositFinish")
           .withArgs(1, await attakerInstance.getAddress(), endTimestamp, 1);
 
         // await expect(tx2).to.changeEtherBalances([attakerInstance, stakingInstance], [amount, -amount]);
@@ -298,7 +298,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await attakerInstance.deposit(params, tokenIds, { value: amount });
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, tokenId, await attakerInstance.getAddress(), startTimestamp, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
         // return
@@ -328,7 +328,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         expect(balance).to.be.equal(amount);
         await expect(tx2).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingFinish")
+          .to.emit(stakingInstance, "DepositFinish")
           .withArgs(1, await attakerInstance.getAddress(), endTimestamp, 1);
 
         // await expect(tx2).to.changeEtherBalances([attakerInstance, stakingInstance], [amount, -amount]);
@@ -380,14 +380,14 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, 1, owner.address, startTimestamp, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
         const tx2 = await stakingInstance.connect(receiver).deposit(params, tokenIds, { value: amount });
         const startTimestamp2: number = (await time.latest()).toNumber();
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(2, 1, receiver.address, startTimestamp2, tokenIds);
         await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -397,7 +397,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         const tx3 = await stakingInstance.receiveReward(1, true, true);
         const endTimestamp: number = (await time.latest()).toNumber();
-        await expect(tx3).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+        await expect(tx3).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
         // const stake = await stakingInstance.getStake(1);
         // expect(stake).to.have.deep.nested.property("cycles", 0);
@@ -414,7 +414,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         await expect(tx4).to.changeEtherBalances([attakerInstance, stakingInstance], [amount / 2n, -amount / 2n]);
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
-          .to.emit(stakingInstance, "WithdrawBalance")
+          .to.emit(stakingInstance, "BalanceWithdraw")
           .withArgs(await attakerInstance.getAddress(), [0, ZeroAddress, tokenId, amount / 2n]);
       });
 
@@ -466,14 +466,14 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await stakingInstance.deposit(params, tokenIds);
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, 1, owner.address, startTimestamp, tokenIds);
         await expect(tx1).to.changeTokenBalances(erc20Instance, [owner, stakingInstance], [-amount, amount]);
 
         const tx2 = await stakingInstance.connect(receiver).deposit(params, tokenIds);
         const startTimestamp2: number = (await time.latest()).toNumber();
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(2, 1, receiver.address, startTimestamp2, tokenIds);
         await expect(tx1).to.changeTokenBalances(erc20Instance, [owner, stakingInstance], [-amount, amount]);
 
@@ -483,7 +483,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         const tx3 = await stakingInstance.receiveReward(1, true, true);
         const endTimestamp: number = (await time.latest()).toNumber();
-        await expect(tx3).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+        await expect(tx3).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
         // const stake = await stakingInstance.getStake(1);
         // expect(stake).to.have.deep.nested.property("cycles", 0);
@@ -504,7 +504,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         );
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
-          .to.emit(stakingInstance, "WithdrawBalance")
+          .to.emit(stakingInstance, "BalanceWithdraw")
           .withArgs(await attakerInstance.getAddress(), [1, await erc20Instance.getAddress(), tokenId, amount / 2n]);
       });
 
@@ -557,7 +557,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await stakingInstance.deposit(params, [tokenId]);
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, 1, owner.address, startTimestamp, [tokenId]);
         const balance_11 = await erc721Instance.balanceOf(owner.address);
         const balance_12 = await erc721Instance.balanceOf(await stakingInstance.getAddress());
@@ -568,7 +568,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx2 = await stakingInstance.connect(receiver).deposit(params, [tokenId + 1n]);
         const startTimestamp2: number = (await time.latest()).toNumber();
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(2, 1, receiver.address, startTimestamp2, [tokenId + 1n]);
         const balance_21 = await erc721Instance.balanceOf(owner.address);
         const balance_22 = await erc721Instance.balanceOf(await stakingInstance.getAddress());
@@ -582,7 +582,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         const tx3 = await stakingInstance.receiveReward(1, true, true);
         const endTimestamp: number = (await time.latest()).toNumber();
-        await expect(tx3).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+        await expect(tx3).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
         // const stake = await stakingInstance.getStake(1);
         // expect(stake).to.have.deep.nested.property("cycles", 0);
@@ -598,7 +598,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
-          .to.emit(stakingInstance, "WithdrawBalance")
+          .to.emit(stakingInstance, "BalanceWithdraw")
           .withArgs(await attakerInstance.getAddress(), [2, await erc721Instance.getAddress(), tokenId, 1]);
         const balance_31 = await erc721Instance.balanceOf(await attakerInstance.getAddress());
         const balance_32 = await erc721Instance.balanceOf(await stakingInstance.getAddress());
@@ -655,7 +655,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx1 = await stakingInstance.deposit(params, tokenIds);
         const startTimestamp: number = (await time.latest()).toNumber();
         await expect(tx1)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(1, 1, owner.address, startTimestamp, tokenIds);
         const balance_11 = await erc1155Instance.balanceOf(owner.address, tokenId);
         const balance_12 = await erc1155Instance.balanceOf(await stakingInstance.getAddress(), tokenId);
@@ -666,7 +666,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
         const tx2 = await stakingInstance.connect(receiver).deposit(params, tokenIds);
         const startTimestamp2: number = (await time.latest()).toNumber();
         await expect(tx2)
-          .to.emit(stakingInstance, "StakingStart")
+          .to.emit(stakingInstance, "DepositStart")
           .withArgs(2, 1, receiver.address, startTimestamp2, tokenIds);
         const balance_21 = await erc1155Instance.balanceOf(owner.address, tokenId);
         const balance_22 = await erc1155Instance.balanceOf(await stakingInstance.getAddress(), tokenId);
@@ -680,7 +680,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         const tx3 = await stakingInstance.receiveReward(1, true, true);
         const endTimestamp: number = (await time.latest()).toNumber();
-        await expect(tx3).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+        await expect(tx3).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
         // const stake = await stakingInstance.getStake(1);
         // expect(stake).to.have.deep.nested.property("cycles", 0);
@@ -696,7 +696,7 @@ export function shouldHaveReentrancyGuard(factory: () => Promise<any>) {
 
         await expect(tx4).to.emit(attakerInstance, "Reentered").withArgs(false);
         await expect(tx4)
-          .to.emit(stakingInstance, "WithdrawBalance")
+          .to.emit(stakingInstance, "BalanceWithdraw")
           .withArgs(await attakerInstance.getAddress(), [4, await erc1155Instance.getAddress(), tokenId, amount]);
         const balance_31 = await erc1155Instance.balanceOf(await attakerInstance.getAddress(), tokenId);
         const balance_32 = await erc1155Instance.balanceOf(await stakingInstance.getAddress(), tokenId);

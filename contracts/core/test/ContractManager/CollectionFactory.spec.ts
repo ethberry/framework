@@ -22,7 +22,7 @@ describe("CollectionFactory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721Factory = await ethers.getContractFactory("ERC721CollectionSimple");
+      const erc721Factory = await ethers.getContractFactory("ERC721CSimple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -93,7 +93,7 @@ describe("CollectionFactory", function () {
         .to.emit(contractInstance, "CollectionDeployed")
         .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, batchSize, contractTemplate], owner.address);
 
-      const erc721Instance = await ethers.getContractAt("ERC721CollectionSimple", address);
+      const erc721Instance = await ethers.getContractAt("ERC721CSimple", address);
 
       await expect(tx)
         .to.emit(erc721Instance, "ConsecutiveTransfer")
@@ -118,7 +118,7 @@ describe("CollectionFactory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721CollectionSimple");
+      const erc721 = await ethers.getContractFactory("ERC721CSimple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();

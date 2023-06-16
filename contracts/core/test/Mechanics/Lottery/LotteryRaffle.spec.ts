@@ -822,6 +822,8 @@ describe("Raffle", function () {
       const eventFilter = raffleInstance.filters.RoundFinalized();
       const events = await raffleInstance.queryFilter(eventFilter);
       const { prizeNumber } = recursivelyDecodeResult(events[0].args);
+      // TODO check this
+      // AssertionError: expected 2 to be below 2
       expect(Number(prizeNumber)).to.be.greaterThan(0).to.be.lessThan(2);
       // WAIT for RELEASE
       const latest = await time.latestBlock();

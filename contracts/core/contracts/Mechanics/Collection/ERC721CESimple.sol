@@ -9,11 +9,15 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721c/contracts/preset/ERC721ABRK.sol";
+import "@gemunion/contracts-erc721ec/contracts/preset/ERC721ABERK.sol";
 
 import "../../utils/errors.sol";
 
-contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
+contract ERC721CESimple is ERC721ABERK, ERC721ABaseUrl {
+  using Counters for Counters.Counter;
+
+  Counters.Counter internal _tokenIdTracker;
+
   uint96 _batchSize;
 
   constructor(
@@ -23,13 +27,14 @@ contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
     string memory baseTokenURI,
     uint96 batchSize,
     address owner
-  ) ERC721ABRK(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
+  ) ERC721ABERK(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
     _batchSize = batchSize;
     _mintConsecutive2(owner, batchSize);
   }
 
   // Default limit of 5k comes from this discussion
   // https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2355#issuecomment-1200144796
+  // to have more than 5k you might want to override _mintConsecutive and emit more than one event
   function _maxBatchSize() internal view override returns (uint96) {
     return _batchSize;
   }
@@ -38,21 +43,22 @@ contract ERC721CollectionSimple is ERC721ABRK, ERC721ABaseUrl {
     return super._mintConsecutive(owner, batchSize);
   }
 
-  function mintCommon(address to, uint256 tokenId) external virtual onlyRole(MINTER_ROLE) {
-    _safeMint(to, tokenId);
+  function mintConsecutive(address to) public virtual onlyRole(MINTER_ROLE) {
+    _safeMint(to, _totalConsecutiveSupply() + _tokenIdTracker.current());
+    _tokenIdTracker.increment();
   }
 
-  function mint(address, uint256) public pure override {
+  function mint(address) public pure {
     revert MethodNotSupported();
   }
 
-  function safeMint(address, uint256) public pure override {
+  function safeMint(address) public pure {
     revert MethodNotSupported();
   }
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC721ABRK) returns (bool) {
+  ) public view virtual override(AccessControl, ERC721ABERK) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

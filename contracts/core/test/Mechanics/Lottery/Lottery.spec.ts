@@ -182,7 +182,7 @@ describe("Lottery", function () {
       }
     });
 
-    it.only("should get current round info ", async function () {
+    it("should get current round info ", async function () {
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
       const tx0 = await lotteryInstance.startRound(

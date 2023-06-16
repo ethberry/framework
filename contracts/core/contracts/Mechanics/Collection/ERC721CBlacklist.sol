@@ -8,9 +8,9 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
-import "./ERC721CollectionSimple.sol";
+import "./ERC721CSimple.sol";
 
-contract ERC721CollectionBlacklist is ERC721CollectionSimple, BlackList {
+contract ERC721CBlacklist is ERC721CSimple, BlackList {
   constructor(
     string memory name,
     string memory symbol,
@@ -18,11 +18,11 @@ contract ERC721CollectionBlacklist is ERC721CollectionSimple, BlackList {
     string memory baseTokenURI,
     uint96 batchSize,
     address owner
-  ) ERC721CollectionSimple(name, symbol, royalty, baseTokenURI, batchSize, owner) {}
+  ) ERC721CSimple(name, symbol, royalty, baseTokenURI, batchSize, owner) {}
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC721CollectionSimple) returns (bool) {
+  ) public view virtual override(AccessControl, ERC721CSimple) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

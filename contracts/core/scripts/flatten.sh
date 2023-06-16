@@ -55,8 +55,8 @@ mkdir -p dist/Mechanics/Breed
 hardhat flatten contracts/Mechanics/Breed/Breed.sol > dist/Mechanics/Breed/Breed.sol
 
 mkdir -p dist/Mechanics/Collection
-hardhat flatten contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol > dist/Mechanics/Collection/ERC721CollectionBlacklist.sol
-hardhat flatten contracts/Mechanics/Collection/ERC721CollectionSimple.sol > dist/Mechanics/Collection/ERC721CollectionSimple.sol
+hardhat flatten contracts/Mechanics/Collection/ERC721CBlacklist.sol > dist/Mechanics/Collection/ERC721CBlacklist.sol
+hardhat flatten contracts/Mechanics/Collection/ERC721CSimple.sol > dist/Mechanics/Collection/ERC721CSimple.sol
 
 mkdir -p dist/Mechanics/Lottery
 hardhat flatten contracts/Mechanics/Lottery/ERC721Lottery.sol > dist/Mechanics/Lottery/ERC721Lottery.sol
