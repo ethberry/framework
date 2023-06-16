@@ -1,9 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { AccessControlRoleType } from "@framework/types";
 
+import { ContractAddressInput } from "./contract";
 import { validationSchema } from "./validation";
 
 export interface IGrantRoleDto {
@@ -30,7 +31,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} />
-      <TextInput name="address" />
+      <ContractAddressInput name="address" targetId="address" controller="contracts" freeSolo />
     </FormDialog>
   );
 };
