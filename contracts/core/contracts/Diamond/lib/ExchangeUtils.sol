@@ -15,12 +15,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "../ERC721/interfaces/IERC721Simple.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
-import "../ERC1155/interfaces/IERC1155Simple.sol";
-import "../utils/constants.sol";
-import "../utils/errors.sol";
-import "../Exchange/interfaces/IAsset.sol";
+import "../../ERC721/interfaces/IERC721Simple.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
+import "../../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../utils/constants.sol";
+import "../../utils/errors.sol";
+import "../../Exchange/interfaces/IAsset.sol";
 
 library ExchangeUtils {
   using Address for address;

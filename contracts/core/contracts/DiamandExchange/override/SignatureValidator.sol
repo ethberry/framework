@@ -10,14 +10,13 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "./override/EIP712Upgradable.sol";
-import "../utils/constants.sol";
-import "../utils/errors.sol";
+import "../../Diamond/override/EIP712Upgradable.sol";
+import "../../utils/constants.sol";
+import "../../utils/errors.sol";
+import "../../Exchange/interfaces/IAsset.sol";
 
-import "../Exchange/interfaces/IAsset.sol";
 
-
-library SignatureValidatorStorage {
+library SigValStorage {
     struct Layout {
         mapping(bytes32 => bool) _expired;
     }
@@ -64,7 +63,7 @@ contract SignatureValidator is EIP712, Context {
     );
 
   // constructor(string memory name) EIP712(name, "1.0.0") {}
-  constructor(string memory name) EIP712() {}
+  constructor() EIP712() {} 
 
   function _recoverOneToOneSignature(
     Params memory params,
@@ -72,10 +71,10 @@ contract SignatureValidator is EIP712, Context {
     Asset memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (SignatureValidatorStorage.layout()._expired[params.nonce]) {
+    if (SigValStorage.layout()._expired[params.nonce]) {
       revert ExpiredSignature();
     }
-    SignatureValidatorStorage.layout()._expired[params.nonce] = true;
+    SigValStorage.layout()._expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
       if (block.timestamp > params.expiresAt) {
@@ -92,10 +91,10 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (SignatureValidatorStorage.layout()._expired[params.nonce]) {
+    if (SigValStorage.layout()._expired[params.nonce]) {
       revert ExpiredSignature();
     }
-    SignatureValidatorStorage.layout()._expired[params.nonce] = true;
+    SigValStorage.layout()._expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
       if (block.timestamp > params.expiresAt) {
@@ -112,10 +111,10 @@ contract SignatureValidator is EIP712, Context {
     Asset[] memory price,
     bytes calldata signature
   ) internal returns (address) {
-    if (SignatureValidatorStorage.layout()._expired[params.nonce]) {
+    if (SigValStorage.layout()._expired[params.nonce]) {
       revert ExpiredSignature();
     }
-    SignatureValidatorStorage.layout()._expired[params.nonce] = true;
+    SigValStorage.layout()._expired[params.nonce] = true;
 
     if (params.expiresAt != 0) {
       if (block.timestamp > params.expiresAt) {

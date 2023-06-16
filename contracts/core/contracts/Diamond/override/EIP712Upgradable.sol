@@ -6,23 +6,6 @@ import "@openzeppelin/contracts/utils/ShortStrings.sol";
 import "@openzeppelin/contracts/interfaces/IERC5267.sol";
 
 
-library EIP712Storage {
-    struct Layout {
-        string _nameFallback;
-        string _versionFallback;
-    }
-
-    bytes32 internal constant STORAGE_SLOT =
-        keccak256('eip712.contracts.storage.EIP712');
-
-    function layout() internal pure returns (Layout storage l) {
-        bytes32 slot = STORAGE_SLOT;
-        assembly {
-            l.slot := slot
-        }
-    }
-}
-
 /**
  * @dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.
  *
@@ -50,7 +33,6 @@ library EIP712Storage {
  */
 abstract contract EIP712 is IERC5267 {
     using ShortStrings for *;
-    using EIP712Storage for EIP712Storage.Layout;
 
     bytes32 private constant _TYPE_HASH =
         keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
@@ -85,12 +67,11 @@ abstract contract EIP712 is IERC5267 {
     constructor() {
         // todo use this vatiables in seperate facet or pull all this variables in seperatee InitContract.abi
         // Or also would need to create custom deploy function, for fixing this
-        string memory name = "name"; 
+        string memory name = "GEMUNION"; 
         string memory version = "1.0.0";
-        EIP712Storage.Layout storage l = EIP712Storage.layout();
 
-        _name = name.toShortStringWithFallback(l._nameFallback);
-        _version = version.toShortStringWithFallback(l._versionFallback);
+        _name = name.toShortString();
+        _version = version.toShortString();
         _hashedName = keccak256(bytes(name));
         _hashedVersion = keccak256(bytes(version));
 
@@ -155,8 +136,8 @@ abstract contract EIP712 is IERC5267 {
     {
         return (
             hex"0f", // 01111
-            _name.toStringWithFallback(EIP712Storage.layout()._nameFallback),
-            _version.toStringWithFallback(EIP712Storage.layout()._versionFallback),
+            _name.toString(),
+            _version.toString(),
             block.chainid,
             address(this),
             bytes32(0),
