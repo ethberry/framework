@@ -98,6 +98,7 @@ import {
   CreateDropAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
+  CreateGameBalance1686896594700,
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
@@ -224,9 +225,8 @@ import {
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
   SeedExchangePayees1663047650510,
+  SeedGameBalance1686896594710,
   SeedGrade1657846587010,
-  SeedLotteryRoundAt1660436476120,
-  // SeedLotteryTicketsAt1660436476140,
   SeedMerchant1563803000120,
   SeedMysteryboxErc1155At1653616447950,
   SeedMysteryboxErc721At1653616447930,
@@ -631,6 +631,10 @@ const config: PostgresConnectionOptions = {
     CreateAchievementRedemption1681273013070,
     SeedAchievementClaimErc721At1681273013071,
     SeedAchievementRedemption1681273013080,
+
+    /* game */
+    CreateGameBalance1686896594700,
+    SeedGameBalance1686896594710,
   ],
 };
 
