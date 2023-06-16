@@ -877,7 +877,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.connect(receiver).deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
@@ -939,7 +939,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.connect(receiver).deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
@@ -1001,7 +1001,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.connect(receiver).deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, receiver.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([receiver, stakingInstance], [-amount, amount]);
 
@@ -1025,9 +1025,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, receiver.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, receiver.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalance(receiver, amount * BigInt(cycles) + amount);
 
@@ -1125,7 +1125,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1175,7 +1175,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1233,7 +1233,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1257,7 +1257,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, false, false);
       const endTimestamp: number = (await time.latest()).toNumber();
 
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount * 2n, -amount * 2n]);
     });
   });
@@ -1294,7 +1294,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1306,9 +1306,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
     });
 
@@ -1350,7 +1350,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1374,9 +1374,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalances(
         [owner, stakingInstance],
@@ -1422,7 +1422,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1446,9 +1446,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, 1);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount + amount, -amount - amount]);
     });
@@ -1491,7 +1491,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1516,7 +1516,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, false, false);
       const endTimestamp: number = (await time.latest()).toNumber();
 
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp, 1);
+      await expect(tx2).to.emit(stakingInstance, "DepositFinish").withArgs(1, owner.address, endTimestamp, 1);
 
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
@@ -1527,13 +1527,13 @@ describe("Staking", function () {
       // REWARD 2
       const tx3 = await stakingInstance.receiveReward(1, false, false);
       const endTimestamp2: number = (await time.latest()).toNumber();
-      await expect(tx3).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp2, 1);
+      await expect(tx3).to.emit(stakingInstance, "DepositFinish").withArgs(1, owner.address, endTimestamp2, 1);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // REWARD 3
       const tx4 = await stakingInstance.receiveReward(1, false, true);
       const endTimestamp3: number = (await time.latest()).toNumber();
-      await expect(tx4).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp3);
+      await expect(tx4).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp3);
       await expect(tx4).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // const stake = await stakingInstance.getStake(1);
@@ -1579,7 +1579,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1611,7 +1611,7 @@ describe("Staking", function () {
       // REWARD 1
       const tx2 = await stakingInstance.receiveReward(1, false, false);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish").withArgs(1, owner.address, endTimestamp, 1);
+      await expect(tx2).to.emit(stakingInstance, "DepositFinish").withArgs(1, owner.address, endTimestamp, 1);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
       // const stake1 = await stakingInstance.getStake(1);
@@ -1626,7 +1626,7 @@ describe("Staking", function () {
       const tx3 = stakingInstance.receiveReward(1, true, false);
 
       await expect(tx3)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp + 1);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
@@ -1678,7 +1678,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1694,9 +1694,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount * BigInt(cycles));
@@ -1754,7 +1754,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1766,9 +1766,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(vrfInstance, "RandomWordsRequested");
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
@@ -1820,7 +1820,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1832,9 +1832,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -1895,7 +1895,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1907,9 +1907,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -1960,7 +1960,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -1972,9 +1972,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(await stakingInstance.getAddress(), ZeroAddress, owner.address, tokenId, amount * BigInt(cycles));
@@ -2028,7 +2028,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2058,9 +2058,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalances(
         [owner, stakingInstance],
@@ -2115,7 +2115,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2135,9 +2135,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount * BigInt(cycles));
@@ -2200,7 +2200,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2218,9 +2218,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(vrfInstance, "RandomWordsRequested");
 
@@ -2279,7 +2279,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2297,9 +2297,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -2367,7 +2367,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2385,9 +2385,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -2461,7 +2461,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2481,9 +2481,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId)
@@ -2557,7 +2557,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0])
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2578,9 +2578,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId)
@@ -2641,7 +2641,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -2659,9 +2659,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(await stakingInstance.getAddress(), ZeroAddress, owner.address, tokenId, amount * BigInt(cycles));
@@ -2719,7 +2719,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -2747,9 +2747,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalances(
         [owner, stakingInstance],
@@ -2805,7 +2805,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -2823,9 +2823,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount * BigInt(cycles));
@@ -2889,7 +2889,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -2905,9 +2905,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(vrfInstance, "RandomWordsRequested");
 
@@ -2964,7 +2964,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -2980,9 +2980,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -3050,7 +3050,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721RandomInstance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3066,9 +3066,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -3126,7 +3126,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3142,9 +3142,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(await stakingInstance.getAddress(), ZeroAddress, owner.address, tokenId, amount * BigInt(cycles));
@@ -3202,7 +3202,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3230,9 +3230,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalances(
         [owner, stakingInstance],
@@ -3288,7 +3288,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3306,9 +3306,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount * BigInt(cycles));
@@ -3366,7 +3366,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3382,9 +3382,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -3452,7 +3452,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3468,9 +3468,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -3537,7 +3537,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3553,9 +3553,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -3619,7 +3619,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998RandomInstance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3635,9 +3635,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(vrfInstance, "RandomWordsRequested");
 
@@ -3700,7 +3700,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3716,9 +3716,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
 
       const balance3 = await erc998Instance.balanceOf(owner.address);
@@ -3772,7 +3772,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -3788,9 +3788,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(await stakingInstance.getAddress(), ZeroAddress, owner.address, tokenId, amount * BigInt(cycles));
@@ -3845,7 +3845,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -3879,9 +3879,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles);
       await expect(tx2).to.changeEtherBalances(
         [owner, stakingInstance],
@@ -3937,7 +3937,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -3961,9 +3961,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount * BigInt(cycles));
@@ -4028,7 +4028,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4050,9 +4050,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(vrfInstance, "RandomWordsRequested");
 
@@ -4111,7 +4111,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4133,9 +4133,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -4203,7 +4203,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4225,9 +4225,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(ZeroAddress, owner.address, tokenId);
@@ -4284,7 +4284,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4306,9 +4306,9 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4365,7 +4365,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -4387,7 +4387,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
 
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
     });
 
@@ -4435,7 +4435,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, tokenIds)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -4452,7 +4452,7 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount / 2n);
@@ -4507,7 +4507,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -4520,7 +4520,7 @@ describe("Staking", function () {
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, tokenId);
@@ -4575,7 +4575,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc721SimpleInstance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -4588,7 +4588,7 @@ describe("Staking", function () {
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       const balance4 = await erc721SimpleInstance.balanceOf(owner.address);
       expect(balance4).to.equal(0);
@@ -4640,7 +4640,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -4653,7 +4653,7 @@ describe("Staking", function () {
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, tokenId);
@@ -4708,7 +4708,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc998Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), tokenId);
@@ -4721,7 +4721,7 @@ describe("Staking", function () {
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       const balance4 = await erc998Instance.balanceOf(owner.address);
       expect(balance4).to.equal(0);
@@ -4773,7 +4773,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIds);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIds)
         .to.emit(erc1155Instance, "TransferSingle")
         .withArgs(
@@ -4792,7 +4792,7 @@ describe("Staking", function () {
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       await expect(tx2)
         .to.emit(erc1155Instance, "TransferSingle")
@@ -4884,7 +4884,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0, 1, 1])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount, "0x")
@@ -4917,7 +4917,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount / 2n)
@@ -5017,7 +5017,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0, 1, 1])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount, "0x")
@@ -5049,7 +5049,7 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       const balance4 = await erc20Instance.balanceOf(owner.address);
       expect(balance4).to.equal(0);
@@ -5137,7 +5137,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0, 1, 1])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount, "0x")
@@ -5170,7 +5170,7 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount / 2n)
@@ -5202,7 +5202,7 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx3)
-        .to.emit(stakingInstance, "WithdrawBalance")
+        .to.emit(stakingInstance, "BalanceWithdraw")
         .withArgs(owner.address, [0, ZeroAddress, 0, amount / 2n]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
@@ -5213,7 +5213,7 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx4)
-        .to.emit(stakingInstance, "WithdrawBalance")
+        .to.emit(stakingInstance, "BalanceWithdraw")
         .withArgs(owner.address, [1, await erc20Instance.getAddress(), 0, amount / 2n]);
 
       const tx5 = stakingInstance.withdrawBalance({
@@ -5317,7 +5317,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0, 1, 1])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount, "0x")
@@ -5349,7 +5349,7 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       const balance4 = await erc20Instance.balanceOf(owner.address);
       expect(balance4).to.equal(0);
@@ -5370,7 +5370,7 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx3)
-        .to.emit(stakingInstance, "WithdrawBalance")
+        .to.emit(stakingInstance, "BalanceWithdraw")
         .withArgs(owner.address, [0, ZeroAddress, 0, amount]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount, -amount]);
 
@@ -5381,7 +5381,7 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx4)
-        .to.emit(stakingInstance, "WithdrawBalance")
+        .to.emit(stakingInstance, "BalanceWithdraw")
         .withArgs(owner.address, [1, await erc20Instance.getAddress(), 0, amount]);
 
       const tx5 = stakingInstance.withdrawBalance({
@@ -5456,7 +5456,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.connect(receiver).deposit(params, tokenIdsZero);
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, receiver.address, startTimestamp, tokenIdsZero)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(receiver.address, await stakingInstance.getAddress(), amount)
@@ -5517,7 +5517,7 @@ describe("Staking", function () {
       );
       const startTimestamp1: number = (await time.latest()).toNumber();
       await expect(tx11)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(2, 2, owner.address, startTimestamp1, tokenIdsZero)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(owner.address, await stakingInstance.getAddress(), amount)
@@ -5532,9 +5532,9 @@ describe("Staking", function () {
       const tx21 = await stakingInstance.connect(receiver).receiveReward(1, true, true);
       const endTimestamp1: number = (await time.latest()).toNumber();
       await expect(tx21)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, receiver.address, endTimestamp1)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, receiver.address, endTimestamp1, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), receiver.address, amount * BigInt(cycles));
@@ -5547,7 +5547,7 @@ describe("Staking", function () {
 
       const tx22 = await stakingInstance.receiveReward(2, true, true);
       const endTimestamp2: number = (await time.latest()).toNumber();
-      await expect(tx22).to.emit(stakingInstance, "StakingWithdraw").withArgs(2, owner.address, endTimestamp2);
+      await expect(tx22).to.emit(stakingInstance, "DepositWithdraw").withArgs(2, owner.address, endTimestamp2);
 
       const balance32 = await erc20Instance.balanceOf(owner.address);
       expect(balance32).to.equal(0);
@@ -5606,7 +5606,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -5615,7 +5615,7 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
 
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
@@ -5627,7 +5627,7 @@ describe("Staking", function () {
         amount,
       });
       await expect(tx3)
-        .to.emit(stakingInstance, "WithdrawBalance")
+        .to.emit(stakingInstance, "BalanceWithdraw")
         .withArgs(owner.address, [0, ZeroAddress, 0, amount / 2n]);
       await expect(tx3).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
@@ -5678,7 +5678,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, tokenIdsZero, { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, tokenId, owner.address, startTimestamp, tokenIdsZero);
       await expect(tx1).to.changeEtherBalances([owner, stakingInstance], [-amount, amount]);
 
@@ -5687,7 +5687,7 @@ describe("Staking", function () {
 
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").withArgs(1, owner.address, endTimestamp);
+      await expect(tx2).to.emit(stakingInstance, "DepositWithdraw").withArgs(1, owner.address, endTimestamp);
       await expect(tx2).to.changeEtherBalances([owner, stakingInstance], [amount / 2n, -amount / 2n]);
 
       // WITHDRAW PENALTY
@@ -5802,7 +5802,7 @@ describe("Staking", function () {
       const tx1 = await stakingInstance.deposit(params, [0, 0, 1, 1], { value: amount });
       const startTimestamp: number = (await time.latest()).toNumber();
       await expect(tx1)
-        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(stakingInstance, "DepositStart")
         .withArgs(1, 1, owner.address, startTimestamp, [0, 0, 1, 1])
         .to.emit(stakingInstance, "TransferReceived")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount, "0x")
@@ -5836,11 +5836,11 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       const endTimestamp: number = (await time.latest()).toNumber();
       await expect(tx2)
-        .to.emit(stakingInstance, "ReturnDeposit")
+        .to.emit(stakingInstance, "DepositReturn")
         .withArgs(1, owner.address)
-        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "DepositWithdraw")
         .withArgs(1, owner.address, endTimestamp)
-        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(stakingInstance, "DepositFinish")
         .withArgs(1, owner.address, endTimestamp, cycles)
         .to.emit(erc20Instance, "Transfer")
         .withArgs(await stakingInstance.getAddress(), owner.address, amount)

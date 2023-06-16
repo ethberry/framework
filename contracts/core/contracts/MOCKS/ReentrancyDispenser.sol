@@ -32,9 +32,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     items[0] = Asset(TokenType.ERC721, token, 2, 1);
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
-    (bool success, bytes memory data) = address(dispenser).call(
-      abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
-    );
+    (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
     return super.onERC721Received(operator, from, tokenId, data);
   }
 
@@ -49,9 +47,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
     items[0] = Asset(TokenType.ERC1155, token, 1, 100000);
     address[] memory receivers = new address[](1);
     receivers[0] = address(this);
-    (bool success, bytes memory _data) = address(dispenser).call(
-      abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
-    );
+    (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
     return super.onERC1155Received(operator, from, id, value, data);
   }
 
@@ -62,9 +58,7 @@ contract ReentrancyDispenser is ERC165, ERC721Holder, ERC1155Holder {
       items[0] = Asset(TokenType.NATIVE, address(0), 0, balance);
       address[] memory receivers = new address[](1);
       receivers[0] = address(this);
-      (bool success, bytes memory _data) = address(dispenser).call(
-        abi.encodeWithSelector(dispenser.disperse.selector, items, receivers)
-      );
+      (bool success, ) = address(dispenser).call(abi.encodeWithSelector(dispenser.disperse.selector, items, receivers));
     }
   }
 

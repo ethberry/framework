@@ -535,7 +535,7 @@ async function main() {
   );
 
   // GENERATIVE
-  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CollectionSimple");
+  const erc721CollectionFactory = await ethers.getContractFactory("ERC721CSimple");
   contracts.erc721Generative = await erc721CollectionFactory.deploy(
     "COLLECTION SIMPLE",
     "COLL721",
