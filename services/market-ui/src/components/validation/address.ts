@@ -1,7 +1,6 @@
 import { object, string } from "yup";
 
-import { reEthAddress } from "@gemunion/constants";
-
+// this is physical address not ETH
 export const addressValidationSchema = object().shape({
-  address: string().matches(reEthAddress, "form.validations.patternMismatch").required("form.validations.valueMissing"),
+  address: string().required("form.validations.valueMissing"),
 });
