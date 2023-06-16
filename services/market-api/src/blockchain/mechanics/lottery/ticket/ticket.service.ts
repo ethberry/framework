@@ -4,40 +4,54 @@ import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typ
 
 import { ns } from "@framework/constants";
 import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTicketSearchDto } from "@framework/types";
+import { TokenMetadata } from "@framework/types";
 
-import { LotteryTicketEntity } from "./ticket.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { TokenService } from "../../../hierarchy/token/token.service";
+import { LotteryRoundEntity } from "../round/round.entity";
 
 @Injectable()
-export class LotteryTicketService {
+export class LotteryTicketService extends TokenService {
   constructor(
-    @InjectRepository(LotteryTicketEntity)
-    private readonly ticketEntityRepository: Repository<LotteryTicketEntity>,
+    @InjectRepository(TokenEntity)
+    protected readonly tokenEntityRepository: Repository<TokenEntity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+  ) {
+    super(tokenEntityRepository);
+  }
 
   public async search(
     dto: Partial<ILotteryTicketSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<LotteryTicketEntity>, number]> {
+  ): Promise<[Array<TokenEntity>, number]> {
     const { roundIds, skip, take } = dto;
 
-    const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
-    queryBuilder.leftJoinAndSelect("ticket.round", "round");
-    queryBuilder.leftJoinAndSelect("ticket.token", "token");
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+    queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("ticket.account = :account", { account: userEntity.wallet });
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+    );
+
+    queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
     if (roundIds) {
       if (roundIds.length === 1) {
-        queryBuilder.andWhere("ticket.roundId = :roundId", {
+        queryBuilder.andWhere("round.roundId = :roundId", {
           roundId: roundIds[0],
         });
       } else {
-        queryBuilder.andWhere("ticket.roundId IN(:...roundIds)", { roundIds });
+        queryBuilder.andWhere("round.roundId IN(:...roundIds)", { roundIds });
       }
     }
 
@@ -50,10 +64,32 @@ export class LotteryTicketService {
   }
 
   public findOne(
-    where: FindOptionsWhere<LotteryTicketEntity>,
-    options?: FindOneOptions<LotteryTicketEntity>,
-  ): Promise<LotteryTicketEntity | null> {
-    return this.ticketEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
+    return this.tokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+
+    queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+    );
+
+    queryBuilder.andWhere("template.contractId = round.ticketContractId");
+
+    queryBuilder.andWhere("ticket.id = :id", {
+      id: where.id,
+    });
+
+    return queryBuilder.getOne();
   }
 
   public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {

@@ -627,6 +627,8 @@ async function main() {
       await contracts.erc721MysteryboxSimple.getAddress(),
       await contracts.erc721LotteryTicket.getAddress(),
       await contracts.erc721RaffleTicket.getAddress(),
+      await contracts.lottery.getAddress(),
+      await contracts.raffle.getAddress(),
     ],
     [
       await contracts.erc721Wrapper.getAddress(),

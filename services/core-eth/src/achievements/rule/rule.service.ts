@@ -10,6 +10,7 @@ import { EventHistoryEntity } from "../../blockchain/event-history/event-history
 import { AchievementsItemService } from "../item/item.service";
 import { EventHistoryService } from "../../blockchain/event-history/event-history.service";
 import { UserService } from "../../infrastructure/user/user.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 interface IAchievementRuleAsset {
   tokenType: TokenType;
@@ -29,6 +30,7 @@ export class AchievementsRuleService {
     @Inject(forwardRef(() => EventHistoryService))
     private readonly eventHistoryService: EventHistoryService,
     private readonly userService: UserService,
+    private readonly contractService: ContractService,
   ) {}
 
   public findOne(
@@ -95,8 +97,17 @@ export class AchievementsRuleService {
     if (eventData && "from" in eventData) {
       const wallet = eventData.from;
       // TODO filter all db.contracts or limit rule events
+      const allContracts = await this.contractService.findAll(
+        {},
+        {
+          select: {
+            address: true,
+          },
+        },
+      );
+
       // Check only user events
-      if (wallet !== ZeroAddress) {
+      if (wallet !== ZeroAddress && !allContracts.map(c => c.address).includes(wallet.toLowerCase())) {
         const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
         // find event User

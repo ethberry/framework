@@ -40,9 +40,9 @@ export const wrapSignature = (network: Network, contract: any, account: Signer) 
   };
 };
 
-export const wrapRaffleSignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
+export const wrapRaffleSignature = (network: Network, contract: any, account: Signer) => {
   return (values: Record<string, any>) => {
-    return account._signTypedData(
+    return account.signTypedData(
       // Domain
       {
         name: tokenName,

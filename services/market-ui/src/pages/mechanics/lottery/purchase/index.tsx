@@ -1,6 +1,7 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants } from "ethers";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -10,6 +11,7 @@ import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";
 
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
+import { formatPrice } from "../../../../utils/money";
 
 const maxTickets = 6;
 
@@ -21,6 +23,7 @@ export const LotteryPurchase: FC = () => {
     address: constants.AddressZero,
     description: "Lottery",
     schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+    round: {},
   });
 
   const { fn, isLoading } = useApiCall(
@@ -66,7 +69,10 @@ export const LotteryPurchase: FC = () => {
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <LotteryPurchaseButton clearForm={clearForm} ticketNumbers={ticketNumbers} />
+          <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
+            <LotteryPurchaseButton round={lottery.round} clearForm={clearForm} ticketNumbers={ticketNumbers} />
+            {formatPrice(lottery.round.price)}
+          </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>

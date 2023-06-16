@@ -59,7 +59,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
             {
               tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
               token: token.template!.contract!.address,
-              tokenId: token.tokenId.toString(),
+              tokenId: token.tokenId,
               amount: "1",
             },
             price,

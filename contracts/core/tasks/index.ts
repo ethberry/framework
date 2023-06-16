@@ -9,6 +9,7 @@ import "./fund-vrfsub";
 import "./get-hash";
 import "./get-uri";
 import "./flat";
+import "./grant";
 import "./get-receipt-by-hash";
 import "./parse-dispenser-tx";
 import "./calc/error-id";

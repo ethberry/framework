@@ -32,6 +32,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   event RoundFinalized(uint256 round, uint8[6] winValues);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
+  event PaymentEthReceived(address from, uint256 amount);
 
   // LOTTERY
 
@@ -220,12 +221,22 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
+    if (currentRound.endTimestamp == 0) {
+      revert NotComplete();
+    }
+
     IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(currentRound.ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 
-    // only owner can burn
-    ticketFactory.burn(tokenId);
+    // revert if prize already set
+    if (data.prize) {
+      revert WrongToken();
+    }
+
+    // ticketFactory.burn(tokenId);
+    // set prize status
+    ticketFactory.setTicketData(tokenId);
 
     uint8[] memory coefficient = new uint8[](7);
     coefficient[0] = 0;
@@ -282,9 +293,8 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   }
 
   // COMMON
-
   receive() external payable override {
-    revert();
+    emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {

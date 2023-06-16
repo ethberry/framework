@@ -28,7 +28,7 @@ import { StakingLogService } from "./log.service";
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         // const stakingAddr = configService.get<string>("STAKING_ADDR", "");
-        const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
+        const stakingContracts = await contractService.findAllByType([ModuleType.STAKING]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

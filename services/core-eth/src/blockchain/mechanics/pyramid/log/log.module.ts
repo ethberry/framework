@@ -28,7 +28,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const pyramidContracts = await contractService.findAllByType(ModuleType.PYRAMID);
+        const pyramidContracts = await contractService.findAllByType([ModuleType.PYRAMID]);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

@@ -24,4 +24,5 @@ export interface ILotteryOption {
   address: string;
   schedule: CronExpression;
   description?: string;
+  round: Partial<ILotteryRound>;
 }

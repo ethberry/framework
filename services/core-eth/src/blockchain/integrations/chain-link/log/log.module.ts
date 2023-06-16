@@ -6,7 +6,7 @@ import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 // uncomment after updating contracts to ethers v6
 // import { abiEncode, keccak256It } from "@gemunion/contracts-utils";
-import { ContractFeatures } from "@framework/types";
+import { ContractFeatures, ModuleType } from "@framework/types";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";
 import { ChainLinkLogService } from "./log.service";
@@ -29,6 +29,12 @@ import { abiEncode, keccak256It } from "../utils";
           ContractFeatures.RANDOM,
           ContractFeatures.GENES,
         ]);
+        const lotteryContracts = await contractService.findAllByType(
+          [ModuleType.LOTTERY, ModuleType.RAFFLE],
+          [ContractFeatures.RANDOM],
+        );
+        const allRandomAddresses = randomTokens.address?.concat(lotteryContracts.address || []);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -38,7 +44,7 @@ import { abiEncode, keccak256It } from "../utils";
           keccak256It(ChainLinkEventSignatures.RandomWordsRequested as string),
           null,
           null,
-          [...new Set(randomTokens.address?.map(addr => abiEncode(addr, "address")))],
+          [...new Set(allRandomAddresses?.map(addr => abiEncode(addr, "address")))],
         ];
 
         return {

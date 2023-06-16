@@ -5,6 +5,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 import { LotteryRoundEntity } from "./round.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
+import { IAssetDto } from "@framework/types";
 
 @Injectable()
 export class LotteryRoundService {
@@ -25,9 +26,13 @@ export class LotteryRoundService {
     return this.roundEntityRepository.create(dto).save();
   }
 
-  public async createEmptyAsset(): Promise<AssetEntity> {
+  public async createEmptyPrice(): Promise<AssetEntity> {
     return await this.assetService.create({
       components: [],
     });
+  }
+
+  public async updatePrice(asset: AssetEntity, price: IAssetDto): Promise<void> {
+    await this.assetService.update(asset, price);
   }
 }

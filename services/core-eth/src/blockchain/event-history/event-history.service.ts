@@ -191,6 +191,8 @@ export class EventHistoryService {
           ExchangeEventType.Mysterybox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,
+          ExchangeEventType.PurchaseLottery,
+          ExchangeEventType.PurchaseRaffle,
           ContractEventType.MintRandom,
         ]),
       });

@@ -227,6 +227,8 @@ import {
   SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
+  // SeedLotteryRoundAt1660436476120,
+  // SeedLotteryTicketsAt1660436476140,
   SeedMerchant1563803000120,
   SeedMysteryboxErc1155At1653616447950,
   SeedMysteryboxErc721At1653616447930,

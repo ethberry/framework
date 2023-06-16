@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractFeatures,
   ContractType,
+  ExchangeEventType,
   LotteryEventType,
   ModuleType,
 } from "@framework/types";
@@ -27,7 +28,7 @@ import { LotteryLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
+        const lotteryContracts = await contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -52,6 +53,7 @@ import { LotteryLogService } from "./log.service";
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
+              ExchangeEventType.PaymentEthReceived,
             ],
           },
           block: {

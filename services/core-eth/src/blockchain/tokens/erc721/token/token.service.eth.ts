@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
-import { JsonRpcProvider } from "ethers";
-import { Log, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 

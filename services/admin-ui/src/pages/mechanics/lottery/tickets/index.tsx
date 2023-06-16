@@ -45,9 +45,6 @@ export const LotteryTickets: FC = () => {
       roundIds: [],
     },
     empty: {
-      // metadata: {
-      //   NUMBERS: "",
-      // },
       round: {
         numbers: [],
       },
@@ -75,11 +72,11 @@ export const LotteryTickets: FC = () => {
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(ticket.metadata.NUMBERS)}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
+              <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {ticket.round.roundId}
               </ListItemText>
-              <ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
                 {getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || [])}
               </ListItemText>
               <ListItemSecondaryAction>

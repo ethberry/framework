@@ -4,9 +4,14 @@ import { Transform } from "class-transformer";
 import { CronExpression } from "@nestjs/schedule";
 
 import { ContractStatus } from "@framework/types";
-import type { ILotteryOption } from "@framework/types";
 
-export class ScheduleUpdateDto implements ILotteryOption {
+// TODO move to ../interface
+interface ILotteryScheduleUpdate {
+  address: string;
+  schedule: CronExpression;
+  description?: string;
+}
+export class ScheduleUpdateDto implements ILotteryScheduleUpdate {
   @ApiProperty()
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())

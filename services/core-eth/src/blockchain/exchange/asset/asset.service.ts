@@ -10,7 +10,7 @@ import {
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, IsNull, Repository } from "typeorm";
 
-import { IAssetItem, ExchangeType, IAssetDto, IExchangePurchaseEvent, TokenType } from "@framework/types";
+import { ExchangeType, IAssetDto, IAssetItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -166,12 +166,13 @@ export class AssetService {
     items: Array<IAssetItem>,
     price: Array<IAssetItem>,
   ): Promise<void> {
+    // ITEMS
     await Promise.allSettled(
       items.map(async ({ tokenType, tokenId, amount }) => {
         const assetComponentHistoryItem = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.ITEM,
-          amount: amount,
+          amount,
         };
 
         const templateEntity = await this.templateService.findOne(
@@ -196,12 +197,13 @@ export class AssetService {
       }),
     );
 
+    // PRICE
     await Promise.allSettled(
       price.map(async ({ token, tokenId, amount }) => {
         const assetComponentHistoryPrice = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.PRICE,
-          amount: amount,
+          amount,
         };
 
         const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());

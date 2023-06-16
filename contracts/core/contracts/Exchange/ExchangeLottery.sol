@@ -22,7 +22,7 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
     Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
     Asset memory price,
     bytes calldata signature
-  ) external whenNotPaused {
+  ) external payable whenNotPaused {
     // Verify signature and check signer for MINTER_ROLE
     if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
       revert SignerMissingRole();

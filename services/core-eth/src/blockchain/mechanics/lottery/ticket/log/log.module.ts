@@ -20,7 +20,7 @@ import { LotteryTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, []);
+        const lotteryTicketAddr = await contractService.findAllByType([ModuleType.LOTTERY], []);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =

@@ -13,6 +13,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.so
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721RaffleTicket.sol";
+import "../../utils/errors.sol";
 
 contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
   using Counters for Counters.Counter;
@@ -36,7 +37,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = TicketRaffle(round);
+    _data[tokenId] = TicketRaffle(round, false);
 
     _upsertRecordField(tokenId, ROUND, round);
 
@@ -48,8 +49,17 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
   }
 
   function getTicketData(uint256 tokenId) external view returns (TicketRaffle memory) {
-    require(_exists(tokenId), "ERC721Ticket: invalid token ID");
+    if (!_exists(tokenId)) {
+      revert WrongToken();
+    }
     return _data[tokenId];
+  }
+
+  function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
+    if (!_exists(tokenId)) {
+      revert WrongToken();
+    }
+    _data[tokenId].prize = true;
   }
 
   // BASE URL
