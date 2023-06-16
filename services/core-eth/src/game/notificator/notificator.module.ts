@@ -1,13 +1,16 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { RmqProviderType } from "@framework/types";
 
+import { MerchantModule } from "../../infrastructure/merchant/merchant.module";
 import { NotificatorService } from "./notificator.service";
 
 @Module({
   imports: [
+    ConfigModule,
+    MerchantModule,
     ClientsModule.registerAsync([
       {
         name: RmqProviderType.MOBILE_SERVICE,
@@ -30,7 +33,7 @@ import { NotificatorService } from "./notificator.service";
       },
     ]),
   ],
-  providers: [NotificatorService],
+  providers: [Logger, NotificatorService],
   exports: [NotificatorService],
 })
 export class NotificatorModule {}

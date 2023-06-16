@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { utils, Wallet } from "ethers";
+import { hexlify, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -47,12 +47,10 @@ import ERC721BlacklistUpgradeableSol from "@framework/core-contracts/artifacts/c
 import ERC721BlacklistUpgradeableRandom from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRandomGemunion.sol/ERC721BlacklistUpgradeableRandomGemunion.json";
 import ERC721BlacklistUpgradeableRentableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721BlacklistUpgradeableRentable.sol/ERC721BlacklistUpgradeableRentable.json";
 import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721BlacklistUpgradeableRentableRandomGemunion.sol/ERC721BlacklistUpgradeableRentableRandomGemunion.json";
-// import ERC721BlacklistUpgradeableRentableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/besu/ERC721BlacklistUpgradeableRentableRandomBesu.sol/ERC721BlacklistUpgradeableRentableRandomBesu.json";
 import ERC998BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC20Simple.sol/ERC998ERC20Simple.json";
 import ERC998ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155Simple.sol/ERC998ERC1155Simple.json";
 import ERC998ERC1155ERC20Sol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20.sol/ERC998ERC1155ERC20.json";
-// import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/genes/ERC998GenesGemunion.sol/ERC998GenesGemunion.json";
 import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/traits/ERC998GenesBesu.sol/ERC998GenesBesu.json";
 import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/random/gemunion/ERC998RandomGemunion.sol/ERC998RandomGemunion.json";
 import ERC998RentableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Rentable.sol/ERC998Rentable.json";
@@ -73,8 +71,8 @@ import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contract
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
 
-import ERC721CollectionSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionSimple.sol/ERC721CollectionSimple.json";
-import ERC721CollectionBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CollectionBlacklist.sol/ERC721CollectionBlacklist.json";
+import ERC721CSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json";
+import ERC721CBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
@@ -92,7 +90,7 @@ export class ContractManagerSignService {
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc20ContractTemplates(dto);
 
     const params = {
@@ -100,7 +98,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -137,18 +135,18 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
     const params = {
       nonce,
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -186,11 +184,11 @@ export class ContractManagerSignService {
         },
       },
     );
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc721Collection(dto: IErc721CollectionDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc721CollectionTemplates(dto);
 
     const params = {
@@ -198,7 +196,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -238,11 +236,11 @@ export class ContractManagerSignService {
         },
       },
     );
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc998Token(dto: IErc998ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc998ContractTemplates(dto);
 
     const params = {
@@ -250,7 +248,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -289,11 +287,11 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc1155Token(dto: IErc1155ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc1155ContractTemplates(dto);
 
     const params = {
@@ -301,7 +299,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -336,12 +334,12 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:MYSTERY
   public async mysterybox(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByMysteryContractTemplates(dto);
 
     const params = {
@@ -349,7 +347,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -388,13 +386,13 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:VESTING
   public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
     const params = {
       nonce,
@@ -408,7 +406,7 @@ export class ContractManagerSignService {
       contractTemplate: Object.values(VestingContractTemplate).indexOf(contractTemplate).toString(),
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -440,12 +438,12 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:PYRAMID
   public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByPyramidContractTemplate(dto);
 
     const params = {
@@ -453,7 +451,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -487,12 +485,12 @@ export class ContractManagerSignService {
         },
       },
     );
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:STAKING
   public async staking(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByStakingContractTemplate(dto);
 
     const params = {
@@ -500,7 +498,7 @@ export class ContractManagerSignService {
       bytecode,
     };
 
-    const signature = await this.signer._signTypedData(
+    const signature = await this.signer.signTypedData(
       // Domain
       {
         name: "ContractManager",
@@ -529,7 +527,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public getBytecodeByErc20ContractTemplates(dto: IErc20TokenDeployDto) {
@@ -675,9 +673,9 @@ export class ContractManagerSignService {
 
     switch (contractTemplate) {
       case Erc721CollectionTemplates.SIMPLE:
-        return ERC721CollectionSol.bytecode;
+        return ERC721CSimpleSol.bytecode;
       case Erc721CollectionTemplates.BLACKLIST:
-        return ERC721CollectionBlacklistSol.bytecode;
+        return ERC721CBlacklistSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }

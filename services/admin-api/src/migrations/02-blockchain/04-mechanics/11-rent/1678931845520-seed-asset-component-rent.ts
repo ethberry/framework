@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -16,13 +16,13 @@ export class SeedAssetComponentRent1678931845520 implements MigrationInterface {
         'ERC20',
         1201,
         120101, -- space credits
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         220101
       ), (
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         220102
       );
     `);

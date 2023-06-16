@@ -1,24 +1,24 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, utils } from "ethers";
+import { randomBytes, WeiPerEther, ZeroAddress } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { nonce } from "@gemunion/contracts-constants";
 
-import { amountWei, amountWeiEth, extra, templateId, tokenZero } from "../constants";
+import { amountWei, extra, templateId, tokenZero } from "../constants";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
 import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
 import { deployContractManager, deployExchangeFixture } from "./shared/fixture";
 
 describe("Factory Exchange Referral", function () {
   const refProgram = {
-    maxRefs: 10,
-    refReward: 10 * 100, // 10.00 %
+    maxRefs: 10n,
+    refReward: 10n * 100n, // 10.00 %
     // refReward: 3 * 100, // 3.00 %
     // refReward: 12 * 100, // 12.00 %
     // refReward: 550, // 5.5 %
     // refDecrease: 5, // 10% - 2% - 0.4% - 0.08% etc.
-    refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
+    refDecrease: 10n, // 10% - 1% - 0.1% - 0.01% etc.
   };
 
   describe("Referral program", function () {
@@ -40,7 +40,7 @@ describe("Factory Exchange Referral", function () {
     it("should fail: wrong ref parameters", async function () {
       const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
-      const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward * 20, refProgram.refDecrease);
+      const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward * 20n, refProgram.refDecrease);
       await expect(tx).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
     });
 
@@ -63,6 +63,7 @@ describe("Factory Exchange Referral", function () {
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const factoryInstance = await deployContractManager(exchangeInstance);
       const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
+      const address = await erc721Instance.getAddress();
 
       const signature = await generateOneToManySignature({
         account: owner.address,
@@ -70,12 +71,12 @@ describe("Factory Exchange Referral", function () {
           nonce,
           externalId: templateId,
           expiresAt: 0, // never
-          referrer: constants.AddressZero,
+          referrer: ZeroAddress,
           extra,
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: address,
           tokenId: templateId,
           amount: 1,
         },
@@ -94,13 +95,13 @@ describe("Factory Exchange Referral", function () {
           nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: constants.AddressZero,
+          referrer: ZeroAddress,
           extra,
         },
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: address,
           tokenId: templateId,
           amount: 1,
         },
@@ -114,7 +115,7 @@ describe("Factory Exchange Referral", function () {
           },
         ],
         signature,
-        { value: amountWeiEth },
+        { value: amountWei },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
 
@@ -150,13 +151,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -174,21 +175,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
@@ -203,9 +204,7 @@ describe("Factory Exchange Referral", function () {
           stranger.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       const balance = await erc721Instance.balanceOf(owner.address);
@@ -237,13 +236,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -261,21 +260,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
       await expect(tx).to.emit(erc721Instance, "Transfer");
@@ -287,9 +286,7 @@ describe("Factory Exchange Referral", function () {
           receiver.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await blockAwait();
@@ -297,7 +294,7 @@ describe("Factory Exchange Referral", function () {
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(1);
 
-      const nonce1 = utils.randomBytes(32);
+      const nonce1 = randomBytes(32);
       const signature1 = await generateOneToManySignature({
         account: stranger.address,
         params: {
@@ -309,13 +306,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -334,21 +331,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature1,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
       await expect(tx1).to.emit(erc721Instance, "Transfer");
@@ -360,9 +357,7 @@ describe("Factory Exchange Referral", function () {
           owner.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await expect(tx1)
@@ -372,15 +367,13 @@ describe("Factory Exchange Referral", function () {
           receiver.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       const balance1 = await erc721Instance.balanceOf(stranger.address);
       expect(balance1).to.equal(1);
 
-      const nonce2 = utils.randomBytes(32);
+      const nonce2 = randomBytes(32);
       const signature2 = await generateOneToManySignature({
         account: receiver.address,
         params: {
@@ -392,13 +385,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -416,21 +409,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature2,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx2).to.emit(exchangeInstance, "Purchase");
       await expect(tx2).to.emit(erc721Instance, "Transfer");
@@ -441,9 +434,7 @@ describe("Factory Exchange Referral", function () {
           stranger.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await expect(tx2)
@@ -453,9 +444,7 @@ describe("Factory Exchange Referral", function () {
           owner.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       const balance2 = await erc721Instance.balanceOf(receiver.address);
@@ -503,13 +492,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -527,21 +516,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
       await expect(tx).to.emit(erc721Instance, "Transfer");
@@ -553,9 +542,7 @@ describe("Factory Exchange Referral", function () {
           receiver.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await blockAwait();
@@ -563,7 +550,7 @@ describe("Factory Exchange Referral", function () {
       const balance = await erc721Instance.balanceOf(owner.address);
       expect(balance).to.equal(1);
 
-      const nonce1 = utils.randomBytes(32);
+      const nonce1 = randomBytes(32);
       const signature1 = await generateOneToManySignature({
         account: stranger.address,
         params: {
@@ -575,13 +562,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -599,21 +586,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature1,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
       await expect(tx1).to.emit(erc721Instance, "Transfer");
@@ -625,9 +612,7 @@ describe("Factory Exchange Referral", function () {
           owner.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
       await expect(tx1)
         .to.emit(exchangeInstance, "ReferralReward")
@@ -636,15 +621,13 @@ describe("Factory Exchange Referral", function () {
           receiver.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       const balance1 = await erc721Instance.balanceOf(stranger.address);
       expect(balance1).to.equal(1);
 
-      const nonce2 = utils.randomBytes(32);
+      const nonce2 = randomBytes(32);
       const signature2 = await generateOneToManySignature({
         account: receiver.address,
         params: {
@@ -656,13 +639,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -680,21 +663,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature2,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx2).to.emit(exchangeInstance, "Purchase");
       await expect(tx2).to.emit(erc721Instance, "Transfer");
@@ -705,9 +688,7 @@ describe("Factory Exchange Referral", function () {
           stranger.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await expect(tx2)
@@ -717,9 +698,7 @@ describe("Factory Exchange Referral", function () {
           owner.address,
           1,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 1),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
         );
 
       const balance2 = await erc721Instance.balanceOf(receiver.address);
@@ -731,31 +710,17 @@ describe("Factory Exchange Referral", function () {
 
       const ownerRefBalance = await exchangeInstance.getBalance(owner.address, tokenZero);
       expect(ownerRefBalance).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0)
-          .add(
-            constants.WeiPerEther.div(100)
-              .mul((refProgram.refReward / 100) | 0)
-              .div(refProgram.refDecrease ** 1),
-          ),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
       );
       const receiverRefBalance = await exchangeInstance.getBalance(receiver.address, tokenZero);
       expect(receiverRefBalance).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0)
-          .add(
-            constants.WeiPerEther.div(100)
-              .mul((refProgram.refReward / 100) | 0)
-              .div(refProgram.refDecrease ** 1),
-          ),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n +
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 1n,
       );
       const strangerRefBalance = await exchangeInstance.getBalance(stranger.address, tokenZero);
       expect(strangerRefBalance).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
     });
 
@@ -785,13 +750,13 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
@@ -810,21 +775,21 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           // ETH
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
 
@@ -838,9 +803,7 @@ describe("Factory Exchange Referral", function () {
           receiver.address, // referrer
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       const eventFilter = exchangeInstance.filters.ReferralReward();
@@ -852,17 +815,13 @@ describe("Factory Exchange Referral", function () {
 
       const refBalance = await exchangeInstance.connect(receiver).getBalance(receiver.address, tokenZero);
       expect(refBalance).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
 
       const tx1 = exchangeInstance.connect(receiver).withdrawReward(tokenZero);
       await expect(tx1).to.changeEtherBalance(
         receiver,
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
     });
 
@@ -882,14 +841,14 @@ describe("Factory Exchange Referral", function () {
       const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
       const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance);
       // MINT ERC20
-      const tenEth = constants.WeiPerEther.mul(10);
+      const tenEth = WeiPerEther * 10n;
       await erc20Instance.mint(owner.address, tenEth);
       const ownerErc20Balance = await erc20Instance.balanceOf(owner.address);
       expect(ownerErc20Balance).to.equal(tenEth);
       // SET ALLOWANCE FOR EXCHANGE
-      await erc20Instance.approve(exchangeInstance.address, constants.WeiPerEther);
-      const allowance = await erc20Instance.allowance(owner.address, exchangeInstance.address);
-      expect(allowance).to.equal(constants.WeiPerEther);
+      await erc20Instance.approve(await exchangeInstance.getAddress(), WeiPerEther);
+      const allowance = await erc20Instance.allowance(owner.address, await exchangeInstance.getAddress());
+      expect(allowance).to.equal(WeiPerEther);
 
       const signature = await generateOneToManySignature({
         account: owner.address,
@@ -902,16 +861,16 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
       });
@@ -927,7 +886,7 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
@@ -935,9 +894,9 @@ describe("Factory Exchange Referral", function () {
           // ERC20
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
         signature,
@@ -954,10 +913,8 @@ describe("Factory Exchange Referral", function () {
           owner.address, // buyer
           receiver.address, // referrer
           0, // level
-          erc20Instance.address,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          await erc20Instance.getAddress(),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       const balance = await erc721Instance.balanceOf(owner.address);
@@ -967,21 +924,17 @@ describe("Factory Exchange Referral", function () {
       expect(refBalanceEth).to.equal(0);
       const refBalanceErc20 = await exchangeInstance
         .connect(receiver)
-        .getBalance(receiver.address, erc20Instance.address);
+        .getBalance(receiver.address, await erc20Instance.getAddress());
       expect(refBalanceErc20).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
 
-      const tx1 = exchangeInstance.connect(receiver).withdrawReward(erc20Instance.address);
+      const tx1 = exchangeInstance.connect(receiver).withdrawReward(await erc20Instance.getAddress());
 
       await expect(tx1).to.changeTokenBalance(
         erc20Instance,
         receiver,
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
     });
 
@@ -1001,14 +954,14 @@ describe("Factory Exchange Referral", function () {
       const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
       const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance);
       // MINT ERC20
-      const tenEth = constants.WeiPerEther.mul(10);
+      const tenEth = WeiPerEther * 10n;
       await erc20Instance.mint(owner.address, tenEth);
       const ownerErc20Balance = await erc20Instance.balanceOf(owner.address);
       expect(ownerErc20Balance).to.equal(tenEth);
       // SET ALLOWANCE FOR EXCHANGE
-      await erc20Instance.approve(exchangeInstance.address, constants.WeiPerEther);
-      const allowance = await erc20Instance.allowance(owner.address, exchangeInstance.address);
-      expect(allowance).to.equal(constants.WeiPerEther);
+      await erc20Instance.approve(await exchangeInstance.getAddress(), WeiPerEther);
+      const allowance = await erc20Instance.allowance(owner.address, await exchangeInstance.getAddress());
+      expect(allowance).to.equal(WeiPerEther);
 
       const signature = await generateOneToManySignature({
         account: owner.address,
@@ -1021,22 +974,22 @@ describe("Factory Exchange Referral", function () {
         },
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
       });
@@ -1052,26 +1005,26 @@ describe("Factory Exchange Referral", function () {
         {
           // ERC721
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId: templateId,
           amount: 1,
         },
         [
           {
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
             token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId: 0,
-            amount: constants.WeiPerEther,
+            amount: WeiPerEther,
           },
         ],
         signature,
-        { value: constants.WeiPerEther },
+        { value: WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
 
@@ -1087,9 +1040,7 @@ describe("Factory Exchange Referral", function () {
           receiver.address,
           0,
           tokenZero,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       await expect(tx) // ERC20 reward
@@ -1098,10 +1049,8 @@ describe("Factory Exchange Referral", function () {
           owner.address, // buyer
           receiver.address, // referrer
           0, // level
-          erc20Instance.address,
-          constants.WeiPerEther.div(100)
-            .mul((refProgram.refReward / 100) | 0)
-            .div(refProgram.refDecrease ** 0),
+          await erc20Instance.getAddress(),
+          ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
         );
 
       const balance = await erc721Instance.balanceOf(owner.address);
@@ -1109,34 +1058,26 @@ describe("Factory Exchange Referral", function () {
 
       const refBalanceEth = await exchangeInstance.connect(receiver).getBalance(receiver.address, tokenZero);
       expect(refBalanceEth).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
       const refBalanceErc20 = await exchangeInstance
         .connect(receiver)
-        .getBalance(receiver.address, erc20Instance.address);
+        .getBalance(receiver.address, await erc20Instance.getAddress());
       expect(refBalanceErc20).to.equal(
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
 
       const tx1 = exchangeInstance.connect(receiver).withdrawReward(tokenZero);
       await expect(tx1).to.changeEtherBalance(
         receiver,
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
 
-      const tx2 = exchangeInstance.connect(receiver).withdrawReward(erc20Instance.address);
+      const tx2 = exchangeInstance.connect(receiver).withdrawReward(await erc20Instance.getAddress());
       await expect(tx2).to.changeTokenBalance(
         erc20Instance,
         receiver,
-        constants.WeiPerEther.div(100)
-          .mul((refProgram.refReward / 100) | 0)
-          .div(refProgram.refDecrease ** 0),
+        ((WeiPerEther / 100n) * ((refProgram.refReward / 100n) | 0n)) / refProgram.refDecrease ** 0n,
       );
     });
   });

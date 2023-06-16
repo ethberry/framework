@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundExceptio
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -108,7 +108,7 @@ export class EventHistoryService {
     this.loggerService.log(JSON.stringify(event, null, "\t"), EventHistoryService.name);
     this.loggerService.log(JSON.stringify(context, null, "\t"), EventHistoryService.name);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
@@ -167,8 +167,7 @@ export class EventHistoryService {
     if (eventType === ContractEventType.MintRandom) {
       const data = eventData as IERC721TokenMintRandomEvent;
       const requestId = data.requestId;
-
-      const parentEvent = await this.findByRandomRequest(requestId);
+      const parentEvent = await this.findByRandomRequest(requestId.toString());
 
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
 import { testChainId } from "@framework/constants";
@@ -39,11 +39,11 @@ export class NativeContractService extends ContractService {
 
   public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
     const { symbol, title, description, merchantId } = dto;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractEntityRepository
       .create({
-        address: constants.AddressZero,
+        address: ZeroAddress,
         symbol,
         decimals: 18,
         royalty: 0,

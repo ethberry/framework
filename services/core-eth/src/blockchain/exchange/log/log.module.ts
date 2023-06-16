@@ -1,8 +1,10 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 
 import {
   AccessControlEventType,
@@ -37,7 +39,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.EXCHANGE,
             contractAddress: [exchangeAddr],
-            contractInterface: ExchangeSol.abi,
+            contractInterface: new Interface(ExchangeSol.abi),
             // prettier-ignore
             eventNames: [
               // MODULE:PAUSE
@@ -63,6 +65,10 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ExchangeEventType.Upgrade,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
+              // MODULE:LOTTERY
+              ExchangeEventType.PurchaseLottery,
+              // MODULE:RAFFLE
+              ExchangeEventType.PurchaseRaffle,
               // MODULE:PAYMENT_SPLITTER
               ExchangeEventType.PayeeAdded,
               ExchangeEventType.PaymentReceived,

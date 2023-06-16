@@ -11,10 +11,8 @@ import "../../../MOCKS/ChainLinkBesu.sol";
 
 contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
   constructor(
-    string memory name,
-    address ticketFactory,
-    address acceptedToken
-  ) LotteryRandom(name, ticketFactory, acceptedToken) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+    Lottery memory config
+  ) LotteryRandom(config) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
@@ -28,10 +26,13 @@ contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
   }
 
   function setDummyRound(
-    bool[] calldata ticket,
+    bytes32 ticket,
     uint8[6] calldata values,
     uint8[7] calldata aggregation,
-    uint256 requestId
+    uint256 requestId,
+    Asset memory item,
+    Asset memory price,
+    uint256 maxTicket
   ) external {
     Round memory dummyRound;
     _rounds.push(dummyRound);
@@ -39,6 +40,7 @@ contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
+    currentRound.maxTicket = maxTicket;
     currentRound.startTimestamp = block.timestamp;
     currentRound.endTimestamp = block.timestamp + 1;
     currentRound.balance = 10000 ether;
@@ -46,12 +48,14 @@ contract LotteryRandomBesu is LotteryRandom, ChainLinkBesu {
     currentRound.total -= (currentRound.total * comm) / 100;
     currentRound.tickets.push(ticket);
     currentRound.values = values;
+    currentRound.ticketAsset = item;
+    currentRound.acceptedAsset = price;
     // prize numbers
     currentRound.aggregation = aggregation;
     currentRound.requestId = requestId;
   }
 
-  function setDummyTicket(bool[] calldata ticket) external {
+  function setDummyTicket(bytes32 ticket) external {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
     currentRound.tickets.push(ticket);

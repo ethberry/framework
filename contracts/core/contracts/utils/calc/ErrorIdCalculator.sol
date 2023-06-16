@@ -8,8 +8,6 @@ pragma solidity ^0.8.13;
 
 import "hardhat/console.sol";
 
-// import "../errors.sol";
-
 contract ErrorsIdCalculator {
   error MethodNotSupported();
   error TemplateZero();
@@ -32,4 +30,7 @@ contract ErrorsIdCalculator {
   error ZeroBalance();
   error NotComplete();
   error NotActive();
+
+  error WrongRound();
+  error WrongPrice();
 }

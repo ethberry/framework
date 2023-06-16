@@ -21,8 +21,8 @@ export interface IEditOrderDialogProps {
 export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, addressId, createdAt, items, orderStatus, userId } = initialValues;
-  const fixedValues = { id, addressId, items, orderStatus, userId };
+  const { id, addressId, createdAt, orderItems, orderStatus, userId } = initialValues;
+  const fixedValues = { id, addressId, orderItems, orderStatus, userId };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -31,7 +31,7 @@ export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
       <EntityInput name="userId" controller="users" getTitle={(option: IUser) => option.displayName} />
       <AddressSelectInput />
       {id ? <SelectInput name="orderStatus" options={OrderStatus} /> : null}
-      <ItemsInput name="items" />
+      <ItemsInput name="orderItems" />
       <StaticInput name="createdAt" value={format(parseISO(createdAt), humanReadableDateTimeFormat)} />
     </FormDialog>
   );

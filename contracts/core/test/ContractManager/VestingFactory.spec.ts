@@ -3,9 +3,9 @@ import { ethers } from "hardhat";
 import { time } from "@openzeppelin/test-helpers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, span } from "../constants";
-import { deployContract } from "../shared/fixture";
 
 describe("VestingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -17,16 +17,17 @@ describe("VestingFactory", function () {
       const vesting = await ethers.getContractFactory("CliffVesting");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
       const timestamp: number = (await time.latest()).toNumber();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -87,16 +88,17 @@ describe("VestingFactory", function () {
       const vesting = await ethers.getContractFactory("CliffVesting");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
       const timestamp: number = (await time.latest()).toNumber();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

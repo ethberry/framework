@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { AddressStatus, IAddress } from "@framework/types";
@@ -31,7 +31,7 @@ export class AddressEntity extends IdDateBaseEntity implements IAddress {
   public zip: string;
 
   @JoinColumn()
-  @OneToOne(_type => UserEntity)
+  @ManyToOne(_type => UserEntity, user => user.addresses)
   public user: UserEntity;
 
   @Column({ type: "int" })

@@ -5,7 +5,7 @@ import { Mixin } from "ts-mixer";
 
 import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
 import { ITokenMetadataSearchDto, ITokenSearchDto, TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({
@@ -82,7 +82,7 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
     minimum: 1,
   })
   @IsOptional()
-  @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
+  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
 
   merchantId: number;

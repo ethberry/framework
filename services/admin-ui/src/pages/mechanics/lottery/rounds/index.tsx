@@ -45,7 +45,7 @@ export const LotteryRounds: FC = () => {
           {rows.map((round, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {round.roundId} - {round.numbers ? getNumbers(round) : "awaiting results"}
+                {round.roundId} - {round.numbers ? getNumbers(round.numbers) : "awaiting results"}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>

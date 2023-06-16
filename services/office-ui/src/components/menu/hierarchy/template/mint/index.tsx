@@ -6,14 +6,14 @@ import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { ITemplate } from "@framework/types";
-import { IUser, TokenType } from "@framework/types";
-import { ITokenAssetComponent } from "@gemunion/mui-inputs-asset";
+import { ContractFeatures, IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITemplateAssetComponent, ITemplateAsset } from "@gemunion/mui-inputs-asset";
 
-import ERC20MintABI from "../../../../../abis/components/common/mint/erc20.mint.abi.json";
-import ERC721MintCommonABI from "../../../../../abis/components/common/mint/erc721.mintCommon.abi.json";
-import ERC1155MintABI from "../../../../../abis/components/common/mint/erc1155.mint.abi.json";
+import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
+import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
+import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
 import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
@@ -23,12 +23,12 @@ export interface IMintMenuItemProps {
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
-    template: { contract, id: templateId },
+    template: { contract, id: templateId, tokens },
   } = props;
 
   const user = useUser<IUser>();
 
-  const { address, contractType, id: contractId, decimals } = contract!;
+  const { address, contractType, id: contractId, decimals, contractFeatures } = contract!;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -65,7 +65,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       );
       return contractErc1155.mint(
         values.account,
-        templateComponent.templateId,
+        templateComponent.template.tokens[0].tokenId,
         templateComponent.amount,
         "0x",
       ) as Promise<any>;
@@ -79,6 +79,16 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       setIsMintTokenDialogOpen(false);
     });
   };
+
+  if (contractType === TokenType.NATIVE || contractFeatures.includes(ContractFeatures.GENES)) {
+    return (
+      <MenuItem>
+        <Typography variant="inherit">
+          <FormattedMessage id="dialogs.unsupported" />
+        </Typography>
+      </MenuItem>
+    );
+  }
 
   return (
     <Fragment>
@@ -103,12 +113,17 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
                 contract: {
                   decimals,
                   address,
+                  contractType,
+                },
+                template: {
+                  id: 0,
+                  tokens,
                 },
                 templateId,
-                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.mul(1).toString() : "1", // default amount for ERC721-998-1155
-              } as ITokenAssetComponent,
+                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.toString() : "1",
+              } as unknown as ITemplateAssetComponent,
             ],
-          } as any,
+          } as ITemplateAsset,
           account: user.profile.wallet,
         }}
       />

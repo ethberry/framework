@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "./template.entity";
 
@@ -28,16 +28,21 @@ export class TemplateService {
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    // we need to get single token for Native, erc20 and erc1155
-    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
-      tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155],
+    // get single token for ERC1155, to use in purchase
+    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
     });
+
+    // do not display external contracts as there is no wat to mint tokens from it
+    queryBuilder.andWhere("NOT(:contractFeature = ANY(contract.contractFeatures))", {
+      contractFeature: ContractFeatures.EXTERNAL,
+    });
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
@@ -192,16 +197,16 @@ export class TemplateService {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    // we need to get single token for Native, erc20 and erc1155
-    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType IN(:...tokenTypes)", {
-      tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155],
+    // get single token for ERC1155, to use in purchase
+    queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
     });
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, Erc20 and Erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",

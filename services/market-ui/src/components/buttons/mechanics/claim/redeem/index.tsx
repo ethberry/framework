@@ -22,21 +22,19 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
 
   const metaRedeem = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ClaimABI, web3Context.provider?.getSigner());
+
     return contract.claim(
       {
         nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
         referrer: constants.AddressZero,
-        extra: utils.formatBytes32String("0x"),
+        extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(claim.endTimestamp).getTime() / 1000)), 32),
       },
       claim.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId:
-          component.contract!.contractType === TokenType.ERC1155
-            ? component.template!.tokens![0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
+        tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),
       claim.signature,

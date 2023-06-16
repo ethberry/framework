@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
 
 export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -24,7 +24,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         121601,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
@@ -36,7 +36,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         221601,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
@@ -48,7 +48,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         321601,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',
@@ -60,7 +60,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         421601,
         'WETH',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
         null,
         0,
         '0',

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { BigNumber, constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
@@ -20,31 +20,31 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         11010101, -- BESU
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         12010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
+        '${(100n * 1000000n).toString()}', -- USDT has 6 places after decimal
         12150101, -- USDT
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         12160101, -- WETH
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddress}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         12170101, -- BUSD
         '${currentDateTime}',
         '${currentDateTime}'
@@ -61,25 +61,25 @@ export class SeedBalanceExchangeAt1563804020402 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${exchangeAddressBinance}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         21010101, -- BNB
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddressBinance}',
-        '${BigNumber.from(1e2).mul(1e6).toString()}', -- USDT has 6 places after decimal
+        '${(100n * 1000000n).toString()}', -- USDT has 6 places after decimal
         22150101, -- USDT
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddressBinance}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         22160101, -- WETH
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${exchangeAddressBinance}',
-        '${BigNumber.from(1e2).mul(constants.WeiPerEther).toString()}',
+        '${(100n * WeiPerEther).toString()}',
         22170101, -- BUSD
         '${currentDateTime}',
         '${currentDateTime}'

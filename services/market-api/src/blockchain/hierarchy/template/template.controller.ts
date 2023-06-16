@@ -22,7 +22,7 @@ export class TemplateController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     return this.templateService.search(
       { take: 10 },
       userEntity?.chainId || chainId,

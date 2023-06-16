@@ -1,9 +1,10 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractEventType,
@@ -11,12 +12,11 @@ import {
   ModuleType,
   StakingEventType,
 } from "@framework/types";
-
-// system contract
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
-import { StakingLogService } from "./log.service";
+
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { StakingLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -27,28 +27,28 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const stakingAddr = configService.get<string>("STAKING_ADDR", "");
+        // const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const stakingContracts = await contractService.findAllByType(ModuleType.STAKING);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
+        // const fromBlock = (await contractService.getLastBlock(stakingAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.STAKING,
             contractAddress: stakingContracts.address || [],
-            contractInterface: StakingSol.abi,
+            contractInterface: new Interface(StakingSol.abi),
             // prettier-ignore
             eventNames: [
               StakingEventType.RuleCreated,
               StakingEventType.RuleUpdated,
-              StakingEventType.StakingStart,
-              StakingEventType.StakingWithdraw,
-              StakingEventType.StakingFinish,
-              StakingEventType.WithdrawBalance,
-              StakingEventType.ReturnDeposit,
+              StakingEventType.DepositStart,
+              StakingEventType.DepositWithdraw,
+              StakingEventType.DepositFinish,
+              StakingEventType.BalanceWithdraw,
+              StakingEventType.DepositReturn,
               // MODULE:PAUSE
               ContractEventType.Paused,
               ContractEventType.Unpaused,
@@ -59,7 +59,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             ],
           },
           block: {
-            fromBlock,
+            // fromBlock,
+            fromBlock: stakingContracts.fromBlock || startingBlock,
             debug: false,
             cron,
           },

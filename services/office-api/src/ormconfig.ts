@@ -61,7 +61,6 @@ const config: PostgresConnectionOptions = {
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
-    MerchantEntity,
     OrderEntity,
     OrderItemEntity,
     PhotoEntity,

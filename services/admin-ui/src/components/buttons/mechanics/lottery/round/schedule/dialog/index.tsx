@@ -4,8 +4,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
-import { validationSchema } from "./validation";
 import { CronExpression, ILotteryOption } from "@framework/types";
+import { ContractInput } from "../../contract-input";
+// import { validationSchema } from "./validation";
 
 export interface ILotteryScheduleDialogProps {
   open: boolean;
@@ -20,11 +21,12 @@ export const LotteryScheduleDialog: FC<ILotteryScheduleDialogProps> = props => {
   return (
     <FormDialog
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message="dialogs.schedule"
       testId="LotteryScheduleForm"
       {...rest}
     >
+      <ContractInput />
       <SelectInput name="schedule" options={CronExpression} />
       <RichTextEditor name="description" />
     </FormDialog>

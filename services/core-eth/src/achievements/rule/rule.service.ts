@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { AchievementRuleStatus, ContractEventType, TokenType } from "@framework/types";
 
@@ -52,14 +52,6 @@ export class AchievementsRuleService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
-    // we need to get single token for Native, erc20 and erc1155
-    // queryBuilder.leftJoinAndSelect(
-    //   "item_template.tokens",
-    //   "item_tokens",
-    //   "item_contract.contractType IN(:...tokenTypes)",
-    //   { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
-    // );
-
     // only ACTIVE rules
     queryBuilder.andWhere("rules.achievementStatus = :achievementStatus", {
       achievementStatus: AchievementRuleStatus.ACTIVE,
@@ -97,14 +89,14 @@ export class AchievementsRuleService {
     if (!event) {
       throw new NotFoundException("eventNotFound");
     }
-    // console.log("processEvent", event);
+
     const { contractId, eventType, eventData } = event;
 
     if (eventData && "from" in eventData) {
       const wallet = eventData.from;
       // TODO filter all db.contracts or limit rule events
       // Check only user events
-      if (wallet !== constants.AddressZero) {
+      if (wallet !== ZeroAddress) {
         const userEntity = await this.userService.findOne({ wallet: wallet.toLowerCase() });
 
         // find event User
@@ -174,21 +166,21 @@ export class AchievementsRuleService {
         templateId: parent.token.template.id,
       });
     } else {
-      // try to parse eventData
+      // try to parse eventData//
       if (eventData && "item" in eventData) {
-        const [tokenType, token, templateId, _amount] = eventData.item;
+        const { tokenType, token, tokenId } = eventData.item;
         eventTokenAsset.push({
           tokenType: Object.values(TokenType)[~~tokenType],
           contract: token.toLowerCase(),
-          templateId: ~~templateId,
+          templateId: ~~tokenId,
         });
       } else if (eventData && "items" in eventData) {
         eventData.items.map(item => {
-          const [tokenType, token, templateId, _amount] = item;
+          const { tokenType, token, tokenId } = item;
           return eventTokenAsset.push({
             tokenType: Object.values(TokenType)[~~tokenType],
             contract: token.toLowerCase(),
-            templateId: ~~templateId,
+            templateId: ~~tokenId,
           });
         });
       }

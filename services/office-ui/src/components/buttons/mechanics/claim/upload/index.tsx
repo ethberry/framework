@@ -5,8 +5,8 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
-import { getFormData } from "./utils";
+import { ClaimUploadDialog } from "./dialog";
+import type { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimUploadButtonProps {
   className?: string;
@@ -17,10 +17,13 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall((api, { files }: IClaimUploadDto) => {
+  const { fn, isLoading } = useApiCall((api, values: IClaimUploadDto) => {
+    const { claims } = values;
     return api.fetchJson({
       url: "/claims/upload",
-      data: getFormData({ file: files[0] }),
+      data: {
+        claims: claims.map(({ id: _id, ...rest }) => rest),
+      },
       method: "POST",
     });
   });
@@ -30,8 +33,10 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    await fn(form, values);
-    setIsUploadDialogOpen(false);
+    return fn(form, values).then(() => {
+      // TODO refresh page
+      setIsUploadDialogOpen(false);
+    });
   };
 
   const handleUploadCancel = () => {
@@ -53,8 +58,9 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         onConfirm={handleUploadConfirm}
         onCancel={handleUploadCancel}
         open={isUploadDialogOpen}
+        isLoading={isLoading}
         initialValues={{
-          files: [],
+          claims: [],
         }}
       />
     </Fragment>

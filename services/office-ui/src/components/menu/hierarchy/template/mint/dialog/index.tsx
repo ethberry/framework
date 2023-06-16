@@ -2,8 +2,8 @@ import { FC } from "react";
 
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import type { ITemplateAsset } from "@gemunion/mui-inputs-asset";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";

@@ -25,7 +25,7 @@ export const RaffleRounds: FC = () => {
   } = useCollection<IRaffleRound, ISearchDto>({
     baseUrl: "/raffle/rounds",
     empty: {
-      numbers: [],
+      maxTickets: 0,
     },
   });
 
@@ -44,7 +44,7 @@ export const RaffleRounds: FC = () => {
           {rows.map((round, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {round.roundId} - {round.numbers || "awaiting results"}
+                {round.roundId} - {round.number || "awaiting results"}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>

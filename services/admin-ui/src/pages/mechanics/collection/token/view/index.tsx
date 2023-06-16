@@ -19,11 +19,9 @@ export interface ICollectionTokenViewDialogProps {
 
 export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-
   const { template, tokenId, metadata, balance, imageUrl } = initialValues;
 
   const showAttributes = shouldShowAttributes(metadata);
-
   const handleConfirm = (): void => {
     onConfirm();
   };
@@ -52,6 +50,18 @@ export const CollectionTokenViewDialog: FC<ICollectionTokenViewDialogProps> = pr
               <TableCell align="right">
                 <RichTextDisplay data={template?.description} />
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{template?.contract?.title}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.address" />
+              </TableCell>
+              <TableCell align="right">{template?.contract?.address}</TableCell>
             </TableRow>
             {showAttributes && (
               <TableRow>

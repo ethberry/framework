@@ -3,11 +3,12 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import { boolArrayToByte32 } from "@framework/traits";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 
@@ -31,10 +32,10 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
             externalId: 0,
             expiresAt: sign.expiresAt,
             referrer: settings.getReferrer(),
-            extra: utils.formatBytes32String("0x"),
+            extra: boolArrayToByte32(ticketNumbers),
           },
-          ticketNumbers,
-          constants.WeiPerEther,
+          [],
+          [],
           sign.signature,
         )
         .then(clearForm) as Promise<void>;
@@ -52,7 +53,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         data: {
           account,
           referrer: settings.getReferrer(),
-          ticketNumbers,
+          ticketNumbers: boolArrayToByte32(ticketNumbers),
         },
       },
       null,

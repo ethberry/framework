@@ -4,9 +4,8 @@ import { Type } from "class-transformer";
 
 import { ICraftCreateDto } from "../interfaces";
 import { ItemDto } from "../../../exchange/asset/dto";
-import { IngredientsDto } from "./ingredients";
 
-export class ExchangeCreateDto implements ICraftCreateDto {
+export class CraftCreateDto implements ICraftCreateDto {
   @ApiProperty({
     type: ItemDto,
   })
@@ -15,9 +14,9 @@ export class ExchangeCreateDto implements ICraftCreateDto {
   public item: ItemDto;
 
   @ApiProperty({
-    type: IngredientsDto,
+    type: ItemDto,
   })
   @ValidateNested()
-  @Type(() => IngredientsDto)
-  public price: IngredientsDto;
+  @Type(() => ItemDto)
+  public price: ItemDto;
 }

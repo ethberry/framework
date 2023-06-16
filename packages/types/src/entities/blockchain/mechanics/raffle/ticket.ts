@@ -9,5 +9,4 @@ export interface IRaffleTicket extends IIdDateBase {
   round?: IRaffleRound;
   tokenId: number;
   token?: IToken;
-  amount: string;
 }

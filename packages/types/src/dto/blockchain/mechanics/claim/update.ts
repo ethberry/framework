@@ -1,3 +1,3 @@
-import { IClaimItemCreateDto } from "./create";
+import { IClaimCreateDto } from "./create";
 
-export interface IClaimItemUpdateDto extends IClaimItemCreateDto {}
+export interface IClaimUpdateDto extends IClaimCreateDto {}

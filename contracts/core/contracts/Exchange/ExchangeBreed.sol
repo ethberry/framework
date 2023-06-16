@@ -14,7 +14,6 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
-import "../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
   using SafeCast for uint256;
@@ -38,19 +37,16 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
     Asset memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverOneToOneSignature(params, item, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) {
+    if (!hasRole(MINTER_ROLE, _recoverOneToOneSignature(params, item, price, signature))) {
       revert SignerMissingRole();
     }
 
     // TODO OR approved?
-    address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    if (ownerOf1 != _msgSender()) {
+    if (IERC721(item.token).ownerOf(item.tokenId) != _msgSender()) {
       revert NotAnOwner();
     }
 
-    address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
-    if (ownerOf2 != _msgSender()) {
+    if (IERC721(price.token).ownerOf(price.tokenId) != _msgSender()) {
       revert NotAnOwner();
     }
 
@@ -78,24 +74,22 @@ abstract contract ExchangeBreed is SignatureValidator, AccessControl, Pausable {
     // Check pregnancy time
     uint64 timeNow = block.timestamp.toUint64();
 
-    require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
-
-    // TODO set rules
-    uint64 timeLimitM = pregnancyM.count > 13
-      ? _pregnancyMaxTime
-      : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64();
-    uint64 timeLimitS = pregnancyS.count > 13
-      ? _pregnancyMaxTime
-      : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64();
-
+    // TODO set rules?
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
-      if (timeNow - pregnancyM.time <= timeLimitM) {
+      if (
+        timeNow - pregnancyM.time <=
+        (pregnancyM.count > 13 ? _pregnancyMaxTime : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64())
+      ) {
         revert LimitExceed();
       }
-      if (timeNow - pregnancyS.time <= timeLimitS) {
+      if (
+        timeNow - pregnancyS.time <=
+        (pregnancyS.count > 13 ? _pregnancyMaxTime : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64())
+      ) {
         revert LimitExceed();
       }
     }
+
     // Update Pregnancy
     pregnancyM.count += 1;
     pregnancyM.time = timeNow;

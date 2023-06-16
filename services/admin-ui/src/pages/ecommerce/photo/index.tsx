@@ -17,13 +17,14 @@ import { useApiCall, useCollection } from "@gemunion/react-hooks";
 
 export const Photo: FC = () => {
   const { rows, fetch, isLoading } = useCollection<IPhoto>({
-    baseUrl: "/photos",
+    baseUrl: "/ecommerce/photos",
     empty: {
       title: "",
       imageUrl: "",
       photoStatus: PhotoStatus.NEW,
       priority: 0,
       productId: 1,
+      productItemId: null,
     },
   });
 
@@ -32,7 +33,7 @@ export const Photo: FC = () => {
       const { photo, newStatus } = values;
       return api
         .fetchJson({
-          url: `/photos/${photo.id}`,
+          url: `/ecommerce/photos/${photo.id}`,
           method: "PUT",
           data: {
             photoStatus: newStatus,
@@ -48,7 +49,7 @@ export const Photo: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "photos"]} />
+      <Breadcrumbs path={["dashboard", "ecommerce", "photos"]} />
 
       <PageHeader message="pages.photos.title" />
 

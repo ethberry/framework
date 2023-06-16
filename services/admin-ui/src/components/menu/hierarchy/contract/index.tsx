@@ -2,7 +2,7 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ContractFeatures, IContract, ModuleType, TokenType } from "@framework/types";
+import { IContract } from "@framework/types";
 
 import { RoyaltyMenuItem } from "../../common/royalty";
 import { EthListenerAddMenuItem } from "../../common/eth-add";
@@ -57,28 +57,15 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
 
-        {contract.contractType !== TokenType.NATIVE &&
-        contract.contractModule === ModuleType.HIERARCHY &&
-        !contract.contractFeatures.includes(ContractFeatures.GENES) ? (
-          <MintMenuItem contract={contract} />
-        ) : null}
-        {contract.contractType === TokenType.ERC20 ? <Erc20TokenSnapshotMenuItem contract={contract} /> : null}
-        {contract.contractType === TokenType.ERC721 ? <RoyaltyMenuItem contract={contract} /> : null}
-        {contract.contractType === TokenType.ERC998 ? <RoyaltyMenuItem contract={contract} /> : null}
-        {contract.contractType === TokenType.ERC1155 ? <RoyaltyMenuItem contract={contract} /> : null}
+        <MintMenuItem contract={contract} />
+        <Erc20TokenSnapshotMenuItem contract={contract} />
+        <RoyaltyMenuItem contract={contract} />
 
-        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <BlacklistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.BLACKLIST) ? (
-          <UnBlacklistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <WhitelistMenuItem contract={contract} />
-        ) : null}
-        {contract.contractFeatures.includes(ContractFeatures.WHITELIST) ? (
-          <UnWhitelistMenuItem contract={contract} />
-        ) : null}
+        <BlacklistMenuItem contract={contract} />
+        <UnBlacklistMenuItem contract={contract} />
+
+        <WhitelistMenuItem contract={contract} />
+        <UnWhitelistMenuItem contract={contract} />
 
         <AllowanceMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />

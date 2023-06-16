@@ -34,25 +34,26 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
     Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverOneToManySignature(params, item, price, signature);
-    if (!hasRole(METADATA_ROLE, signer)) {
+    if (!hasRole(METADATA_ROLE, _recoverOneToManySignature(params, item, price, signature))) {
       revert SignerMissingRole();
     }
 
     ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
-    uint64 expires = uint256(params.extra).toUint64();
-
     emit Lend(
       _msgSender() /* from */,
       params.referrer /* to */,
-      expires /* lend expires */,
+      uint256(params.extra).toUint64() /* lend expires */,
       params.externalId /* lendRule db id */,
       item,
       price
     );
 
-    IERC4907(item.token).setUser(item.tokenId, params.referrer /* to */, expires /* lend expires */);
+    IERC4907(item.token).setUser(
+      item.tokenId,
+      params.referrer /* to */,
+      uint256(params.extra).toUint64() /* lend expires */
+    );
   }
 
   function lendMany(
@@ -62,6 +63,7 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
     bytes calldata signature
   ) external payable whenNotPaused {
     address signer = _recoverManyToManySignature(params, items, price, signature);
+
     if (!hasRole(METADATA_ROLE, signer)) {
       revert SignerMissingRole();
     }
@@ -70,24 +72,23 @@ abstract contract ExchangeRentable is SignatureValidator, AccessControl, Pausabl
       revert WrongAmount();
     }
 
-    if (price.length > 0) {
-      ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
-    }
-
-    uint64 expires = uint256(params.extra).toUint64();
+    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
     emit LendMany(
       _msgSender() /* from */,
       params.referrer /* to */,
-      expires /* lend expires */,
+      uint256(params.extra).toUint64() /* lend expires */,
       params.externalId /* lendRule db id */,
       items,
       price
     );
-    // TODO optimization
-    uint256 length = items.length;
-    for (uint256 i = 0; i < length; ) {
-      IERC4907(items[i].token).setUser(items[i].tokenId, params.referrer /* to */, expires /* lend expires */);
+
+    for (uint256 i = 0; i < items.length; ) {
+      IERC4907(items[i].token).setUser(
+        items[i].tokenId,
+        params.referrer /* to */,
+        uint256(params.extra).toUint64() /* lend expires */
+      );
       unchecked {
         i++;
       }

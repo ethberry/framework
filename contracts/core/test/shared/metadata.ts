@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { TokenMetadata } from "@framework/types";
 
 export enum MetadataHash {
@@ -6,6 +5,8 @@ export enum MetadataHash {
   "0x76e34cd5c7c46b6bfe6b1da94d54447ea83a4af449bc62a0ef3ecae24c08031a" = "GRADE",
   "0xda9488a573bb2899ea5782d71e9ebaeb1d8291bf3812a066ec86608a697c51fc" = "RARITY",
   "0x478aed3c6ed3b5e4cf9592dfb6162deb45c868f08215e5b56b7e9199c036f94c" = "TRAITS",
+  "0x2864e00281a4949f7117ffbddceac1cae2b09211744a2c94050e9225a2dccdab" = "ROUND",
+  "0x1fff709eacc1711cf7a4321794f821657522f68d06fde4a0db121aca1734ed62" = "NUMBERS",
 }
 
 export const metadataKeysArray = [TokenMetadata.TEMPLATE_ID, TokenMetadata.TRAITS];
@@ -14,38 +15,8 @@ export const decodeMetadata = function (tokenMetaData: Array<any>): Record<strin
   return tokenMetaData.reduce(
     (memo: Record<string, string>, current: { key: keyof typeof MetadataHash; value: string }) =>
       Object.assign(memo, {
-        [MetadataHash[current.key]]: BigNumber.from(current.value).toString(),
+        [MetadataHash[current.key]]: current.value,
       }),
     {} as Record<string, string>,
   ) as Record<string, string>;
-};
-
-export const encodeNumbers = (numbers: Array<number>, size = 32) => {
-  let encoded = BigNumber.from(0);
-  numbers.reverse().forEach((number, i) => {
-    encoded = encoded.or(BigNumber.from(number).shl(i * size));
-  });
-  return encoded;
-};
-
-export const decodeNumber = (encoded: BigNumber, size = 32) => {
-  return new Array(256 / size)
-    .fill(null)
-    .map((_e, i) =>
-      encoded
-        .shr(i * size)
-        .mask(size)
-        .toNumber(),
-    )
-    .reverse();
-};
-
-export const encodeTraits = (traits: Record<string, number>) => {
-  return encodeNumbers(Object.values(traits));
-};
-
-export const decodeTraits = (encoded: BigNumber, traits = metadataKeysArray) => {
-  return decodeNumber(encoded)
-    .slice(-traits.length)
-    .reduceRight((memo, value, i) => ({ [traits[i]]: value, ...memo }), {} as Record<string, number>);
 };

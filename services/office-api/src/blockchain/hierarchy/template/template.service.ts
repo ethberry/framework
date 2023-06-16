@@ -1,15 +1,15 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { TokenService } from "../token/token.service";
-import { TemplateEntity } from "./template.entity";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
+import { TemplateEntity } from "./template.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -33,7 +33,20 @@ export class TemplateService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect([
+      "contract.address",
+      "contract.decimals",
+      "contract.contractType",
+      "contract.contractModule",
+      "contract.contractFeatures",
+    ]);
+
+    // get single token for ERC1155, to use in mint dialog
+    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
+    });
+    queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
@@ -88,70 +101,82 @@ export class TemplateService {
 
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
+      "template.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
-    const {
-      contractFeatures = [],
-      templateStatus = [],
-      contractIds = [],
-      contractModule = [],
-      contractType = [],
-    } = dto;
+    const { contractFeatures, templateStatus, contractIds, contractModule, contractType } = dto;
+    const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
-    const where = {
-      contract: {
-        chainId: userEntity.chainId,
-      },
-    };
+    queryBuilder.select(["template.title", "template.id"]);
 
-    if (contractType.length) {
-      Object.assign(where.contract, {
-        contractType: In(contractType),
-      });
-    }
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address", "contract.decimals", "contract.contractType"]);
 
-    if (contractModule.length) {
-      Object.assign(where.contract, {
-        contractModule: In(contractModule),
-      });
-    }
-
-    if (contractFeatures.length) {
-      Object.assign(where.contract, {
-        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
-        contractFeatures: ArrayOverlap(contractFeatures),
-      });
-    }
-
-    if (templateStatus.length) {
-      Object.assign(where, {
-        templateStatus: In(templateStatus),
-      });
-    }
-
-    if (contractIds.length) {
-      Object.assign(where, {
-        contractId: In(contractIds),
-      });
-    }
-
-    return this.templateEntityRepository.find({
-      where,
-      select: {
-        id: true,
-        title: true,
-      },
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          contract: "template.contract",
-        },
-      },
+    // get single token for ERC1155, to use in mint dialog
+    queryBuilder.leftJoin("template.tokens", "tokens", "contract.contractType = :tokenType", {
+      tokenType: TokenType.ERC1155,
     });
+    queryBuilder.addSelect(["tokens.id", "tokens.tokenId"]);
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
+
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("manager.contractType = :contractType", {
+          contractType: contractType[0],
+        });
+      } else {
+        queryBuilder.andWhere("manager.contractType IN(:...contractType)", { contractType });
+      }
+    }
+
+    if (contractFeatures) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
+      }
+    }
+
+    if (templateStatus) {
+      if (templateStatus.length === 1) {
+        queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: templateStatus[0] });
+      } else {
+        queryBuilder.andWhere("template.templateStatus IN(:...templateStatus)", { templateStatus });
+      }
+    }
+
+    queryBuilder.orderBy({
+      "template.createdAt": "DESC",
+    });
+
+    return queryBuilder.getMany();
   }
 
   public findOne(

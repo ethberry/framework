@@ -7,6 +7,7 @@ import { PhotoStatus } from "@framework/types";
 import { IPhotoCreateDto, IPhotoUpdateDto } from "./interfaces";
 import { PhotoEntity } from "./photo.entity";
 import { ProductEntity } from "../product/product.entity";
+import { ProductItemEntity } from "../product-item/product-item.entity";
 
 @Injectable()
 export class PhotoService {
@@ -33,24 +34,29 @@ export class PhotoService {
     return this.photoEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(data: IPhotoCreateDto, productEntity: ProductEntity): Promise<PhotoEntity> {
+  public async create(
+    dto: IPhotoCreateDto,
+    productEntity: ProductEntity | null,
+    productItemEntity: ProductItemEntity | null = null,
+  ): Promise<PhotoEntity> {
     return this.photoEntityRepository
       .create({
-        ...data,
+        ...dto,
         photoStatus: PhotoStatus.NEW,
         product: productEntity,
+        productItem: productItemEntity,
       })
       .save();
   }
 
-  public async update(where: FindOptionsWhere<PhotoEntity>, data: IPhotoUpdateDto): Promise<PhotoEntity> {
+  public async update(where: FindOptionsWhere<PhotoEntity>, dto: IPhotoUpdateDto): Promise<PhotoEntity> {
     const photoEntity = await this.photoEntityRepository.findOne({ where });
 
     if (!photoEntity) {
       throw new NotFoundException("photoNotFound");
     }
 
-    Object.assign(photoEntity, { ...data });
+    Object.assign(photoEntity, { ...dto });
     return photoEntity.save();
   }
 

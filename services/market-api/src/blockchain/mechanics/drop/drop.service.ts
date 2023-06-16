@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber, constants, utils } from "ethers";
+import { ZeroAddress, hexlify, randomBytes, encodeBytes32String } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -42,7 +42,6 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
@@ -85,7 +84,6 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
@@ -99,7 +97,7 @@ export class DropService {
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, dropId } = dto;
+    const { account, referrer = ZeroAddress, dropId } = dto;
 
     const dropEntity = await this.findOneWithRelations({ id: dropId });
 
@@ -122,14 +120,14 @@ export class DropService {
       throw new NotFoundException("templateNotFound");
     }
 
-    const cap = BigNumber.from(templateEntity.cap);
-    if (cap.gt(0) && cap.lte(templateEntity.amount)) {
+    const cap = BigInt(templateEntity.cap);
+    if (cap > 0 && cap <= BigInt(templateEntity.amount)) {
       throw new BadRequestException("limitExceeded");
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
@@ -138,12 +136,12 @@ export class DropService {
         externalId: dropEntity.id,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       dropEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(account: string, params: IParams, dropEntity: DropEntity): Promise<string> {

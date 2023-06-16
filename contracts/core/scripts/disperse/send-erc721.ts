@@ -1,40 +1,31 @@
 import { ethers } from "hardhat";
 
-import { blockAwait } from "@gemunion/contracts-utils";
-import { deployContract, deployJerk } from "@gemunion/contracts-mocks";
+import { deployContract } from "@gemunion/contracts-mocks";
 
-import { templateId } from "../../test/constants";
-import { deployERC721 } from "../../test/ERC721/shared/fixtures";
+import { deployCollection } from "../../test/Mechanics/Collection/shared/fixtures";
 
 async function main() {
   const totalTransfers = 3;
 
-  const [owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployContract("Disperse");
-  await blockAwait();
-  const erc721Instance = await deployERC721();
-  await blockAwait();
-  const nonReceiverInstance = await deployJerk();
-  await blockAwait();
+  const [_owner, receiver] = await ethers.getSigners();
+  const contractInstance = await deployContract("Dispenser");
+  const erc721Instance = await deployCollection();
 
-  for (let i = 0; i < totalTransfers + 1; i++) {
-    console.info(`Minting tokenId ${i + 1}`);
-    await erc721Instance.mintCommon(owner.address, templateId);
-    await blockAwait();
-  }
-  await erc721Instance.setApprovalForAll(contractInstance.address, true);
-  await blockAwait();
+  await erc721Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
-  const receivers = new Array(totalTransfers).fill(null).map(_ => receiver.address);
-  receivers.push(nonReceiverInstance.address); // fail: non receiver
-  receivers.push(receiver.address); // fail: tokenId is not exist
-  const tokenIds = new Array(totalTransfers + 2).fill(null).map((_, i) => i + 1);
+  const receivers = new Array(Number(totalTransfers)).fill(null).map(_ => receiver.address);
+  const items = await Promise.all(
+    new Array(Number(totalTransfers)).fill(null).map(async (_, i) => ({
+      tokenType: 0,
+      token: await erc721Instance.getAddress(),
+      tokenId: i + 1,
+      amount: 1,
+    })),
+  );
 
-  // Call the function and capture the transaction response
-  const tx = await contractInstance.disperseERC721(erc721Instance.address, receivers, tokenIds, {
+  const tx = await contractInstance.disperse(items, receivers, {
     gasLimit: 10000000,
   });
-  await blockAwait();
 
   console.info("TX HASH :::", tx?.hash);
 }

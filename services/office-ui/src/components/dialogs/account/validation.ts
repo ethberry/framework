@@ -1,5 +1,7 @@
-import { object, string } from "yup";
+import { object } from "yup";
+
+import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema = object().shape({
-  account: string().required("form.validations.valueMissing"),
+  account: addressValidationSchema,
 });

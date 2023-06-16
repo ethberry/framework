@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
@@ -13,6 +13,7 @@ import { MarketplaceSection } from "./exchange/marketplace";
 import { MysterySection } from "./mechanics/mystery";
 import { PagesSection } from "./infrastructure/pages";
 import { StakingSection } from "./mechanics/staking";
+import { RaffleSection } from "./mechanics/raffle";
 import { LotterySection } from "./mechanics/lottery";
 import { VestingSection } from "./mechanics/vesting";
 import { ClaimSection } from "./mechanics/claim";
@@ -53,6 +54,8 @@ export const Dashboard: FC = () => {
           <RentSection />
           <CraftSection />
           <BreedSection />
+          <Divider sx={{ m: 2 }} />
+          <RaffleSection />
           <LotterySection />
           <StakingSection />
           <PyramidSection />

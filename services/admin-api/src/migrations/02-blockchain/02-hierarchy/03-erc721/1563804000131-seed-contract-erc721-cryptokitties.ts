@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { baseTokenURI, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractErc721CryptoKittiesAt1563804000131 implements MigrationInterface {
@@ -30,14 +30,14 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
       ) VALUES (
         1315,
         '0x06012c8cf97bead5deae237070f9587f8e7a266d',
-        '1',
+        1,
         'CryptoKitties (external)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcrypto_kitties.png?alt=media&token=df69f93c-8892-4456-92f8-34dc3703b64b',
         'CK',
         'CK',
-        100,
-        '${baseTokenURI}',
+        0,
+        'https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/{tokenId}.png',
         'ACTIVE',
         'ERC721',
         '{EXTERNAL}',

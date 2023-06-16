@@ -2,14 +2,15 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 
 import { AccessControlEventType, ContractType, Erc1363EventType, ModuleType, VestingEventType } from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
 import { VestingLogService } from "./vesting.log.service";
 // custom contracts
-import { VestingAbi } from "./interfaces";
+import { VestingInterface } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
@@ -33,7 +34,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
           contract: {
             contractType: ContractType.VESTING,
             contractAddress: vestingContracts.address || [],
-            contractInterface: VestingAbi,
+            contractInterface: VestingInterface,
             // prettier-ignore
             eventNames: [
               VestingEventType.ERC20Released,

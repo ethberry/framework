@@ -23,7 +23,7 @@ export class Erc721TemplateController {
     @Query() dto: TemplateSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     return this.erc721TemplateService.search(dto, userEntity?.chainId || chainId);
   }
 

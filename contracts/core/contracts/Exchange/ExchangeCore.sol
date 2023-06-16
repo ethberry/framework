@@ -23,14 +23,17 @@ abstract contract ExchangeCore is SignatureValidator, AccessControl, Pausable {
     Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverOneToManySignature(params, item, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) {
+    if (!hasRole(MINTER_ROLE, _recoverOneToManySignature(params, item, price, signature))) {
       revert SignerMissingRole();
     }
 
-
     ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
-    ExchangeUtils.acquire(ExchangeUtils._toArray(item), _msgSender(), DisabledTokenTypes(false, false, false, false, false));
+
+    ExchangeUtils.acquire(
+      ExchangeUtils._toArray(item),
+      _msgSender(),
+      DisabledTokenTypes(false, false, false, false, false)
+    );
 
     emit Purchase(_msgSender(), params.externalId, item, price);
 

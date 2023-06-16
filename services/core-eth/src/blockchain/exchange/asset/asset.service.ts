@@ -10,7 +10,7 @@ import {
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeepPartial, IsNull, Repository } from "typeorm";
 
-import { ExchangeType, IAssetDto, IExchangeItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
+import { IAssetItem, ExchangeType, IAssetDto, IExchangePurchaseEvent, TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -163,20 +163,23 @@ export class AssetService {
 
   public async saveAssetHistory(
     eventHistoryEntity: EventHistoryEntity,
-    items: Array<IExchangeItem>,
-    price: Array<IExchangeItem>,
+    items: Array<IAssetItem>,
+    price: Array<IAssetItem>,
   ): Promise<void> {
     await Promise.allSettled(
-      items.map(async ([itemType, _itemTokenAddr, itemTokenId, itemAmount]) => {
+      items.map(async ({ tokenType, tokenId, amount }) => {
         const assetComponentHistoryItem = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.ITEM,
-          amount: itemAmount,
+          amount: amount,
         };
 
         const templateEntity = await this.templateService.findOne(
           {
-            id: itemType === 4 ? ~~(eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId : ~~itemTokenId,
+            id:
+              ~~tokenType === 4
+                ? Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId)
+                : Number(tokenId),
           },
           { relations: { tokens: true } },
         );
@@ -185,7 +188,7 @@ export class AssetService {
           throw new NotFoundException("templateNotFound");
         }
         Object.assign(assetComponentHistoryItem, {
-          tokenId: itemType === 0 || itemType === 1 || itemType === 4 ? templateEntity.tokens[0].id : null,
+          tokenId: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0].id : null,
           contractId: templateEntity.contractId,
         });
 
@@ -194,14 +197,14 @@ export class AssetService {
     );
 
     await Promise.allSettled(
-      price.map(async ([_priceType, priceTokenAddr, priceTokenId, priceAmount]) => {
+      price.map(async ({ token, tokenId, amount }) => {
         const assetComponentHistoryPrice = {
           historyId: eventHistoryEntity.id,
           exchangeType: ExchangeType.PRICE,
-          amount: priceAmount,
+          amount: amount,
         };
 
-        const tokenEntity = await this.tokenService.getToken(priceTokenId, priceTokenAddr.toLowerCase());
+        const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());
         if (!tokenEntity) {
           this.loggerService.error(new NotFoundException("tokenNotFound"), AssetService.name);
           throw new NotFoundException("tokenNotFound");

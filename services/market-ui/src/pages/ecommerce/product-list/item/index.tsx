@@ -30,7 +30,7 @@ export const ProductItem: FC<IProductItemProps> = props => {
             <RichTextDisplay data={product.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(product.price)}
+            {formatPrice(product.productItems[0].price)}
           </Typography>
         </CardContent>
       </CardActionArea>

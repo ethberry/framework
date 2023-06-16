@@ -10,7 +10,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
 import { ContractFeatures, GradeAttribute, TokenMetadata, TokenRarity } from "@framework/types";
 
-import { GradeButton, TokenSellButton, TokenTransferButton } from "../../../../components/buttons";
+import { Erc721TransferButton, GradeButton, TokenSellButton } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
@@ -67,7 +67,7 @@ export const Erc998Token: FC = () => {
                 ))}
             </ul>
             <TokenSellButton token={selected} />
-            <TokenTransferButton token={selected} />
+            <Erc721TransferButton token={selected} />
           </Paper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (

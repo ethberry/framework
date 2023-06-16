@@ -1,9 +1,10 @@
 import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, ExchangeEventType, IClaimRewardEvent, IRewardSetEvent } from "@framework/types";
+import type { IWaitlistClaimRewardEvent, IWaitlistSetRewardEvent } from "@framework/types";
+import { ContractType, WaitlistEventType } from "@framework/types";
 
 import { WaitlistItemServiceEth } from "./item.service.eth";
 
@@ -11,19 +12,19 @@ import { WaitlistItemServiceEth } from "./item.service.eth";
 export class WaitlistItemControllerEth {
   constructor(private readonly waitlistServiceEth: WaitlistItemServiceEth) {}
 
-  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: ExchangeEventType.RewardSet }])
+  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: WaitlistEventType.RewardSet }])
   public rewardSet(
     @Payload()
-    event: ILogEvent<IRewardSetEvent>,
+    event: ILogEvent<IWaitlistSetRewardEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.waitlistServiceEth.rewardSet(event, context);
   }
 
-  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: ExchangeEventType.ClaimReward }])
+  @EventPattern([{ contractType: ContractType.WAITLIST, eventName: WaitlistEventType.ClaimReward }])
   public withdraw(
     @Payload()
-    event: ILogEvent<IClaimRewardEvent>,
+    event: ILogEvent<IWaitlistClaimRewardEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.waitlistServiceEth.claimReward(event, context);

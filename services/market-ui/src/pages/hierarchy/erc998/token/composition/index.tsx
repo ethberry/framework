@@ -13,6 +13,7 @@ import { IBalance, IToken, TokenType } from "@framework/types";
 
 import ERC998TransferABI from "../../../../../abis/hierarchy/erc998/token/composition/transfer.abi.json";
 
+import { formatTokenTitle } from "../../../../../utils/token";
 import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
 
 export interface IComposition {
@@ -161,8 +162,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
             key={child.id}
             initialValues={filtered.reduce(
               (memo, current, i) => {
-                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                memo.tokenId[i] = `${filtered[i].token?.template?.title} #${filtered[i].token?.tokenId}`;
+                memo.tokenId[i] = formatTokenTitle(filtered[i].token!);
                 return memo;
               },
               { tokenId: [] as Array<string> },
@@ -203,7 +203,7 @@ export const Erc998Composition: FC<IErc998Composition> = props => {
                 }}
                 label={formatMessage({ id: "form.labels.tokenId" })}
                 placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-                getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
+                getTitle={(token: IToken) => formatTokenTitle(token)}
                 onChange={handleChange}
               />
             ))}

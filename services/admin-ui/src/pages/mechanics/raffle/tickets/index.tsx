@@ -39,7 +39,9 @@ export const RaffleTickets: FC = () => {
     search: {
       roundIds: [],
     },
-    empty: {},
+    empty: {
+      tokenId: 1,
+    },
   });
 
   return (
@@ -62,7 +64,7 @@ export const RaffleTickets: FC = () => {
           {rows.map((ticket, i) => (
             <ListItem key={i}>
               <ListItemText>{ticket.id}</ListItemText>
-              <ListItemText>{"winner?"}</ListItemText>
+              <ListItemText>{ticket.token!.tokenId === ticket.round!.number ? "winner" : ""}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(ticket)}>
                   <Visibility />

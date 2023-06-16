@@ -1,40 +1,34 @@
 import { ethers } from "hardhat";
 
 import { amount } from "@gemunion/contracts-constants";
-import { deployJerk, deployContract } from "@gemunion/contracts-mocks";
-import { blockAwait } from "@gemunion/contracts-utils";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { tokenId } from "../../test/constants";
 import { deployERC1155 } from "../../test/ERC1155/shared/fixtures";
 
 async function main() {
-  const totalTransfers = 10;
+  const totalTransfers = 10n;
 
   const [owner, receiver] = await ethers.getSigners();
-  const contractInstance = await deployContract("Disperse");
-  await blockAwait();
+  const contractInstance = await deployContract("Dispenser");
   const erc1155Instance = await deployERC1155();
-  await blockAwait();
-  const nonReceiverInstance = await deployJerk();
-  await blockAwait();
 
   await erc1155Instance.mint(owner.address, tokenId, amount * totalTransfers, "0x");
-  await blockAwait();
-  await erc1155Instance.setApprovalForAll(contractInstance.address, true);
-  await blockAwait();
+  await erc1155Instance.setApprovalForAll(await contractInstance.getAddress(), true);
 
-  const receivers = new Array(totalTransfers).fill(receiver.address);
-  receivers.push(nonReceiverInstance.address); // fail: non receiver
-  receivers.push(receiver.address); // fail: tokenId does not exist
-  const tokenIds = new Array(totalTransfers + 1).fill(tokenId);
-  tokenIds.push(2); // fail: tokenId does not exist
-  const amounts = new Array(totalTransfers + 2).fill(amount);
+  const receivers = new Array(Number(totalTransfers)).fill(receiver.address);
+  const items = await Promise.all(
+    new Array(Number(totalTransfers)).fill(null).map(async _ => ({
+      tokenType: 0,
+      token: await erc1155Instance.getAddress(),
+      tokenId,
+      amount,
+    })),
+  );
 
-  // Call the function and capture the transaction response
-  const tx = await contractInstance.disperseERC1155(erc1155Instance.address, receivers, tokenIds, amounts, {
+  const tx = await contractInstance.disperse(items, receivers, {
     gasLimit: 100000000,
   });
-  await blockAwait();
 
   console.info("TX HASH :::", tx?.hash);
 }

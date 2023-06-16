@@ -9,9 +9,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, TokenType } from "@framework/types";
 
-import ERC20ApproveABI from "../../../../../abis/components/common/allowance/erc20.approve.abi.json";
-import ERC721SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc721.setApprovalForAll.abi.json";
-import ERC1155SetApprovalForAllABI from "../../../../../abis/components/common/allowance/erc1155.setApprovalForAll.abi.json";
+import ERC20ApproveABI from "../../../../../abis/extensions/allowance/erc20.approve.abi.json";
+import ERC721SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc721.setApprovalForAll.abi.json";
+import ERC1155SetApprovalForAllABI from "../../../../../abis/extensions/allowance/erc1155.setApprovalForAll.abi.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./dialog";
 

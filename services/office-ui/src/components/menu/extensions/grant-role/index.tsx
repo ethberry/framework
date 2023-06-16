@@ -9,15 +9,15 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
-import GrantRoleABI from "../../../../abis/components/menu/extensions/grant-role/grantRole.abi.json";
+import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
-export interface IOzContractGrantRoleMenuItemProps {
+export interface IContractGrantRoleMenuItemProps {
   contract: IContract;
 }
 
-export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = props => {
+export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = props => {
   const {
     contract: { address },
   } = props;

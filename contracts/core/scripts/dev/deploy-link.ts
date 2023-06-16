@@ -1,10 +1,8 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { Contract, TransactionReceipt, TransactionResponse } from "ethers";
 
-import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
-import { TransactionReceipt, TransactionResponse } from "@ethersproject/abstract-provider";
+import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
 
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
 
@@ -26,25 +24,25 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
   }
 };
 
-const contracts: Record<string, Contract> = {};
+const contracts: Record<string, any> = {};
 
 async function main() {
   // LINK & VRF
   const linkFactory = await ethers.getContractFactory("LinkToken");
   // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
-  const linkInstance = await linkFactory.deploy();
-  contracts.link = linkInstance;
+  contracts.link = await linkFactory.deploy();
+  const linkAddress = await contracts.link.getAddress();
   await debug(contracts);
-  // console.info(`LINK_ADDR=${contracts.link.address}`);
+  // console.info(`LINK_ADDR=${linkAddress}`);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  contracts.vrf = await vrfFactory.deploy(contracts.link.address);
+  contracts.vrf = await vrfFactory.deploy(linkAddress);
   await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);
 
-  if (contracts.link.address !== "0x42699A7612A82f1d9C36148af9C77354759b210b") {
+  if (linkAddress !== "0x42699A7612A82f1d9C36148af9C77354759b210b") {
     console.info("LINK_ADDR address mismatch, clean BESU, then try again");
   }
-  if (contracts.vrf.address !== "0xa50a51c09a5c451C52BB714527E1974b686D8e77") {
+  if (linkAddress !== "0xa50a51c09a5c451C52BB714527E1974b686D8e77") {
     console.info("VRF_ADDR address mismatch, clean BESU, then try again");
   }
   // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU

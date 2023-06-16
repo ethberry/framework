@@ -12,6 +12,6 @@ export interface IRule {
 export interface IAsset {
   tokenType: number;
   token: string;
-  tokenId: number;
-  amount: number;
+  tokenId: bigint;
+  amount: bigint;
 }

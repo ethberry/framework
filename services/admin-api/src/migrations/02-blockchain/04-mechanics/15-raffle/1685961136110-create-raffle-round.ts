@@ -13,14 +13,31 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "numbers",
-          type: "boolean",
-          isArray: true,
+          name: "number",
+          type: "uint256",
           isNullable: true,
         },
         {
           name: "round_id",
           type: "uint256",
+        },
+        {
+          name: "contract_id",
+          type: "int",
+        },
+        {
+          name: "ticket_contract_id",
+          type: "int",
+        },
+        {
+          name: "price_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "max_tickets",
+          type: "int",
+          isNullable: true,
         },
         {
           name: "start_timestamp",
@@ -38,6 +55,26 @@ export class CreateRaffleRoundAt1685961136110 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["ticket_contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
         },
       ],
     });

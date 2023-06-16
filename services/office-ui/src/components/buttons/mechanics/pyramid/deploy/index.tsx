@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import type { IPyramidContractDeployDto } from "@framework/types";
 
-import PyramidDeployPyramidABI from "../../../../../abis/components/buttons/mechanics/pyramid/deploy/deployPyramid.abi.json";
+import PyramidDeployPyramidABI from "../../../../../abis/mechanics/pyramid/deploy/deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
 

@@ -11,6 +11,7 @@ import { WaitlistModule } from "./waitlist/waitlist.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
 import { BreedModule } from "./breed/breed.module";
 import { RentModule } from "./rent/rent.module";
+import { RaffleModule } from "./raffle/raffle.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RentModule } from "./rent/rent.module";
     VestingModule,
     ReferralModule,
     LotteryModule,
+    RaffleModule,
     PyramidModule,
     WaitlistModule,
     WrapperModule,

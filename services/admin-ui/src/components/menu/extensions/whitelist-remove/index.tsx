@@ -4,6 +4,7 @@ import { Unpublished } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import type { IContract } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import { AccessListUnWhitelistDialog } from "./dialog";
 
@@ -13,7 +14,7 @@ export interface IUnWhitelistMenuItemProps {
 
 export const UnWhitelistMenuItem: FC<IUnWhitelistMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractFeatures },
   } = props;
 
   const [isUnWhitelistDialogOpen, setIsUnWhitelistDialogOpen] = useState(false);
@@ -29,6 +30,10 @@ export const UnWhitelistMenuItem: FC<IUnWhitelistMenuItemProps> = props => {
   const handleUnWhitelistConfirm = () => {
     setIsUnWhitelistDialogOpen(false);
   };
+
+  if (!contractFeatures.includes(ContractFeatures.WHITELIST)) {
+    return null;
+  }
 
   return (
     <Fragment>

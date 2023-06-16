@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log, ZeroAddress, JsonRpcProvider } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenMetadata, TokenStatus } from "@framework/types";
@@ -22,7 +21,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
@@ -47,7 +46,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     }
 
     // Mint token create
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
@@ -73,7 +72,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
-    const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const mysteryboxTokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!mysteryboxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -81,13 +80,13 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, mysteryboxTokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       mysteryboxTokenEntity.template.amount += 1;
       // mysteryboxTokenEntity.erc721Template
       //   ? (mysteryboxTokenEntity.template.instanceCount += 1)
       //   : (mysteryboxTokenEntity.mystery.template.instanceCount += 1);
       mysteryboxTokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       // mysteryboxTokenEntity.erc721Template.instanceCount -= 1;
       mysteryboxTokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {

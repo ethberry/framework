@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
-import { BigNumber, Contract, utils } from "ethers";
+import { hexlify, randomBytes } from "ethers";
 
 import { VRFCoordinatorMock } from "../../typechain-types";
 
-export async function randomRequest(rndInstance: Contract, vrfInstance: VRFCoordinatorMock) {
+export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinatorMock) {
   const eventFilter = vrfInstance.filters.RandomWordsRequested();
   const events = await vrfInstance.queryFilter(eventFilter);
   for (const e of events) {
@@ -12,8 +12,7 @@ export async function randomRequest(rndInstance: Contract, vrfInstance: VRFCoord
     } = e;
 
     const blockNum = await ethers.provider.getBlockNumber();
-
-    await vrfInstance.fulfillRandomWords(requestId, keyHash, BigNumber.from(utils.randomBytes(32)), {
+    await vrfInstance.fulfillRandomWords(requestId, keyHash, hexlify(randomBytes(32)), {
       blockNum,
       subId,
       callbackGasLimit,

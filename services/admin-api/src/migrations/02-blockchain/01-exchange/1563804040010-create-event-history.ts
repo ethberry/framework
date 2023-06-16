@@ -109,6 +109,16 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
          -- MODULE:GRADE
         'LevelUp',
         'MetadataUpdate',
+        
+        'PurchaseLottery',
+        'PurchaseRaffle',
+        -- MODULE:LOTTERY
+        -- MODULE:RAFFLE
+        'RoundFinalized',
+        'RoundStarted',
+        'RoundEnded',
+        'Released',
+        'Prize',
 
         -- MODULE:PAYMENT_SPLITTER
         'PayeeAdded',
@@ -124,7 +134,10 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
 
         -- MODULE:CHAINLINKV2
         'RandomWordsRequested',
-        'RandomWordsFulfilled'
+        'RandomWordsFulfilled',
+
+        -- MODULE:ECOMMERCE
+        'EcommercePurchase'
       );
     `);
 

@@ -53,7 +53,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_template_tokens",
@@ -224,7 +223,10 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+  public findOneWithRelations(
+    where: FindOptionsWhere<TokenEntity>,
+    userEntity?: UserEntity,
+  ): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
     queryBuilder.leftJoinAndSelect("token.history", "history");
     queryBuilder.leftJoinAndSelect("token.exchange", "exchange");
@@ -246,13 +248,26 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("rent_price_components.contract", "rent_price_components_contract");
     queryBuilder.leftJoinAndSelect("rent_price_components.template", "rent_price_components_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "rent_price_components_template.tokens",
       "rent_price_components_template_tokens",
       `rent_price_components_contract.contractType IN(:...tokenTypes)`,
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
+    if (userEntity) {
+      queryBuilder.leftJoinAndSelect(
+        "token.balance",
+        "balance",
+        "contract.contract_module = :moduleType AND contract.contract_type = :tokenType AND balance.token_id = :tokenId AND balance.account = :account",
+        {
+          moduleType: ModuleType.HIERARCHY,
+          tokenType: TokenType.ERC1155,
+          tokenId: where.id,
+          account: userEntity.wallet,
+        },
+      );
+    }
 
     // MODULE:BREED
     // queryBuilder.leftJoinAndSelect("token.breeds", "breeds", "ANY(contract.contractFeatures) = :contractFeature", {

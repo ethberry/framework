@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { constants, utils } from "ethers";
+import { ZeroAddress, hexlify, encodeBytes32String, randomBytes } from "ethers";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -40,7 +40,6 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
@@ -90,7 +89,6 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
       "item_tokens",
@@ -103,7 +101,6 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "price_template.tokens",
       "price_tokens",
@@ -118,7 +115,7 @@ export class CraftService {
   }
 
   public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, craftId } = dto;
+    const { account, referrer = ZeroAddress, craftId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
@@ -127,7 +124,7 @@ export class CraftService {
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
       account,
@@ -136,12 +133,12 @@ export class CraftService {
         externalId: craftEntity.id,
         expiresAt,
         referrer,
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
       craftEntity,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(account: string, params: IParams, craftEntity: CraftEntity): Promise<string> {

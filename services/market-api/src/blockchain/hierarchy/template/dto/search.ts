@@ -5,7 +5,7 @@ import { Transform, Type } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { TemplateStatus } from "@framework/types";
 import type { ITemplateSearchDto } from "@framework/types";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @ApiPropertyOptional({
@@ -48,14 +48,14 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
     type: Number,
   })
   @IsOptional()
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public minPrice: string;
 
   @ApiPropertyOptional({
     type: Number,
   })
   @IsOptional()
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
   public merchantId: number;

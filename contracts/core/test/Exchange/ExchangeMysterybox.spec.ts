@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber, constants } from "ethers";
+import { ZeroAddress, ZeroHash } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
@@ -23,13 +23,13 @@ describe("ExchangeMysterybox", function () {
           items: [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -37,25 +37,25 @@ describe("ExchangeMysterybox", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -63,7 +63,7 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -82,27 +82,27 @@ describe("ExchangeMysterybox", function () {
             externalId,
             isEqualEventArgArrObj(
               {
-                tokenType: 2,
-                token: erc721Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 2n,
+                token: await erc721Instance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
               {
-                tokenType: 2,
-                token: mysteryboxInstance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 2n,
+                token: await mysteryboxInstance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
             ),
             isEqualEventArgArrObj({
-              tokenType: 0,
-              token: constants.AddressZero,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 0n,
+              token: ZeroAddress,
+              tokenId,
+              amount,
             }),
           )
           .to.emit(mysteryboxInstance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId);
+          .withArgs(ZeroAddress, receiver.address, tokenId);
       });
     });
 
@@ -119,13 +119,13 @@ describe("ExchangeMysterybox", function () {
           items: [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -133,25 +133,25 @@ describe("ExchangeMysterybox", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -159,7 +159,7 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -178,27 +178,27 @@ describe("ExchangeMysterybox", function () {
             externalId,
             isEqualEventArgArrObj(
               {
-                tokenType: 4,
-                token: erc1155Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 4n,
+                token: await erc1155Instance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
               {
-                tokenType: 2,
-                token: mysteryboxInstance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 2n,
+                token: await mysteryboxInstance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
             ),
             isEqualEventArgArrObj({
-              tokenType: 0,
-              token: constants.AddressZero,
-              tokenId: BigNumber.from(tokenId),
-              amount: BigNumber.from(amount),
+              tokenType: 0n,
+              token: ZeroAddress,
+              tokenId,
+              amount,
             }),
           )
           .to.emit(mysteryboxInstance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId);
+          .withArgs(ZeroAddress, receiver.address, tokenId);
       });
     });
 
@@ -214,7 +214,7 @@ describe("ExchangeMysterybox", function () {
         const mysteryboxInstance = await deployErc721Base("ERC721MysteryboxSimple", exchangeInstance);
 
         await erc20Instance.mint(receiver.address, amount);
-        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -222,31 +222,31 @@ describe("ExchangeMysterybox", function () {
           items: [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 3,
-              token: erc998Instance.address,
+              token: await erc998Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -254,49 +254,49 @@ describe("ExchangeMysterybox", function () {
           price: [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
           ],
         });
 
-        const tx1 = exchangeInstance.connect(receiver).mysterybox(
+        const tx1 = exchangeInstance.connect(receiver).purchaseMystery(
           params,
           [
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
             {
               tokenType: 2,
-              token: erc721Instance.address,
+              token: await erc721Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 3,
-              token: erc998Instance.address,
+              token: await erc998Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 4,
-              token: erc1155Instance.address,
+              token: await erc1155Instance.getAddress(),
               tokenId,
               amount: 1,
             },
             {
               tokenType: 2,
-              token: mysteryboxInstance.address,
+              token: await mysteryboxInstance.getAddress(),
               tokenId,
               amount: 1,
             },
@@ -304,13 +304,13 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
             {
               tokenType: 1,
-              token: erc20Instance.address,
+              token: await erc20Instance.getAddress(),
               tokenId,
               amount,
             },
@@ -329,55 +329,55 @@ describe("ExchangeMysterybox", function () {
             externalId,
             isEqualEventArgArrObj(
               {
-                tokenType: 1,
-                token: erc20Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(amount),
+                tokenType: 1n,
+                token: await erc20Instance.getAddress(),
+                tokenId,
+                amount,
               },
               {
-                tokenType: 2,
-                token: erc721Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 2n,
+                token: await erc721Instance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
               {
-                tokenType: 3,
-                token: erc998Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 3n,
+                token: await erc998Instance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
               {
-                tokenType: 4,
-                token: erc1155Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 4n,
+                token: await erc1155Instance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
               {
-                tokenType: 2,
-                token: mysteryboxInstance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(1),
+                tokenType: 2n,
+                token: await mysteryboxInstance.getAddress(),
+                tokenId,
+                amount: 1n,
               },
             ),
             isEqualEventArgArrObj(
               {
-                tokenType: 0,
-                token: constants.AddressZero,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(amount),
+                tokenType: 0n,
+                token: ZeroAddress,
+                tokenId,
+                amount,
               },
               {
-                tokenType: 1,
-                token: erc20Instance.address,
-                tokenId: BigNumber.from(tokenId),
-                amount: BigNumber.from(amount),
+                tokenType: 1n,
+                token: await erc20Instance.getAddress(),
+                tokenId,
+                amount,
               },
             ),
           )
           .to.emit(mysteryboxInstance, "Transfer")
-          .withArgs(constants.AddressZero, receiver.address, tokenId)
+          .withArgs(ZeroAddress, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(receiver.address, exchangeInstance.address, amount)
+          .withArgs(receiver.address, await exchangeInstance.getAddress(), amount)
           .changeEtherBalances([exchangeInstance, receiver], [amount, -amount]);
       });
     });
@@ -388,18 +388,18 @@ describe("ExchangeMysterybox", function () {
 
         await exchangeInstance.pause();
 
-        const tx1 = exchangeInstance.mysterybox(
+        const tx1 = exchangeInstance.purchaseMystery(
           params,
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
@@ -407,12 +407,12 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: constants.AddressZero,
+              token: ZeroAddress,
               tokenId,
               amount,
             },
           ],
-          constants.HashZero,
+          ZeroHash,
         );
 
         await expect(tx1).to.be.revertedWith("Pausable: paused");

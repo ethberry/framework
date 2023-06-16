@@ -98,6 +98,7 @@
       "97": "BINANCE (testnet)"
     },
     "claimStatus": {
+      "EXPIRED": "Expired",
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
@@ -458,7 +459,8 @@
       "releasable": "Check releasable amount",
       "release": "Release",
       "reward": "Reward",
-      "transfer": "Transfer ownership",
+      "transfer": "Transfer",
+      "transferOwnership": "Transfer ownership",
       "view": "View",
       "waitlist": "Waitlist"
     },
@@ -628,6 +630,11 @@
         "products": "Products",
         "title": "Ecommerce"
       },
+      "exchange": {
+        "marketplace": "Marketplace",
+        "personal": "My stash",
+        "referral": "Referral program"
+      },
       "hierarchy": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -651,11 +658,6 @@
         "coin-gecko": "CoinGecko",
         "ipfs": "IPFS"
       },
-      "exchange": {
-        "marketplace": "Marketplace",
-        "referral": "Referral program",
-        "personal": "My stash"
-      },
       "mechanics": {
         "breed": "Breed",
         "claim": "Claim",
@@ -664,6 +666,7 @@
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "pyramid": "Pyramid",
+        "raffle": "Raffle",
         "rent": "Rent",
         "staking": "Staking",
         "vesting": "Vesting",
@@ -917,6 +920,20 @@
       },
       "title": "Pyramid"
     },
+    "raffle": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "purchase": {
+        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "selected": "Selected {selected}/6.",
+        "title": "Buy a ticket"
+      },
+      "tickets": {
+        "title": "My tickets"
+      },
+      "title": "Lottery"
+    },
     "referral": {
       "cabinet": {
         "title": "Cabinet"
@@ -950,6 +967,7 @@
       "title": "Staking"
     },
     "token": {
+      "balanceTitle": "Balance:",
       "priceTitle": "Base price:"
     },
     "tokens": {

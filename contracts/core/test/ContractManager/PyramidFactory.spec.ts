@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { BigNumber } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate } from "../constants";
 import { isEqualArray } from "../utils";
-import { deployContract } from "../shared/fixture";
 
 describe("PyramidFactory", function () {
   const factory = () => deployContract(this.title);
@@ -18,14 +17,15 @@ describe("PyramidFactory", function () {
       const pyramid = await ethers.getContractFactory("Pyramid");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -74,7 +74,7 @@ describe("PyramidFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "PyramidDeployed")
-        .withArgs(address, isEqualArray([owner.address], [BigNumber.from(1)], contractTemplate));
+        .withArgs(address, isEqualArray([owner.address], [1n], contractTemplate));
     });
 
     it("should fail: SignerMissingRole", async function () {
@@ -83,14 +83,15 @@ describe("PyramidFactory", function () {
       const pyramid = await ethers.getContractFactory("Pyramid");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

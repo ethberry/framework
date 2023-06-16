@@ -1,12 +1,11 @@
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { wallets } from "@gemunion/constants";
 
-export async function deployERC20(contracts: Record<string, Contract>) {
+export async function deployERC20(contracts: Record<string, any>) {
   const [owner] = await ethers.getSigners();
-  const amount = constants.WeiPerEther.mul(1e6);
+  const amount = WeiPerEther.mul(1e6);
 
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
   const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);

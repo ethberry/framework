@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { TokenSellButton, TokenTransferButton } from "../../../../components/buttons";
+import { Erc721TransferButton, TokenSellButton } from "../../../../components/buttons";
 import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
@@ -55,7 +55,7 @@ export const MysteryboxToken: FC = () => {
               />
             </Typography>
             <TokenSellButton token={selected} />
-            <TokenTransferButton token={selected} />
+            <Erc721TransferButton token={selected} />
             <MysteryWrapperUnpackButton token={selected} />
           </Paper>
         </Grid>

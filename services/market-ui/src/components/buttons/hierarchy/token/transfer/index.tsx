@@ -1,40 +1,38 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
 import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, Contract, utils } from "ethers";
+import { Contract } from "ethers";
+
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IToken } from "@framework/types";
-
-import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/erc721.safeTransferFrom.abi.json";
-
-import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 import { ContractFeatures } from "@framework/types";
 
-interface ITokenTransferButtonProps {
+import ERC721SafeTransferFromABI from "../../../../../abis/hierarchy/erc721/transfer/safeTransferFrom.abi.json";
+
+import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
+
+interface IErc721TransferButtonProps {
   token: IToken;
 }
 
-export const TokenTransferButton: FC<ITokenTransferButtonProps> = props => {
+export const Erc721TransferButton: FC<IErc721TransferButtonProps> = props => {
   const { token } = props;
 
   const [isTransferTokenDialogOpen, setIsTransferTokenDialogOpen] = useState(false);
 
   const { formatMessage } = useIntl();
 
-  //  TODO different types of token contracts abi!
   const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(
       token.template!.contract!.address,
       ERC721SafeTransferFromABI,
       web3Context.provider?.getSigner(),
     );
-    return contract["safeTransferFrom(address,address,uint256,bytes)"](
+    return contract["safeTransferFrom(address,address,uint256)"](
       web3Context.account,
       dto.account,
       token.tokenId,
-      utils.hexZeroPad(BigNumber.from(token.tokenId).toHexString(), 32),
     ) as Promise<any>;
   });
 
@@ -58,7 +56,7 @@ export const TokenTransferButton: FC<ITokenTransferButtonProps> = props => {
         <Button
           onClick={handleTransfer}
           disabled={token.template?.contract?.contractFeatures.includes(ContractFeatures.SOULBOUND)}
-          data-testid="TokenTransferButton"
+          data-testid="Erc721TransferButton"
         >
           <FormattedMessage id="form.buttons.transfer" />
         </Button>
@@ -68,7 +66,7 @@ export const TokenTransferButton: FC<ITokenTransferButtonProps> = props => {
         onCancel={handleTransferCancel}
         open={isTransferTokenDialogOpen}
         message="dialogs.transfer"
-        testId="TransferTokenDialogForm"
+        testId="Erc721TransferDialogForm"
         initialValues={{
           account: "",
         }}

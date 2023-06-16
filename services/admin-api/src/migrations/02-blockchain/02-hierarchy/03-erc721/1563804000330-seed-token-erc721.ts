@@ -139,7 +139,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130601",
           [TokenMetadata.GRADE]: "1",
-          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
+          [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
         })}',
         null,
         100,
@@ -153,12 +153,12 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
          '${JSON.stringify({
            [TokenMetadata.TEMPLATE_ID]: "130601",
            [TokenMetadata.GRADE]: "10",
-           [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
+           [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
          })}',
          null,
          100,
          '13060102',
-         'BURNED',
+         'MINTED',
          130601,
          '${subDays(now, 4).toISOString()}',
          '${currentDateTime}'
@@ -181,12 +181,12 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130603",
           [TokenMetadata.GRADE]: "10",
-          [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
+          [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         null,
         100,
         '13060301',
-        'MINTED',
+        'BURNED',
         130603,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
@@ -195,7 +195,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130604",
           [TokenMetadata.GRADE]: "10",
-          [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
+          [TokenMetadata.RARITY]: "3", // TokenRarity.EPIC
         })}',
         null,
         100,
@@ -209,13 +209,27 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "130605",
           [TokenMetadata.GRADE]: "10",
-          [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
+          [TokenMetadata.RARITY]: "3", // TokenRarity.EPIC
         })}',
         null,
         100,
         '13060501',
         'MINTED',
         130605,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        13061001, -- Mjölnir
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "130610",
+          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        null,
+        100,
+        '13061001',
+        'MINTED',
+        130610,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (

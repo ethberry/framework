@@ -7,7 +7,6 @@ import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeERC721Blacklist, shouldBehaveLikeERC721BlacklistRandom } from "../ERC721/shared/blacklist";
-import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998BlacklistRandom", function () {
@@ -18,7 +17,6 @@ describe("ERC998BlacklistRandom", function () {
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC721BlacklistRandom(factory);
 
-  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);
@@ -27,6 +25,9 @@ describe("ERC998BlacklistRandom", function () {
     InterfaceId.IERC165,
     InterfaceId.IAccessControl,
     InterfaceId.IERC721,
+    InterfaceId.IERC998TD,
+    InterfaceId.IERC998WL,
+    FrameworkInterfaceId.ERC721Simple,
     FrameworkInterfaceId.ERC721Random,
   ]);
 });

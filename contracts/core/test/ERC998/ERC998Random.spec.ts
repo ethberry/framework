@@ -4,7 +4,6 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998Random", function () {
@@ -12,7 +11,6 @@ describe("ERC998Random", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);

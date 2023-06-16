@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -9,8 +9,7 @@ import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  ILotteryPurchaseEvent,
-  LotteryEventType,
+  // LotteryEventType,
 } from "@framework/types";
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
@@ -22,11 +21,6 @@ export class LotteryTicketControllerEth {
     private readonly ticketServiceEth: LotteryTicketServiceEth,
     private readonly tokenServiceEth: TokenServiceEth,
   ) {}
-
-  @EventPattern({ contractType: ContractType.LOTTERY, eventName: LotteryEventType.Purchase })
-  public purchase(@Payload() event: ILogEvent<ILotteryPurchaseEvent>, @Ctx() context: Log): Promise<void> {
-    return this.ticketServiceEth.purchase(event, context);
-  }
 
   @EventPattern({ contractType: ContractType.LOTTERY, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {

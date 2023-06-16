@@ -1,8 +1,10 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
 import ERC721MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
@@ -30,7 +32,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           contract: {
             contractType: ContractType.MYSTERY,
             contractAddress: mysteryContracts.address || [],
-            contractInterface: ERC721MysteryboxBlacklistPausableSol.abi,
+            contractInterface: new Interface(ERC721MysteryboxBlacklistPausableSol.abi),
             // prettier-ignore
             eventNames: [
               ContractEventType.Approval,

@@ -3,7 +3,6 @@ import { DEFAULT_ADMIN_ROLE, InterfaceId, MINTER_ROLE } from "@gemunion/contract
 
 import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { deployERC721 } from "../ERC721/shared/fixtures";
-import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 import { shouldBehaveLikeERC998ERC1155 } from "@gemunion/contracts-erc998td";
 import { customMintCommonERC721 } from "../ERC721/shared/customMintFn";
@@ -15,7 +14,6 @@ describe("ERC998ERC1155Simple", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldBehaveLikeERC998ERC1155(factory, options);
   shouldMintCommon(factory);

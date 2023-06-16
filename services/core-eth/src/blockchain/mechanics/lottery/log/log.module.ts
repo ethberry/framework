@@ -1,17 +1,23 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType, LotteryEventType } from "@framework/types";
-
-import { LotteryLogService } from "./log.service";
-
-// system contract
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  LotteryEventType,
+  ModuleType,
+} from "@framework/types";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { LotteryLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -21,23 +27,23 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryAddr = configService.get<string>("LOTTERY_ADDR", "");
+        const lotteryContracts = await contractService.findAllByType(ModuleType.LOTTERY, [ContractFeatures.RANDOM]);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(lotteryAddr)) || startingBlock;
+        // const fromBlock = (await contractService.getLastBlock(lotteryAddr)) || startingBlock;
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: [lotteryAddr],
-            contractInterface: LotterySol.abi,
+            contractAddress: lotteryContracts.address || [],
+            contractInterface: new Interface(LotterySol.abi),
             // prettier-ignore
             eventNames: [
               LotteryEventType.Prize,
               LotteryEventType.RoundEnded,
-              LotteryEventType.Purchase,
               LotteryEventType.Released,
               LotteryEventType.RoundStarted,
               LotteryEventType.RoundFinalized,
@@ -49,7 +55,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             ],
           },
           block: {
-            fromBlock,
+            // fromBlock,
+            fromBlock: lotteryContracts.fromBlock || startingBlock,
             debug: false,
             cron,
           },

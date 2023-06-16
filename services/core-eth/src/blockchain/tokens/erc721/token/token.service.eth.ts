@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
-import { BigNumber, constants, providers } from "ethers";
-import { Log } from "@ethersproject/abstract-provider";
+import { JsonRpcProvider } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
@@ -34,7 +34,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
@@ -53,9 +53,9 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address, transactionHash } = context;
 
     // Mint token create
-    if (from === constants.AddressZero) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-      const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
+    if (from === ZeroAddress) {
+      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
+      const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenServiceEth.name);
@@ -75,7 +75,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
         // decide if it was random mint or common mint via admin-panel
         const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
-        const mintType = getTokenMintType(txLogs);
+        const mintType = getTokenMintType(txLogs as Array<Log>);
 
         if (mintType === TokenMintType.MintRandom) {
           // update Asset history
@@ -107,19 +107,19 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc721TokenEntity) {
-      this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
+      this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    if (from === constants.AddressZero) {
+    if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
-    } else if (to === constants.AddressZero) {
+    } else if (to === ZeroAddress) {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
@@ -139,7 +139,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const { address } = context;
 
     // Mint token create batch
-    if (fromAddress === constants.AddressZero) {
+    if (fromAddress === ZeroAddress) {
       const templateEntity = await this.templateService.findOne(
         { contract: { address } },
         { relations: { contract: true } },
@@ -150,11 +150,11 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       }
       await this.eventHistoryService.updateHistory(event, context, void 0, templateEntity.contract.id);
 
-      const batchSize = JSON.parse(templateEntity.contract.description).batchSize
-        ? JSON.parse(templateEntity.contract.description).batchSize
-        : 0;
+      const description = JSON.parse(templateEntity.contract.description);
+      const batchSize = description.batchSize ? Number(description.batchSize) : 0;
 
-      const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+      // const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+      const batchLen = Number(toTokenId) - Number(fromTokenId);
 
       if (batchLen !== batchSize) {
         throw new BadRequestException("batchLengthError");
@@ -193,6 +193,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { tokenId, to },
     } = event;
     const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+
     const entityWithRelations = await this.eventHistoryService.findOne(
       { id: eventHistoryEntity.id },
       { relations: { parent: true } },
@@ -218,7 +219,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address } = context;
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);

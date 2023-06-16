@@ -1,8 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "@ethersproject/abstract-provider";
+import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
-import { providers, Wallet } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -62,7 +61,7 @@ export class ContractManagerServiceEth {
     @Inject(ETHERS_SIGNER)
     protected readonly ethersSignerProvider: Wallet,
     @Inject(ETHERS_RPC)
-    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly jsonRpcProvider: JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
@@ -86,11 +85,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, cap, contractTemplate] = args;
+    const { name, symbol, cap, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -103,7 +102,7 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc20ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc20ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC20,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -136,11 +135,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -152,10 +151,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc721ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -198,11 +197,11 @@ export class ContractManagerServiceEth {
       args: { addr, args, owner },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, batchSize, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, batchSize, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -218,11 +217,11 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc721CollectionTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc721CollectionTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -241,10 +240,10 @@ export class ContractManagerServiceEth {
     const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
 
     const currentDateTime = new Date().toISOString();
-    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(~~batchSize)].map((_, i) => ({
+    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
       metadata: "{}",
       tokenId: i.toString(),
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       imageUrl: `${imgUrl}/collection/${addr.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
@@ -267,11 +266,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
@@ -283,10 +282,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc998ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc998ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC998,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -325,11 +324,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [royalty, baseTokenURI, contractTemplate] = args;
+    const { royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -340,10 +339,10 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc1155ContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(Erc1155ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC1155,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
     });
@@ -359,11 +358,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, baseTokenURI, royalty, contractTemplate] = args;
+    const { name, symbol, baseTokenURI, royalty, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -375,11 +374,11 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(MysteryContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(MysteryContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.MYSTERY,
       chainId,
-      royalty: ~~royalty,
+      royalty: Number(royalty),
       baseTokenURI,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchant(addr.toLowerCase()),
@@ -396,11 +395,11 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [account, startTimestamp, duration, contractTemplate] = args;
+    const { account, startTimestamp, duration, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -409,10 +408,10 @@ export class ContractManagerServiceEth {
       imageUrl,
       parameters: {
         account: account.toLowerCase(),
-        startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-        duration: ~~duration * 1000,
+        startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
+        duration: Number(duration) * 1000,
       },
-      contractFeatures: Object.values(VestingContractTemplate)[~~contractTemplate].split(
+      contractFeatures: Object.values(VestingContractTemplate)[Number(contractTemplate)].split(
         "_",
       ) as Array<ContractFeatures>,
       contractModule: ModuleType.VESTING,
@@ -431,11 +430,11 @@ export class ContractManagerServiceEth {
     const {
       args: { addr, args },
     } = event;
-    const [payees, shares, contractTemplate] = args;
+    const { payees, shares, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
@@ -449,7 +448,7 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(PyramidContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(PyramidContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.PYRAMID,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -467,24 +466,21 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [maxStake, contractTemplate] = args;
+    const { contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: `${ModuleType.STAKING} (new)`,
       description: emptyStateString,
-      parameters: {
-        maxStake,
-      },
       imageUrl,
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(StakingContractTemplates)[~~contractTemplate].split("_") as Array<ContractFeatures>),
+          : (Object.values(StakingContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
       contractModule: ModuleType.STAKING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

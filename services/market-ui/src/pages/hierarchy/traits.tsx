@@ -12,7 +12,7 @@ export interface ITokenMetadataView {
 export const TokenTraitsView: FC<ITokenMetadataView> = props => {
   const { metadata } = props;
 
-  const result = Object.entries(decodeTraits(BigNumber.from(metadata[TokenMetadata.TRAITS]), DND)).reduce(
+  const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );

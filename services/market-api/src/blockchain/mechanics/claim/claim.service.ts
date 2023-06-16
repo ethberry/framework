@@ -1,11 +1,11 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { constants, utils } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimItemCreateDto, IClaimItemUpdateDto } from "@framework/types";
+import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
@@ -35,7 +35,6 @@ export class ClaimService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    // we need to get single token for Native, erc20 and erc1155
     queryBuilder.leftJoinAndSelect(
       "item_template.tokens",
       "item_tokens",
@@ -92,7 +91,7 @@ export class ClaimService {
     });
   }
 
-  public async create(dto: IClaimItemCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
+  public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -115,7 +114,7 @@ export class ClaimService {
 
   public async update(
     where: FindOptionsWhere<ClaimEntity>,
-    dto: IClaimItemUpdateDto,
+    dto: IClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;
@@ -143,7 +142,7 @@ export class ClaimService {
       throw new NotFoundException("claimNotFound");
     }
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
       account,
@@ -151,15 +150,15 @@ export class ClaimService {
         nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         // @TODO fix to use expiresAt as extra, temporary set to empty
-        extra: utils.formatBytes32String("0x"),
+        extra: encodeBytes32String("0x"),
       },
 
       claimEntity,
     );
 
-    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 

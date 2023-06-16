@@ -16,14 +16,14 @@ describe("CliffVesting", function () {
     const [owner] = await ethers.getSigners();
     const vestingInstance = await factory();
 
-    const expectedAmounts = [0, 0, 0, 0, amount * 100, 0];
+    const expectedAmounts = [0, 0, 0, 0, amount * 100n, 0];
     for (const expectedAmount of expectedAmounts) {
       const releaseable = await vestingInstance["releaseable()"]();
 
       expect(releaseable).to.be.equal(expectedAmount);
 
       const tx = await vestingInstance["release()"]();
-      await expect(tx).changeEtherBalances([vestingInstance, owner], [releaseable.mul(-1), releaseable]);
+      await expect(tx).changeEtherBalances([vestingInstance, owner], [releaseable * -1n, releaseable]);
 
       const current = await time.latest();
       await time.increaseTo(current.add(web3.utils.toBN(span)));
@@ -35,17 +35,17 @@ describe("CliffVesting", function () {
     const vestingInstance = await factory();
     const erc20Instance = await deployERC20(vestingInstance);
 
-    const expectedAmounts = [0, 0, 0, 0, amount * 100, 0];
+    const expectedAmounts = [0n, 0n, 0n, 0n, amount * 100n, 0n];
 
     for (const expectedAmount of expectedAmounts) {
-      const releaseable = await vestingInstance["releaseable(address)"](erc20Instance.address);
+      const releaseable = await vestingInstance["releaseable(address)"](await erc20Instance.getAddress());
       expect(releaseable).to.be.equal(expectedAmount);
 
-      const tx = await vestingInstance["release(address)"](erc20Instance.address);
+      const tx = await vestingInstance["release(address)"](await erc20Instance.getAddress());
       await expect(tx).changeTokenBalances(
         erc20Instance,
-        [vestingInstance.address, owner.address],
-        [releaseable.mul(-1), releaseable],
+        [await vestingInstance.getAddress(), owner.address],
+        [releaseable * -1n, releaseable],
       );
 
       const current = await time.latest();

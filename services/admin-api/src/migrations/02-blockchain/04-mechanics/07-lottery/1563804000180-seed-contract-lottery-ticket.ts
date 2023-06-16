@@ -4,10 +4,10 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
-export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
+export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
+    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_TICKET_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -26,7 +26,6 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
-        contract_module,
         from_block,
         merchant_id,
         created_at,
@@ -45,7 +44,6 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{}',
-        'LOTTERY',
         '${fromBlock}',
         1,
         '${currentDateTime}',

@@ -14,11 +14,15 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { ILotteryTicket, ILotteryTicketSearchDto } from "@framework/types";
+import type { ILotteryRound, ILotteryTicketSearchDto, IToken } from "@framework/types";
 
 import { LotteryTicketViewDialog } from "./view";
-import { getNumbers, getWinners } from "../utils";
+import { getWinners, decodeNumbers, decodeNumbersToArr } from "../utils";
 import { LotteryTicketSearchForm } from "./form";
+
+export interface ILotteryTicket extends IToken {
+  round: Partial<ILotteryRound>;
+}
 
 export const LotteryTickets: FC = () => {
   const {
@@ -41,7 +45,12 @@ export const LotteryTickets: FC = () => {
       roundIds: [],
     },
     empty: {
-      numbers: [],
+      // metadata: {
+      //   NUMBERS: "",
+      // },
+      round: {
+        numbers: [],
+      },
     },
   });
 
@@ -64,10 +73,15 @@ export const LotteryTickets: FC = () => {
         <List>
           {rows.map((ticket, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {ticket.id} - {getNumbers(ticket)}
+              <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(ticket.metadata.NUMBERS)}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>
+                {"Round #"}
+                {ticket.round.roundId}
               </ListItemText>
-              <ListItemText>{getWinners(ticket, ticket.round!)}</ListItemText>
+              <ListItemText>
+                {getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || [])}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(ticket)}>
                   <Visibility />

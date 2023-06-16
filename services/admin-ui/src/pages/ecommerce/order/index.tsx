@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { DateRange } from "@mui/x-date-pickers-pro";
+import { stringify } from "qs";
 
 import { IOrder, OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -54,15 +55,15 @@ export const Order: FC = () => {
     handleToggleFilters,
     handleChangePage,
   } = useCollection<IOrder, IOrderSearchDto>({
-    baseUrl: "/orders",
+    baseUrl: "/ecommerce/orders",
     empty: emptyOrder,
+    redirect: (_baseUrl, search) => `/ecommerce/orders?${stringify(search)}`,
     search: {
       take: 10,
       isArchived: true,
-      orderStatus: [OrderStatus.NEW],
+      orderStatus: [],
       dateRange: stringifyDateRange(parseDateRange()),
     },
-    embedded: true,
   });
 
   const transformSearch = ({ dateRange, ...rest }: IOrderSearchDto): TTransformedSearch => ({
@@ -93,7 +94,7 @@ export const Order: FC = () => {
           />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
-          <FormattedMessage id="form.buttons.add" />
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 

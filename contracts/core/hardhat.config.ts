@@ -7,15 +7,18 @@ import "hardhat-deploy";
 
 import "./tasks";
 
-config();
+config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+  // path: `.env`,
+});
 
 export default {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true,
-      blockGasLimit: 1e10, // default: 3e7
-      gas: 7000000,
+      blockGasLimit: 40966424, // default: 3e7
+      gas: "auto",
     },
     besu: {
       url: process.env.JSON_RPC_ADDR_BESU,
@@ -53,8 +56,8 @@ export default {
       },
     },
     goerli: {
-      url: process.env.JSON_RPC_ADDR_GORLY,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      url: process.env.JSON_RPC_ADDR_GOERLY,
+      accounts: [process.env.PRIVATE_KEY],
       timeout: 142000,
     },
   },

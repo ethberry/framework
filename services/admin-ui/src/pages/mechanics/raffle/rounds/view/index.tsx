@@ -14,7 +14,7 @@ export interface IRaffleRoundViewDialogProps {
 
 export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { roundId } = initialValues;
+  const { roundId, number } = initialValues;
 
   const { formatMessage } = useIntl();
 
@@ -37,7 +37,7 @@ export const RaffleRoundViewDialog: FC<IRaffleRoundViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
-              <TableCell align="right">{formatMessage({ id: "pages.lottery.rounds.wait" })}</TableCell>
+              <TableCell align="right">{number || formatMessage({ id: "pages.lottery.rounds.wait" })}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -36,11 +36,14 @@ export class LotteryRoundService {
       throw new NotFoundException("contractNotFound");
     }
 
-    const descriptionJson = JSON.parse(lotteryEntity.description);
+    const descriptionJson: ILotteryOption = JSON.parse(lotteryEntity.description);
 
-    return {
-      description: "description" in descriptionJson ? descriptionJson.description : "Lottery",
-      schedule: "schedule" in descriptionJson ? descriptionJson.schedule : CronExpression.EVERY_DAY_AT_MIDNIGHT,
-    };
+    return Object.assign(
+      {
+        description: "Lottery",
+        schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+      },
+      descriptionJson,
+    );
   }
 }

@@ -1,9 +1,10 @@
 import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, ExchangeEventType, IExchangeClaimEvent } from "@framework/types";
+import type { IExchangeClaimEvent } from "@framework/types";
+import { ContractType, ExchangeEventType } from "@framework/types";
 
 import { ExchangeClaimServiceEth } from "./claim.service.eth";
 

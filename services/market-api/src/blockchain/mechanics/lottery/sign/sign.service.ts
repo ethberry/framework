@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, utils, Wallet } from "ethers";
+import { hexlify, randomBytes, Wallet, WeiPerEther, ZeroAddress } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -18,32 +18,28 @@ export class LotterySignService {
   ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { account, referrer = constants.AddressZero, ticketNumbers } = dto;
+    const { account, referrer = ZeroAddress, ticketNumbers } = dto;
 
-    const nonce = utils.randomBytes(32);
+    const nonce = randomBytes(32);
     const expiresAt = 0;
-    const signature = await this.getSignature(
-      account,
-      {
-        nonce,
-        externalId: 0,
-        expiresAt,
-        referrer,
-        extra: utils.formatBytes32String("0x"),
-      },
-      ticketNumbers,
-    );
+    const signature = await this.getSignature(account, {
+      nonce,
+      externalId: 0,
+      expiresAt,
+      referrer,
+      extra: ticketNumbers,
+    });
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, ticketNumbers: Array<boolean>): Promise<string> {
-    return this.signer._signTypedData(
+  public async getSignature(account: string, params: IParams): Promise<string> {
+    return this.signer.signTypedData(
       // Domain
       {
         name: "Lottery",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", Number(testChainId)),
         verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
       },
       // Types
@@ -51,7 +47,6 @@ export class LotterySignService {
         EIP712: [
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
-          { name: "numbers", type: "bool[36]" },
           { name: "price", type: "uint256" },
         ],
         Params: [
@@ -65,8 +60,7 @@ export class LotterySignService {
       {
         account,
         params,
-        numbers: ticketNumbers,
-        price: constants.WeiPerEther,
+        price: WeiPerEther,
       },
     );
   }

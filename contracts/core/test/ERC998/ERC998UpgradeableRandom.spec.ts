@@ -6,7 +6,6 @@ import { shouldMintCommon } from "../ERC721/shared/simple/base/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
-import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998UpgradeableRandom", function () {
@@ -14,11 +13,10 @@ describe("ERC998UpgradeableRandom", function () {
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
 
-  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
+  shouldBehaveLikeUpgradeable(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);
-  shouldBehaveLikeUpgradeable(factory);
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

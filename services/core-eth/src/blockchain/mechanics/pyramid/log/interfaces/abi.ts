@@ -1,5 +1,5 @@
-import { FormatTypes, Interface } from "@ethersproject/abi";
+import { Interface } from "ethers";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
-export const ABI = new Interface(PyramidSol.abi).format(FormatTypes.full);
+export const ABI = new Interface(PyramidSol.abi);

@@ -1,6 +1,4 @@
-import { BigNumber } from "ethers";
-
-import { decodeNumber, decodeTraits, encodeNumbers, encodeTraits } from "./traits";
+import { decodeNumber, decodeTraits, encodeNumbers, encodeTraits } from ".";
 
 const data = {
   strength: 1,
@@ -11,7 +9,8 @@ const data = {
   charisma: 1024,
 };
 
-const dna = BigNumber.from("0x010000000200000012000000800000010000000400");
+// 0x010000000200000012000000800000010000000400
+const dna = 1461501638011467653471668687260973553737594307584n;
 
 describe("Traits", () => {
   describe("encodeNumbers", () => {

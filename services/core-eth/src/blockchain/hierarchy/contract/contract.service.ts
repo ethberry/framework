@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, In, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
 
@@ -52,7 +52,7 @@ export class ContractService {
   }
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     const contractEntity = await this.findOne({ address: address.toLowerCase(), chainId });
     if (contractEntity) {
       return contractEntity.fromBlock;
@@ -61,7 +61,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       address,
@@ -82,7 +82,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByType(contractModule: ModuleType, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       contractModule,
@@ -102,7 +102,7 @@ export class ContractService {
   }
 
   public async updateLastBlockByTokenType(contractType: TokenType, lastBlock: number): Promise<number> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const entity = await this.findOne({
       contractType,
@@ -122,9 +122,27 @@ export class ContractService {
     return lastBlock;
   }
 
-  public async findAllByType(contractModule: ModuleType): Promise<IContractListenerResult> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
-    const contractEntities = await this.findAll({ contractModule, chainId });
+  public async findAllByType(
+    contractModule: ModuleType,
+    contractFeatures?: Array<ContractFeatures>,
+  ): Promise<IContractListenerResult> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const where = { contractModule, chainId };
+
+    if (contractFeatures) {
+      if (contractFeatures.length) {
+        Object.assign(where, {
+          // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+          contractFeatures: ArrayOverlap(contractFeatures),
+        });
+      } else {
+        Object.assign(where, {
+          // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+          contractFeatures: [],
+        });
+      }
+    }
+    const contractEntities = await this.findAll(where);
 
     if (contractEntities.length) {
       return {
@@ -139,11 +157,11 @@ export class ContractService {
     contractType?: TokenType,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<IContractListenerResult> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const queryBuilder = this.contractEntityRepository
       .createQueryBuilder("contract")
-      .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
+      // .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
       // it should be nested array
       .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });

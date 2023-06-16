@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Wallet } from "ethers";
+import { Log, Wallet } from "ethers";
 
-import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {
+  IAssetDto,
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
@@ -16,6 +16,9 @@ import {
 import { LotteryRoundService } from "./round.service";
 import { getLotteryNumbers } from "../../../../common/utils";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -24,6 +27,8 @@ export class LotteryRoundServiceEth {
     private readonly loggerService: LoggerService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly templateService: TemplateService,
+    private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     @Inject(ETHERS_SIGNER)
     private readonly ethersSignerProvider: Wallet,
@@ -32,12 +37,55 @@ export class LotteryRoundServiceEth {
   public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
-      args: { round, startTimestamp },
+      args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
+    const { address } = context;
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    // LOTTERY CONTRACT
+    const lotteryContract = await this.contractService.findOne({ address: address.toLowerCase(), chainId });
+
+    if (!lotteryContract) {
+      throw new NotFoundException("lotteryContractNotFound");
+    }
+
+    // TICKET CONTRACT
+    const { token } = ticket;
+    const ticketContract = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
+
+    if (!ticketContract) {
+      throw new NotFoundException("ticketContractNotFound");
+    }
+
+    // PRICE ASSET
+    const priceAsset: IAssetDto = await this.lotteryRoundService.createEmptyAsset();
+
+    const { tokenId, amount } = price;
+
+    const priceTemplate = await this.templateService.findOne(
+      { id: Number(tokenId) },
+      { relations: { contract: true } },
+    );
+
+    if (!priceTemplate) {
+      throw new NotFoundException("priceTemplateNotFound");
+    }
+
+    priceAsset.components.push({
+      tokenType: priceTemplate.contract.contractType,
+      contractId: priceTemplate.contract.id,
+      templateId: priceTemplate.id,
+      amount: Number(amount).toString(),
+    });
 
     await this.lotteryRoundService.create({
-      roundId: round,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      roundId,
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
+      contractId: lotteryContract.id,
+      ticketContractId: ticketContract.id,
+      price: priceAsset,
+      maxTickets: Number(maxTicket),
     });
   }
 
@@ -71,7 +119,7 @@ export class LotteryRoundServiceEth {
     }
 
     Object.assign(roundEntity, {
-      endTimestamp: new Date(~~endTimestamp * 1000).toISOString(),
+      endTimestamp: new Date(Number(endTimestamp) * 1000).toISOString(),
     });
 
     await roundEntity.save();

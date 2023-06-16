@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate } from "../constants";
-import { deployContract } from "../shared/fixture";
 
 describe("StakingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -16,14 +16,15 @@ describe("StakingFactory", function () {
       const staking = await ethers.getContractFactory("Staking");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {
@@ -71,14 +72,15 @@ describe("StakingFactory", function () {
       const staking = await ethers.getContractFactory("Staking");
 
       const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
 
-      const signature = await owner._signTypedData(
+      const signature = await owner.signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: contractInstance.address,
+          verifyingContract,
         },
         // Types
         {

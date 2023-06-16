@@ -6,15 +6,16 @@ import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import type { ITemplate } from "@framework/types";
-import { IUser, TokenType } from "@framework/types";
+import { ContractFeatures, IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITemplateAssetComponent, ITemplateAsset } from "@gemunion/mui-inputs-asset";
 
 import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
 import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
 import ERC1155MintABI from "../../../../../abis/hierarchy/erc1155/mint/erc1155.mint.abi.json";
 
-import { IMintTokenDto, ITokenAssetComponent, MintTokenDialog } from "./dialog";
+import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   template: ITemplate;
@@ -22,12 +23,12 @@ export interface IMintMenuItemProps {
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
-    template: { contract, id: templateId },
+    template: { contract, id: templateId, tokens },
   } = props;
 
   const user = useUser<IUser>();
 
-  const { address, contractType, id: contractId, decimals } = contract!;
+  const { address, contractType, id: contractId, decimals, contractFeatures } = contract!;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -41,7 +42,6 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
 
   const metaFn = useMetamask((values: IMintTokenDto, web3Context: Web3ContextType) => {
     const templateComponent = values.template.components[0];
-    const tokenComponent = values.token.components[0];
 
     if (templateComponent.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(
@@ -59,14 +59,14 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       return contractErc721.mintCommon(values.account, templateComponent.templateId) as Promise<any>;
     } else if (templateComponent.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
-        tokenComponent.contract.address,
+        templateComponent.contract.address,
         ERC1155MintABI,
         web3Context.provider?.getSigner(),
       );
       return contractErc1155.mint(
         values.account,
-        tokenComponent.token.tokenId,
-        tokenComponent.amount,
+        templateComponent.template.tokens[0].tokenId,
+        templateComponent.amount,
         "0x",
       ) as Promise<any>;
     } else {
@@ -79,6 +79,16 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       setIsMintTokenDialogOpen(false);
     });
   };
+
+  if (contractType === TokenType.NATIVE || contractFeatures.includes(ContractFeatures.GENES)) {
+    return (
+      <MenuItem>
+        <Typography variant="inherit">
+          <FormattedMessage id="dialogs.unsupported" />
+        </Typography>
+      </MenuItem>
+    );
+  }
 
   return (
     <Fragment>
@@ -103,30 +113,17 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
                 contract: {
                   decimals,
                   address,
+                  contractType,
+                },
+                template: {
+                  id: 0,
+                  tokens,
                 },
                 templateId,
-                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.mul(1).toString() : "1", // default amount for ERC721-998-1155
-              } as ITokenAssetComponent,
+                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.toString() : "1",
+              } as unknown as ITemplateAssetComponent,
             ],
-          } as any,
-          token: {
-            components: [
-              {
-                tokenType: contractType,
-                contractId,
-                contract: {
-                  decimals,
-                  address,
-                },
-                token: {
-                  tokenId: "0",
-                },
-                tokenId: 0,
-                templateId: 0,
-                amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.mul(1).toString() : "1", // default amount for ERC721-998-1155
-              } as ITokenAssetComponent,
-            ],
-          },
+          } as ITemplateAsset,
           account: user.profile.wallet,
         }}
       />

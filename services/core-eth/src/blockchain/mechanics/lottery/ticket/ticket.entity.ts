@@ -1,10 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ILotteryTicket } from "@framework/types";
-
-import { LotteryRoundEntity } from "../round/round.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "lottery_ticket" })
@@ -18,17 +16,10 @@ export class LotteryTicketEntity extends IdDateBaseEntity implements ILotteryTic
   @Column({ type: "int" })
   public roundId: number;
 
-  @JoinColumn()
-  @ManyToOne(_type => LotteryRoundEntity, round => round.tickets)
-  public round: LotteryRoundEntity;
-
   @Column({ type: "int" })
   public tokenId: number;
 
   @JoinColumn()
   @OneToOne(_type => TokenEntity)
   public token: TokenEntity;
-
-  @Column({ type: "numeric" })
-  public amount: string;
 }

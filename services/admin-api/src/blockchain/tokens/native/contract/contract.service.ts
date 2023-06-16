@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { constants } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
 
@@ -39,7 +39,7 @@ export class NativeContractService extends ContractService {
 
     const contractEntity = await this.contractEntityRepository
       .create({
-        address: constants.AddressZero,
+        address: ZeroAddress,
         symbol,
         decimals: 18,
         royalty: 0,

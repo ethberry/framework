@@ -16,14 +16,13 @@ import "./ExchangeUtils.sol";
 abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausable {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
-  function mysterybox(
+  function purchaseMystery(
     Params memory params,
     Asset[] memory items,
     Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
-    address signer = _recoverManyToManySignature(params, items, price, signature);
-    if (!hasRole(MINTER_ROLE, signer)) {
+    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, price, signature))) {
       revert SignerMissingRole();
     }
 
@@ -35,6 +34,7 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
 
     emit Mysterybox(_msgSender(), params.externalId, items, price);
 
+    // TODO use slice?
     Asset memory box = items[items.length - 1];
 
     // pop from array is not supported
@@ -48,6 +48,7 @@ abstract contract ExchangeMysterybox is SignatureValidator, AccessControl, Pausa
     }
 
     IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
+
     _afterPurchase(params.referrer, price);
   }
 

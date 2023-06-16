@@ -8,7 +8,6 @@ import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
 import { shouldBehaveLikeERC721Blacklist, shouldBehaveLikeERC721BlacklistRandom } from "../ERC721/shared/blacklist";
-import { shouldBehaveLikeERC998 } from "./shared/simple/base";
 import { shouldBehaveLikeERC998Simple } from "./shared/simple";
 
 describe("ERC998BlacklistUpgradeableRandom", function () {
@@ -18,7 +17,6 @@ describe("ERC998BlacklistUpgradeableRandom", function () {
   shouldBehaveLikeBlackList(factory);
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC721BlacklistRandom(factory);
-  shouldBehaveLikeERC998(factory);
   shouldBehaveLikeERC998Simple(factory);
   shouldMintCommon(factory);
   shouldMintRandom(factory);

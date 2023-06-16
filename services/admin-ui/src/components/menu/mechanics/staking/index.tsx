@@ -10,7 +10,7 @@ import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { PausableMenuItem } from "../common/pausable";
+import { PauseMenuItem } from "../common/pause";
 import { AllowanceMenu } from "./allowance";
 import { StakingInfoMenuItem } from "./counters";
 
@@ -54,7 +54,7 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
         <AllowanceMenu contract={staking} />
         <TopUpMenuItem contract={staking} />
         <StakingInfoMenuItem contract={staking} />
-        <PausableMenuItem contract={staking} />
+        <PauseMenuItem contract={staking} />
         <EthListenerAddMenuItem contract={staking} />
         <EthListenerRemoveMenuItem contract={staking} />
       </Menu>

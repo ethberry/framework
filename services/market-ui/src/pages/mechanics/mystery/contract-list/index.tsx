@@ -22,7 +22,7 @@ export const MysteryContractList: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(contract => (
-            <Grid item lg={4} sm={6} xs={12} key={contract.id}>
+            <Grid item lg={4} sm={6} xs={12} key={contract.id} sx={{ display: "flex" }}>
               <MysteryContractListItem contract={contract} />
             </Grid>
           ))}

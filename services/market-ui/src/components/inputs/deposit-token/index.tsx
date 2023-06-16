@@ -5,6 +5,8 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IAssetComponent, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
+import { formatTokenTitle } from "../../../utils/token";
+
 export const TokenDepositInput: () => any = () => {
   const deposit: IAssetComponent[] = useWatch({ name: "deposit" });
   const form = useFormContext<any>();
@@ -25,7 +27,7 @@ export const TokenDepositInput: () => any = () => {
           contractIds: [dep.contractId],
           templateIds: dep.templateId ? [dep.templateId] : [],
         }}
-        getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
+        getTitle={(token: IToken) => formatTokenTitle(token)}
         onChange={handleChange}
       />
     ) : null,

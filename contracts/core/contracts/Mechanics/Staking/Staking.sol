@@ -55,16 +55,15 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   //  mapping(address => uint256) internal _stakeCounter;
   mapping(address => EnumerableMap.UintToUintMap) internal _stakeCounter;
 
-
   DisabledTokenTypes _disabledTypes = DisabledTokenTypes(false, false, false, false, false);
 
-  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
-  event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
-  event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
-  event WithdrawBalance(address account, Asset item);
-  event ReturnDeposit(uint256 stakingId, address owner);
   event RuleCreated(uint256 ruleId, Rule rule);
   event RuleUpdated(uint256 ruleId, bool active);
+  event DepositStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256[] tokenIds);
+  event DepositWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
+  event DepositFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
+  event DepositReturn(uint256 stakingId, address owner);
+  event BalanceWithdraw(address account, Asset item);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -120,7 +119,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     _stakes[stakeId].cycles = 0;
     _stakes[stakeId].activeDeposit = true;
 
-    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenIds);
+    emit DepositStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenIds);
 
     uint256 length = rule.deposit.length;
     if (length > 0) {
@@ -159,9 +158,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           _afterPurchase(referrer, ExchangeUtils._toArray(depositItem));
         }
 
-      unchecked {
-        i++;
-      }
+        unchecked {
+          i++;
+        }
       }
     }
   }
@@ -233,7 +232,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       // If Stake cycles > 0 AND breakLastPeriod flag is true
       // Withdraw initial Deposit
       if (withdrawDeposit || (multiplier > 0 && !rule.recurrent) || (stake.cycles > 0 && breakLastPeriod)) {
-        emit StakingWithdraw(stakeId, receiver, block.timestamp);
+        emit DepositWithdraw(stakeId, receiver, block.timestamp);
         // Deactivate current deposit
         stake.activeDeposit = false;
 
@@ -243,15 +242,15 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         stake.startTimestamp = block.timestamp;
       }
 
-    unchecked {
-      i++;
-    }
+      unchecked {
+        i++;
+      }
     }
 
     // If the multiplier is not zero, it means that the staking period has ended and rewards can be issued.
     if (multiplier > 0) {
       // Emit an event indicating that staking has finished.
-      emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
+      emit DepositFinish(stakeId, receiver, block.timestamp, multiplier);
 
       // Iterate by Array<reward>
       uint256 lengthReward = rule.reward.length;
@@ -259,9 +258,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
         // Transfer the reward.
         withdrawRewardItem(stakeId, j, multiplier, receiver);
 
-      unchecked {
-        j++;
-      }
+        unchecked {
+          j++;
+        }
       }
     }
     // IF the multiplier is zero
@@ -378,9 +377,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
           ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);
         }
-      unchecked {
-        k++;
-      }
+        unchecked {
+          k++;
+        }
       }
     } else if (rewardItem.tokenType == TokenType.ERC1155) {
       // If the token is an ERC1155 token, call the acquire function to transfer the tokens to the receiver.
@@ -397,13 +396,13 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
    * @param receiver The Deposit's receiver.
    */
   function returnDeposit(uint256 stakeId, address receiver) internal {
-    emit ReturnDeposit(stakeId, receiver);
+    emit DepositReturn(stakeId, receiver);
 
     // Retrieve the stake and rule objects from storage.
     Stake storage stake = _stakes[stakeId];
     Asset[] storage stakeDeposit = stake.deposit;
 
-    emit StakingWithdraw(stakeId, receiver, block.timestamp);
+    emit DepositWithdraw(stakeId, receiver, block.timestamp);
     // Deactivate current deposit
     stake.activeDeposit = false;
 
@@ -425,9 +424,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           _depositBalancesMap.set(depositItemWithdraw.token, balance - depositItemWithdraw.amount);
         }
       }
-    unchecked {
-      m++;
-    }
+      unchecked {
+        m++;
+      }
     }
   }
 
@@ -441,8 +440,8 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     (, uint256 depositBalance) = _depositBalancesMap.tryGet(rewardItem.token);
     // Get contract balance
     uint256 contractBalance = rewardItem.tokenType == TokenType.NATIVE
-    ? address(this).balance
-    : IERC20(rewardItem.token).balanceOf(address(this));
+      ? address(this).balance
+      : IERC20(rewardItem.token).balanceOf(address(this));
 
     return rewardItem.amount <= contractBalance - depositBalance;
   }
@@ -492,9 +491,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     uint256 length = rules.length;
     for (uint256 i; i < length; ) {
       _setRule(rules[i]);
-    unchecked {
-      i++;
-    }
+      unchecked {
+        i++;
+      }
     }
   }
 
@@ -520,18 +519,18 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     }
     for (uint256 i = 0; i < lengthDeposit; ) {
       p.deposit.push(rule.deposit[i]);
-    unchecked {
-      i++;
-    }
+      unchecked {
+        i++;
+      }
     }
     // p.reward = rule.reward;
     // Store each individual asset in the rule's deposit array
     uint256 lengthReward = rule.reward.length;
     for (uint256 j = 0; j < lengthReward; ) {
       p.reward.push(rule.reward[j]);
-    unchecked {
-      j++;
-    }
+      unchecked {
+        j++;
+      }
     }
 
     // p.content = rule.content;
@@ -542,13 +541,13 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       uint256 length = rule.content[k].length;
       for (uint256 l = 0; l < length; ) {
         p.content[k].push(rule.content[k][l]);
+        unchecked {
+          l++;
+        }
+      }
       unchecked {
-        l++;
+        k++;
       }
-      }
-    unchecked {
-      k++;
-    }
     }
 
     p.period = rule.period;
@@ -575,7 +574,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   }
 
   /**
- * @dev Get Stake
+   * @dev Get Stake
    */
   function getStake(uint256 stakeId) public view returns (Stake memory stake) {
     return _stakes[stakeId];
@@ -608,10 +607,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
   /**
    * @dev Get Penalty
    */
-  function getPenalty(
-    address token,
-    uint256 tokenId
-  ) public view returns (uint256 penalty) {
+  function getPenalty(address token, uint256 tokenId) public view returns (uint256 penalty) {
     return _penalties[token][tokenId];
   }
 
@@ -637,13 +633,12 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     }
 
     // Emit an event indicating that penalty balance has withdrawn.
-    emit WithdrawBalance(_msgSender(), item);
+    emit BalanceWithdraw(_msgSender(), item);
     // clean penalty balance in _penalties mapping storage
     _penalties[item.token][item.tokenId] = 0;
 
     ExchangeUtils.spend(ExchangeUtils._toArray(item), _msgSender(), _disabledTypes);
   }
-
 
   /**
    * @dev Pauses the contract.

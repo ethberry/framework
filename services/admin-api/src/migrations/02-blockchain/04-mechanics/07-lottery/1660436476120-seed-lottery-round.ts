@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
@@ -17,9 +18,53 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
     const now = new Date();
 
     await queryRunner.query(`
+      INSERT INTO ${ns}.asset (
+        id
+      ) VALUES (
+        1073001
+      ), (
+        1073002
+      ), (
+        1073003
+      );
+    `);
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.asset_component (
+        token_type,
+        contract_id,
+        template_id,
+        amount,
+        asset_id
+      ) VALUES (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${WeiPerEther.toString()}',
+        1073001
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${WeiPerEther.toString()}',
+        1073002
+      ), (
+        'ERC20',
+        1201,
+        120101, -- space credit
+        '${WeiPerEther.toString()}',
+        1073003
+      );
+    `);
+
+    await queryRunner.query(`
       INSERT INTO ${ns}.lottery_round (
         numbers,
         round_id,
+        contract_id,
+        ticket_contract_id,
+        price_id,
+        max_tickets,
         start_timestamp,
         end_timestamp,
         created_at,
@@ -27,6 +72,10 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ) VALUES (
         '${getNumbers()}',
         '1',
+        11,
+        12101,
+        1073001,
+        0,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -34,6 +83,10 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '2',
+        11,
+        12101,
+        1073002,
+        0,
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -41,6 +94,10 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '3',
+        11,
+        12101,
+        1073003,
+        5,
         '${addDays(now, 1).toISOString()}',
         '${addDays(now, 3).toISOString()}',
         '${currentDateTime}',

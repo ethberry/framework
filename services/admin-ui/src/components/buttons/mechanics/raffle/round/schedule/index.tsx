@@ -50,6 +50,7 @@ export const RaffleScheduleButton: FC = () => {
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
+          address: "",
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
           description: emptyStateString,
         }}

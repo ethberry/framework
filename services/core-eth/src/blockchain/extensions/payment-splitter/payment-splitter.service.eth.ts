@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Log } from "@ethersproject/abstract-provider";
-import { constants } from "ethers";
+import { Log, ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type {
@@ -45,7 +44,7 @@ export class PaymentSplitterServiceEth {
 
     await this.payeesService.create({
       account: account.toLowerCase(),
-      shares: ~~shares,
+      shares: Number(shares),
       contractId: contractEntity.id,
     });
   }
@@ -57,8 +56,8 @@ export class PaymentSplitterServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     // get NATIVE token
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
-    const tokenEntity = await this.tokenService.getToken("0", constants.AddressZero, chainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress, chainId);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -73,8 +72,8 @@ export class PaymentSplitterServiceEth {
     } = event;
     await this.eventHistoryService.updateHistory(event, context);
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
-    const tokenEntity = await this.tokenService.getToken("0", constants.AddressZero.toLowerCase(), chainId);
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const tokenEntity = await this.tokenService.getToken("0", ZeroAddress, chainId);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

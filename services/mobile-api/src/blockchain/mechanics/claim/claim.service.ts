@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { addDays } from "date-fns";
 
-import type { IClaim, IClaimItemCreateDto } from "@framework/types";
+import type { IClaim, IClaimCreateDto } from "@framework/types";
 import { GameEventType, RmqProviderType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -16,7 +16,7 @@ export class ClaimService {
 
   public async test(userEntity: UserEntity): Promise<IClaim | undefined> {
     return this.mobileClientProxy
-      .send<IClaim, IClaimItemCreateDto>(GameEventType.CLAIM_TEST, {
+      .send<IClaim, IClaimCreateDto>(GameEventType.CLAIM_TEST, {
         account: userEntity.wallet,
         item: {
           components: [

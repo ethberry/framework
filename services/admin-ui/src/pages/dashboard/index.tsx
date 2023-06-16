@@ -28,7 +28,7 @@ import { BreedSection } from "./mechanics/breed";
 import { ClaimSection } from "./mechanics/claim";
 import { Collections } from "./mechanics/collection";
 import { CraftSection } from "./mechanics/craft";
-import { DisperseSection } from "./mechanics/disperse";
+import { DispenserSection } from "./mechanics/dispenser";
 import { DropSection } from "./mechanics/drop";
 import { GradeSection } from "./mechanics/grade";
 import { LotterySection } from "./mechanics/lottery";
@@ -59,7 +59,7 @@ export const Dashboard: FC = () => {
           <Collections />
         </Grid>
         <Grid item xs={12} md={4}>
-          <DisperseSection />
+          <DispenserSection />
           <VestingSection />
           <WaitlistSection />
           <ClaimSection />

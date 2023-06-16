@@ -19,7 +19,9 @@ error LimitExceed();
 error BalanceExceed();
 error WrongAmount();
 error RefProgramSet();
+error WrongArrayLength();
 
+// staking
 error WrongToken();
 error WrongStake();
 error WrongRule();
@@ -27,3 +29,7 @@ error Expired();
 error ZeroBalance();
 error NotComplete();
 error NotActive();
+
+// lottery, raffle
+error WrongRound();
+error WrongPrice();

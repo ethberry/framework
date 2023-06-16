@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsOptional, Min, Validate, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { ForbidEnumValues, IsBigNumber } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues, IsBigInt } from "@gemunion/nest-js-validators";
 import type { IAssetComponentDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
@@ -35,7 +35,7 @@ export class ItemComponentDto implements IAssetComponentDto {
   @ApiProperty({
     type: Number,
   })
-  @IsBigNumber({}, { message: "typeMismatch" })
+  @IsBigInt({}, { message: "typeMismatch" })
   @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
   public amount: string;
 }

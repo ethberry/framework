@@ -1,12 +1,12 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ClaimStatus, IExchangeClaimEvent } from "@framework/types";
 
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { ClaimService } from "../../mechanics/claim/claim.service";
-import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()
@@ -22,14 +22,14 @@ export class ExchangeClaimServiceEth {
 
   public async claim(event: ILogEvent<IExchangeClaimEvent>, context: Log): Promise<void> {
     const {
-      args: { items, from, externalId },
+      args: { items, externalId },
     } = event;
     const { transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
     const claimEntity = await this.claimService.findOne(
-      { id: ~~externalId },
+      { id: Number(externalId) },
       {
         join: {
           alias: "claim",
@@ -53,8 +53,7 @@ export class ExchangeClaimServiceEth {
 
     await this.assetService.saveAssetHistory(history, items, []);
 
-    this.notificatorService.claim({
-      account: from,
+    await this.notificatorService.claim({
       claim: claimEntity,
       transactionHash,
     });

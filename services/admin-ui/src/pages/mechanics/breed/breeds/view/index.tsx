@@ -19,7 +19,7 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
   const { token, tokenId, traits, children } = initialValues;
 
   const result = traits
-    ? Object.entries(decodeTraits(BigNumber.from(traits), DND)).reduce(
+    ? Object.entries(decodeTraits(BigInt(traits), DND)).reduce(
         (memo, [key, value]) => Object.assign(memo, { [key]: value }),
         {} as Record<string, any>,
       )

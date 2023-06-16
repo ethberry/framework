@@ -22,11 +22,11 @@ struct Asset {
 }
 
 struct Params {
-  bytes32 nonce;
-  address referrer;
   uint256 externalId;
   uint256 expiresAt;
+  bytes32 nonce;
   bytes32 extra;
+  address referrer;
 }
 
 struct DisabledTokenTypes {

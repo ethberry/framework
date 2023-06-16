@@ -1,21 +1,20 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
-import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Log } from "ethers";
 
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  DurationUnit,
+import type {
   IAssetDto,
   IErc1363TransferReceivedEvent,
   IStakingBalanceWithdrawEvent,
-  IStakingCreateEvent,
-  IStakingDepositEvent,
-  IStakingFinishEvent,
-  IStakingReturnDepositEvent,
-  IStakingUpdateEvent,
-  IStakingWithdrawEvent,
-  StakingRuleStatus,
+  IStakingRuleCreateEvent,
+  IStakingDepositStartEvent,
+  IStakingDepositFinishEvent,
+  IStakingDepositReturnEvent,
+  IStakingRuleUpdateEvent,
+  IStakingDepositWithdrawEvent,
 } from "@framework/types";
+import { DurationUnit, StakingRuleStatus } from "@framework/types";
 
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -37,22 +36,22 @@ export class StakingRulesServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
+  public async ruleCreate(event: ILogEvent<IStakingRuleCreateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { rule, ruleId },
     } = event;
     const { address } = context;
 
-    const [deposit, reward, _content, period, penalty, maxStake, recurrent, active] = rule;
+    const { deposit, reward, period, penalty, maxStake, recurrent, active } = rule;
 
     // DEPOSIT ARRAY
     const depositItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const dep of deposit) {
-      const [_tokenType, _token, templateId, amount] = dep;
+      const { tokenId, amount } = dep;
       const depositTemplate = await this.templateService.findOne(
-        { id: ~~templateId },
+        { id: Number(tokenId) },
         { relations: { contract: true } },
       );
 
@@ -72,10 +71,10 @@ export class StakingRulesServiceEth {
     const rewardItem: IAssetDto = await this.stakingRulesService.createEmptyAsset();
 
     for (const rew of reward) {
-      const [_tokenType, _token, templateId, amount] = rew;
+      const { tokenId, amount } = rew;
 
       const rewardTemplate = await this.templateService.findOne(
-        { id: ~~templateId },
+        { id: Number(tokenId) },
         { relations: { contract: true } },
       );
 
@@ -104,10 +103,10 @@ export class StakingRulesServiceEth {
       description: emptyStateString,
       deposit: depositItem,
       reward: rewardItem,
-      durationAmount: ~~period,
+      durationAmount: Number(period),
       durationUnit: DurationUnit.DAY,
-      penalty: ~~penalty,
-      maxStake: ~~maxStake,
+      penalty: Number(penalty),
+      maxStake: Number(maxStake),
       recurrent,
       stakingRuleStatus,
       externalId: ruleId,
@@ -118,12 +117,12 @@ export class StakingRulesServiceEth {
       externalId: ruleId,
       deposit: depositItem,
       reward: rewardItem,
-      penalty: ~~penalty,
+      penalty: Number(penalty),
       recurrent,
     });
   }
 
-  public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
+  public async ruleUpdate(event: ILogEvent<IStakingRuleUpdateEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { ruleId, active },
@@ -148,7 +147,7 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async depositStart(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
+  public async depositStart(event: ILogEvent<IStakingDepositStartEvent>, context: Log): Promise<void> {
     // emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.eventHistoryService.updateHistory(event, context);
     const {
@@ -165,27 +164,27 @@ export class StakingRulesServiceEth {
     await this.stakingDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       stakingRuleId: stakingRuleEntity.id,
     });
 
     this.notificatorService.stakingDepositStart({
       account: owner.toLowerCase(),
-      externalId: ~~stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).getDate(),
+      externalId: Number(stakingId),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).getDate(),
       stakingRuleId: stakingRuleEntity.id,
     });
   }
 
-  public async depositWithdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
+  public async depositWithdraw(event: ILogEvent<IStakingDepositWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async return(event: ILogEvent<IStakingReturnDepositEvent>, context: Log): Promise<void> {
+  public async depositReturn(event: ILogEvent<IStakingDepositReturnEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 
-  public async depositFinish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
+  public async depositFinish(event: ILogEvent<IStakingDepositFinishEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
@@ -194,13 +193,13 @@ export class StakingRulesServiceEth {
 
     this.notificatorService.stakingDepositFinish({
       account: owner.toLowerCase(),
-      externalId: ~~stakingId,
-      startTimestamp: new Date(~~finishTimestamp * 1000).getDate(),
-      multiplier: ~~multiplier,
+      externalId: Number(stakingId),
+      startTimestamp: new Date(Number(finishTimestamp) * 1000).getDate(),
+      multiplier: Number(multiplier),
     });
   }
 
-  public async withdrawBalance(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
+  public async balanceWithdraw(event: ILogEvent<IStakingBalanceWithdrawEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
   }
 

@@ -5,6 +5,8 @@ import { useIntl } from "react-intl";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IToken } from "@framework/types";
 
+import { formatTokenTitle } from "../../../../../utils/token";
+
 export interface ITokenInputProps {
   prefix: string;
 }
@@ -36,7 +38,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
       }}
       label={formatMessage({ id: "form.labels.tokenId" })}
       placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-      getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
+      getTitle={(token: IToken) => formatTokenTitle(token)}
       onChange={handleChange}
     />
   );

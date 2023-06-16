@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
+import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IPyramidCreateEvent, IPyramidUpdateEvent, PyramidRuleStatus } from "@framework/types";
@@ -24,7 +24,7 @@ export class PyramidRulesServiceEth {
     } = event;
     const { address } = context;
 
-    const [_deposit, _reward, _period, _maxCycles, _penalty, _externalId, active] = rule;
+    const { active } = rule;
 
     const contractEntity = await this.contractService.findOne({
       address: address.toLowerCase(),
@@ -35,7 +35,7 @@ export class PyramidRulesServiceEth {
     }
 
     const pyramidRuleEntity = await this.pyramidRulesService.findOne({
-      id: ~~externalId,
+      id: Number(externalId),
       contractId: contractEntity.id,
     });
 

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
 
 export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -24,7 +24,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         121701,
         'BUSD',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         null,
         0,
         '31000000000000000000000000',
@@ -36,7 +36,7 @@ export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface 
         221701,
         'BUSD',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbinance.png?alt=media&token=2011b811-d158-46ec-b883-2fefed3f4fa0',
         null,
         0,
         '31000000000000000000000000',

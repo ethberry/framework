@@ -1,4 +1,4 @@
-import { utils } from "ethers";
+import { toBeHex, zeroPadValue } from "ethers";
 
 export const boolArrayToByte32 = (booleans: Array<boolean>) => {
   if (booleans.length > 256) {
@@ -12,7 +12,7 @@ export const boolArrayToByte32 = (booleans: Array<boolean>) => {
     }
   });
 
-  return utils.hexZeroPad(utils.hexlify(result), 32); // toBeHex
+  return zeroPadValue(toBeHex(result), 32);
 };
 
 export const byte32ToBoolArray = (byte32: string) => {

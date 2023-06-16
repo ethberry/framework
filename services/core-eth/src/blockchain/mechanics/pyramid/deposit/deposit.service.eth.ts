@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log } from "@ethersproject/abstract-provider";
-import { constants } from "ethers";
+import { Log } from "ethers";
+import { ZeroAddress } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -59,7 +59,7 @@ export class PyramidDepositServiceEth {
     await this.pyramidDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       pyramidRuleId: pyramidRuleEntity.id,
     });
   }
@@ -125,7 +125,7 @@ export class PyramidDepositServiceEth {
     } = event;
     const { address } = context;
 
-    if (token.toLowerCase() === constants.AddressZero) {
+    if (token.toLowerCase() === ZeroAddress) {
       const tokenEntity = await this.tokenService.getToken("0", token.toLowerCase());
 
       if (!tokenEntity) {

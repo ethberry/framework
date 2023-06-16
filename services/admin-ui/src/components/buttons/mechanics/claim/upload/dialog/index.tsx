@@ -4,7 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 
 import { validationSchema } from "./validation";
-import { FileInput, IClaimUploadDto } from "./file-input";
+import type { IClaimUploadDto } from "./file-input";
+import { FileInput } from "./file-input";
 import { ClaimInfoPopover } from "./popover";
 
 export interface IClaimUploadDialogProps {

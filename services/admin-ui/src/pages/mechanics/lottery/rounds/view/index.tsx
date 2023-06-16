@@ -40,7 +40,9 @@ export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props =>
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
               <TableCell align="right">
-                {getNumbers(initialValues) || formatMessage({ id: "pages.lottery.rounds.wait" })}
+                {initialValues.numbers
+                  ? getNumbers(initialValues.numbers)
+                  : formatMessage({ id: "pages.lottery.rounds.wait" })}
               </TableCell>
             </TableRow>
           </TableBody>

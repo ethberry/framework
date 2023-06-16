@@ -1,16 +1,16 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
-
-import { WrapperLogService } from "./log.service";
-
-// system contract
 import WrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Wrapper/ERC721Wrapper.sol/ERC721Wrapper.json";
+
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { WrapperLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -31,7 +31,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.WRAPPER,
             contractAddress: [wrapperAddr],
-            contractInterface: WrapperSol.abi,
+            contractInterface: new Interface(WrapperSol.abi),
             // prettier-ignore
             eventNames: [
               ContractEventType.Approval,

@@ -7,6 +7,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 import WhitelistABI from "../../../../abis/extensions/whitelist-add/whitelist.abi.json";
 
@@ -18,7 +19,7 @@ export interface IWhitelistMenuItemProps {
 
 export const WhitelistMenuItem: FC<IWhitelistMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractFeatures },
   } = props;
 
   const [isWhitelistDialogOpen, setIsWhitelistDialogOpen] = useState(false);
@@ -41,6 +42,10 @@ export const WhitelistMenuItem: FC<IWhitelistMenuItemProps> = props => {
       setIsWhitelistDialogOpen(false);
     });
   };
+
+  if (!contractFeatures.includes(ContractFeatures.WHITELIST)) {
+    return null;
+  }
 
   return (
     <Fragment>

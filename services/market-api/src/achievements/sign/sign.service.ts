@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { utils } from "ethers";
+import { hexlify } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -64,7 +64,7 @@ export class AchievementSignService {
     });
 
     return {
-      nonce: utils.hexlify(claimEntity.nonce),
+      nonce: hexlify(claimEntity.nonce),
       signature: claimEntity.signature,
       expiresAt: ttl && ttl + Date.now() / 1000,
       bytecode: claimEntity.id.toString(),

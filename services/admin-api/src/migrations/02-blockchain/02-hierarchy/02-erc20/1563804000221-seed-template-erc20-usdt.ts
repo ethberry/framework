@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
 
 export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -24,7 +24,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         121501,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
         0,
         '100000000000',
@@ -36,7 +36,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         221501,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
         0,
         '100000000000',
@@ -48,7 +48,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         321501,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
         0,
         '100000000000',
@@ -60,7 +60,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         421501,
         'USDT',
         '${simpleFormatting}',
-        '${imageUrl}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
         null,
         0,
         '100000000000',

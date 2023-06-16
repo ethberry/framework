@@ -1,12 +1,13 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
+import { Interface } from "ethers";
 
-import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
+import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
-// system contract
-import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721Lottery.sol/ERC721Lottery.json";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { LotteryTicketLogService } from "./log.service";
@@ -19,18 +20,19 @@ import { LotteryTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const lotteryTicketAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "");
+        const lotteryTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, []);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(lotteryTicketAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: [lotteryTicketAddr],
-            contractInterface: LotteryTicketSol.abi,
+            contractAddress: lotteryTicketAddr.address || [],
+            contractInterface: new Interface(LotteryTicketSol.abi),
             // prettier-ignore
             eventNames: [
               // TODO add other events
@@ -45,7 +47,7 @@ import { LotteryTicketLogService } from "./log.service";
             ],
           },
           block: {
-            fromBlock,
+            fromBlock: lotteryTicketAddr.fromBlock || startingBlock,
             debug: false,
             cron,
           },

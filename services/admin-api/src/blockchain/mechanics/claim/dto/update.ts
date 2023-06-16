@@ -1,18 +1,13 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { Type } from "class-transformer";
 
-import type { IClaimItemUpdateDto } from "@framework/types";
+import { AccountDto } from "@gemunion/collection";
+import type { IClaimUpdateDto } from "@framework/types";
 
 import { ItemDto } from "../../../exchange/asset/dto";
 
-export class ClaimItemUpdateDto implements IClaimItemUpdateDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public account: string;
-
+export class ClaimUpdateDto extends AccountDto implements IClaimUpdateDto {
   @ApiPropertyOptional({
     type: ItemDto,
   })

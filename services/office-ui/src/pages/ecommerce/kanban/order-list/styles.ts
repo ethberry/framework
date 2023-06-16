@@ -6,7 +6,6 @@ export const useStyles = makeStyles<Theme>(
     wrapper: {
       display: "flex",
       flexDirection: "column",
-      marginTop: theme.spacing(2),
       userSelect: "none",
       width: "100%",
       height: "100%",

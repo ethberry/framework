@@ -32,7 +32,7 @@ export const Cart: FC = () => {
             <ListItem key={item.product.id} disableGutters={true}>
               <ListItemText
                 primary={item.product.title}
-                secondary={<Fragment>{formatPrice(item.product.price)}</Fragment>}
+                secondary={<Fragment>{formatPrice(item.product.productItems[0].price)}</Fragment>}
               />
               <ListItemSecondaryAction>
                 <Grid item container alignItems="center" justifyContent="center">

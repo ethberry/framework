@@ -7,6 +7,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import ERC20SnapshotABI from "../../../../../abis/hierarchy/erc20/snapshot/snapshot.abi.json";
 
@@ -16,7 +17,7 @@ export interface IErc20TokenSnapshotMenuItemProps {
 
 export const Erc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractType },
   } = props;
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
@@ -27,6 +28,10 @@ export const Erc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = 
   const handleSnapshot = async () => {
     await metaFn();
   };
+
+  if (contractType !== TokenType.ERC20) {
+    return null;
+  }
 
   return (
     <MenuItem onClick={handleSnapshot}>

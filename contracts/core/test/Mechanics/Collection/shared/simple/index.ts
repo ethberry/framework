@@ -1,11 +1,25 @@
-import { Contract } from "ethers";
+import type { IERC721EnumOptions } from "@gemunion/contracts-erc721e";
+import { shouldBehaveLikeERC721Burnable } from "@gemunion/contracts-erc721e";
+import { batchSize } from "@gemunion/contracts-constants";
 
 import { shouldBehaveLikeERC721 } from "./base";
-import { shouldBehaveLikeERC721Burnable } from "./burnable";
-import { shouldBaseUrl } from "./baseUrl";
+import { shouldBaseUrl } from "../../../../ERC721/shared/simple/baseUrl";
+import { customMintConsecutive } from "../customMintFn";
+import { tokenId } from "../../../../constants";
 
-export function shouldBehaveLikeERC721Simple(factory: () => Promise<Contract>) {
-  shouldBehaveLikeERC721(factory);
-  shouldBehaveLikeERC721Burnable(factory);
-  shouldBaseUrl(factory);
+export function shouldBehaveLikeERC721Collection(factory: () => Promise<any>, options: IERC721EnumOptions = {}) {
+  options = Object.assign(
+    {},
+    {
+      mint: customMintConsecutive,
+      safeMint: customMintConsecutive,
+      tokenId,
+      batchSize,
+    },
+    options,
+  );
+
+  shouldBehaveLikeERC721(factory, options);
+  shouldBehaveLikeERC721Burnable(factory, options);
+  shouldBaseUrl(factory, options);
 }

@@ -1,4 +1,4 @@
 export interface ICartItemCreateDto {
-  productId: number;
-  amount: number;
+  productItemId: number;
+  quantity: number;
 }

@@ -6,7 +6,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IOrder, IOrderItem } from "@framework/types";
+import { IOrder, IOrderItem, IProductItem } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -15,7 +15,7 @@ export interface IUserInputProps {
 }
 
 export const ItemsInput: FC<IUserInputProps> = props => {
-  const { name = "items" } = props;
+  const { name = "orderItems" } = props;
 
   const classes = useStyles();
 
@@ -26,7 +26,7 @@ export const ItemsInput: FC<IUserInputProps> = props => {
 
   const handleAddRow = (): void => {
     const newValue = value.concat({
-      productId: null,
+      productItemId: 0,
       amount: 1,
     });
     form.setValue(name, newValue, { shouldDirty: true });
@@ -38,6 +38,18 @@ export const ItemsInput: FC<IUserInputProps> = props => {
       newValue.splice(i, 1);
       form.setValue(name, newValue, { shouldDirty: true });
     };
+  };
+
+  const getTitle = (item: Partial<IProductItem>): string => {
+    const { product, parameters } = item;
+
+    const title = product?.title || "";
+
+    if (parameters?.length) {
+      return `${title} (${parameters.map(({ parameterValue }) => parameterValue).join(", ")})`;
+    }
+
+    return title;
   };
 
   return (
@@ -56,7 +68,11 @@ export const ItemsInput: FC<IUserInputProps> = props => {
           <ListItem key={i}>
             <Grid container spacing={2}>
               <Grid item className={classes.root}>
-                <EntityInput name={`${name}[${i}].productId`} controller="products" />
+                <EntityInput
+                  name={`${name}[${i}].productItemId`}
+                  controller="ecommerce/product-item"
+                  getTitle={getTitle}
+                />
               </Grid>
               <Grid item>
                 <NumberInput name={`${name}[${i}].amount`} InputProps={{ inputProps: { min: 1 } }} />

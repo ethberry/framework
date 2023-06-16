@@ -1,10 +1,9 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
 import { baseTokenURI, royalty } from "@gemunion/contracts-constants";
 
-export async function deployERC721(contracts: Record<string, Contract>) {
+export async function deployERC721(contracts: Record<string, any>) {
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
   contracts.erc721Simple = await erc721SimpleFactory.deploy("RUNE", "GEM721", royalty, baseTokenURI);
   await blockAwait();

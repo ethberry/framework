@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
-import { BigNumber, constants, utils } from "ethers";
+import { encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
 import {
@@ -56,14 +56,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -71,20 +71,20 @@ describe("ExchangeCore", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -98,16 +98,16 @@ describe("ExchangeCore", function () {
           receiver.address,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
           }),
           isEqualEventArgArrObj({
-            tokenType: 1,
-            token: erc20Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
           }),
         );
     });
@@ -122,13 +122,13 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
-            amount: "123000000000000000",
+            amount: 123000000000000000n,
             token: "0x0000000000000000000000000000000000000000",
             tokenId: "0",
             tokenType: 0,
@@ -140,20 +140,20 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
-            amount: "123000000000000000",
+            amount: 123000000000000000n,
             token: "0x0000000000000000000000000000000000000000",
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: BigNumber.from("123000000000000000") },
+        { value: 123000000000000000n },
       );
 
       await expect(tx1)
@@ -162,16 +162,16 @@ describe("ExchangeCore", function () {
           receiver.address,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
           }),
           isEqualEventArgArrObj({
-            tokenType: 0,
-            token: constants.AddressZero,
-            tokenId: BigNumber.from("0"),
-            amount: BigNumber.from("123000000000000000"),
+            tokenType: 0n,
+            token: ZeroAddress,
+            tokenId: 0n,
+            amount: 123000000000000000n,
           }),
         );
     });
@@ -186,7 +186,7 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
@@ -200,27 +200,29 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      const tx02 = vrfInstance.addConsumer(1, erc721Instance.address);
-      await expect(tx02).to.emit(vrfInstance, "SubscriptionConsumerAdded").withArgs(1, erc721Instance.address);
+      const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
+      await expect(tx02)
+        .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+        .withArgs(1, await erc721Instance.getAddress());
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
-            amount: "123000000000000000",
+            amount: 123000000000000000n,
             token: "0x0000000000000000000000000000000000000000",
             tokenId: "0",
             tokenType: 0,
           },
         ],
         signature,
-        { value: BigNumber.from("123000000000000000") },
+        { value: 123000000000000000n },
       );
 
       await expect(tx1)
@@ -229,16 +231,16 @@ describe("ExchangeCore", function () {
           receiver.address,
           externalId,
           isEqualEventArgObj({
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId: BigNumber.from(tokenId),
-            amount: BigNumber.from(amount),
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId,
+            amount,
           }),
           isEqualEventArgArrObj({
-            tokenType: 0,
-            token: constants.AddressZero,
-            tokenId: BigNumber.from("0"),
-            amount: BigNumber.from("123000000000000000"),
+            tokenType: 0n,
+            token: ZeroAddress,
+            tokenId: 0n,
+            amount: 123000000000000000n,
           }),
         );
     });
@@ -254,14 +256,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -269,20 +271,20 @@ describe("ExchangeCore", function () {
       });
 
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -296,14 +298,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -324,14 +326,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -344,14 +346,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -373,14 +375,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -391,14 +393,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -419,19 +421,19 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
         ],
-        utils.formatBytes32String("signature"),
+        encodeBytes32String("signature"),
       );
 
       await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
@@ -448,7 +450,7 @@ describe("ExchangeCore", function () {
         nonce,
         externalId,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         extra,
       };
       const signature = await generateOneToManySignature({
@@ -456,14 +458,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -474,14 +476,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -499,13 +501,13 @@ describe("ExchangeCore", function () {
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       await erc20Instance.mint(receiver.address, amount);
-      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const params = {
         nonce,
         externalId,
         expiresAt,
-        referrer: constants.AddressZero,
+        referrer: ZeroAddress,
         extra,
       };
 
@@ -514,14 +516,14 @@ describe("ExchangeCore", function () {
         params,
         item: {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         price: [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -532,14 +534,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -553,14 +555,14 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 2,
-          token: erc721Instance.address,
+          token: await erc721Instance.getAddress(),
           tokenId,
           amount,
         },
         [
           {
             tokenType: 1,
-            token: erc20Instance.address,
+            token: await erc20Instance.getAddress(),
             tokenId,
             amount,
           },
@@ -580,19 +582,19 @@ describe("ExchangeCore", function () {
         params,
         {
           tokenType: 0,
-          token: constants.AddressZero,
+          token: ZeroAddress,
           tokenId,
           amount,
         },
         [
           {
             tokenType: 0,
-            token: constants.AddressZero,
+            token: ZeroAddress,
             tokenId,
             amount,
           },
         ],
-        constants.HashZero,
+        ZeroHash,
       );
 
       await expect(tx1).to.be.revertedWith("Pausable: paused");

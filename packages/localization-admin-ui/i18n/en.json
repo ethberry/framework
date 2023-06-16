@@ -39,6 +39,7 @@
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
+    "endRound": "End Lottery Round",
     "fund": "Fund",
     "grantRole": "Grant role",
     "listenerAdd": "Add ETH Listener",
@@ -50,6 +51,7 @@
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
+    "startRound": "Start Lottery Round",
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
@@ -397,14 +399,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "parameterName": {
-      "COLOR": "Color",
-      "SIZE": "Size"
-    },
     "parameterType": {
-      "date": "Date",
-      "number": "Number",
-      "string": "String"
+      "DATE": "Date",
+      "ENUM": "Enum",
+      "NUMBER": "Number",
+      "STRING": "String"
     },
     "productStatus": {
       "ACTIVE": "Active",
@@ -635,6 +634,7 @@
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
       "maxTime": "Max Cooldown",
+      "maxTicket": "Max tickets",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
       "metadata": "Attributes",
@@ -642,11 +642,13 @@
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
+      "orderItems": "Items",
       "orderStatus": "Status",
       "orderType": "Type",
       "owner": "Owner",
       "pageStatus": "Status",
       "parameterMaxValue": "Max Value",
+      "parameterMinValue": "Min Value",
       "parameterName": "Name",
       "parameterType": "Type",
       "parameterValue": "Value",
@@ -664,6 +666,7 @@
       "photos": "Photos",
       "price": "Price",
       "productId": "Product",
+      "productItemId": "Item",
       "productStatus": "Status",
       "pyramidDepositStatus": "Status",
       "pyramidRule": "Pyramid rule",
@@ -695,6 +698,8 @@
       "templateIds": "Templates",
       "templateStatus": "Status",
       "time": "Cooldown time",
+      "ticket": "Ticket",
+      "ticketNumber": "Ticket Number",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
@@ -712,6 +717,7 @@
       "userRoles": "Roles",
       "userStatus": "Status",
       "winNumbers": "Win numbers",
+      "winNumber": "Win number",
       "year": "Year",
       "zip": "ZIP code"
     },
@@ -758,6 +764,7 @@
       "maxCycles": "0",
       "maxStake": "10",
       "maxStakes": "0",
+      "maxTicket": "0",
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
       "metadata": "{}",
@@ -765,6 +772,10 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parameterMaxValue": "10000",
+      "parameterMinValue": "0",
+      "parameterName": "Color",
+      "parameterValue": "Anything",
       "parameters": "Parameters",
       "parentCategoryId": "Root",
       "parentId": "Contract",
@@ -775,6 +786,7 @@
       "penalty": "1",
       "price": "1000",
       "productId": "Bottle of water",
+      "productItemId": "Item",
       "productStatus": "Status",
       "query": "Search...",
       "rarity": "Legendary",
@@ -920,6 +932,7 @@
           "categories": "Categories",
           "kanban": "Orders",
           "orders": "Orders Archive",
+          "parameters": "Parameters",
           "photos": "Photos",
           "products": "Products",
           "promos": "Promos",
@@ -969,7 +982,7 @@
         "claim": "Claim",
         "collection": "Collections",
         "craft": "Craft",
-        "disperse": "Disperse",
+        "dispenser": "Dispenser",
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
@@ -984,11 +997,14 @@
       },
       "title": "Dashboard"
     },
-    "disperse": {
-      "title": "Disperse"
+    "dispenser": {
+      "title": "Dispenser"
     },
     "drop": {
       "title": "Drops"
+    },
+    "ecommerce": {
+      "title": "Ecommerce"
     },
     "emails": {
       "title": "Emails"
@@ -1107,6 +1123,9 @@
     "pages": {
       "title": "Pages"
     },
+    "parameters": {
+      "title": "Parameters"
+    },
     "payees": {
       "attach": "Attach",
       "balances": {
@@ -1168,7 +1187,7 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Lottery"
+      "title": "Raffle"
     },
     "rent": {
       "title": "Rent"

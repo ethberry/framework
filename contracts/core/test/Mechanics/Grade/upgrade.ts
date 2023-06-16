@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract, utils } from "ethers";
+import { keccak256, toUtf8Bytes } from "ethers";
 import { METADATA_ROLE } from "@gemunion/contracts-constants";
 
 import { templateId, tokenId } from "../../constants";
 import { TokenMetadata } from "@framework/types";
 
-export function shouldBehaveLikeUpgradeable(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeUpgradeable(factory: () => Promise<any>) {
   describe("upgrade", function () {
     it("should: upgrade level", async function () {
       const [owner, receiver] = await ethers.getSigners();
@@ -22,10 +22,7 @@ export function shouldBehaveLikeUpgradeable(factory: () => Promise<Contract>) {
         .to.emit(contractInstance, "MetadataUpdate")
         .withArgs(tokenId);
 
-      const value = await contractInstance.getRecordFieldValue(
-        tokenId,
-        utils.keccak256(utils.toUtf8Bytes(TokenMetadata.GRADE)),
-      );
+      const value = await contractInstance.getRecordFieldValue(tokenId, keccak256(toUtf8Bytes(TokenMetadata.GRADE)));
 
       expect(value).to.equal(1);
     });

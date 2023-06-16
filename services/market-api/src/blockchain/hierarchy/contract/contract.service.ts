@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { ISearchDto } from "@gemunion/types-collection";
-import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -25,7 +25,7 @@ export class ContractService {
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
-    // this filters out contract without templates
+    // filter out contract without templates
     queryBuilder.leftJoin("contract.templates", "template", "template IS NOT NULL");
 
     queryBuilder.select();
@@ -35,6 +35,10 @@ export class ContractService {
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
+    });
+    // do not display external contracts as there is no wat to mint tokens from it
+    queryBuilder.andWhere("NOT(:contractFeature = ANY(contract.contractFeatures))", {
+      contractFeature: ContractFeatures.EXTERNAL,
     });
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
+import { WeiPerEther } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
@@ -53,7 +53,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'NATIVE',
         1101,
         110101, -- ETH
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80512
       ), (
         'ERC1155',
@@ -65,7 +65,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC20',
         1201,
         120101, -- space credit
-        '${constants.WeiPerEther.toString()}',
+        '${WeiPerEther.toString()}',
         80522
       ), (
         'ERC1155',
