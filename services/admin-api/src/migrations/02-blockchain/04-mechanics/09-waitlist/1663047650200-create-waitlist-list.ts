@@ -21,12 +21,24 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           type: "json",
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
         },
       ],
     });

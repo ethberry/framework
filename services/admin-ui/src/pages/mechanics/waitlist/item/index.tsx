@@ -6,12 +6,12 @@ import { Add, Delete } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IWaitlistItem, IWaitlistItemSearchDto } from "@framework/types";
+import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
-import { WaitlistSearchForm } from "./form";
-import { WaitlistItemEditDialog } from "./edit";
+import { WaitListSearchForm } from "./form";
+import { WaitListItemEditDialog } from "./edit";
 
-export const WaitlistItem: FC = () => {
+export const WaitListItem: FC = () => {
   const {
     rows,
     count,
@@ -28,7 +28,7 @@ export const WaitlistItem: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IWaitlistItem, IWaitlistItemSearchDto>({
+  } = useCollection<IWaitListItem, IWaitListItemSearchDto>({
     baseUrl: "/waitlist/item",
     empty: {
       account: "",
@@ -45,12 +45,12 @@ export const WaitlistItem: FC = () => {
       <Breadcrumbs path={["dashboard", "waitlist", "waitlist.item"]} />
 
       <PageHeader message="pages.waitlist.item.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitlistCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <WaitlistSearchForm onSubmit={handleSearch} initialValues={search} />
+      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
@@ -91,11 +91,11 @@ export const WaitlistItem: FC = () => {
         }}
       />
 
-      <WaitlistItemEditDialog
+      <WaitListItemEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
-        testId="WaitlistEditDialog"
+        testId="WaitListEditDialog"
         initialValues={selected}
       />
     </Fragment>

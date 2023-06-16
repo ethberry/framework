@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { IWaitlistClaimDto } from "../interfaces";
+import { IWaitListClaimDto } from "../interfaces";
 
-export class WaitlistProofDto implements IWaitlistClaimDto {
+export class WaitListProofDto implements IWaitListClaimDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })

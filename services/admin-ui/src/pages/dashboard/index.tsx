@@ -38,7 +38,7 @@ import { PyramidSection } from "./mechanics/pyramid";
 import { RentSection } from "./mechanics/rent";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
-import { WaitlistSection } from "./mechanics/waitlist";
+import { WaitListSection } from "./mechanics/waitlist";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -61,7 +61,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={12} md={4}>
           <DispenserSection />
           <VestingSection />
-          <WaitlistSection />
+          <WaitListSection />
           <ClaimSection />
           <DropSection />
           <RentSection />

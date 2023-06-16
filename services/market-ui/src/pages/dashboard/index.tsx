@@ -26,7 +26,7 @@ import { WrapperSection } from "./mechanics/wrapper";
 import { BreedSection } from "./mechanics/breed";
 import { PyramidSection } from "./mechanics/pyramid";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
-import { WaitlistSection } from "./mechanics/waitlist";
+import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
@@ -48,7 +48,7 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <VestingSection />
-          <WaitlistSection />
+          <WaitListSection />
           <ClaimSection />
           <DropSection />
           <RentSection />

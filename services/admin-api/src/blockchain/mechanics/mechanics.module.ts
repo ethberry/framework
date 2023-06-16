@@ -13,7 +13,7 @@ import { RaffleModule } from "./raffle/raffle.module";
 import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
-import { WaitlistModule } from "./waitlist/waitlist.module";
+import { WaitListModule } from "./waitlist/waitlist.module";
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { WaitlistModule } from "./waitlist/waitlist.module";
     StakingModule,
     PyramidModule,
     VestingModule,
-    WaitlistModule,
+    WaitListModule,
   ],
 })
 export class MechanicsModule {}

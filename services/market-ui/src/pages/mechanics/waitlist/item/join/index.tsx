@@ -6,19 +6,19 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
 
-export interface IWaitlistClaimDto {
+export interface IWaitListClaimDto {
   account: string;
   listId: number;
 }
 
-export interface IWaitlistClaimDialogProps {
+export interface IWaitListClaimDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IWaitlistClaimDto>, form: any) => Promise<void>;
-  initialValues: IWaitlistClaimDto;
+  onConfirm: (values: Partial<IWaitListClaimDto>, form: any) => Promise<void>;
+  initialValues: IWaitListClaimDto;
 }
 
-export const WaitlistJoinDialog: FC<IWaitlistClaimDialogProps> = props => {
+export const WaitListJoinDialog: FC<IWaitListClaimDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { account, listId } = initialValues;
@@ -32,7 +32,7 @@ export const WaitlistJoinDialog: FC<IWaitlistClaimDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.join"
-      testId="WaitlistJoinDialog"
+      testId="WaitListJoinDialog"
       {...rest}
     >
       <TextInput name="account" readOnly />

@@ -1,3 +1,3 @@
-export interface IWaitlistGenerateDto {
+export interface IWaitListGenerateDto {
   listId: number;
 }

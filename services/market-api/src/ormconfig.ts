@@ -25,8 +25,8 @@ import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/rew
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
@@ -82,8 +82,8 @@ const config: PostgresConnectionOptions = {
     LotteryRoundEntity,
     LotteryTicketEntity,
     MysteryBoxEntity,
-    WaitlistListEntity,
-    WaitlistItemEntity,
+    WaitListListEntity,
+    WaitListItemEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
     BreedEntity,

@@ -6,12 +6,12 @@ import { useWeb3React } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IWaitlistItem, IWaitlistItemSearchDto } from "@framework/types";
+import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
-import { ClaimWaitlistButton } from "../../../../components/buttons";
-import { WaitlistJoinDialog } from "./join";
+import { WaitListClaimButton } from "../../../../components/buttons";
+import { WaitListJoinDialog } from "./join";
 
-export const WaitlistItem: FC = () => {
+export const WaitListItem: FC = () => {
   const { account } = useWeb3React();
 
   const {
@@ -25,7 +25,7 @@ export const WaitlistItem: FC = () => {
     handleEditConfirm,
     handleEditCancel,
     handleChangePage,
-  } = useCollection<IWaitlistItem, IWaitlistItemSearchDto>({
+  } = useCollection<IWaitListItem, IWaitListItemSearchDto>({
     baseUrl: "/waitlist/item",
     empty: {
       account,
@@ -54,7 +54,7 @@ export const WaitlistItem: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <ClaimWaitlistButton listId={waitlist.listId} />
+                <WaitListClaimButton listId={waitlist.listId} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -69,7 +69,7 @@ export const WaitlistItem: FC = () => {
         onChange={handleChangePage}
       />
 
-      <WaitlistJoinDialog
+      <WaitListJoinDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

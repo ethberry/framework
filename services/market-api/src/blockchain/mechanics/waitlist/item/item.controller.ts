@@ -3,29 +3,29 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { WaitlistItemService } from "./item.service";
-import { WaitlistItemEntity } from "./item.entity";
-import { WaitlistItemCreateDto, WaitlistProofDto } from "./dto";
+import { WaitListItemService } from "./item.service";
+import { WaitListItemEntity } from "./item.entity";
+import { WaitListItemCreateDto, WaitListProofDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/waitlist/item")
-export class WaitlistItemController {
-  constructor(private readonly waitlistItemService: WaitlistItemService) {}
+export class WaitListItemController {
+  constructor(private readonly waitListItemService: WaitListItemService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@User() userEntity: UserEntity): Promise<[Array<WaitlistItemEntity>, number]> {
-    return this.waitlistItemService.search(userEntity);
+  public search(@User() userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
+    return this.waitListItemService.search(userEntity);
   }
 
   @Post("/")
-  public create(@Body() dto: WaitlistItemCreateDto): Promise<WaitlistItemEntity> {
-    return this.waitlistItemService.create(dto);
+  public create(@Body() dto: WaitListItemCreateDto): Promise<WaitListItemEntity> {
+    return this.waitListItemService.create(dto);
   }
 
   @Post("/proof")
-  public proof(@Body() dto: WaitlistProofDto, @User() userEntity: UserEntity): Promise<{ proof: Array<string> }> {
-    return this.waitlistItemService.proof(dto, userEntity);
+  public proof(@Body() dto: WaitListProofDto, @User() userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+    return this.waitListItemService.proof(dto, userEntity);
   }
 }

@@ -3,19 +3,19 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { IWaitlistItemCreateDto } from "./interfaces";
-import { WaitlistItemEntity } from "./item.entity";
+import { IWaitListItemCreateDto } from "./interfaces";
+import { WaitListItemEntity } from "./item.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { WaitlistProofDto } from "./dto";
+import { WaitListProofDto } from "./dto";
 
 @Injectable()
-export class WaitlistItemService {
+export class WaitListItemService {
   constructor(
-    @InjectRepository(WaitlistItemEntity)
-    private readonly waitlistItemEntityRepository: Repository<WaitlistItemEntity>,
+    @InjectRepository(WaitListItemEntity)
+    private readonly waitlistItemEntityRepository: Repository<WaitListItemEntity>,
   ) {}
 
-  public async search(userEntity: UserEntity): Promise<[Array<WaitlistItemEntity>, number]> {
+  public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
     const { wallet } = userEntity;
 
     const queryBuilder = this.waitlistItemEntityRepository.createQueryBuilder("waitlist");
@@ -33,13 +33,13 @@ export class WaitlistItemService {
   }
 
   public findOne(
-    where: FindOptionsWhere<WaitlistItemEntity>,
-    options?: FindOneOptions<WaitlistItemEntity>,
-  ): Promise<WaitlistItemEntity | null> {
+    where: FindOptionsWhere<WaitListItemEntity>,
+    options?: FindOneOptions<WaitListItemEntity>,
+  ): Promise<WaitListItemEntity | null> {
     return this.waitlistItemEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IWaitlistItemCreateDto): Promise<WaitlistItemEntity> {
+  public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
     const waitlistEntity = await this.findOne(dto);
 
     if (waitlistEntity) {
@@ -49,7 +49,7 @@ export class WaitlistItemService {
     return this.waitlistItemEntityRepository.create(dto).save();
   }
 
-  public async proof(dto: WaitlistProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+  public async proof(dto: WaitListProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
     const waitlistEntities = await this.waitlistItemEntityRepository.find({
       where: { listId: dto.listId },
     });

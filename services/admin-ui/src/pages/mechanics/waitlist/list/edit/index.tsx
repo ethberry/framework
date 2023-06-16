@@ -7,7 +7,7 @@ import type { ISearchable } from "@gemunion/types-collection";
 
 import { validationSchema } from "./validation";
 
-export interface IWaitlistListEditDialogProps {
+export interface IWaitListListEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: ISearchable, form: any) => Promise<void>;
@@ -16,7 +16,7 @@ export interface IWaitlistListEditDialogProps {
   testId: string;
 }
 
-export const WaitlistListEditDialog: FC<IWaitlistListEditDialogProps> = props => {
+export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props => {
   const { initialValues, message, ...rest } = props;
 
   const { id, title, description } = initialValues;

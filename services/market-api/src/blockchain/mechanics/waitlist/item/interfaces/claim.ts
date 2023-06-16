@@ -1,3 +1,3 @@
-export interface IWaitlistClaimDto {
+export interface IWaitListClaimDto {
   listId: number;
 }

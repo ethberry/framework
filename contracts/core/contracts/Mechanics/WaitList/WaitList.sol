@@ -15,7 +15,7 @@ import "../../utils/constants.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Exchange/interfaces/IAsset.sol";
 
-contract Waitlist is AccessControl, Pausable {
+contract WaitList is AccessControl, Pausable {
   using Counters for Counters.Counter;
   using MerkleProof for bytes32[];
 
@@ -25,8 +25,8 @@ contract Waitlist is AccessControl, Pausable {
 
   Counters.Counter internal _itemsCounter;
 
-  event RewardSet(uint256 externalId, Asset[] items);
-  event ClaimReward(address from, uint256 externalId, Asset[] items);
+  event WaitListRewardSet(uint256 externalId, Asset[] items);
+  event WaitListRewardClaimed(address from, uint256 externalId, Asset[] items);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -46,7 +46,7 @@ contract Waitlist is AccessControl, Pausable {
       }
     }
 
-    emit RewardSet(externalId, _items[externalId]);
+    emit WaitListRewardSet(externalId, _items[externalId]);
   }
 
   function updateReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -62,7 +62,7 @@ contract Waitlist is AccessControl, Pausable {
       }
     }
 
-    emit RewardSet(externalId, _items[externalId]);
+    emit WaitListRewardSet(externalId, _items[externalId]);
   }
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
@@ -78,7 +78,7 @@ contract Waitlist is AccessControl, Pausable {
 
     ExchangeUtils.acquire(_items[externalId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
-    emit ClaimReward(_msgSender(), externalId, _items[externalId]);
+    emit WaitListRewardClaimed(_msgSender(), externalId, _items[externalId]);
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

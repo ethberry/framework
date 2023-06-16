@@ -4,7 +4,7 @@ import { TimerOutlined } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const WaitlistSection: FC = () => {
+export const WaitListSection: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List

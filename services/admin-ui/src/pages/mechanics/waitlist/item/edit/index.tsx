@@ -6,21 +6,21 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
 
-export interface IWaitlistItemCreateDto {
+export interface IWaitListItemCreateDto {
   id: number;
   account: string;
   listId: number;
 }
 
-export interface IWaitlistDialogProps {
+export interface IWaitListDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IWaitlistItemCreateDto, form: any) => Promise<void>;
-  initialValues: IWaitlistItemCreateDto;
+  onConfirm: (values: IWaitListItemCreateDto, form: any) => Promise<void>;
+  initialValues: IWaitListItemCreateDto;
   testId: string;
 }
 
-export const WaitlistItemEditDialog: FC<IWaitlistDialogProps> = props => {
+export const WaitListItemEditDialog: FC<IWaitListDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, listId, account } = initialValues;

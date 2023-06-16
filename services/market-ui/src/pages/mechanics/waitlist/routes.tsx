@@ -1,8 +1,8 @@
 import type { RouteObject } from "react-router-dom";
 
-import { WaitlistItem } from "./item";
+import { WaitListItem } from "./item";
 import { IndexWrapper } from "../../index-wrapper";
-import { WaitlistSection } from "../../dashboard/mechanics/waitlist";
+import { WaitListSection } from "../../dashboard/mechanics/waitlist";
 import { WalletWrapper } from "../../wallet-wrapper";
 
 export const waitlistRoutes: Array<RouteObject> = [
@@ -13,14 +13,14 @@ export const waitlistRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="waitlist">
-            <WaitlistSection />
+            <WaitListSection />
           </IndexWrapper>
         ),
       },
       {
         path: "/waitlist/item",
         element: <WalletWrapper />,
-        children: [{ index: true, element: <WaitlistItem /> }],
+        children: [{ index: true, element: <WaitListItem /> }],
       },
     ],
   },

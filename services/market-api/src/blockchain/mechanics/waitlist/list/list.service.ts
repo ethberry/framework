@@ -2,16 +2,16 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { WaitlistListEntity } from "./list.entity";
+import { WaitListListEntity } from "./list.entity";
 
 @Injectable()
-export class WaitlistListService {
+export class WaitListListService {
   constructor(
-    @InjectRepository(WaitlistListEntity)
-    private readonly waitlistListEntityRepository: Repository<WaitlistListEntity>,
+    @InjectRepository(WaitListListEntity)
+    private readonly waitlistListEntityRepository: Repository<WaitListListEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<WaitlistListEntity>> {
+  public async autocomplete(): Promise<Array<WaitListListEntity>> {
     return this.waitlistListEntityRepository.find({
       select: {
         id: true,

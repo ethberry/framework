@@ -433,7 +433,6 @@ services:
       REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
-      RMQ_QUEUE_GAME: game
       # THROTTLE
       THROTTLE_TTL: "${THROTTLE_TTL}"
       THROTTLE_LIMIT: "${THROTTLE_LIMIT}"

@@ -5,23 +5,28 @@ import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import type { ISearchableDto, ISearchDto } from "@gemunion/types-collection";
 
-import { IWaitlistListCreateDto } from "./interfaces";
-import { WaitlistListEntity } from "./list.entity";
-import { WaitlistGenerateDto } from "./dto";
+import { IWaitListListCreateDto } from "./interfaces";
+import { WaitListListEntity } from "./list.entity";
+import { WaitListGenerateDto } from "./dto";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
-export class WaitlistListService {
+export class WaitListListService {
   constructor(
-    @InjectRepository(WaitlistListEntity)
-    private readonly waitlistListEntityRepository: Repository<WaitlistListEntity>,
+    @InjectRepository(WaitListListEntity)
+    private readonly waitListListEntityRepository: Repository<WaitListListEntity>,
   ) {}
 
-  public async search(dto: Partial<ISearchDto>): Promise<[Array<WaitlistListEntity>, number]> {
+  public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {
     const { query, skip, take } = dto;
 
-    const queryBuilder = this.waitlistListEntityRepository.createQueryBuilder("waitlist");
+    const queryBuilder = this.waitListListEntityRepository.createQueryBuilder("waitlist");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("waitlist.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -51,33 +56,38 @@ export class WaitlistListService {
   }
 
   public findOne(
-    where: FindOptionsWhere<WaitlistListEntity>,
-    options?: FindOneOptions<WaitlistListEntity>,
-  ): Promise<WaitlistListEntity | null> {
-    return this.waitlistListEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<WaitListListEntity>,
+    options?: FindOneOptions<WaitListListEntity>,
+  ): Promise<WaitListListEntity | null> {
+    return this.waitListListEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IWaitlistListCreateDto): Promise<WaitlistListEntity> {
-    return this.waitlistListEntityRepository.create(dto).save();
+  public async create(dto: IWaitListListCreateDto, userEntity: UserEntity): Promise<WaitListListEntity> {
+    return this.waitListListEntityRepository
+      .create({
+        ...dto,
+        merchantId: userEntity.merchantId,
+      })
+      .save();
   }
 
   public async update(
-    where: FindOptionsWhere<WaitlistListEntity>,
+    where: FindOptionsWhere<WaitListListEntity>,
     dto: Partial<ISearchableDto>,
-  ): Promise<WaitlistListEntity> {
-    const waitlistListEntity = await this.findOne(where);
+  ): Promise<WaitListListEntity> {
+    const waitListListEntity = await this.findOne(where);
 
-    if (!waitlistListEntity) {
+    if (!waitListListEntity) {
       throw new NotFoundException("waitlistNotFound");
     }
 
-    Object.assign(waitlistListEntity, dto);
+    Object.assign(waitListListEntity, dto);
 
-    return waitlistListEntity.save();
+    return waitListListEntity.save();
   }
 
-  public async autocomplete(): Promise<Array<WaitlistListEntity>> {
-    return this.waitlistListEntityRepository.find({
+  public async autocomplete(): Promise<Array<WaitListListEntity>> {
+    return this.waitListListEntityRepository.find({
       select: {
         id: true,
         title: true,
@@ -85,12 +95,12 @@ export class WaitlistListService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<WaitlistListEntity>): Promise<DeleteResult> {
-    return this.waitlistListEntityRepository.delete(where);
+  public async delete(where: FindOptionsWhere<WaitListListEntity>): Promise<DeleteResult> {
+    return this.waitListListEntityRepository.delete(where);
   }
 
-  public async generate(dto: WaitlistGenerateDto): Promise<{ root: string }> {
-    const waitlistListEntity = await this.waitlistListEntityRepository.findOne({
+  public async generate(dto: WaitListGenerateDto): Promise<{ root: string }> {
+    const waitlistListEntity = await this.waitListListEntityRepository.findOne({
       where: { id: dto.listId },
       relations: { items: true },
     });

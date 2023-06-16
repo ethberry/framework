@@ -6,7 +6,7 @@ import csv2json from "csvtojson";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
 
-import { IClaimRow } from "../../../../../../buttons/mechanics/claim/upload";
+import { IClaimRow } from "../../../../../../buttons/mechanics/claim/upload/dialog/file-input";
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { ICollectionUploadDto } from "../index";
 import { tokensValidationSchema } from "../validation";

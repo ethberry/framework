@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { WaitlistLogModule } from "./log/log.module";
-import { WaitlistItemModule } from "./item/item.module";
+import { WaitListItemModule } from "./item/item.module";
+import { WaitListListModule } from "./list/list.module";
+import { WaitListLogModule } from "./log/log.module";
 
 @Module({
-  imports: [WaitlistLogModule, WaitlistItemModule],
+  imports: [WaitListItemModule, WaitListListModule, WaitListLogModule],
 })
-export class WaitlistModule {}
+export class WaitListModule {}

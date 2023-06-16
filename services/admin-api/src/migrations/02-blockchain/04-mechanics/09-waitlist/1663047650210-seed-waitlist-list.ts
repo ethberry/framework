@@ -11,16 +11,19 @@ export class SeedWaitlistListAt1663047650210 implements MigrationInterface {
       INSERT INTO ${ns}.waitlist_list (
         title,
         description,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
         'Waitlist #1',
         '${simpleFormatting}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Waitlist #2',
         '${simpleFormatting}',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

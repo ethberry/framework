@@ -5,22 +5,22 @@ import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
-export interface IWaitlistDto {
+export interface IWaitListDto {
   account: string;
   listId: number;
 }
 
-export interface IWaitlistDialogProps {
+export interface IWaitListDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IWaitlistDto, form: any) => Promise<void>;
-  initialValues: IWaitlistDto;
+  onConfirm: (values: IWaitListDto, form: any) => Promise<void>;
+  initialValues: IWaitListDto;
   message: string;
   testId: string;
 }
 
-export const WaitlistDialog: FC<IWaitlistDialogProps> = props => {
-  const { initialValues, message, testId = "WaitlistDialogForm", ...rest } = props;
+export const WaitListDialog: FC<IWaitListDialogProps> = props => {
+  const { initialValues, message, testId = "WaitListDialogForm", ...rest } = props;
 
   return (
     <FormDialog

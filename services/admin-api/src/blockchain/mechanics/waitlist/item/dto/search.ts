@@ -3,9 +3,9 @@ import { IsInt, IsOptional, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
-import { IWaitlistItemSearchDto } from "@framework/types";
+import { IWaitListItemSearchDto } from "@framework/types";
 
-export class WaitlistSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IWaitlistItemSearchDto {
+export class WaitListSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IWaitListItemSearchDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsInt({ message: "typeMismatch" })

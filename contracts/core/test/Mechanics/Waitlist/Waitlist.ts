@@ -11,7 +11,7 @@ import { tokenId } from "../../constants";
 import { isEqualEventArgArrObj } from "../../utils";
 import { deployERC1363 } from "../../ERC20/shared/fixtures";
 
-describe("Waitlist", function () {
+describe("WaitList", function () {
   const factory = () => deployContract(this.title);
   const erc721factory = () => deployERC721();
   const erc20Factory = () => deployERC1363();
@@ -65,7 +65,7 @@ describe("Waitlist", function () {
 
       const tx = contractInstance.setReward(root, items, 123);
       await expect(tx)
-        .to.emit(contractInstance, "RewardSet")
+        .to.emit(contractInstance, "WaitListRewardSet")
         .withArgs(123, isEqualEventArgArrObj(...items));
     });
 
@@ -94,7 +94,7 @@ describe("Waitlist", function () {
 
       const tx = contractInstance.setReward(root, items, 123);
       await expect(tx)
-        .to.emit(contractInstance, "RewardSet")
+        .to.emit(contractInstance, "WaitListRewardSet")
         .withArgs(123, isEqualEventArgArrObj(...items));
 
       const tx2 = contractInstance.setReward(root, items, 123);
@@ -176,7 +176,7 @@ describe("Waitlist", function () {
 
       const tx = contractInstance.setReward(root, items, 123);
       await expect(tx)
-        .to.emit(contractInstance, "RewardSet")
+        .to.emit(contractInstance, "WaitListRewardSet")
         .withArgs(123, isEqualEventArgArrObj(...items));
 
       const items2 = [
@@ -190,7 +190,7 @@ describe("Waitlist", function () {
 
       const tx2 = contractInstance.updateReward(root, items2, 123);
       await expect(tx2)
-        .to.emit(contractInstance, "RewardSet")
+        .to.emit(contractInstance, "WaitListRewardSet")
         .withArgs(123, isEqualEventArgArrObj(...items2));
     });
   });
@@ -267,7 +267,7 @@ describe("Waitlist", function () {
       const root = merkleTree.root;
 
       const tx = contractInstance.setReward(root, items, 123);
-      await expect(tx).to.emit(contractInstance, "RewardSet");
+      await expect(tx).to.emit(contractInstance, "WaitListRewardSet");
 
       let proof: Array<string> = [];
       for (const [i, v] of merkleTree.entries()) {
@@ -277,7 +277,7 @@ describe("Waitlist", function () {
         }
       }
       const tx1 = contractInstance.claim(proof, 123);
-      await expect(tx1).to.emit(contractInstance, "ClaimReward");
+      await expect(tx1).to.emit(contractInstance, "WaitListRewardClaimed");
     });
 
     it("should claim reward as receiver", async function () {
@@ -304,7 +304,7 @@ describe("Waitlist", function () {
       const root = merkleTree.root;
 
       const tx = contractInstance.setReward(root, items, 123);
-      await expect(tx).to.emit(contractInstance, "RewardSet");
+      await expect(tx).to.emit(contractInstance, "WaitListRewardSet");
 
       let proof: Array<string> = [];
       for (const [i, v] of merkleTree.entries()) {
@@ -314,7 +314,7 @@ describe("Waitlist", function () {
         }
       }
       const tx1 = contractInstance.connect(receiver).claim(proof, 123);
-      await expect(tx1).to.emit(contractInstance, "ClaimReward");
+      await expect(tx1).to.emit(contractInstance, "WaitListRewardClaimed");
     });
 
     it("should fail: sender is not in the wait list", async function () {
@@ -341,7 +341,7 @@ describe("Waitlist", function () {
       const root = merkleTree.root;
 
       const tx = contractInstance.setReward(root, items, 123);
-      await expect(tx).to.emit(contractInstance, "RewardSet");
+      await expect(tx).to.emit(contractInstance, "WaitListRewardSet");
 
       let proof: Array<string> = [];
       for (const [i, v] of merkleTree.entries()) {
@@ -378,7 +378,7 @@ describe("Waitlist", function () {
       const root = merkleTree.root;
 
       const tx = contractInstance.setReward(root, items, 123);
-      await expect(tx).to.emit(contractInstance, "RewardSet");
+      await expect(tx).to.emit(contractInstance, "WaitListRewardSet");
 
       let proof: Array<string> = [];
       for (const [i, v] of merkleTree.entries()) {
@@ -388,7 +388,7 @@ describe("Waitlist", function () {
         }
       }
       const tx1 = contractInstance.claim(proof, 123);
-      await expect(tx1).to.emit(contractInstance, "ClaimReward");
+      await expect(tx1).to.emit(contractInstance, "WaitListRewardClaimed");
 
       const tx2 = contractInstance.claim(proof, 123);
       await expect(tx2).to.be.rejectedWith("Witlist: Reward already claimed");

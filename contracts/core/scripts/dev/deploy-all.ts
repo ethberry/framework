@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { Contract, WeiPerEther, ZeroAddress, Result } from "ethers";
+import { Contract, Result, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -562,7 +562,7 @@ async function main() {
   await debug(contracts);
   // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
-  const waitlistFactory = await ethers.getContractFactory("Waitlist");
+  const waitlistFactory = await ethers.getContractFactory("WaitList");
   contracts.waitlist = await waitlistFactory.deploy();
   await debug(contracts);
 
