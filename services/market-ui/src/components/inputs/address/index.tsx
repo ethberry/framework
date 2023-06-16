@@ -7,10 +7,11 @@ import { useLicense } from "@gemunion/provider-license";
 
 export interface IAddressInputProps {
   outlined?: boolean;
+  prefix?: string;
 }
 
 export const AddressInput: FC<IAddressInputProps> = props => {
-  const { outlined = true } = props;
+  const { outlined = true, prefix = "" } = props;
 
   const license = useLicense();
 
@@ -18,15 +19,19 @@ export const AddressInput: FC<IAddressInputProps> = props => {
     return null;
   }
 
+  const handlePrefix = (name: string): string => {
+    return `${prefix ? `${prefix}.` : ""}${name}`;
+  };
+
   return (
     <Paper elevation={outlined ? 1 : 0} sx={{ px: outlined ? 2 : 0 }}>
-      <TextInput name="addressLine1" />
-      <TextInput name="addressLine2" />
-      <TextInput name="city" />
-      <SelectInput name="country" options={EnabledCountries} />
-      <TextInput name="state" />
-      <TextInput name="zip" />
-      <SwitchInput name="isDefault" />
+      <TextInput name={handlePrefix("addressLine1")} />
+      <TextInput name={handlePrefix("addressLine2")} />
+      <TextInput name={handlePrefix("city")} />
+      <SelectInput name={handlePrefix("country")} options={EnabledCountries} />
+      <TextInput name={handlePrefix("state")} />
+      <TextInput name={handlePrefix("zip")} />
+      <SwitchInput name={handlePrefix("isDefault")} />
     </Paper>
   );
 };

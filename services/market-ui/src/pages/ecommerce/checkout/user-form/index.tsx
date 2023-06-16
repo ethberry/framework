@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { AddressInput } from "./address-input";
+import { AddressSelectInput } from "../../../../components/inputs/address-select";
 import { validationSchema } from "./validation";
 import { FormButtons } from "../form-buttons";
 
@@ -29,7 +29,7 @@ export const UserForm: FC = () => {
       onSubmit={handleSubmit}
       showButtons={false}
     >
-      <AddressInput name="addressId" />
+      <AddressSelectInput />
       <FormButtons submit="checkout" />
     </FormWrapper>
   );

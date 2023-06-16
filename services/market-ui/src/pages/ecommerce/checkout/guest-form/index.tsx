@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormWrapper } from "@gemunion/mui-form";
 
 import { validationSchema } from "./validation";
-import { AddressInput } from "./address-input";
+import { AddressesInput } from "./address-input";
 import { UserInput } from "./user-input";
 import { FormButtons } from "../form-buttons";
 import { emptyAddress, emptyUser } from "../../../../components/common/interfaces";
@@ -38,7 +38,7 @@ export const GuestForm: FC = () => {
       onSubmit={handleSubmit}
       showButtons={false}
     >
-      <AddressInput name="addresses" />
+      <AddressesInput name="addresses" />
       <UserInput name="user" />
       <FormButtons submit="checkout" />
     </FormWrapper>
