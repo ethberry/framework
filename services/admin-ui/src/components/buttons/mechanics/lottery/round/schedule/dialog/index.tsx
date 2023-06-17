@@ -4,15 +4,19 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
-import { CronExpression, ILotteryOption } from "@framework/types";
+import { CronExpression } from "@framework/types";
 import { ContractInput } from "../../contract-input";
 // import { validationSchema } from "./validation";
-
+interface ILotteryScheduleUpdate {
+  address: string;
+  schedule: CronExpression;
+  description?: string;
+}
 export interface ILotteryScheduleDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<ILotteryOption>, form: any) => Promise<void>;
-  initialValues: ILotteryOption;
+  onConfirm: (values: Partial<ILotteryScheduleUpdate>, form: any) => Promise<void>;
+  initialValues: ILotteryScheduleUpdate;
 }
 
 export const LotteryScheduleDialog: FC<ILotteryScheduleDialogProps> = props => {

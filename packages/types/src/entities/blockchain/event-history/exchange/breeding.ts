@@ -1,8 +1,8 @@
-import { IExchangeItem } from "./common";
+import { IAssetItem } from "./common";
 
 export interface IExchangeBreedEvent {
   from: string;
   externalId: string;
-  matron: IExchangeItem;
-  sire: IExchangeItem;
+  matron: IAssetItem;
+  sire: IAssetItem;
 }

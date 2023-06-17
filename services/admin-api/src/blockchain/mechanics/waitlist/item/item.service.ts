@@ -2,19 +2,19 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IWaitlistItemSearchDto } from "@framework/types";
+import { IWaitListItemSearchDto } from "@framework/types";
 
-import { IWaitlistItemCreateDto } from "./interfaces";
-import { WaitlistItemEntity } from "./item.entity";
+import { IWaitListItemCreateDto } from "./interfaces";
+import { WaitListItemEntity } from "./item.entity";
 
 @Injectable()
-export class WaitlistItemService {
+export class WaitListItemService {
   constructor(
-    @InjectRepository(WaitlistItemEntity)
-    private readonly waitlistEntityRepository: Repository<WaitlistItemEntity>,
+    @InjectRepository(WaitListItemEntity)
+    private readonly waitlistEntityRepository: Repository<WaitListItemEntity>,
   ) {}
 
-  public async search(dto: Partial<IWaitlistItemSearchDto>): Promise<[Array<WaitlistItemEntity>, number]> {
+  public async search(dto: Partial<IWaitListItemSearchDto>): Promise<[Array<WaitListItemEntity>, number]> {
     const { skip, take, account } = dto;
 
     const queryBuilder = this.waitlistEntityRepository.createQueryBuilder("waitlist");
@@ -39,13 +39,13 @@ export class WaitlistItemService {
   }
 
   public findOne(
-    where: FindOptionsWhere<WaitlistItemEntity>,
-    options?: FindOneOptions<WaitlistItemEntity>,
-  ): Promise<WaitlistItemEntity | null> {
+    where: FindOptionsWhere<WaitListItemEntity>,
+    options?: FindOneOptions<WaitListItemEntity>,
+  ): Promise<WaitListItemEntity | null> {
     return this.waitlistEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IWaitlistItemCreateDto): Promise<WaitlistItemEntity> {
+  public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
     const waitlistEntity = await this.findOne(dto);
 
     if (waitlistEntity) {
@@ -55,7 +55,7 @@ export class WaitlistItemService {
     return this.waitlistEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<WaitlistItemEntity>): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<WaitListItemEntity>): Promise<DeleteResult> {
     return this.waitlistEntityRepository.delete(where);
   }
 }

@@ -12,7 +12,6 @@ export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinato
     } = e;
 
     const blockNum = await ethers.provider.getBlockNumber();
-
     await vrfInstance.fulfillRandomWords(requestId, keyHash, hexlify(randomBytes(32)), {
       blockNum,
       subId,

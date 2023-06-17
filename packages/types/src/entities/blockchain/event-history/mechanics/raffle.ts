@@ -1,4 +1,4 @@
-import { IExchangeItem } from "../exchange/common";
+import { IAssetItem } from "../exchange/common";
 
 export enum RaffleEventType {
   RoundFinalized = "RoundFinalized",
@@ -12,8 +12,8 @@ export interface IRaffleRoundStartedEvent {
   roundId: string;
   startTimestamp: string;
   maxTicket: string;
-  ticket: IExchangeItem;
-  price: IExchangeItem;
+  ticket: IAssetItem;
+  price: IAssetItem;
 }
 
 export interface IRaffleRoundFinalizedEvent {
@@ -43,8 +43,8 @@ export interface IRaffleRoundInfo {
   endTimestamp: string;
   maxTicket: string;
   prizeNumber: string;
-  acceptedAsset: IExchangeItem;
-  ticketAsset: IExchangeItem;
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
 }
 
 export type TRaffleEvents =

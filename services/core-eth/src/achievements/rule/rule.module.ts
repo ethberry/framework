@@ -6,10 +6,12 @@ import { AchievementsRuleService } from "./rule.service";
 import { AchievementItemModule } from "../item/item.module";
 import { EventHistoryModule } from "../../blockchain/event-history/event-history.module";
 import { UserModule } from "../../infrastructure/user/user.module";
+import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 
 @Module({
   imports: [
     UserModule,
+    ContractModule,
     forwardRef(() => EventHistoryModule),
     AchievementItemModule,
     TypeOrmModule.forFeature([AchievementRuleEntity]),

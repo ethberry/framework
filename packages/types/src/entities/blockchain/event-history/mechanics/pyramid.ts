@@ -1,4 +1,4 @@
-import { IAssetStruct } from "./staking";
+import { IAssetItem } from "../exchange/common";
 
 export enum PyramidEventType {
   RuleCreated = "RuleCreated",
@@ -27,7 +27,15 @@ export interface IFinalizedTokenEvent {
   amount: string;
 }
 
-export type IPyramidRuleStruct = [[IAssetStruct], [IAssetStruct], string, string, string, string, boolean];
+export interface IPyramidRuleStruct {
+  deposit: Array<IAssetItem>;
+  reward: Array<IAssetItem>;
+  period: string;
+  maxCycles: string;
+  penalty: string;
+  externalId: string;
+  active: boolean;
+}
 
 export interface IPyramidCreateEvent {
   ruleId: string;

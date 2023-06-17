@@ -9,23 +9,23 @@ import { Web3ContextType } from "@web3-react/core";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IWaitlistList, TokenType } from "@framework/types";
+import { IWaitListList, TokenType } from "@framework/types";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 
-import WaitlistSetRewardABI from "../../../../abis/mechanics/waitlist/list/setReward.abi.json";
+import WaitListSetRewardABI from "../../../../abis/mechanics/waitlist/list/setReward.abi.json";
 
-import { WaitlistSearchForm } from "./form";
-import { WaitlistListEditDialog } from "./edit";
-import { IWaitlistGenerateDto, WaitlistGenerateDialog } from "./generate";
+import { WaitListSearchForm } from "./form";
+import { WaitListListEditDialog } from "./edit";
+import { IWaitListGenerateDto, WaitListGenerateDialog } from "./generate";
 
 export interface IRoot {
   root: string;
 }
 
-export const WaitlistList: FC = () => {
+export const WaitListList: FC = () => {
   const {
     rows,
     count,
@@ -43,7 +43,7 @@ export const WaitlistList: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IWaitlistList, ISearchDto>({
+  } = useCollection<IWaitListList, ISearchDto>({
     baseUrl: "/waitlist/list",
     empty: {
       title: "",
@@ -69,8 +69,8 @@ export const WaitlistList: FC = () => {
     { success: false },
   );
 
-  const metaFn = useMetamask((values: IWaitlistGenerateDto, root: IRoot, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSetRewardABI, web3Context.provider?.getSigner());
+  const metaFn = useMetamask((values: IWaitListGenerateDto, root: IRoot, web3Context: Web3ContextType) => {
+    const contract = new Contract(process.env.WAITLIST_ADDR, WaitListSetRewardABI, web3Context.provider?.getSigner());
 
     const asset = values.item.components.map(component => ({
       tokenType: Object.values(TokenType).indexOf(component.tokenType),
@@ -109,27 +109,27 @@ export const WaitlistList: FC = () => {
           variant="outlined"
           startIcon={<TimerOutlined />}
           onClick={handleUpload}
-          data-testid="WaitlistUploadButton"
+          data-testid="WaitListUploadButton"
         >
           <FormattedMessage id={`form.buttons.upload`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitlistCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <WaitlistSearchForm onSubmit={handleSearch} initialValues={search} />
+      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((waitlistItem, i) => (
+          {rows.map((waitListItem, i) => (
             <ListItem key={i}>
-              <ListItemText>{waitlistItem.title}</ListItemText>
+              <ListItemText>{waitListItem.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(waitlistItem)}>
+                <IconButton onClick={handleEdit(waitListItem)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(waitlistItem)}>
+                <IconButton onClick={handleDelete(waitListItem)}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -153,16 +153,16 @@ export const WaitlistList: FC = () => {
         initialValues={selected}
       />
 
-      <WaitlistListEditDialog
+      <WaitListListEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         message={selected.id ? "dialogs.edit" : "dialogs.create"}
-        testId="WaitlistListEditDialog"
+        testId="WaitListListEditDialog"
         initialValues={selected}
       />
 
-      <WaitlistGenerateDialog
+      <WaitListGenerateDialog
         onCancel={handleGenerateCancel}
         onConfirm={handleGenerateConfirm}
         open={isGenerateDialogOpen}

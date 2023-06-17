@@ -5,12 +5,12 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import type { ISearchDto } from "@gemunion/types-collection";
 
-interface IWaitlistSearchFormProps {
+interface IWaitListSearchFormProps {
   onSubmit: (values: ISearchDto) => Promise<void>;
   initialValues: ISearchDto;
 }
 
-export const WaitlistSearchForm: FC<IWaitlistSearchFormProps> = props => {
+export const WaitListSearchForm: FC<IWaitListSearchFormProps> = props => {
   const { onSubmit, initialValues } = props;
 
   const { query } = initialValues;
@@ -22,7 +22,7 @@ export const WaitlistSearchForm: FC<IWaitlistSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="WaitlistListSearchForm"
+      testId="WaitListListSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

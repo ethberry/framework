@@ -39,6 +39,14 @@ export class PaymentSplitterControllerEth {
       contractType: ContractType.PYRAMID,
       eventName: ExchangeEventType.PaymentReceived,
     },
+    {
+      contractType: ContractType.LOTTERY,
+      eventName: ExchangeEventType.PaymentEthReceived,
+    },
+    {
+      contractType: ContractType.RAFFLE,
+      eventName: ExchangeEventType.PaymentEthReceived,
+    },
   ])
   public addEth(@Payload() event: ILogEvent<IExchangePaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.paymentSplitterServiceEth.addEth(event, context);

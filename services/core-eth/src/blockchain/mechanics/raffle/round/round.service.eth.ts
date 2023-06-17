@@ -50,8 +50,8 @@ export class RaffleRoundServiceEth {
     }
 
     // TICKET CONTRACT
-    const [_tokenTypeT, ticketAddr, _templateId, _amount] = ticket;
-    const ticketContract = await this.contractService.findOne({ address: ticketAddr.toLowerCase(), chainId });
+    const { token } = ticket;
+    const ticketContract = await this.contractService.findOne({ address: token.toLowerCase(), chainId });
 
     if (!ticketContract) {
       throw new NotFoundException("ticketContractNotFound");
@@ -60,10 +60,10 @@ export class RaffleRoundServiceEth {
     // PRICE ASSET
     const priceAsset: IAssetDto = await this.raffleRoundService.createEmptyAsset();
 
-    const [_tokenTypeP, _token, templateId, amount] = price;
+    const { tokenId, amount } = price;
 
     const priceTemplate = await this.templateService.findOne(
-      { id: Number(templateId) },
+      { id: Number(tokenId) },
       { relations: { contract: true } },
     );
 

@@ -3,9 +3,9 @@ import { IsInt, Min } from "class-validator";
 
 import { AccountDto } from "@gemunion/collection";
 
-import { IWaitlistItemCreateDto } from "../interfaces";
+import { IWaitListItemCreateDto } from "../interfaces";
 
-export class WaitlistItemCreateDto extends AccountDto implements IWaitlistItemCreateDto {
+export class WaitListItemCreateDto extends AccountDto implements IWaitListItemCreateDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })

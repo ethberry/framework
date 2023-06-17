@@ -1,11 +1,11 @@
 import { ethers, network } from "hardhat";
-import { Contract, toBeHex, TransactionReceipt, TransactionResponse, WeiPerEther, zeroPadValue } from "ethers";
+import { Contract, Result, toBeHex, TransactionReceipt, TransactionResponse, WeiPerEther, zeroPadValue } from "ethers";
 
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
 
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
-const subscriptionId = 1; // besu
+// const subscriptionId = 1; // besu
 // const subscriptionId = 2; // gemunion
 
 interface IObj {
@@ -13,6 +13,26 @@ interface IObj {
   hash?: string;
   wait: () => Promise<TransactionReceipt> | void;
 }
+
+const recursivelyDecodeResult = (result: Result): Record<string, any> => {
+  if (typeof result !== "object") {
+    // Raw primitive value
+    return result;
+  }
+  try {
+    const obj = result.toObject();
+    if (obj._) {
+      throw new Error("Decode as array, not object");
+    }
+    Object.keys(obj).forEach(key => {
+      obj[key] = recursivelyDecodeResult(obj[key]);
+    });
+    return obj;
+  } catch (err) {
+    // Result is array.
+    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
+  }
+};
 
 const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse, name?: string) => {
   if (obj && obj.hash) {
@@ -53,29 +73,44 @@ async function main() {
   // console.info(`LINK_ADDR=${contracts.link.address}`);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfInstance = await vrfFactory.deploy(linkAddress);
+
   // const vrfInstance = vrfFactory.attach(vrfAddr);
   contracts.vrf = vrfInstance;
+  const vrfAddress = await contracts.vrf.getAddress();
   await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);
 
   if (linkAddress !== linkAddr) {
     console.info("LINK_ADDR address mismatch, clean BESU, then try again");
   }
-  if (linkAddress !== vrfAddr) {
+  if (vrfAddress !== vrfAddr) {
     console.info("VRF_ADDR address mismatch, clean BESU, then try again");
   }
   // BESU gemunion
   // address(0x86C86939c631D53c6D812625bD6Ccd5Bf5BEb774), // vrfCoordinator
   //   address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
   // SETUP CHAIN_LINK VRF-V2 TO WORK
-  const linkAmount = WeiPerEther * 10n;
+  const linkAmount = WeiPerEther * 1000n;
 
   await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
   await debug(await vrfInstance.createSubscription(), "createSubscription");
   // TODO get subId from createSubscription event
-  const subId = zeroPadValue(toBeHex(subscriptionId), 32);
-  await debug(await linkInstance.transferAndCall(await vrfInstance.getAddress(), linkAmount, subId), "transferAndCall");
+  // emit SubscriptionCreated(currentSubId, msg.sender);
+  const eventFilter = vrfInstance.filters.SubscriptionCreated();
+  const events = await vrfInstance.queryFilter(eventFilter);
+  const { subId } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  console.info("SubscriptionCreated", subId);
+
+  const subscriptionId = zeroPadValue(toBeHex(subId), 32);
+  await debug(
+    await linkInstance.transferAndCall(await vrfInstance.getAddress(), linkAmount, subscriptionId),
+    "transferAndCall",
+  );
   // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
+  const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
+  const events1 = await vrfInstance.queryFilter(eventFilter1);
+  const { newBalance } = recursivelyDecodeResult(events1[0].args as unknown as Result);
+  console.info("SubscriptionFunded", newBalance);
 }
 
 main()

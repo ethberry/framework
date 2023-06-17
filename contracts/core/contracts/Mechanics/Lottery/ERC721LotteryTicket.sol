@@ -13,6 +13,7 @@ import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.so
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721LotteryTicket.sol";
+import "../../utils/errors.sol";
 
 contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
   using Counters for Counters.Counter;
@@ -32,7 +33,6 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   }
 
   // TICKET
-
   function mintTicket(
     address account,
     uint256 round,
@@ -41,10 +41,8 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = Ticket(round, numbers);
+    _data[tokenId] = Ticket(round, numbers, false);
 
-    //    uint256 packed = _encodeNumbers(numbers, 6);
-    //    bytes32 unpacked = _decodeNumbers(packed);
     _upsertRecordField(tokenId, ROUND, round);
     _upsertRecordField(tokenId, NUMBERS, _encodeNumbers(numbers, 6));
 
@@ -63,8 +61,17 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   }
 
   function getTicketData(uint256 tokenId) external view returns (Ticket memory) {
-    require(_exists(tokenId), "ERC721Lottery: invalid token ID");
+    if (!_exists(tokenId)) {
+      revert WrongToken();
+    }
     return _data[tokenId];
+  }
+
+  function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
+    if (!_exists(tokenId)) {
+      revert WrongToken();
+    }
+    _data[tokenId].prize = true;
   }
 
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721LotteryTicket) {
@@ -72,13 +79,11 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   }
 
   // BASE URL
-
   function _baseURI() internal view virtual override(ERC721, ERC721ABaseUrl) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 
   // COMMON
-
   function supportsInterface(
     bytes4 interfaceId
   ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {

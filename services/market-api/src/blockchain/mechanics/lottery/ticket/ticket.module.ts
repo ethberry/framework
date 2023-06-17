@@ -2,11 +2,11 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { LotteryTicketService } from "./ticket.service";
-import { LotteryTicketEntity } from "./ticket.entity";
 import { LotteryTicketController } from "./ticket.controller";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LotteryTicketEntity])],
+  imports: [TypeOrmModule.forFeature([TokenEntity])],
   providers: [LotteryTicketService],
   controllers: [LotteryTicketController],
   exports: [LotteryTicketService],

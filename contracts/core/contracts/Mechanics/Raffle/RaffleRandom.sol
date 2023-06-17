@@ -36,6 +36,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   event RoundFinalized(uint256 round, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
+  event PaymentEthReceived(address from, uint256 amount);
 
   // RAFFLE
   struct Round {
@@ -208,7 +209,17 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     uint256 prizeNumber = currentRound.prizeNumber;
 
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(currentRound.ticketAsset.token);
-    ticketFactory.burn(tokenId);
+
+    TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
+
+    // revert if prize already set
+    if (data.prize) {
+      revert WrongToken();
+    }
+
+    // ticketFactory.burn(tokenId);
+    // set prize status
+    ticketFactory.setTicketData(tokenId);
 
     if (tokenId == prizeNumber) {
       emit Prize(_msgSender(), tokenId, 0);
@@ -227,7 +238,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   // COMMON
   receive() external payable override {
-    revert();
+    emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {

@@ -51,8 +51,8 @@ import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.ent
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */
@@ -98,6 +98,7 @@ import {
   CreateDropAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
+  CreateGameBalance1686896594700,
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
@@ -224,7 +225,10 @@ import {
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
   SeedExchangePayees1663047650510,
+  SeedGameBalance1686896594710,
   SeedGrade1657846587010,
+  // SeedLotteryRoundAt1660436476120,
+  // SeedLotteryTicketsAt1660436476140,
   SeedMerchant1563803000120,
   SeedMysteryboxErc1155At1653616447950,
   SeedMysteryboxErc721At1653616447930,
@@ -333,8 +337,8 @@ const config: PostgresConnectionOptions = {
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
-    WaitlistItemEntity,
-    WaitlistListEntity,
+    WaitListItemEntity,
+    WaitListListEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -629,6 +633,10 @@ const config: PostgresConnectionOptions = {
     CreateAchievementRedemption1681273013070,
     SeedAchievementClaimErc721At1681273013071,
     SeedAchievementRedemption1681273013080,
+
+    /* game */
+    CreateGameBalance1686896594700,
+    SeedGameBalance1686896594710,
   ],
 };
 

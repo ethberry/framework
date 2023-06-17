@@ -1,3 +1,5 @@
+import { IAssetItem } from "../exchange/common";
+
 export enum StakingEventType {
   RuleCreated = "RuleCreated",
   RuleUpdated = "RuleUpdated",
@@ -8,18 +10,16 @@ export enum StakingEventType {
   DepositReturn = "DepositReturn",
 }
 
-export type IAssetStruct = [string, string, string, string];
-
-export type IStakingRuleStruct = [
-  [IAssetStruct],
-  [IAssetStruct],
-  [IAssetStruct],
-  string,
-  string,
-  string,
-  boolean,
-  boolean,
-];
+export interface IStakingRuleStruct {
+  deposit: Array<IAssetItem>;
+  reward: Array<IAssetItem>;
+  content: Array<Array<IAssetItem>>;
+  period: string;
+  penalty: string;
+  maxStake: string;
+  recurrent: boolean;
+  active: boolean;
+}
 
 export interface IStakingRuleCreateEvent {
   ruleId: string;
@@ -71,7 +71,7 @@ export interface IStakingDepositWithdrawEvent {
 
 export interface IStakingBalanceWithdrawEvent {
   owner: string;
-  item: IAssetStruct;
+  item: IAssetItem;
 }
 
 export interface IStakingDepositFinishEvent {

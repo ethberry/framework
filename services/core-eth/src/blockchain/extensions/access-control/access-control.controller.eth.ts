@@ -36,6 +36,7 @@ export class AccessControlControllerEth {
     { contractType: ContractType.STAKING, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleGranted },
+    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleGranted },

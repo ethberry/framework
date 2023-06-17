@@ -85,7 +85,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, cap, contractTemplate] = args;
+    const { name, symbol, cap, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -135,7 +135,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -197,7 +197,7 @@ export class ContractManagerServiceEth {
       args: { addr, args, owner },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, batchSize, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, batchSize, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -266,7 +266,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, royalty, baseTokenURI, contractTemplate] = args;
+    const { name, symbol, royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -324,7 +324,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [royalty, baseTokenURI, contractTemplate] = args;
+    const { royalty, baseTokenURI, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -358,7 +358,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [name, symbol, baseTokenURI, royalty, contractTemplate] = args;
+    const { name, symbol, baseTokenURI, royalty, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -395,7 +395,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [account, startTimestamp, duration, contractTemplate] = args;
+    const { account, startTimestamp, duration, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -430,7 +430,7 @@ export class ContractManagerServiceEth {
     const {
       args: { addr, args },
     } = event;
-    const [payees, shares, contractTemplate] = args;
+    const { payees, shares, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -466,7 +466,7 @@ export class ContractManagerServiceEth {
       args: { addr, args },
     } = event;
 
-    const [contractTemplate] = args;
+    const { contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 

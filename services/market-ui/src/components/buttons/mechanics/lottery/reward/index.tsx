@@ -5,10 +5,11 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { ILotteryTicket, TokenStatus } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
+import { ILotteryTicket } from "../../../../../pages/mechanics/lottery/ticket-list";
 
 export interface ILotteryRewardButtonProps {
   ticket: ILotteryTicket;
@@ -21,7 +22,7 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
 
   const metaFn = useMetamask((ticket: ILotteryTicket, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.LOTTERY_ADDR, LotteryGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.token?.tokenId) as Promise<void>;
+    return contract.getPrize(ticket.tokenId) as Promise<void>;
   });
 
   const handleReward = (ticket: ILotteryTicket): (() => Promise<void>) => {
@@ -36,7 +37,7 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
     <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
       <IconButton
         onClick={handleReward(ticket)}
-        disabled={ticket.token!.tokenStatus !== TokenStatus.MINTED}
+        disabled={ticket.tokenStatus !== TokenStatus.MINTED}
         data-testid="LotteryRewardButton"
       >
         <Redeem />

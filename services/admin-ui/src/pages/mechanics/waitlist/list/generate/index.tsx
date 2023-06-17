@@ -8,19 +8,19 @@ import { IAsset } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IWaitlistGenerateDto {
+export interface IWaitListGenerateDto {
   item: IAsset;
   listId: number;
 }
 
-export interface IWaitlistEditDialogProps {
+export interface IWaitListEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IWaitlistGenerateDto>, form: any) => Promise<void>;
-  initialValues: IWaitlistGenerateDto;
+  onConfirm: (values: Partial<IWaitListGenerateDto>, form: any) => Promise<void>;
+  initialValues: IWaitListGenerateDto;
 }
 
-export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
+export const WaitListGenerateDialog: FC<IWaitListEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { item, listId } = initialValues;
@@ -34,7 +34,7 @@ export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.create"
-      testId="WaitlistGenerateDialog"
+      testId="WaitListGenerateDialog"
       {...rest}
     >
       <TemplateAssetInput autoSelect multiple prefix="item" />

@@ -11,7 +11,7 @@ import {
 
 import { shouldNotMint } from "../../../../ERC721/shared/simple/base/shouldNotMint";
 import { shouldNotSafeMint } from "../../../../ERC721/shared/simple/base/shouldNotSafeMint";
-import { shouldBaseUrl } from "./baseUrl";
+import { shouldBaseUrl } from "../../../../ERC721/shared/simple/baseUrl";
 import { shouldReceive } from "../../../../shared/receive";
 
 export function shouldBehaveLikeERC721(factory: () => Promise<any>, options?: IERC721EnumOptions) {

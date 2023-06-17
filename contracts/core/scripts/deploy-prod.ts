@@ -1,7 +1,7 @@
 import { camelToSnakeCase } from "@gemunion/contracts-utils";
 
 import { deployLotteryProd } from "./deploy/mechanics/lottery_prod";
-import { deployWaitlist } from "./deploy/mechanics/waitlist";
+import { deployWaitList } from "./deploy/mechanics/waitlist";
 import { deployWrapper } from "./deploy/mechanics/wrapper";
 import { deployStakingProd } from "./deploy/mechanics/staking_prod";
 import { deploySystem } from "./deploy/system";
@@ -11,7 +11,7 @@ const contracts: Record<string, any> = {};
 async function deployMechanics(contracts: Record<string, any>) {
   await deployStakingProd(contracts);
   await deployLotteryProd(contracts);
-  await deployWaitlist(contracts);
+  await deployWaitList(contracts);
   await deployWrapper(contracts);
 }
 

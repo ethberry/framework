@@ -7,13 +7,12 @@ import { AssetModule } from "../../exchange/asset/asset.module";
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
 import { ClaimController } from "./claim.controller";
-import { ClaimControllerRmq } from "./claim.controller.rmq";
 import { ClaimServiceRmq } from "./claim.service.rmq";
 
 @Module({
   imports: [SignerModule, AssetModule, MerchantModule, TypeOrmModule.forFeature([ClaimEntity])],
   providers: [Logger, ClaimService, ClaimServiceRmq],
-  controllers: [ClaimController, ClaimControllerRmq],
+  controllers: [ClaimController],
   exports: [ClaimService, ClaimServiceRmq],
 })
 export class ClaimModule {}

@@ -10,6 +10,7 @@ import {
   ContractEventType,
   ContractFeatures,
   ContractType,
+  ExchangeEventType,
   ModuleType,
   RaffleEventType,
 } from "@framework/types";
@@ -27,7 +28,7 @@ import { RaffleLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const raffleContracts = await contractService.findAllByType(ModuleType.RAFFLE, [ContractFeatures.RANDOM]);
+        const raffleContracts = await contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -52,6 +53,7 @@ import { RaffleLogService } from "./log.service";
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
+              ExchangeEventType.PaymentEthReceived,
             ],
           },
           block: {

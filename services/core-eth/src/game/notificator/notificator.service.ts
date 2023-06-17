@@ -1,11 +1,11 @@
-import { Inject, Logger, Injectable, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
 import { MobileEventType, RmqProviderType } from "@framework/types";
 
 import { MerchantService } from "../../infrastructure/merchant/merchant.service";
-import {
+import type {
   IClaimData,
   IGradeData,
   IPurchaseData,
@@ -15,6 +15,8 @@ import {
   IStakingDepositStartData,
   IStakingRuleCreatedData,
   IStakingRuleUpdatedData,
+  IWaitListRewardClaimedData,
+  IWaitListRewardSetData,
 } from "./interfaces";
 
 @Injectable()
@@ -64,6 +66,19 @@ export class NotificatorService {
   public async claim(data: IClaimData): Promise<any> {
     return this.sendMessage(data.claim.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+    });
+  }
+
+  // MODULE:WAITLIST
+  public async rewardSet(data: IWaitListRewardSetData): Promise<any> {
+    return this.sendMessage(data.waitList.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.WAITLIST_REWARD_SET, data).toPromise();
+    });
+  }
+
+  public async rewardClaimed(data: IWaitListRewardClaimedData): Promise<any> {
+    return this.sendMessage(data.waitList.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.WAITLIST_REWARD_CLAIMED, data).toPromise();
     });
   }
 

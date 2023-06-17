@@ -10,7 +10,22 @@ export enum ContractManagerEventType {
   StakingDeployed = "StakingDeployed",
 }
 
-export type ICollectionDeployedEventArgs = [string, string, string, string, string, string];
+// struct CollectionArgs {
+//   string name;
+//   string symbol;
+//   uint96 royalty;
+//   string baseTokenURI;
+//   uint96 batchSize;
+//   string contractTemplate;
+// }
+export interface ICollectionDeployedEventArgs {
+  name: string;
+  symbol: string;
+  royalty: string;
+  baseTokenURI: string;
+  batchSize: string;
+  contractTemplate: string;
+}
 
 export interface IContractManagerCollectionDeployedEvent {
   addr: string;
@@ -18,42 +33,102 @@ export interface IContractManagerCollectionDeployedEvent {
   owner: string;
 }
 
-export type IVestingDeployedEventArgs = [string, string, string, string, string];
+// struct VestingArgs {
+//   address account;
+//   uint64 startTimestamp; // in sec
+//   uint64 duration; // in sec
+//   string contractTemplate;
+// }
 
+export interface IVestingDeployedEventArgs {
+  account: string;
+  startTimestamp: string;
+  duration: string;
+  contractTemplate: string;
+}
 export interface IContractManagerVestingDeployedEvent {
   addr: string;
   args: IVestingDeployedEventArgs;
 }
 
-export type IMysteryTokenDeployedEventArgs = [string, string, string, string, string];
+// struct MysteryArgs {
+//   string name;
+//   string symbol;
+//   uint96 royalty;
+//   string baseTokenURI;
+//   string contractTemplate;
+// }
+export interface IMysteryTokenDeployedEventArgs {
+  name: string;
+  symbol: string;
+  royalty: string;
+  baseTokenURI: string;
+  contractTemplate: string;
+}
 
 export interface IContractManagerMysteryTokenDeployedEvent {
   addr: string;
   args: IMysteryTokenDeployedEventArgs;
 }
 
-export type IERC20TokenDeployedEventArgs = [string, string, string, string];
-
+// struct Erc20Args {
+//   string name;
+//   string symbol;
+//   uint256 cap;
+//   string contractTemplate;
+// }
+export interface IERC20TokenDeployedEventArgs {
+  name: string;
+  symbol: string;
+  cap: string;
+  contractTemplate: string;
+}
 export interface IContractManagerERC20TokenDeployedEvent {
   addr: string;
   args: IERC20TokenDeployedEventArgs;
 }
 
-export type IERC721TokenDeployedEventArgs = [string, string, string, string, string];
-
+// struct Erc721\998Args {
+//   string name;
+//   string symbol;
+//   uint96 royalty;
+//   string baseTokenURI;
+//   string contractTemplate;
+// }
+export interface IERC721TokenDeployedEventArgs {
+  name: string;
+  symbol: string;
+  royalty: string;
+  baseTokenURI: string;
+  contractTemplate: string;
+}
 export interface IContractManagerERC721TokenDeployedEvent {
   addr: string;
   args: IERC721TokenDeployedEventArgs;
 }
 
-export type IERC998TokenDeployedEventArgs = [string, string, string, string, string];
-
+export interface IERC998TokenDeployedEventArgs {
+  name: string;
+  symbol: string;
+  royalty: string;
+  baseTokenURI: string;
+  contractTemplate: string;
+}
 export interface IContractManagerERC998TokenDeployedEvent {
   addr: string;
   args: IERC998TokenDeployedEventArgs;
 }
 
-export type IERC1155TokenDeployedEventArgs = [string, string, string];
+// struct Erc1155Args {
+//   uint96 royalty;
+//   string baseTokenURI;
+//   string contractTemplate;
+// }
+export interface IERC1155TokenDeployedEventArgs {
+  royalty: string;
+  baseTokenURI: string;
+  contractTemplate: string;
+}
 
 export interface IContractManagerERC1155TokenDeployedEvent {
   royalty: string;
@@ -61,14 +136,26 @@ export interface IContractManagerERC1155TokenDeployedEvent {
   args: IERC1155TokenDeployedEventArgs;
 }
 
-export type IPyramidDeployedEventArgs = [Array<string>, Array<string>, string];
+// struct PyramidArgs {
+//   address[] payees;
+//   uint256[] shares;
+//   string contractTemplate;
+// }
+export interface IPyramidDeployedEventArgs {
+  payees: Array<string>;
+  shares: Array<string>;
+  contractTemplate: string;
+}
 
 export interface IContractManagerPyramidDeployedEvent {
   addr: string;
   args: IPyramidDeployedEventArgs;
 }
 
-export type IStakingDeployedEventArgs = [string, string];
+// struct StakingArgs { string contractTemplate }
+export interface IStakingDeployedEventArgs {
+  contractTemplate: string;
+}
 
 export interface IContractManagerStakingDeployedEvent {
   addr: string;

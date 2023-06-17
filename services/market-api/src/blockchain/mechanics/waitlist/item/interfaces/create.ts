@@ -1,3 +1,3 @@
-export interface IWaitlistItemCreateDto {
+export interface IWaitListItemCreateDto {
   account: string;
 }

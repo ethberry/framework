@@ -167,8 +167,7 @@ export class EventHistoryService {
     if (eventType === ContractEventType.MintRandom) {
       const data = eventData as IERC721TokenMintRandomEvent;
       const requestId = data.requestId;
-
-      const parentEvent = await this.findByRandomRequest(requestId);
+      const parentEvent = await this.findByRandomRequest(requestId.toString());
 
       if (parentEvent) {
         Object.assign(contractEventEntity, { parentId: parentEvent.id });
@@ -192,6 +191,8 @@ export class EventHistoryService {
           ExchangeEventType.Mysterybox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,
+          ExchangeEventType.PurchaseLottery,
+          ExchangeEventType.PurchaseRaffle,
           ContractEventType.MintRandom,
         ]),
       });

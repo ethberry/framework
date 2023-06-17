@@ -20,7 +20,7 @@ import { RaffleTicketLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const raffleTicketAddr = await contractService.findAllByType(ModuleType.LOTTERY, []);
+        const raffleTicketAddr = await contractService.findAllByType([ModuleType.RAFFLE], []);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =

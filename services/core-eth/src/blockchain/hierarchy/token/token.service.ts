@@ -50,7 +50,7 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
-      tokenId,
+      tokenId: Number(tokenId).toString(),
     });
 
     queryBuilder.andWhere("contract.address = :address", {

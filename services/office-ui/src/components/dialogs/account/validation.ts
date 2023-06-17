@@ -1,7 +1,7 @@
-import { object, string } from "yup";
+import { object } from "yup";
 
-import { reEthAddress } from "@gemunion/constants";
+import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema = object().shape({
-  account: string().matches(reEthAddress, "form.validations.patternMismatch").required("form.validations.valueMissing"),
+  account: addressValidationSchema,
 });

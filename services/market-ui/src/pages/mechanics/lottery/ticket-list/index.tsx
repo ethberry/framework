@@ -13,13 +13,17 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILotteryTicket, ILotteryTicketSearchDto } from "@framework/types";
+import { ILotteryRound, ILotteryTicketSearchDto, IToken } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryTicketSearchForm } from "./form";
 import { LotteryTicketViewDialog } from "./view";
-import { getNumbers, getWinners } from "./utils";
+import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryRewardButton } from "../../../../components/buttons";
+
+export interface ILotteryTicket extends IToken {
+  round: Partial<ILotteryRound>;
+}
 
 export const LotteryTicketList: FC = () => {
   const {
@@ -39,7 +43,9 @@ export const LotteryTicketList: FC = () => {
   } = useCollection<ILotteryTicket, ILotteryTicketSearchDto>({
     baseUrl: "/lottery/ticket",
     empty: {
-      numbers: [],
+      round: {
+        numbers: [],
+      },
     },
     search: {
       roundIds: [],
@@ -62,10 +68,19 @@ export const LotteryTicketList: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((ticket, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>
-                {ticket.roundId} - {getNumbers(ticket)}
+              <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(ticket.metadata.NUMBERS)}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {"Round #"}
+                {ticket.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{getWinners(ticket, ticket.round!)}</ListItemText>
+              {/* <ListItemText sx={{ width: 0.6 }}> */}
+              {/*  {ticket.round.roundId} - {getNumbers(ticket)} */}
+              {/* </ListItemText> */}
+              <ListItemText sx={{ width: 0.2 }}>
+                {getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || [])}
+              </ListItemText>
+              {/* <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{getWinners(ticket, ticket.round!)}</ListItemText> */}
               <ListItemSecondaryAction>
                 <LotteryRewardButton ticket={ticket} />
                 <IconButton onClick={handleView(ticket)}>

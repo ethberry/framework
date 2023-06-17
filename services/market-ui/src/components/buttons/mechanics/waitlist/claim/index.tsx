@@ -10,11 +10,11 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ClaimABI from "../../../../../abis/mechanics/waitlist/claim/claim.abi.json";
 
-export interface IClaimWaitlistButtonProps {
+export interface IWaitListClaimButtonProps {
   listId: number;
 }
 
-export const ClaimWaitlistButton: FC<IClaimWaitlistButtonProps> = props => {
+export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
   const { listId } = props;
 
   const { formatMessage } = useIntl();
@@ -32,7 +32,7 @@ export const ClaimWaitlistButton: FC<IClaimWaitlistButtonProps> = props => {
     { success: false },
   );
 
-  const metaWaitlist = useMetamask((web3Context: Web3ContextType) => {
+  const metaWaitList = useMetamask((web3Context: Web3ContextType) => {
     return fn(null as unknown as any, listId).then((proof: { proof: Array<string> }) => {
       const contract = new Contract(process.env.WAITLIST_ADDR, ClaimABI, web3Context.provider?.getSigner());
       return contract.claim(proof.proof, listId) as Promise<void>;
@@ -40,12 +40,12 @@ export const ClaimWaitlistButton: FC<IClaimWaitlistButtonProps> = props => {
   });
 
   const handleClick = () => {
-    return metaWaitlist();
+    return metaWaitList();
   };
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.waitlist" })}>
-      <IconButton onClick={handleClick} data-testid="ClaimWaitlistButton">
+      <IconButton onClick={handleClick} data-testid="ClaimWaitListButton">
         <Redeem />
       </IconButton>
     </Tooltip>

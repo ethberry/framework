@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
-import { JsonRpcProvider } from "ethers";
-import { Log, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
@@ -193,6 +192,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       args: { tokenId, to },
     } = event;
     const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+
     const entityWithRelations = await this.eventHistoryService.findOne(
       { id: eventHistoryEntity.id },
       { relations: { parent: true } },
