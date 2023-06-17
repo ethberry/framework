@@ -39,7 +39,7 @@
     "@gemunion/popup": "1.0.21",
     "@gemunion/provider-api-firebase": "2.0.22",
     "@gemunion/provider-coingecko": "2.0.43",
-    "@gemunion/provider-license": "3.0.20",
+    "@gemunion/provider-license": "3.0.21",
     "@gemunion/provider-localization": "3.0.84",
     "@gemunion/provider-picker": "5.0.21",
     "@gemunion/provider-popup": "1.0.21",
