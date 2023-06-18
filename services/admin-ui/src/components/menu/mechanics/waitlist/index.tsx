@@ -3,17 +3,17 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ITemplate } from "@framework/types";
+import type { IWaitListList } from "@framework/types";
 
-import { MintMenuItem } from "./mint";
+import { UploadMenuItem } from "./upload";
 
-export interface ITemplateActionsMenu {
-  template: ITemplate;
+export interface IWaitListActionsMenu {
+  waitListList: IWaitListList;
   disabled?: boolean;
 }
 
-export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
-  const { template, disabled } = props;
+export const WaitListActionsMenu: FC<IWaitListActionsMenu> = props => {
+  const { waitListList, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -30,18 +30,18 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
     <Fragment>
       <IconButton
         aria-label="more"
-        id="template-menu-button"
-        aria-controls={open ? "template-actions-menu" : undefined}
+        id="waitlist-menu-button"
+        aria-controls={open ? "waitlist-actions-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
         disabled={disabled}
-        data-testid="TemplateActionsMenuButton"
+        data-testid="WaitListActionsMenuButton"
       >
         <MoreVert />
       </IconButton>
-      <Menu id="template-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MintMenuItem template={template} />
+      <Menu id="waitlist-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <UploadMenuItem waitListList={waitListList} />
       </Menu>
     </Fragment>
   );

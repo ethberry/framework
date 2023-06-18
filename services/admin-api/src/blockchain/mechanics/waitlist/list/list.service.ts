@@ -1,21 +1,36 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  forwardRef,
+  Inject,
+  Injectable,
+  Logger,
+  LoggerService,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
+import { mapLimit } from "async";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { WaitListItemEntity } from "../item/item.entity";
+import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
-import type { IWaitListGenerateDto } from "./interfaces";
+import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
 
 @Injectable()
 export class WaitListListService {
   constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @InjectRepository(WaitListListEntity)
     private readonly waitListListEntityRepository: Repository<WaitListListEntity>,
+    @Inject(forwardRef(() => WaitListItemService))
+    private readonly waitListItemService: WaitListItemService,
     protected readonly assetService: AssetService,
   ) {}
 
@@ -169,5 +184,38 @@ export class WaitListListService {
 
     // return { root: merkleTree.getHexRoot() };
     return { root: merkleTree.root };
+  }
+
+  public async upload(dto: IWaitListUploadDto, userEntity: UserEntity): Promise<Array<WaitListItemEntity>> {
+    const { items, listId } = dto;
+
+    const waitListListEntity = await this.findOne({ id: listId });
+
+    if (!waitListListEntity) {
+      throw new NotFoundException("waitListListNotFound");
+    }
+
+    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return new Promise(resolve => {
+      mapLimit(
+        items,
+        10,
+        async (row: IWaitListRow) => {
+          return this.waitListItemService.create({
+            listId,
+            account: row.account,
+          });
+        },
+        (e, results) => {
+          if (e) {
+            this.loggerService.error(e, WaitListItemService.name);
+          }
+          resolve(results as Array<WaitListItemEntity>);
+        },
+      );
+    });
   }
 }

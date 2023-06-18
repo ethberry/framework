@@ -71,7 +71,6 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
         open={isUploadDialogOpen}
         isLoading={isLoading}
         initialValues={{
-          files: [],
           rows: [],
         }}
       />

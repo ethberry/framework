@@ -14,6 +14,7 @@ import type { IWaitListList } from "@framework/types";
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
+import { WaitListActionsMenu } from "../../../../components/menu/mechanics/waitlist";
 
 export const WaitListList: FC = () => {
   const {
@@ -64,16 +65,20 @@ export const WaitListList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((waitListItem, i) => (
+          {rows.map((waitListList, i) => (
             <ListItem key={i}>
-              <ListItemText>{waitListItem.title}</ListItemText>
+              <ListItemText>{waitListList.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(waitListItem)}>
+                <IconButton onClick={handleEdit(waitListList)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(waitListItem)}>
+                <IconButton onClick={handleDelete(waitListList)}>
                   <Delete />
                 </IconButton>
+                <WaitListActionsMenu
+                  waitListList={waitListList}
+                  // disabled={waitListList.root}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

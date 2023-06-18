@@ -197,9 +197,10 @@ export class ClaimService {
   }
 
   public async upload(dto: IClaimUploadDto, userEntity: UserEntity): Promise<Array<ClaimEntity>> {
-    return new Promise((resolve, reject) => {
+    const { claims } = dto;
+    return new Promise(resolve => {
       mapLimit(
-        dto.claims,
+        claims,
         10,
         async (row: IClaimRow) => {
           const contractEntity = await this.contractService.findOne({
@@ -229,12 +230,11 @@ export class ClaimService {
             userEntity,
           );
         },
-        (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(results as ClaimEntity[]);
+        (e, results) => {
+          if (e) {
+            this.loggerService.error(e, ClaimService.name);
           }
+          resolve(results as Array<ClaimEntity>);
         },
       );
     });

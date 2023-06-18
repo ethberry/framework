@@ -1,41 +1,47 @@
 import React, { FC, useEffect } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
-import { v4 } from "uuid";
 import csv2json from "csvtojson";
+import { v4 } from "uuid";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
-import { ICollectionUploadDto } from "../index";
-import { tokensValidationSchema } from "../validation";
+import { claimsValidationSchema } from "../validation";
 import { useStyles } from "./styles";
-// TODO this is wrong
-import { IClaimRow } from "../../../../../../buttons/mechanics/claim/upload/dialog/file-input";
+
+export interface IWaitListRow {
+  id?: string;
+  account: string;
+}
+
+export interface IWaitListUploadDto {
+  listId: number;
+  items: Array<IWaitListRow>;
+}
 
 export interface IFileInputProps {
-  initialValues: ICollectionUploadDto;
+  initialValues: IWaitListUploadDto;
 }
 
 export const FileInput: FC<IFileInputProps> = props => {
   const { initialValues } = props;
-
   const classes = useStyles();
-  const form = useFormContext<any>();
-  const { formatMessage } = useIntl();
 
-  const fieldName = "tokens";
+  const fieldName = "items";
   const filesName = "files";
 
-  const tokens = useWatch({ name: fieldName });
+  const form = useFormContext<any>();
+  const items = useWatch({ name: fieldName });
+  const { formatMessage } = useIntl();
 
-  const headers = ["tokenId", "imageUrl", "metadata"];
+  const headers = ["account"];
 
   const resetForm = () => {
     form.reset(initialValues);
   };
 
-  const parseCsv = async (csv: File): Promise<IClaimRow[]> => {
+  const parseCsv = async (csv: File): Promise<IWaitListRow[]> => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
@@ -43,13 +49,13 @@ export const FileInput: FC<IFileInputProps> = props => {
           noheader: true,
           headers,
           colParser: {
-            metadata: "string",
+            amount: "string",
           },
           checkType: true,
         })
           .fromString(reader.result as string)
-          .then((data: IClaimRow[]) => {
-            resolve(data.map(token => ({ ...token, id: v4() })));
+          .then((data: IWaitListRow[]) => {
+            resolve(data.map(items => ({ ...items, id: v4() })));
           });
       };
       reader.readAsText(csv, "UTF-8");
@@ -59,7 +65,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   const handleChange = async (files: Array<File>) => {
     try {
       const data = await parseCsv(files[0]);
-      tokensValidationSchema.validateSync({ [fieldName]: data });
+      claimsValidationSchema.validateSync({ [fieldName]: data });
       form.setValue(fieldName, data, { shouldDirty: true });
       form.setValue(filesName, files, { shouldDirty: true });
     } catch (e) {
@@ -71,24 +77,10 @@ export const FileInput: FC<IFileInputProps> = props => {
 
   const columns = [
     {
-      field: "tokenId",
-      headerName: formatMessage({ id: "form.labels.tokenId" }),
-      sortable: true,
-      flex: 1,
-      minWidth: 100,
-    },
-    {
-      field: "imageUrl",
-      headerName: formatMessage({ id: "form.labels.imageUrl" }),
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.account" }),
       sortable: true,
       flex: 3,
-      minWidth: 260,
-    },
-    {
-      field: "metadata",
-      headerName: formatMessage({ id: "form.labels.metadata" }),
-      sortable: true,
-      flex: 2,
       minWidth: 260,
     },
   ];
@@ -97,7 +89,7 @@ export const FileInput: FC<IFileInputProps> = props => {
     return () => resetForm();
   }, []);
 
-  if (tokens.length) {
+  if (items.length) {
     return <CsvContentView resetForm={resetForm} csvContentName={fieldName} columns={columns} />;
   }
 

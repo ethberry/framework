@@ -29,11 +29,11 @@ export const FileInput: FC<IFileInputProps> = props => {
   const { initialValues } = props;
   const classes = useStyles();
 
-  const claimsName = "claims";
+  const fieldName = "claims";
   const filesName = "files";
 
   const form = useFormContext<any>();
-  const claims = useWatch({ name: claimsName });
+  const claims = useWatch({ name: fieldName });
   const { formatMessage } = useIntl();
 
   const headers = ["account", "tokenType", "address", "templateId", "amount", "endTimestamp"];
@@ -66,8 +66,8 @@ export const FileInput: FC<IFileInputProps> = props => {
   const handleChange = async (files: Array<File>) => {
     try {
       const data = await parseCsv(files[0]);
-      claimsValidationSchema.validateSync({ [claimsName]: data });
-      form.setValue(claimsName, data, { shouldDirty: true });
+      claimsValidationSchema.validateSync({ [fieldName]: data });
+      form.setValue(fieldName, data, { shouldDirty: true });
       form.setValue(filesName, files, { shouldDirty: true });
     } catch (e) {
       console.error(e);
@@ -126,7 +126,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   }, []);
 
   if (claims.length) {
-    return <CsvContentView resetForm={resetForm} csvContentName={claimsName} columns={columns} />;
+    return <CsvContentView resetForm={resetForm} csvContentName={fieldName} columns={columns} />;
   }
 
   return (

@@ -16,7 +16,6 @@ export interface IDispenserRow extends IBCAssetDto {
 }
 
 export interface IDispenserUploadDto {
-  files: Array<File>;
   rows: IDispenserRow[];
 }
 
@@ -28,11 +27,11 @@ export const FileInput: FC<IFileInputProps> = props => {
   const { initialValues } = props;
   const classes = useStyles();
 
-  const rowsName = "rows";
+  const fieldName = "rows";
   const filesName = "files";
 
   const { formatMessage } = useIntl();
-  const rows = useWatch({ name: rowsName });
+  const rows = useWatch({ name: fieldName });
   const form = useFormContext<any>();
 
   const headers = ["account", "tokenType", "address", "tokenId", "amount"];
@@ -65,8 +64,8 @@ export const FileInput: FC<IFileInputProps> = props => {
   const handleChange = async (files: Array<File>) => {
     try {
       const data = await parseCsv(files[0]);
-      dispenserValidationSchema.validateSync({ [rowsName]: data });
-      form.setValue(rowsName, data, { shouldDirty: true });
+      dispenserValidationSchema.validateSync({ [fieldName]: data });
+      form.setValue(fieldName, data, { shouldDirty: true });
       form.setValue(filesName, files, { shouldDirty: true });
     } catch (e) {
       console.error(e);
@@ -118,7 +117,7 @@ export const FileInput: FC<IFileInputProps> = props => {
   ];
 
   if (rows.length) {
-    return <CsvContentView resetForm={resetForm} csvContentName={rowsName} columns={columns} />;
+    return <CsvContentView resetForm={resetForm} csvContentName={fieldName} columns={columns} />;
   }
 
   return (
