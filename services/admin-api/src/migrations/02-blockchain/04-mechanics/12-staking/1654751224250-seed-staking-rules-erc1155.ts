@@ -46,7 +46,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ) VALUES (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80511
       ), (
@@ -58,19 +58,19 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80521
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80522
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80531
       ), (
@@ -82,7 +82,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80541
       ), (
@@ -94,19 +94,19 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80551
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80552
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80599
       );

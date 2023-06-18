@@ -20,7 +20,7 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
       ) VALUES (
         '${erc998ContractRandomAddress}',
         1,
-        104010101, -- physical rune
+        104010101, -- Physical rune
         104060101, -- Warrior
         '${currentDateTime}',
         '${currentDateTime}'

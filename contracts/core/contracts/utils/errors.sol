@@ -13,6 +13,7 @@ error UnsupportedTokenType();
 error SignerMissingRole();
 error ExpiredSignature();
 error NotExist();
+error AlreadyExist();
 error NotAnOwner();
 error CountExceed();
 error LimitExceed();
@@ -33,3 +34,5 @@ error NotActive();
 // lottery, raffle
 error WrongRound();
 error WrongPrice();
+
+// waitlist

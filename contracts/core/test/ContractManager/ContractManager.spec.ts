@@ -98,7 +98,7 @@ describe("ContractManager", function () {
         await expect(tx).to.be.revertedWith("ContractManager: Wrong role");
       });
 
-      it("should fail add: account is missing role", async function () {
+      it("should fail: account is missing role", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
         const contractInstance = await factory();

@@ -39,19 +39,19 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ) VALUES (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         1073001
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         1073002
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         1073003
       );

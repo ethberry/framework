@@ -33,36 +33,26 @@ contract WaitList is AccessControl, Pausable {
     _grantRole(PAUSER_ROLE, _msgSender());
   }
 
-  function setReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(_roots[externalId] == "", "Waitlist: Reward already set");
-    // TODO add sol function for addReward or changeReward
-    _roots[externalId] = root;
+  function setReward(Params memory params, Asset[] memory items) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (_roots[params.externalId] != "") {
+      revert AlreadyExist();
+    }
+
+    _roots[params.externalId] = params.extra;
+
+    if (items.length == 0) {
+      revert WrongAmount();
+    }
 
     uint256 length = items.length;
     for (uint256 i = 0; i < length; ) {
-      _items[externalId].push(items[i]);
+      _items[params.externalId].push(items[i]);
       unchecked {
         i++;
       }
     }
 
-    emit WaitListRewardSet(externalId, _items[externalId]);
-  }
-
-  function updateReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(_roots[externalId] != "", "Waitlist: Reward not yet set");
-    delete _items[externalId];
-    _roots[externalId] = root;
-
-    uint256 length = items.length;
-    for (uint256 i = 0; i < length; ) {
-      _items[externalId].push(items[i]);
-      unchecked {
-        i++;
-      }
-    }
-
-    emit WaitListRewardSet(externalId, _items[externalId]);
+    emit WaitListRewardSet(params.externalId, items);
   }
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {

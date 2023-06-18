@@ -15,115 +15,115 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
       ) VALUES (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040101
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040102
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040103
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040401
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040402
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040403
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040404
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040405
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040501
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040601
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040602
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040603
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040701
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040901
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040902
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101040903
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101041101
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101041201
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101041301
       ), (

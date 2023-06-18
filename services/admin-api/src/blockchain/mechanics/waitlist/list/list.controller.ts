@@ -15,12 +15,12 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchableDto, SearchableOptionalDto, SearchDto } from "@gemunion/collection";
+import { SearchDto } from "@gemunion/collection";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { WaitListListService } from "./list.service";
 import { WaitListListEntity } from "./list.entity";
-import { WaitListGenerateDto } from "./dto";
+import { WaitListGenerateDto, WaitListListCreateDto, WaitListListUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/waitlist/list")
@@ -34,7 +34,7 @@ export class WaitListListController {
   }
 
   @Post("/")
-  public create(@Body() dto: SearchableDto, @User() userEntity: UserEntity): Promise<WaitListListEntity> {
+  public create(@Body() dto: WaitListListCreateDto, @User() userEntity: UserEntity): Promise<WaitListListEntity> {
     return this.waitlistListService.create(dto, userEntity);
   }
 
@@ -51,21 +51,21 @@ export class WaitListListController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<WaitListListEntity | null> {
-    return this.waitlistListService.findOne({ id });
+    return this.waitlistListService.findOneWithRelations({ id });
   }
 
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: SearchableOptionalDto,
+    @Body() dto: WaitListListUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<WaitListListEntity | null> {
-    return this.waitlistListService.update({ id, merchantId: userEntity.merchantId }, dto);
+    return this.waitlistListService.update({ id }, dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.waitlistListService.delete({ id, merchantId: userEntity.merchantId });
+    await this.waitlistListService.delete({ id }, userEntity);
   }
 }

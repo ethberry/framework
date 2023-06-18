@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedAssetComponentsMysteryboxAt1563804001260 implements MigrationInterface {
+export class SeedAssetComponentsWaitListAt1663047650220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -13,41 +13,77 @@ export class SeedAssetComponentsMysteryboxAt1563804001260 implements MigrationIn
         amount,
         asset_id
       ) VALUES (
-        'ERC20',
-        10201,
-        1020101, -- Space Credits
+        'NATIVE',
+        10101,
+        1010101, -- BESU
         '${WeiPerEther.toString()}',
-        101110101
+        102090001
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110102
+        102090002
+      ), (
+        'ERC721',
+        10301,
+        1030101, -- Ruby
+        '1',
+        102090003
+      ), (
+        'ERC998',
+        10401,
+        1040101, -- Physic rune
+        '1',
+        102090004
+      ), (
+        'ERC1155',
+        10501,
+        1050101, -- Gold
+        '1000',
+        102090005
+      ), (
+        'NATIVE',
+        10101,
+        1010101, -- BESU
+        '${WeiPerEther.toString()}',
+        102090006
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110401
+        102090006
+      ), (
+        'ERC721',
+        10301,
+        1030101, -- Ruby
+        '1',
+        102090006
+      ), (
+        'ERC998',
+        10401,
+        1040101, -- Physic rune
+        '1',
+        102090006
+      ), (
+        'ERC1155',
+        10501,
+        1050101, -- Gold
+        '1000',
+        102090006
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110501
+        102090007
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110601
-      ), (
-        'ERC20',
-        20217,
-        2021701, -- busd
-        '${WeiPerEther.toString()}',
-        201110101
+        102090008
       );
     `);
   }

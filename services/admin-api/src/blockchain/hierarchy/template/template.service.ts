@@ -202,9 +202,11 @@ export class TemplateService {
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const { price } = dto;
+
     const assetEntity = await this.assetService.create({
       components: [],
     });
+
     await this.assetService.update(assetEntity, price);
 
     return await this.templateEntityRepository

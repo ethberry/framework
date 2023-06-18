@@ -21,19 +21,19 @@ export class SeedAssetComponentGrade1657846587020 implements MigrationInterface 
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         50102
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         '1000',
         50201
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         '1000',
         50202
       );

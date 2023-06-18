@@ -9,10 +9,11 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { IWaitListList } from "@framework/types";
+import type { IWaitListList } from "@framework/types";
 
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
+import { cleanUpAsset } from "../../../../utils/money";
 
 export const WaitListList: FC = () => {
   const {
@@ -42,6 +43,11 @@ export const WaitListList: FC = () => {
     search: {
       query: "",
     },
+    filter: ({ title, description, item }) => ({
+      title,
+      description,
+      item: cleanUpAsset(item),
+    }),
   });
 
   return (
@@ -49,7 +55,7 @@ export const WaitListList: FC = () => {
       <Breadcrumbs path={["dashboard", "waitlist", "waitlist.list"]} />
 
       <PageHeader message="pages.waitlist.list.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
@@ -93,7 +99,6 @@ export const WaitListList: FC = () => {
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
-        message={selected.id ? "dialogs.edit" : "dialogs.create"}
         testId="WaitListListEditDialog"
         initialValues={selected}
       />

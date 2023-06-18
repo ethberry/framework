@@ -126,7 +126,7 @@ import {
   CreateTemplate1563804000200,
   CreateToken1563804000300,
   CreateUser1563803000130,
-  CreateWaitlistItem1663047650300,
+  CreateWaitListItem1663047650300,
   CreateWaitlistList1663047650200,
   CreateWalletPayees1663047650500,
   SeedAccessControlCollectionAt20At1679894502230,
@@ -227,8 +227,6 @@ import {
   SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
-  // SeedLotteryRoundAt1660436476120,
-  // SeedLotteryTicketsAt1660436476140,
   SeedMerchant1563803000120,
   SeedMysteryboxErc1155At1653616447950,
   SeedMysteryboxErc721At1653616447930,
@@ -290,10 +288,11 @@ import {
   SeedTokenNativeAt1563804000310,
   SeedTokenRaffleTicketAt1685961134380,
   SeedUser1563803000140,
-  SeedWaitlistItemAt1663047650310,
-  SeedWaitlistListAt1663047650210,
+  SeedWaitListItemAt1663047650310,
+  SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedAssetComponentsWaitListAt1663047650220 } from "./migrations/02-blockchain/04-mechanics/09-waitlist/1663047650220-seed-asset-component-waitlist";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -565,9 +564,10 @@ const config: PostgresConnectionOptions = {
 
     SeedContractWaitlistAt1663047650100,
     CreateWaitlistList1663047650200,
-    SeedWaitlistListAt1663047650210,
-    CreateWaitlistItem1663047650300,
-    SeedWaitlistItemAt1663047650310,
+    SeedWaitListListAt1663047650210,
+    SeedAssetComponentsWaitListAt1663047650220,
+    CreateWaitListItem1663047650300,
+    SeedWaitListItemAt1663047650310,
 
     CreateBreed1663047650400,
     SeedBreed1663047650401,

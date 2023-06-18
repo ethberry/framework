@@ -25,7 +25,7 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
       ) VALUES (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         '1000',
         35101
       );

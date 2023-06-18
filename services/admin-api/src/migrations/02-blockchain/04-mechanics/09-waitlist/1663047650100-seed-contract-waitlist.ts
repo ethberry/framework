@@ -9,7 +9,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const waitlistAddr = process.env.WAITLIST_ADDR || wallet;
+    const waitListAddr = process.env.WAITLIST_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,7 +31,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         updated_at
       ) VALUES (
         5,
-        '${waitlistAddr}',
+        '${waitListAddr}',
         '${chainId}',
         'WAITLIST',
         '${simpleFormatting}',

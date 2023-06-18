@@ -45,13 +45,13 @@ export class SeedAssetComponentsAchievementAt1681273013045 implements MigrationI
       ), (
         'ERC20',
         10201,
-        1020101, -- space credits
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         40100106
       ), (
         'ERC20',
         10201,
-        1020101, -- space credits
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         40100107
       );

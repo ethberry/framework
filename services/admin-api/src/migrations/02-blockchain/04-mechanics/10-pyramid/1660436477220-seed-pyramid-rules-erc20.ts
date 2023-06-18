@@ -32,7 +32,7 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       ) VALUES (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         90211
       ), (
@@ -44,13 +44,13 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         90221
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         90222
       );

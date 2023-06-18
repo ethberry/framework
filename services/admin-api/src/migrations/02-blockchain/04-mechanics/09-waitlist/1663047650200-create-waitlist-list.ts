@@ -25,6 +25,15 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "item_id",
+          type: "int",
+        },
+        {
+          name: "is_uploaded",
+          type: "bool",
+          default: false,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -38,6 +47,12 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

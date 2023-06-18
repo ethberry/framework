@@ -46,7 +46,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ) VALUES (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80211
       ), (
@@ -58,19 +58,19 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80221
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80222
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80231
       ), (
@@ -82,7 +82,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80241
       ), (
@@ -94,19 +94,19 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80251
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         1000,
         80252
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80299
       );

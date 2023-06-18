@@ -64,7 +64,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80122
       ), (
@@ -100,7 +100,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       ), (
         'ERC1155',
         10501,
-        1050101, -- gold
+        1050101, -- Gold
         10,
         80152
       ), (

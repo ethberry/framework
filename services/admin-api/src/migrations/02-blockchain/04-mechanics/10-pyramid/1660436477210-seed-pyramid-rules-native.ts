@@ -50,7 +50,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         90122
       );

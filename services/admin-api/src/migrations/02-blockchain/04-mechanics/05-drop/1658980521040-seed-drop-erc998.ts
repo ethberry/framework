@@ -35,7 +35,7 @@ export class SeedDropErc998At1658980521040 implements MigrationInterface {
       ), (
         'ERC20',
         10201,
-        1020101, -- space credit
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         64111
       );
