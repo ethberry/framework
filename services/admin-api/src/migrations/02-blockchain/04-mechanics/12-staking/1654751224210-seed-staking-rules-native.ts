@@ -45,68 +45,68 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         asset_id
       ) VALUES (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80111
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80112
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80121
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
         80122
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80131
       ), (
         'ERC721',
-        1306,
-        130601, -- sword
+        10306,
+        1030601, -- sword
         1,
         80132
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80141
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80142
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80151
       ), (
         'ERC1155',
-        1501,
-        150101, -- gold
+        10501,
+        1050101, -- gold
         10,
         80152
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80199
       );

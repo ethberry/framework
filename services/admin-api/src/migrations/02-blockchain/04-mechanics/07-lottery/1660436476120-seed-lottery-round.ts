@@ -38,20 +38,20 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
         1073001
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
         1073002
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
         1073003
       );
@@ -72,7 +72,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ) VALUES (
         '${getNumbers()}',
         '1',
-        11,
+        21,
         12101,
         1073001,
         0,
@@ -83,7 +83,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '2',
-        11,
+        21,
         12101,
         1073002,
         0,
@@ -94,7 +94,7 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       ), (
         '${getNumbers()}',
         '3',
-        11,
+        21,
         12101,
         1073003,
         5,

@@ -17,7 +17,7 @@ export class SeedBalanceLotteryTicketAt1563804020480 implements MigrationInterfa
       ) VALUES (
         '${wallet}',
         1,
-        121010101,
+        122010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

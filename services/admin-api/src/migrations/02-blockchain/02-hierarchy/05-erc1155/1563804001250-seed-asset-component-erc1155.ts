@@ -14,58 +14,58 @@ export class SeedAssetComponentsErc1155At1563804001250 implements MigrationInter
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150101
+        101050101
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150102
+        101050102
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150103
+        101050103
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150104
+        101050104
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150105
+        101050105
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150401
+        101050401
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150402
+        101050402
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- space credit
         '${WeiPerEther.toString()}',
-        150403
+        101050403
       ), (
         'ERC20',
-        2217,
-        221701, -- busd
+        20217,
+        2021701, -- busd
         '${WeiPerEther.toString()}',
-        250101
+        201050101
       );
     `);
   }

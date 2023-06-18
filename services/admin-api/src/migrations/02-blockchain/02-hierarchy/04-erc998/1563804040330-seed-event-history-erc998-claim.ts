@@ -27,8 +27,8 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130401",
-          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
+          externalId: "1030401",
+          items: [[2, erc721ContractSimpleAddress, "1040101", "1"]],
         })}',
         null,
         '${currentDateTime}',
@@ -41,7 +41,7 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "14010101",
+          tokenId: "104010101",
         })}',
         1304010,
         '${currentDateTime}',
@@ -53,8 +53,8 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130402",
-          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
+          externalId: "1030402",
+          items: [[2, erc721ContractSimpleAddress, "1040101", "1"]],
         })}',
         null,
         '${currentDateTime}',
@@ -67,7 +67,7 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "14010201",
+          tokenId: "104010201",
         })}',
         1304020,
         '${currentDateTime}',
@@ -79,8 +79,8 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         'Claim',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "130403",
-          items: [[2, erc721ContractSimpleAddress, "140101", "1"]],
+          externalId: "1030403",
+          items: [[2, erc721ContractSimpleAddress, "1040101", "1"]],
         })}',
         null,
         '${currentDateTime}',
@@ -93,7 +93,7 @@ export class SeedEventHistoryErc998ClaimAt1563804040330 implements MigrationInte
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "14010301",
+          tokenId: "104010301",
         })}',
         1304030,
         '${currentDateTime}',

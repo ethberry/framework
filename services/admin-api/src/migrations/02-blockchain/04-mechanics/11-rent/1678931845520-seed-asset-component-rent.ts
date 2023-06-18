@@ -14,14 +14,14 @@ export class SeedAssetComponentRent1678931845520 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- space credits
         '${WeiPerEther.toString()}',
         220101
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         220102
       );

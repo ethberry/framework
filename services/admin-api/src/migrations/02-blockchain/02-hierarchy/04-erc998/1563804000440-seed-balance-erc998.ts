@@ -20,105 +20,105 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
       ) VALUES (
         '${erc998ContractRandomAddress}',
         1,
-        14010101, -- physical rune
-        14060101, -- Warrior
+        104010101, -- physical rune
+        104060101, -- Warrior
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        14050101, -- Grimoir #1
-        14060301, -- Mage
+        104050101, -- Grimoir #1
+        104060301, -- Mage
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040101, -- Fireball
-        14050101, -- Grimoire #1
+        104040101, -- Fireball
+        104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040201, -- Frostbite
-        14050101, -- Grimoire #1
+        104040201, -- Frostbite
+        104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040301, -- Lightning bolt
-        14050101, -- Grimoire #1
+        104040301, -- Lightning bolt
+        104050101, -- Grimoire #1
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040401, -- Slow
-        14050102, -- Grimoire #2
+        104040401, -- Slow
+        104050102, -- Grimoire #2
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractUpgradeableAddress}',
         1,
-        14040501, -- Fly
-        14050102, -- Grimoire #2
+        104040501, -- Fly
+        104050102, -- Grimoire #2
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14060201,
+        104060201,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14060301,
+        104060301,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14070101,
+        104070101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14090101,
+        104090101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14110101,
+        104110101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14120101,
+        104120101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14130101,
+        104130101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        24010101,
+        204010101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'

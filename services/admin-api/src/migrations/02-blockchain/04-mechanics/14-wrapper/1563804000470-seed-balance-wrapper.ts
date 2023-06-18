@@ -20,57 +20,57 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
       ) VALUES (
         '${wallet}',
         1,
-        17010101,
+        112010101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         '${WeiPerEther.toString()}',
-        11010101,
-        17010101,
+        101010101,
+        112010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         '${WeiPerEther.toString()}',
-        12010101,
-        17010101,
+        102010101, -- Space Credits
+        112010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        17010102,
+        112010102,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         1,
-        13010101,
-        17010102,
+        103010101,
+        112010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         1,
-        14010101,
-        17010102,
+        104010101,
+        112010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        17010103,
+        112010103,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         1000,
-        15010101,
-        17010103,
+        105010101,
+        112010103,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -25,8 +25,8 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        1601,
-        160101, -- sword mysterybox
+        11101,
+        1110101, -- sword mysterybox
         '1',
         16001
       );

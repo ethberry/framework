@@ -34,7 +34,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'GRADE',
         0,
         50101,
-        1305,
+        10305,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -42,7 +42,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'GRADE',
         0,
         50102,
-        1306,
+        10306,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -50,7 +50,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'GRADE',
         1,
         50201,
-        1405,
+        10405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -58,7 +58,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'GRADE',
         1,
         50202,
-        1406, -- hero
+        10406, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       );

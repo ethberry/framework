@@ -19,13 +19,13 @@ export class SeedBalanceStakingAt1654751224530 implements MigrationInterface {
       ) VALUES (
         '${stakingAddr}',
         '${(100n * WeiPerEther).toString()}',
-        11010101, -- BESU
+        101010101, -- BESU
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${stakingAddr}',
         '${(100n * WeiPerEther).toString()}',
-        12010101, -- Space Credits
+        102010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       );

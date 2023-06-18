@@ -29,7 +29,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1101,
+        10101,
         '${ZeroAddress}',
         '${chainId}',
         'Native token (BESU)',
@@ -47,7 +47,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1102,
+        10102,
         '${ZeroAddress}',
         '${chainId}',
         'Inactive token (BESU)',
@@ -65,7 +65,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2101,
+        20101,
         '${ZeroAddress}',
         56,
         'Native token (BNB)',
@@ -83,7 +83,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3101,
+        30101,
         '${ZeroAddress}',
         '1',
         'Native token (ETH)',
@@ -101,7 +101,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4101,
+        40101,
         '${ZeroAddress}',
         '137',
         'Native token (MATIC)',

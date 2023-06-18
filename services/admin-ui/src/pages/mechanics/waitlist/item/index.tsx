@@ -8,6 +8,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
+import { WaitListGenerateButton } from "../../../../components/buttons/mechanics/waitlist/generate";
 import { WaitListSearchForm } from "./form";
 import { WaitListItemEditDialog } from "./edit";
 
@@ -45,6 +46,7 @@ export const WaitListItem: FC = () => {
       <Breadcrumbs path={["dashboard", "waitlist", "waitlist.item"]} />
 
       <PageHeader message="pages.waitlist.item.title">
+        <WaitListGenerateButton />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
@@ -54,17 +56,17 @@ export const WaitListItem: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((waitlistItem, i) => (
+          {rows.map((waitListItem, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{waitlistItem.account}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlistItem.list?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{waitListItem.account}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitListItem.list?.title}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <IconButton onClick={handleDelete(waitlistItem)}>
+                <IconButton onClick={handleDelete(waitListItem)}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

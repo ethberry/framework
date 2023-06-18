@@ -28,20 +28,20 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        1306,
-        130601, -- sword
+        10306,
+        1030601, -- sword
         '1',
         33101
       ), (
         'ERC721',
-        1306,
-        130601, -- sword
+        10306,
+        1030601, -- sword
         '1',
         33201
       ), (
         'ERC721',
-        2301,
-        230101, -- bep
+        20301,
+        2030101, -- bep
         '1',
         33301
       );
@@ -62,7 +62,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         33101,
-        160101,
+        1110101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -71,7 +71,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         33201,
-        160102,
+        1110102,
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -80,7 +80,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         33301,
-        260101,
+        2110101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

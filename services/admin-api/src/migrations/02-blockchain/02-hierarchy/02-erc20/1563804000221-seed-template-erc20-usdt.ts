@@ -21,7 +21,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        121501,
+        1021501,
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -29,11 +29,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        1215,
+        10215,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        221501,
+        2021501,
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -41,11 +41,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        2215,
+        20215,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        321501,
+        3021501,
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -53,11 +53,11 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        3215,
+        30215,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        421501,
+        4021501,
         'USDT',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fusdt.png?alt=media&token=fb224695-58f6-4014-aab9-2789b557a692',
@@ -65,7 +65,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        4215,
+        40215,
         '${currentDateTime}',
         '${currentDateTime}'
       );

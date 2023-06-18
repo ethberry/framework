@@ -27,42 +27,42 @@ export class SeedRent1678931845510 implements MigrationInterface {
       ) VALUES (
         'SHARE 25% to 75%',
         220101,
-        1309,
+        10309,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'SHARE 50% to 50%',
         220101,
-        1309,
+        10309,
         'ACTIVE',  
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'SHARE 75% to 25%',
          220101,
-         1309,
+         10309,
         'INACTIVE',
         '${currentDateTime}',
          '${currentDateTime}'
       ), (
         'SHARE 25% to 75%',
         220102,
-        1409,
+        10409,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'SHARE 50% to 50%',
         220102,
-        1409,
+        10409,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'SHARE 75% to 25%',
         220102,
-        1409,
+        10409,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

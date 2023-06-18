@@ -22,7 +22,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        110101,
+        1010101,
         'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -30,11 +30,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1101,
+        10101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        110201,
+        1010201,
         'Inactive token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,11 +42,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1102,
+        10102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        210101,
+        2010101,
         'Native token (BNB)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -54,11 +54,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        2101,
+        20101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        310101,
+        3010101,
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -66,11 +66,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        3101,
+        30101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        410101,
+        4010101,
         'Native token (MATIC)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -78,7 +78,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        4101,
+        40101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

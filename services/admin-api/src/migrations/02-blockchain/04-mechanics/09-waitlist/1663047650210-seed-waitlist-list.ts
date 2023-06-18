@@ -8,6 +8,16 @@ export class SeedWaitlistListAt1663047650210 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
+      INSERT INTO ${ns}.asset (
+        id
+      ) VALUES (
+        102090001
+      ), (
+        102090002
+      );
+    `);
+
+    await queryRunner.query(`
       INSERT INTO ${ns}.waitlist_list (
         title,
         description,

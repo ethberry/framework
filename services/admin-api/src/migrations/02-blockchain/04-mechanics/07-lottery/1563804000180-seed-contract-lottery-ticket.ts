@@ -32,7 +32,7 @@ export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterf
         created_at,
         updated_at
       ) VALUES (
-        12101,
+        12201,
         '${erc721ContractLotteryAddress}',
         '${chainId}',
         'LOTTERY TICKET',

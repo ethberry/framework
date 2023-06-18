@@ -36,7 +36,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1201,
+        10201,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
         'Space Credits',
@@ -55,7 +55,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1202,
+        10202,
         '${erc20TokenInactiveAddress}',
         '${chainId}',
         'ERC20 (inactive)',
@@ -74,7 +74,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1203,
+        10203,
         '${erc20TokenNewAddress}',
         '${chainId}',
         'ERC20 (new)',
@@ -93,7 +93,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1204,
+        10204,
         '${erc20TokenBlackListAddress}',
         '${chainId}',
         'ERC20 (blacklist)',
@@ -112,7 +112,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1205,
+        10205,
         '${erc20TokenWhiteListAddress}',
         '${chainId}',
         'ERC20 (whitelist)',
