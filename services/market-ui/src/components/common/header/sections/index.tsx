@@ -1,11 +1,13 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { matchPath, useLocation } from "react-router";
-import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
 import { useUser } from "@gemunion/provider-user";
 import { IUser } from "@framework/types";
+
+import { StyledButton } from "./styled";
 
 export const Sections: FC = () => {
   const location = useLocation();
@@ -34,15 +36,9 @@ export const Sections: FC = () => {
     }
 
     return (
-      <Button
-        sx={theme => ({ color: theme.palette.common.white, borderColor: theme.palette.common.white })}
-        variant="outlined"
-        size="large"
-        component={RouterLink}
-        to="/login"
-      >
+      <StyledButton variant="outlined" size="large" component={RouterLink} to="/login">
         <FormattedMessage id="components.header.menu.login" />
-      </Button>
+      </StyledButton>
     );
   }
 
