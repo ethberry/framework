@@ -51,7 +51,7 @@ describe("WaitList", function () {
       const tx = contractInstance.setReward(params, items);
       await expect(tx)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
     });
 
     it("should fail: account is missing role", async function () {
@@ -136,7 +136,7 @@ describe("WaitList", function () {
       const tx = contractInstance.setReward(params, items);
       await expect(tx)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
 
       const tx2 = contractInstance.setReward(params, items);
       await expect(tx2).to.be.revertedWithCustomError(contractInstance, "AlreadyExist");
@@ -176,15 +176,10 @@ describe("WaitList", function () {
       const tx1 = contractInstance.setReward(params, items);
       await expect(tx1)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === owner.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([owner.address]));
+
       const tx2 = contractInstance.claim(proof, externalId);
       await expect(tx2)
         .to.emit(contractInstance, "WaitListRewardClaimed")
@@ -223,15 +218,10 @@ describe("WaitList", function () {
       const tx1 = contractInstance.setReward(params, items);
       await expect(tx1)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === receiver.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([receiver.address]));
+
       const tx2 = contractInstance.connect(receiver).claim(proof, externalId);
       await expect(tx2)
         .to.emit(contractInstance, "WaitListRewardClaimed")
@@ -250,13 +240,8 @@ describe("WaitList", function () {
 
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === owner.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([owner.address]));
+
       await contractInstance.pause();
       const tx1 = contractInstance.claim(proof, externalId);
       await expect(tx1).to.be.revertedWith("Pausable: paused");
@@ -274,15 +259,10 @@ describe("WaitList", function () {
 
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === owner.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([owner.address]));
+
       const tx1 = contractInstance.claim(proof, externalId);
-      await expect(tx1).to.be.rejectedWith("Waitlist: Not yet started");
+      await expect(tx1).to.be.revertedWithCustomError(contractInstance, "NotExist");
     });
 
     it("should fail: sender is not in the wait list", async function () {
@@ -317,17 +297,12 @@ describe("WaitList", function () {
       const tx1 = contractInstance.setReward(params, items);
       await expect(tx1)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === owner.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([owner.address]));
+
       const tx2 = contractInstance.connect(receiver).claim(proof, externalId);
-      await expect(tx2).to.be.revertedWith("Waitlist: You are not in the wait list");
+      await expect(tx2).to.be.revertedWithCustomError(contractInstance, "NotInList");
     });
 
     it("should fail: Reward already claimed", async function () {
@@ -362,20 +337,15 @@ describe("WaitList", function () {
       const tx1 = contractInstance.setReward(params, items);
       await expect(tx1)
         .to.emit(contractInstance, "WaitListRewardSet")
-        .withArgs(isEqualEventArgArrObj(params), isEqualEventArgArrObj(...items));
+        .withArgs(params.externalId, merkleTree.root, isEqualEventArgArrObj(...items));
 
-      let proof: Array<string> = [];
-      for (const [i, v] of merkleTree.entries()) {
-        if (v[0] === owner.address) {
-          // (3)
-          proof = merkleTree.getProof(i);
-        }
-      }
+      const proof = merkleTree.getProof(merkleTree.leafLookup([owner.address]));
+
       const tx2 = contractInstance.claim(proof, externalId);
       await expect(tx2).to.emit(contractInstance, "WaitListRewardClaimed");
 
       const tx3 = contractInstance.claim(proof, externalId);
-      await expect(tx3).to.be.rejectedWith("Witlist: Reward already claimed");
+      await expect(tx3).to.be.revertedWithCustomError(contractInstance, "Expired");
     });
   });
 });

@@ -36,3 +36,4 @@ error WrongRound();
 error WrongPrice();
 
 // waitlist
+error NotInList();

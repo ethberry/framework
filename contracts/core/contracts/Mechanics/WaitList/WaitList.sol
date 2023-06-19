@@ -11,13 +11,14 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "hardhat/console.sol";
+
 import "../../utils/constants.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Exchange/interfaces/IAsset.sol";
 
 contract WaitList is AccessControl, Pausable {
   using Counters for Counters.Counter;
-  using MerkleProof for bytes32[];
 
   mapping(uint256 => bytes32) internal _roots;
   mapping(uint256 => mapping(address => bool)) internal _expired;
@@ -55,27 +56,25 @@ contract WaitList is AccessControl, Pausable {
     emit WaitListRewardSet(params.externalId, params.extra, items);
   }
 
-  //  function whitelistMint(uint256 _mintAmount, bytes32[] calldata _merkleProof) public payable mintCompliance(_mintAmount) mintPriceCompliance(_mintAmount) {
-  //    // Verify whitelist requirements
-  //    require(whitelistMintEnabled, 'The whitelist sale is not enabled!');
-  //    require(!whitelistClaimed[_msgSender()], 'Address already claimed!');
-  //    bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
-  //    require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), 'Invalid proof!');
-  //
-  //    whitelistClaimed[_msgSender()] = true;
-  //    _safeMint(_msgSender(), _mintAmount);
-  //  }
+  function claim(bytes32[] calldata proof, uint256 externalId) public whenNotPaused {
+    if (_roots[externalId] == "") {
+      revert NotExist();
+    }
 
-  function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
-    require(_roots[externalId] != "", "Waitlist: Not yet started");
+    // should be
+    // keccak256(abi.encodePacked(_msgSender()))
+    bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(_msgSender()))));
+    bool verified = MerkleProof.verifyCalldata(proof, _roots[externalId], leaf);
 
-    require(!_expired[externalId][_msgSender()], "Witlist: Reward already claimed");
+    if (!verified) {
+      revert NotInList();
+    }
+
+    if (_expired[externalId][_msgSender()]) {
+      revert Expired();
+    }
+
     _expired[externalId][_msgSender()] = true;
-
-    //    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(_msgSender())));
-    bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(_msgSender())))));
-
-    require(verified, "Waitlist: You are not in the wait list");
 
     ExchangeUtils.acquire(_items[externalId], _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 

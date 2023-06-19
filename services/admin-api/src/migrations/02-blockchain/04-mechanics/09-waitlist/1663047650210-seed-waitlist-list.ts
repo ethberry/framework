@@ -99,7 +99,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         2,
         102090008,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       );
