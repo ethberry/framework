@@ -71,36 +71,4 @@ export class LotterySignService {
       ],
     );
   }
-
-  // public async getSignature(account: string, params: IParams): Promise<string> {
-  //   return this.signer.signTypedData(
-  //     // Domain
-  //     {
-  //       name: "Lottery",
-  //       version: "1.0.0",
-  //       chainId: ~~this.configService.get<number>("CHAIN_ID", Number(testChainId)),
-  //       verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
-  //     },
-  //     // Types
-  //     {
-  //       EIP712: [
-  //         { name: "account", type: "address" },
-  //         { name: "params", type: "Params" },
-  //         { name: "price", type: "uint256" },
-  //       ],
-  //       Params: [
-  //         { name: "nonce", type: "bytes32" },
-  //         { name: "externalId", type: "uint256" },
-  //         { name: "expiresAt", type: "uint256" },
-  //         { name: "referrer", type: "address" },
-  //       ],
-  //     },
-  //     // Value
-  //     {
-  //       account,
-  //       params,
-  //       price: WeiPerEther,
-  //     },
-  //   );
-  // }
 }

@@ -38,10 +38,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const { clearForm, ticketNumbers, round } = props;
 
   const settings = useSettings();
-  // Params memory params,
-  //   Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
-  //   Asset memory price,
-  //   bytes calldata signature
+
   const metaFnWithSign = useServerSignature(
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, LotteryPurchaseABI, web3Context.provider?.getSigner());

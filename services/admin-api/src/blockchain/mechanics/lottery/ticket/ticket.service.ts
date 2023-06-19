@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ILotteryTicketSearchDto, TokenMetadata } from "@framework/types";
+import { ILotteryTicketSearchDto, ModuleType, TokenMetadata } from "@framework/types";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -22,9 +22,14 @@ export class LotteryTicketService extends TokenService {
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
     queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.select();
+
+    queryBuilder.where("contract.contractModule = :contractModule", {
+      contractModule: ModuleType.LOTTERY,
+    });
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",

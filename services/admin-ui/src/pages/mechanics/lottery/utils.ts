@@ -35,5 +35,5 @@ export const getWinners = (ticketNumbers: Array<boolean>, roundNumbers: Array<bo
   const tN = getNumbers(ticketNumbers).split(", ");
   const rN = getNumbers(roundNumbers).split(", ");
   const count = rN.filter(i => tN.includes(i)).length;
-  return count ? `winner ${count} of 6` : "";
+  return count ? `${count} of 6` : "";
 };

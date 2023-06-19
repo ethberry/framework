@@ -13,7 +13,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IRaffleTicket, IRaffleTicketSearchDto } from "@framework/types";
+import { IRaffleTicketSearchDto, ITicketRaffle } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { RaffleTicketSearchForm } from "./form";
@@ -35,9 +35,13 @@ export const RaffleTicketList: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<IRaffleTicket, IRaffleTicketSearchDto>({
+  } = useCollection<ITicketRaffle, IRaffleTicketSearchDto>({
     baseUrl: "/raffle/ticket",
-    empty: {},
+    empty: {
+      round: {
+        number: "0",
+      },
+    },
     search: {
       roundIds: [],
     },
@@ -59,8 +63,15 @@ export const RaffleTicketList: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((ticket, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{ticket.roundId}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{"winner"}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{ticket.metadata.NUMBER}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {"Round #"}
+                {ticket.round.roundId}
+              </ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
+                {ticket.round.number === ticket.tokenId ? "winner" : ""}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <RaffleRewardButton ticket={ticket} />
                 <IconButton onClick={handleView(ticket)}>

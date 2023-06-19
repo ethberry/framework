@@ -4,8 +4,6 @@ import { useWatch } from "react-hook-form";
 
 import { CheckboxInput, PasswordInput, TextInput } from "@gemunion/mui-inputs-core";
 
-import { useStyles } from "./styles";
-
 export interface IUserInputProps {
   name: string;
 }
@@ -13,12 +11,10 @@ export interface IUserInputProps {
 export const UserInput: FC<IUserInputProps> = props => {
   const { name = "user" } = props;
 
-  const classes = useStyles();
-
   const saveValue = useWatch({ name: "save" });
 
   return (
-    <Paper className={classes.paper}>
+    <Paper sx={{ p: 2 }}>
       <TextInput name={`${name}.email`} />
       <TextInput name={`${name}.displayName`} />
       <CheckboxInput name="save" />

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { useStyles } from "./styles";
+import { StyledPaper } from "./styled";
 import { Erc1155TransferButton, TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
@@ -28,8 +28,6 @@ export const Erc1155Token: FC = () => {
       } as ITemplate,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -54,20 +52,22 @@ export const Erc1155Token: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>
+          <StyledPaper>
             <FormattedMessage id="pages.token.priceTitle" />
-            <ul className={classes.price}>
+            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
               {formatPrice(selected.template?.price)
                 .split(", ")
                 .map((item: string, index: number) => (
                   <li key={index}>{item}</li>
                 ))}
-            </ul>
+            </Box>
             <FormattedMessage id="pages.token.balanceTitle" />
-            <p className={classes.price}>{selected.balance?.at(0)?.amount}</p>
+            <Box component="p" sx={{ pl: 0, listStylePosition: "inside" }}>
+              {selected.balance?.at(0)?.amount}
+            </Box>
             <TokenSellButton token={selected} />
             <Erc1155TransferButton token={selected} />
-          </Paper>
+          </StyledPaper>
         </Grid>
         <TokenHistory
           token={selected}

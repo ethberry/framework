@@ -21,6 +21,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
   mapping(uint256 => TicketRaffle) private _data;
 
   bytes32 constant ROUND = keccak256("ROUND");
+  bytes32 constant PRIZE = keccak256("PRIZE");
 
   constructor(
     string memory name,
@@ -60,6 +61,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
       revert WrongToken();
     }
     _data[tokenId].prize = true;
+    _upsertRecordField(tokenId, PRIZE, 1);
   }
 
   // BASE URL

@@ -35,7 +35,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
-  event Prize(address account, uint256 ticketId, uint256 amount);
+  event Prize(address account, uint256 roundId, uint256 ticketId, uint256 amount);
   event PaymentEthReceived(address from, uint256 amount);
 
   // RAFFLE
@@ -206,6 +206,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   function getPrize(uint256 tokenId) external {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
+
+    if (currentRound.endTimestamp == 0) {
+      revert NotComplete();
+    }
+
     uint256 prizeNumber = currentRound.prizeNumber;
 
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(currentRound.ticketAsset.token);
@@ -222,7 +227,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     ticketFactory.setTicketData(tokenId);
 
     if (tokenId == prizeNumber) {
-      emit Prize(_msgSender(), tokenId, 0);
+      emit Prize(_msgSender(), roundNumber, tokenId, 0);
     }
   }
 

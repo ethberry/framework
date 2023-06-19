@@ -9,7 +9,6 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { MysteryBoxList } from "../box-list";
-import { useStyles } from "./styles";
 
 export const MysteryContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -20,8 +19,6 @@ export const MysteryContract: FC = () => {
     },
     redirect: () => "",
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -40,7 +37,7 @@ export const MysteryContract: FC = () => {
               <Avatar />
             </Skeleton>
           ) : (
-            <Avatar className={classes.avatar} src={selected.imageUrl} />
+            <Avatar sx={{ width: 200, height: 200 }} src={selected.imageUrl} />
           )}
         </Box>
         <Box width="100%">
@@ -49,7 +46,7 @@ export const MysteryContract: FC = () => {
               <Typography>.</Typography>
             </Skeleton>
           ) : (
-            <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+            <Typography variant="body2" color="textSecondary" component="div">
               <RichTextDisplay data={selected.description} />
             </Typography>
           )}

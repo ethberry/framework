@@ -5,7 +5,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ICraft } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { CraftIngredients } from "./menu";
 import { CraftButton } from "../../../../../components/buttons";
 
@@ -15,15 +14,14 @@ interface ICraftItemProps {
 
 export const CraftItem: FC<ICraftItemProps> = props => {
   const { craft } = props;
-  const classes = useStyles();
 
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/craft/${craft.id}`}>
         <CardHeader action={<CraftIngredients craft={craft} />} title={craft.item?.components[0].template!.title} />
-        <CardMedia className={classes.media} image={craft.item?.components[0].template!.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={craft.item?.components[0].template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={craft.item?.components[0].template!.description} />
           </Typography>
         </CardContent>

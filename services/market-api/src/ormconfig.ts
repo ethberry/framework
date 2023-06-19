@@ -49,6 +49,7 @@ import { AchievementRedemptionEntity } from "./achievements/redemption/redemptio
 import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-parameter.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -79,6 +80,7 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     ReferralRewardEntity,
     LotteryRoundEntity,
+    RaffleRoundEntity,
     MysteryBoxEntity,
     WaitListListEntity,
     WaitListItemEntity,

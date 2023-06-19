@@ -3,18 +3,20 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { IRaffleTicket } from "@framework/types";
+import { AddressLink } from "@gemunion/mui-scanner";
+
+import { ITicketRaffle } from "@framework/types";
 
 export interface IRaffleTicketViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IRaffleTicket;
+  initialValues: ITicketRaffle;
 }
 
 export const RaffleTicketViewDialog: FC<IRaffleTicketViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { roundId } = initialValues;
+  const { tokenId, round, balance, tokenStatus } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -27,21 +29,35 @@ export const RaffleTicketViewDialog: FC<IRaffleTicketViewDialogProps> = props =>
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.roundId" />
+                <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
-              <TableCell align="right">{roundId}</TableCell>
+              <TableCell align="right">{tokenId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.numbers" />
+                <FormattedMessage id="form.labels.roundId" />
               </TableCell>
-              <TableCell align="right">{"winner!"}</TableCell>
+              <TableCell align="right">{round.roundId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.winNumbers" />
               </TableCell>
-              <TableCell align="right">{"round not yet finished"}</TableCell>
+              <TableCell align="right">{round ? round.number || "round not yet finished" : ""}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.tokenStatus" />
+              </TableCell>
+              <TableCell align="right">{tokenStatus}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.account" />
+              </TableCell>
+              <TableCell align="right">
+                <AddressLink address={balance?.at(0)?.account} length={42} />
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

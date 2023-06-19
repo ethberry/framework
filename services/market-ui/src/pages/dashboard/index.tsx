@@ -3,7 +3,8 @@ import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
-import { useStyles } from "./styles";
+import { Root } from "./styled";
+
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
@@ -32,10 +33,8 @@ import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
 
 export const Dashboard: FC = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Root>
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
@@ -73,6 +72,6 @@ export const Dashboard: FC = () => {
           <FeedbackSection />
         </Grid>
       </Grid>
-    </div>
+    </Root>
   );
 };

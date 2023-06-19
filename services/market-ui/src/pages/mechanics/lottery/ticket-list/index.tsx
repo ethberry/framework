@@ -13,17 +13,13 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILotteryRound, ILotteryTicketSearchDto, IToken } from "@framework/types";
+import { ILotteryTicketSearchDto, ITicketLottery } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryTicketSearchForm } from "./form";
 import { LotteryTicketViewDialog } from "./view";
 import { decodeNumbers, decodeNumbersToArr, getWinners } from "./utils";
 import { LotteryRewardButton } from "../../../../components/buttons";
-
-export interface ILotteryTicket extends IToken {
-  round: Partial<ILotteryRound>;
-}
 
 export const LotteryTicketList: FC = () => {
   const {
@@ -40,7 +36,7 @@ export const LotteryTicketList: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<ILotteryTicket, ILotteryTicketSearchDto>({
+  } = useCollection<ITicketLottery, ILotteryTicketSearchDto>({
     baseUrl: "/lottery/ticket",
     empty: {
       round: {
@@ -74,13 +70,9 @@ export const LotteryTicketList: FC = () => {
                 {"Round #"}
                 {ticket.round.roundId}
               </ListItemText>
-              {/* <ListItemText sx={{ width: 0.6 }}> */}
-              {/*  {ticket.round.roundId} - {getNumbers(ticket)} */}
-              {/* </ListItemText> */}
               <ListItemText sx={{ width: 0.2 }}>
                 {getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || [])}
               </ListItemText>
-              {/* <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{getWinners(ticket, ticket.round!)}</ListItemText> */}
               <ListItemSecondaryAction>
                 <LotteryRewardButton ticket={ticket} />
                 <IconButton onClick={handleView(ticket)}>

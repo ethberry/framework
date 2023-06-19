@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import { Box, Grid, List, ListItem, ListItemText, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -10,9 +10,9 @@ import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { ICraft } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { CraftButton } from "../../../../components/buttons";
 import { formatEther } from "../../../../utils/money";
+import { StyledPaper } from "./styled";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
@@ -22,8 +22,6 @@ export const CraftItem: FC = () => {
       price: emptyPrice,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -43,13 +41,13 @@ export const CraftItem: FC = () => {
             alt="Gemunion template image"
             sx={{ display: "block", mx: "auto", maxWidth: "70%" }}
           />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <List component="nav">
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="body2" color="textSecondary" component="p">
                 <FormattedMessage id="form.labels.price" />
               </Typography>
@@ -67,7 +65,7 @@ export const CraftItem: FC = () => {
                 </ListItem>
               ))}
               <CraftButton craft={selected} />
-            </Paper>
+            </StyledPaper>
           </List>
         </Grid>
       </Grid>

@@ -6,7 +6,6 @@ import { Add, Remove } from "@mui/icons-material";
 import { IProduct } from "@framework/types";
 
 import { CartContext } from "../../providers/cart";
-import { useStyles } from "./styles";
 
 interface IPriceInputProps {
   product: IProduct;
@@ -16,12 +15,11 @@ export const AmountInput: FC<IPriceInputProps> = props => {
   const { product } = props;
 
   const cart = useContext(CartContext);
-  const classes = useStyles();
 
   const amount = cart.items.find(item => item.product.id === product.id)?.amount;
 
   return (
-    <Grid item container alignItems="center" justifyContent="center" className={classes.root}>
+    <Grid item container alignItems="center" justifyContent="center" sx={{ height: 36 }}>
       {amount ? (
         <Fragment>
           <IconButton aria-label="remove" size="small" onClick={cart.alter(amount - 1, product)}>

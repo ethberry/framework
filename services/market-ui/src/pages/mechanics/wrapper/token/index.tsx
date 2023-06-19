@@ -9,7 +9,6 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { WrapperContent } from "../../../../components/tables/wrapper-content";
@@ -24,8 +23,6 @@ export const WrapperToken: FC = () => {
       } as ITemplate,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -47,14 +44,14 @@ export const WrapperToken: FC = () => {
       <Grid container>
         <Grid item xs={9}>
           <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>
           {selected.template?.contract?.contractModule === ModuleType.HIERARCHY ||
           selected.template?.contract?.contractModule === ModuleType.MYSTERY ? (
-            <Paper className={classes.paper}>
+            <Paper sx={{ p: 2, mb: 2 }}>
               <Typography>
                 <FormattedMessage
                   id="pages.wrapper.token.price"

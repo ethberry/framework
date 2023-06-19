@@ -6,6 +6,7 @@ import { RaffleRoundEntity } from "./round.entity";
 // import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { IAssetDto } from "@framework/types";
 
 @Injectable()
 export class RaffleRoundService {
@@ -50,7 +51,11 @@ export class RaffleRoundService {
     return queryBuilder.getOne();
   }
 
-  public async createEmptyAsset(): Promise<AssetEntity> {
+  public async updatePrice(asset: AssetEntity, price: IAssetDto): Promise<void> {
+    await this.assetService.update(asset, price);
+  }
+
+  public async createEmptyPrice(): Promise<AssetEntity> {
     return await this.assetService.create({
       components: [],
     });

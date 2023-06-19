@@ -38,24 +38,13 @@ export class LotteryRoundService {
 
     const lotteryRound = await this.findCurrentRoundWithRelations();
 
-    if (!lotteryRound) {
-      throw new NotFoundException("roundNotFound");
-    }
-
     const descriptionJson: Partial<ILotteryOption> = JSON.parse(lotteryEntity.description);
-
-    // TODO real options
-    // const lottery = {
-    //   description: descriptionJson.description,
-    //   schedule: descriptionJson.schedule,
-    //   round: lotteryRound,
-    // };
 
     return {
       address: lotteryEntity.address,
       description: descriptionJson.description,
       schedule: descriptionJson.schedule || CronExpression.EVERY_DAY_AT_MIDNIGHT,
-      round: lotteryRound,
+      round: lotteryRound || undefined,
     };
   }
 

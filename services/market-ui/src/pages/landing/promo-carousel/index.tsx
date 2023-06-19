@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Button, MobileStepper } from "@mui/material";
+import { Button, MobileStepper } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 
@@ -9,10 +9,9 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
 
-import { useStyles } from "./styles";
+import { Root, StyledImage } from "./styled";
 
 export const PromoCarousel: FC = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -54,14 +53,10 @@ export const PromoCarousel: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      <Box className={classes.root}>
-        <Box
-          className={classes.img}
-          onClick={handleClick}
-          style={{ backgroundImage: `url(${promos[activeStep]?.imageUrl})` }}
-        />
+      <Root>
+        <StyledImage onClick={handleClick} sx={{ backgroundImage: `url(${promos[activeStep]?.imageUrl})` }} />
         <MobileStepper
-          className={classes.stepper}
+          sx={{ width: "100%" }}
           steps={promos.length}
           position="static"
           variant="dots"
@@ -82,7 +77,7 @@ export const PromoCarousel: FC = () => {
             </Button>
           }
         />
-      </Box>
+      </Root>
     </ProgressOverlay>
   );
 };
