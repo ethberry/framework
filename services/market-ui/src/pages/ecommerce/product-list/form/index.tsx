@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { Collapse, Grid } from "@mui/material";
+import { Box, Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 
-import { useStyles } from "./styles";
 import { IProductSearchDto } from "../index";
 
 interface IProductSearchFormProps {
@@ -17,13 +16,11 @@ interface IProductSearchFormProps {
 export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
-
   const { query, categoryIds } = initialValues;
   const fixedValues = { query, categoryIds };
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ my: 2 }}>
       <FormWrapper initialValues={fixedValues} onSubmit={onSubmit} showButtons={false} showPrompt={false}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -42,6 +39,6 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
         </Collapse>
         <AutoSave onSubmit={onSubmit} />
       </FormWrapper>
-    </div>
+    </Box>
   );
 };

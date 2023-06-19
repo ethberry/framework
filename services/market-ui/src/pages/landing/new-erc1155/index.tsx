@@ -10,11 +10,8 @@ import { TokenType } from "@framework/types";
 
 import { Erc1155TemplateListItem } from "../../hierarchy/erc1155/template-list/item";
 import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
-import { useStyles } from "./styles";
 
 export const NewErc1155: FC = () => {
-  const classes = useStyles();
-
   const [templates, setTemplates] = useState<Array<ITemplate>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -45,7 +42,7 @@ export const NewErc1155: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="h4" sx={{ mt: 7 }}>
         <FormattedMessage id="pages.landing.erc1155-new" />
       </Typography>
       <MultiCarouselHierarchy templates={templates} component={Erc1155TemplateListItem} />

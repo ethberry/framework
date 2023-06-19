@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, MobileStepper, Paper, Typography } from "@mui/material";
+import { Button, MobileStepper, Typography } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 import { Spinner } from "@gemunion/mui-page-layout";
 import { IProduct } from "@framework/types";
 
-import { useStyles } from "./styles";
+import { Root, StyledHeader, StyledImage } from "./styled";
 
 interface ICarouselProps {
   product: IProduct;
@@ -15,7 +15,6 @@ interface ICarouselProps {
 export const Carousel: FC<ICarouselProps> = props => {
   const { product } = props;
 
-  const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -31,11 +30,11 @@ export const Carousel: FC<ICarouselProps> = props => {
   }
 
   return (
-    <div className={classes.root}>
-      <Paper square elevation={0} className={classes.header}>
+    <Root>
+      <StyledHeader square elevation={0}>
         <Typography>{product.photos[activeStep].title}</Typography>
-      </Paper>
-      <img className={classes.img} src={product.photos[activeStep].imageUrl} alt={product.photos[activeStep].title} />
+      </StyledHeader>
+      <StyledImage component="img" src={product.photos[activeStep].imageUrl} alt={product.photos[activeStep].title} />
       <MobileStepper
         steps={product.photos.length}
         position="static"
@@ -57,6 +56,6 @@ export const Carousel: FC<ICarouselProps> = props => {
           </Button>
         }
       />
-    </div>
+    </Root>
   );
 };

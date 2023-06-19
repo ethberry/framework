@@ -5,7 +5,6 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { IProduct } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { formatPrice } from "../../../../utils/money";
 import { AmountInput } from "../../../../components/inputs/amount-input";
 
@@ -16,17 +15,15 @@ interface IProductItemProps {
 export const ProductItem: FC<IProductItemProps> = props => {
   const { product } = props;
 
-  const classes = useStyles();
-
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/ecommerce/products/${product.id}`}>
-        <CardMedia className={classes.media} image={product.photos[0].imageUrl} title={product.photos[0].title} />
+        <CardMedia sx={{ height: 200 }} image={product.photos[0].imageUrl} title={product.photos[0].title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {product.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ overflow: "hidden", height: 80 }}>
             <RichTextDisplay data={product.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

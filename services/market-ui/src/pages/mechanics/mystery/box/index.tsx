@@ -10,7 +10,6 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
-import { useStyles } from "./styles";
 import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 
 export const MysteryBox: FC = () => {
@@ -26,8 +25,6 @@ export const MysteryBox: FC = () => {
     },
   });
 
-  const classes = useStyles();
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -41,12 +38,12 @@ export const MysteryBox: FC = () => {
       <Grid container>
         <Grid item xs={9}>
           <Box component="img" sx={{ maxWidth: "100%" }} src={selected.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Paper className={classes.paper}>
+          <Paper sx={{ p: 2 }}>
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage
                 id="pages.mystery.box.price"

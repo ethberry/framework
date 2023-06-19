@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Paper, Typography } from "@mui/material";
 
 import { IOrder } from "@framework/types";
 
 import { OrderList } from "../order-list";
-import { useStyles } from "./styles";
+import { StyledContainer, StyledHeader } from "./styled";
 
 export interface IColumnProps {
   status: string;
@@ -16,14 +15,13 @@ export interface IColumnProps {
 
 export const Column: FC<IColumnProps> = props => {
   const { status, items, onEdit } = props;
-  const classes = useStyles();
   return (
-    <Paper className={classes.container}>
-      <Typography component="h5" className={classes.header}>
+    <StyledContainer>
+      <StyledHeader component="h5">
         <FormattedMessage id={`enums.orderStatus.${status}`} />
-      </Typography>
+      </StyledHeader>
 
       <OrderList listId={status} items={items} onEdit={onEdit} />
-    </Paper>
+    </StyledContainer>
   );
 };

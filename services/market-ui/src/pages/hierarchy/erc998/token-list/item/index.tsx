@@ -5,7 +5,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
 
@@ -16,16 +15,14 @@ interface IErc998TokenListItemProps {
 export const Erc998TokenListItem: FC<IErc998TokenListItemProps> = props => {
   const { token } = props;
 
-  const classes = useStyles(token);
-
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/erc998/tokens/${token.id}`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
-        <CardMedia className={classes.media} image={token.template!.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={token.template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={token.template!.description} />
           </Typography>
         </CardContent>

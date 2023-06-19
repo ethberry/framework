@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import type { ITemplate } from "@framework/types";
@@ -11,7 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { formatPrice } from "../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../components/buttons";
-import { useStyles } from "./styles";
+import { StyledPaper } from "./styled";
 
 export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -21,8 +21,6 @@ export const Erc721Template: FC = () => {
       description: emptyStateString,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -49,12 +47,12 @@ export const Erc721Template: FC = () => {
         <Grid item xs={12} sm={3}>
           {selected.templateStatus === TemplateStatus.ACTIVE &&
           (selected.cap === "0" || selected.amount !== selected.cap) ? (
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography variant="body2" color="textSecondary" component="p">
                 <FormattedMessage id="pages.erc721.template.price" values={{ amount: formatPrice(selected.price) }} />
               </Typography>
               <TemplatePurchaseButton template={selected} />
-            </Paper>
+            </StyledPaper>
           ) : null}
         </Grid>
       </Grid>
