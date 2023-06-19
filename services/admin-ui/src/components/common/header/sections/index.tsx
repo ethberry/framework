@@ -7,12 +7,9 @@ import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 import { useUser } from "@gemunion/provider-user";
 import type { IUser } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 export const Sections: FC = () => {
   const location = useLocation();
 
-  const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
 
   const user = useUser<IUser>();
@@ -37,7 +34,13 @@ export const Sections: FC = () => {
     }
 
     return (
-      <Button className={classes.login} variant="outlined" size="large" component={RouterLink} to="/login">
+      <Button
+        sx={theme => ({ color: theme.palette.common.white, borderColor: theme.palette.common.white })}
+        variant="outlined"
+        size="large"
+        component={RouterLink}
+        to="/login"
+      >
         <FormattedMessage id="components.header.menu.login" />
       </Button>
     );

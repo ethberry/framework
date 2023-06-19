@@ -20,7 +20,6 @@ import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
-import { useStyles } from "./styles";
 
 export interface IBreedDto {
   tokenType: TokenType;
@@ -45,8 +44,6 @@ export interface IBreedDto {
 }
 
 export const Breed: FC = () => {
-  const classes = useStyles();
-
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -133,12 +130,12 @@ export const Breed: FC = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Typography variant="h6" className={classes.select}>
+            <Typography variant="h6" sx={{ mt: 1 }}>
               <FormattedMessage id="pages.breed.matron" />
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6" className={classes.select}>
+            <Typography variant="h6" sx={{ mt: 1 }}>
               <FormattedMessage id="pages.breed.sire" />
             </Typography>
           </Grid>

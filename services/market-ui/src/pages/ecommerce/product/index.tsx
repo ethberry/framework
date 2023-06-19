@@ -10,14 +10,12 @@ import { IProduct } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { formatPrice } from "../../../utils/money";
-import { useStyles } from "./styles";
 import { Carousel } from "./carousel";
 
 export const Product: FC = () => {
   const { id } = useParams<{ id: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-  const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<IProduct>({} as IProduct);
@@ -70,7 +68,7 @@ export const Product: FC = () => {
           <Carousel product={product} />
           <Hidden mdUp>
             <Box py={2}>
-              <Paper className={classes.paper}>
+              <Paper sx={{ p: 2 }}>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {formatPrice(product.productItems[0].price)}
                 </Typography>
@@ -83,7 +81,7 @@ export const Product: FC = () => {
         </Grid>
         <Hidden mdDown>
           <Grid item xs={12} md={3}>
-            <Paper className={classes.paper}>
+            <Paper sx={{ p: 2 }}>
               <Typography variant="body2" color="textSecondary" component="p">
                 {formatPrice(product.productItems[0].price)}
               </Typography>

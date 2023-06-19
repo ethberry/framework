@@ -6,7 +6,6 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { DropPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
-import { useStyles } from "./styles";
 
 interface IDropItemProps {
   drop: IDrop;
@@ -15,19 +14,18 @@ interface IDropItemProps {
 export const DropItem: FC<IDropItemProps> = props => {
   const { drop } = props;
 
-  const classes = useStyles();
-
   return (
     <Card>
       <CardActionArea
         component={RouterLink}
         // prettier-ignore
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         to={`/${drop.item!.components[0].contract!.contractType.toLowerCase()}-templates/${drop.item!.components[0].templateId}`}
       >
         <CardHeader title={drop.item?.components[0]?.template?.title} />
-        <CardMedia className={classes.media} image={drop.item?.components[0]?.template?.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={drop.item?.components[0]?.template?.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={drop.item?.components[0]?.template?.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

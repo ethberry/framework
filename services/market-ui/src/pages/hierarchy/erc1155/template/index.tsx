@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import type { ITemplate } from "@framework/types";
@@ -9,8 +9,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { formatPrice } from "../../../../utils/money";
-import { useStyles } from "./styles";
 import { TemplatePurchaseButton } from "../../../../components/buttons";
+import { StyledPaper } from "./styled";
 
 export const Erc1155Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -20,8 +20,6 @@ export const Erc1155Template: FC = () => {
       description: emptyStateString,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -46,12 +44,12 @@ export const Erc1155Template: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>
+          <StyledPaper>
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage id="pages.erc1155.template.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
             <TemplatePurchaseButton template={selected} />
-          </Paper>
+          </StyledPaper>
         </Grid>
       </Grid>
     </Fragment>

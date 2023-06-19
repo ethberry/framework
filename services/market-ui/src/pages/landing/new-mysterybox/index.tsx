@@ -7,13 +7,10 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IMysterybox } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { MultiCarouselMysterybox } from "../multi-carousel-mysterybox";
 import { MysteryboxListItem } from "../../mechanics/mystery/box-list/item";
 
 export const NewMysterybox: FC = () => {
-  const classes = useStyles();
-
   const [mysteryboxes, setMysteryboxes] = useState<Array<IMysterybox>>([]);
 
   const { fn, isLoading } = useApiCall(
@@ -41,7 +38,7 @@ export const NewMysterybox: FC = () => {
 
   return (
     <ProgressOverlay isLoading={isLoading}>
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="h4" sx={{ mt: 7 }}>
         <FormattedMessage id="pages.landing.mysterybox-new" />
       </Typography>
       {mysteryboxes.length ? (

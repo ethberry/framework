@@ -12,7 +12,6 @@ import { Erc721TransferButton, TokenSellButton } from "../../../../components/bu
 import { MysteryboxContent } from "../../../../components/tables/mysterybox-content";
 import { formatPrice } from "../../../../utils/money";
 import { TokenHistory } from "../../../../components/common/token-history";
-import { useStyles } from "./styles";
 import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
 
 export const MysteryboxToken: FC = () => {
@@ -27,8 +26,6 @@ export const MysteryboxToken: FC = () => {
     },
   });
 
-  const classes = useStyles();
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -42,12 +39,12 @@ export const MysteryboxToken: FC = () => {
       <Grid container>
         <Grid item xs={9}>
           <Box component="img" sx={{ maxWidth: "100%" }} src={selected.template!.imageUrl} />
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div">
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Paper className={classes.paper}>
+          <Paper sx={{ p: 2, mb: 2 }}>
             <Typography>
               <FormattedMessage
                 id="pages.mystery.token.price"

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import { FormattedMessage } from "react-intl";
 
@@ -16,7 +16,7 @@ import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { Erc998Composition } from "./composition";
-import { useStyles } from "./styles";
+import { StyledPaper } from "./styled";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
@@ -28,8 +28,6 @@ export const Erc998Token: FC = () => {
       } as ITemplate,
     },
   });
-
-  const classes = useStyles();
 
   if (isLoading) {
     return <Spinner />;
@@ -57,31 +55,31 @@ export const Erc998Token: FC = () => {
           <Erc998Composition token={selected} />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>
+          <StyledPaper>
             <FormattedMessage id="pages.token.priceTitle" />
-            <ul className={classes.price}>
+            <Box component="ul" sx={{ pl: 0, listStylePosition: "inside" }}>
               {formatPrice(selected.template?.price)
                 .split(", ")
                 .map((item: string, index: number) => (
                   <li key={index}>{item}</li>
                 ))}
-            </ul>
+            </Box>
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
-          </Paper>
+          </StyledPaper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography>
                 <FormattedMessage
                   id="pages.erc998.token.rarity"
                   values={{ rarity: Object.values(TokenRarity)[selected.metadata[TokenMetadata.RARITY]] }}
                 />
               </Typography>
-            </Paper>
+            </StyledPaper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography>
                 <FormattedMessage
                   id="pages.erc998.token.level"
@@ -89,24 +87,24 @@ export const Erc998Token: FC = () => {
                 />
               </Typography>
               <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
-            </Paper>
+            </StyledPaper>
           ) : null}
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography>
                 <FormattedMessage id="pages.erc998.token.genesis" />
               </Typography>
               <TokenGenesisView metadata={selected.metadata} />
-            </Paper>
+            </StyledPaper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
-            <Paper className={classes.paper}>
+            <StyledPaper>
               <Typography>
                 <FormattedMessage id="pages.erc998.token.traits" />
               </Typography>
               <TokenTraitsView metadata={selected.metadata} />
-            </Paper>
+            </StyledPaper>
           ) : null}
         </Grid>
         <TokenHistory
