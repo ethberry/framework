@@ -255,6 +255,7 @@
     "internal-server-error": "Server Error",
     "page-not-found": "Page Not Found",
     "service-unavailable": "Service Unavailable",
+    "uncaughtError": "Uncaught error happened",
     "unknown": "Unknown Error"
   },
   "form": {
