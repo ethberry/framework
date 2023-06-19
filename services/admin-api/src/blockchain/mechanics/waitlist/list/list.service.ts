@@ -145,8 +145,11 @@ export class WaitListListService {
     return waitListListEntity.save();
   }
 
-  public async autocomplete(): Promise<Array<WaitListListEntity>> {
+  public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
     return this.waitListListEntityRepository.find({
+      where: {
+        merchantId: userEntity.merchantId,
+      },
       select: {
         id: true,
         title: true,

@@ -1,20 +1,22 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Collapse } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IWaitListItemSearchDto } from "@framework/types";
 
 interface IWaitListSearchFormProps {
   onSubmit: (values: IWaitListItemSearchDto) => Promise<void>;
   initialValues: IWaitListItemSearchDto;
+  open: boolean;
 }
 
 export const WaitListSearchForm: FC<IWaitListSearchFormProps> = props => {
-  const { onSubmit, initialValues } = props;
+  const { onSubmit, initialValues, open } = props;
 
-  const { account } = initialValues;
-  const fixedValues = { account };
+  const { account, listIds } = initialValues;
+  const fixedValues = { account, listIds };
 
   return (
     <FormWrapper
@@ -29,6 +31,13 @@ export const WaitListSearchForm: FC<IWaitListSearchFormProps> = props => {
           <SearchInput name="account" />
         </Grid>
       </Grid>
+      <Collapse in={open}>
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={12}>
+            <EntityInput name="listIds" controller="waitlist/list" multiple />
+          </Grid>
+        </Grid>
+      </Collapse>
       <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );

@@ -29,7 +29,7 @@ export class WaitListItemService {
     dto: Partial<IWaitListItemSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<WaitListItemEntity>, number]> {
-    const { skip, take, account } = dto;
+    const { skip, take, account, listIds } = dto;
 
     const queryBuilder = this.waitListItemEntityRepository.createQueryBuilder("waitlist");
 
@@ -41,6 +41,16 @@ export class WaitListItemService {
     queryBuilder.andWhere("list.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
+
+    if (listIds) {
+      if (listIds.length === 1) {
+        queryBuilder.andWhere("waitlist.listId = :listId", {
+          listId: listIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("waitlist.listId IN(:...listIds)", { listIds });
+      }
+    }
 
     if (account) {
       queryBuilder.andWhere("waitlist.account ILIKE '%' || :account || '%'", { account });

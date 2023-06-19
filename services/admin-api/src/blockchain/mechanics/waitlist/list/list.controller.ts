@@ -50,8 +50,8 @@ export class WaitListListController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<WaitListListEntity>> {
-    return this.waitListListService.autocomplete();
+  public autocomplete(@User() userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
+    return this.waitListListService.autocomplete(userEntity);
   }
 
   @Get("/:id")
