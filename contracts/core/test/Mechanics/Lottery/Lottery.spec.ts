@@ -1167,11 +1167,12 @@ describe("Lottery", function () {
 
       const values = [8, 5, 3, 2, 1, 0];
       const aggregation = [0, 0, 0, 0, 0, 0, 1];
-
+      const ticketNumbers = getNumbersBytes(values);
       const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
 
       const defNumbers = getNumbersBytes(values);
       await erc721Instance.mintTicket(receiver.address, 1, defNumbers);
+      await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
 
       await erc20Instance.mint(lotteryInstance.getAddress(), parseEther("20000"));
 
@@ -1200,7 +1201,15 @@ describe("Lottery", function () {
       const prizeAmount = WeiPerEther * 7000n - 180n; // rounding error
 
       const tx = lotteryInstance.connect(receiver).getPrize(1);
-      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
+      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, 1, prizeAmount);
+
+      // TEST METADATA
+      const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
+      const decodedMeta = decodeMetadata(metadata as any[]);
+      expect(decodedMeta.PRIZE).to.equal(1n);
+      expect(decodedMeta.ROUND).to.equal(1n);
+      expect(toBeHex(decodedMeta.NUMBERS, 32)).to.equal(ticketNumbers);
+      expect(getBytesNumbersArr(decodedMeta.NUMBERS)).to.have.all.members(values);
     });
 
     it("should get prize: Jackpot 2 tickets", async function () {
@@ -1214,6 +1223,8 @@ describe("Lottery", function () {
 
       const defNumbers = getNumbersBytes(values);
       await erc721Instance.mintTicket(receiver.address, 1, defNumbers);
+      await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
+
       await erc721Instance.connect(receiver).approve(lotteryInstance.getAddress(), 1);
 
       await lotteryInstance.setDummyRound(
@@ -1239,7 +1250,7 @@ describe("Lottery", function () {
       const prizeAmount = WeiPerEther * 3500n - 200n; // rounding error
 
       const tx = lotteryInstance.connect(receiver).getPrize(1);
-      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
+      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, 1, prizeAmount);
     });
 
     it("should fail: round not finished", async function () {
@@ -1382,7 +1393,6 @@ describe("Lottery", function () {
       await expect(tx).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
 
       const tx1 = lotteryInstance.connect(receiver).getPrize(1);
-      // await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
       await expect(tx1).to.be.revertedWithCustomError(lotteryInstance, "NotComplete");
     });
 
@@ -1424,7 +1434,7 @@ describe("Lottery", function () {
       const prizeAmount = WeiPerEther * 7000n - 180n; // rounding error
 
       const tx = lotteryInstance.connect(receiver).getPrize(1);
-      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, prizeAmount);
+      await expect(tx).to.emit(lotteryInstance, "Prize").withArgs(receiver.address, 1, 1, prizeAmount);
 
       const tx1 = lotteryInstance.connect(receiver).getPrize(1);
       await expect(tx1).to.be.revertedWithCustomError(lotteryInstance, "WrongToken");

@@ -16,12 +16,14 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
   imports: [
     ConfigModule,
     AssetModule,
     TemplateModule,
+    TokenModule,
     ContractModule,
     EventHistoryModule,
     TypeOrmModule.forFeature([RaffleRoundEntity]),

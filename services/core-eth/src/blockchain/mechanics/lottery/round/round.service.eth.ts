@@ -134,20 +134,25 @@ export class LotteryRoundServiceEth {
 
   public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     const {
-      args: { ticketId },
+      args: { roundId, ticketId },
     } = event;
-    const { address } = context;
+    // const { address } = context;
     // TODO use it, check ticketId?
     // TODO find ticket.round.ticketContract.address
-    const ticketEntity = await this.tokenService.getToken(ticketId, address.toLowerCase());
+    const roundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+
+    if (!roundEntity) {
+      throw new NotFoundException("roundNotFound");
+    }
+
+    const ticketEntity = await this.tokenService.getToken(ticketId, roundEntity.ticketContract.address.toLowerCase());
 
     if (!ticketEntity) {
       throw new NotFoundException("ticketNotFound");
     }
 
-    // SET PRIZE METADATA
-    // TODO set real metadata?
-    Object.assign(ticketEntity, { metadata: { PRIZE: true } });
+    // UPDATE PRIZE METADATA
+    Object.assign(ticketEntity.metadata, { PRIZE: "1" });
     await ticketEntity.save();
     await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
   }

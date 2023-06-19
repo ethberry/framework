@@ -5,14 +5,15 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { AddressLink } from "@gemunion/mui-scanner";
 
+import { ITicketLottery } from "@framework/types";
+
 import { decodeNumbers, getNumbers } from "../utils";
-import { ILotteryTicket } from "../index";
 
 export interface ILotteryTicketViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: ILotteryTicket;
+  initialValues: ITicketLottery;
 }
 
 export const LotteryTicketViewDialog: FC<ILotteryTicketViewDialogProps> = props => {

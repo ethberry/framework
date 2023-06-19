@@ -928,8 +928,7 @@
         "title": "Leaderboard"
       },
       "purchase": {
-        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
-        "selected": "Selected {selected}/6.",
+        "rules": "Just buy a ticket. Random will choose a winner",
         "title": "Buy a ticket"
       },
       "tickets": {

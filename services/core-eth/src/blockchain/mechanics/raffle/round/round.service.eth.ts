@@ -5,7 +5,6 @@ import { Log, Wallet } from "ethers";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {
-  IAssetDto,
   IRafflePrizeEvent,
   IRaffleReleaseEvent,
   IRaffleRoundEndedEvent,
@@ -18,6 +17,7 @@ import { EventHistoryService } from "../../../event-history/event-history.servic
 import { testChainId } from "@framework/constants";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class RaffleRoundServiceEth {
@@ -26,6 +26,7 @@ export class RaffleRoundServiceEth {
     private readonly loggerService: LoggerService,
     private readonly raffleRoundService: RaffleRoundService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
@@ -58,7 +59,7 @@ export class RaffleRoundServiceEth {
     }
 
     // PRICE ASSET
-    const priceAsset: IAssetDto = await this.raffleRoundService.createEmptyAsset();
+    const asset = await this.raffleRoundService.createEmptyPrice();
 
     const { tokenId, amount } = price;
 
@@ -71,19 +72,25 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("priceTemplateNotFound");
     }
 
-    priceAsset.components.push({
-      tokenType: priceTemplate.contract.contractType,
-      contractId: priceTemplate.contract.id,
-      templateId: priceTemplate.id,
-      amount: Number(amount).toString(),
-    });
+    const priceAsset = {
+      components: [
+        {
+          tokenType: priceTemplate.contract.contractType,
+          contractId: priceTemplate.contract.id,
+          templateId: priceTemplate.id,
+          amount: Number(amount).toString(),
+        },
+      ],
+    };
+
+    await this.raffleRoundService.updatePrice(asset, priceAsset);
 
     await this.raffleRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContract.id,
       ticketContractId: ticketContract.id,
-      price: priceAsset,
+      priceId: asset.id,
       maxTickets: Number(maxTicket),
     });
   }
@@ -94,7 +101,7 @@ export class RaffleRoundServiceEth {
       args: { round, prizeNumber },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: Number(round).toString() });
+    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -112,7 +119,7 @@ export class RaffleRoundServiceEth {
       args: { round, endTimestamp },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: Number(round).toString() });
+    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -126,8 +133,27 @@ export class RaffleRoundServiceEth {
   }
 
   public async prize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
-    // TODO use it, check ticketId?
-    await this.eventHistoryService.updateHistory(event, context);
+    const {
+      args: { roundId, ticketId },
+    } = event;
+
+    const roundEntity = await this.raffleRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+
+    if (!roundEntity) {
+      throw new NotFoundException("roundNotFound");
+    }
+
+    const ticketEntity = await this.tokenService.getToken(ticketId, roundEntity.ticketContract.address.toLowerCase());
+
+    if (!ticketEntity) {
+      throw new NotFoundException("ticketNotFound");
+    }
+
+    // UPDATE PRIZE METADATA
+    Object.assign(ticketEntity.metadata, { PRIZE: "1" });
+    await ticketEntity.save();
+
+    await this.eventHistoryService.updateHistory(event, context, ticketEntity.id);
   }
 
   public async release(event: ILogEvent<IRaffleReleaseEvent>, context: Log): Promise<void> {

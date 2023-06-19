@@ -4,6 +4,7 @@ import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
 import { IToken } from "../../hierarchy/token";
+import { ILotteryRound } from "../lottery/round";
 
 export interface IRaffleRound extends IIdDateBase {
   number: string | null; // winner
@@ -24,4 +25,5 @@ export interface IRaffleOption {
   address: string;
   schedule: CronExpression;
   description?: string;
+  round?: Partial<ILotteryRound>;
 }

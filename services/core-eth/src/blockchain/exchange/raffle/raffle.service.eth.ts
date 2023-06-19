@@ -6,47 +6,38 @@ import { IExchangePurchaseRaffleEvent } from "@framework/types";
 
 import { AssetService } from "../asset/asset.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
-import { RaffleRoundService } from "../../mechanics/raffle/round/round.service";
-import { TokenService } from "../../hierarchy/token/token.service";
-import { RaffleTicketService } from "../../mechanics/raffle/ticket/ticket.service";
+import { TemplateService } from "../../hierarchy/template/template.service";
 
 @Injectable()
 export class ExchangeRaffleServiceEth {
   constructor(
     private readonly assetService: AssetService,
-    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
     private readonly eventHistoryService: EventHistoryService,
-    private readonly raffleRoundService: RaffleRoundService,
-    private readonly raffleTicketService: RaffleTicketService,
   ) {}
 
+  // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
   public async purchaseRaffle(event: ILogEvent<IExchangePurchaseRaffleEvent>, context: Log): Promise<void> {
     const {
-      args: { account, roundId, items, price },
+      args: { items, price },
     } = event;
 
+    // TODO find ticket-token?
+    const ticketTemplate = await this.templateService.findOne(
+      {
+        contract: { address: items[1].token.toLowerCase() }, // lottery ticket contract
+      },
+      { relations: { contract: true } },
+    );
+
+    if (!ticketTemplate) {
+      throw new NotFoundException("ticketTemplateNotFound");
+    }
+
+    // change contract's tokenID to DB's templateID
+    Object.assign(items[1], { tokenId: ticketTemplate.id });
+
     const history = await this.eventHistoryService.updateHistory(event, context);
-
-    const { token } = items[0]; // Raffle contract
-    const { tokenId } = items[1]; // Ticket contract
-
-    const roundEntity = await this.raffleRoundService.getRound(roundId, token.toLowerCase());
-
-    if (!roundEntity) {
-      throw new NotFoundException("roundNotFound");
-    }
-
-    const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
-
-    if (!tokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    await this.raffleTicketService.create({
-      account: account.toLowerCase(),
-      roundId: roundEntity.id,
-      tokenId: tokenEntity.id,
-    });
 
     await this.assetService.saveAssetHistory(history, [items[1]] /* [raffle, ticket] */, [price]);
   }

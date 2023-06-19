@@ -31,7 +31,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
   event Released(uint256 round, uint256 amount);
-  event Prize(address account, uint256 ticketId, uint256 amount);
+  event Prize(address account, uint256 roundId, uint256 ticketId, uint256 amount);
   event PaymentEthReceived(address from, uint256 amount);
 
   // LOTTERY
@@ -279,7 +279,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    emit Prize(_msgSender(), tokenId, amount);
+    emit Prize(_msgSender(), roundNumber, tokenId, amount);
   }
 
   // PAUSABLE

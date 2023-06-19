@@ -4,7 +4,7 @@ import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typ
 
 import { ns } from "@framework/constants";
 import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTicketSearchDto } from "@framework/types";
-import { TokenMetadata } from "@framework/types";
+import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -33,6 +33,10 @@ export class LotteryTicketService extends TokenService {
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.select();
+
+    queryBuilder.where("contract.contractModule = :contractModule", {
+      contractModule: ModuleType.LOTTERY,
+    });
 
     queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 

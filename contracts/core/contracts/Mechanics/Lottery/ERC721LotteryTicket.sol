@@ -22,6 +22,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
 
   bytes32 constant ROUND = keccak256("ROUND");
   bytes32 constant NUMBERS = keccak256("NUMBERS");
+  bytes32 constant PRIZE = keccak256("PRIZE");
 
   constructor(
     string memory name,
@@ -71,7 +72,9 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
+    // TODO use metadata only?
     _data[tokenId].prize = true;
+    _upsertRecordField(tokenId, PRIZE, 1);
   }
 
   function burn(uint256 tokenId) public override(ERC721Burnable, IERC721LotteryTicket) {

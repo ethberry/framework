@@ -5,8 +5,8 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { RaffleTicketSearchDto } from "./dto";
 import { RaffleTicketService } from "./ticket.service";
-import { RaffleTicketEntity } from "./ticket.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
 @Controller("/raffle/ticket")
@@ -18,13 +18,13 @@ export class RaffleTicketController {
   public search(
     @Query() dto: RaffleTicketSearchDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<RaffleTicketEntity>, number]> {
+  ): Promise<[Array<TokenEntity>, number]> {
     return this.raffleTicketService.search(dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<RaffleTicketEntity | null> {
-    return this.raffleTicketService.findOne({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
+    return this.raffleTicketService.findOneWithRelations({ id });
   }
 }
