@@ -14,7 +14,7 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeClaim is SignatureValidator, AccessControl, Pausable {
-  event Claim(address from, uint256 externalId, Asset[] items);
+  event Claim(address account, uint256 externalId, Asset[] items);
 
   function claim(Params memory params, Asset[] memory items, bytes calldata signature) external payable whenNotPaused {
     if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, new Asset[](0), signature))) {

@@ -1,7 +1,6 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { constants } from "ethers";
-import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";

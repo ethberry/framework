@@ -1,7 +1,7 @@
 import "@nomicfoundation/hardhat-toolbox";
 
 import { ethers, network } from "hardhat";
-import { Contract, parseEther } from "ethers";
+import { parseEther } from "ethers";
 
 import { getContractName } from "../../utils";
 import { deployERC721 } from "../../ERC721/shared/fixtures";

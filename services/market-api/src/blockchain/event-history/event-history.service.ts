@@ -85,16 +85,16 @@ export class EventHistoryService {
         //     );
         //   }),
         // );
-        // qb.orWhere(
-        //   new Brackets(qb1 => {
-        //     qb1.andWhere("history.event_type = :eventType3", { eventType3: ContractEventType.Claim });
-        //     qb1.andWhere(
-        //       new Brackets(qb2 => {
-        //         qb2.andWhere("LOWER(history.event_data->>'from') = :wallet4", { wallet4: wallet });
-        //       }),
-        //     );
-        //   }),
-        // );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType3", { eventType3: ContractEventType.Claim });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'account') = :wallet4", { wallet4: wallet });
+              }),
+            );
+          }),
+        );
         // qb.orWhere(
         //   new Brackets(qb1 => {
         //     qb1.andWhere("history.event_type = :eventType4", { eventType4: ContractEventType.Lend });

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { Log, ZeroAddress } from "ethers";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IERC721TokenTransferEvent, IExchangePurchaseRaffleEvent, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, TokenStatus } from "@framework/types";
 
 import { RaffleTicketService } from "./ticket.service";
 import { RaffleRoundService } from "../round/round.service";

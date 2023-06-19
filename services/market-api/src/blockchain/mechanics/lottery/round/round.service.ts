@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, FindOptionsWhere } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 
 import { LotteryRoundEntity } from "./round.entity";
 import { CronExpression, ILotteryOption, ModuleType, TokenType } from "@framework/types";
@@ -45,11 +45,11 @@ export class LotteryRoundService {
     const descriptionJson: Partial<ILotteryOption> = JSON.parse(lotteryEntity.description);
 
     // TODO real options
-    const lottery = {
-      description: descriptionJson.description,
-      schedule: descriptionJson.schedule,
-      round: lotteryRound,
-    };
+    // const lottery = {
+    //   description: descriptionJson.description,
+    //   schedule: descriptionJson.schedule,
+    //   round: lotteryRound,
+    // };
 
     return {
       address: lotteryEntity.address,

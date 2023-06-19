@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 

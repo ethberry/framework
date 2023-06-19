@@ -2,8 +2,6 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
-import { ILotteryOption } from "@framework/types";
-
 import { ContractInput } from "../../contract-input";
 import { validationSchema } from "./validation";
 

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 
 import { TokenMetadata } from "@framework/types";
