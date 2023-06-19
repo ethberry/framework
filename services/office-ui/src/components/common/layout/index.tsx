@@ -1,18 +1,19 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
-import { Container } from "@mui/material";
 
 import { Header } from "../header";
-import { useStyles } from "./styles";
+import ErrorBoundary from "../error-boundary";
+import { Root, StyledContainer } from "./styled";
 
 export const Layout: FC = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <Root>
       <Header />
-      <Container className={classes.container} maxWidth="md">
-        <Outlet />
-      </Container>
-    </div>
+      <StyledContainer maxWidth="md">
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+      </StyledContainer>
+    </Root>
   );
 };

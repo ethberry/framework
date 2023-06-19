@@ -79,7 +79,7 @@ const config: Configuration = {
     new CopyPlugin({
       patterns: [{ from: "./static", to: "./" }],
     }),
-    new ReactRefreshWebpackPlugin(),
+    new ReactRefreshWebpackPlugin({ overlay: false }),
     new ForkTsCheckerWebpackPlugin(),
   ],
   performance: {
@@ -117,6 +117,9 @@ const config: Configuration = {
     errorDetails: true,
   },
   devServer: {
+    client: {
+      overlay: false,
+    },
     static: {
       directory: path.join(__dirname, "static"),
     },

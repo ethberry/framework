@@ -222,6 +222,7 @@
     }
   },
   "errors": {
+    "uncaughtError": "Uncaught error happened",
     "page-not-found": "Page Not Found"
   },
   "form": {
