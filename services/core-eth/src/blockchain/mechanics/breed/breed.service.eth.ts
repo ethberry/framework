@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import {} from "ethers";
 import { BreedService } from "./breed.service";
-import { decodeNumber, decodeTraits } from "@framework/traits";
+import { decodeNumber, decodeTraits } from "@framework/traits-api";
 
 @Injectable()
 export class BreedServiceEth {

@@ -20,7 +20,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@framework/traits",
+  "name": "@framework/traits-api",
   "peerDependencies": {
     "ethers": "^6.0.0"
   },

@@ -12,7 +12,7 @@
     "@emotion/styled": "11.11.0",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
-    "@framework/traits": "0.0.1",
+    "@framework/traits-ui": "0.0.1",
     "@framework/localization-market-ui": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/1inch": "0.0.1",

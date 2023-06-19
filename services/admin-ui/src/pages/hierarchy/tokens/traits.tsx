@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeTraits, DND } from "@framework/traits";
+import { decodeTraits, DND } from "@framework/traits-ui";
 
 export interface ITokenMetadataView {
   metadata: Record<string, any>;

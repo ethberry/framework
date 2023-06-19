@@ -5,7 +5,7 @@ import { BigNumber } from "ethers";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IBreed } from "@framework/types";
-import { decodeTraits, DND } from "@framework/traits";
+import { decodeTraits, DND } from "@framework/traits-ui";
 
 export interface IBreedItemViewDialogProps {
   open: boolean;
