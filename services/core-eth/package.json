@@ -7,7 +7,7 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
-    "@framework/traits": "0.0.1",
+    "@framework/traits-api": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.0.2",
     "@gemunion/constants": "0.12.2",
