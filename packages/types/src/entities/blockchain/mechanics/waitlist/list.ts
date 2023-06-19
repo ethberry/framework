@@ -6,6 +6,7 @@ import { IAsset } from "../../exchange/asset";
 
 export interface IWaitListList extends ISearchable {
   items?: Array<IWaitListItem>;
+  root: string;
   merchantId: number;
   merchant?: IMerchant;
   item?: IAsset;

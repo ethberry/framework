@@ -7,11 +7,12 @@ export enum WaitListEventType {
 
 export interface IWaitListRewardSetEvent {
   externalId: string;
+  root: string;
   items: Array<IAssetItem>;
 }
 
 export interface IWaitListRewardClaimedEvent {
-  from: string;
+  account: string;
   externalId: string;
   items: Array<IAssetItem>;
 }

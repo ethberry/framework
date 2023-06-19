@@ -6,6 +6,7 @@ import { MoreVert } from "@mui/icons-material";
 import type { IWaitListList } from "@framework/types";
 
 import { UploadMenuItem } from "./upload";
+import { GenerateMenuItem } from "./generate";
 
 export interface IWaitListActionsMenu {
   waitListList: IWaitListList;
@@ -42,6 +43,7 @@ export const WaitListActionsMenu: FC<IWaitListActionsMenu> = props => {
       </IconButton>
       <Menu id="waitlist-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <UploadMenuItem waitListList={waitListList} />
+        <GenerateMenuItem waitListList={waitListList} />
       </Menu>
     </Fragment>
   );

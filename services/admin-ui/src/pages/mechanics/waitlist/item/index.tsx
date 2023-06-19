@@ -8,7 +8,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
-import { WaitListGenerateButton } from "../../../../components/buttons/mechanics/waitlist/generate";
 import { WaitListSearchForm } from "./form";
 import { WaitListItemEditDialog } from "./edit";
 
@@ -55,7 +54,6 @@ export const WaitListItem: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <WaitListGenerateButton />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

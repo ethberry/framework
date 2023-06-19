@@ -25,8 +25,8 @@ contract WaitList is AccessControl, Pausable {
 
   Counters.Counter internal _itemsCounter;
 
-  event WaitListRewardSet(uint256 externalId, Asset[] items);
-  event WaitListRewardClaimed(address from, uint256 externalId, Asset[] items);
+  event WaitListRewardSet(uint256 externalId, bytes32 root, Asset[] items);
+  event WaitListRewardClaimed(address account, uint256 externalId, Asset[] items);
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -52,8 +52,19 @@ contract WaitList is AccessControl, Pausable {
       }
     }
 
-    emit WaitListRewardSet(params.externalId, items);
+    emit WaitListRewardSet(params.externalId, params.extra, items);
   }
+
+  //  function whitelistMint(uint256 _mintAmount, bytes32[] calldata _merkleProof) public payable mintCompliance(_mintAmount) mintPriceCompliance(_mintAmount) {
+  //    // Verify whitelist requirements
+  //    require(whitelistMintEnabled, 'The whitelist sale is not enabled!');
+  //    require(!whitelistClaimed[_msgSender()], 'Address already claimed!');
+  //    bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
+  //    require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), 'Invalid proof!');
+  //
+  //    whitelistClaimed[_msgSender()] = true;
+  //    _safeMint(_msgSender(), _mintAmount);
+  //  }
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
     require(_roots[externalId] != "", "Waitlist: Not yet started");

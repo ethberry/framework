@@ -116,7 +116,7 @@ export class WaitListListService {
     dto: IWaitListListUpdateDto,
     userEntity: UserEntity,
   ): Promise<WaitListListEntity> {
-    const { item, ...rest } = dto;
+    const { /* item, */ ...rest } = dto;
 
     const waitListListEntity = await this.findOne(where, {
       join: {
@@ -138,9 +138,10 @@ export class WaitListListService {
 
     Object.assign(waitListListEntity, rest);
 
-    if (item) {
-      await this.assetService.update(waitListListEntity.item, item);
-    }
+    // update of the item is not allowed
+    // if (item) {
+    //   await this.assetService.update(waitListListEntity.item, item);
+    // }
 
     return waitListListEntity.save();
   }
@@ -172,21 +173,28 @@ export class WaitListListService {
   }
 
   public async generate(dto: IWaitListGenerateDto): Promise<{ root: string }> {
-    const waitlistListEntity = await this.waitListListEntityRepository.findOne({
-      where: { id: dto.listId },
+    const { listId } = dto;
+    const waitListListEntity = await this.waitListListEntityRepository.findOne({
+      where: { id: listId },
       relations: { items: true },
     });
 
-    if (!waitlistListEntity) {
+    if (!waitListListEntity) {
       throw new NotFoundException("listNotFound");
     }
 
-    const leaves = waitlistListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
+    const leaves = waitListListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
     // const merkleTree = new MerkleTree(leaves.sort(), utils.keccak256, { hashLeaves: true, sortPairs: true });
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
 
     // return { root: merkleTree.getHexRoot() };
-    return { root: merkleTree.root };
+
+    Object.assign(waitListListEntity, {
+      root: merkleTree.root,
+    });
+
+    // DO NOT SAVE
+    return waitListListEntity;
   }
 
   public async upload(dto: IWaitListUploadDto, userEntity: UserEntity): Promise<Array<WaitListItemEntity>> {

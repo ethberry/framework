@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { Alert, Box } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
@@ -28,7 +30,14 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TemplateAssetInput autoSelect multiple prefix="item" />
+      {id ? (
+        <Box mt={2}>
+          <Alert severity="warning">
+            <FormattedMessage id="form.hints.editNotAllowed" />
+          </Alert>
+        </Box>
+      ) : null}
+      <TemplateAssetInput autoSelect multiple prefix="item" readOnly />
     </FormDialog>
   );
 };

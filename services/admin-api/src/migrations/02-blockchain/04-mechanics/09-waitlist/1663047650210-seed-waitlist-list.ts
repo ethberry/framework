@@ -30,12 +30,12 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.waitlist_list (
+      INSERT INTO ${ns}.wait_list_list (
         title,
         description,
         merchant_id,
         item_id,
-        is_uploaded,
+        root,
         created_at,
         updated_at
       ) VALUES (
@@ -43,7 +43,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090001,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -51,7 +51,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090002,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -59,7 +59,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090003,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -67,7 +67,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090004,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -75,7 +75,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090005,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -83,7 +83,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090006,
-        false,
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -91,7 +91,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090007,
-        true,
+        '0x0',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -107,6 +107,6 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.waitlist_list`);
+    await queryRunner.dropTable(`${ns}.wait_list_list`);
   }
 }

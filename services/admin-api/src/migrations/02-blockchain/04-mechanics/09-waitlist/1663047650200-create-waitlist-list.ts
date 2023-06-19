@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateWaitlistList1663047650200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.waitlist_list`,
+      name: `${ns}.wait_list_list`,
       columns: [
         {
           name: "id",
@@ -29,9 +29,9 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "is_uploaded",
-          type: "bool",
-          default: false,
+          name: "root",
+          type: "varchar",
+          isNullable: true,
         },
         {
           name: "created_at",
@@ -62,6 +62,6 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.waitlist_list`);
+    await queryRunner.dropTable(`${ns}.wait_list_list`);
   }
 }

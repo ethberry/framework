@@ -71,13 +71,13 @@ export class NotificatorService {
 
   // MODULE:WAITLIST
   public async rewardSet(data: IWaitListRewardSetData): Promise<any> {
-    return this.sendMessage(data.waitList.merchantId, clientProxy => {
+    return this.sendMessage(data.waitListList.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.WAITLIST_REWARD_SET, data).toPromise();
     });
   }
 
   public async rewardClaimed(data: IWaitListRewardClaimedData): Promise<any> {
-    return this.sendMessage(data.waitList.merchantId, clientProxy => {
+    return this.sendMessage(data.waitListItem.list!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.WAITLIST_REWARD_CLAIMED, data).toPromise();
     });
   }

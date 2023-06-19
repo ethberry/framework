@@ -11,10 +11,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import type { IWaitListList } from "@framework/types";
 
+import { WaitListActionsMenu } from "../../../../components/menu/mechanics/waitlist";
+import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
-import { cleanUpAsset } from "../../../../utils/money";
-import { WaitListActionsMenu } from "../../../../components/menu/mechanics/waitlist";
 
 export const WaitListList: FC = () => {
   const {
@@ -75,10 +75,7 @@ export const WaitListList: FC = () => {
                 <IconButton onClick={handleDelete(waitListList)}>
                   <Delete />
                 </IconButton>
-                <WaitListActionsMenu
-                  waitListList={waitListList}
-                  // disabled={waitListList.root}
-                />
+                <WaitListActionsMenu waitListList={waitListList} disabled={!!waitListList.root} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

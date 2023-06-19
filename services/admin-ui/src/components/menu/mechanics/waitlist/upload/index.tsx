@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { CloudUploadOutlined } from "@mui/icons-material";
 
 import type { IWaitListList } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -51,7 +51,7 @@ export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
     <Fragment>
       <MenuItem onClick={handleUpload}>
         <ListItemIcon>
-          <AddCircleOutlineIcon />
+          <CloudUploadOutlined />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.upload" />
