@@ -11,7 +11,7 @@ export class SeedTemplateRaffleTicketAt1685961134280 implements MigrationInterfa
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1110101
+        101210101
       );
     `);
 
@@ -29,15 +29,15 @@ export class SeedTemplateRaffleTicketAt1685961134280 implements MigrationInterfa
         created_at,
         updated_at
       ) VALUES (
-        1110101,
+        1210101,
         'Raffle ticket',
         '${simpleFormatting}',
         '${imageUrl}',
-        1110101,
+        101210101,
         0,
         1,
         'ACTIVE',
-        11101,
+        12101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

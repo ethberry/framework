@@ -23,6 +23,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.achievement_rule (
+        id,
         title,
         description,
         achievement_type,
@@ -33,6 +34,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        1,
         'Marketplace',
         '${simpleFormatting}',
         'MARKETPLACE',
@@ -43,16 +45,18 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        2,
         'Craft',
         '${simpleFormatting}',
         'CRAFT',
         'Craft',
-        1306,
+        10306,
         50100102,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        3,
         'Collection',
         '${simpleFormatting}',
         'COLLECTION',
@@ -63,6 +67,7 @@ export class SeedAchievementRule1681273013020 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        4,
         'Ecommerce',
         '${simpleFormatting}',
         'ECOMMERCE',

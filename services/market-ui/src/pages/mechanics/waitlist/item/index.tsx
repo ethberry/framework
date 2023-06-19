@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
 import { WaitListClaimButton } from "../../../../components/buttons";
-import { WaitListJoinDialog } from "./join";
+import { WaitListJoinDialog } from "../../../../components/buttons/mechanics/waitlist/join";
 
 export const WaitListItem: FC = () => {
   const { account } = useWeb3React();

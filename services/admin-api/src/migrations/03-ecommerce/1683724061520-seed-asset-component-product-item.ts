@@ -14,56 +14,56 @@ export class SeedAssetComponentProductItemAt1683724061520 implements MigrationIn
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190101
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190102
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190103
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190104
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190105
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190106
       ), (
         'ERC20',
-        1201,
-        120101, -- Space Credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190107
       ), (
         'ERC20',
-        1201,
-        120101, -- Space Credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190108
       ), (
         'ERC20',
-        1201,
-        120101, -- Space Credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         190109
       );

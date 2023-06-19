@@ -14,8 +14,8 @@ export class SeedAssetComponentsCollectionAt1679894501230 implements MigrationIn
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         161101
       );

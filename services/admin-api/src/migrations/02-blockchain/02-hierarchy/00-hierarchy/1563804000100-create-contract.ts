@@ -69,6 +69,16 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
+    // 010x - native
+    // 020x - erc20
+    // 030x - erc721
+    // 040x - erc998
+    // 050x - erc1155
+    // 011x - mystery
+    // 012x - wrapper
+    // 021x - raffle
+    // 022x - lottery
+
     const table = new Table({
       name: `${ns}.contract`,
       columns: [

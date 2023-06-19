@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateWaitlistList1663047650200 implements MigrationInterface {
+export class CreateWaitListList1663047650200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.waitlist_list`,
+      name: `${ns}.wait_list_list`,
       columns: [
         {
           name: "id",
@@ -25,6 +25,15 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "item_id",
+          type: "int",
+        },
+        {
+          name: "root",
+          type: "varchar",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -40,6 +49,12 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
           referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
+        {
+          columnNames: ["item_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
       ],
     });
 
@@ -47,6 +62,6 @@ export class CreateWaitlistList1663047650200 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.waitlist_list`);
+    await queryRunner.dropTable(`${ns}.wait_list_list`);
   }
 }

@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  Pagination
+  Pagination,
 } from "@mui/material";
 
 import { Create, FilterList } from "@mui/icons-material";
@@ -40,24 +40,24 @@ export const StakingRules: FC = () => {
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
-    handleDeleteConfirm
+    handleDeleteConfirm,
   } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     filter: ({ title, description }) => ({
       title,
-      description
+      description,
     }),
     search: {
       query: "",
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
-        tokenType: [] as Array<TokenType>
+        tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
       reward: {
-        tokenType: [] as Array<TokenType>
-      } as IStakingRuleItemSearchDto
-    }
+        tokenType: [] as Array<TokenType>,
+      } as IStakingRuleItemSearchDto,
+    },
   });
 
   return (

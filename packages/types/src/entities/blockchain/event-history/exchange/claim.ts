@@ -1,7 +1,7 @@
 import { IAssetItem } from "./common";
 
 export interface IExchangeClaimEvent {
-  from: string;
+  account: string;
   externalId: string;
   items: Array<IAssetItem>;
 }

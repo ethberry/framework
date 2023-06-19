@@ -32,7 +32,7 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
         created_at,
         updated_at
       ) VALUES (
-        11101,
+        12101,
         '${erc721ContractRaffleAddress}',
         '${chainId}',
         'RAFFLE TICKET',

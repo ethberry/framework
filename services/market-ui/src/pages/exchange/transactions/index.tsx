@@ -1,6 +1,7 @@
 import { FC, useCallback } from "react";
-import { useIntl } from "react-intl";
-import { Grid } from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid } from "@mui/material";
+import { FilterList } from "@mui/icons-material";
 import {
   DataGridPremium,
   DataGridPremiumProps,
@@ -11,17 +12,32 @@ import {
 import { format, parseISO } from "date-fns";
 import { stringify } from "qs";
 
-import { ContractEventType, IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { TxHashLink } from "@gemunion/mui-scanner";
 import { useUser } from "@gemunion/provider-user";
 import { useCollection } from "@gemunion/react-hooks";
+import type { IEventHistory, IExchangeLendEvent, IUser } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 
 import { EventDataView } from "./event-data-view";
+import type { IEventSearchDto } from "./form";
+import { TransactionSearchForm } from "./form";
 
 export const MyTransactions: FC = () => {
-  const { rows, count, search, isLoading, handleChangePaginationModel } = useCollection<IEventHistory>({
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    isFiltersOpen,
+    handleSearch,
+    handleToggleFilters,
+    handleChangePaginationModel,
+  } = useCollection<IEventHistory, IEventSearchDto>({
+    search: {
+      eventTypes: [],
+    },
     baseUrl: "/events/my",
     redirect: (_, search) => `/transactions?${stringify(search)}`,
   });
@@ -92,7 +108,16 @@ export const MyTransactions: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "transactions"]} />
 
-      <PageHeader message="pages.transactions.title" />
+      <PageHeader message="pages.transactions.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+      </PageHeader>
+
+      <TransactionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGridPremium
         pagination

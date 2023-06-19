@@ -21,15 +21,15 @@ export class SeedBalanceErc20Erc998At1563804020450 implements MigrationInterface
       ) VALUES (
         '${erc998ContractOwnerErc20Address}',
         '${WeiPerEther.toString()}',
-        12010101,
-        14110101, -- erc20 owner
+        102010101, -- Space Credits
+        104110101, -- erc20 owner
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractOwnerErc1155Erc20Address}',
         '${WeiPerEther.toString()}',
-        12010101,
-        14130101, -- erc20 + erc1155 owner
+        102010101, -- Space Credits
+        104130101, -- erc20 + erc1155 owner
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -15,38 +15,38 @@ export class SeedEventHistoryErc721PurchaseComponentsAt1563804040240 implements 
       ) VALUES (
         1301010,
         'ITEM',
-        1301,
-        13010101,
+        10301,
+        103010101,
         1
       ), (
         1301010,
         'PRICE',
-        1201,
-        12010101,
+        10201,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
         1301020,
         'ITEM',
-        1301,
-        13010201,
+        10301,
+        103010201,
         1
       ), (
         1301020,
         'PRICE',
-        1201,
-        12010101,
+        10201,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
         1301030,
         'ITEM',
-        1301,
-        13010301,
+        10301,
+        103010301,
         1
       ), (
         1301030,
         'PRICE',
-        1201,
-        12010101,
+        10201,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       );
     `);

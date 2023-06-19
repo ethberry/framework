@@ -39,7 +39,9 @@ export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
+export * from "./mechanics/waitlist/create";
 export * from "./mechanics/waitlist/search";
+export * from "./mechanics/waitlist/update";
 
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/chart";

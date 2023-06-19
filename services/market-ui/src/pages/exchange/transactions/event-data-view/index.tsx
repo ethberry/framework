@@ -56,6 +56,44 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
           })}
         </Box>
       );
+    case ContractEventType.WaitListRewardClaimed:
+      return (
+        <Box sx={{ p: 2.5 }}>
+          {Object.keys(eventData).map((key: string) => {
+            // @ts-ignore
+            let value = eventData[key];
+            const showRaw = typeof value === "number" || typeof value === "string";
+            if (!showRaw) {
+              value = JSON.stringify(value);
+            }
+
+            return (
+              <Box key={key} sx={{ display: "flex", mb: 1, "&:last-of-type": { mb: 0 } }}>
+                <Typography fontWeight={500}>
+                  <FormattedMessage id={`enums.eventDataLabel.${key}`} />:
+                </Typography>
+                <Box sx={{ ml: 1 }}>
+                  {key === "items" && assets?.length ? (
+                    assets.map(asset => (
+                      <Box key={asset.id}>
+                        <Typography variant="body1">
+                          {asset.token?.template?.title} - {asset.amount}
+                        </Typography>
+                      </Box>
+                    ))
+                  ) : key === "from" || key === "to" ? (
+                    <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
+                      <AddressLink address={value} />
+                    </Box>
+                  ) : (
+                    <Typography variant="body1">{value}</Typography>
+                  )}
+                </Box>
+              </Box>
+            );
+          })}
+        </Box>
+      );
     case ContractEventType.Lend:
     case ContractEventType.Purchase:
       return (

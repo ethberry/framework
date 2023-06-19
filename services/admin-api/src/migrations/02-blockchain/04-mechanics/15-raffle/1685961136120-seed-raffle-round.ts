@@ -20,7 +20,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ) VALUES (
         '1',
         '1',
-        15,
+        21,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -28,7 +28,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ), (
         '2',
         '2',
-        15,
+        21,
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
@@ -36,7 +36,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ), (
         null,
         '3',
-        15,
+        21,
         '${addDays(now, 1).toISOString()}',
         '${addDays(now, 3).toISOString()}',
         '${currentDateTime}',

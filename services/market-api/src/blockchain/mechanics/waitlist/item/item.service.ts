@@ -7,6 +7,7 @@ import { IWaitListItemCreateDto } from "./interfaces";
 import { WaitListItemEntity } from "./item.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { WaitListProofDto } from "./dto";
+import { WaitListStatus } from "@framework/types";
 
 @Injectable()
 export class WaitListItemService {
@@ -16,18 +17,15 @@ export class WaitListItemService {
   ) {}
 
   public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
-    const { wallet } = userEntity;
+    const queryBuilder = this.waitlistItemEntityRepository.createQueryBuilder("wait_list_item");
 
-    const queryBuilder = this.waitlistItemEntityRepository.createQueryBuilder("waitlist");
+    queryBuilder.select(["wait_list_item.account", "wait_list_item.listId"]);
 
-    queryBuilder.select(["waitlist.account", "waitlist.listId"]);
+    queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
+    queryBuilder.addSelect(["wait_list_list.title"]);
 
-    queryBuilder.leftJoin("waitlist.list", "list");
-    queryBuilder.addSelect(["list.title"]);
-
-    if (wallet) {
-      queryBuilder.andWhere("waitlist.account = :account", { account: wallet });
-    }
+    queryBuilder.andWhere("wait_list_item.account = :account", { account: userEntity.wallet });
+    queryBuilder.andWhere("wait_list_item.waitListStatus = :waitListStatus", { waitListStatus: WaitListStatus.NEW });
 
     return queryBuilder.getManyAndCount();
   }
@@ -40,9 +38,9 @@ export class WaitListItemService {
   }
 
   public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
-    const waitlistEntity = await this.findOne(dto);
+    const waitListEntity = await this.findOne(dto);
 
-    if (waitlistEntity) {
+    if (waitListEntity) {
       throw new ConflictException("duplicateAccount");
     }
 
@@ -50,30 +48,25 @@ export class WaitListItemService {
   }
 
   public async proof(dto: WaitListProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
-    const waitlistEntities = await this.waitlistItemEntityRepository.find({
+    const waitListEntities = await this.waitlistItemEntityRepository.find({
       where: { listId: dto.listId },
     });
 
-    if (waitlistEntities.length === 0) {
+    if (waitListEntities.length === 0) {
       throw new NotFoundException("listNotFound");
     }
 
-    const accounts = waitlistEntities.map(waitlistEntity => waitlistEntity.account);
+    const accounts = waitListEntities.map(waitListEntity => waitListEntity.account);
 
     if (!Object.values(accounts).includes(userEntity.wallet)) {
       throw new NotFoundException("accountNotFound");
     }
-    // const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+
     const leaves = accounts.map(account => [account]);
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
-    // const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
 
-    let proofHex: Array<string> = [];
-    for (const [i, v] of merkleTree.entries()) {
-      if (v[0] === userEntity.wallet) {
-        proofHex = merkleTree.getProof(i);
-      }
-    }
-    return { proof: proofHex };
+    const proof = merkleTree.getProof(merkleTree.leafLookup([userEntity.wallet]));
+
+    return { proof };
   }
 }

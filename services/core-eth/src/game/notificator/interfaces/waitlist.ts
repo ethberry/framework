@@ -1,11 +1,11 @@
-import { IWaitListList } from "@framework/types";
+import { IWaitListItem, IWaitListList } from "@framework/types";
 
 export interface IWaitListRewardSetData {
-  waitList: IWaitListList;
+  waitListList: IWaitListList;
   transactionHash: string;
 }
 
 export interface IWaitListRewardClaimedData {
-  waitList: IWaitListList;
+  waitListItem: IWaitListItem;
   transactionHash: string;
 }

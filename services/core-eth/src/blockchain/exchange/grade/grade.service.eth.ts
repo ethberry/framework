@@ -58,7 +58,7 @@ export class ExchangeGradeServiceEth {
     // Notify about Grade
     this.notificatorService.grade({
       account: from,
-      tokenId: tokenId,
+      tokenId,
       gradeType: gradeEntity.attribute,
       transactionHash,
     });

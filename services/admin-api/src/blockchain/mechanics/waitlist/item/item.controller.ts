@@ -13,8 +13,9 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { WaitListItemService } from "./item.service";
 import { WaitListItemEntity } from "./item.entity";
 import { WaitListItemCreateDto, WaitListSearchDto } from "./dto";
@@ -22,22 +23,25 @@ import { WaitListItemCreateDto, WaitListSearchDto } from "./dto";
 @ApiBearerAuth()
 @Controller("/waitlist/item")
 export class WaitListItemController {
-  constructor(private readonly waitlistItemService: WaitListItemService) {}
+  constructor(private readonly waitListItemService: WaitListItemService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: WaitListSearchDto): Promise<[Array<WaitListItemEntity>, number]> {
-    return this.waitlistItemService.search(dto);
+  public search(
+    @Query() dto: WaitListSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<WaitListItemEntity>, number]> {
+    return this.waitListItemService.search(dto, userEntity);
   }
 
   @Post("/")
-  public create(@Body() dto: WaitListItemCreateDto): Promise<WaitListItemEntity> {
-    return this.waitlistItemService.create(dto);
+  public create(@Body() dto: WaitListItemCreateDto, @User() userEntity: UserEntity): Promise<WaitListItemEntity> {
+    return this.waitListItemService.createItem(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.waitlistItemService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.waitListItemService.delete({ id }, userEntity);
   }
 }

@@ -19,7 +19,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         created_at,
         updated_at
       ) VALUES (
-        1200001,
+        10200001,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -31,7 +31,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1200002,
+        10200002,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -43,7 +43,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1200003,
+        10200003,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -55,7 +55,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1200004,
+        10200004,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -67,7 +67,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1200005,
+        10200005,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -79,7 +79,7 @@ export class SeedEventHistoryErc20TransferAt1563804040120 implements MigrationIn
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1200006,
+        10200006,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',

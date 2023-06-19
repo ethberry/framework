@@ -15,26 +15,26 @@ export class SeedEventHistoryErc721LendComponentsAt1678931845540 implements Migr
       ) VALUES (
         1303010,
         'ITEM',
-        1309,
-        13090101,
+        10309,
+        103090101,
         1
       ), (
         1303010,
         'PRICE',
-        1201,
-        12010101,
+        10201,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
         1303020,
         'ITEM',
-        1309,
-        13090201,
+        10309,
+        103090201,
         1
       ), (
         1303020,
         'PRICE',
-        1201,
-        12010101,
+        10201,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       );
     `);

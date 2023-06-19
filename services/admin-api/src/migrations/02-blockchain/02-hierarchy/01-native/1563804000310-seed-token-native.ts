@@ -18,48 +18,48 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        11010101, -- BESU
+        101010101, -- BESU
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        110101,
+        1010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        11020101, -- BESU (inactive)
+        101020101, -- BESU (inactive)
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        110201,
+        1010201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        21010101, -- BNB
+        201010101, -- BNB
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        210101,
+        2010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        31010101, -- ETH
+        301010101, -- ETH
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        310101,
+        3010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        41010101, -- MATIC
+        401010101, -- MATIC
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        410101,
+        4010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

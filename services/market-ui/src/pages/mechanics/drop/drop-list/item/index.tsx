@@ -19,8 +19,7 @@ export const DropItem: FC<IDropItemProps> = props => {
       <CardActionArea
         component={RouterLink}
         // prettier-ignore
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        to={`/${drop.item!.components[0].contract!.contractType.toLowerCase()}-templates/${drop.item!.components[0].templateId}`}
+        to={`/${drop.item!.components[0].contract!.contractType.toLowerCase()}-templates/${drop.item!.components[0].templateId || 0}`}
       >
         <CardHeader title={drop.item?.components[0]?.template?.title} />
         <CardMedia sx={{ height: 200 }} image={drop.item?.components[0]?.template?.imageUrl} />

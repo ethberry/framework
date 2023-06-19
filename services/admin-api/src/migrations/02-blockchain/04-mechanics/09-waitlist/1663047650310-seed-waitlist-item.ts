@@ -3,34 +3,87 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
 
-export class SeedWaitlistItemAt1663047650310 implements MigrationInterface {
+export class SeedWaitListItemAt1663047650310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.waitlist_item (
+      INSERT INTO ${ns}.wait_list_item (
         account,
         list_id,
+        wait_list_status,
         created_at,
         updated_at
       ) VALUES (
         '${wallets[0]}',
         1,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         2,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        3,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        4,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        5,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        6,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        7,
+        'REDEEMED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        8,
+        'REDEEMED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         2,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        3,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         2,
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        4,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -38,6 +91,6 @@ export class SeedWaitlistItemAt1663047650310 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.waitlist_item`);
+    await queryRunner.dropTable(`${ns}.wait_list_item`);
   }
 }

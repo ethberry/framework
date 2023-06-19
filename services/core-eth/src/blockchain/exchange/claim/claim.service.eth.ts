@@ -44,7 +44,7 @@ export class ExchangeClaimServiceEth {
     );
 
     if (!claimEntity) {
-      this.loggerService.error("claimNotFound", ~~externalId, ExchangeClaimServiceEth.name);
+      this.loggerService.error("claimNotFound", externalId, ExchangeClaimServiceEth.name);
       throw new NotFoundException("claimNotFound");
     }
 

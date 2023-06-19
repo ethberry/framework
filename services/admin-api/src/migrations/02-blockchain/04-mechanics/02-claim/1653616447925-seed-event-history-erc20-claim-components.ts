@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc20ClaimComponentsAt1563804040340 implements MigrationInterface {
+export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
@@ -12,64 +12,40 @@ export class SeedEventHistoryErc20ClaimComponentsAt1563804040340 implements Migr
         token_id,
         amount
       ) VALUES (
-        1202010,
+        10202010,
         'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       ), (
-        1202020,
+        10202020,
         'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       ), (
-        1202030,
+        10202030,
         'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       ), (
-        1202040,
+        10202030,
         'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       ), (
-        1202050,
+        10202040,
         'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       ), (
-        1202060,
+        10202040,
         'ITEM',
-        1301,
-        13010101,
-        1
-      ), (
-        1202070,
-        'ITEM',
-        1301,
-        13010101,
-        1
-      ), (
-        1202080,
-        'ITEM',
-        1301,
-        13010101,
-        1
-      ), (
-        1202090,
-        'ITEM',
-        1301,
-        13010101,
-        1
-      ), (
-        1202100,
-        'ITEM',
-        1301,
-        13010101,
+        10201,
+        102010101,
         1
       );
     `);

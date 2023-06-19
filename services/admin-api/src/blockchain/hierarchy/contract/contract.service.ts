@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Not, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
@@ -189,7 +189,7 @@ export class ContractService {
     return contractEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
+  public delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
     return this.update(where, { contractStatus: ContractStatus.INACTIVE });
   }
 }

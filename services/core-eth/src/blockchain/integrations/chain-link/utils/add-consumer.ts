@@ -9,6 +9,6 @@ export const addConsumer = async function (
   provider: Wallet,
 ): Promise<string> {
   const contract = new ethers.Contract(vrfAddr, VrfSol.abi, provider);
-  const trx = await contract.addConsumer(subId, consumerContract);
-  return trx.hash;
+  const tx = await contract.addConsumer(subId, consumerContract);
+  return tx.hash as string;
 };

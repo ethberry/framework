@@ -36,7 +36,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1601,
+        11101,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (weapon)',
@@ -55,7 +55,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1602,
+        11102,
         '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
@@ -74,7 +74,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1603,
+        11103,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (new)',
@@ -93,7 +93,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1604,
+        11104,
         '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (pausable)',
@@ -112,7 +112,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1605,
+        11105,
         '${erc721ContractMysteryboxBlacklistAddress}',
         '${chainId}',
         'MYSTERY BOX (blacklist)',
@@ -131,7 +131,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1606,
+        11106,
         '${erc721ContractMysteryboxBlacklistPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (mixed)',
@@ -150,7 +150,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2601,
+        21101,
         '${erc721ContractMysteryboxSimpleAddress}',
         56,
         'MYSTERY BOX (BEP)',
