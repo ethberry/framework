@@ -47,6 +47,7 @@ export const MyTokensList: FC<IMyTokenListProps> = props => {
           ModuleType.MYSTERY,
           ModuleType.COLLECTION,
           ModuleType.LOTTERY,
+          ModuleType.RAFFLE,
           ModuleType.WRAPPER,
         ]}
       />
