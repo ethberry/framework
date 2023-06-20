@@ -436,7 +436,7 @@ async function main() {
         active: true,
       },
     ]),
-    "takingInstance.setRules",
+    "stakingInstance.setRules",
   );
 
   await debug(
