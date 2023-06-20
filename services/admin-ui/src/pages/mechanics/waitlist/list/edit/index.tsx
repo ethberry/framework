@@ -9,6 +9,7 @@ import type { IWaitListList } from "@framework/types";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
 import { validationSchema } from "./validation";
+import { ModuleType } from "@framework/types";
 
 export interface IWaitListListEditDialogProps {
   open: boolean;
@@ -37,7 +38,13 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
           </Alert>
         </Box>
       ) : null}
-      <TemplateAssetInput autoSelect multiple prefix="item" readOnly />
+      <TemplateAssetInput
+        autoSelect
+        multiple
+        prefix="item"
+        readOnly={!!id}
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+      />
     </FormDialog>
   );
 };

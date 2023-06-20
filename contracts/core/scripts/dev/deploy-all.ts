@@ -1,12 +1,14 @@
 import { ethers, network } from "hardhat";
 import { Contract, Result, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
+import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
-import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
+import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty, nonce } from "@gemunion/contracts-constants";
 
 import { getContractName } from "../../test/utils";
+import { expiresAt, externalId } from "../../test/constants";
 
 const delay = 1; // block delay
 const delayMs = 900; // block delay ms
@@ -79,7 +81,7 @@ const timestamp = Math.ceil(Date.now() / 1000);
 const currentBlock: { number: number } = { number: 1 };
 
 async function main() {
-  const [owner] = await ethers.getSigners();
+  const [owner, receiver, stranger] = await ethers.getSigners();
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
   fs.appendFileSync(
@@ -566,7 +568,18 @@ async function main() {
   contracts.waitlist = await waitlistFactory.deploy();
   await debug(contracts);
 
-  const root = "0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a";
+  // function setReward(Params memory params, Asset[] memory items)
+  const leavesEntities = [[owner.address], [receiver.address], [stranger.address]];
+
+  const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
+
+  const params = {
+    nonce,
+    externalId,
+    expiresAt,
+    referrer: ZeroAddress,
+    extra: merkleTree.root,
+  };
   const items = [
     {
       tokenType: 2,
@@ -576,7 +589,7 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitlist.setReward(root, items, 2), "waitlist.setReward");
+  await debug(await contracts.waitlist.setReward(params, items), "waitlist.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);

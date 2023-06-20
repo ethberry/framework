@@ -6,3 +6,8 @@ export interface IPurchaseData {
   price: Array<IAssetComponentHistory>;
   transactionHash: string;
 }
+
+export interface IPurchaseRandomData {
+  tokenId: string;
+  transactionHash: string;
+}

@@ -60,6 +60,7 @@ export class EventHistoryService {
 
     queryBuilder.leftJoinAndSelect("event.parent", "parent");
     queryBuilder.leftJoinAndSelect("parent.parent", "grand_parent");
+    queryBuilder.leftJoinAndSelect("grand_parent.parent", "grand_grand_parent");
 
     queryBuilder.andWhere("event.id = :id", {
       id: where.id,

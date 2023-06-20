@@ -36,14 +36,16 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   const metaFn = useMetamask((result: IWaitListList, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.WAITLIST_ADDR, WaitListSetRewardABI, web3Context.provider?.getSigner());
 
+    const params = {
+      nonce: constants.HashZero,
+      externalId: id,
+      expiresAt: 0,
+      referrer: constants.AddressZero,
+      extra: utils.arrayify(result.root),
+    };
+    console.log("params", params);
     return contract.setReward(
-      {
-        nonce: constants.HashZero,
-        externalId: id,
-        expiresAt: 0,
-        referrer: constants.AddressZero,
-        extra: utils.arrayify(result.root),
-      },
+      params,
       result.item?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,

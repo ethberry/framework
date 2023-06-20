@@ -9,6 +9,7 @@ import type {
   IClaimData,
   IGradeData,
   IPurchaseData,
+  IPurchaseRandomData,
   IRentData,
   IRentUserUpdateData,
   IStakingDepositFinishData,
@@ -59,6 +60,10 @@ export class NotificatorService {
 
   // MODULE:CORE
   public purchase(data: IPurchaseData): void {
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
+  }
+
+  public purchaseRandom(data: IPurchaseRandomData): void {
     this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
   }
 

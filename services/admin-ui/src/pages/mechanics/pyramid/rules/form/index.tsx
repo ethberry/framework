@@ -24,7 +24,6 @@ export const PyramidRuleSearchForm: FC<IPyramidRuleSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      sx={{ my: 3 }}
       testId="PyramidRuleSearchForm"
     >
       <Grid container spacing={2}>

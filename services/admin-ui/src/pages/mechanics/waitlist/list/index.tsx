@@ -67,6 +67,7 @@ export const WaitListList: FC = () => {
         <List>
           {rows.map((waitListList, i) => (
             <ListItem key={i}>
+              <ListItemText>{waitListList.id || "new"}</ListItemText>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(waitListList)}>

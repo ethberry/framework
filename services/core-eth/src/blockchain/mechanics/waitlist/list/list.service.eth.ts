@@ -71,7 +71,7 @@ export class WaitListListServiceEth {
 
     const waitListItemEntity = await this.waitListItemService.findOne(
       {
-        account,
+        account: account.toLowerCase(),
         list: {
           id: Number(externalId),
         },
@@ -80,8 +80,8 @@ export class WaitListListServiceEth {
         join: {
           alias: "wait_list_item",
           leftJoinAndSelect: {
-            list: "wait_list_item.wait_list_list",
-            item: "wait_list_list.item",
+            list: "wait_list_item.list",
+            item: "list.item",
             item_components: "item.components",
             item_template: "item_components.template",
             item_contract: "item_components.contract",

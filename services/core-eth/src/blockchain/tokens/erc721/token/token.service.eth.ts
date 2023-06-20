@@ -113,7 +113,21 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
+    const { id } = await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
+    const history = await this.eventHistoryService.findOneWithRelations({ id });
+
+    if (
+      history &&
+      history.parent &&
+      history.parent.parent &&
+      history.parent.parent.parent &&
+      history.parent.parent.parent.eventType === ContractEventType.Purchase
+    ) {
+      this.notificatorService.purchaseRandom({
+        transactionHash,
+        tokenId,
+      });
+    }
 
     if (from === ZeroAddress) {
       erc721TokenEntity.template.amount += 1;
@@ -188,28 +202,20 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    const {
-      args: { tokenId, to },
-    } = event;
+    // const {
+    //   args: { tokenId, to },
+    // } = event;
     const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
 
     const entityWithRelations = await this.eventHistoryService.findOne(
       { id: eventHistoryEntity.id },
-      { relations: { parent: true } },
+      { relations: { parent: true, assets: true } },
     );
 
     if (!entityWithRelations) {
       this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
       throw new NotFoundException("historyNotFound");
     }
-
-    // Notify about Purchase
-    // TODO add price paid?
-    this.notificatorService.purchase({
-      account: to,
-      tokenId,
-      transactionHash: entityWithRelations.parent.transactionHash, // Purchase transaction
-    });
   }
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {

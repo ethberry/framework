@@ -84,6 +84,7 @@ export class WaitListListService {
       join: {
         alias: "waitlist",
         leftJoinAndSelect: {
+          items: "waitlist.items",
           item: "waitlist.item",
           item_components: "item.components",
           item_template: "item_components.template",
@@ -142,7 +143,6 @@ export class WaitListListService {
     // if (item) {
     //   await this.assetService.update(waitListListEntity.item, item);
     // }
-
     return waitListListEntity.save();
   }
 
@@ -172,12 +172,9 @@ export class WaitListListService {
     return this.waitListListEntityRepository.delete(where);
   }
 
-  public async generate(dto: IWaitListGenerateDto): Promise<{ root: string }> {
+  public async generate(dto: IWaitListGenerateDto): Promise<WaitListListEntity> {
     const { listId } = dto;
-    const waitListListEntity = await this.waitListListEntityRepository.findOne({
-      where: { id: listId },
-      relations: { items: true },
-    });
+    const waitListListEntity = await this.findOneWithRelations({ id: listId });
 
     if (!waitListListEntity) {
       throw new NotFoundException("listNotFound");

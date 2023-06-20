@@ -14,6 +14,7 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
 import { Erc998TokenLogModule } from "./log/log.module";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { Erc998TokenLogModule } from "./log/log.module";
     BalanceModule,
     ContractModule,
     Erc998CompositionModule,
+    NotificatorModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
   providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth],
