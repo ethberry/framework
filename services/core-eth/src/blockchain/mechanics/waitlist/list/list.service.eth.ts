@@ -25,7 +25,7 @@ export class WaitListListServiceEth {
     const {
       args: { externalId, root },
     } = event;
-    const { transactionHash } = context;
+    const { transactionHash, address } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -57,6 +57,7 @@ export class WaitListListServiceEth {
 
     await this.notificatorService.rewardSet({
       waitListList: waitListListEntity,
+      address,
       transactionHash,
     });
   }
@@ -65,7 +66,7 @@ export class WaitListListServiceEth {
     const {
       args: { account, externalId },
     } = event;
-    const { transactionHash } = context;
+    const { transactionHash, address } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -100,6 +101,7 @@ export class WaitListListServiceEth {
 
     await this.notificatorService.rewardClaimed({
       waitListItem: waitListItemEntity,
+      address,
       transactionHash,
     });
   }

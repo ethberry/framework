@@ -28,8 +28,6 @@ export class AssetService {
     private readonly loggerService: LoggerService,
     @InjectRepository(AssetEntity)
     private readonly assetEntityRepository: Repository<AssetEntity>,
-    @InjectRepository(AssetComponentEntity)
-    private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
     @InjectRepository(AssetComponentHistoryEntity)
     private readonly assetComponentHistoryEntityRepository: Repository<AssetComponentHistoryEntity>,
     @Inject(forwardRef(() => TemplateService))

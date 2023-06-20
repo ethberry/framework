@@ -25,15 +25,15 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
 
     return contract.claim(
       {
-        nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
-        referrer: constants.AddressZero,
+        nonce: utils.arrayify(claim.nonce),
         extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(claim.endTimestamp).getTime() / 1000)), 32),
+        referrer: constants.AddressZero,
       },
       claim.item?.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
+        token: component.contract?.address,
         tokenId: (component.templateId || 0).toString(), // suppression types check with 0
         amount: component.amount,
       })),

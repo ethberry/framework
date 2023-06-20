@@ -21,6 +21,21 @@ export class TemplateService {
   ): Promise<TemplateEntity | null> {
     return this.templateEntityRepository.findOne({ where, ...options });
   }
+  //
+  // public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
+  //   return this.findOne(where, {
+  //     join: {
+  //       alias: "template",
+  //       leftJoinAndSelect: {
+  //         contract: "template.contract",
+  //         price: "template.price",
+  //         price_components: "price.components",
+  //         price_contract: "price_components.contract",
+  //         price_template: "price_components.template",
+  //       },
+  //     },
+  //   });
+  // }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {
     return this.templateEntityRepository.create(dto).save();

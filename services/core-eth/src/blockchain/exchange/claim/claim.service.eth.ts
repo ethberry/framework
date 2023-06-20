@@ -24,7 +24,7 @@ export class ExchangeClaimServiceEth {
     const {
       args: { items, externalId },
     } = event;
-    const { transactionHash } = context;
+    const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
@@ -55,6 +55,7 @@ export class ExchangeClaimServiceEth {
 
     await this.notificatorService.claim({
       claim: claimEntity,
+      address,
       transactionHash,
     });
   }
