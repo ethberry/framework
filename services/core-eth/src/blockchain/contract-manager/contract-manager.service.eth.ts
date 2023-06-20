@@ -16,6 +16,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPyramidDeployedEvent,
+  IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
@@ -26,6 +27,7 @@ import {
   Erc721CollectionTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  IContractManagerLotteryDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   PyramidContractTemplates,
@@ -52,6 +54,8 @@ import { StakingLogService } from "../mechanics/staking/log/log.service";
 import { EventHistoryService } from "../event-history/event-history.service";
 import { addConsumer } from "../integrations/chain-link/utils";
 import { RentService } from "../mechanics/rent/rent.service";
+import { LotteryLogService } from "../mechanics/lottery/log/log.service";
+import { RaffleLogService } from "../mechanics/raffle/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -73,6 +77,8 @@ export class ContractManagerServiceEth {
     private readonly stakingLogService: StakingLogService,
     private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
+    private readonly lotteryLogService: LotteryLogService,
+    private readonly raffleLogService: RaffleLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
@@ -456,6 +462,84 @@ export class ContractManagerServiceEth {
     });
 
     this.pyramidLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async lottery(event: ILogEvent<IContractManagerLotteryDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, args },
+    } = event;
+
+    const { config } = args;
+    const { timeLagBeforeRelease, commission } = config;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: `${ModuleType.LOTTERY} (new)`,
+      description: emptyStateString,
+      parameters: {
+        timeLagBeforeRelease,
+        commission,
+      },
+      imageUrl,
+      contractFeatures: [ContractFeatures.RANDOM],
+      contractModule: ModuleType.LOTTERY,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
+    });
+
+    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
+    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, addr.toLowerCase(), this.ethersSignerProvider);
+    this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+
+    this.lotteryLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async raffle(event: ILogEvent<IContractManagerRaffleDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, args },
+    } = event;
+
+    const { config } = args;
+    const { timeLagBeforeRelease, commission } = config;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: `${ModuleType.RAFFLE} (new)`,
+      description: emptyStateString,
+      parameters: {
+        timeLagBeforeRelease,
+        commission,
+      },
+      imageUrl,
+      contractFeatures: [ContractFeatures.RANDOM],
+      contractModule: ModuleType.LOTTERY,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchant(addr.toLowerCase()),
+    });
+
+    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
+    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, addr.toLowerCase(), this.ethersSignerProvider);
+    this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+
+    this.raffleLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

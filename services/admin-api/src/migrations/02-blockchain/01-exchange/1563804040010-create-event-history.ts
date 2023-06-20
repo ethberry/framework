@@ -12,6 +12,8 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'MysteryboxDeployed',
         'StakingDeployed',
         'PyramidDeployed',
+        'LotteryDeployed',
+        'RaffleDeployed',
         'ERC20TokenDeployed',
         'ERC721TokenDeployed',
         'ERC998TokenDeployed',

@@ -12,8 +12,10 @@ import {
   IContractManagerERC20TokenDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPyramidDeployedEvent,
+  IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
@@ -112,5 +114,21 @@ export class ContractManagerControllerEth {
   })
   public pyramid(@Payload() event: ILogEvent<IContractManagerPyramidDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.pyramid(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.LotteryDeployed,
+  })
+  public lottery(@Payload() event: ILogEvent<IContractManagerLotteryDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.lottery(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.RaffleDeployed,
+  })
+  public raffle(@Payload() event: ILogEvent<IContractManagerRaffleDeployedEvent>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.raffle(event, ctx);
   }
 }

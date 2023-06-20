@@ -68,6 +68,7 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
           await accessInstance.grantRole(roles[k], grantee[j]);
+          await blockAwaitMs(2);
           // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }

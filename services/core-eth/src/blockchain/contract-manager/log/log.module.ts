@@ -44,6 +44,8 @@ import { ContractManagerLogService } from "./log.service";
               ContractManagerEventType.CollectionDeployed,
               ContractManagerEventType.StakingDeployed,
               ContractManagerEventType.PyramidDeployed,
+              ContractManagerEventType.LotteryDeployed,
+              ContractManagerEventType.RaffleDeployed,
               // MODULE:ACCESS_CONTROL
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,

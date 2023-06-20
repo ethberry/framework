@@ -25,6 +25,8 @@ import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
 import { RentModule } from "../mechanics/rent/rent.module";
+import { RaffleLogModule } from "../mechanics/raffle/log/log.module";
+import { LotteryLogModule } from "../mechanics/lottery/log/log.module";
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { RentModule } from "../mechanics/rent/rent.module";
     VestingLogModule,
     StakingLogModule,
     PyramidLogModule,
+    LotteryLogModule,
+    RaffleLogModule,
     ContractManagerLogModule,
     EventHistoryModule,
     VestingModule,

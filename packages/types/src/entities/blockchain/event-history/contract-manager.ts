@@ -8,6 +8,8 @@ export enum ContractManagerEventType {
   CollectionDeployed = "CollectionDeployed",
   PyramidDeployed = "PyramidDeployed",
   StakingDeployed = "StakingDeployed",
+  LotteryDeployed = "LotteryDeployed",
+  RaffleDeployed = "RaffleDeployed",
 }
 
 // struct CollectionArgs {
@@ -162,6 +164,39 @@ export interface IContractManagerStakingDeployedEvent {
   args: IStakingDeployedEventArgs;
 }
 
+// struct LotteryConfig {
+//   uint256 timeLagBeforeRelease;
+//   uint256 commission;
+// }
+
+export interface ILotteryConfig {
+  timeLagBeforeRelease: string;
+  commission: string;
+}
+
+export interface ILotteryDeployedEventArgs {
+  config: ILotteryConfig;
+}
+
+export interface IContractManagerLotteryDeployedEvent {
+  addr: string;
+  args: ILotteryDeployedEventArgs;
+}
+
+export interface IRaffleConfig {
+  timeLagBeforeRelease: string;
+  commission: string;
+}
+
+export interface IRaffleDeployedEventArgs {
+  config: ILotteryConfig;
+}
+
+export interface IContractManagerRaffleDeployedEvent {
+  addr: string;
+  args: ILotteryDeployedEventArgs;
+}
+
 export type TContractManagerEventData =
   | IContractManagerVestingDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
@@ -171,4 +206,6 @@ export type TContractManagerEventData =
   | IContractManagerMysteryTokenDeployedEvent
   | IContractManagerCollectionDeployedEvent
   | IContractManagerStakingDeployedEvent
-  | IContractManagerPyramidDeployedEvent;
+  | IContractManagerPyramidDeployedEvent
+  | IContractManagerLotteryDeployedEvent
+  | IContractManagerRaffleDeployedEvent;
