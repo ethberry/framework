@@ -3,14 +3,15 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { BigNumber, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
+import type { IRaffleRound } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import RafflePurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
-import { IRaffleRound, TokenType } from "@framework/types";
+import RafflePurchaseABI from "../../../../../abis/mechanics/raffle/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
 
 export interface IRafflePurchaseButtonProps {
@@ -25,38 +26,39 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
     (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, RafflePurchaseABI, web3Context.provider?.getSigner());
 
-      const params = {
-        nonce: utils.arrayify(sign.nonce),
-        externalId: 0,
-        expiresAt: sign.expiresAt,
-        referrer: settings.getReferrer(),
-        extra: utils.formatBytes32String("0x"),
-      };
-      const raffleItem = [
+      return contract.purchaseRaffle(
         {
-          tokenType: 0,
-          token: round.contract?.address,
-          tokenId: "0",
-          amount: "0",
+          nonce: utils.arrayify(sign.nonce),
+          externalId: 0,
+          expiresAt: sign.expiresAt,
+          referrer: settings.getReferrer(),
+          extra: utils.formatBytes32String("0x"),
         },
+        [
+          {
+            tokenType: 0,
+            token: round.contract?.address,
+            tokenId: "0",
+            amount: "0",
+          },
+          {
+            tokenType: 2,
+            token: round.ticketContract?.address,
+            tokenId: "0",
+            amount: "1",
+          },
+        ],
+        round.price?.components.map(component => ({
+          tokenType: Object.values(TokenType).indexOf(component.tokenType),
+          token: component.contract?.address,
+          tokenId: component.templateId || 0,
+          amount: component.amount,
+        })),
+        sign.signature,
         {
-          tokenType: 2,
-          token: round.ticketContract?.address,
-          tokenId: "0",
-          amount: "1",
+          value: getEthPrice(round.price),
         },
-      ];
-      // TODO free tickets option?
-      const rafflePrice = {
-        tokenType: Object.values(TokenType).indexOf(round.price!.components[0].tokenType),
-        token: round.price!.components[0].contract!.address,
-        tokenId: round.price!.components[0].template!.tokens![0].tokenId,
-        amount: BigNumber.from(round.price!.components[0].amount),
-      };
-
-      return contract.purchaseRaffle(params, raffleItem, rafflePrice, sign.signature, {
-        value: getEthPrice(round.price),
-      }) as Promise<void>;
+      ) as Promise<void>;
     },
     // { error: false },
   );

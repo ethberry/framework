@@ -15,16 +15,16 @@ import "./interfaces/IAsset.sol";
 import "./interfaces/ILottery.sol";
 
 abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable {
-  event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
+  event PurchaseLottery(address account, Asset[] items, Asset[] price, uint256 roundId, bytes32 numbers);
 
   function purchaseLottery(
     Params memory params,
     Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
-    Asset memory price,
+    Asset[] memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
     // Verify signature and check signer for MINTER_ROLE
-    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
+    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, price, signature))) {
       revert SignerMissingRole();
     }
 
@@ -32,12 +32,7 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
       revert WrongAmount();
     }
 
-    ExchangeUtils.spendFrom(
-      ExchangeUtils._toArray(price),
-      _msgSender(),
-      items[0].token,
-      DisabledTokenTypes(false, false, false, false, false)
-    );
+    ExchangeUtils.spendFrom(price, _msgSender(), items[0].token, DisabledTokenTypes(false, false, false, false, false));
 
     (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(
       _msgSender(),
@@ -49,7 +44,7 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
 
     emit PurchaseLottery(_msgSender(), items, price, roundId, params.extra);
 
-    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
+    _afterPurchase(params.referrer, price);
   }
 
   function _afterPurchase(address referrer, Asset[] memory price) internal virtual;

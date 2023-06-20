@@ -2,11 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangePurchaseLotteryEvent } from "@framework/types";
+import type { IExchangePurchaseLotteryEvent } from "@framework/types";
 
-import { AssetService } from "../asset/asset.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class ExchangeLotteryServiceEth {
@@ -14,13 +15,14 @@ export class ExchangeLotteryServiceEth {
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
-  // event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
   public async purchaseLottery(event: ILogEvent<IExchangePurchaseLotteryEvent>, context: Log): Promise<void> {
     const {
-      args: { items, price },
+      args: { account, items, price },
     } = event;
+    const { transactionHash } = context;
 
     // TODO find ticket-token?
     const ticketTemplate = await this.templateService.findOne(
@@ -31,7 +33,7 @@ export class ExchangeLotteryServiceEth {
     );
 
     if (!ticketTemplate) {
-      throw new NotFoundException("ticketTemplateNotFound");
+      throw new NotFoundException("lotteryTicketTemplateNotFound");
     }
 
     // change contract's tokenID to DB's templateID
@@ -39,6 +41,12 @@ export class ExchangeLotteryServiceEth {
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    await this.assetService.saveAssetHistory(history, [items[1]] /* [lottery, ticket] */, [price]);
+    const assets = await this.assetService.saveAssetHistory(history, [items[1]] /* [lottery, ticket] */, [price]);
+
+    this.notificatorService.purchaseLottery({
+      account,
+      ...assets,
+      transactionHash,
+    });
   }
 }

@@ -5,8 +5,9 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { ITicketLottery, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITicketLottery } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
 import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/ticket-list/utils";

@@ -2,11 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangePurchaseRaffleEvent } from "@framework/types";
+import type { IExchangePurchaseRaffleEvent } from "@framework/types";
 
-import { AssetService } from "../asset/asset.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class ExchangeRaffleServiceEth {
@@ -14,13 +15,15 @@ export class ExchangeRaffleServiceEth {
     private readonly assetService: AssetService,
     private readonly templateService: TemplateService,
     private readonly eventHistoryService: EventHistoryService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
   public async purchaseRaffle(event: ILogEvent<IExchangePurchaseRaffleEvent>, context: Log): Promise<void> {
     const {
-      args: { items, price },
+      args: { account, items, price },
     } = event;
+    const { transactionHash } = context;
 
     // TODO find ticket-token?
     const ticketTemplate = await this.templateService.findOne(
@@ -31,7 +34,7 @@ export class ExchangeRaffleServiceEth {
     );
 
     if (!ticketTemplate) {
-      throw new NotFoundException("ticketTemplateNotFound");
+      throw new NotFoundException("raffleTicketTemplateNotFound");
     }
 
     // change contract's tokenID to DB's templateID
@@ -39,6 +42,12 @@ export class ExchangeRaffleServiceEth {
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    await this.assetService.saveAssetHistory(history, [items[1]] /* [raffle, ticket] */, [price]);
+    const assets = await this.assetService.saveAssetHistory(history, [items[1]], [price]);
+
+    this.notificatorService.purchaseRaffle({
+      account,
+      ...assets,
+      transactionHash,
+    });
   }
 }

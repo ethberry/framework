@@ -5,10 +5,11 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { ITicketRaffle, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITicketRaffle } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
-import RaffleGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
+import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
 
 export interface IRaffleRewardButtonProps {
   ticket: ITicketRaffle;

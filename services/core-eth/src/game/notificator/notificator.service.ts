@@ -62,6 +62,16 @@ export class NotificatorService {
     this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
   }
 
+  // MODULE:LOTTERY
+  public purchaseLottery(data: IPurchaseData): void {
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data);
+  }
+
+  // MODULE:RAFFLE
+  public purchaseRaffle(data: IPurchaseData): void {
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data);
+  }
+
   // MODULE:CLAIM
   public async claim(data: IClaimData): Promise<any> {
     return this.sendMessage(data.claim.merchantId, clientProxy => {

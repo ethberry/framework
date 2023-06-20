@@ -12,7 +12,7 @@ export class ExchangeRaffleControllerEth {
   constructor(private readonly exchangeRaffleServiceEth: ExchangeRaffleServiceEth) {}
 
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.PurchaseRaffle }])
-  public purchase(@Payload() event: ILogEvent<IExchangePurchaseRaffleEvent>, @Ctx() context: Log): Promise<void> {
+  public purchaseRaffle(@Payload() event: ILogEvent<IExchangePurchaseRaffleEvent>, @Ctx() context: Log): Promise<void> {
     return this.exchangeRaffleServiceEth.purchaseRaffle(event, context);
   }
 }
