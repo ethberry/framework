@@ -2,10 +2,10 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
+import type { IRaffleOption } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
-import { IRaffleOption } from "@framework/types";
 
 @Public()
 @ApiBearerAuth()

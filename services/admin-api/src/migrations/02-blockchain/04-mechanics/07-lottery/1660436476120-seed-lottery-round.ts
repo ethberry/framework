@@ -21,11 +21,11 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1073001
+        102220001
       ), (
-        1073002
+        102220002
       ), (
-        1073003
+        102220003
       );
     `);
 
@@ -41,24 +41,25 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        1073001
+        102220001
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        1073002
+        102220002
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        1073003
+        102220003
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.lottery_round (
+        id,
         numbers,
         round_id,
         contract_id,
@@ -70,36 +71,39 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        1,
         '${getNumbers()}',
         '1',
-        21,
-        12101,
-        1073001,
+        122,
+        12201,
+        102220001,
         0,
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        2,
         '${getNumbers()}',
         '2',
-        21,
-        12101,
-        1073002,
+        122,
+        12201,
+        102220002,
         0,
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${getNumbers()}',
+        3,
+        null,
         '3',
-        21,
-        12101,
-        1073003,
+        122,
+        12201,
+        102220002,
         5,
         '${addDays(now, 1).toISOString()}',
-        '${addDays(now, 3).toISOString()}',
+        null,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { ILotteryRound } from "@framework/types";
+import type { ILotteryRound } from "@framework/types";
 
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";

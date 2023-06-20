@@ -20,9 +20,60 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         updated_at
       ) VALUES (
         122010101,
-        '${JSON.stringify({})}',
+        '${JSON.stringify({
+          ROUND: "1",
+          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+        })}',
         100,
         '1',
+        'MINTED',
+        1220101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        122010102,
+        '${JSON.stringify({
+          ROUND: "2",
+          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+        })}',
+        100,
+        '2',
+        'MINTED',
+        1220101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        122010103,
+        '${JSON.stringify({
+          ROUND: "3",
+          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+        })}',
+        100,
+        '3',
+        'MINTED',
+        1220101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        122010104,
+        '${JSON.stringify({
+          ROUND: "1",
+          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+        })}',
+        100,
+        '4',
+        'MINTED',
+        1220101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        122010105,
+        '${JSON.stringify({
+          ROUND: "1",
+          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+        })}',
+        100,
+        '5',
         'MINTED',
         1220101,
         '${subDays(now, 1).toISOString()}',

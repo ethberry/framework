@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 
 import { ILotteryTicketSearchDto, ModuleType, TokenMetadata } from "@framework/types";
 
@@ -78,12 +78,5 @@ export class LotteryTicketService extends TokenService {
     });
 
     return queryBuilder.getOne();
-  }
-
-  public findOne(
-    where: FindOptionsWhere<TokenEntity>,
-    options?: FindOneOptions<TokenEntity>,
-  ): Promise<TokenEntity | null> {
-    return this.tokenEntityRepository.findOne({ where, ...options });
   }
 }

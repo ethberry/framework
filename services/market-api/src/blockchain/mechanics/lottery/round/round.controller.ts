@@ -2,10 +2,10 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
+import type { ILotteryOption } from "@framework/types";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
-import { ILotteryOption } from "@framework/types";
 
 @Public()
 @ApiBearerAuth()

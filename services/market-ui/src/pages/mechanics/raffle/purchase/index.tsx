@@ -56,11 +56,7 @@ export const RafflePurchase: FC = () => {
       </ProgressOverlay>
       <StyledTypography variant="h6">{raffle.description}</StyledTypography>
       <StyledTypography variant="body1">
-        {
-          Object.keys(CronExpression)[
-            Object.values(CronExpression).indexOf(raffle.schedule as unknown as CronExpression)
-          ]
-        }
+        {Object.keys(CronExpression)[Object.values(CronExpression).indexOf(raffle.schedule)]}
       </StyledTypography>
       <StyledTypography variant="h6">
         <FormattedMessage id="pages.raffle.purchase.rules" />

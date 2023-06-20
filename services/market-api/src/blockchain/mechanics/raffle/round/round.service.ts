@@ -2,9 +2,11 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, FindOptionsWhere } from "typeorm";
 
-import { RaffleRoundEntity } from "./round.entity";
-import { CronExpression, IRaffleOption, ModuleType, TokenType } from "@framework/types";
+import { CronExpression, ModuleType, TokenType } from "@framework/types";
+import type { IRaffleOption } from "@framework/types";
+
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { RaffleRoundEntity } from "./round.entity";
 
 @Injectable()
 export class RaffleRoundService {
@@ -48,10 +50,7 @@ export class RaffleRoundService {
     };
   }
 
-  public findCurrentRoundWithRelations(
-    where?: FindOptionsWhere<RaffleRoundEntity>,
-  ): // where: FindOptionsWhere<LotteryRoundEntity>,
-  Promise<RaffleRoundEntity | null> {
+  public findCurrentRoundWithRelations(where?: FindOptionsWhere<RaffleRoundEntity>): Promise<RaffleRoundEntity | null> {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
     queryBuilder.leftJoinAndSelect("round.contract", "contract");
     queryBuilder.leftJoinAndSelect("round.ticketContract", "ticketContract");

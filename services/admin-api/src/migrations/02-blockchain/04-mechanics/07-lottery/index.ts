@@ -5,3 +5,5 @@ export * from "./1563804000480-seed-balance-lottery-ticket";
 export * from "./1660436476100-seed-contract-lottery";
 export * from "./1660436476110-create-lottery-round";
 export * from "./1660436476120-seed-lottery-round";
+export * from "./1660436476310-seed-event-history-lottery-ticket-purchase";
+export * from "./1660436476320-seed-event-history-lottery-ticket-purchase-components";

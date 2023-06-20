@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 
 import { IRaffleTicketSearchDto, ModuleType, TokenMetadata } from "@framework/types";
 
@@ -55,13 +55,6 @@ export class RaffleTicketService extends TokenService {
     queryBuilder.orderBy("ticket.createdAt", "DESC");
 
     return queryBuilder.getManyAndCount();
-  }
-
-  public findOne(
-    where: FindOptionsWhere<TokenEntity>,
-    options?: FindOneOptions<TokenEntity>,
-  ): Promise<TokenEntity | null> {
-    return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
