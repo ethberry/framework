@@ -7,6 +7,7 @@ import type { IWaitListList } from "@framework/types";
 
 import { UploadMenuItem } from "./upload";
 import { GenerateMenuItem } from "./generate";
+import { CreateMenuItem } from "./create";
 
 export interface IWaitListActionsMenu {
   waitListList: IWaitListList;
@@ -42,6 +43,7 @@ export const WaitListActionsMenu: FC<IWaitListActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="waitlist-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <CreateMenuItem waitListList={waitListList} />
         <UploadMenuItem waitListList={waitListList} />
         <GenerateMenuItem waitListList={waitListList} />
       </Menu>

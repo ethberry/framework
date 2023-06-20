@@ -2,8 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
 import { AccountDto } from "@gemunion/collection";
-
-import { IWaitListItemCreateDto } from "../interfaces";
+import type { IWaitListItemCreateDto } from "@framework/types";
 
 export class WaitListItemCreateDto extends AccountDto implements IWaitListItemCreateDto {
   @ApiProperty()

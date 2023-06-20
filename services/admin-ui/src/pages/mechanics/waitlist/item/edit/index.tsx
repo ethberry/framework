@@ -5,18 +5,13 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
-
-export interface IWaitListItemCreateDto {
-  id: number;
-  account: string;
-  listId: number;
-}
+import { IWaitListItem } from "@framework/types";
 
 export interface IWaitListDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IWaitListItemCreateDto, form: any) => Promise<void>;
-  initialValues: IWaitListItemCreateDto;
+  onConfirm: (values: Partial<IWaitListItem>, form: any) => Promise<void>;
+  initialValues: Partial<IWaitListItem>;
   testId: string;
 }
 

@@ -9,10 +9,9 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IWaitListItemSearchDto } from "@framework/types";
+import type { IWaitListItemCreateDto, IWaitListItemSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import type { IWaitListItemCreateDto } from "./interfaces";
 import { WaitListItemEntity } from "./item.entity";
 import { WaitListListService } from "../list/list.service";
 

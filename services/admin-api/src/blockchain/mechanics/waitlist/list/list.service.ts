@@ -181,10 +181,7 @@ export class WaitListListService {
     }
 
     const leaves = waitListListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
-    // const merkleTree = new MerkleTree(leaves.sort(), utils.keccak256, { hashLeaves: true, sortPairs: true });
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
-
-    // return { root: merkleTree.getHexRoot() };
 
     Object.assign(waitListListEntity, {
       root: merkleTree.root,

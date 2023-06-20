@@ -53,12 +53,18 @@ export class SeedWaitListItemAt1663047650310 implements MigrationInterface {
       ), (
         '${wallets[0]}',
         7,
-        'REDEEMED',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         8,
+        'REDEEMED',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        9,
         'REDEEMED',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 
-import type { IWaitListList } from "@framework/types";
+import type { IWaitListItem, IWaitListList } from "@framework/types";
 import { MobileEventType } from "@framework/types";
 
 import { WaitListService } from "./waitlist.service";
@@ -16,7 +16,7 @@ export class WaitListControllerRmq {
   }
 
   @MessagePattern(MobileEventType.WAITLIST_REWARD_CLAIMED)
-  public rewardClaimed(@Payload() dto: IWaitListList): Promise<void> {
+  public rewardClaimed(@Payload() dto: IWaitListItem): Promise<void> {
     return this.claimService.rewardClaimed(dto);
   }
 }

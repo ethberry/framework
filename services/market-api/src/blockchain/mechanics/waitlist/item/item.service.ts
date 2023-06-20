@@ -3,26 +3,29 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { IWaitListItemCreateDto } from "./interfaces";
-import { WaitListItemEntity } from "./item.entity";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { WaitListProofDto } from "./dto";
+import type { IWaitListItemCreateDto } from "@framework/types";
 import { WaitListStatus } from "@framework/types";
+
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { WaitListItemEntity } from "./item.entity";
+import { WaitListProofDto } from "./dto";
 
 @Injectable()
 export class WaitListItemService {
   constructor(
     @InjectRepository(WaitListItemEntity)
-    private readonly waitlistItemEntityRepository: Repository<WaitListItemEntity>,
+    private readonly waitListItemEntityRepository: Repository<WaitListItemEntity>,
   ) {}
 
   public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
-    const queryBuilder = this.waitlistItemEntityRepository.createQueryBuilder("wait_list_item");
+    const queryBuilder = this.waitListItemEntityRepository.createQueryBuilder("wait_list_item");
 
     queryBuilder.select(["wait_list_item.account", "wait_list_item.listId"]);
 
     queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
     queryBuilder.addSelect(["wait_list_list.title"]);
+
+    queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
 
     queryBuilder.andWhere("wait_list_item.account = :account", { account: userEntity.wallet });
     queryBuilder.andWhere("wait_list_item.waitListStatus = :waitListStatus", { waitListStatus: WaitListStatus.NEW });
@@ -34,7 +37,7 @@ export class WaitListItemService {
     where: FindOptionsWhere<WaitListItemEntity>,
     options?: FindOneOptions<WaitListItemEntity>,
   ): Promise<WaitListItemEntity | null> {
-    return this.waitlistItemEntityRepository.findOne({ where, ...options });
+    return this.waitListItemEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
@@ -44,11 +47,11 @@ export class WaitListItemService {
       throw new ConflictException("duplicateAccount");
     }
 
-    return this.waitlistItemEntityRepository.create(dto).save();
+    return this.waitListItemEntityRepository.create(dto).save();
   }
 
   public async proof(dto: WaitListProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
-    const waitListEntities = await this.waitlistItemEntityRepository.find({
+    const waitListEntities = await this.waitListItemEntityRepository.find({
       where: { listId: dto.listId },
     });
 

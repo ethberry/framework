@@ -26,6 +26,8 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         102090007
       ), (
         102090008
+      ), (
+        102090009
       );
     `);
 
@@ -91,15 +93,23 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
         '${simpleFormatting}',
         1,
         102090007,
-        '0x0',
+        '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'WaitList @@@',
         '${simpleFormatting}',
-        2,
+        1,
         102090008,
-        null,
+        '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'WaitList $$$',
+        '${simpleFormatting}',
+        2,
+        102090009,
+        '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
         '${currentDateTime}',
         '${currentDateTime}'
       );

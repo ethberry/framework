@@ -59,17 +59,16 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
 
 const grantRoles = async (contracts: Array<string>, grantee: Array<string>, roles: Array<string>) => {
   let idx = 1;
+  const max = contracts.length * grantee.length * roles.length;
   for (let i = 0; i < contracts.length; i++) {
     for (let j = 0; j < grantee.length; j++) {
       for (let k = 0; k < roles.length; k++) {
         if (contracts[i] !== grantee[j]) {
-          const max = contracts.length * grantee.length * roles.length;
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          await accessInstance.grantRole(roles[k], grantee[j]);
-          await blockAwaitMs(2);
-          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          // await accessInstance.grantRole(roles[k], grantee[j]);
+          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }

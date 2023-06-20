@@ -45,10 +45,11 @@ export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
 
-export * from "./mechanics/waitlist/create";
+export * from "./mechanics/waitlist/item/create";
+export * from "./mechanics/waitlist/item/search";
+export * from "./mechanics/waitlist/list/create";
+export * from "./mechanics/waitlist/list/update";
 export * from "./mechanics/waitlist/deploy";
-export * from "./mechanics/waitlist/search";
-export * from "./mechanics/waitlist/update";
 
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/chart";

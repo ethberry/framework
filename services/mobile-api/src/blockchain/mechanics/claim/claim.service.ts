@@ -11,6 +11,6 @@ export class ClaimService {
 
   public async claim(dto: IClaim): Promise<void> {
     await Promise.resolve();
-    this.loggerService.log(dto, ClaimService.name);
+    this.loggerService.log(JSON.stringify(dto, null, "\t"), ClaimService.name);
   }
 }
