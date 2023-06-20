@@ -55,7 +55,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
 
   Round[] internal _rounds;
 
-  constructor(Lottery memory config) {
+  constructor(LotteryConfig memory config) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
@@ -141,10 +141,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
-  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
+  function getCurrentRoundInfo() public view returns (LotteryRoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
     return
-      RoundInfo(
+      LotteryRoundInfo(
         round.roundId,
         round.startTimestamp,
         round.endTimestamp,

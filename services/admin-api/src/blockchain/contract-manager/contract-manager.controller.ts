@@ -16,10 +16,13 @@ import {
   Erc721CollectionDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
+  LotteryContractDeployDto,
   MysteryContractDeployDto,
   PyramidContractDeployDto,
+  RaffleContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
+  WaitListContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -107,5 +110,23 @@ export class ContractManagerController {
   @Post("/pyramid")
   public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.pyramid(dto, userEntity);
+  }
+
+  // MODULE:WAITLIST
+  @Post("/waitlist")
+  public waitList(@Body() dto: WaitListContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.waitList(dto, userEntity);
+  }
+
+  // MODULE:RAFFLE
+  @Post("/raffle")
+  public raffle(@Body() dto: RaffleContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.raffle(dto, userEntity);
+  }
+
+  // MODULE:LOTTERY
+  @Post("/lottery")
+  public lottery(@Body() dto: LotteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.lottery(dto, userEntity);
   }
 }

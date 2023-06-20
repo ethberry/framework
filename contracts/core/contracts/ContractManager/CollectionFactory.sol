@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract CollectionFactory is AbstractFactory {
   bytes private constant ERC721C_ARGUMENTS_SIGNATURE =
     "CollectionArgs(string name,string symbol,uint96 royalty,string baseTokenURI,uint96 batchSize,string contractTemplate)";
-  bytes32 private constant ERC721C_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC721C_ARGUMENTS_SIGNATURE));
+  bytes32 private constant ERC721C_ARGUMENTS_TYPEHASH = keccak256(ERC721C_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable ERC721C_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,CollectionArgs args)", ERC721C_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
@@ -73,12 +73,12 @@ contract CollectionFactory is AbstractFactory {
       keccak256(
         abi.encode(
           ERC721C_ARGUMENTS_TYPEHASH,
-          keccak256(abi.encodePacked(args.name)),
-          keccak256(abi.encodePacked(args.symbol)),
+          keccak256(bytes(args.name)),
+          keccak256(bytes(args.symbol)),
           args.royalty,
-          keccak256(abi.encodePacked(args.baseTokenURI)),
+          keccak256(bytes(args.baseTokenURI)),
           args.batchSize,
-          keccak256(abi.encodePacked(args.contractTemplate))
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

@@ -11,7 +11,7 @@ import "./AbstractFactory.sol";
 
 contract StakingFactory is AbstractFactory {
   bytes private constant STAKING_ARGUMENTS_SIGNATURE = "StakingArgs(string contractTemplate)";
-  bytes32 private constant STAKING_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(STAKING_ARGUMENTS_SIGNATURE));
+  bytes32 private constant STAKING_ARGUMENTS_TYPEHASH = keccak256(STAKING_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable STAKING_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,StakingArgs args)", PARAMS_SIGNATURE, STAKING_ARGUMENTS_SIGNATURE));
@@ -51,7 +51,7 @@ contract StakingFactory is AbstractFactory {
   }
 
   function _hashStakingStruct(StakingArgs calldata args) private pure returns (bytes32) {
-    return keccak256(abi.encode(STAKING_ARGUMENTS_TYPEHASH, keccak256(abi.encodePacked(args.contractTemplate))));
+    return keccak256(abi.encode(STAKING_ARGUMENTS_TYPEHASH, keccak256(bytes(args.contractTemplate))));
   }
 
   function allStaking() external view returns (address[] memory) {

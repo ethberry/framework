@@ -12,7 +12,7 @@ import "../LotteryRandom.sol";
 
 contract LotteryRandomHardhat is LotteryRandom, ChainLinkHardhat {
   constructor(
-    Lottery memory config
+    LotteryConfig memory config
   ) LotteryRandom(config) ChainLinkHardhat(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(LotteryRandom, ChainLinkBase) returns (uint256 requestId) {

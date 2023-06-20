@@ -56,7 +56,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   Round[] internal _rounds;
 
-  constructor(Raffle memory config) {
+  constructor(RaffleConfig memory config) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
@@ -131,10 +131,10 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     return _rounds[roundId];
   }
 
-  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
+  function getCurrentRoundInfo() public view returns (RaffleRoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
     return
-      RoundInfo(
+      RaffleRoundInfo(
         round.roundId,
         round.startTimestamp,
         round.endTimestamp,
