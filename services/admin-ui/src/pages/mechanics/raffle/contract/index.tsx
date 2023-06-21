@@ -17,14 +17,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, StakingContractFeatures } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
-import { StakingDeployButton } from "../../../../components/buttons";
+import { RaffleDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { StakingActionsMenu } from "../../../../components/menu/mechanics/staking";
-import { StakingEditDialog } from "./edit";
+import { RaffleActionsMenu } from "../../../../components/menu/mechanics/raffle";
+import { RaffleEditDialog } from "./edit";
 
-export const StakingContracts: FC = () => {
+export const RaffleContracts: FC = () => {
   const {
     rows,
     count,
@@ -44,7 +44,7 @@ export const StakingContracts: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/staking/contracts",
+    baseUrl: "/raffle/contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -65,23 +65,23 @@ export const StakingContracts: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.contracts"]} />
+      <Breadcrumbs path={["dashboard", "raffle", "raffle.contracts"]} />
 
-      <PageHeader message="pages.staking.title">
+      <PageHeader message="pages.raffle.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <StakingDeployButton />
+        <RaffleDeployButton />
       </PageHeader>
 
       <ContractSearchForm
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={StakingContractFeatures}
+        contractFeaturesOptions={{}}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -99,10 +99,7 @@ export const StakingContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <StakingActionsMenu
-                  contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
-                />
+                <RaffleActionsMenu contract={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -124,7 +121,7 @@ export const StakingContracts: FC = () => {
         initialValues={selected}
       />
 
-      <StakingEditDialog
+      <RaffleEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

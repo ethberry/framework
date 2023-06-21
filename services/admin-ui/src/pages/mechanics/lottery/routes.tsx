@@ -2,10 +2,11 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { LotteryRounds } from "./rounds";
-import { LotteryTickets } from "./tickets";
 import { IndexWrapper } from "../../index-wrapper";
 import { LotterySection } from "../../dashboard/mechanics/lottery";
+import { LotteryContracts } from "./contract";
+import { LotteryRounds } from "./rounds";
+import { LotteryTickets } from "./tickets";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -18,6 +19,14 @@ export const lotteryRoutes: Array<RouteObject> = [
             <LotterySection />
           </IndexWrapper>
         ),
+      },
+      {
+        path: "/lottery/contracts",
+        element: <Protected />,
+        children: [
+          { index: true, element: <LotteryContracts /> },
+          { path: "/lottery/contracts/:id", element: <LotteryContracts /> },
+        ],
       },
       {
         path: "/lottery/rounds",

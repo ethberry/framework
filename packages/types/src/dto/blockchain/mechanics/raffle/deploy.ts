@@ -1,5 +1,4 @@
 export interface IRaffleContractDeployDto {
-  account: string;
   config: IRaffleConfigDto;
 }
 

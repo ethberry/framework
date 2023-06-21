@@ -183,11 +183,6 @@ export interface IContractManagerLotteryDeployedEvent {
   args: ILotteryDeployedEventArgs;
 }
 
-export interface IRaffleConfig {
-  timeLagBeforeRelease: string;
-  commission: string;
-}
-
 export interface IRaffleDeployedEventArgs {
   config: ILotteryConfig;
 }

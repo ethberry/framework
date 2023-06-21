@@ -591,6 +591,7 @@
       "claimStatus": "Status",
       "cliffInMonth": "Cliff in month",
       "comment": "Comment",
+      "commission": "Commission",
       "confirm": "Confirm",
       "content": "Content",
       "contract": "Contract",
@@ -704,6 +705,7 @@
       "ticket": "Ticket",
       "ticketNumber": "Ticket Number",
       "time": "Cooldown time",
+      "timeLagBeforeRelease": "Time lag before release",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
@@ -747,6 +749,7 @@
       "city": "Hamburg",
       "cliffInMonth": "12",
       "comment": "Fraud",
+      "commission": "30",
       "confirm": "******",
       "contract": "Contract",
       "contractId": "Contract",
@@ -812,6 +815,7 @@
       "templateIds": "Template",
       "text": "qwerty",
       "time": "0",
+      "timeLagBeforeRelease": "100",
       "title": "Title",
       "token": "Bottle of water",
       "tokenId": "Token",
@@ -1073,6 +1077,9 @@
       "title": "Orders"
     },
     "lottery": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -1185,6 +1192,9 @@
       "title": "Pyramid"
     },
     "raffle": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",

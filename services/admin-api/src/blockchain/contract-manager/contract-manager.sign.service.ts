@@ -596,7 +596,7 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:WAITLIST
+  // MODULE:LOTTERY
   public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByLotteryContractTemplate(dto);

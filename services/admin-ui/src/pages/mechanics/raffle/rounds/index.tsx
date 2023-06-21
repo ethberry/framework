@@ -8,7 +8,6 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IRaffleRound } from "@framework/types";
 
 import { RaffleRoundViewDialog } from "./view";
-import { RaffleRoundEndButton, RaffleRoundStartButton, RaffleScheduleButton } from "../../../../components/buttons";
 
 export const RaffleRounds: FC = () => {
   const {
@@ -33,11 +32,7 @@ export const RaffleRounds: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "raffle", "raffle.rounds"]} />
 
-      <PageHeader message="pages.raffle.rounds.title">
-        <RaffleRoundStartButton />
-        <RaffleRoundEndButton />
-        <RaffleScheduleButton />
-      </PageHeader>
+      <PageHeader message="pages.raffle.rounds.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
