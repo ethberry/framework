@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
+import { addMonths, format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
@@ -18,10 +18,10 @@ export interface IVestingViewDialogProps {
 export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { address, parameters, contractFeatures } = initialValues;
-  const { account, duration, startTimestamp } = parameters as IVestingParams;
+  const { address, parameters } = initialValues;
+  const { account, startTimestamp, cliffInMonth, monthlyRelease } = parameters as unknown as IVestingParams;
   const dateStart = new Date(startTimestamp);
-  const dateFinish = new Date(dateStart.getTime() + duration);
+  const dateFinish = addMonths(dateStart, Math.ceil(10000 / monthlyRelease));
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -56,6 +56,12 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.cliffInMonth" />
+              </TableCell>
+              <TableCell align="right">{cliffInMonth}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.duration" />
               </TableCell>
               <TableCell align="right">
@@ -75,12 +81,6 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.endTimestamp" />
               </TableCell>
               <TableCell align="right">{formatDistance(dateFinish, Date.now(), { addSuffix: true })}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.contractTemplate" />
-              </TableCell>
-              <TableCell align="right">{contractFeatures.join(", ")}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

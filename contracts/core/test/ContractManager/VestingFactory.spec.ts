@@ -5,22 +5,22 @@ import { time } from "@openzeppelin/test-helpers";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate, span } from "../constants";
+import { isEqualEventArgObj } from "../utils";
 
 describe("VestingFactory", function () {
   const factory = () => deployContract(this.title);
 
   describe("deployVesting", function () {
     it("should deploy contract", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const vesting = await ethers.getContractFactory("CliffVesting");
+
+      const vesting = await ethers.getContractFactory("Vesting");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
 
-      const timestamp: number = (await time.latest()).toNumber();
-
+      const current = await time.latest();
       const signature = await owner.signTypedData(
         // Domain
         {
@@ -42,8 +42,8 @@ describe("VestingFactory", function () {
           VestingArgs: [
             { name: "account", type: "address" },
             { name: "startTimestamp", type: "uint64" },
-            { name: "duration", type: "uint64" },
-            { name: "contractTemplate", type: "string" },
+            { name: "cliffInMonth", type: "uint16" },
+            { name: "monthlyRelease", type: "uint16" },
           ],
         },
         // Values
@@ -53,10 +53,10 @@ describe("VestingFactory", function () {
             bytecode: vesting.bytecode,
           },
           args: {
-            account: receiver.address,
-            startTimestamp: timestamp,
-            duration: span,
-            contractTemplate,
+            account: owner.address,
+            startTimestamp: current.toNumber(),
+            cliffInMonth: 12,
+            monthlyRelease: 417,
           },
         },
       );
@@ -67,10 +67,10 @@ describe("VestingFactory", function () {
           bytecode: vesting.bytecode,
         },
         {
-          account: receiver.address,
-          startTimestamp: timestamp,
-          duration: span,
-          contractTemplate,
+          account: owner.address,
+          startTimestamp: current.toNumber(),
+          cliffInMonth: 12,
+          monthlyRelease: 417,
         },
         signature,
       );
@@ -79,19 +79,27 @@ describe("VestingFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "VestingDeployed")
-        .withArgs(address, [receiver.address, timestamp, span, contractTemplate]);
+        .withArgs(
+          address,
+          isEqualEventArgObj({
+            account: owner.address,
+            startTimestamp: current.toString(),
+            cliffInMonth: "12",
+            monthlyRelease: "417",
+          }),
+        );
     });
 
     it("should fail: SignerMissingRole", async function () {
-      const [owner, receiver] = await ethers.getSigners();
+      const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const vesting = await ethers.getContractFactory("CliffVesting");
+
+      const vesting = await ethers.getContractFactory("Vesting");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
 
-      const timestamp: number = (await time.latest()).toNumber();
-
+      const current = await time.latest();
       const signature = await owner.signTypedData(
         // Domain
         {
@@ -113,8 +121,8 @@ describe("VestingFactory", function () {
           VestingArgs: [
             { name: "account", type: "address" },
             { name: "startTimestamp", type: "uint64" },
-            { name: "duration", type: "uint64" },
-            { name: "contractTemplate", type: "string" },
+            { name: "cliffInMonth", type: "uint16" },
+            { name: "monthlyRelease", type: "uint16" },
           ],
         },
         // Values
@@ -124,10 +132,10 @@ describe("VestingFactory", function () {
             bytecode: vesting.bytecode,
           },
           args: {
-            account: receiver.address,
-            startTimestamp: timestamp,
-            duration: span,
-            contractTemplate,
+            account: owner.address,
+            startTimestamp: current.toNumber(),
+            cliffInMonth: 12,
+            monthlyRelease: 417,
           },
         },
       );
@@ -140,10 +148,10 @@ describe("VestingFactory", function () {
           bytecode: vesting.bytecode,
         },
         {
-          account: receiver.address,
-          startTimestamp: timestamp,
-          duration: span,
-          contractTemplate,
+          account: owner.address,
+          startTimestamp: current.toNumber(),
+          cliffInMonth: 12,
+          monthlyRelease: 417,
         },
         signature,
       );

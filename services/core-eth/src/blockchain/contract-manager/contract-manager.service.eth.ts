@@ -34,7 +34,6 @@ import {
   StakingContractTemplates,
   TemplateStatus,
   TokenType,
-  VestingContractTemplate,
 } from "@framework/types";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
@@ -417,9 +416,7 @@ export class ContractManagerServiceEth {
         startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
         duration: Number(duration) * 1000,
       },
-      contractFeatures: Object.values(VestingContractTemplate)[Number(contractTemplate)].split(
-        "_",
-      ) as Array<ContractFeatures>,
+      contractFeatures: [],
       contractModule: ModuleType.VESTING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

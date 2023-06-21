@@ -5,18 +5,18 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
-  IPyramidContractDeployDto,
-  IStakingContractDeployDto,
-  IWaitListContractDeployDto,
   IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
   IErc721CollectionDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
-  IMysteryContractDeployDto,
-  IVestingContractDeployDto,
-  IRaffleContractDeployDto,
   ILotteryContractDeployDto,
+  IMysteryContractDeployDto,
+  IPyramidContractDeployDto,
+  IRaffleContractDeployDto,
+  IStakingContractDeployDto,
+  IVestingContractDeployDto,
+  IWaitListContractDeployDto,
 } from "@framework/types";
 import {
   Erc1155ContractTemplates,
@@ -27,16 +27,13 @@ import {
   MysteryContractTemplates,
   PyramidContractTemplates,
   StakingContractTemplates,
-  VestingContractTemplate,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 import ERC20WhitelistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Whitelist.sol/ERC20Whitelist.json";
 
-import VestingLinearSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
-import VestingGradedSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
-import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
@@ -390,7 +387,7 @@ export class ContractManagerSignService {
 
   // MODULE:VESTING
   public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractTemplate, account, startTimestamp, duration } = dto;
+    const { account, startTimestamp, cliffInMonth, monthlyRelease } = dto;
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
 
@@ -415,8 +412,8 @@ export class ContractManagerSignService {
         VestingArgs: [
           { name: "account", type: "address" },
           { name: "startTimestamp", type: "uint64" },
-          { name: "duration", type: "uint64" },
-          { name: "contractTemplate", type: "string" },
+          { name: "cliffInMonth", type: "uint16" },
+          { name: "monthlyRelease", type: "uint16" },
         ],
       },
       // Values
@@ -428,8 +425,8 @@ export class ContractManagerSignService {
         args: {
           account,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
-          duration: duration * 60 * 60 * 24, // in seconds
-          contractTemplate: Object.values(VestingContractTemplate).indexOf(contractTemplate).toString(),
+          cliffInMonth, // in seconds
+          monthlyRelease,
         },
       },
     );
@@ -747,19 +744,8 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto) {
-    const { contractTemplate } = dto;
-
-    switch (contractTemplate) {
-      case VestingContractTemplate.LINEAR:
-        return VestingLinearSol.bytecode;
-      case VestingContractTemplate.GRADED:
-        return VestingGradedSol.bytecode;
-      case VestingContractTemplate.CLIFF:
-        return VestingCliffSol.bytecode;
-      default:
-        throw new NotFoundException("templateNotFound");
-    }
+  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto) {
+    return VestingSol.bytecode;
   }
 
   // MODULE:MYSTERY

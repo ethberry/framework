@@ -43,7 +43,7 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
       referrer: constants.AddressZero,
       extra: utils.arrayify(result.root),
     };
-    console.log("params", params);
+
     return contract.setReward(
       params,
       result.item?.components.map(component => ({

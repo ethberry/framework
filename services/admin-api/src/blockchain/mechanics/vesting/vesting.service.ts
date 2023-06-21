@@ -5,6 +5,8 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IVestingSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { AchievementLevelEntity } from "../../../achievements/level/level.entity";
+import { BalanceEntity } from "../../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class VestingService {
@@ -14,7 +16,7 @@ export class VestingService {
   ) {}
 
   public async search(dto: IVestingSearchDto): Promise<[Array<ContractEntity>, number]> {
-    const { account, contractTemplate, skip, take } = dto;
+    const { account, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");
 
@@ -22,16 +24,6 @@ export class VestingService {
     queryBuilder.andWhere("vesting.contractModule = :contractModule", {
       contractModule: ModuleType.VESTING,
     });
-
-    if (contractTemplate) {
-      if (contractTemplate.length === 1) {
-        queryBuilder.andWhere(":contractFeature = ANY(vesting.contractFeatures)", {
-          contractFeature: contractTemplate[0],
-        });
-      } else {
-        queryBuilder.andWhere("vesting.contractFeatures && :contractFeatures", { contractFeatures: contractTemplate });
-      }
-    }
 
     if (account) {
       queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
@@ -54,5 +46,13 @@ export class VestingService {
     options?: FindOneOptions<ContractEntity>,
   ): Promise<ContractEntity | null> {
     return this.contractEntityRepository.findOne({ where, ...options });
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<AchievementLevelEntity>): Promise<ContractEntity | null> {
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
+    queryBuilder.select();
+    queryBuilder.where(where);
+    queryBuilder.innerJoinAndMapOne("contract.balance", BalanceEntity, "owner", "balance.account = owner.address");
+    return queryBuilder.getOne();
   }
 }

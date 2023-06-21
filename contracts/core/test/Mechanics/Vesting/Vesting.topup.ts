@@ -5,7 +5,7 @@ import { deployVesting } from "./shared/fixture";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 
 describe("Vesting TopUp", function () {
-  const factory = () => deployVesting("LinearVesting");
+  const factory = () => deployVesting("Vesting", 12, 417);
 
   shouldBehaveLikeOwnable(factory);
   shouldBehaveLikeTopUp(factory);

@@ -109,11 +109,6 @@
       "INACTIVE": "غير نشط",
       "NEW": "جديد"
     },
-    "contractTemplate": {
-      "CLIFF": "جرف",
-      "GRADED": "متدرج",
-      "LINEAR": "خطي"
-    },
     "craftStatus": {
       "ACTIVE": "نشيط",
       "INACTIVE": "غير نشط",

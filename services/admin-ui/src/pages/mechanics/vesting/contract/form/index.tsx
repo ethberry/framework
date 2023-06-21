@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IVestingSearchDto, VestingContractTemplate } from "@framework/types";
+import { SearchInput } from "@gemunion/mui-inputs-core";
+import { IVestingSearchDto } from "@framework/types";
 
 interface IVestingSearchFormProps {
   onSubmit: (values: IVestingSearchDto) => Promise<void>;
@@ -14,8 +14,8 @@ interface IVestingSearchFormProps {
 export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { account, contractTemplate } = initialValues;
-  const fixedValues = { account, contractTemplate };
+  const { account } = initialValues;
+  const fixedValues = { account };
 
   return (
     <FormWrapper
@@ -30,13 +30,7 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
           <SearchInput name="account" />
         </Grid>
       </Grid>
-      <Collapse in={open}>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
-            <SelectInput name="contractTemplate" options={VestingContractTemplate} multiple />
-          </Grid>
-        </Grid>
-      </Collapse>
+      <Collapse in={open}></Collapse>
       <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );

@@ -166,11 +166,6 @@ export enum ContractFeatures {
   // MODULE:MYSTERY
   "PAUSABLE" = "PAUSABLE",
 
-  // MODULE:VESTING
-  "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
-  "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
-  "CLIFF" = "CLIFF", // 0 -> 100
-
   // MODULE:PYRAMID
   "REFERRAL" = "REFERRAL",
   "SPLITTER" = "SPLITTER",

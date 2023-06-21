@@ -1,16 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsISO8601, IsString } from "class-validator";
+import { IsInt, IsISO8601, IsString } from "class-validator";
 
 import { AccountDto } from "@gemunion/collection";
-import { IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
+import { IVestingContractDeployDto } from "@framework/types";
 
 export class VestingContractDeployDto extends AccountDto implements IVestingContractDeployDto {
-  @ApiProperty({
-    enum: VestingContractTemplate,
-  })
-  @IsEnum(VestingContractTemplate, { message: "badInput" })
-  public contractTemplate: VestingContractTemplate;
-
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
@@ -18,5 +12,9 @@ export class VestingContractDeployDto extends AccountDto implements IVestingCont
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  public duration: number;
+  public cliffInMonth: number;
+
+  @ApiProperty()
+  @IsInt({ message: "typeMismatch" })
+  public monthlyRelease: number;
 }

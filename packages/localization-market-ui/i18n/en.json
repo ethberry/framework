@@ -385,6 +385,7 @@
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Status",
+      "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contract": "Contract",

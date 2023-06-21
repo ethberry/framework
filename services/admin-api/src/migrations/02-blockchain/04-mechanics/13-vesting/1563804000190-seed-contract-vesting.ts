@@ -7,9 +7,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const vestingLinearAddress = process.env.VESTING_LINEAR_ADDR || wallet;
-    const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
-    const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
+    const vestingAddress = process.env.VESTING_LINEAR_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -34,7 +32,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         updated_at
       ) VALUES (
         1901,
-        '${vestingLinearAddress}',
+        '${vestingAddress}',
         '${chainId}',
         'LINEAR VESTING',
         '${simpleFormatting}',
@@ -42,7 +40,12 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Linear vesting',
         '',
         '',
-        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
+        '${JSON.stringify({
+          account: wallet,
+          startTimestamp: currentDateTime,
+          cliffInMonth: 12,
+          monthlyRelease: 417,
+        })}',
         'ACTIVE',
         '{LINEAR}',
         'VESTING',
@@ -52,7 +55,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1902,
-        '${vestingGradedAddress}',
+        '${vestingAddress}',
         '${chainId}',
         'GRADED VESTING',
         '${simpleFormatting}',
@@ -60,7 +63,12 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Graded vesting',
         '',
         '',
-        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
+        '${JSON.stringify({
+          account: wallet,
+          startTimestamp: currentDateTime,
+          cliffInMonth: 12,
+          monthlyRelease: 417,
+        })}',
         'ACTIVE',
         '{GRADED}',
         'VESTING',
@@ -70,7 +78,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1903,
-        '${vestingCliffAddress}',
+        '${vestingAddress}',
         '${chainId}',
         'CLIFF VESTING',
         '${simpleFormatting}',
@@ -78,7 +86,12 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'Cliff vesting',
         '',
         '',
-        '${JSON.stringify({ account: wallet, duration: 31536000000, startTimestamp: currentDateTime })}',
+        '${JSON.stringify({
+          account: wallet,
+          startTimestamp: currentDateTime,
+          cliffInMonth: 12,
+          monthlyRelease: 417,
+        })}',
         'ACTIVE',
         '{CLIFF}',
         'VESTING',
