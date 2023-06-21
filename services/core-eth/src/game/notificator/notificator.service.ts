@@ -64,7 +64,7 @@ export class NotificatorService {
   }
 
   public purchaseRandom(data: IPurchaseRandomData): void {
-    this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
+    this.mobileClientProxy.emit(MobileEventType.PURCHASE_RANDOM, data);
   }
 
   // MODULE:LOTTERY
@@ -110,6 +110,11 @@ export class NotificatorService {
   public grade(data: IGradeData): void {
     this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
   }
+
+  // MODULE:GENES
+  // public breed(data: IGradeData): void {
+  //   this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
+  // }
 
   // MODULE:STAKING
   public stakingDepositStart(data: IStakingDepositStartData): void {

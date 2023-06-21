@@ -27,13 +27,17 @@ import { EventHistoryModule } from "../event-history/event-history.module";
 import { RentModule } from "../mechanics/rent/rent.module";
 import { RaffleLogModule } from "../mechanics/raffle/log/log.module";
 import { LotteryLogModule } from "../mechanics/lottery/log/log.module";
+import { Erc721TokenRandomLogModule } from "../tokens/erc721/token/log-random/log.module";
+import { Erc998TokenRandomLogModule } from "../tokens/erc998/token/log-random/log.module";
 
 @Module({
   imports: [
     ConfigModule,
     Erc20TokenLogModule,
     Erc721TokenLogModule,
+    Erc721TokenRandomLogModule,
     Erc998TokenLogModule,
+    Erc998TokenRandomLogModule,
     Erc1155TokenLogModule,
     MysteryLogModule,
     VestingLogModule,

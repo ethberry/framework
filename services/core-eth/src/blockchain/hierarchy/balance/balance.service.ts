@@ -56,7 +56,10 @@ export class BalanceService {
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount = (BigInt(balanceEntity.amount) - BigInt(amount)).toString();
+      balanceEntity.amount =
+        BigInt(balanceEntity.amount) - BigInt(amount) > 0
+          ? (BigInt(balanceEntity.amount) - BigInt(amount)).toString()
+          : "0";
       return balanceEntity.save();
     }
   }

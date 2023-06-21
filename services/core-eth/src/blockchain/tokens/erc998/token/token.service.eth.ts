@@ -3,7 +3,6 @@ import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  ContractEventType,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
@@ -15,11 +14,10 @@ import {
   IErc998TokenWhitelistedChildEvent,
   ILevelUp,
   TokenMetadata,
-  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
-import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
+import { getMetadata } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -75,49 +73,20 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
       await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
-
-      // if RANDOM token - update tokenId in exchange asset history
-      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
-        // decide if it was random mint or common mint via admin-panel
-        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
-        const mintType = getTokenMintType(txLogs as Array<Log>);
-
-        if (mintType === TokenMintType.MintRandom) {
-          // update Asset history
-          const historyEntity = await this.eventHistoryService.findOne({
-            transactionHash,
-            eventType: ContractEventType.MintRandom,
-          });
-          if (!historyEntity) {
-            throw new NotFoundException("historyNotFound");
-          }
-          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
-        }
-      }
     }
 
-    const erc998TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      address.toLowerCase(),
+      void 0,
+      true,
+    );
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const { id } = await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
-    const history = await this.eventHistoryService.findOneWithRelations({ id });
-
-    if (
-      history &&
-      history.parent &&
-      history.parent.parent &&
-      history.parent.parent.parent &&
-      history.parent.parent.parent.eventType === ContractEventType.Purchase
-    ) {
-      this.notificatorService.purchaseRandom({
-        transactionHash,
-        tokenId,
-      });
-    }
+    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === ZeroAddress) {
       erc998TokenEntity.template.amount += 1;

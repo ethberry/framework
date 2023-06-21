@@ -51,7 +51,7 @@ export class RaffleTicketServiceEth {
     const erc721TokenEntity =
       from === ZeroAddress
         ? await this.createTicketToken(address, tokenId, to, transactionHash)
-        : await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId);
+        : await this.tokenService.getToken(tokenId, address.toLowerCase(), chainId, true);
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

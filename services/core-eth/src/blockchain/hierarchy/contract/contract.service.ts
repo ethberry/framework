@@ -192,4 +192,84 @@ export class ContractService {
     }
     return { address: [], fromBlock: undefined };
   }
+
+  public async findAllRandomTokensByType(
+    contractType?: TokenType,
+    contractFeatures?: Array<ContractFeatures>,
+  ): Promise<IContractListenerResult> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const queryBuilder = this.contractEntityRepository
+      .createQueryBuilder("contract")
+      .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
+      .andWhere("contract.chainId = :chainId", { chainId })
+      // it should be nested array
+      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });
+
+    if (contractType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    }
+
+    // TODO fix search in array
+    if (contractFeatures) {
+      // queryBuilder.andWhere("contract.contractFeatures = ANY(:...contractFeatures)", {
+      queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", {
+        contractFeatures: contractFeatures,
+      });
+    }
+
+    const contractEntities = await queryBuilder.getMany();
+
+    if (contractEntities.length) {
+      const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);
+      const unique = [...new Set(addresses)];
+      return {
+        address: unique,
+        fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
+      };
+    }
+    return { address: [], fromBlock: undefined };
+  }
+
+  public async findAllCommonTokensByType(
+    contractType?: TokenType,
+    contractFeatures?: Array<ContractFeatures>,
+  ): Promise<IContractListenerResult> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const queryBuilder = this.contractEntityRepository
+      .createQueryBuilder("contract")
+      .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
+      .andWhere("contract.chainId = :chainId", { chainId })
+      // it should be nested array
+      .andWhere("contract.contractFeatures NOT IN (:...features)", {
+        features: [[ContractFeatures.EXTERNAL, ContractFeatures.RANDOM]],
+      });
+
+    if (contractType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    }
+
+    if (contractFeatures) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
+      }
+    }
+
+    const contractEntities = await queryBuilder.getMany();
+
+    if (contractEntities.length) {
+      const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);
+      const unique = [...new Set(addresses)];
+      return {
+        address: unique,
+        fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
+      };
+    }
+    return { address: [], fromBlock: undefined };
+  }
 }

@@ -72,7 +72,12 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
-    const mysteryboxTokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const mysteryboxTokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      address.toLowerCase(),
+      void 0,
+      true,
+    );
 
     if (!mysteryboxTokenEntity) {
       throw new NotFoundException("tokenNotFound");

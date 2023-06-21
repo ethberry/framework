@@ -55,6 +55,8 @@ import { addConsumer } from "../integrations/chain-link/utils";
 import { RentService } from "../mechanics/rent/rent.service";
 import { LotteryLogService } from "../mechanics/lottery/log/log.service";
 import { RaffleLogService } from "../mechanics/raffle/log/log.service";
+import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
+import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -70,7 +72,9 @@ export class ContractManagerServiceEth {
     private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
+    private readonly erc721RandomLogService: Erc721TokenRandomLogService,
     private readonly erc998LogService: Erc998TokenLogService,
+    private readonly erc998RandomLogService: Erc998TokenRandomLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly stakingLogService: StakingLogService,
@@ -191,10 +195,20 @@ export class ContractManagerServiceEth {
       });
     }
 
-    this.erc721LogService.addListener({
-      address: [addr.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
-    });
+    if (
+      contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
+      contractEntity.contractFeatures.includes(ContractFeatures.GENES)
+    ) {
+      this.erc721RandomLogService.addListener({
+        address: [addr.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    } else {
+      this.erc721LogService.addListener({
+        address: [addr.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    }
   }
 
   public async erc721Collection(event: ILogEvent<IContractManagerCollectionDeployedEvent>, ctx: Log): Promise<void> {
@@ -318,11 +332,22 @@ export class ContractManagerServiceEth {
       });
     }
 
-    this.erc998LogService.addListener({
-      address: [addr.toLowerCase()],
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
-    });
+    if (
+      contractEntity.contractFeatures.includes(ContractFeatures.RANDOM) ||
+      contractEntity.contractFeatures.includes(ContractFeatures.GENES)
+    ) {
+      this.erc998RandomLogService.addListener({
+        address: [addr.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    } else {
+      this.erc998LogService.addListener({
+        address: [addr.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    }
   }
+  //
 
   public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {

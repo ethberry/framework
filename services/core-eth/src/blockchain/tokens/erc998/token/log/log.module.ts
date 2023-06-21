@@ -21,7 +21,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const erc998Contracts = await contractService.findAllTokensByType(TokenType.ERC998);
+        const erc998Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC998);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[

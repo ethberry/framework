@@ -67,8 +67,8 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          // await accessInstance.grantRole(roles[k], grantee[j]);
-          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          await accessInstance.grantRole(roles[k], grantee[j]);
+          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }
@@ -324,16 +324,8 @@ async function main() {
   contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
   await debug(contracts);
 
-  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
-  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
-  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
-  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  const vestingFactory = await ethers.getContractFactory("Vesting");
+  contracts.vestingLinear = await vestingFactory.deploy(wallet, timestamp, 12, 417);
   await debug(contracts);
 
   const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");

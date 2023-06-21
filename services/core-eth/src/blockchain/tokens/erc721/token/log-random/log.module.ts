@@ -5,11 +5,18 @@ import { CronExpression } from "@nestjs/schedule";
 import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractEventType, ContractType, Erc4907EventType, TokenType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractFeatures,
+  ContractType,
+  Erc4907EventType,
+  TokenType,
+} from "@framework/types";
 
 // custom contracts
-import { ABI } from "./interfaces";
-import { Erc721TokenLogService } from "./log.service";
+import { ABIRandom } from "./interfaces";
+import { Erc721TokenRandomLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
@@ -22,7 +29,11 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const erc721Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC721);
+        const erc721RandomContracts = await contractService.findAllRandomTokensByType(TokenType.ERC721, [
+          ContractFeatures.RANDOM,
+          ContractFeatures.GENES,
+        ]);
+        //
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -30,15 +41,15 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           ];
         return {
           contract: {
-            contractType: ContractType.ERC721_TOKEN,
-            contractAddress: erc721Contracts.address || [],
-            contractInterface: ABI,
+            contractType: ContractType.ERC721_TOKEN_RANDOM,
+            contractAddress: erc721RandomContracts.address || [],
+            contractInterface: ABIRandom,
             // prettier-ignore
             eventNames: [
               ContractEventType.Approval,
               ContractEventType.ApprovalForAll,
               ContractEventType.DefaultRoyaltyInfo,
-              // ContractEventType.MintRandom,
+              ContractEventType.MintRandom,
               ContractEventType.Paused,
               ContractEventType.RedeemClaim,
               ContractEventType.TokenRoyaltyInfo,
@@ -55,7 +66,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: erc721Contracts.fromBlock || startingBlock,
+            fromBlock: erc721RandomContracts.fromBlock || startingBlock,
             debug: false,
             cron,
           },
@@ -63,14 +74,14 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       },
     }),
   ],
-  providers: [Erc721TokenLogService, Logger],
-  exports: [Erc721TokenLogService],
+  providers: [Erc721TokenRandomLogService, Logger],
+  exports: [Erc721TokenRandomLogService],
 })
-export class Erc721TokenLogModule implements OnModuleDestroy {
-  constructor(private readonly erc721TokenLogService: Erc721TokenLogService) {}
+export class Erc721TokenRandomLogModule implements OnModuleDestroy {
+  constructor(private readonly erc721TokenRandomLogService: Erc721TokenRandomLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.erc721TokenLogService.updateBlock();
+    return this.erc721TokenRandomLogService.updateBlock();
   }
 }

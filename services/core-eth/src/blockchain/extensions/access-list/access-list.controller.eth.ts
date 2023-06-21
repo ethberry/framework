@@ -21,7 +21,9 @@ export class AccessListControllerEth {
   @EventPattern([
     { contractType: ContractType.ERC20_TOKEN, eventName: AccessListEventType.Blacklisted },
     { contractType: ContractType.ERC721_TOKEN, eventName: AccessListEventType.Blacklisted },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessListEventType.Blacklisted },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessListEventType.Blacklisted },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessListEventType.Blacklisted },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessListEventType.Blacklisted },
     { contractType: ContractType.MYSTERY, eventName: AccessListEventType.Blacklisted },
   ])
@@ -32,7 +34,9 @@ export class AccessListControllerEth {
   @EventPattern([
     { contractType: ContractType.ERC20_TOKEN, eventName: AccessListEventType.UnBlacklisted },
     { contractType: ContractType.ERC721_TOKEN, eventName: AccessListEventType.UnBlacklisted },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessListEventType.UnBlacklisted },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessListEventType.UnBlacklisted },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessListEventType.UnBlacklisted },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessListEventType.UnBlacklisted },
     { contractType: ContractType.MYSTERY, eventName: AccessListEventType.UnBlacklisted },
   ])
