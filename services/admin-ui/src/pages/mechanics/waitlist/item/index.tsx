@@ -1,17 +1,17 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Add, Delete } from "@mui/icons-material";
+import { Add, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IWaitlistItem, IWaitlistItemSearchDto } from "@framework/types";
+import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
 
-import { WaitlistSearchForm } from "./form";
-import { WaitlistItemEditDialog } from "./edit";
+import { WaitListSearchForm } from "./form";
+import { WaitListItemEditDialog } from "./edit";
 
-export const WaitlistItem: FC = () => {
+export const WaitListItem: FC = () => {
   const {
     rows,
     count,
@@ -20,6 +20,7 @@ export const WaitlistItem: FC = () => {
     isLoading,
     isEditDialogOpen,
     isDeleteDialogOpen,
+    isFiltersOpen,
     handleCreate,
     handleEditCancel,
     handleEditConfirm,
@@ -28,13 +29,15 @@ export const WaitlistItem: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IWaitlistItem, IWaitlistItemSearchDto>({
+    handleToggleFilters,
+  } = useCollection<IWaitListItem, IWaitListItemSearchDto>({
     baseUrl: "/waitlist/item",
     empty: {
       account: "",
     },
     search: {
       account: "",
+      listIds: [],
     },
   });
 
@@ -45,26 +48,32 @@ export const WaitlistItem: FC = () => {
       <Breadcrumbs path={["dashboard", "waitlist", "waitlist.item"]} />
 
       <PageHeader message="pages.waitlist.item.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitlistCreateButton">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <WaitlistSearchForm onSubmit={handleSearch} initialValues={search} />
+      <WaitListSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>
-          {rows.map((waitlistItem, i) => (
+          {rows.map((waitListItem, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{waitlistItem.account}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlistItem.list?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{waitListItem.account}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitListItem.list?.title}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <IconButton onClick={handleDelete(waitlistItem)}>
+                <IconButton onClick={handleDelete(waitListItem)}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -91,11 +100,11 @@ export const WaitlistItem: FC = () => {
         }}
       />
 
-      <WaitlistItemEditDialog
+      <WaitListItemEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
-        testId="WaitlistEditDialog"
+        testId="WaitListEditDialog"
         initialValues={selected}
       />
     </Fragment>

@@ -1,7 +1,14 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
-import type { IWaitlistItem } from "./item";
+import type { IMerchant } from "../../../infrastructure";
+import type { IWaitListItem } from "./item";
+import { IAsset } from "../../exchange/asset";
 
-export interface IWaitlistList extends ISearchable {
-  items?: Array<IWaitlistItem>;
+export interface IWaitListList extends ISearchable {
+  items?: Array<IWaitListItem>;
+  root: string;
+  merchantId: number;
+  merchant?: IMerchant;
+  item?: IAsset;
+  itemId: number;
 }

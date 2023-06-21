@@ -7,7 +7,7 @@ import { VestingModule } from "./vesting/vesting.module";
 import { ReferralModule } from "./referral/referral.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { PyramidModule } from "./pyramid/pyramid.module";
-import { WaitlistModule } from "./waitlist/waitlist.module";
+import { WaitListModule } from "./waitlist/waitlist.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
 import { BreedModule } from "./breed/breed.module";
 import { RentModule } from "./rent/rent.module";
@@ -23,7 +23,7 @@ import { RaffleModule } from "./raffle/raffle.module";
     LotteryModule,
     RaffleModule,
     PyramidModule,
-    WaitlistModule,
+    WaitListModule,
     WrapperModule,
     BreedModule,
     RentModule,

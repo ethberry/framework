@@ -45,68 +45,68 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80411
       ), (
         'NATIVE',
-        1101,
-        110101, -- ETH
+        10101,
+        1010101, -- ETH
         '${WeiPerEther.toString()}',
         80412
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80421
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         80422
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80431
       ), (
         'ERC721',
-        1306,
-        130601, -- sword
+        10306,
+        1030601, -- sword
         1,
         80432
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80441
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80442
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80451
       ), (
         'ERC1155',
-        1501,
-        150101, -- gold
+        10501,
+        1050101, -- Gold
         1000,
         80452
       ), (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         1,
         80499
       );

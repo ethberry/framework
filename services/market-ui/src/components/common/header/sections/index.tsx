@@ -1,18 +1,17 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { matchPath, useLocation } from "react-router";
-import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
 import { useUser } from "@gemunion/provider-user";
 import { IUser } from "@framework/types";
 
-import { useStyles } from "./styles";
+import { StyledButton } from "./styled";
 
 export const Sections: FC = () => {
   const location = useLocation();
 
-  const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
 
   const user = useUser<IUser>();
@@ -37,9 +36,9 @@ export const Sections: FC = () => {
     }
 
     return (
-      <Button className={classes.login} variant="outlined" size="large" component={RouterLink} to="/login">
+      <StyledButton variant="outlined" size="large" component={RouterLink} to="/login">
         <FormattedMessage id="components.header.menu.login" />
-      </Button>
+      </StyledButton>
     );
   }
 

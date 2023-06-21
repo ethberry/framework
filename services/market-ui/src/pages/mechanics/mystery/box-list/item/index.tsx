@@ -6,7 +6,6 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { MysteryboxPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
-import { useStyles } from "./styles";
 
 interface IMysteryboxListItemProps {
   mysterybox: IMysterybox;
@@ -15,15 +14,13 @@ interface IMysteryboxListItemProps {
 export const MysteryboxListItem: FC<IMysteryboxListItemProps> = props => {
   const { mysterybox } = props;
 
-  const classes = useStyles();
-
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/mystery/boxes/${mysterybox.id}`}>
         <CardHeader title={mysterybox.title} />
-        <CardMedia className={classes.media} image={mysterybox.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={mysterybox.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={mysterybox.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

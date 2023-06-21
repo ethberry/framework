@@ -21,7 +21,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        121601,
+        1021601,
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
@@ -29,11 +29,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        1216,
+        10216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        221601,
+        2021601,
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
@@ -41,11 +41,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        2216,
+        20216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        321601,
+        3021601,
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
@@ -53,11 +53,11 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        3216,
+        30216,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        421601,
+        4021601,
         'WETH',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fweth.png?alt=media&token=ea038e2a-c284-4727-bf24-ddf80bc96d46',
@@ -65,7 +65,7 @@ export class SeedTemplateErc20WETHAt1563804000222 implements MigrationInterface 
         0,
         '0',
         'ACTIVE',
-        4216,
+        40216,
         '${currentDateTime}',
         '${currentDateTime}'
       );

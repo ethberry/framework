@@ -1,16 +1,11 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-
-import { WaitlistItemEntity } from "./item.entity";
-import { WaitlistItemServiceEth } from "./item.service.eth";
-import { WaitlistItemControllerEth } from "./item.controller.eth";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { WaitListItemEntity } from "./item.entity";
+import { WaitListItemService } from "./item.service";
 
 @Module({
-  imports: [EventHistoryModule, ContractModule, TypeOrmModule.forFeature([WaitlistItemEntity])],
-  providers: [Logger, WaitlistItemServiceEth],
-  controllers: [WaitlistItemControllerEth],
-  exports: [WaitlistItemServiceEth],
+  imports: [TypeOrmModule.forFeature([WaitListItemEntity])],
+  providers: [WaitListItemService],
+  exports: [WaitListItemService],
 })
-export class WaitlistItemModule {}
+export class WaitListItemModule {}

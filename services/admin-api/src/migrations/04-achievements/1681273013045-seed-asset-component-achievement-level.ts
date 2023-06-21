@@ -14,44 +14,44 @@ export class SeedAssetComponentsAchievementAt1681273013045 implements MigrationI
         asset_id
       ) VALUES (
         'ERC721',
-        1306,
-        130601, -- sword
+        10306,
+        1030601, -- sword
         1,
         40100101
       ), (
         'ERC721',
-        1306,
-        130602, -- mace
+        10306,
+        1030602, -- mace
         1,
         40100102
       ), (
         'ERC721',
-        1306,
-        130602, -- axe
+        10306,
+        1030602, -- axe
         1,
         40100103
       ), (
         'ERC1155',
-        1501,
-        150102, -- wood
+        10501,
+        1050102, -- wood
         1,
         40100104
       ), (
         'ERC1155',
-        1501,
-        150103, -- iron
+        10501,
+        1050103, -- iron
         10,
         40100105
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         40100106
       ), (
         'ERC20',
-        1201,
-        120101, -- space credits
+        10201,
+        1020101, -- Space Creditss
         '${WeiPerEther.toString()}',
         40100107
       );

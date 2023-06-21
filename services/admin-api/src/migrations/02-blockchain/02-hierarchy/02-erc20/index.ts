@@ -15,5 +15,3 @@ export * from "./1563804000421-seed-balance-erc20-usdt";
 export * from "./1563804000422-seed-balance-erc20-weth";
 export * from "./1563804000423-seed-balance-erc20-busd";
 export * from "./1563804040120-seed-event-history-erc20-transfer";
-export * from "./1563804040330-seed-event-history-erc20-claim";
-export * from "./1563804040340-seed-event-history-erc20-claim-components";

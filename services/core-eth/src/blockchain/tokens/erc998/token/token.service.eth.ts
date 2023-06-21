@@ -29,6 +29,7 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { ABI } from "../../erc721/token/log/interfaces";
 import { Erc998CompositionService } from "../composition/composition.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -44,6 +45,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly contractService: ContractService,
     protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
+    private readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
   }
@@ -101,7 +103,21 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
+    const { id } = await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);
+    const history = await this.eventHistoryService.findOneWithRelations({ id });
+
+    if (
+      history &&
+      history.parent &&
+      history.parent.parent &&
+      history.parent.parent.parent &&
+      history.parent.parent.parent.eventType === ContractEventType.Purchase
+    ) {
+      this.notificatorService.purchaseRandom({
+        transactionHash,
+        tokenId,
+      });
+    }
 
     if (from === ZeroAddress) {
       erc998TokenEntity.template.amount += 1;

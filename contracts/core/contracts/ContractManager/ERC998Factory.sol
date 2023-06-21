@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract ERC998Factory is AbstractFactory {
   bytes private constant ERC998_ARGUMENTS_SIGNATURE =
     "Erc998Args(string name,string symbol,uint96 royalty,string baseTokenURI,string contractTemplate)";
-  bytes32 private constant ERC998_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC998_ARGUMENTS_SIGNATURE));
+  bytes32 private constant ERC998_ARGUMENTS_TYPEHASH = keccak256(ERC998_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable ERC998_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc998Args args)", ERC998_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
@@ -68,11 +68,11 @@ contract ERC998Factory is AbstractFactory {
       keccak256(
         abi.encode(
           ERC998_ARGUMENTS_TYPEHASH,
-          keccak256(abi.encodePacked(args.name)),
-          keccak256(abi.encodePacked(args.symbol)),
+          keccak256(bytes(args.name)),
+          keccak256(bytes(args.symbol)),
           args.royalty,
-          keccak256(abi.encodePacked(args.baseTokenURI)),
-          keccak256(abi.encodePacked(args.contractTemplate))
+          keccak256(bytes(args.baseTokenURI)),
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

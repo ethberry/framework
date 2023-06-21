@@ -21,8 +21,8 @@ import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-c
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
-import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { PayeesEntity } from "./blockchain/extensions/payment-splitter/payee/payees.entity";
 // import { AchievementItemEntity } from "./achievements/item/item.entity";
@@ -65,8 +65,8 @@ const config: PostgresConnectionOptions = {
     RaffleTicketEntity,
     PyramidDepositEntity,
     PyramidRulesEntity,
-    WaitlistListEntity,
-    WaitlistItemEntity,
+    WaitListListEntity,
+    WaitListItemEntity,
     BreedEntity,
     PayeesEntity,
     ClaimEntity,

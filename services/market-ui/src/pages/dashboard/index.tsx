@@ -3,7 +3,8 @@ import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
-import { useStyles } from "./styles";
+import { Root } from "./styled";
+
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
@@ -26,16 +27,14 @@ import { WrapperSection } from "./mechanics/wrapper";
 import { BreedSection } from "./mechanics/breed";
 import { PyramidSection } from "./mechanics/pyramid";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
-import { WaitlistSection } from "./mechanics/waitlist";
+import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
 
 export const Dashboard: FC = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Root>
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
@@ -48,7 +47,7 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <VestingSection />
-          <WaitlistSection />
+          <WaitListSection />
           <ClaimSection />
           <DropSection />
           <RentSection />
@@ -73,6 +72,6 @@ export const Dashboard: FC = () => {
           <FeedbackSection />
         </Grid>
       </Grid>
-    </div>
+    </Root>
   );
 };

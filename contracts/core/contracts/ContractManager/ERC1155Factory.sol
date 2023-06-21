@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract ERC1155Factory is AbstractFactory {
   bytes private constant ERC1155_ARGUMENTS_SIGNATURE =
     "Erc1155Args(uint96 royalty,string baseTokenURI,string contractTemplate)";
-  bytes32 private constant ERC1155_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(ERC1155_ARGUMENTS_SIGNATURE));
+  bytes32 private constant ERC1155_ARGUMENTS_TYPEHASH = keccak256(ERC1155_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc1155Args args)", ERC1155_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
@@ -66,8 +66,8 @@ contract ERC1155Factory is AbstractFactory {
         abi.encode(
           ERC1155_ARGUMENTS_TYPEHASH,
           args.royalty,
-          keccak256(abi.encodePacked(args.baseTokenURI)),
-          keccak256(abi.encodePacked(args.contractTemplate))
+          keccak256(bytes(args.baseTokenURI)),
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

@@ -19,12 +19,58 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        111010101,
-        '${JSON.stringify({})}',
+        121010101,
+        '${JSON.stringify({
+          ROUND: "1",
+        })}',
         100,
         '1',
         'MINTED',
-        1110101,
+        1210101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        121010102,
+        '${JSON.stringify({
+          ROUND: "1",
+        })}',
+        100,
+        '2',
+        'MINTED',
+        1210101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        121010103,
+        '${JSON.stringify({
+          ROUND: "1",
+        })}',
+        100,
+        '3',
+        'MINTED',
+        1210101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        121010104,
+        '${JSON.stringify({
+          ROUND: "1",
+        })}',
+        100,
+        '4',
+        'MINTED',
+        1210101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        121010105,
+        '${JSON.stringify({
+          ROUND: "1",
+        })}',
+        100,
+        '5',
+        'MINTED',
+        1210101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );

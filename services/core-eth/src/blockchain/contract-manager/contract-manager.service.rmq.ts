@@ -65,7 +65,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.MYSTERYBOX) {
-      const contracts = await this.contractService.findAllByType(ModuleType.MYSTERY);
+      const contracts = await this.contractService.findAllByType([ModuleType.MYSTERY]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.mysteryLogService.addListener({
@@ -74,7 +74,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.PYRAMID) {
-      const contracts = await this.contractService.findAllByType(ModuleType.PYRAMID);
+      const contracts = await this.contractService.findAllByType([ModuleType.PYRAMID]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.pyramidLogService.addListener({
@@ -83,7 +83,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.VESTING) {
-      const contracts = await this.contractService.findAllByType(ModuleType.VESTING);
+      const contracts = await this.contractService.findAllByType([ModuleType.VESTING]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.vestingLogService.addListener({
@@ -92,7 +92,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.STAKING) {
-      const contracts = await this.contractService.findAllByType(ModuleType.STAKING);
+      const contracts = await this.contractService.findAllByType([ModuleType.STAKING]);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.vestingLogService.addListener({
@@ -142,7 +142,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.MYSTERYBOX) {
-      const contracts = await this.contractService.findAllByType(ModuleType.MYSTERY);
+      const contracts = await this.contractService.findAllByType([ModuleType.MYSTERY]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
       this.mysteryLogService.addListener({
@@ -151,7 +151,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.PYRAMID) {
-      const contracts = await this.contractService.findAllByType(ModuleType.PYRAMID);
+      const contracts = await this.contractService.findAllByType([ModuleType.PYRAMID]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
       this.pyramidLogService.addListener({
@@ -160,7 +160,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.VESTING) {
-      const contracts = await this.contractService.findAllByType(ModuleType.VESTING);
+      const contracts = await this.contractService.findAllByType([ModuleType.VESTING]);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
       this.vestingLogService.addListener({

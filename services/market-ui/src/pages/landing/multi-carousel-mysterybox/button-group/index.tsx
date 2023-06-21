@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
-import { useStyles } from "./styles";
+import { StyledIconButton, StyledWrapper } from "./styled";
 
 declare interface IMultiCarouselButtonGroupProps {
   next?: () => void;
@@ -11,17 +10,14 @@ declare interface IMultiCarouselButtonGroupProps {
 
 export const MultiCarouselButtonGroup: FC<IMultiCarouselButtonGroupProps> = props => {
   const { next, previous } = props;
-
-  const classes = useStyles();
-
   return (
-    <div className={classes.buttonGroup}>
-      <IconButton onClick={() => previous?.()} className={classes.button}>
+    <StyledWrapper>
+      <StyledIconButton onClick={() => previous?.()}>
         <ArrowBack />
-      </IconButton>
-      <IconButton onClick={() => next?.()} className={classes.button}>
+      </StyledIconButton>
+      <StyledIconButton onClick={() => next?.()}>
         <ArrowForward />
-      </IconButton>
-    </div>
+      </StyledIconButton>
+    </StyledWrapper>
   );
 };

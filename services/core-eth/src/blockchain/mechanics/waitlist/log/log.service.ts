@@ -6,7 +6,7 @@ import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class WaitlistLogService {
+export class WaitListLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,

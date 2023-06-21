@@ -6,7 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-import "./VestingFactory.sol";
 import "./ERC20Factory.sol";
 import "./ERC721Factory.sol";
 import "./ERC998Factory.sol";
@@ -14,7 +13,11 @@ import "./ERC1155Factory.sol";
 import "./MysteryboxFactory.sol";
 import "./CollectionFactory.sol";
 import "./PyramidFactory.sol";
+import "./LotteryFactory.sol";
+import "./RaffleFactory.sol";
 import "./StakingFactory.sol";
+import "./VestingFactory.sol";
+import "./WaitListFactory.sol";
 
 contract ContractManager is
   VestingFactory,
@@ -25,5 +28,8 @@ contract ContractManager is
   MysteryboxFactory,
   CollectionFactory,
   PyramidFactory,
-  StakingFactory
+  StakingFactory,
+  //LotteryFactory,
+  RaffleFactory,
+  WaitListFactory
 {}

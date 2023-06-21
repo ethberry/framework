@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ICreateListenerPayload } from "../../../../common/interfaces";
 
 @Injectable()
 export class RaffleLogService {
@@ -20,6 +21,10 @@ export class RaffleLogService {
       return contractEntity.fromBlock;
     }
     return 0;
+  }
+
+  public addListener(dto: ICreateListenerPayload): void {
+    this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
   public async updateBlock(): Promise<number> {

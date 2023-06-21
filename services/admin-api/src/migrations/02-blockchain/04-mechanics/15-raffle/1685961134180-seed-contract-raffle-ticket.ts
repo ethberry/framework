@@ -26,12 +26,13 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
         contract_status,
         contract_type,
         contract_features,
+        contract_module,
         from_block,
         merchant_id,
         created_at,
         updated_at
       ) VALUES (
-        11101,
+        12101,
         '${erc721ContractRaffleAddress}',
         '${chainId}',
         'RAFFLE TICKET',
@@ -44,6 +45,7 @@ export class SeedContractRaffleTicketAt1685961134180 implements MigrationInterfa
         'ACTIVE',
         'ERC721',
         '{}',
+        'RAFFLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',

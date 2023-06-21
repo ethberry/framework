@@ -6,7 +6,7 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const erc721ContractSimpleAddress = process.env.ERC721_RANDOM_ADDR || wallet;
+    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -19,7 +19,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         created_at,
         updated_at
       ) VALUES (
-        1300001,
+        10300001,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -31,7 +31,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1300002,
+        10300002,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -43,7 +43,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1300003,
+        10300003,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -55,7 +55,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1300004,
+        10300004,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -67,7 +67,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1300005,
+        10300005,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -79,7 +79,7 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1300006,
+        10300006,
         '${erc721ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',

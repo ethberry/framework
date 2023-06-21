@@ -14,62 +14,62 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1405, -- spell book
-        1404, -- scroll
+        10405, -- spell book
+        10404, -- scroll
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406, -- hero
-        1405, -- spell book
+        10406, -- hero
+        10405, -- spell book
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406, -- hero
-        1305, -- armour
+        10406, -- hero
+        10305, -- armour
         5,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1411, -- ec20 owner
-        1201, -- space credit
+        10411, -- ec20 owner
+        10201, -- space credit
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1413, -- ec20 + erc1155 owner
-        1201, -- space credit
+        10413, -- ec20 + erc1155 owner
+        10201, -- space credit
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1412, -- erc1155 owner
-        1501, -- resources
+        10412, -- erc1155 owner
+        10501, -- resources
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1413, -- ec20 + erc1155 owner
-        1501, -- resources
+        10413, -- ec20 + erc1155 owner
+        10501, -- resources
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2401, -- bep
-        2215, -- usdt
+        20401, -- bep
+        20215, -- usdt
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2401, -- bep
-        2216, -- weth
+        20401, -- bep
+        20216, -- weth
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2401, -- bep
-        2217, -- busd
+        20401, -- bep
+        20217, -- busd
         1,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -26,7 +26,14 @@ export class TokenController {
       dto,
       userEntity,
       [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
-      [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.COLLECTION, ModuleType.LOTTERY, ModuleType.WRAPPER],
+      [
+        ModuleType.HIERARCHY,
+        ModuleType.COLLECTION,
+        ModuleType.MYSTERY,
+        ModuleType.WRAPPER,
+        ModuleType.LOTTERY,
+        ModuleType.RAFFLE,
+      ],
     );
   }
 }

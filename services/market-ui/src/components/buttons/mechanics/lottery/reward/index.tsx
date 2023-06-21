@@ -5,13 +5,15 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { ILotteryTicket, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { ITicketLottery } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
+import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/ticket-list/utils";
 
 export interface ILotteryRewardButtonProps {
-  ticket: ILotteryTicket;
+  ticket: ITicketLottery;
 }
 
 export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
@@ -19,12 +21,12 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((ticket: ILotteryTicket, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((ticket: ITicketLottery, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.LOTTERY_ADDR, LotteryGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.token?.tokenId) as Promise<void>;
+    return contract.getPrize(ticket.tokenId) as Promise<void>;
   });
 
-  const handleReward = (ticket: ILotteryTicket): (() => Promise<void>) => {
+  const handleReward = (ticket: ITicketLottery): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(ticket).then(() => {
         // TODO reload page
@@ -32,11 +34,16 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
     };
   };
 
+  const count = getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || []);
+  if (ticket.metadata.PRIZE === "1") {
+    return null;
+  }
+
   return (
     <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
       <IconButton
         onClick={handleReward(ticket)}
-        disabled={ticket.token!.tokenStatus !== TokenStatus.MINTED}
+        disabled={ticket.tokenStatus !== TokenStatus.MINTED || ticket.metadata.PRIZE === "1" || count === ""}
         data-testid="LotteryRewardButton"
       >
         <Redeem />

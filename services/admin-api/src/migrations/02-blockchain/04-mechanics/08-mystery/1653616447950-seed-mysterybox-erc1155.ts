@@ -24,8 +24,8 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         asset_id
       ) VALUES (
         'ERC1155',
-        1501,
-        150101, -- gold
+        10501,
+        1050101, -- Gold
         '1000',
         35101
       );
@@ -46,7 +46,7 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         '${simpleFormatting}',
         '${imageUrl}',
         35101,
-        160501,
+        1110501,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

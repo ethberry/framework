@@ -33,6 +33,7 @@ export interface IRoundEndedEvent {
 
 export interface ILotteryPrizeEvent {
   account: string;
+  roundId: string;
   ticketId: string;
   amount: string;
 }

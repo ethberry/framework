@@ -31,7 +31,7 @@ export const ReportDataView: FC<IEventDataViewProps> = props => {
             </Typography>
             <Box sx={{ ml: 1 }}>
               <Box sx={{ fontSize: 16, lineHeight: "24px" }}>
-                <AddressLink address={purchaseEventData.from} />
+                <AddressLink address={purchaseEventData.account} />
               </Box>
             </Box>
           </Box>

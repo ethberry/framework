@@ -14,15 +14,12 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { ILotteryRound, ILotteryTicketSearchDto, IToken } from "@framework/types";
+import type { ILotteryTicketSearchDto } from "@framework/types";
+import { ITicketLottery } from "@framework/types";
 
 import { LotteryTicketViewDialog } from "./view";
-import { getWinners, decodeNumbers, decodeNumbersToArr } from "../utils";
+import { decodeNumbers, decodeNumbersToArr, getWinners } from "../utils";
 import { LotteryTicketSearchForm } from "./form";
-
-export interface ILotteryTicket extends IToken {
-  round: Partial<ILotteryRound>;
-}
 
 export const LotteryTickets: FC = () => {
   const {
@@ -39,15 +36,12 @@ export const LotteryTickets: FC = () => {
     handleSearch,
     handleChangePage,
     handleToggleFilters,
-  } = useCollection<ILotteryTicket, ILotteryTicketSearchDto>({
+  } = useCollection<ITicketLottery, ILotteryTicketSearchDto>({
     baseUrl: "/lottery/tickets",
     search: {
       roundIds: [],
     },
     empty: {
-      // metadata: {
-      //   NUMBERS: "",
-      // },
       round: {
         numbers: [],
       },
@@ -75,11 +69,12 @@ export const LotteryTickets: FC = () => {
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
               <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(ticket.metadata.NUMBERS)}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
+              <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {ticket.round.roundId}
               </ListItemText>
-              <ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {ticket.metadata.PRIZE ? "Prize " : ""}
                 {getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || [])}
               </ListItemText>
               <ListItemSecondaryAction>

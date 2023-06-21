@@ -24,8 +24,8 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC998',
-        1406,
-        140601, -- warrior
+        10406,
+        1040601, -- warrior
         '1',
         34101
       );
@@ -46,7 +46,7 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         34101,
-        160401,
+        1110401,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -11,11 +11,6 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
     const lotteryAddr = process.env.LOTTERY_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
-    const lotteryOptions = JSON.stringify({
-      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-      description: "Midnight Lottery",
-    });
-
     await queryRunner.query(`
         INSERT INTO ${ns}.contract (
           id,
@@ -36,11 +31,14 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           created_at,
           updated_at
         ) VALUES (
-          11,
+          122,
           '${lotteryAddr}',
           '${chainId}',
           'LOTTERY',
-          '${lotteryOptions}',
+          '${JSON.stringify({
+            schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+            description: "Midnight Lottery",
+          })}',
           '',
           'Lottery',
           '',

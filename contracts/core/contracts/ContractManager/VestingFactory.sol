@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract VestingFactory is AbstractFactory {
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =
     "VestingArgs(address account,uint64 startTimestamp,uint64 duration,string contractTemplate)";
-  bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(VESTING_ARGUMENTS_SIGNATURE));
+  bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(VESTING_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable VESTING_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,VestingArgs args)", PARAMS_SIGNATURE, VESTING_ARGUMENTS_SIGNATURE));
@@ -62,7 +62,7 @@ contract VestingFactory is AbstractFactory {
           args.account,
           args.startTimestamp,
           args.duration,
-          keccak256(abi.encodePacked(args.contractTemplate))
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

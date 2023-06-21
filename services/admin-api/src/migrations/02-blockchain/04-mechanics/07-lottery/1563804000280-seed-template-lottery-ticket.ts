@@ -11,7 +11,7 @@ export class SeedTemplateLotteryTicketAt1563804000280 implements MigrationInterf
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1210101
+        102220101
       );
     `);
 
@@ -29,15 +29,15 @@ export class SeedTemplateLotteryTicketAt1563804000280 implements MigrationInterf
         created_at,
         updated_at
       ) VALUES (
-        1210101,
+        1220101,
         'Lottery ticket',
         '${simpleFormatting}',
         '${imageUrl}',
-        1210101,
+        102220101,
         0,
         1,
         'ACTIVE',
-        12101,
+        12201,
         '${currentDateTime}',
         '${currentDateTime}'
       );

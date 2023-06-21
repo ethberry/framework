@@ -5,7 +5,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount } from "@gemunion/contracts-constants";
 import { TokenMetadata } from "@framework/types";
-import { decodeNumber, decodeTraits } from "@framework/traits";
+import { decodeNumber, decodeTraits } from "@framework/traits-api";
 
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";

@@ -15,7 +15,7 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeCore is SignatureValidator, AccessControl, Pausable {
-  event Purchase(address from, uint256 externalId, Asset item, Asset[] price);
+  event Purchase(address account, uint256 externalId, Asset item, Asset[] price);
 
   function purchase(
     Params memory params,

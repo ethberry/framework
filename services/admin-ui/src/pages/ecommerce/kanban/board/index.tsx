@@ -4,7 +4,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { IOrder, OrderStatus } from "@framework/types";
 
 import { Column } from "../column";
-import { useStyles } from "./styles";
+import { StyledContainer } from "./styled";
 
 const statuses = [OrderStatus.NEW, OrderStatus.SCHEDULED, OrderStatus.NOW_IN_DELIVERY, OrderStatus.DELIVERED];
 
@@ -17,7 +17,6 @@ export interface IBoardProps {
 export const Board: FC<IBoardProps> = props => {
   const { initial, onOrderStatusChange, onEdit } = props;
 
-  const classes = useStyles();
   const [columns, setColumns] = useState(initial);
   const [ordered, setOrdered] = useState(Object.values(OrderStatus));
 
@@ -39,11 +38,11 @@ export const Board: FC<IBoardProps> = props => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className={classes.container}>
+      <StyledContainer>
         {ordered.map((status: string, index: number) => (
           <Column key={status} index={index} status={status} items={columns[status]} onEdit={onEdit} />
         ))}
-      </div>
+      </StyledContainer>
     </DragDropContext>
   );
 };

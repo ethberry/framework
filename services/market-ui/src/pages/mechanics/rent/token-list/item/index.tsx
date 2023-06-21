@@ -7,7 +7,6 @@ import { IToken } from "@framework/types";
 
 import { TokenLendButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
-import { useStyles } from "./styles";
 
 interface IRentTokenListItemProps {
   token: IToken;
@@ -16,16 +15,14 @@ interface IRentTokenListItemProps {
 export const RentTokenListItem: FC<IRentTokenListItemProps> = props => {
   const { token } = props;
 
-  const classes = useStyles(token);
-
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/erc721/tokens/${token.id}`}>
         <RarityBadge token={token} />
         <CardHeader title={token.template!.title} />
-        <CardMedia className={classes.media} image={token.template!.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={token.template!.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={token.template!.description} />
           </Typography>
         </CardContent>

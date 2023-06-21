@@ -41,7 +41,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1401,
+        10401,
         '${erc998ContractSimpleAddress}',
         '${chainId}',
         'Runes (simple)',
@@ -59,7 +59,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1402,
+        10402,
         '${erc998ContractInactiveAddress}',
         '${chainId}',
         'ERC998 (inactive)',
@@ -77,7 +77,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1403,
+        10403,
         '${erc998ContractNewAddress}',
         '${chainId}',
         'ERC998 (new)',
@@ -95,7 +95,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1404,
+        10404,
         '${erc998ContractBlacklistAddress}',
         '${chainId}',
         'Scrolls (blacklist)',
@@ -113,7 +113,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1405,
+        10405,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
         'Spell books (upgradeable)',
@@ -131,7 +131,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1406,
+        10406,
         '${erc998ContractRandomAddress}',
         '${chainId}',
         'Heros (random)',
@@ -149,7 +149,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1407,
+        10407,
         '${erc998ContractGenesAddress}',
         '${chainId}',
         'AXIE (traits)',
@@ -167,7 +167,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1409,
+        10409,
         '${erc998ContractRentableAddress}',
         '${chainId}',
         'Buildings (rentable)',
@@ -185,7 +185,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1411,
+        10411,
         '${erc998ContractOwnerErc20Address}',
         '${chainId}',
         'ERC998 (ERC20 OWNER)',
@@ -203,7 +203,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1412,
+        10412,
         '${erc998ContractOwnerErc1155Address}',
         '${chainId}',
         'ERC998 (ERC1155 OWNER)',
@@ -221,7 +221,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1413,
+        10413,
         '${erc998ContractOwnerErc1155Erc20Address}',
         '${chainId}',
         'ERC998 (ERC20+ERC1155 OWNER)',
@@ -239,7 +239,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2401,
+        20401,
         '${wallet}',
         56,
         'BEP',

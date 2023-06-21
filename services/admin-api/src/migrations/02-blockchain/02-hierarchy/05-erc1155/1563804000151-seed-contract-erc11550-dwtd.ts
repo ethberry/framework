@@ -27,7 +27,7 @@ export class SeedContractErc1155DumbWayToDieAt1563804000151 implements Migration
         created_at,
         updated_at
       ) VALUES (
-        1515,
+        10515,
         '0x0cd925f268678d03057d184ded76d98552d7d837',
         1,
         'Dumb Ways To Die (external)',

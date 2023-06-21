@@ -13,16 +13,14 @@ import {
 } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 
-import { useStyles } from "./styles";
 import { CartContext } from "../../../../components/providers/cart";
 import { formatPrice } from "../../../../utils/money";
 
 export const Cart: FC = () => {
-  const classes = useStyles();
   const cart = useContext(CartContext);
 
   return (
-    <Paper className={classes.paper}>
+    <Paper sx={{ mb: 2, p: 2 }}>
       <Typography component="h4" variant="h5">
         <FormattedMessage id="pages.checkout.products" />
       </Typography>
@@ -52,7 +50,7 @@ export const Cart: FC = () => {
             <FormattedMessage id="pages.checkout.empty" />
           </ListItem>
         )}
-        <ListSubheader className={classes.total}>
+        <ListSubheader sx={{ textAlign: "right" }}>
           <FormattedMessage
             id="pages.checkout.total"
             values={{

@@ -123,11 +123,11 @@ export class ContractService {
   }
 
   public async findAllByType(
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<IContractListenerResult> {
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { contractModule, chainId };
+    const where = { contractModule: In(contractModule), chainId };
 
     if (contractFeatures) {
       if (contractFeatures.length) {
@@ -137,7 +137,6 @@ export class ContractService {
         });
       } else {
         Object.assign(where, {
-          // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
           contractFeatures: [],
         });
       }
@@ -161,7 +160,7 @@ export class ContractService {
 
     const queryBuilder = this.contractEntityRepository
       .createQueryBuilder("contract")
-      // .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
+      .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
       // it should be nested array
       .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] });

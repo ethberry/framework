@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { IStakingRule, ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -25,8 +25,19 @@ export interface IStakingRuleUploadDialogProps {
 export const StakingRuleUploadDialog: FC<IStakingRuleUploadDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, contract, description, penalty, recurrent, deposit, reward, maxStake, durationAmount, durationUnit } =
-    initialValues;
+  const {
+    id,
+    title,
+    contract,
+    description,
+    penalty,
+    recurrent,
+    deposit,
+    reward,
+    maxStake,
+    durationAmount,
+    durationUnit,
+  } = initialValues;
   const fixedValues = {
     id,
     title,

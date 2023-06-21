@@ -6,8 +6,6 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import type { IPyramidRuleSearchDto } from "@framework/types";
 import { PyramidRuleStatus, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IPyramidRuleSearchFormProps {
   onSubmit: (values: IPyramidRuleSearchDto) => Promise<void>;
   initialValues: IPyramidRuleSearchDto;
@@ -16,8 +14,6 @@ interface IPyramidRuleSearchFormProps {
 
 export const PyramidRuleSearchForm: FC<IPyramidRuleSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { query, pyramidRuleStatus, deposit, reward } = initialValues;
   const fixedValues = { query, pyramidRuleStatus, deposit, reward };
@@ -28,7 +24,6 @@ export const PyramidRuleSearchForm: FC<IPyramidRuleSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="PyramidRuleSearchForm"
     >
       <Grid container spacing={2}>

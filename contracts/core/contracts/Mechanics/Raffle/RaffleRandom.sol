@@ -35,7 +35,8 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
-  event Prize(address account, uint256 ticketId, uint256 amount);
+  event Prize(address account, uint256 roundId, uint256 ticketId, uint256 amount);
+  event PaymentEthReceived(address from, uint256 amount);
 
   // RAFFLE
   struct Round {
@@ -55,7 +56,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   Round[] internal _rounds;
 
-  constructor(Raffle memory config) {
+  constructor(RaffleConfig memory config) {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
@@ -130,10 +131,10 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     return _rounds[roundId];
   }
 
-  function getCurrentRoundInfo() public view returns (RoundInfo memory) {
+  function getCurrentRoundInfo() public view returns (RaffleRoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
     return
-      RoundInfo(
+      RaffleRoundInfo(
         round.roundId,
         round.startTimestamp,
         round.endTimestamp,
@@ -205,13 +206,28 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   function getPrize(uint256 tokenId) external {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
+
+    if (currentRound.endTimestamp == 0) {
+      revert NotComplete();
+    }
+
     uint256 prizeNumber = currentRound.prizeNumber;
 
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(currentRound.ticketAsset.token);
-    ticketFactory.burn(tokenId);
+
+    TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
+
+    // revert if prize already set
+    if (data.prize) {
+      revert WrongToken();
+    }
+
+    // ticketFactory.burn(tokenId);
+    // set prize status
+    ticketFactory.setTicketData(tokenId);
 
     if (tokenId == prizeNumber) {
-      emit Prize(_msgSender(), tokenId, 0);
+      emit Prize(_msgSender(), roundNumber, tokenId, 0);
     }
   }
 
@@ -227,7 +243,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   // COMMON
   receive() external payable override {
-    revert();
+    emit PaymentEthReceived(_msgSender(), msg.value);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, Wallet) returns (bool) {

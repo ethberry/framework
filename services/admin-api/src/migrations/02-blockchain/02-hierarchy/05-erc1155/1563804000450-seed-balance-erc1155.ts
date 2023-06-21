@@ -20,63 +20,63 @@ export class SeedBalanceErc1155At1563804020450 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         100,
-        15010101,
+        105010101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractOwnerErc1155Address}',
         1000,
-        15010101,
-        14120101, -- erc1155 owner
+        105010101,
+        104120101, -- erc1155 owner
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractOwnerErc1155Erc20Address}',
         1000,
-        15010101,
-        14130101, -- erc20 + erc1155 owner
+        105010101,
+        104130101, -- erc20 + erc1155 owner
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        15010201,
+        105010201,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        15010301,
+        105010301,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        15040101,
+        105040101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        15040201,
+        105040201,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        15040301,
+        105040301,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         100,
-        25010101,
+        205010101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'

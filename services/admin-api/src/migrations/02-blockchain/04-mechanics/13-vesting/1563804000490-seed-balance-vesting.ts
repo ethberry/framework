@@ -21,19 +21,19 @@ export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
       ) VALUES (
         '${vestingLinearAddress}',
         '${(100n * WeiPerEther).toString()}',
-        12010101,
+        102010101, -- Space Credits
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${vestingGradedAddress}',
         '${(100n * 1000000n).toString()}', -- USDT has 6 places after decimal
-        12150101,
+        102150101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${vestingCliffAddress}',
         '${(100n * WeiPerEther).toString()}',
-        12170101,
+        102170101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

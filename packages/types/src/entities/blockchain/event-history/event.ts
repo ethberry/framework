@@ -30,7 +30,7 @@ import type { TWrapperEvents } from "./mechanics/wrapper";
 import type { TErc4907Events } from "./extensions/erc4907";
 import type { TUpgradeEvents } from "./mechanics/grade";
 import type { TRaffleEvents } from "./mechanics/raffle";
-import type { TWaitlistEvents } from "./mechanics/waitlist";
+import type { TWaitListEvents } from "./mechanics/waitlist";
 
 export enum ContractEventType {
   // MODULE:ERC20
@@ -124,8 +124,8 @@ export enum ContractEventType {
   // MODULE:GRADE
   Upgrade = "Upgrade",
   // MODULE:WAITLIST
-  RewardSet = "RewardSet",
-  ClaimReward = "ClaimReward",
+  WaitListRewardSet = "WaitListRewardSet",
+  WaitListRewardClaimed = "WaitListRewardClaimed",
   // MODULE:BREEDING
   Breed = "Breed",
   // MODULE:GRADE
@@ -168,7 +168,7 @@ export type TContractEventData =
   | TLotteryEvents
   | TRaffleEvents
   | TPyramidEvents
-  | TWaitlistEvents
+  | TWaitListEvents
 
   // extensions
   | TRoyaltyEvents

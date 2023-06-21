@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract PyramidFactory is AbstractFactory {
   bytes private constant PYRAMID_ARGUMENTS_SIGNATURE =
     "PyramidArgs(address[] payees,uint256[] shares,string contractTemplate)";
-  bytes32 private constant PYRAMID_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(PYRAMID_ARGUMENTS_SIGNATURE));
+  bytes32 private constant PYRAMID_ARGUMENTS_TYPEHASH = keccak256(PYRAMID_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,PyramidArgs args)", PARAMS_SIGNATURE, PYRAMID_ARGUMENTS_SIGNATURE));
@@ -59,14 +59,14 @@ contract PyramidFactory is AbstractFactory {
       );
   }
 
-  function _hashPyramidStruct(PyramidArgs calldata p) private pure returns (bytes32) {
+  function _hashPyramidStruct(PyramidArgs calldata args) private pure returns (bytes32) {
     return
       keccak256(
         abi.encode(
           PYRAMID_ARGUMENTS_TYPEHASH,
-          keccak256(abi.encodePacked(p.payees)),
-          keccak256(abi.encodePacked(p.shares)),
-          keccak256(abi.encodePacked(p.contractTemplate))
+          keccak256(abi.encodePacked(args.payees)),
+          keccak256(abi.encodePacked(args.shares)),
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

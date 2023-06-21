@@ -11,11 +11,6 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
     const raffleAddr = process.env.RAFFLE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
-    const raffleOptions = JSON.stringify({
-      schedule: CronExpression.EVERY_WEEKEND,
-      description: "Weekend Raffle",
-    });
-
     await queryRunner.query(`
         INSERT INTO ${ns}.contract (
           id,
@@ -36,11 +31,14 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           created_at,
           updated_at
         ) VALUES (
-          15,
+          121,
           '${raffleAddr}',
           '${chainId}',
           'RAFFLE',
-          '${raffleOptions}',
+          '${JSON.stringify({
+            schedule: CronExpression.EVERY_WEEKEND,
+            description: "Weekend Raffle",
+          })}',
           '',
           'Raffle',
           '',

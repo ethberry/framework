@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { wallet } from "@gemunion/constants";
+import { wallets } from "@gemunion/constants";
 
 export class SeedBalanceRaffleTicketAt1685961134480 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -15,9 +15,33 @@ export class SeedBalanceRaffleTicketAt1685961134480 implements MigrationInterfac
         created_at,
         updated_at
       ) VALUES (
-        '${wallet}',
+        '${wallets[0]}',
         1,
-        111010101,
+        121010101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        1,
+        121010102,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        1,
+        121010103,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[1]}',
+        1,
+        121010104,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[2]}',
+        1,
+        121010105,
         '${currentDateTime}',
         '${currentDateTime}'
       );

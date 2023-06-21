@@ -14,124 +14,124 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
         asset_id
       ) VALUES (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140101
+        101040101
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140102
+        101040102
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140103
+        101040103
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140401
+        101040401
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140402
+        101040402
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140403
+        101040403
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140404
+        101040404
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140405
+        101040405
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140501
+        101040501
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140601
+        101040601
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140602
+        101040602
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140603
+        101040603
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140701
+        101040701
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140901
+        101040901
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140902
+        101040902
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        140903
+        101040903
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        141101
+        101041101
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        141201
+        101041201
       ), (
         'ERC20',
-        1201,
-        120101, -- space credit
+        10201,
+        1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        141301
+        101041301
       ), (
         'ERC20',
-        2217,
-        221701, -- busd
+        20217,
+        2021701, -- busd
         '${WeiPerEther.toString()}',
-        240101
+        201040101
       );
     `);
   }

@@ -17,31 +17,31 @@ export class SeedBalanceErc721MysteryAt1563804020460 implements MigrationInterfa
       ) VALUES (
         '${wallet}',
         1,
-        16010101,
+        111010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        16040101,
+        111040101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        16050101,
+        111050101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        16060101,
+        111060101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        26010101,
+        211010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -1,9 +1,8 @@
 import { FC } from "react";
-import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeTraits } from "@framework/traits";
+import { decodeTraits } from "@framework/traits-ui";
 
 export interface ITokenGenesisView {
   metadata: Record<string, any>;

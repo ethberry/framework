@@ -14,7 +14,7 @@ contract RaffleRandomGoerli is RaffleRandom, ChainLinkGoerli {
   using Counters for Counters.Counter;
 
   constructor(
-    Raffle memory config
+    RaffleConfig memory config
   ) RaffleRandom(config) ChainLinkGoerli(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {

@@ -139,7 +139,7 @@ export class ProductService {
       "items.product_id = product.id",
     );
 
-    queryBuilder.andWhere(`items.total IS NOT NULL`);
+    queryBuilder.andWhere("items.total IS NOT NULL");
 
     queryBuilder.leftJoinAndSelect(
       "product.photos",

@@ -16,13 +16,13 @@ export class SeedAchievementRedemption1681273013080 implements MigrationInterfac
       ) VALUES (
         1,
         1,
-        11,
+        1040301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         4,
-        12,
+        1040302,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -20,238 +20,238 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        14010101, -- Physic rune
+        104010101, -- Physic rune
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "1040101",
         })}',
         100,
-        '14010101',
+        '104010101',
         'MINTED',
-        140101,
+        1040101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14010102, -- Magic rune
+        104010201, -- Magic rune
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "1040101",
         })}',
         100,
-        '14010102',
+        '104010201',
         'MINTED',
-        140101,
+        1040101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14010103, -- Poison rune
+        104010301, -- Poison rune
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140101",
+          [TokenMetadata.TEMPLATE_ID]: "1040101",
         })}',
         100,
-        '14010103',
+        '104010301',
         'MINTED',
-        140101,
+        1040101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040101, -- Fireball
+        104040101, -- Fireball
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140401",
+          [TokenMetadata.TEMPLATE_ID]: "1040401",
         })}',
         100,
-        '14040101',
+        '104040101',
         'MINTED',
-        140401,
+        1040401,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040201, -- Frostbite
+        104040201, -- Frostbite
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140402",
+          [TokenMetadata.TEMPLATE_ID]: "1040402",
         })}',
         100,
-        '14040201',
+        '104040201',
         'MINTED',
-        140402,
+        1040402,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040301, -- Lightning bolt
+        104040301, -- Lightning bolt
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140403",
+          [TokenMetadata.TEMPLATE_ID]: "1040403",
         })}',
         100,
-        '14040301',
+        '104040301',
         'MINTED',
-        140403,
+        1040403,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040401, -- Slow
+        104040401, -- Slow
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140404",
+          [TokenMetadata.TEMPLATE_ID]: "1040404",
         })}',
         100,
-        '14040401',
+        '104040401',
         'MINTED',
-        140404,
+        1040404,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14040501, -- Fly
+        104040501, -- Fly
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140405",
+          [TokenMetadata.TEMPLATE_ID]: "1040405",
         })}',
         100,
-        '14040501',
+        '104040501',
         'MINTED',
-        140405,
+        1040405,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14050101, -- Grimoire #1
+        104050101, -- Grimoire #1
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140501",
+          [TokenMetadata.TEMPLATE_ID]: "1040501",
           [TokenMetadata.GRADE]: "1",
         })}',
         100,
-        '14050101',
+        '104050101',
         'MINTED',
-        140501,
+        1040501,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14050102, -- Grimoire #2
+        104050102, -- Grimoire #2
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140502",
+          [TokenMetadata.TEMPLATE_ID]: "1040502",
           [TokenMetadata.GRADE]: "10",
         })}',
         100,
-        '14050201',
+        '104050201',
         'MINTED',
-        140501,
+        1040501,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14060101, -- Warrior
+        104060101, -- Warrior
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140601",
+          [TokenMetadata.TEMPLATE_ID]: "1040601",
           [TokenMetadata.GRADE]: "1",
           [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
         })}',
         100,
-        '14060101',
+        '104060101',
         'MINTED',
-        140601,
+        1040601,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-         14060102, -- Warrior
+         104060102, -- Warrior
          '${JSON.stringify({
            [TokenMetadata.TEMPLATE_ID]: "40601",
            [TokenMetadata.GRADE]: "10",
            [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
          })}',
          100,
-         '14060102',
+         '104060102',
          'BURNED',
-         140601,
+         1040601,
          '${subDays(now, 1).toISOString()}',
          '${currentDateTime}'
       ), (
-        14060201, -- Rouge
+        104060201, -- Rouge
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140602",
+          [TokenMetadata.TEMPLATE_ID]: "1040602",
           [TokenMetadata.GRADE]: "5",
           [TokenMetadata.RARITY]: "1", // TokenRarity.UNCOMMON
         })}',
         100,
-        '14060201',
+        '104060201',
         'MINTED',
-        140602,
+        1040602,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14060301, -- Mage
+        104060301, -- Mage
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140603",
+          [TokenMetadata.TEMPLATE_ID]: "1040603",
           [TokenMetadata.GRADE]: "10",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
-        '14060301',
+        '104060301',
         'MINTED',
-        140603,
+        1040603,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        14070101,
+        104070101,
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140701",
+          [TokenMetadata.TEMPLATE_ID]: "1040701",
           [TokenMetadata.GRADE]: "10",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
           [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         100,
-        '14070101',
+        '104070101',
         'MINTED',
-        140701,
+        1040701,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14090101,
+        104090101,
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "140901",
+          [TokenMetadata.TEMPLATE_ID]: "1040901",
         })}',
         100,
-        '14090101',
+        '104090101',
         'MINTED',
-        140901,
+        1040901,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        14110101, -- erc20 owner
+        104110101, -- erc20 owner
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "141101",
+          [TokenMetadata.TEMPLATE_ID]: "1041101",
         })}',
         100,
         '14110101',
         'MINTED',
-        141101,
+        1041101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14120101, -- erc1155 owner
+        104120101, -- erc1155 owner
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "141201",
+          [TokenMetadata.TEMPLATE_ID]: "1041201",
         })}',
         100,
         '14120101',
         'MINTED',
-        141201,
+        1041201,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        14130101, -- erc20 + erc1155 owner
+        104130101, -- erc20 + erc1155 owner
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "141301",
+          [TokenMetadata.TEMPLATE_ID]: "1041301",
         })}',
         100,
         '14130101',
         'MINTED',
-        141301,
+        1041301,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        24010101,
+        204010101,
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "240101",
+          [TokenMetadata.TEMPLATE_ID]: "2040101",
           [TokenMetadata.GRADE]: "10",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '24010101',
         'MINTED',
-        240101,
+        2040101,
         '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );

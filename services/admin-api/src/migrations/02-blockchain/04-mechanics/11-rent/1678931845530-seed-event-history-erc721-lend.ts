@@ -34,8 +34,15 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
           to: wallets[1],
           expires: 1700000000,
           externalId: 1,
-          item: [[2, erc721ContractSimpleAddress, "130101", "1"]],
-          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
+          item: [[2, erc721ContractSimpleAddress, "1030101", "1"]],
+          price: [
+            {
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
+            },
+          ],
         })}',
         null,
         '${subDays(now, 9).toISOString()}',
@@ -46,7 +53,7 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
         '${ZeroHash}',
         'UpdateUser',
         '${JSON.stringify({
-          tokenId: "13010101",
+          tokenId: "103010101",
           user: wallets[1],
           expires: 1700000000,
         })}',
@@ -76,8 +83,15 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
           to: wallets[0],
           expires: 1700000000,
           externalId: 2,
-          item: [[2, erc721ContractSimpleAddress, "130101", "2"]],
-          price: [[1, erc20TokenSimpleAddress, "120101", WeiPerEther.toString()]],
+          item: [[2, erc721ContractSimpleAddress, "1030101", "2"]],
+          price: [
+            {
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
+            },
+          ],
         })}',
         null,
         '${subDays(now, 5).toISOString()}',
@@ -88,7 +102,7 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
         '${ZeroHash}',
         'UpdateUser',
         '${JSON.stringify({
-          tokenId: "13010102",
+          tokenId: "103010102",
           user: wallets[0],
           expires: 1700000000,
         })}',

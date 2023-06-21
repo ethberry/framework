@@ -28,7 +28,7 @@ export class SeedContractErc721CryptoKittiesAt1563804000131 implements Migration
         created_at,
         updated_at
       ) VALUES (
-        1315,
+        10315,
         '0x06012c8cf97bead5deae237070f9587f8e7a266d',
         1,
         'CryptoKitties (external)',

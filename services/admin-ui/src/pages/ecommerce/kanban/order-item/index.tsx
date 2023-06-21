@@ -4,7 +4,6 @@ import { Card, CardActions, CardContent, CardHeader, Typography } from "@mui/mat
 import type { IOrder } from "@framework/types";
 
 import { useFormatAddress } from "../../../../utils/address";
-import { useStyles } from "./styles";
 import { OrderActionMenu } from "./menu";
 
 export interface IOrderListItemProps {
@@ -19,7 +18,6 @@ export const OrderListItem = memo<IOrderListItemProps>(props => {
   const { order, provided, onEdit } = props;
 
   const { formatAddress } = useFormatAddress();
-  const classes = useStyles();
 
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -32,9 +30,9 @@ export const OrderListItem = memo<IOrderListItemProps>(props => {
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className={classes.container}
+      sx={{ mb: 1 }}
     >
-      <CardHeader className={classes.id} title={`#${order.id}`} />
+      <CardHeader title={`#${order.id}`} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="div">
           {order.address ? formatAddress(order.address) : ""}

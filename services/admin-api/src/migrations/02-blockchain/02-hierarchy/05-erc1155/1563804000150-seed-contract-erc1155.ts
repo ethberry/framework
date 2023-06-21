@@ -34,7 +34,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1501,
+        10501,
         '${erc1155ContractSimpleAddress}',
         '${chainId}',
         'Resources (simple)',
@@ -52,7 +52,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1502,
+        10502,
         '${erc1155ContractInactiveAddress}',
         '${chainId}',
         'ERC1155 (inactive)',
@@ -70,7 +70,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1503,
+        10503,
         '${erc1155ContractNewAddress}',
         '${chainId}',
         'ERC1155 (new)',
@@ -88,7 +88,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        1504,
+        10504,
         '${erc1155ContractBlacklistAddress}',
         '${chainId}',
         'Potions (blacklist)',
@@ -106,7 +106,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2501,
+        20501,
         '${wallet}',
         56,
         'BEP',

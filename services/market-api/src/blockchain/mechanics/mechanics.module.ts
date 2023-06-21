@@ -13,7 +13,7 @@ import { ReferralModule } from "./referral/referral.module";
 import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
-import { WaitlistModule } from "./waitlist/waitlist.module";
+import { WaitListModule } from "./waitlist/waitlist.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
 
 @Module({
@@ -31,7 +31,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
     RentModule,
     StakingModule,
     VestingModule,
-    WaitlistModule,
+    WaitListModule,
     WrapperModule,
   ],
 })

@@ -3,77 +3,73 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { IWaitlistItemCreateDto } from "./interfaces";
-import { WaitlistItemEntity } from "./item.entity";
+import type { IWaitListItemCreateDto } from "@framework/types";
+import { WaitListStatus } from "@framework/types";
+
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { WaitlistProofDto } from "./dto";
+import { WaitListItemEntity } from "./item.entity";
+import { WaitListProofDto } from "./dto";
 
 @Injectable()
-export class WaitlistItemService {
+export class WaitListItemService {
   constructor(
-    @InjectRepository(WaitlistItemEntity)
-    private readonly waitlistItemEntityRepository: Repository<WaitlistItemEntity>,
+    @InjectRepository(WaitListItemEntity)
+    private readonly waitListItemEntityRepository: Repository<WaitListItemEntity>,
   ) {}
 
-  public async search(userEntity: UserEntity): Promise<[Array<WaitlistItemEntity>, number]> {
-    const { wallet } = userEntity;
+  public async search(userEntity: UserEntity): Promise<[Array<WaitListItemEntity>, number]> {
+    const queryBuilder = this.waitListItemEntityRepository.createQueryBuilder("wait_list_item");
 
-    const queryBuilder = this.waitlistItemEntityRepository.createQueryBuilder("waitlist");
+    queryBuilder.select(["wait_list_item.account", "wait_list_item.listId"]);
 
-    queryBuilder.select(["waitlist.account", "waitlist.listId"]);
+    queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
+    queryBuilder.addSelect(["wait_list_list.title"]);
 
-    queryBuilder.leftJoin("waitlist.list", "list");
-    queryBuilder.addSelect(["list.title"]);
+    queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
 
-    if (wallet) {
-      queryBuilder.andWhere("waitlist.account = :account", { account: wallet });
-    }
+    queryBuilder.andWhere("wait_list_item.account = :account", { account: userEntity.wallet });
+    queryBuilder.andWhere("wait_list_item.waitListStatus = :waitListStatus", { waitListStatus: WaitListStatus.NEW });
 
     return queryBuilder.getManyAndCount();
   }
 
   public findOne(
-    where: FindOptionsWhere<WaitlistItemEntity>,
-    options?: FindOneOptions<WaitlistItemEntity>,
-  ): Promise<WaitlistItemEntity | null> {
-    return this.waitlistItemEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<WaitListItemEntity>,
+    options?: FindOneOptions<WaitListItemEntity>,
+  ): Promise<WaitListItemEntity | null> {
+    return this.waitListItemEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IWaitlistItemCreateDto): Promise<WaitlistItemEntity> {
-    const waitlistEntity = await this.findOne(dto);
+  public async create(dto: IWaitListItemCreateDto): Promise<WaitListItemEntity> {
+    const waitListEntity = await this.findOne(dto);
 
-    if (waitlistEntity) {
+    if (waitListEntity) {
       throw new ConflictException("duplicateAccount");
     }
 
-    return this.waitlistItemEntityRepository.create(dto).save();
+    return this.waitListItemEntityRepository.create(dto).save();
   }
 
-  public async proof(dto: WaitlistProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
-    const waitlistEntities = await this.waitlistItemEntityRepository.find({
+  public async proof(dto: WaitListProofDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+    const waitListEntities = await this.waitListItemEntityRepository.find({
       where: { listId: dto.listId },
     });
 
-    if (waitlistEntities.length === 0) {
+    if (waitListEntities.length === 0) {
       throw new NotFoundException("listNotFound");
     }
 
-    const accounts = waitlistEntities.map(waitlistEntity => waitlistEntity.account);
+    const accounts = waitListEntities.map(waitListEntity => waitListEntity.account);
 
     if (!Object.values(accounts).includes(userEntity.wallet)) {
       throw new NotFoundException("accountNotFound");
     }
-    // const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+
     const leaves = accounts.map(account => [account]);
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
-    // const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
 
-    let proofHex: Array<string> = [];
-    for (const [i, v] of merkleTree.entries()) {
-      if (v[0] === userEntity.wallet) {
-        proofHex = merkleTree.getProof(i);
-      }
-    }
-    return { proof: proofHex };
+    const proof = merkleTree.getProof(merkleTree.leafLookup([userEntity.wallet]));
+
+    return { proof };
   }
 }

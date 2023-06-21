@@ -20,84 +20,84 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        15010101,
+        105010101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        150101,
+        1050101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        15010201,
+        105010201,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        150102,
+        1050102,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        15010301,
+        105010301,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        150103,
+        1050103,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        15010401,
+        105010401,
         '${defaultJSON}',
         100,
         '4',
         'MINTED',
-        150104,
+        1050104,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        15010501,
+        105010501,
         '${defaultJSON}',
         100,
         '5',
         'MINTED',
-        150105,
+        1050105,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        15040101,
+        105040101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        150401,
+        1050401,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        15040201,
+        105040201,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        150402,
+        1050402,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        15040301,
+        105040301,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        150403,
+        1050403,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        25010101,
+        205010101,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        250101,
+        2050101,
         '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );

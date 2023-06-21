@@ -2,9 +2,36 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "root",
-        "type": "bytes32"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "externalId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expiresAt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "nonce",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "extra",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "referrer",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct Params",
+        "name": "params",
+        "type": "tuple"
       },
       {
         "components": [
@@ -32,11 +59,6 @@
         "internalType": "struct Asset[]",
         "name": "items",
         "type": "tuple[]"
-      },
-      {
-        "internalType": "uint256",
-        "name": "externalId",
-        "type": "uint256"
       }
     ],
     "name": "setReward",

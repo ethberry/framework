@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IRaffleTicket, IRaffleTicketSearchDto } from "@framework/types";
+import type { IRaffleTicketSearchDto, ITicketRaffle } from "@framework/types";
 
 import { RaffleTicketViewDialog } from "./view";
 import { RaffleTicketSearchForm } from "./form";
@@ -34,13 +34,15 @@ export const RaffleTickets: FC = () => {
     handleSearch,
     handleChangePage,
     handleToggleFilters,
-  } = useCollection<IRaffleTicket, IRaffleTicketSearchDto>({
+  } = useCollection<ITicketRaffle, IRaffleTicketSearchDto>({
     baseUrl: "/raffle/tickets",
     search: {
       roundIds: [],
     },
     empty: {
-      tokenId: 1,
+      round: {
+        number: "0",
+      },
     },
   });
 
@@ -63,8 +65,16 @@ export const RaffleTickets: FC = () => {
         <List>
           {rows.map((ticket, i) => (
             <ListItem key={i}>
-              <ListItemText>{ticket.id}</ListItemText>
-              <ListItemText>{ticket.token!.tokenId === ticket.round!.number ? "winner" : ""}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{ticket.id}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {"Round #"}
+                {ticket.round.roundId}
+              </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>
+                {ticket.metadata.PRIZE ? "Prize " : ""}
+                {ticket.round.number === ticket.tokenId ? "winner" : ""}
+              </ListItemText>
+
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(ticket)}>
                   <Visibility />

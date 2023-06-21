@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AppBar, Hidden, Link, Toolbar } from "@mui/material";
+import { AppBar, Hidden } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { companyName, EnabledLanguages } from "@framework/constants";
@@ -11,17 +11,16 @@ import { NetworkButton } from "./network";
 import { Referrer } from "./referrer";
 import { Cart } from "./cart";
 import { Sections } from "./sections";
-import { useStyles } from "./styles";
+import { StyledGrow, StyledLink, StyledToolbar } from "./styled";
 
 export const Header: FC = () => {
-  const classes = useStyles();
   return (
     <AppBar position="fixed">
-      <Toolbar className={classes.toolbar}>
-        <Link className={classes.title} component={RouterLink} to="/">
+      <StyledToolbar>
+        <StyledLink component={RouterLink} to="/">
           <Hidden smDown>{companyName} - Marketplace</Hidden>
-        </Link>
-        <div className={classes.grow} />
+        </StyledLink>
+        <StyledGrow />
         <Referrer />
         <NetworkButton />
         <WalletButton />
@@ -29,7 +28,7 @@ export const Header: FC = () => {
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
         <Sections />
-      </Toolbar>
+      </StyledToolbar>
     </AppBar>
   );
 };

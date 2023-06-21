@@ -1,19 +1,20 @@
 import { IAssetItem } from "../exchange/common";
 
-export enum WaitlistEventType {
-  RewardSet = "RewardSet",
-  ClaimReward = "ClaimReward",
+export enum WaitListEventType {
+  WaitListRewardSet = "WaitListRewardSet",
+  WaitListRewardClaimed = "WaitListRewardClaimed",
 }
 
-export interface IWaitlistSetRewardEvent {
+export interface IWaitListRewardSetEvent {
+  externalId: string;
+  root: string;
+  items: Array<IAssetItem>;
+}
+
+export interface IWaitListRewardClaimedEvent {
+  account: string;
   externalId: string;
   items: Array<IAssetItem>;
 }
 
-export interface IWaitlistClaimRewardEvent {
-  from: string;
-  externalId: string;
-  items: Array<IAssetItem>;
-}
-
-export type TWaitlistEvents = IWaitlistSetRewardEvent | IWaitlistClaimRewardEvent;
+export type TWaitListEvents = IWaitListRewardSetEvent | IWaitListRewardClaimedEvent;

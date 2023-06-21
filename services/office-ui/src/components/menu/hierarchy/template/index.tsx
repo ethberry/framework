@@ -7,12 +7,9 @@ import { ITemplate } from "@framework/types";
 
 import { MintMenuItem } from "./mint";
 
-export enum TemplateActions {}
-
 export interface ITemplateActionsMenu {
   template: ITemplate;
   disabled?: boolean;
-  actions?: Array<TemplateActions | null>;
 }
 
 export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {

@@ -2,10 +2,10 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { WaitlistSection } from "../../dashboard/mechanics/waitlist";
+import { WaitListSection } from "../../dashboard/mechanics/waitlist";
 import { IndexWrapper } from "../../index-wrapper";
-import { WaitlistList } from "./list";
-import { WaitlistItem } from "./item";
+import { WaitListList } from "./list";
+import { WaitListItem } from "./item";
 
 export const waitlistRoutes: Array<RouteObject> = [
   {
@@ -15,7 +15,7 @@ export const waitlistRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="waitlist">
-            <WaitlistSection />
+            <WaitListSection />
           </IndexWrapper>
         ),
       },
@@ -23,16 +23,16 @@ export const waitlistRoutes: Array<RouteObject> = [
         path: "/waitlist/list",
         element: <Protected />,
         children: [
-          { index: true, element: <WaitlistList /> },
-          { path: "/waitlist/list/:id", element: <WaitlistList /> },
+          { index: true, element: <WaitListList /> },
+          { path: "/waitlist/list/:id", element: <WaitListList /> },
         ],
       },
       {
         path: "/waitlist/item",
         element: <Protected />,
         children: [
-          { index: true, element: <WaitlistItem /> },
-          { path: "/waitlist/item/:id", element: <WaitlistItem /> },
+          { index: true, element: <WaitListItem /> },
+          { path: "/waitlist/item/:id", element: <WaitListItem /> },
         ],
       },
     ],

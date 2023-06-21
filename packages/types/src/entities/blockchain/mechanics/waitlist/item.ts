@@ -1,9 +1,15 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import type { IWaitlistList } from "./list";
+import type { IWaitListList } from "./list";
 
-export interface IWaitlistItem extends IIdDateBase {
+export enum WaitListStatus {
+  NEW = "NEW",
+  REDEEMED = "REDEEMED",
+}
+
+export interface IWaitListItem extends IIdDateBase {
   account: string;
+  waitListStatus: WaitListStatus;
   listId: number;
-  list?: IWaitlistList;
+  list?: IWaitListList;
 }

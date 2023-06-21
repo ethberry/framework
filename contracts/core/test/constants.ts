@@ -1,4 +1,4 @@
-import { encodeBytes32String, WeiPerEther, ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
@@ -23,7 +23,7 @@ export const maxStake = 5;
 // EXCHANGE
 export const externalId = 1;
 export const expiresAt = 0;
-export const extra = encodeBytes32String("0x");
+export const extra = ZeroHash;
 
 export const params = {
   nonce,

@@ -7,7 +7,6 @@ import type { ITemplate } from "@framework/types";
 
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
-import { useStyles } from "./styles";
 
 interface IErc1155TemplateListItemProps {
   template: ITemplate;
@@ -16,15 +15,13 @@ interface IErc1155TemplateListItemProps {
 export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props => {
   const { template } = props;
 
-  const classes = useStyles();
-
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/erc1155/templates/${template.id}`}>
         <CardHeader title={template.title} />
-        <CardMedia className={classes.media} image={template.imageUrl} />
+        <CardMedia sx={{ height: 200 }} image={template.imageUrl} />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+          <Typography variant="body2" color="textSecondary" component="div" sx={{ height: 80, overflow: "hidden" }}>
             <RichTextDisplay data={template.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

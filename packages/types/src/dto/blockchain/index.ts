@@ -23,10 +23,15 @@ export * from "./mechanics/claim/update";
 export * from "./mechanics/craft/search";
 export * from "./mechanics/rent/search";
 export * from "./mechanics/drop/search";
+
+export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/leaderboard";
+
+export * from "./mechanics/raffle/deploy";
 export * from "./mechanics/raffle/search";
 export * from "./mechanics/raffle/leaderboard";
+
 export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/mysterybox/deploy";
 export * from "./mechanics/referral/search";
@@ -39,7 +44,12 @@ export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
-export * from "./mechanics/waitlist/search";
+
+export * from "./mechanics/waitlist/item/create";
+export * from "./mechanics/waitlist/item/search";
+export * from "./mechanics/waitlist/list/create";
+export * from "./mechanics/waitlist/list/update";
+export * from "./mechanics/waitlist/deploy";
 
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/chart";

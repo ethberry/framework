@@ -22,7 +22,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        120101,
+        1020101,
         'Space Credits',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -30,11 +30,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1201,
+        10201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        120201,
+        1020201,
         'Inactive token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,11 +42,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'INACTIVE',
-        1202,
+        10202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        120301,
+        1020301,
         'New token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -54,11 +54,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1203,
+        10203,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        120401,
+        1020401,
         'Black list token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -66,11 +66,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1204,
+        10204,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        120501,
+        1020501,
         'White list token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -78,7 +78,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
-        1205,
+        10205,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -2,10 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateWaitlistItem1663047650300 implements MigrationInterface {
+export class CreateWaitListItem1663047650300 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.wait_list_status_enum AS ENUM (
+        'NEW',
+        'REDEEMED'
+      );
+    `);
+
     const table = new Table({
-      name: `${ns}.waitlist_item`,
+      name: `${ns}.wait_list_item`,
       columns: [
         {
           name: "id",
@@ -15,6 +22,11 @@ export class CreateWaitlistItem1663047650300 implements MigrationInterface {
         {
           name: "account",
           type: "varchar",
+        },
+        {
+          name: "wait_list_status",
+          type: `${ns}.wait_list_status_enum`,
+          default: "'NEW'",
         },
         {
           name: "list_id",
@@ -33,7 +45,7 @@ export class CreateWaitlistItem1663047650300 implements MigrationInterface {
         {
           columnNames: ["list_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.waitlist_list`,
+          referencedTableName: `${ns}.wait_list_list`,
           onDelete: "CASCADE",
         },
       ],
@@ -43,6 +55,6 @@ export class CreateWaitlistItem1663047650300 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.waitlist_item`);
+    await queryRunner.dropTable(`${ns}.wait_list_item`);
   }
 }

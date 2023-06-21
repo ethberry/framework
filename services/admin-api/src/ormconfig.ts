@@ -51,8 +51,8 @@ import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.ent
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */
@@ -98,6 +98,7 @@ import {
   CreateDropAt1658980521000,
   CreateEventHistory1563804040010,
   CreateEventHistoryComponents1563804040020,
+  CreateGameBalance1686896594700,
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
@@ -125,8 +126,8 @@ import {
   CreateTemplate1563804000200,
   CreateToken1563804000300,
   CreateUser1563803000130,
-  CreateWaitlistItem1663047650300,
-  CreateWaitlistList1663047650200,
+  CreateWaitListItem1663047650300,
+  CreateWaitListList1663047650200,
   CreateWalletPayees1663047650500,
   SeedAccessControlCollectionAt20At1679894502230,
   SeedAccessControlErc1155At20At1653616447250,
@@ -153,6 +154,7 @@ import {
   SeedAssetComponentsErc721At1563804001230,
   SeedAssetComponentsErc998At1563804001240,
   SeedAssetComponentsMysteryboxAt1563804001260,
+  SeedAssetComponentsWaitListAt1663047650220,
   SeedBalanceCollectionAt1679894500430,
   SeedBalanceErc1155At1563804020450,
   SeedBalanceErc20At1563804020420,
@@ -173,6 +175,7 @@ import {
   SeedBreed1663047650401,
   SeedCategory1683724061310,
   SeedClaimErc1155At1653616447850,
+  SeedClaimErc20At1653616447820,
   SeedClaimErc721At1653616447830,
   SeedClaimErc998At1653616447840,
   SeedClaimMixedAt1653616447870,
@@ -209,24 +212,34 @@ import {
   SeedDropErc721At1658980521030,
   SeedDropErc998At1658980521040,
   SeedDropErcMysteryboxAt1658980521050,
-  SeedEventHistoryErc20ClaimAt1563804040330,
-  SeedEventHistoryErc20ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc1155PurchaseAt1563804040230,
+  SeedEventHistoryErc1155PurchaseComponentsAt1563804040240,
+  SeedEventHistoryErc1155TransferSingleAt1563804040130,
+  SeedEventHistoryErc1155TransferBatchAt1563804040140,
+  SeedEventHistoryErc20ClaimAt1653616447920,
+  SeedEventHistoryErc20ClaimComponentsAt1653616447925,
   SeedEventHistoryErc20TransferAt1563804040120,
-  SeedEventHistoryErc721ClaimAt1563804040330,
-  SeedEventHistoryErc721ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc721ClaimAt1653616447930,
+  SeedEventHistoryErc721ClaimComponentsAt1653616447935,
   SeedEventHistoryErc721LendAt1678931845530,
   SeedEventHistoryErc721LendComponentsAt1678931845540,
   SeedEventHistoryErc721PurchaseAt1563804040230,
   SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc721TransferAt1563804040130,
-  SeedEventHistoryErc998ClaimAt1563804040330,
-  SeedEventHistoryErc998ClaimComponentsAt1563804040340,
+  SeedEventHistoryErc998ClaimAt1653616447940,
+  SeedEventHistoryErc998ClaimComponentsAt1653616447945,
   SeedEventHistoryErc998PurchaseAt1563804040230,
   SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
+  SeedEventHistoryErc998TransferAt1563804040130,
+  SeedEventHistoryLotteryTicketPurchaseAt1660436476310,
+  SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
+  SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
+  SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
+  SeedEventHistoryWaitListAt1663047650350,
   SeedExchangePayees1663047650510,
+  SeedGameBalance1686896594710,
   SeedGrade1657846587010,
   SeedLotteryRoundAt1660436476120,
-  // SeedLotteryTicketsAt1660436476140,
   SeedMerchant1563803000120,
   SeedMysteryboxErc1155At1653616447950,
   SeedMysteryboxErc721At1653616447930,
@@ -246,6 +259,7 @@ import {
   SeedPyramidPayees1663047650520,
   SeedPyramidRulesErc20At1660436477220,
   SeedPyramidRulesNativeAt1660436477210,
+  SeedRaffleRoundAt1685961136120,
   SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
@@ -288,8 +302,8 @@ import {
   SeedTokenNativeAt1563804000310,
   SeedTokenRaffleTicketAt1685961134380,
   SeedUser1563803000140,
-  SeedWaitlistItemAt1663047650310,
-  SeedWaitlistListAt1663047650210,
+  SeedWaitListItemAt1663047650310,
+  SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
 
@@ -335,8 +349,8 @@ const config: PostgresConnectionOptions = {
     RentEntity,
     StakingRulesEntity,
     StakingDepositEntity,
-    WaitlistItemEntity,
-    WaitlistListEntity,
+    WaitListItemEntity,
+    WaitListListEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,
@@ -466,11 +480,18 @@ const config: PostgresConnectionOptions = {
     SeedAccessListErc1155At1653616447350,
 
     CreateClaim1653616447810,
+    SeedClaimErc20At1653616447820,
     SeedClaimErc721At1653616447830,
     SeedClaimErc998At1653616447840,
     SeedClaimErc1155At1653616447850,
     SeedClaimMysteryboxAt1653616447860,
     SeedClaimMixedAt1653616447870,
+    SeedEventHistoryErc20ClaimAt1653616447920,
+    SeedEventHistoryErc20ClaimComponentsAt1653616447925,
+    SeedEventHistoryErc721ClaimAt1653616447930,
+    SeedEventHistoryErc721ClaimComponentsAt1653616447935,
+    SeedEventHistoryErc998ClaimAt1653616447940,
+    SeedEventHistoryErc998ClaimComponentsAt1653616447945,
 
     CreateMysterybox1653616447910,
     SeedMysteryboxErc721At1653616447930,
@@ -504,20 +525,18 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentGrade1657846587020,
 
     CreateEventHistory1563804040010,
+    CreateEventHistoryComponents1563804040020,
     SeedEventHistoryErc20TransferAt1563804040120,
-    SeedEventHistoryErc20ClaimAt1563804040330,
     SeedEventHistoryErc721TransferAt1563804040130,
     SeedEventHistoryErc721PurchaseAt1563804040230,
-    SeedEventHistoryErc721ClaimAt1563804040330,
-    SeedEventHistoryErc998ClaimAt1563804040330,
-    SeedEventHistoryErc998PurchaseAt1563804040230,
-
-    CreateEventHistoryComponents1563804040020,
-    SeedEventHistoryErc20ClaimComponentsAt1563804040340,
     SeedEventHistoryErc721PurchaseComponentsAt1563804040240,
-    SeedEventHistoryErc721ClaimComponentsAt1563804040340,
-    SeedEventHistoryErc998ClaimComponentsAt1563804040340,
+    SeedEventHistoryErc998TransferAt1563804040130,
+    SeedEventHistoryErc998PurchaseAt1563804040230,
     SeedEventHistoryErc998PurchaseComponentsAt1563804040240,
+    SeedEventHistoryErc1155TransferSingleAt1563804040130,
+    SeedEventHistoryErc1155TransferBatchAt1563804040140,
+    SeedEventHistoryErc1155PurchaseAt1563804040230,
+    SeedEventHistoryErc1155PurchaseComponentsAt1563804040240,
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
@@ -538,8 +557,9 @@ const config: PostgresConnectionOptions = {
     SeedBalanceLotteryTicketAt1563804020480,
     SeedContractLotteryAt1660436476100,
     CreateLotteryRoundAt1660436476100,
-    // SeedLotteryRoundAt1660436476120,
-    // SeedLotteryTicketsAt1660436476140,
+    SeedLotteryRoundAt1660436476120,
+    SeedEventHistoryLotteryTicketPurchaseAt1660436476310,
+    SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
 
     // RAFFLE
     SeedContractRaffleAt1685961136100,
@@ -548,9 +568,11 @@ const config: PostgresConnectionOptions = {
     SeedTokenRaffleTicketAt1685961134380,
     SeedBalanceRaffleTicketAt1685961134480,
     CreateRaffleRoundAt1685961136110,
-    // SeedRaffleRoundAt1685961136120,
-    // SeedRaffleTicketsAt1685961136140,
+    SeedRaffleRoundAt1685961136120,
+    SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
+    SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
 
+    // PYRAMID
     SeedContractPyramidAt1660436477100,
     CreatePyramidRules1660436477200,
     SeedPyramidRulesNativeAt1660436477210,
@@ -562,10 +584,12 @@ const config: PostgresConnectionOptions = {
     SeedBalancePyramidAt1663047650530,
 
     SeedContractWaitlistAt1663047650100,
-    CreateWaitlistList1663047650200,
-    SeedWaitlistListAt1663047650210,
-    CreateWaitlistItem1663047650300,
-    SeedWaitlistItemAt1663047650310,
+    CreateWaitListList1663047650200,
+    SeedWaitListListAt1663047650210,
+    SeedAssetComponentsWaitListAt1663047650220,
+    CreateWaitListItem1663047650300,
+    SeedWaitListItemAt1663047650310,
+    SeedEventHistoryWaitListAt1663047650350,
 
     CreateBreed1663047650400,
     SeedBreed1663047650401,
@@ -631,6 +655,10 @@ const config: PostgresConnectionOptions = {
     CreateAchievementRedemption1681273013070,
     SeedAchievementClaimErc721At1681273013071,
     SeedAchievementRedemption1681273013080,
+
+    /* game */
+    CreateGameBalance1686896594700,
+    SeedGameBalance1686896594710,
   ],
 };
 

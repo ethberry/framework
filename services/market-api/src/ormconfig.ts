@@ -23,10 +23,9 @@ import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
-import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
@@ -50,6 +49,7 @@ import { AchievementRedemptionEntity } from "./achievements/redemption/redemptio
 import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { CustomParameterEntity } from "./ecommerce/custom-parameter/custom-parameter.entity";
+import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -80,10 +80,10 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     ReferralRewardEntity,
     LotteryRoundEntity,
-    LotteryTicketEntity,
+    RaffleRoundEntity,
     MysteryBoxEntity,
-    WaitlistListEntity,
-    WaitlistItemEntity,
+    WaitListListEntity,
+    WaitListItemEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
     BreedEntity,

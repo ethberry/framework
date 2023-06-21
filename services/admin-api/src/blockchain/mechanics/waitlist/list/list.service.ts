@@ -1,27 +1,49 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  forwardRef,
+  Inject,
+  Injectable,
+  Logger,
+  LoggerService,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
+import { mapLimit } from "async";
 
-import type { ISearchableDto, ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
+import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
 
-import { IWaitlistListCreateDto } from "./interfaces";
-import { WaitlistListEntity } from "./list.entity";
-import { WaitlistGenerateDto } from "./dto";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { AssetService } from "../../../exchange/asset/asset.service";
+import { WaitListItemEntity } from "../item/item.entity";
+import { WaitListItemService } from "../item/item.service";
+import { WaitListListEntity } from "./list.entity";
+import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
 
 @Injectable()
-export class WaitlistListService {
+export class WaitListListService {
   constructor(
-    @InjectRepository(WaitlistListEntity)
-    private readonly waitlistListEntityRepository: Repository<WaitlistListEntity>,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
+    @InjectRepository(WaitListListEntity)
+    private readonly waitListListEntityRepository: Repository<WaitListListEntity>,
+    @Inject(forwardRef(() => WaitListItemService))
+    private readonly waitListItemService: WaitListItemService,
+    protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: Partial<ISearchDto>): Promise<[Array<WaitlistListEntity>, number]> {
+  public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {
     const { query, skip, take } = dto;
 
-    const queryBuilder = this.waitlistListEntityRepository.createQueryBuilder("waitlist");
+    const queryBuilder = this.waitListListEntityRepository.createQueryBuilder("waitlist");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("waitlist.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -51,33 +73,84 @@ export class WaitlistListService {
   }
 
   public findOne(
-    where: FindOptionsWhere<WaitlistListEntity>,
-    options?: FindOneOptions<WaitlistListEntity>,
-  ): Promise<WaitlistListEntity | null> {
-    return this.waitlistListEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<WaitListListEntity>,
+    options?: FindOneOptions<WaitListListEntity>,
+  ): Promise<WaitListListEntity | null> {
+    return this.waitListListEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IWaitlistListCreateDto): Promise<WaitlistListEntity> {
-    return this.waitlistListEntityRepository.create(dto).save();
+  public findOneWithRelations(where: FindOptionsWhere<WaitListListEntity>): Promise<WaitListListEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "waitlist",
+        leftJoinAndSelect: {
+          items: "waitlist.items",
+          item: "waitlist.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+        },
+      },
+    });
+  }
+
+  public async create(dto: IWaitListListCreateDto, userEntity: UserEntity): Promise<WaitListListEntity> {
+    const { item } = dto;
+
+    const assetEntity = await this.assetService.create({
+      components: [],
+    });
+
+    await this.assetService.update(assetEntity, item);
+
+    return this.waitListListEntityRepository
+      .create({
+        ...dto,
+        item: assetEntity,
+        merchantId: userEntity.merchantId,
+      })
+      .save();
   }
 
   public async update(
-    where: FindOptionsWhere<WaitlistListEntity>,
-    dto: Partial<ISearchableDto>,
-  ): Promise<WaitlistListEntity> {
-    const waitlistListEntity = await this.findOne(where);
+    where: FindOptionsWhere<WaitListListEntity>,
+    dto: IWaitListListUpdateDto,
+    userEntity: UserEntity,
+  ): Promise<WaitListListEntity> {
+    const { /* item, */ ...rest } = dto;
 
-    if (!waitlistListEntity) {
+    const waitListListEntity = await this.findOne(where, {
+      join: {
+        alias: "waitlist",
+        leftJoinAndSelect: {
+          item: "waitlist.item",
+          components: "item.components",
+        },
+      },
+    });
+
+    if (!waitListListEntity) {
       throw new NotFoundException("waitlistNotFound");
     }
 
-    Object.assign(waitlistListEntity, dto);
+    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
-    return waitlistListEntity.save();
+    Object.assign(waitListListEntity, rest);
+
+    // update of the item is not allowed
+    // if (item) {
+    //   await this.assetService.update(waitListListEntity.item, item);
+    // }
+    return waitListListEntity.save();
   }
 
-  public async autocomplete(): Promise<Array<WaitlistListEntity>> {
-    return this.waitlistListEntityRepository.find({
+  public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
+    return this.waitListListEntityRepository.find({
+      where: {
+        merchantId: userEntity.merchantId,
+      },
       select: {
         id: true,
         title: true,
@@ -85,25 +158,69 @@ export class WaitlistListService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<WaitlistListEntity>): Promise<DeleteResult> {
-    return this.waitlistListEntityRepository.delete(where);
+  public async delete(where: FindOptionsWhere<WaitListListEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+    const waitListListEntity = await this.findOne(where);
+
+    if (!waitListListEntity) {
+      throw new NotFoundException("waitListListNotFound");
+    }
+
+    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return this.waitListListEntityRepository.delete(where);
   }
 
-  public async generate(dto: WaitlistGenerateDto): Promise<{ root: string }> {
-    const waitlistListEntity = await this.waitlistListEntityRepository.findOne({
-      where: { id: dto.listId },
-      relations: { items: true },
-    });
+  public async generate(dto: IWaitListGenerateDto): Promise<WaitListListEntity> {
+    const { listId } = dto;
+    const waitListListEntity = await this.findOneWithRelations({ id: listId });
 
-    if (!waitlistListEntity) {
+    if (!waitListListEntity) {
       throw new NotFoundException("listNotFound");
     }
 
-    const leaves = waitlistListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
-    // const merkleTree = new MerkleTree(leaves.sort(), utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const leaves = waitListListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
 
-    // return { root: merkleTree.getHexRoot() };
-    return { root: merkleTree.root };
+    Object.assign(waitListListEntity, {
+      root: merkleTree.root,
+    });
+
+    // DO NOT SAVE
+    return waitListListEntity;
+  }
+
+  public async upload(dto: IWaitListUploadDto, userEntity: UserEntity): Promise<Array<WaitListItemEntity>> {
+    const { items, listId } = dto;
+
+    const waitListListEntity = await this.findOne({ id: listId });
+
+    if (!waitListListEntity) {
+      throw new NotFoundException("waitListListNotFound");
+    }
+
+    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return new Promise(resolve => {
+      mapLimit(
+        items,
+        10,
+        async (row: IWaitListRow) => {
+          return this.waitListItemService.create({
+            listId,
+            account: row.account,
+          });
+        },
+        (e, results) => {
+          if (e) {
+            this.loggerService.error(e, WaitListItemService.name);
+          }
+          resolve(results as Array<WaitListItemEntity>);
+        },
+      );
+    });
   }
 }

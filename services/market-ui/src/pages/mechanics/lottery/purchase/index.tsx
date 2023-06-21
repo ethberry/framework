@@ -10,8 +10,9 @@ import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";
 
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
+import { formatPrice } from "../../../../utils/money";
 
-const maxTickets = 6;
+const maxNumbers = 6;
 
 export const LotteryPurchase: FC = () => {
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultTickets());
@@ -21,6 +22,7 @@ export const LotteryPurchase: FC = () => {
     address: constants.AddressZero,
     description: "Lottery",
     schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+    round: {},
   });
 
   const { fn, isLoading } = useApiCall(
@@ -48,7 +50,7 @@ export const LotteryPurchase: FC = () => {
 
   const handleClick = (i: number) => {
     return () => {
-      if (ticketNumbers.filter(e => e).length >= maxTickets && !ticketNumbers[i]) {
+      if (ticketNumbers.filter(e => e).length >= maxNumbers && !ticketNumbers[i]) {
         return;
       }
       const newNumbers = [...ticketNumbers];
@@ -66,7 +68,12 @@ export const LotteryPurchase: FC = () => {
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
-          <LotteryPurchaseButton clearForm={clearForm} ticketNumbers={ticketNumbers} />
+          <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
+            {lottery.round ? (
+              <LotteryPurchaseButton round={lottery.round} clearForm={clearForm} ticketNumbers={ticketNumbers} />
+            ) : null}
+            {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
+          </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
@@ -124,7 +131,7 @@ export const LotteryPurchase: FC = () => {
               color="default"
               isSelected={isSelected}
               onClick={handleClick(i)}
-              disabled={!isSelected && selectedNumbers.length === maxTickets}
+              disabled={!isSelected && selectedNumbers.length === maxNumbers}
             >
               {i + 1}
             </StyledIconButton>

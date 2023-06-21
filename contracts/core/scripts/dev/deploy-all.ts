@@ -1,12 +1,14 @@
 import { ethers, network } from "hardhat";
-import { Contract, WeiPerEther, ZeroAddress, Result } from "ethers";
+import { Contract, Result, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
+import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
-import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
+import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty, nonce } from "@gemunion/contracts-constants";
 
 import { getContractName } from "../../test/utils";
+import { expiresAt, externalId } from "../../test/constants";
 
 const delay = 1; // block delay
 const delayMs = 900; // block delay ms
@@ -57,16 +59,16 @@ const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
 
 const grantRoles = async (contracts: Array<string>, grantee: Array<string>, roles: Array<string>) => {
   let idx = 1;
+  const max = contracts.length * grantee.length * roles.length;
   for (let i = 0; i < contracts.length; i++) {
     for (let j = 0; j < grantee.length; j++) {
       for (let k = 0; k < roles.length; k++) {
         if (contracts[i] !== grantee[j]) {
-          const max = contracts.length * grantee.length * roles.length;
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          await accessInstance.grantRole(roles[k], grantee[j]);
-          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          // await accessInstance.grantRole(roles[k], grantee[j]);
+          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }
@@ -79,7 +81,7 @@ const timestamp = Math.ceil(Date.now() / 1000);
 const currentBlock: { number: number } = { number: 1 };
 
 async function main() {
-  const [owner] = await ethers.getSigners();
+  const [owner, receiver, stranger] = await ethers.getSigners();
   const block = await ethers.provider.getBlock("latest");
   currentBlock.number = block!.number;
   fs.appendFileSync(
@@ -433,7 +435,7 @@ async function main() {
         active: true,
       },
     ]),
-    "takingInstance.setRules",
+    "stakingInstance.setRules",
   );
 
   await debug(
@@ -562,11 +564,22 @@ async function main() {
   await debug(contracts);
   // const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
 
-  const waitlistFactory = await ethers.getContractFactory("Waitlist");
+  const waitlistFactory = await ethers.getContractFactory("WaitList");
   contracts.waitlist = await waitlistFactory.deploy();
   await debug(contracts);
 
-  const root = "0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a";
+  // function setReward(Params memory params, Asset[] memory items)
+  const leavesEntities = [[owner.address], [receiver.address], [stranger.address]];
+
+  const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
+
+  const params = {
+    nonce,
+    externalId,
+    expiresAt,
+    referrer: ZeroAddress,
+    extra: merkleTree.root,
+  };
   const items = [
     {
       tokenType: 2,
@@ -576,7 +589,7 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitlist.setReward(root, items, 2), "waitlist.setReward");
+  await debug(await contracts.waitlist.setReward(params, items), "waitlist.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721Wrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
@@ -627,6 +640,8 @@ async function main() {
       await contracts.erc721MysteryboxSimple.getAddress(),
       await contracts.erc721LotteryTicket.getAddress(),
       await contracts.erc721RaffleTicket.getAddress(),
+      await contracts.lottery.getAddress(),
+      await contracts.raffle.getAddress(),
     ],
     [
       await contracts.erc721Wrapper.getAddress(),

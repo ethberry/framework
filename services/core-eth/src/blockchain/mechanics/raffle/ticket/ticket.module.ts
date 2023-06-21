@@ -3,6 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 
 import { TypeOrmModule } from "@nestjs/typeorm";
 
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { RaffleRoundModule } from "../round/round.module";
@@ -14,6 +16,7 @@ import { RaffleTicketServiceEth } from "./ticket.service.eth";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [
@@ -21,13 +24,14 @@ import { EventHistoryModule } from "../../../event-history/event-history.module"
     RaffleTicketLogModule,
     ContractModule,
     TokenModule,
+    AssetModule,
     TemplateModule,
     BalanceModule,
     RaffleRoundModule,
     EventHistoryModule,
     TypeOrmModule.forFeature([RaffleTicketEntity]),
   ],
-  providers: [Logger, RaffleTicketService, RaffleTicketServiceEth],
+  providers: [Logger, ethersRpcProvider, RaffleTicketService, RaffleTicketServiceEth],
   controllers: [RaffleTicketControllerEth],
   exports: [RaffleTicketService, RaffleTicketServiceEth],
 })

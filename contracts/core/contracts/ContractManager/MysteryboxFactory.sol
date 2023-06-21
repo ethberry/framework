@@ -12,7 +12,7 @@ import "./AbstractFactory.sol";
 contract MysteryboxFactory is AbstractFactory {
   bytes private constant MYSTERYBOX_ARGUMENTS_SIGNATURE =
     "MysteryArgs(string name,string symbol,uint96 royalty,string baseTokenURI,string contractTemplate)";
-  bytes32 private constant MYSTERYBOX_ARGUMENTS_TYPEHASH = keccak256(abi.encodePacked(MYSTERYBOX_ARGUMENTS_SIGNATURE));
+  bytes32 private constant MYSTERYBOX_ARGUMENTS_TYPEHASH = keccak256(MYSTERYBOX_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,MysteryArgs args)", MYSTERYBOX_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
@@ -69,11 +69,11 @@ contract MysteryboxFactory is AbstractFactory {
       keccak256(
         abi.encode(
           MYSTERYBOX_ARGUMENTS_TYPEHASH,
-          keccak256(abi.encodePacked(args.name)),
-          keccak256(abi.encodePacked(args.symbol)),
+          keccak256(bytes(args.name)),
+          keccak256(bytes(args.symbol)),
           args.royalty,
-          keccak256(abi.encodePacked(args.baseTokenURI)),
-          keccak256(abi.encodePacked(args.contractTemplate))
+          keccak256(bytes(args.baseTokenURI)),
+          keccak256(bytes(args.contractTemplate))
         )
       );
   }

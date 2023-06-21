@@ -11,17 +11,17 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        160101
+        101110101
       ), (
-        160102
+        101110102
       ), (
-        160401
+        101110401
       ), (
-        160501
+        101110501
       ), (
-        160601
+        101110601
       ), (
-        260101
+        201110101
       );
     `);
 
@@ -39,75 +39,75 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        160101,
+        1110101,
         'Sword Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        160101,
+        101110101,
         0,
         4,
         'ACTIVE',
-        1601,
+        11101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        160102,
+        1110102,
         'Sword Mysterybox Inactive',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        160102,
+        101110102,
         0,
         1,
         'INACTIVE',
-        1601,
+        11101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        160401,
+        1110401,
         'Warrior Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        160401,
+        101110401,
         0,
         1,
         'ACTIVE',
-        1604,
+        11104,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        160501,
+        1110501,
         'Gold Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        160501,
+        101110501,
         0,
         1,
         'ACTIVE',
-        1605,
+        11105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        160601,
+        1110601,
         'Mixed Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        160601,
+        101110601,
         0,
         1,
         'ACTIVE',
-        1606,
+        11106,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        260101,
+        2110101,
         'Mysterybox (BEP)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        260101,
+        201110101,
         0,
         1,
         'ACTIVE',
-        2601,
+        21101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

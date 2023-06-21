@@ -3,14 +3,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType, WaitlistEventType } from "@framework/types";
-import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
+import { AccessControlEventType, ContractEventType, ContractType, WaitListEventType } from "@framework/types";
+import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { WaitlistLogService } from "./log.service";
+import { WaitListLogService } from "./log.service";
 
 @Module({
   imports: [
@@ -31,11 +31,11 @@ import { WaitlistLogService } from "./log.service";
           contract: {
             contractType: ContractType.WAITLIST,
             contractAddress: [waitlistAddr],
-            contractInterface: new Interface(WaitlistSol.abi),
+            contractInterface: new Interface(WaitListSol.abi),
             // prettier-ignore
             eventNames: [
-              WaitlistEventType.RewardSet,
-              WaitlistEventType.ClaimReward,
+              WaitListEventType.WaitListRewardSet,
+              WaitListEventType.WaitListRewardClaimed,
               ContractEventType.Paused,
               ContractEventType.Unpaused,
               AccessControlEventType.RoleAdminChanged,
@@ -52,14 +52,14 @@ import { WaitlistLogService } from "./log.service";
       },
     }),
   ],
-  providers: [WaitlistLogService, Logger],
-  exports: [WaitlistLogService],
+  providers: [WaitListLogService, Logger],
+  exports: [WaitListLogService],
 })
-export class WaitlistLogModule implements OnModuleDestroy {
-  constructor(private readonly waitlistLogService: WaitlistLogService) {}
+export class WaitListLogModule implements OnModuleDestroy {
+  constructor(private readonly waitListLogService: WaitListLogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.waitlistLogService.updateBlock();
+    return this.waitListLogService.updateBlock();
   }
 }
