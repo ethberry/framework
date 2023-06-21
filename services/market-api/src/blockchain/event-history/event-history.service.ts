@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IErc1155TokenApprovalForAllEvent, IEventHistorySearchDto } from "@framework/types";
+import type { IErc1155TokenApprovalForAllEvent, IEventHistorySearchDto } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "./event-history.entity";
@@ -94,6 +95,19 @@ export class EventHistoryService {
               new Brackets(qb2 => {
                 qb2.andWhere("LOWER(history.event_data->>'from') = :wallet", { wallet });
                 qb2.orWhere("LOWER(history.event_data->>'to') = :wallet", { wallet });
+              }),
+            );
+          }),
+        );
+        qb.orWhere(
+          new Brackets(qb1 => {
+            qb1.andWhere("history.event_type = :eventType013", {
+              eventType013: ContractEventType.OwnershipTransferred,
+            });
+            qb1.andWhere(
+              new Brackets(qb2 => {
+                qb2.andWhere("LOWER(history.event_data->>'previousOwner') = :wallet", { wallet });
+                qb2.orWhere("LOWER(history.event_data->>'newOwner') = :wallet", { wallet });
               }),
             );
           }),

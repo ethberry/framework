@@ -7,7 +7,7 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const vestingAddress = process.env.VESTING_LINEAR_ADDR || wallet;
+    const vestingAddress = process.env.VESTING_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

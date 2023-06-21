@@ -204,6 +204,7 @@
       "Lend": "Lend",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
+      "OwnershipTransferred": "OwnershipTransferred",
       "Paused": "Paused",
       "PayeeAdded": "PayeeAdded",
       "PaymentEthReceived": "PaymentEthReceived",
@@ -643,8 +644,8 @@
       "integrations": {
         "coin-gecko": "CoinGecko",
         "dex": {
-          "title": "Dex",
           "1inch": "1inch",
+          "title": "Dex",
           "uniswap": "Uniswap"
         },
         "ipfs": "IPFS"

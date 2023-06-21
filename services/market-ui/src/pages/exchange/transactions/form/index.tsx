@@ -15,6 +15,7 @@ export enum ContractEventType {
   Transfer = "Transfer", // ERC20,ERC721,ERC998
   TransferSingle = "TransferSingle", // ERC1155
   TransferBatch = "TransferBatch", // ERC1155
+  OwnershipTransferred = "OwnershipTransferred", // Vesting, Extensions
 }
 
 export interface IEventSearchDto extends IPaginationDto {

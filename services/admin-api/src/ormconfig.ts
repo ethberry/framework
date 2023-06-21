@@ -214,8 +214,8 @@ import {
   SeedDropErcMysteryboxAt1658980521050,
   SeedEventHistoryErc1155PurchaseAt1563804040230,
   SeedEventHistoryErc1155PurchaseComponentsAt1563804040240,
-  SeedEventHistoryErc1155TransferSingleAt1563804040130,
   SeedEventHistoryErc1155TransferBatchAt1563804040140,
+  SeedEventHistoryErc1155TransferSingleAt1563804040130,
   SeedEventHistoryErc20ClaimAt1653616447920,
   SeedEventHistoryErc20ClaimComponentsAt1653616447925,
   SeedEventHistoryErc20TransferAt1563804040120,
@@ -235,6 +235,7 @@ import {
   SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310,
   SeedEventHistoryRaffleTicketPurchaseAt1685961136310,
   SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
+  SeedEventHistoryVestingTransferOwnershipAt1687338973200,
   SeedEventHistoryWaitListAt1663047650350,
   SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
@@ -421,7 +422,6 @@ const config: PostgresConnectionOptions = {
     SeedContractErc1155DumbWayToDieAt1563804000151,
     SeedContractMysteryAt1563804000160,
     SeedContractWrapperAt1563804000170,
-    SeedContractVestingAt1563804000190,
 
     CreateTemplate1563804000200,
     SeedTemplateNativeAt1563804000210,
@@ -459,7 +459,6 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc1155At1563804020450,
     SeedBalanceErc721MysteryAt1563804020460,
     SeedBalanceErc721WrapperAt1563804020470,
-    SeedBalanceVestingAt1563804000490,
 
     CreateAssetComponent1563804001220,
     SeedAssetComponentsErc721At1563804001230,
@@ -492,6 +491,10 @@ const config: PostgresConnectionOptions = {
     SeedEventHistoryErc721ClaimComponentsAt1653616447935,
     SeedEventHistoryErc998ClaimAt1653616447940,
     SeedEventHistoryErc998ClaimComponentsAt1653616447945,
+
+    SeedContractVestingAt1563804000190,
+    SeedBalanceVestingAt1563804000490,
+    SeedEventHistoryVestingTransferOwnershipAt1687338973200,
 
     CreateMysterybox1653616447910,
     SeedMysteryboxErc721At1653616447930,

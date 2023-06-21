@@ -7,7 +7,7 @@ import { wallet } from "@gemunion/constants";
 export class SeedBalanceVestingAt1563804000490 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const vestingLinearAddress = process.env.VESTING_LINEAR_ADDR || wallet;
+    const vestingLinearAddress = process.env.VESTING_ADDR || wallet;
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
 

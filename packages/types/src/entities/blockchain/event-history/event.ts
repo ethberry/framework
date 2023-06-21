@@ -99,6 +99,7 @@ export enum ContractEventType {
   RoleGranted = "RoleGranted",
   RoleRevoked = "RoleRevoked",
   RoleAdminChanged = "RoleAdminChanged",
+  OwnershipTransferred = "OwnershipTransferred",
 
   // MODULE:STAKING
   RuleCreated = "RuleCreated",
