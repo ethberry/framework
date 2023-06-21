@@ -106,7 +106,7 @@ export const SwapToken: FC<ISwapTokenProps> = props => {
       <Grid item xs={12} sx={{ textAlign: "right" }}>
         {token ? (
           <Typography>
-            {formatMessage({ id: "pages.1inch.swap.balanceOf" })} {token.symbol}: {maxSpend}
+            {formatMessage({ id: "pages.dex.1inch.swap.balanceOf" })} {token.symbol}: {maxSpend}
           </Typography>
         ) : null}
       </Grid>

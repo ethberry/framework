@@ -94,7 +94,7 @@ export const Swap: FC = memo(() => {
     return (
       <StyledSwapContainer>
         <StyledSwapHeader>
-          <StyledSwapHeaderItem>{formatMessage({ id: "pages.1inch.swap.preparing" })}</StyledSwapHeaderItem>
+          <StyledSwapHeaderItem>{formatMessage({ id: "pages.dex.1inch.swap.preparing" })}</StyledSwapHeaderItem>
         </StyledSwapHeader>
         <CircularProgress />
       </StyledSwapContainer>
@@ -118,9 +118,9 @@ export const Swap: FC = memo(() => {
         <StyledSwapHeader>
           <StyledSwapHeaderItem>
             {swapState.status === SwapStatus.AWAITING_APPROVAL
-              ? formatMessage({ id: "pages.1inch.swap.approve" })
+              ? formatMessage({ id: "pages.dex.1inch.swap.approve" })
               : swapState.status === SwapStatus.AWAITING_APPROVE_TX
-              ? formatMessage({ id: "pages.1inch.swap.approving" })
+              ? formatMessage({ id: "pages.dex.1inch.swap.approving" })
               : ""}
           </StyledSwapHeaderItem>
         </StyledSwapHeader>
@@ -132,7 +132,7 @@ export const Swap: FC = memo(() => {
     return (
       <StyledSwapContainer>
         <StyledSwapHeader>
-          <StyledSwapHeaderItem>{formatMessage({ id: "pages.1inch.swap.swapping" })}</StyledSwapHeaderItem>
+          <StyledSwapHeaderItem>{formatMessage({ id: "pages.dex.1inch.swap.swapping" })}</StyledSwapHeaderItem>
         </StyledSwapHeader>
       </StyledSwapContainer>
     );
@@ -142,11 +142,11 @@ export const Swap: FC = memo(() => {
     return (
       <StyledSwapContainer>
         <StyledSwapHeader>
-          <StyledSwapHeaderItem>{formatMessage({ id: "pages.1inch.swap.complete" })}</StyledSwapHeaderItem>
+          <StyledSwapHeaderItem>{formatMessage({ id: "pages.dex.1inch.swap.complete" })}</StyledSwapHeaderItem>
         </StyledSwapHeader>
         <StyledButtonGroup>
           <StyledButton onClick={() => swapState.reset()}>
-            {formatMessage({ id: "pages.1inch.buttons.swapAgain" })}
+            {formatMessage({ id: "pages.dex.1inch.buttons.swapAgain" })}
           </StyledButton>
         </StyledButtonGroup>
       </StyledSwapContainer>
@@ -159,13 +159,13 @@ export const Swap: FC = memo(() => {
       return;
     }
     if (+quantity > +(walletTokenBalances[fromToken.address] || 0)) {
-      enqueueSnackbar(formatMessage({ id: "pages.1inch.warning.insufficient" }, { symbol: fromToken.symbol }), {
+      enqueueSnackbar(formatMessage({ id: "pages.dex.1inch.warning.insufficient" }, { symbol: fromToken.symbol }), {
         variant: "error",
       });
       return;
     }
     if (fromToken.address === toToken.address) {
-      enqueueSnackbar(formatMessage({ id: "pages.1inch.warning.cannotBeSame" }), { variant: "error" });
+      enqueueSnackbar(formatMessage({ id: "pages.dex.1inch.warning.cannotBeSame" }), { variant: "error" });
       return;
     }
     await swapState.execute();
@@ -226,7 +226,7 @@ export const Swap: FC = memo(() => {
           <Grid container>
             <Grid item xs={6}>
               <Typography>
-                {fromToken?.symbol} {formatMessage({ id: "pages.1inch.swap.buyPrice" })}
+                {fromToken?.symbol} {formatMessage({ id: "pages.dex.1inch.swap.buyPrice" })}
               </Typography>
             </Grid>
             <Grid item xs={6} sx={{ textAlign: "right" }}>
@@ -235,7 +235,7 @@ export const Swap: FC = memo(() => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography>{formatMessage({ id: "pages.1inch.swap.txCost" })}</Typography>
+              <Typography>{formatMessage({ id: "pages.dex.1inch.swap.txCost" })}</Typography>
             </Grid>
             <Grid item xs={6} sx={{ textAlign: "right" }}>
               {quote ? `$ ${(quote.estimatedGas * 0.000001).toFixed(5)}` : null}
@@ -245,10 +245,10 @@ export const Swap: FC = memo(() => {
       </StyledPaper>
 
       <StyledSwapFormDexInfoContainer>
-        <StyledSwapFormDexInfoTitle>{formatMessage({ id: "pages.1inch.swap.spread" })}</StyledSwapFormDexInfoTitle>
+        <StyledSwapFormDexInfoTitle>{formatMessage({ id: "pages.dex.1inch.swap.spread" })}</StyledSwapFormDexInfoTitle>
         <StyledSwapFormDexInfoToggle>
           <StyledSwapFormDexInfoToggleActionText>
-            <LoadingText text={quote?.protocols.length} /> {formatMessage({ id: "pages.1inch.swap.selected" })}
+            <LoadingText text={quote?.protocols.length} /> {formatMessage({ id: "pages.dex.1inch.swap.selected" })}
           </StyledSwapFormDexInfoToggleActionText>
         </StyledSwapFormDexInfoToggle>
       </StyledSwapFormDexInfoContainer>
@@ -264,21 +264,21 @@ export const Swap: FC = memo(() => {
           size="large"
           fullWidth
         >
-          <FormattedMessage id="pages.1inch.buttons.connect-wallet" />
+          <FormattedMessage id="pages.dex.1inch.buttons.connect-wallet" />
         </Button>
       ) : (
         <Button type="submit" color="primary" variant="contained" size="large" fullWidth>
-          <FormattedMessage id="pages.1inch.buttons.swap-tokens" />
+          <FormattedMessage id="pages.dex.1inch.buttons.swap-tokens" />
         </Button>
       )}
 
       <StyledSwapFormMetaContainer>
         <Box>
-          {formatMessage({ id: "pages.1inch.swap.maxPriceSlippage" })}: {oneInch.getSlippage()}
+          {formatMessage({ id: "pages.dex.1inch.swap.maxPriceSlippage" })}: {oneInch.getSlippage()}
         </Box>
         <Box>
-          {formatMessage({ id: "pages.1inch.swap.gasPrice" })}: {~~+gasPrice}{" "}
-          {formatMessage({ id: "pages.1inch.swap.gwei" })}
+          {formatMessage({ id: "pages.dex.1inch.swap.gasPrice" })}: {~~+gasPrice}{" "}
+          {formatMessage({ id: "pages.dex.1inch.swap.gwei" })}
         </Box>
       </StyledSwapFormMetaContainer>
 

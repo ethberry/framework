@@ -29,7 +29,7 @@ export const Warning: FC = () => {
       }}
     >
       <FormattedMessage
-        id="pages.1inch.warning.text"
+        id="pages.dex.1inch.warning.text"
         values={{
           walletNetwork: chainIdToNetwork[chainId] || `#${chainId}`,
           appNetwork: chainIdToNetwork[profile.chainId],

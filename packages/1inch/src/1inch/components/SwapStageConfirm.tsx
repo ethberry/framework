@@ -76,7 +76,7 @@ export const SwapStageConfirm: FC<ISwapStageConfirmProps> = props => {
   return (
     <StyledSwapContainer>
       <StyledSwapHeader>
-        <StyledSwapHeaderItem>{formatMessage({ id: "pages.1inch.swap.confirm" })}</StyledSwapHeaderItem>
+        <StyledSwapHeaderItem>{formatMessage({ id: "pages.dex.1inch.swap.confirm" })}</StyledSwapHeaderItem>
       </StyledSwapHeader>
       <StyledSwapFormContainer>
         <small
@@ -88,49 +88,49 @@ export const SwapStageConfirm: FC<ISwapStageConfirmProps> = props => {
         >
           <code>
             {"  "}
-            <b>{formatMessage({ id: "pages.1inch.swap.product" })}:</b> {swap?.toToken.symbol}
+            <b>{formatMessage({ id: "pages.dex.1inch.swap.product" })}:</b> {swap?.toToken.symbol}
           </code>
           <br />
           <code>
             <span title={swapStats.toTokenQuantity}>
-              <b>{formatMessage({ id: "pages.1inch.swap.quantity" })}:</b> {+swapStats.toTokenQuantity}
+              <b>{formatMessage({ id: "pages.dex.1inch.swap.quantity" })}:</b> {+swapStats.toTokenQuantity}
             </span>
           </code>
           <br />
           <code>
             <span title={swapStats.rate}>
-              × <b>{formatMessage({ id: "pages.1inch.swap.rate" })}:</b> {+swapStats.rate}
+              × <b>{formatMessage({ id: "pages.dex.1inch.swap.rate" })}:</b> {+swapStats.rate}
             </span>{" "}
             {swap?.fromToken.symbol}/{swap?.toToken.symbol}
           </code>
           <br />
           <code>
-            + <b>{formatMessage({ id: "pages.1inch.swap.gasPrice" })}:</b> <LoadingText text={swapStats.gasPrice} />{" "}
-            {formatMessage({ id: "pages.1inch.swap.gwei" })}
+            + <b>{formatMessage({ id: "pages.dex.1inch.swap.gasPrice" })}:</b> <LoadingText text={swapStats.gasPrice} />{" "}
+            {formatMessage({ id: "pages.dex.1inch.swap.gwei" })}
           </code>
           <br />
           <code>
-            × <b>{formatMessage({ id: "pages.1inch.swap.gas" })}:</b> <LoadingText text={swap?.tx.gas.toString()} />
+            × <b>{formatMessage({ id: "pages.dex.1inch.swap.gas" })}:</b> <LoadingText text={swap?.tx.gas.toString()} />
           </code>
           <br />
           <hr />
           <code>
-            <b> {formatMessage({ id: "pages.1inch.swap.cost" })}:</b> {swapStats.fromTokenQuantity}{" "}
+            <b> {formatMessage({ id: "pages.dex.1inch.swap.cost" })}:</b> {swapStats.fromTokenQuantity}{" "}
             {swap?.fromToken.symbol} (
             <CoinPriceUSD token={fromToken} tokenQuantity={swapStats.fromTokenQuantity} />)
           </code>
           <br />
           <code>
             <b>
-              {"+"} {formatMessage({ id: "pages.1inch.swap.fee" })}:
+              {"+"} {formatMessage({ id: "pages.dex.1inch.swap.fee" })}:
             </b>{" "}
-            <LoadingText text={swapStats.fee} /> {formatMessage({ id: "pages.1inch.swap.ETH" })} (
+            <LoadingText text={swapStats.fee} /> {formatMessage({ id: "pages.dex.1inch.swap.ETH" })} (
             <CoinPriceUSD token={ethToken} tokenQuantity={swapStats.fee} />)
           </code>
           <br />
           <hr />
           <code>
-            <b>{formatMessage({ id: "pages.1inch.swap.total" })}:</b> ≈$
+            <b>{formatMessage({ id: "pages.dex.1inch.swap.total" })}:</b> ≈$
             <LoadingText text={totalInUSD} />
           </code>
         </small>
@@ -138,9 +138,11 @@ export const SwapStageConfirm: FC<ISwapStageConfirmProps> = props => {
         <br />
         <StyledButtonGroup>
           <StyledButton onClick={() => deny()} light>
-            {formatMessage({ id: "pages.1inch.buttons.cancel" })}
+            {formatMessage({ id: "pages.dex.1inch.buttons.cancel" })}
           </StyledButton>
-          <StyledButton onClick={() => confirm()}>{formatMessage({ id: "pages.1inch.buttons.confirm" })}</StyledButton>
+          <StyledButton onClick={() => confirm()}>
+            {formatMessage({ id: "pages.dex.1inch.buttons.confirm" })}
+          </StyledButton>
         </StyledButtonGroup>
       </StyledSwapFormContainer>
     </StyledSwapContainer>

@@ -553,86 +553,6 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "1inch": {
-      "advanced-settings": {
-        "gas": "Gas",
-        "slippage": "Slippage tolerance",
-        "title": "Advanced settings"
-      },
-      "buttons": {
-        "buy-crypto": "Buy Crypto",
-        "cancel": "Cancel",
-        "confirm": "Confirm",
-        "connect-wallet": "Connect wallet",
-        "download-metamask": "Download Metamask",
-        "learn-more": "Learn more",
-        "swap-tokens": "Swap Tokens",
-        "swapAgain": "Swap Again"
-      },
-      "enums": {
-        "gasPrice": {
-          "HIGH": "High",
-          "LOW": "Low",
-          "MEDIUM": "MEDIUM"
-        },
-        "networks": {
-          "ARBITRUM": "Arbitrum",
-          "BINANCE": "Binance",
-          "ETHEREUM": "Ethereum",
-          "OPTIMISM": "Optimism",
-          "POLYGON": "Polygon"
-        },
-        "slippage": {
-          "HIGH": "1%",
-          "LOW": "0.1%",
-          "MEDIUM": "0.5%",
-          "VERY_HIGH": "3%"
-        },
-        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
-      },
-      "header": {
-        "bridge": "Bridge",
-        "network": "Network"
-      },
-      "snackbar": {
-        "accountNotFound": "Account not found in list",
-        "approve-1inch": "Please approve 1inch to spend your {symbol}",
-        "web3-not-detected": "Web3 provider not detected"
-      },
-      "swap": {
-        "ETH": "ETH",
-        "approve": "Approve",
-        "approving": "Approving...",
-        "balanceOf": "Balance of",
-        "buyPrice": "buy price",
-        "complete": "Complete",
-        "confirm": "Confirm Swap",
-        "cost": "Cost",
-        "fee": "Fee",
-        "gas": "Gas",
-        "gasPrice": "Gas Price",
-        "gwei": "GWEI",
-        "maxPriceSlippage": "Max price slippage",
-        "preparing": "Preparing Swap",
-        "product": "Product",
-        "quantity": "Quantity",
-        "rate": "Rate",
-        "selected": "Selected",
-        "spread": "Spread across DEXes",
-        "swapping": "Swapping Tokens",
-        "title": "SWAP",
-        "total": "Total",
-        "txCost": "Tx cost"
-      },
-      "title": "1inch",
-      "token-search": {
-        "title": "Search {amount} tokens"
-      },
-      "warning": {
-        "cannotBeSame": "Tokens cannot be the same",
-        "insufficient": "Insufficient {symbol} balance"
-      }
-    },
     "achievements": {
       "info": {
         "contract": "Contract",
@@ -721,8 +641,12 @@
         }
       },
       "integrations": {
-        "1inch": "1inch",
         "coin-gecko": "CoinGecko",
+        "dex": {
+          "title": "Dex",
+          "1inch": "1inch",
+          "uniswap": "Uniswap"
+        },
         "ipfs": "IPFS"
       },
       "mechanics": {
@@ -741,6 +665,92 @@
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
+    },
+    "dex": {
+      "1inch": {
+        "advanced-settings": {
+          "gas": "Gas",
+          "slippage": "Slippage tolerance",
+          "title": "Advanced settings"
+        },
+        "buttons": {
+          "buy-crypto": "Buy Crypto",
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "connect-wallet": "Connect wallet",
+          "download-metamask": "Download Metamask",
+          "learn-more": "Learn more",
+          "swap-tokens": "Swap Tokens",
+          "swapAgain": "Swap Again"
+        },
+        "enums": {
+          "gasPrice": {
+            "HIGH": "High",
+            "LOW": "Low",
+            "MEDIUM": "MEDIUM"
+          },
+          "networks": {
+            "ARBITRUM": "Arbitrum",
+            "BINANCE": "Binance",
+            "ETHEREUM": "Ethereum",
+            "OPTIMISM": "Optimism",
+            "POLYGON": "Polygon"
+          },
+          "slippage": {
+            "HIGH": "1%",
+            "LOW": "0.1%",
+            "MEDIUM": "0.5%",
+            "VERY_HIGH": "3%"
+          },
+          "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
+        },
+        "header": {
+          "bridge": "Bridge",
+          "network": "Network"
+        },
+        "snackbar": {
+          "accountNotFound": "Account not found in list",
+          "approve-1inch": "Please approve 1inch to spend your {symbol}",
+          "web3-not-detected": "Web3 provider not detected"
+        },
+        "swap": {
+          "ETH": "ETH",
+          "approve": "Approve",
+          "approving": "Approving...",
+          "balanceOf": "Balance of",
+          "buyPrice": "buy price",
+          "complete": "Complete",
+          "confirm": "Confirm Swap",
+          "cost": "Cost",
+          "fee": "Fee",
+          "gas": "Gas",
+          "gasPrice": "Gas Price",
+          "gwei": "GWEI",
+          "maxPriceSlippage": "Max price slippage",
+          "preparing": "Preparing Swap",
+          "product": "Product",
+          "quantity": "Quantity",
+          "rate": "Rate",
+          "selected": "Selected",
+          "spread": "Spread across DEXes",
+          "swapping": "Swapping Tokens",
+          "title": "SWAP",
+          "total": "Total",
+          "txCost": "Tx cost"
+        },
+        "title": "1inch",
+        "token-search": {
+          "title": "Search {amount} tokens"
+        },
+        "warning": {
+          "cannotBeSame": "Tokens cannot be the same",
+          "insufficient": "Insufficient {symbol} balance"
+        }
+      },
+      "title": "Dex",
+      "uniswap": {
+        "title": "Uniswap"
+      }
     },
     "drop-list": {
       "title": "Drops"

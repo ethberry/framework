@@ -23,7 +23,7 @@ export class VestingService {
   }
 
   public async search(dto: IVestingSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    const { contractTemplate, skip, take } = dto;
+    const { skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");
 
@@ -31,16 +31,6 @@ export class VestingService {
     queryBuilder.andWhere("vesting.contractModule = :contractModule", {
       contractModule: ModuleType.VESTING,
     });
-
-    if (contractTemplate) {
-      if (contractTemplate.length === 1) {
-        queryBuilder.andWhere(":contractFeature = ANY(vesting.contractFeatures)", {
-          contractFeature: contractTemplate[0],
-        });
-      } else {
-        queryBuilder.andWhere("vesting.contractFeatures && :contractFeatures", { contractTemplate });
-      }
-    }
 
     queryBuilder.andWhere(`vesting.parameters->>'account' = :account`, {
       account: userEntity.wallet,

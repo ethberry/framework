@@ -8,7 +8,6 @@ import { Root } from "./styled";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
-import { OneInchSection } from "./integrations/1inch";
 import { PersonalSection } from "./exchange/personal";
 import { MarketplaceSection } from "./exchange/marketplace";
 import { MysterySection } from "./mechanics/mystery";
@@ -31,6 +30,7 @@ import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
+import { DexSection } from "./integrations/dex";
 
 export const Dashboard: FC = () => {
   return (
@@ -64,7 +64,7 @@ export const Dashboard: FC = () => {
           <MarketplaceSection />
           <ReferralSection />
           <EcommerceSection />
-          <OneInchSection />
+          <DexSection />
           <CoinGeckoSection />
           <IpfsSection />
           <PagesSection />
