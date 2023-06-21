@@ -15,9 +15,9 @@ contract WaitListFactory is AbstractFactory {
 
   address[] private _waitLists;
 
-  event WaitListDeployed(address addr);
+  event WaitListDeployed(address account, uint256 externalId);
 
-  function deployWaitList(Params calldata params, bytes calldata signature) external returns (address addr) {
+  function deployWaitList(Params calldata params, bytes calldata signature) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashWaitList(params), signature);
@@ -26,16 +26,16 @@ contract WaitListFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(), params.nonce);
-    _waitLists.push(addr);
+    account = deploy2(params.bytecode, abi.encode(), params.nonce);
+    _waitLists.push(account);
 
-    emit WaitListDeployed(addr);
+    emit WaitListDeployed(account, params.externalId);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = PAUSER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    fixPermissions(addr, roles);
+    fixPermissions(account, roles);
   }
 
   function _hashWaitList(Params calldata params) internal view returns (bytes32) {

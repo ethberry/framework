@@ -117,6 +117,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc20Args: [
           { name: "name", type: "string" },
@@ -164,6 +165,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc721Args: [
           { name: "name", type: "string" },
@@ -212,6 +214,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         CollectionArgs: [
           { name: "name", type: "string" },
@@ -227,6 +230,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           name: dto.name,
@@ -262,6 +266,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc998Args: [
           { name: "name", type: "string" },
@@ -276,6 +281,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc998ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -311,6 +317,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc1155Args: [
           { name: "royalty", type: "uint96" },
@@ -323,6 +330,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc1155ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -357,6 +365,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         MysteryArgs: [
           { name: "name", type: "string" },
@@ -371,6 +380,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(MysteryContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -387,7 +397,7 @@ export class ContractManagerSignService {
 
   // MODULE:VESTING
   public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { account, startTimestamp, cliffInMonth, monthlyRelease } = dto;
+    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = dto;
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
 
@@ -408,9 +418,10 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         VestingArgs: [
-          { name: "account", type: "address" },
+          { name: "beneficiary", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "cliffInMonth", type: "uint16" },
           { name: "monthlyRelease", type: "uint16" },
@@ -421,9 +432,10 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
-          account,
+          beneficiary,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
           cliffInMonth, // in seconds
           monthlyRelease,
@@ -456,6 +468,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         PyramidArgs: [
           { name: "payees", type: "address[]" },
@@ -468,6 +481,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           payees: dto.payees,
@@ -501,6 +515,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         StakingArgs: [{ name: "contractTemplate", type: "string" }],
       },
@@ -509,6 +524,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(StakingContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -538,6 +554,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
       },
       // Values
@@ -545,6 +562,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
       },
     );
@@ -574,6 +592,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
         RaffleConfig: [
@@ -586,6 +605,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           config: dto.config,
@@ -618,6 +638,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         LotteryArgs: [{ name: "config", type: "LotteryConfig" }],
         LotteryConfig: [
@@ -630,6 +651,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           config: dto.config,

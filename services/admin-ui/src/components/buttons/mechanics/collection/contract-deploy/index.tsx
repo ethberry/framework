@@ -5,7 +5,9 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc721CollectionTemplates, IErc721CollectionDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IErc721CollectionDeployDto, IUser } from "@framework/types";
+import { Erc721CollectionTemplates } from "@framework/types";
 
 import CollectionDeployCollectionABI from "../../../../../abis/mechanics/collection/contract-deploy/deployCollection.abi.json";
 
@@ -17,6 +19,8 @@ export interface ICollectionContractDeployButtonProps {
 
 export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
   const { className } = props;
+
+  const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721CollectionDeployDto, web3Context, sign) => {
@@ -31,6 +35,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         // values,
         {

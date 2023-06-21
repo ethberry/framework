@@ -5,7 +5,9 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc20ContractTemplates, IErc20TokenDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IErc20TokenDeployDto, IUser } from "@framework/types";
+import { Erc20ContractTemplates } from "@framework/types";
 
 import ERC20DeployERC20TokenABI from "../../../../../abis/hierarchy/erc20/contract-deploy/deployERC20Token.abi.json";
 
@@ -17,6 +19,8 @@ export interface IErc20ContractDeployButtonProps {
 
 export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = props => {
   const { className } = props;
+
+  const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc20TokenDeployDto, web3Context, sign) => {
@@ -31,6 +35,7 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         // values,
         {

@@ -5,7 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IRaffleConfigDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IRaffleConfigDto, IUser } from "@framework/types";
 
 import RaffleDeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
@@ -17,6 +18,8 @@ export interface IRaffleDeployButtonProps {
 
 export const RaffleDeployButton: FC<IRaffleDeployButtonProps> = props => {
   const { className } = props;
+
+  const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IRaffleConfigDto, web3Context, sign) => {
@@ -31,6 +34,7 @@ export const RaffleDeployButton: FC<IRaffleDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         {
           config: {

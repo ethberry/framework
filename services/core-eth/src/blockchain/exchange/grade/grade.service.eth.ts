@@ -26,9 +26,9 @@ export class ExchangeGradeServiceEth {
 
   public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
     const {
-      args: { item, price, from },
+      args: { item, price },
     } = event;
-    const { transactionHash } = context;
+    const { transactionHash, address } = context;
 
     const { tokenType, token, tokenId, amount } = item;
 
@@ -55,11 +55,9 @@ export class ExchangeGradeServiceEth {
       throw new NotFoundException("gradeNotFound");
     }
 
-    // Notify about Grade
-    this.notificatorService.grade({
-      account: from,
-      tokenId,
-      gradeType: gradeEntity.attribute,
+    await this.notificatorService.grade({
+      grade: gradeEntity,
+      address,
       transactionHash,
     });
 

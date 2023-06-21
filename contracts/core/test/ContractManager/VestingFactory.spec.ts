@@ -6,6 +6,7 @@ import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { isEqualEventArgObj } from "../utils";
+import { externalId } from "../constants";
 
 describe("VestingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -14,8 +15,7 @@ describe("VestingFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-
-      const vesting = await ethers.getContractFactory("Vesting");
+      const { bytecode } = await ethers.getContractFactory("Vesting");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -38,9 +38,10 @@ describe("VestingFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           VestingArgs: [
-            { name: "account", type: "address" },
+            { name: "beneficiary", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
@@ -50,10 +51,11 @@ describe("VestingFactory", function () {
         {
           params: {
             nonce,
-            bytecode: vesting.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
-            account: owner.address,
+            beneficiary: owner.address,
             startTimestamp: current.toNumber(),
             cliffInMonth: 12,
             monthlyRelease: 417,
@@ -64,10 +66,11 @@ describe("VestingFactory", function () {
       const tx = await contractInstance.deployVesting(
         {
           nonce,
-          bytecode: vesting.bytecode,
+          bytecode,
+          externalId,
         },
         {
-          account: owner.address,
+          beneficiary: owner.address,
           startTimestamp: current.toNumber(),
           cliffInMonth: 12,
           monthlyRelease: 417,
@@ -81,8 +84,9 @@ describe("VestingFactory", function () {
         .to.emit(contractInstance, "VestingDeployed")
         .withArgs(
           address,
+          externalId,
           isEqualEventArgObj({
-            account: owner.address,
+            beneficiary: owner.address,
             startTimestamp: current.toString(),
             cliffInMonth: "12",
             monthlyRelease: "417",
@@ -93,8 +97,7 @@ describe("VestingFactory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-
-      const vesting = await ethers.getContractFactory("Vesting");
+      const { bytecode } = await ethers.getContractFactory("Vesting");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -117,9 +120,10 @@ describe("VestingFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           VestingArgs: [
-            { name: "account", type: "address" },
+            { name: "beneficiary", type: "address" },
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
@@ -129,10 +133,11 @@ describe("VestingFactory", function () {
         {
           params: {
             nonce,
-            bytecode: vesting.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
-            account: owner.address,
+            beneficiary: owner.address,
             startTimestamp: current.toNumber(),
             cliffInMonth: 12,
             monthlyRelease: 417,
@@ -145,10 +150,11 @@ describe("VestingFactory", function () {
       const tx = contractInstance.deployVesting(
         {
           nonce,
-          bytecode: vesting.bytecode,
+          bytecode,
+          externalId,
         },
         {
-          account: owner.address,
+          beneficiary: owner.address,
           startTimestamp: current.toNumber(),
           cliffInMonth: 12,
           monthlyRelease: 417,

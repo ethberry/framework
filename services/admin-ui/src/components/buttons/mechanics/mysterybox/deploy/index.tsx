@@ -5,7 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import type { IMysteryContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IMysteryContractDeployDto, IUser } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
 import MysteryboxDeployMysteryboxABI from "../../../../../abis/mechanics/mysterybox/deploy/deployMysterybox.abi.json";
@@ -18,6 +19,8 @@ export interface IMysteryContractDeployButtonProps {
 
 export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> = props => {
   const { className } = props;
+
+  const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IMysteryContractDeployDto, web3Context, sign) => {
@@ -32,6 +35,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         // values,
         {

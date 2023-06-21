@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate } from "../constants";
+import { contractTemplate, externalId } from "../constants";
 import { isEqualArray } from "../utils";
 
 describe("PyramidFactory", function () {
@@ -14,7 +14,7 @@ describe("PyramidFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const pyramid = await ethers.getContractFactory("Pyramid");
+      const { bytecode } = await ethers.getContractFactory("Pyramid");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -36,6 +36,7 @@ describe("PyramidFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           PyramidArgs: [
             { name: "payees", type: "address[]" },
@@ -47,7 +48,8 @@ describe("PyramidFactory", function () {
         {
           params: {
             nonce,
-            bytecode: pyramid.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             payees: [owner.address],
@@ -60,7 +62,8 @@ describe("PyramidFactory", function () {
       const tx = await contractInstance.deployPyramid(
         {
           nonce,
-          bytecode: pyramid.bytecode,
+          bytecode,
+          externalId,
         },
         {
           payees: [owner.address],
@@ -74,13 +77,13 @@ describe("PyramidFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "PyramidDeployed")
-        .withArgs(address, isEqualArray([owner.address], [1n], contractTemplate));
+        .withArgs(address, externalId, isEqualArray([owner.address], [1n], contractTemplate));
     });
 
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const pyramid = await ethers.getContractFactory("Pyramid");
+      const { bytecode } = await ethers.getContractFactory("Pyramid");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -102,6 +105,7 @@ describe("PyramidFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           PyramidArgs: [
             { name: "payees", type: "address[]" },
@@ -113,7 +117,8 @@ describe("PyramidFactory", function () {
         {
           params: {
             nonce,
-            bytecode: pyramid.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             payees: [owner.address],
@@ -128,7 +133,8 @@ describe("PyramidFactory", function () {
       const tx = contractInstance.deployPyramid(
         {
           nonce,
-          bytecode: pyramid.bytecode,
+          bytecode,
+          externalId,
         },
         {
           payees: [owner.address],

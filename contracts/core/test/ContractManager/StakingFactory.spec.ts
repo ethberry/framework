@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate } from "../constants";
+import { contractTemplate, externalId } from "../constants";
 
 describe("StakingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -13,7 +13,7 @@ describe("StakingFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const staking = await ethers.getContractFactory("Staking");
+      const { bytecode } = await ethers.getContractFactory("Staking");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -35,6 +35,7 @@ describe("StakingFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           StakingArgs: [{ name: "contractTemplate", type: "string" }],
         },
@@ -42,7 +43,8 @@ describe("StakingFactory", function () {
         {
           params: {
             nonce,
-            bytecode: staking.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             contractTemplate,
@@ -53,7 +55,8 @@ describe("StakingFactory", function () {
       const tx = await contractInstance.deployStaking(
         {
           nonce,
-          bytecode: staking.bytecode,
+          bytecode,
+          externalId,
         },
         {
           contractTemplate,
@@ -63,13 +66,13 @@ describe("StakingFactory", function () {
 
       const [address] = await contractInstance.allStaking();
 
-      await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, [contractTemplate]);
+      await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, externalId, [contractTemplate]);
     });
 
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const staking = await ethers.getContractFactory("Staking");
+      const { bytecode } = await ethers.getContractFactory("Staking");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -91,6 +94,7 @@ describe("StakingFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           StakingArgs: [{ name: "contractTemplate", type: "string" }],
         },
@@ -98,7 +102,8 @@ describe("StakingFactory", function () {
         {
           params: {
             nonce,
-            bytecode: staking.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             contractTemplate,
@@ -111,7 +116,8 @@ describe("StakingFactory", function () {
       const tx = contractInstance.deployStaking(
         {
           nonce,
-          bytecode: staking.bytecode,
+          bytecode,
+          externalId,
         },
         {
           contractTemplate,

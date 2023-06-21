@@ -3,6 +3,7 @@ import { ethers } from "hardhat";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
+import { externalId } from "../constants";
 
 describe("WaitListFactory", function () {
   const factory = () => deployContract(this.title);
@@ -11,7 +12,7 @@ describe("WaitListFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const waitList = await ethers.getContractFactory("WaitList");
+      const { bytecode } = await ethers.getContractFactory("WaitList");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -30,13 +31,15 @@ describe("WaitListFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
         },
         // Values
         {
           params: {
             nonce,
-            bytecode: waitList.bytecode,
+            bytecode,
+            externalId,
           },
         },
       );
@@ -44,20 +47,21 @@ describe("WaitListFactory", function () {
       const tx = await contractInstance.deployWaitList(
         {
           nonce,
-          bytecode: waitList.bytecode,
+          bytecode,
+          externalId,
         },
         signature,
       );
 
       const [address] = await contractInstance.allWaitLists();
 
-      await expect(tx).to.emit(contractInstance, "WaitListDeployed").withArgs(address);
+      await expect(tx).to.emit(contractInstance, "WaitListDeployed").withArgs(address, externalId);
     });
 
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const waitList = await ethers.getContractFactory("WaitList");
+      const { bytecode } = await ethers.getContractFactory("WaitList");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -76,13 +80,15 @@ describe("WaitListFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
         },
         // Values
         {
           params: {
             nonce,
-            bytecode: waitList.bytecode,
+            bytecode,
+            externalId,
           },
         },
       );
@@ -92,7 +98,8 @@ describe("WaitListFactory", function () {
       const tx = contractInstance.deployWaitList(
         {
           nonce,
-          bytecode: waitList.bytecode,
+          bytecode,
+          externalId,
         },
         signature,
       );

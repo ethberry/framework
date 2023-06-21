@@ -5,7 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { ILotteryConfigDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { ILotteryConfigDto, IUser } from "@framework/types";
 
 import LotteryDeployLotteryABI from "../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
 
@@ -17,6 +18,8 @@ export interface ILotteryDeployButtonProps {
 
 export const LotteryDeployButton: FC<ILotteryDeployButtonProps> = props => {
   const { className } = props;
+
+  const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ILotteryConfigDto, web3Context, sign) => {
@@ -31,6 +34,7 @@ export const LotteryDeployButton: FC<ILotteryDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         {
           config: {

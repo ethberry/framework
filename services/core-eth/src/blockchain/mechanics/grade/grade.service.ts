@@ -1,20 +1,27 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { WeiPerEther } from "ethers";
 
-import { ContractFeatures, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, GradeAttribute, GradeStrategy, TokenType } from "@framework/types";
 
-import { GradeEntity } from "./grade.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { GradeEntity } from "./grade.entity";
+import { testChainId } from "@framework/constants";
 
 @Injectable()
 export class GradeService {
   constructor(
     @InjectRepository(GradeEntity)
     private readonly gradeEntityRepository: Repository<GradeEntity>,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
+    protected readonly configService: ConfigService,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public findOne(
@@ -25,12 +32,28 @@ export class GradeService {
   }
 
   public async create(dto: DeepPartial<GradeEntity>): Promise<GradeEntity> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    const contractEntity = await this.contractService.findOne(
+      {
+        contractType: TokenType.NATIVE,
+        contractStatus: ContractStatus.ACTIVE,
+        chainId,
+      },
+      { relations: { templates: true } },
+    );
+
+    if (!contractEntity) {
+      this.loggerService.error("CRITICAL ERROR", GradeService.name);
+      throw new NotFoundException("contractNotFound");
+    }
+
     const assetEntity = await this.assetService.create({
       components: [
         {
           tokenType: TokenType.NATIVE,
-          contractId: 1,
-          templateId: 101001, // TODO why?
+          contractId: contractEntity.id,
+          templateId: contractEntity.templates.at(0)?.id, // TODO why?
           amount: WeiPerEther.toString(),
         },
       ],

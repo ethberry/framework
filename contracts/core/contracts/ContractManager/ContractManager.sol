@@ -29,7 +29,7 @@ contract ContractManager is
   CollectionFactory,
   PyramidFactory,
   StakingFactory,
-  //LotteryFactory,
+  LotteryFactory,
   RaffleFactory,
   WaitListFactory
 {}

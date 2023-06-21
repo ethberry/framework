@@ -36,13 +36,13 @@ contract LotteryFactory is AbstractFactory {
     LotteryConfig config;
   }
 
-  event LotteryDeployed(address addr, LotteryArgs args);
+  event LotteryDeployed(address account, uint256 externalId, LotteryArgs args);
 
   function deployLottery(
     Params calldata params,
     LotteryArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashLottery(params, args), signature);
@@ -51,20 +51,20 @@ contract LotteryFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(
+    account = deploy2(
       params.bytecode,
       abi.encodeWithSelector(bytes4(LOTTERY_CONFIG_TYPEHASH), args.config.timeLagBeforeRelease, args.config.commission),
       params.nonce
     );
-    _lotterys.push(addr);
+    _lotterys.push(account);
 
-    emit LotteryDeployed(addr, args);
+    emit LotteryDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = PAUSER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    fixPermissions(addr, roles);
+    fixPermissions(account, roles);
   }
 
   function _hashLottery(Params calldata params, LotteryArgs calldata args) internal view returns (bytes32) {

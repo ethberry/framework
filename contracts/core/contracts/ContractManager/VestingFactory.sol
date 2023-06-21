@@ -15,7 +15,7 @@ import "./AbstractFactory.sol";
  */
 contract VestingFactory is AbstractFactory {
   bytes private constant VESTING_ARGUMENTS_SIGNATURE =
-    "VestingArgs(address account,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
+    "VestingArgs(address beneficiary,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
   bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(VESTING_ARGUMENTS_SIGNATURE);
 
   bytes32 private immutable VESTING_PERMIT_SIGNATURE =
@@ -26,13 +26,13 @@ contract VestingFactory is AbstractFactory {
 
   // Structure representing Vesting template and arguments
   struct VestingArgs {
-    address account;
+    address beneficiary;
     uint64 startTimestamp; // in sec
     uint16 cliffInMonth; // in sec
     uint16 monthlyRelease;
   }
 
-  event VestingDeployed(address addr, VestingArgs args);
+  event VestingDeployed(address account, uint256 externalId, VestingArgs args);
 
   /**
    * @dev Deploys a vesting contract with the specified arguments.
@@ -40,13 +40,13 @@ contract VestingFactory is AbstractFactory {
    * @param params struct containing bytecode and nonce.
    * @param args The arguments for the vesting contract deployment.
    * @param signature The signature provided to verify the transaction.
-   * @return addr address of the deployed vesting contract
+   * @return account address of the deployed vesting contract
    */
   function deployVesting(
     Params calldata params,
     VestingArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     // Check that the transaction with the same nonce was not executed yet
     _checkNonce(params.nonce);
 
@@ -58,16 +58,16 @@ contract VestingFactory is AbstractFactory {
     }
 
     // Deploy the contract
-    addr = deploy2(
+    account = deploy2(
       params.bytecode,
-      abi.encode(args.account, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
+      abi.encode(args.beneficiary, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
       params.nonce
     );
     // add deployed address to the list of vesting contracts
-    _vesting.push(addr);
+    _vesting.push(account);
 
     // Notify our server about successful deployment
-    emit VestingDeployed(addr, args);
+    emit VestingDeployed(account, params.externalId, args);
   }
 
   /**
@@ -95,7 +95,7 @@ contract VestingFactory is AbstractFactory {
       keccak256(
         abi.encode(
           VESTING_ARGUMENTS_TYPEHASH,
-          args.account,
+          args.beneficiary,
           args.startTimestamp,
           args.cliffInMonth,
           args.monthlyRelease

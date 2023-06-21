@@ -6,6 +6,7 @@ import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
+import { UserModule } from "../../infrastructure/user/user.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";
 import { Erc20TokenLogModule } from "../tokens/erc20/token/log/log.module";
 import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
@@ -19,8 +20,6 @@ import { TokenModule } from "../hierarchy/token/token.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
 import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
-import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
-import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { StakingLogModule } from "../mechanics/staking/log/log.module";
 import { EventHistoryModule } from "../event-history/event-history.module";
@@ -29,6 +28,8 @@ import { RaffleLogModule } from "../mechanics/raffle/log/log.module";
 import { LotteryLogModule } from "../mechanics/lottery/log/log.module";
 import { Erc721TokenRandomLogModule } from "../tokens/erc721/token/log-random/log.module";
 import { Erc998TokenRandomLogModule } from "../tokens/erc998/token/log-random/log.module";
+import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
+import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { Erc998TokenRandomLogModule } from "../tokens/erc998/token/log-random/lo
     GradeModule,
     RentModule,
     BalanceModule,
+    UserModule,
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],

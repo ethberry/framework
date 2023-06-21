@@ -26,13 +26,13 @@ contract ERC20Factory is AbstractFactory {
     string contractTemplate;
   }
 
-  event ERC20TokenDeployed(address addr, Erc20Args args);
+  event ERC20TokenDeployed(address account, uint256 externalId, Erc20Args args);
 
   function deployERC20Token(
     Params calldata params,
     Erc20Args calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC20(params, args), signature);
@@ -41,18 +41,18 @@ contract ERC20Factory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.cap), params.nonce);
-    _erc20_tokens.push(addr);
+    account = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.cap), params.nonce);
+    _erc20_tokens.push(account);
 
-    emit ERC20TokenDeployed(addr, args);
+    emit ERC20TokenDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](3);
     roles[0] = MINTER_ROLE;
     roles[1] = SNAPSHOT_ROLE;
     roles[2] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashERC20(Params calldata params, Erc20Args calldata args) internal view returns (bytes32) {

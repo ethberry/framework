@@ -5,7 +5,7 @@ import { ZeroAddress } from "ethers";
 import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { cap, contractTemplate } from "../constants";
+import { cap, contractTemplate, externalId } from "../constants";
 
 describe("ERC20Factory", function () {
   const factory = () => deployContract(this.title);
@@ -14,7 +14,7 @@ describe("ERC20Factory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC20Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -36,6 +36,7 @@ describe("ERC20Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc20Args: [
             { name: "name", type: "string" },
@@ -48,7 +49,8 @@ describe("ERC20Factory", function () {
         {
           params: {
             nonce,
-            bytecode: erc20Factory.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -62,7 +64,8 @@ describe("ERC20Factory", function () {
       const tx = await contractInstance.deployERC20Token(
         {
           nonce,
-          bytecode: erc20Factory.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,
@@ -77,7 +80,7 @@ describe("ERC20Factory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "ERC20TokenDeployed")
-        .withArgs(address, [tokenName, tokenSymbol, cap, contractTemplate]);
+        .withArgs(address, externalId, [tokenName, tokenSymbol, cap, contractTemplate]);
 
       const erc20Instance = await ethers.getContractAt("ERC20Simple", address);
 
@@ -97,7 +100,7 @@ describe("ERC20Factory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc20 = await ethers.getContractFactory("ERC20Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC20Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -119,6 +122,7 @@ describe("ERC20Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc20Args: [
             { name: "name", type: "string" },
@@ -131,7 +135,8 @@ describe("ERC20Factory", function () {
         {
           params: {
             nonce,
-            bytecode: erc20.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -147,7 +152,8 @@ describe("ERC20Factory", function () {
       const tx = contractInstance.deployERC20Token(
         {
           nonce,
-          bytecode: erc20.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,

@@ -107,8 +107,10 @@ export class NotificatorService {
   }
 
   // MODULE:GRADE
-  public grade(data: IGradeData): void {
-    this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
+  public grade(data: IGradeData): Promise<any> {
+    return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.UPGRADE, data).toPromise();
+    });
   }
 
   // MODULE:GENES

@@ -27,13 +27,13 @@ contract ERC721Factory is AbstractFactory {
     string contractTemplate;
   }
 
-  event ERC721TokenDeployed(address addr, Erc721Args args);
+  event ERC721TokenDeployed(address account, uint256 externalId, Erc721Args args);
 
   function deployERC721Token(
     Params calldata params,
     Erc721Args calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC721(params, args), signature);
@@ -42,18 +42,22 @@ contract ERC721Factory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
-    _erc721_tokens.push(addr);
+    account = deploy2(
+      params.bytecode,
+      abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
+      params.nonce
+    );
+    _erc721_tokens.push(account);
 
-    emit ERC721TokenDeployed(addr, args);
+    emit ERC721TokenDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    grantFactoryMetadataPermission(addr);
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    grantFactoryMetadataPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashERC721(Params calldata params, Erc721Args calldata args) internal view returns (bytes32) {

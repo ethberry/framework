@@ -30,9 +30,9 @@ export interface ICollectionDeployedEventArgs {
 }
 
 export interface IContractManagerCollectionDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: ICollectionDeployedEventArgs;
-  owner: string;
 }
 
 // struct VestingArgs {
@@ -43,13 +43,15 @@ export interface IContractManagerCollectionDeployedEvent {
 // }
 
 export interface IVestingDeployedEventArgs {
-  account: string;
+  beneficiary: string;
   startTimestamp: string;
-  duration: string;
-  contractTemplate: string;
+  cliffInMonth: number;
+  monthlyRelease: number;
 }
+
 export interface IContractManagerVestingDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IVestingDeployedEventArgs;
 }
 
@@ -69,7 +71,8 @@ export interface IMysteryTokenDeployedEventArgs {
 }
 
 export interface IContractManagerMysteryTokenDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IMysteryTokenDeployedEventArgs;
 }
 
@@ -86,7 +89,8 @@ export interface IERC20TokenDeployedEventArgs {
   contractTemplate: string;
 }
 export interface IContractManagerERC20TokenDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IERC20TokenDeployedEventArgs;
 }
 
@@ -105,7 +109,8 @@ export interface IERC721TokenDeployedEventArgs {
   contractTemplate: string;
 }
 export interface IContractManagerERC721TokenDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IERC721TokenDeployedEventArgs;
 }
 
@@ -117,7 +122,8 @@ export interface IERC998TokenDeployedEventArgs {
   contractTemplate: string;
 }
 export interface IContractManagerERC998TokenDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IERC998TokenDeployedEventArgs;
 }
 
@@ -133,8 +139,8 @@ export interface IERC1155TokenDeployedEventArgs {
 }
 
 export interface IContractManagerERC1155TokenDeployedEvent {
-  royalty: string;
-  addr: string;
+  account: string;
+  externalId: number;
   args: IERC1155TokenDeployedEventArgs;
 }
 
@@ -150,7 +156,8 @@ export interface IPyramidDeployedEventArgs {
 }
 
 export interface IContractManagerPyramidDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IPyramidDeployedEventArgs;
 }
 
@@ -160,7 +167,8 @@ export interface IStakingDeployedEventArgs {
 }
 
 export interface IContractManagerStakingDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: IStakingDeployedEventArgs;
 }
 
@@ -179,17 +187,24 @@ export interface ILotteryDeployedEventArgs {
 }
 
 export interface IContractManagerLotteryDeployedEvent {
-  addr: string;
+  account: string;
+  externalId: number;
   args: ILotteryDeployedEventArgs;
+}
+
+export interface IRaffleConfig {
+  timeLagBeforeRelease: string;
+  commission: string;
 }
 
 export interface IRaffleDeployedEventArgs {
-  config: ILotteryConfig;
+  config: IRaffleConfig;
 }
 
 export interface IContractManagerRaffleDeployedEvent {
-  addr: string;
-  args: ILotteryDeployedEventArgs;
+  account: string;
+  externalId: number;
+  args: IRaffleDeployedEventArgs;
 }
 
 export type TContractManagerEventData =

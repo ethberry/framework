@@ -26,7 +26,14 @@ export class ContractService {
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
     // filter out contract without templates
-    queryBuilder.leftJoin("contract.templates", "template", "template IS NOT NULL");
+    queryBuilder.andWhereExists(
+      // https://github.com/typeorm/typeorm/issues/2815
+      this.contractEntityRepository
+        .createQueryBuilder("c")
+        .select()
+        .innerJoinAndSelect("c.templates", "template", "template.id IS NOT NULL")
+        .where("c.id = contract.id"),
+    );
 
     queryBuilder.select();
 
@@ -36,7 +43,8 @@ export class ContractService {
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
     });
-    // do not display external contracts as there is no wat to mint tokens from it
+
+    // do not display external contracts as there is no way to mint tokens from it
     queryBuilder.andWhere("NOT(:contractFeature = ANY(contract.contractFeatures))", {
       contractFeature: ContractFeatures.EXTERNAL,
     });

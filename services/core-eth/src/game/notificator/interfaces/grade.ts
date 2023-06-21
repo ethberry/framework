@@ -1,8 +1,7 @@
-import { GradeAttribute } from "@framework/types";
+import { IGrade } from "@framework/types";
 
 export interface IGradeData {
-  account: string;
-  tokenId: string;
-  gradeType: GradeAttribute;
+  grade: IGrade;
+  address: string;
   transactionHash: string;
 }

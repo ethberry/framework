@@ -43,7 +43,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
             grade.price?.components.sort(sorter("id")).map(component => ({
               tokenType: Object.values(TokenType).indexOf(component.tokenType),
               token: component.contract!.address,
-              tokenId: component.template!.tokens![0].tokenId,
+              tokenId: component.templateId || 0,
               amount: getMultiplier(level, component.amount, grade),
             })) || [];
 

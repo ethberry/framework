@@ -28,13 +28,13 @@ contract CollectionFactory is AbstractFactory {
     string contractTemplate;
   }
 
-  event CollectionDeployed(address addr, CollectionArgs args, address owner);
+  event CollectionDeployed(address account, uint256 externalId, CollectionArgs args);
 
   function deployCollection(
     Params calldata params,
     CollectionArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashCollection(params, args), signature);
@@ -43,22 +43,22 @@ contract CollectionFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(
+    account = deploy2(
       params.bytecode,
       abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI, args.batchSize, _msgSender()),
       params.nonce
     );
-    _erc721c_token.push(addr);
+    _erc721c_token.push(account);
 
-    emit CollectionDeployed(addr, args, _msgSender());
+    emit CollectionDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    grantFactoryMetadataPermission(addr);
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    grantFactoryMetadataPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashCollection(Params calldata params, CollectionArgs calldata args) internal view returns (bytes32) {

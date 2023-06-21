@@ -5,6 +5,7 @@ import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { getContractName, isEqualArray } from "../utils";
+import { externalId } from "../constants";
 
 describe("RaffleFactory", function () {
   const factory = () => deployContract(this.title);
@@ -13,7 +14,7 @@ describe("RaffleFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const raffle = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+      const { bytecode } = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -35,6 +36,7 @@ describe("RaffleFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
           RaffleConfig: [
@@ -46,7 +48,8 @@ describe("RaffleFactory", function () {
         {
           params: {
             nonce,
-            bytecode: raffle.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             config: {
@@ -60,7 +63,8 @@ describe("RaffleFactory", function () {
       const tx = await contractInstance.deployRaffle(
         {
           nonce,
-          bytecode: raffle.bytecode,
+          bytecode,
+          externalId,
         },
         {
           config: {
@@ -75,13 +79,13 @@ describe("RaffleFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "RaffleDeployed")
-        .withArgs(address, isEqualArray(["100", "30"]));
+        .withArgs(address, externalId, isEqualArray(["100", "30"]));
     });
 
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const raffle = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
+      const { bytecode } = await ethers.getContractFactory(getContractName("RaffleRandom", network.name));
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -103,6 +107,7 @@ describe("RaffleFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
           RaffleConfig: [
@@ -114,7 +119,8 @@ describe("RaffleFactory", function () {
         {
           params: {
             nonce,
-            bytecode: raffle.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             config: {
@@ -130,7 +136,8 @@ describe("RaffleFactory", function () {
       const tx = contractInstance.deployRaffle(
         {
           nonce,
-          bytecode: raffle.bytecode,
+          bytecode,
+          externalId,
         },
         {
           config: {

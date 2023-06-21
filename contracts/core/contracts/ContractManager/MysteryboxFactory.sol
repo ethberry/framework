@@ -27,13 +27,13 @@ contract MysteryboxFactory is AbstractFactory {
     string contractTemplate;
   }
 
-  event MysteryboxDeployed(address addr, MysteryArgs args);
+  event MysteryboxDeployed(address account, uint256 externalId, MysteryArgs args);
 
   function deployMysterybox(
     Params calldata params,
     MysteryArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashMysterybox(params, args), signature);
@@ -42,19 +42,23 @@ contract MysteryboxFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
-    _mysterybox_tokens.push(addr);
+    account = deploy2(
+      params.bytecode,
+      abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
+      params.nonce
+    );
+    _mysterybox_tokens.push(account);
 
-    emit MysteryboxDeployed(addr, args);
+    emit MysteryboxDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    grantFactoryMetadataPermission(addr);
-    fixPermissions(addr, roles);
-    addFactory(addr, MINTER_ROLE);
+    grantFactoryMintPermission(account);
+    grantFactoryMetadataPermission(account);
+    fixPermissions(account, roles);
+    addFactory(account, MINTER_ROLE);
   }
 
   function _hashMysterybox(Params calldata params, MysteryArgs calldata args) internal view returns (bytes32) {

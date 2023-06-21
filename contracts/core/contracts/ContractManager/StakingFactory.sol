@@ -22,13 +22,13 @@ contract StakingFactory is AbstractFactory {
     string contractTemplate;
   }
 
-  event StakingDeployed(address addr, StakingArgs args);
+  event StakingDeployed(address account, uint256 externalId, StakingArgs args);
 
   function deployStaking(
     Params calldata params,
     StakingArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashStaking(params, args), signature);
@@ -37,10 +37,10 @@ contract StakingFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, "", params.nonce);
-    _staking.push(addr);
+    account = deploy2(params.bytecode, "", params.nonce);
+    _staking.push(account);
 
-    emit StakingDeployed(addr, args);
+    emit StakingDeployed(account, params.externalId, args);
   }
 
   function _hashStaking(Params calldata params, StakingArgs calldata args) internal view returns (bytes32) {

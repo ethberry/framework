@@ -12,7 +12,7 @@ import {
 } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate, templateId, tokenId } from "../constants";
+import { contractTemplate, externalId, templateId, tokenId } from "../constants";
 
 describe("ERC998Factory", function () {
   const factory = () => deployContract(this.title);
@@ -21,7 +21,7 @@ describe("ERC998Factory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc998Factory = await ethers.getContractFactory("ERC998Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC998Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -43,6 +43,7 @@ describe("ERC998Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc998Args: [
             { name: "name", type: "string" },
@@ -56,7 +57,8 @@ describe("ERC998Factory", function () {
         {
           params: {
             nonce,
-            bytecode: erc998Factory.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -71,7 +73,8 @@ describe("ERC998Factory", function () {
       const tx = await contractInstance.deployERC998Token(
         {
           nonce,
-          bytecode: erc998Factory.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,
@@ -87,7 +90,7 @@ describe("ERC998Factory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "ERC998TokenDeployed")
-        .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
+        .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc998Instance = await ethers.getContractAt("ERC998Simple", address);
 
@@ -110,7 +113,7 @@ describe("ERC998Factory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc998 = await ethers.getContractFactory("ERC998Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC998Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -132,6 +135,7 @@ describe("ERC998Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc998Args: [
             { name: "name", type: "string" },
@@ -145,7 +149,8 @@ describe("ERC998Factory", function () {
         {
           params: {
             nonce,
-            bytecode: erc998.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -162,7 +167,8 @@ describe("ERC998Factory", function () {
       const tx = contractInstance.deployERC998Token(
         {
           nonce,
-          bytecode: erc998.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,

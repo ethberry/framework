@@ -25,13 +25,13 @@ contract PyramidFactory is AbstractFactory {
     string contractTemplate;
   }
 
-  event PyramidDeployed(address addr, PyramidArgs args);
+  event PyramidDeployed(address account, uint256 externalId, PyramidArgs args);
 
   function deployPyramid(
     Params calldata params,
     PyramidArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashPyramid(params, args), signature);
@@ -40,16 +40,16 @@ contract PyramidFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.payees, args.shares), params.nonce);
-    _pyramid_tokens.push(addr);
+    account = deploy2(params.bytecode, abi.encode(args.payees, args.shares), params.nonce);
+    _pyramid_tokens.push(account);
 
-    emit PyramidDeployed(addr, args);
+    emit PyramidDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = PAUSER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    fixPermissions(addr, roles);
+    fixPermissions(account, roles);
   }
 
   function _hashPyramid(Params calldata params, PyramidArgs calldata args) internal view returns (bytes32) {
