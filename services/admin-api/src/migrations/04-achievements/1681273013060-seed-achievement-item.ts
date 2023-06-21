@@ -16,139 +16,139 @@ export class SeedAchievementItem1681273013060 implements MigrationInterface {
       ) VALUES (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301020,
+        10301020,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301030,
+        10301030,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         1,
-        1301010,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        1,
-        2,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         2,
-        1301010,
+        10301010,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1,
+        2,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         1,
         3,
-        1301010,
+        10301010,
         '${currentDateTime}',
         '${currentDateTime}'
       );

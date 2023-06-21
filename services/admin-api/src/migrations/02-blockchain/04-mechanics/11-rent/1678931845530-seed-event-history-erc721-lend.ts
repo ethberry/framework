@@ -35,7 +35,14 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
           expires: 1700000000,
           externalId: 1,
           item: [[2, erc721ContractSimpleAddress, "1030101", "1"]],
-          price: [[1, erc20TokenSimpleAddress, "1020101", WeiPerEther.toString()]],
+          price: [
+            {
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
+            },
+          ],
         })}',
         null,
         '${subDays(now, 9).toISOString()}',
@@ -77,7 +84,14 @@ export class SeedEventHistoryErc721LendAt1678931845530 implements MigrationInter
           expires: 1700000000,
           externalId: 2,
           item: [[2, erc721ContractSimpleAddress, "1030101", "2"]],
-          price: [[1, erc20TokenSimpleAddress, "1020101", WeiPerEther.toString()]],
+          price: [
+            {
+              tokenType: 1,
+              token: erc20TokenSimpleAddress,
+              tokenId: "1020101",
+              amount: WeiPerEther.toString(),
+            },
+          ],
         })}',
         null,
         '${subDays(now, 5).toISOString()}',

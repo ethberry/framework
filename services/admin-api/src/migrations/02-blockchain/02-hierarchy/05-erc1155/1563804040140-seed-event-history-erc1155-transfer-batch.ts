@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash } from "ethers";
+import { ZeroHash, ZeroAddress } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationInterface {
+export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -19,74 +19,86 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         created_at,
         updated_at
       ) VALUES (
-        10300001,
-        '${erc721ContractSimpleAddress}',
+        10500201,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[0],
           to: wallets[1],
-          tokenId: "1",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300002,
-        '${erc721ContractSimpleAddress}',
+        10500202,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[0],
           to: wallets[2],
-          tokenId: "2",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300003,
-        '${erc721ContractSimpleAddress}',
+        10500203,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[1],
           to: wallets[0],
-          tokenId: "3",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300004,
-        '${erc721ContractSimpleAddress}',
+        10500204,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[1],
           to: wallets[2],
-          tokenId: "4",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300005,
-        '${erc721ContractSimpleAddress}',
+        10500205,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[2],
           to: wallets[0],
-          tokenId: "5",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300006,
-        '${erc721ContractSimpleAddress}',
+        10500206,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferBatch',
         '${JSON.stringify({
+          operator: ZeroAddress,
           from: wallets[2],
           to: wallets[1],
-          tokenId: "6",
+          id: ["105010201", "105010301"],
+          value: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -9,9 +9,12 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 export enum ContractEventType {
   WaitListRewardClaimed = "WaitListRewardClaimed",
   Claim = "Claim",
+  Purchase = "Purchase",
   PurchaseRaffle = "PurchaseRaffle",
   PurchaseLottery = "PurchaseLottery",
-  Transfer = "Transfer", // ERC20,ERC721
+  Transfer = "Transfer", // ERC20,ERC721,ERC998
+  TransferSingle = "TransferSingle", // ERC1155
+  TransferBatch = "TransferBatch", // ERC1155
 }
 
 export interface IEventSearchDto extends IPaginationDto {

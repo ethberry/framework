@@ -4,9 +4,9 @@ import { ZeroHash } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationInterface {
+export class SeedEventHistoryErc998TransferAt1563804040130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
+    const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -19,8 +19,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         created_at,
         updated_at
       ) VALUES (
-        10300001,
-        '${erc721ContractSimpleAddress}',
+        10400001,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -31,8 +31,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300002,
-        '${erc721ContractSimpleAddress}',
+        10400002,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -43,8 +43,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300003,
-        '${erc721ContractSimpleAddress}',
+        10400003,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -55,8 +55,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300004,
-        '${erc721ContractSimpleAddress}',
+        10400004,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -67,8 +67,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300005,
-        '${erc721ContractSimpleAddress}',
+        10400005,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -79,8 +79,8 @@ export class SeedEventHistoryErc721TransferAt1563804040130 implements MigrationI
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10300006,
-        '${erc721ContractSimpleAddress}',
+        10400006,
+        '${erc998ContractSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({

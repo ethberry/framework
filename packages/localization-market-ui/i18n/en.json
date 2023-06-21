@@ -211,6 +211,8 @@
       "PaymentReceived": "PaymentReceived",
       "PaymentReleased": "PaymentReleased",
       "Purchase": "Purchase",
+      "PurchaseLottery": "PurchaseLottery",
+      "PurchaseRaffle": "PurchaseRaffle",
       "RandomWordsRequested": "RandomWordsRequested",
       "RandomnessRequest": "RandomnessRequest",
       "RandomnessRequestId": "RandomnessRequestId",

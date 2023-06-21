@@ -5,11 +5,12 @@ import { subDays } from "date-fns";
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationInterface {
+export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_RANDOM_ADDR || wallet;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
 
     const now = new Date();
     const currentDateTime = now.toISOString();
@@ -25,18 +26,18 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         created_at,
         updated_at
       ) VALUES (
-        10301010,
+        10501010,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "1030101",
+          externalId: "1050101",
           item: {
-            tokenType: 2,
-            token: erc721ContractSimpleAddress,
-            tokenId: "1030101",
-            amount: "1",
+            tokenType: 3,
+            token: erc1155ContractSimpleAddress,
+            tokenId: "1050101",
+            amount: "1000",
           },
           price: [
             {
@@ -51,20 +52,22 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301011,
-        '${erc721ContractSimpleAddress}',
+        10501011,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferSingle',
         '${JSON.stringify({
+          operator: exchangeAddress,
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103010101",
+          id: "105010101",
+          value: "1000",
         })}',
-        10301010,
+        10501010,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301012,
+        10501012,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -73,22 +76,22 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        10301010,
+        10501010,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301020,
+        10501020,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "1030101",
+          externalId: "1050102",
           item: {
-            tokenType: 2,
-            token: erc721ContractSimpleAddress,
-            tokenId: "1030101",
-            amount: "1",
+            tokenType: 3,
+            token: erc1155ContractSimpleAddress,
+            tokenId: "1050102",
+            amount: "1000",
           },
           price: [
             {
@@ -103,20 +106,22 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301021,
-        '${erc721ContractSimpleAddress}',
+        10501021,
+        '${erc1155ContractSimpleAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferSingle',
         '${JSON.stringify({
+          operator: exchangeAddress,
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103010201",
+          id: "105010201",
+          value: "1000",
         })}',
-        10301020,
+        10501020,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301022,
+        10501022,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -125,22 +130,22 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        10301020,
+        10501020,
         '${subDays(now, 9).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301030,
+        10501030,
         '${exchangeAddress}',
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
           from: wallets[0],
-          externalId: "1030101",
+          externalId: "105040",
           item: {
-            tokenType: 2,
-            token: erc721ContractSimpleAddress,
-            tokenId: "1030101",
-            amount: "1",
+            tokenType: 3,
+            token: erc1155ContractBlacklistAddress,
+            tokenId: "105040101",
+            amount: "1000",
           },
           price: [
             {
@@ -155,20 +160,22 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301031,
-        '${erc721ContractSimpleAddress}',
+        10501031,
+        '${erc1155ContractBlacklistAddress}',
         '${ZeroHash}',
-        'Transfer',
+        'TransferSingle',
         '${JSON.stringify({
+          operator: exchangeAddress,
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "103010301",
+          id: "105040101",
+          value: "1000",
         })}',
-        10301030,
+        10501030,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
-        10301032,
+        10501032,
         '${erc20TokenSimpleAddress}',
         '${ZeroHash}',
         'Transfer',
@@ -177,7 +184,7 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
           to: exchangeAddress,
           value: WeiPerEther.toString(),
         })}',
-        10301030,
+        10501030,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       );
