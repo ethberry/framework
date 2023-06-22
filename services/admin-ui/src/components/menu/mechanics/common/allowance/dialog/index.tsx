@@ -3,8 +3,8 @@ import { FC } from "react";
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
-import { ContractInput } from "./contract-input";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {
@@ -36,7 +36,19 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       showDebug={true}
       {...rest}
     >
-      <ContractInput />
+      <CommonContractInput
+        name="contractId"
+        controller="contracts"
+        data={{ contractType: [TokenType.ERC20] }}
+        onChangeOptions={[
+          { name: "contractId", optionName: "id", defaultValue: 0 },
+          { name: "contract.address", optionName: "address", defaultValue: "0x" },
+          { name: "contract.contractType", optionName: "contractType", defaultValue: "0x" },
+          { name: "contract.decimals", optionName: "decimals", defaultValue: 0 },
+        ]}
+        autoselect
+        multiple
+      />
       <AmountInput />
     </FormDialog>
   );

@@ -4,10 +4,10 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenStatus, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, TokenStatus, TokenType } from "@framework/types";
 
+import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
-import { ContractInput } from "./contract-input";
 
 interface IMarketplaceRaritySearchFormProps {
   onSubmit: (values: IMarketplaceSupplySearchDto) => Promise<any>;
@@ -42,7 +42,16 @@ export const MarketplaceRaritySearchForm: FC<IMarketplaceRaritySearchFormProps> 
             <SelectInput name="tokenStatus" options={TokenStatus} />
           </Grid>
           <Grid item xs={6}>
-            <ContractInput />
+            <CommonContractInput
+              name="contractIds"
+              controller="contracts"
+              data={{
+                contractStatus: [ContractStatus.ACTIVE],
+                contractFeatures: [ContractFeatures.RANDOM],
+              }}
+              multiple
+              useTokenType
+            />
           </Grid>
           <Grid item xs={6}>
             <TemplateInput />

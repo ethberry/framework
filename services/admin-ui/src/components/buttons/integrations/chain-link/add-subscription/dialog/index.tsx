@@ -1,10 +1,11 @@
 import { FC } from "react";
 
+import { ContractFeatures } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { validationSchema } from "./validation";
-import { VrfConsumerInput } from "./contract-input";
 
 export interface IChainLinkVrfSubscriptionDDto {
   subscriptionId: string;
@@ -29,7 +30,16 @@ export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> 
       testId="VrfConsumerForm"
       {...rest}
     >
-      <VrfConsumerInput />
+      <CommonContractInput
+        name="contractId"
+        controller="contracts"
+        data={{ contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
+        onChangeOptions={[
+          { name: "contractId", optionName: "id", defaultValue: 0 },
+          { name: "address", optionName: "address", defaultValue: "0x" },
+        ]}
+        autoselect
+      />
       <TextInput name="subscriptionId" />
     </FormDialog>
   );
