@@ -1,7 +1,6 @@
 import { shouldBehaveLikeAccessControl, shouldSupportsInterface } from "@gemunion/contracts-mocha";
 import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { shouldBehaveLikeERC721Metadata } from "@gemunion/contracts-erc721e";
 
 import { FrameworkInterfaceId } from "../constants";
 import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
@@ -16,7 +15,6 @@ describe("ERC721BlacklistUpgradeable", function () {
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
   shouldBehaveLikeBlackList(factory);
   shouldBehaveLikeERC721Blacklist(factory);
-  shouldBehaveLikeERC721Metadata(factory);
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
   shouldBehaveLikeUpgradeable(factory);

@@ -1,8 +1,9 @@
-import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
+import { toUtf8Bytes, WeiPerEther, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 
 import { nonce } from "@gemunion/contracts-constants";
 
 import { getNumbers } from "./utils";
+import { TokenMetadata } from "@framework/types";
 
 export const tokenId = 1n;
 export const tokenIds = [1];
@@ -34,6 +35,16 @@ export const params = {
 };
 
 export const contractTemplate = "SIMPLE";
+
+// toUtf8String(stripZerosLeft(tokenAttribute))
+export const tokenAttributes = {
+  LEVEL: zeroPadValue(toUtf8Bytes(TokenMetadata.LEVEL), 32),
+  RARITY: zeroPadValue(toUtf8Bytes(TokenMetadata.RARITY), 32),
+  GENES: zeroPadValue(toUtf8Bytes(TokenMetadata.GENES), 32),
+  TRAITS: zeroPadValue(toUtf8Bytes(TokenMetadata.TRAITS), 32),
+  TEMPLATE_ID: zeroPadValue(toUtf8Bytes(TokenMetadata.TEMPLATE_ID), 32),
+};
+
 export const subscriptionId = 1;
 
 export enum FrameworkInterfaceId {

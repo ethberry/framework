@@ -7,7 +7,7 @@ import { ICreateListenerPayload } from "../../../../../common/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class Erc721TokenLogService {
+export class Erc721LogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,

@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, toUtf8String, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
@@ -154,18 +154,18 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
-      args: { tokenId, grade },
+      args: { tokenId, attribute, value },
     } = event;
     const { address } = context;
 
-    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc721TokenEntity.metadata, { GRADE: grade.toString() });
+    Object.assign(erc721TokenEntity.metadata, { [toUtf8String(attribute)]: value });
     await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);

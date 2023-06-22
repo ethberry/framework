@@ -113,6 +113,7 @@ export class ContractService {
     } = dto;
     const where = {
       chainId: userEntity.chainId,
+      merchantId: userEntity.merchantId,
     };
 
     if (contractType.length) {

@@ -12,9 +12,11 @@ export enum TokenStatus {
 
 export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
+  LEVEL = "LEVEL",
   GRADE = "GRADE",
   RARITY = "RARITY",
   TRAITS = "TRAITS",
+  GENES = "GENES",
   ROUND = "ROUND",
   NUMBERS = "NUMBERS",
 }

@@ -30,13 +30,9 @@ abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721Black
     string memory baseTokenURI
   ) ERC721BlacklistUpgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address account,
-    uint256 templateId
-  ) public override(ERC721BlacklistUpgradeable) onlyRole(MINTER_ROLE) {
+  function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
-    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, 0);
   }
 
@@ -51,13 +47,19 @@ abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721Black
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    if (attribute == TEMPLATE_ID || attribute == RARITY) {
+      revert ProtectedAttribute(attribute);
+    }
+    return _upgrade(tokenId, attribute);
+  }
+
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];

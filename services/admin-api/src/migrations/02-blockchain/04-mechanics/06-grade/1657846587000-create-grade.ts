@@ -13,8 +13,9 @@ export class CreateGrade1657846587000 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.grade_attribute_enum AS ENUM (
-        'GRADE'
+      CREATE TYPE ${ns}.grade_status_enum AS ENUM (
+        'ACTIVE',
+        'INACTIVE'
       );
     `);
 
@@ -31,9 +32,13 @@ export class CreateGrade1657846587000 implements MigrationInterface {
           type: `${ns}.grade_strategy_enum`,
         },
         {
+          name: "grade_status",
+          type: `${ns}.grade_status_enum`,
+          default: "'ACTIVE'",
+        },
+        {
           name: "attribute",
-          type: `${ns}.grade_attribute_enum`,
-          default: "'GRADE'",
+          type: "varchar",
         },
         {
           name: "price_id",
@@ -45,7 +50,7 @@ export class CreateGrade1657846587000 implements MigrationInterface {
         },
         {
           name: "growth_rate",
-          type: "float",
+          type: "int",
           default: 0,
         },
         {

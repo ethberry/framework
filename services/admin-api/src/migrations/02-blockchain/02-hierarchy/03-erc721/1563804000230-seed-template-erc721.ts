@@ -91,6 +91,8 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         101030905
       ), (
+        101038001
+      ), (
         201030101
       );
     `);
@@ -598,6 +600,18 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         1,
         'ACTIVE',
         10309,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1038001,
+        'Trousers',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fcuisses.png?alt=media&token=21705e71-3fcf-4615-968c-dfcbbaf32ccb',
+        101038001,
+        0,
+        1,
+        'ACTIVE',
+        10380,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

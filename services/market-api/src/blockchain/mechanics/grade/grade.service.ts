@@ -1,19 +1,19 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ZeroAddress, randomBytes, encodeBytes32String, hexlify } from "ethers";
+import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeAttribute, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
+import { ContractFeatures, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
-import { ISearchGradeDto, ISignGradeDto } from "./interfaces";
-import { GradeEntity } from "./grade.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../common/utils/sorter";
+import type { IAutocompleteGradeDto, ISearchGradeDto, ISignGradeDto } from "./interfaces";
+import { GradeEntity } from "./grade.entity";
 
 @Injectable()
 export class GradeService {
@@ -105,7 +105,7 @@ export class GradeService {
         externalId: gradeEntity.id,
         expiresAt,
         referrer,
-        extra: encodeBytes32String("0x"),
+        extra: zeroPadValue(toUtf8Bytes(attribute), 32),
       },
       attribute,
       tokenEntity,
@@ -118,7 +118,7 @@ export class GradeService {
   public async getSignature(
     account: string,
     params: IParams,
-    attribute: GradeAttribute,
+    attribute: string,
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
@@ -136,7 +136,7 @@ export class GradeService {
       gradeEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
+        tokenId: (component.templateId || 0).toString(),
         amount: this.getMultiplier(level, component.amount, gradeEntity).toString(),
       })),
     );
@@ -154,5 +154,20 @@ export class GradeService {
     } else {
       throw new BadRequestException("unknownStrategy");
     }
+  }
+
+  public autocomplete(where: IAutocompleteGradeDto): Promise<Array<GradeEntity>> {
+    return this.gradeEntityRepository.find({
+      where,
+      join: {
+        alias: "grade",
+        leftJoinAndSelect: {
+          price: "grade.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_template: "price_components.template",
+        },
+      },
+    });
   }
 }

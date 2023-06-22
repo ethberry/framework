@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
@@ -7,19 +7,21 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ContractFeatures, GradeAttribute, IGrade, IToken, TokenType } from "@framework/types";
+import { ContractFeatures, IGrade, IToken, TokenType } from "@framework/types";
 
 import UpgradeABI from "../../../../abis/mechanics/grade/upgrade.abi.json";
 import { sorter } from "../../../../utils/sorter";
 import { getEthPrice, getMultiplier } from "./utils";
+import { IUpgradeDto, UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
   token: IToken;
-  attribute: GradeAttribute;
 }
 
 export const GradeButton: FC<IUpgradeButtonProps> = props => {
-  const { token, attribute } = props;
+  const { token } = props;
+
+  const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
   const api = useApi();
   const { account } = useWeb3React();
@@ -27,17 +29,17 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   const { contractFeatures } = token.template!.contract!;
 
   const metaFnWithSign = useServerSignature(
-    (_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+    (values: IUpgradeDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       return api
         .fetchJson({
           url: `/grade`,
           data: {
             tokenId: token.id,
-            attribute,
+            attribute: values.attribute,
           },
         })
         .then((grade: IGrade) => {
-          const level = token.metadata[attribute];
+          const level = token.metadata[values.attribute];
 
           const price =
             grade.price?.components.sort(sorter("id")).map(component => ({
@@ -54,7 +56,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
               externalId: grade.id,
               expiresAt: sign.expiresAt,
               referrer: constants.AddressZero,
-              extra: utils.formatBytes32String("0x"),
+              extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
             },
             {
               tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType),
@@ -73,24 +75,34 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     // { error: false },
   );
 
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IUpgradeDto, web3Context: Web3ContextType) => {
     return metaFnWithSign(
       {
         url: "/grade/sign",
         method: "POST",
         data: {
           tokenId: token.id,
-          attribute,
+          attribute: values.attribute,
           account,
         },
       },
-      null,
+      values,
       web3Context,
     );
   });
 
-  const handleLevelUp = async () => {
-    await metaFn();
+  const handleUpgrade = (): void => {
+    setIsUpgradeDialogOpen(true);
+  };
+
+  const handleUpgradeConfirm = async (dto: IUpgradeDto): Promise<void> => {
+    await metaFn(dto).then(() => {
+      setIsUpgradeDialogOpen(false);
+    });
+  };
+
+  const handleUpgradeCancel = (): void => {
+    setIsUpgradeDialogOpen(false);
   };
 
   if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
@@ -98,8 +110,19 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
   }
 
   return (
-    <Button onClick={handleLevelUp} data-testid="ExchangeUpgradeButton">
-      <FormattedMessage id={`form.buttons.${attribute as string}`} />
-    </Button>
+    <Fragment>
+      <Button onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
+        <FormattedMessage id={`form.buttons.upgrade`} />
+      </Button>
+      <UpgradeDialog
+        onCancel={handleUpgradeCancel}
+        onConfirm={handleUpgradeConfirm}
+        open={isUpgradeDialogOpen}
+        initialValues={{
+          attribute: "",
+          contractId: token.template!.contractId,
+        }}
+      />
+    </Fragment>
   );
 };

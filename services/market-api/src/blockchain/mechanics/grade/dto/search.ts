@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min } from "class-validator";
+import { IsInt, IsString, Matches, MaxLength, Min } from "class-validator";
 import { Type } from "class-transformer";
-
-import { GradeAttribute } from "@framework/types";
 
 import { ISearchGradeDto } from "../interfaces";
 
@@ -15,9 +13,9 @@ export class SearchGradeDto implements ISearchGradeDto {
   @Type(() => Number)
   public tokenId: number;
 
-  @ApiProperty({
-    enum: GradeAttribute,
-  })
-  @IsEnum(GradeAttribute, { message: "badInput" })
-  public attribute: GradeAttribute;
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @MaxLength(32, { message: "rangeOverflow" })
+  @Matches(/^[0-9A-Z]+$/, { message: "patternMismatch" })
+  public attribute: string;
 }

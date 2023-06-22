@@ -13,7 +13,7 @@ import {
 } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { contractTemplate } from "../../constants";
+import { contractTemplate, externalId } from "../../constants";
 import { ContractManager, ERC721Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc721(
@@ -22,7 +22,7 @@ export async function factoryDeployErc721(
 ): Promise<ERC721Simple> {
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
-  const erc721Factory = await ethers.getContractFactory("ERC721Simple");
+  const { bytecode } = await ethers.getContractFactory("ERC721Simple");
 
   const verifyingContract = await factoryInstance.getAddress();
   const exchangeAddress = await exchangeInstance.getAddress();
@@ -44,6 +44,7 @@ export async function factoryDeployErc721(
       Params: [
         { name: "nonce", type: "bytes32" },
         { name: "bytecode", type: "bytes" },
+        { name: "externalId", type: "uint256" },
       ],
       Erc721Args: [
         { name: "name", type: "string" },
@@ -57,7 +58,8 @@ export async function factoryDeployErc721(
     {
       params: {
         nonce,
-        bytecode: erc721Factory.bytecode,
+        bytecode,
+        externalId,
       },
       args: {
         name: tokenName,
@@ -72,7 +74,8 @@ export async function factoryDeployErc721(
   const tx = await factoryInstance.deployERC721Token(
     {
       nonce,
-      bytecode: erc721Factory.bytecode,
+      bytecode,
+      externalId,
     },
     {
       name: tokenName,
@@ -92,7 +95,7 @@ export async function factoryDeployErc721(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC721TokenDeployed")
-    .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
+    .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
   const erc721Instance = await ethers.getContractAt("ERC721Simple", address);
 

@@ -130,6 +130,25 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        10280,
+        '${erc20TokenSimpleAddress}',
+        '${chainId}',
+        'Warp Credits',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'Warp Credits',
+        'GEM20',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{}',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

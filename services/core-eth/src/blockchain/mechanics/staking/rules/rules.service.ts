@@ -41,7 +41,7 @@ export class StakingRulesService {
   }
 
   public async createEmptyAsset(): Promise<AssetEntity> {
-    return await this.assetService.create({
+    return this.assetService.create({
       components: [],
     });
   }

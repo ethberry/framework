@@ -22,6 +22,9 @@ error WrongAmount();
 error RefProgramSet();
 error WrongArrayLength();
 
+// random
+error ProtectedAttribute(bytes32 attribute);
+
 // staking
 error WrongToken();
 error WrongStake();

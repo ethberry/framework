@@ -168,7 +168,7 @@ export class AchievementRuleService {
     });
     await this.assetService.update(itemEntity, item);
 
-    return await this.achievementRuleEntityRepository.create({ ...rest, item: itemEntity }).save();
+    return this.achievementRuleEntityRepository.create({ ...rest, item: itemEntity }).save();
   }
 
   // public async update(

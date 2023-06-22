@@ -1,15 +1,26 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create } from "@mui/icons-material";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Add, Create } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IPaginationDto } from "@gemunion/types-collection";
-import type { IContract, IGrade } from "@framework/types";
+import type { IGrade } from "@framework/types";
+import { GradeStrategy } from "@framework/types";
 
-import { GradeEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
+import { GradeEditDialog } from "./edit";
 
 export const Grade: FC = () => {
   const {
@@ -19,6 +30,7 @@ export const Grade: FC = () => {
     selected,
     isLoading,
     isEditDialogOpen,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -26,25 +38,38 @@ export const Grade: FC = () => {
   } = useCollection<IGrade, IPaginationDto>({
     baseUrl: "/grades",
     empty: {
+      contractId: 0,
+      attribute: "",
+      gradeStrategy: GradeStrategy.FLAT,
       growthRate: 0,
       price: emptyPrice,
-      contract: {
-        title: "",
-      } as IContract,
     },
-    filter: ({ gradeStrategy, growthRate, price, attribute }) => ({
-      gradeStrategy,
-      growthRate,
-      attribute,
-      price: cleanUpAsset(price),
-    }),
+    filter: ({ id, contractId, attribute, gradeStatus, gradeStrategy, growthRate, price }) =>
+      id
+        ? {
+            gradeStatus,
+            gradeStrategy,
+            growthRate,
+            price: cleanUpAsset(price),
+          }
+        : {
+            contractId,
+            attribute,
+            gradeStrategy,
+            growthRate,
+            price: cleanUpAsset(price),
+          },
   });
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "grade"]} />
 
-      <PageHeader message="pages.grade.title" />
+      <PageHeader message="pages.grade.title">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

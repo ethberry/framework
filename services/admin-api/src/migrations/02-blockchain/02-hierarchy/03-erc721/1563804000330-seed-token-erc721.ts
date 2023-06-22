@@ -60,7 +60,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050101, -- Cuirass
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030501",
-          [TokenMetadata.GRADE]: "1",
+          [TokenMetadata.LEVEL]: "1",
         })}',
         null,
         100,
@@ -73,7 +73,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050201, -- Helmet
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030502",
-          [TokenMetadata.GRADE]: "5",
+          [TokenMetadata.LEVEL]: "5",
         })}',
         null,
         100,
@@ -86,7 +86,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050301, -- Cuisses
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030503",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
         })}',
         null,
         100,
@@ -99,7 +99,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050401, -- Gauntlets
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030504",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
         })}',
         null,
         100,
@@ -112,7 +112,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050501, -- Sabatons
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030505",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
         })}',
         null,
         100,
@@ -125,7 +125,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103050601, -- Shield
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030506",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
         })}',
         null,
         100,
@@ -138,7 +138,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103060101, -- Sword
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030601",
-          [TokenMetadata.GRADE]: "1",
+          [TokenMetadata.LEVEL]: "1",
           [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
         })}',
         null,
@@ -152,7 +152,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
          103060102, -- Sword
          '${JSON.stringify({
            [TokenMetadata.TEMPLATE_ID]: "1030601",
-           [TokenMetadata.GRADE]: "10",
+           [TokenMetadata.LEVEL]: "10",
            [TokenMetadata.RARITY]: "0", // TokenRarity.COMMON
          })}',
          null,
@@ -166,7 +166,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103060201, -- Mace
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030602",
-          [TokenMetadata.GRADE]: "5",
+          [TokenMetadata.LEVEL]: "5",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         null,
@@ -180,7 +180,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103060301, -- Axe
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030603",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
           [TokenMetadata.RARITY]: "2", // TokenRarity.RARE
         })}',
         null,
@@ -194,7 +194,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103060401, -- Bow
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030604",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
           [TokenMetadata.RARITY]: "3", // TokenRarity.EPIC
         })}',
         null,
@@ -208,7 +208,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103060501, -- Staff
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030605",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
           [TokenMetadata.RARITY]: "3", // TokenRarity.EPIC
         })}',
         null,
@@ -222,7 +222,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         103061001, -- Mjölnir
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1030610",
-          [TokenMetadata.GRADE]: "10",
+          [TokenMetadata.LEVEL]: "10",
           [TokenMetadata.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
         null,
@@ -306,6 +306,19 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         'MINTED',
         1030902,
         '${subDays(now, 2).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        103800101, -- Cuisses
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1038001",
+          [TokenMetadata.LEVEL]: "7",
+        })}',
+        null,
+        100,
+        '103800101',
+        'MINTED',
+        1038001,
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         203010101, -- bep

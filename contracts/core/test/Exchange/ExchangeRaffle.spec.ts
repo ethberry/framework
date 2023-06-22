@@ -6,7 +6,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
-import { getContractName, isEqualEventArgArrObj } from "../utils";
+import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { expiresAt, extra } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 
@@ -106,14 +106,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
@@ -136,7 +134,7 @@ describe("ExchangeRaffle", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -203,6 +201,7 @@ describe("ExchangeRaffle", function () {
             },
           ],
         });
+
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
@@ -212,14 +211,12 @@ describe("ExchangeRaffle", function () {
             extra,
           },
           [],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 
@@ -315,14 +312,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 
@@ -382,14 +377,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
@@ -484,14 +477,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         // event PurchaseRaffle(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
@@ -513,7 +504,7 @@ describe("ExchangeRaffle", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -544,14 +535,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
@@ -646,14 +635,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
@@ -748,14 +735,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 

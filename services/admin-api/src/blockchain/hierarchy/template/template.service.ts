@@ -209,12 +209,10 @@ export class TemplateService {
 
     await this.assetService.update(assetEntity, price);
 
-    return await this.templateEntityRepository
-      .create({
-        ...dto,
-        price: assetEntity,
-      })
-      .save();
+    return this.create({
+      ...dto,
+      price: assetEntity,
+    });
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {

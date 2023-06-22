@@ -6,15 +6,11 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
 import "./ERC998Simple.sol";
 
 contract ERC998Blacklist is ERC998Simple, BlackList {
-  using Counters for Counters.Counter;
-
   constructor(
     string memory name,
     string memory symbol,

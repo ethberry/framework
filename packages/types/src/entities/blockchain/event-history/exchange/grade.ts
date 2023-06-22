@@ -1,8 +1,9 @@
 import { IAssetItem } from "./common";
 
 export interface IExchangeGradeEvent {
-  from: string;
+  account: string;
   externalId: string;
+  attribute: string;
   item: IAssetItem;
   price: Array<IAssetItem>;
 }

@@ -6,7 +6,7 @@ import { blockAwait } from "@gemunion/contracts-utils";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { cap, contractTemplate } from "../../constants";
+import { cap, contractTemplate, externalId } from "../../constants";
 import { ContractManager, ERC20Simple, Exchange } from "../../../typechain-types";
 
 export async function factoryDeployErc20(
@@ -15,7 +15,7 @@ export async function factoryDeployErc20(
 ): Promise<ERC20Simple> {
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
-  const erc20Factory = await ethers.getContractFactory("ERC20Simple");
+  const { bytecode } = await ethers.getContractFactory("ERC20Simple");
   const nonce = encodeBytes32String("nonce1");
 
   const verifyingContract = await factoryInstance.getAddress();
@@ -38,6 +38,7 @@ export async function factoryDeployErc20(
       Params: [
         { name: "nonce", type: "bytes32" },
         { name: "bytecode", type: "bytes" },
+        { name: "externalId", type: "uint256" },
       ],
       Erc20Args: [
         { name: "name", type: "string" },
@@ -50,7 +51,8 @@ export async function factoryDeployErc20(
     {
       params: {
         nonce,
-        bytecode: erc20Factory.bytecode,
+        bytecode,
+        externalId,
       },
       args: {
         name: tokenName,
@@ -64,7 +66,8 @@ export async function factoryDeployErc20(
   const tx = await factoryInstance.deployERC20Token(
     {
       nonce,
-      bytecode: erc20Factory.bytecode,
+      bytecode,
+      externalId,
     },
     {
       name: tokenName,
@@ -83,7 +86,7 @@ export async function factoryDeployErc20(
 
   await expect(tx)
     .to.emit(factoryInstance, "ERC20TokenDeployed")
-    .withArgs(address, [tokenName, tokenSymbol, cap, contractTemplate]);
+    .withArgs(address, externalId, [tokenName, tokenSymbol, cap, contractTemplate]);
 
   const erc20Instance = await ethers.getContractAt("ERC20Simple", address);
 

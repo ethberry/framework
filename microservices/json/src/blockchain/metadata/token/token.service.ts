@@ -65,12 +65,6 @@ export class MetadataTokenService {
             value: Object.values(TokenRarity)[~~value],
           });
           break;
-        case TokenMetadata.GRADE:
-          memo.push({
-            trait_type: key,
-            value,
-          });
-          break;
         // MODULE:DND
         // MODULE:BREEDING
         // MODULE:COLLECTION
@@ -83,7 +77,13 @@ export class MetadataTokenService {
           });
           break;
         case TokenMetadata.TEMPLATE_ID:
+          break;
+        // custom metadata
         default:
+          memo.push({
+            trait_type: key,
+            value,
+          });
           break;
       }
 

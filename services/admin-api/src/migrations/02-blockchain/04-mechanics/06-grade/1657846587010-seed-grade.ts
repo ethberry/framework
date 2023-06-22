@@ -14,9 +14,11 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       ), (
         50102
       ), (
-        50201
+        50103
       ), (
-        50202
+        50104
+      ), (
+        50105
       );
     `);
 
@@ -31,7 +33,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         updated_at
       ) VALUES (
         'FLAT',
-        'GRADE',
+        'LEVEL',
         0,
         50101,
         10305,
@@ -39,7 +41,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
-        'GRADE',
+        'LEVEL',
         0,
         50102,
         10306,
@@ -47,18 +49,26 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'LINEAR',
-        'GRADE',
+        'LEVEL',
         1,
-        50201,
+        50103,
         10405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'EXPONENTIAL',
-        'GRADE',
+        'LINEAR',
+        'LEVEL',
         1,
-        50202,
+        50104,
         10406, -- hero
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'LINEAR',
+        'LEVEL',
+        1,
+        50105,
+        10380, -- under armour
         '${currentDateTime}',
         '${currentDateTime}'
       );

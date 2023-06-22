@@ -65,7 +65,7 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "GRADE": {
+    "LEVEL": {
       "1": "1",
       "10": "10",
       "2": "2",
@@ -96,7 +96,7 @@
       "MARKETPLACE": "Marketplace"
     },
     "attributeName": {
-      "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
     },
@@ -356,6 +356,10 @@
       "STRENGTH": "Strength",
       "WISDOM": "Wisdom"
     },
+    "gradeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
       "FLAT": "Flat",
@@ -558,7 +562,7 @@
     "labels": {
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
-      "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -622,6 +626,7 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
+      "gradeStatus": "Status",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",

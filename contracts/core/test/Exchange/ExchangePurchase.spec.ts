@@ -234,7 +234,7 @@ describe("ExchangePurchaseV2", function () {
         expect(eventsRnd[0].args.to).to.equal(receiver.address);
 
         const metadata = await erc721Instance.getTokenMetadata(tokenId);
-        expect(metadata.length).to.equal(2);
+        expect(metadata.length).to.equal(3);
 
         const balance = await erc721Instance.balanceOf(receiver.address);
         expect(balance).to.equal(1);

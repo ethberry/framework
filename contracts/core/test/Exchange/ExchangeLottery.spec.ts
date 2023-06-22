@@ -6,7 +6,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
-import { getContractName, isEqualEventArgArrObj } from "../utils";
+import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { expiresAt, extra, params } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 
@@ -102,14 +102,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
         // event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
@@ -132,7 +130,7 @@ describe("ExchangeLottery", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -209,14 +207,12 @@ describe("ExchangeLottery", function () {
             extra,
           },
           [],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
 
@@ -312,14 +308,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
 
@@ -379,14 +373,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
         await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
@@ -481,14 +473,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
         // event PurchaseLottery(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
@@ -510,7 +500,7 @@ describe("ExchangeLottery", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -542,14 +532,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
         await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
@@ -644,14 +632,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
         await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
@@ -746,14 +732,12 @@ describe("ExchangeLottery", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121n,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121n,
+            amount,
+          },
           signature,
         );
 

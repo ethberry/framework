@@ -13,8 +13,9 @@ import "../utils/constants.sol";
 import "../Mechanics/Traits/TraitsDnD.sol";
 import "./interfaces/IERC721Random.sol";
 import "./ERC721Simple.sol";
+import "../Mechanics/Rarity/Rarity.sol";
 
-abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD {
+abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD, Rarity {
   using Counters for Counters.Counter;
   using SafeCast for uint;
 
@@ -49,19 +50,17 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD {
   }
 
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
     Request memory request = _queue[requestId];
+    uint256 tokenId = _tokenIdTracker.current();
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    uint256 traits = encodeData(request, randomWords[0]);
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, TRAITS, traits);
+    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
+    _upsertRecordField(tokenId, TRAITS, encodeData(request, randomWords[0]));
 
     delete _queue[requestId];
-    _safeMint(request.account, tokenId);
+
+    _mintCommon(request.account, request.templateId);
   }
 
   function decodeData(uint256 externalId) internal pure returns (uint256 childId, uint256 matronId, uint256 sireId) {

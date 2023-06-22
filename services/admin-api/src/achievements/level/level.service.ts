@@ -100,7 +100,7 @@ export class AchievementLevelService {
     });
     await this.assetService.update(itemEntity, item);
 
-    return await this.achievementLevelEntityRepository
+    return this.achievementLevelEntityRepository
       .create({
         ...dto,
         parameters,

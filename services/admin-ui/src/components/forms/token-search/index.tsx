@@ -29,7 +29,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
     metadata: Object.assign(
       {
         [TokenMetadata.RARITY]: [],
-        [TokenMetadata.GRADE]: [],
+        [TokenMetadata.LEVEL]: [],
       },
       metadata,
     ),
@@ -65,7 +65,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
               </Grid>
               <Grid item xs={6}>
                 <SelectInput
-                  name={`metadata.${TokenMetadata.GRADE}`}
+                  name={`metadata.${TokenMetadata.LEVEL}`}
                   options={new Array(10)
                     .fill(null)
                     .reduce((memo: Record<string, string>, value, i) => Object.assign(memo, { [i + 1]: i + 1 }), {})}

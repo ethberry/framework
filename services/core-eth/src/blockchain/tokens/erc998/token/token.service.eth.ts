@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, toUtf8String, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -52,7 +52,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
-    const { address, transactionHash } = context;
+    const { address } = context;
 
     // Mint token create
     if (from === ZeroAddress) {
@@ -341,18 +341,18 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
-      args: { tokenId, grade },
+      args: { tokenId, attribute, value },
     } = event;
     const { address } = context;
 
-    const erc998TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc998TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc998TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc998TokenEntity.metadata, { GRADE: grade.toString() });
+    Object.assign(erc998TokenEntity.metadata, { [toUtf8String(attribute)]: value });
     await erc998TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);

@@ -27,7 +27,7 @@ export class LotteryRoundService {
   }
 
   public async createEmptyPrice(): Promise<AssetEntity> {
-    return await this.assetService.create({
+    return this.assetService.create({
       components: [],
     });
   }

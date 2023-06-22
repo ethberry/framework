@@ -134,7 +134,7 @@ export class AchievementsRuleService {
                     // if Rule.Asset condition met - create achievementsItem
                     if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
                       if (asset.templateId === item.templateId || !asset.templateId) {
-                        return await this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                        return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
                       } else {
                         return void 0;
                       }
@@ -149,7 +149,7 @@ export class AchievementsRuleService {
               }
             } else {
               // Rule condition met - create achievementsItem
-              return await this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+              return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
             }
           });
         }

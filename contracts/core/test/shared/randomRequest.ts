@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { hexlify, randomBytes } from "ethers";
+import { toBeHex } from "ethers";
 
 import { VRFCoordinatorMock } from "../../typechain-types";
 
@@ -12,7 +12,8 @@ export async function randomRequest(rndInstance: any, vrfInstance: VRFCoordinato
     } = e;
 
     const blockNum = await ethers.provider.getBlockNumber();
-    await vrfInstance.fulfillRandomWords(requestId, keyHash, hexlify(randomBytes(32)), {
+    // ATTENTION: 32 is not random, fixed number is needed to test RARITY
+    await vrfInstance.fulfillRandomWords(requestId, keyHash, toBeHex(32), {
       blockNum,
       subId,
       callbackGasLimit,

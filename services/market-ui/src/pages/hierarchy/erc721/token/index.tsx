@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, GradeAttribute, TokenMetadata, TokenRarity } from "@framework/types";
+import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
 
 import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
@@ -81,10 +81,10 @@ export const Erc721Token: FC = () => {
               <Typography>
                 <FormattedMessage
                   id="pages.erc721.token.level"
-                  values={{ level: selected.metadata[TokenMetadata.GRADE] }}
+                  values={{ level: selected.metadata[TokenMetadata.LEVEL] }}
                 />
               </Typography>
-              <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
+              <GradeButton token={selected} />
             </StyledPaper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (

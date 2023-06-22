@@ -15,7 +15,7 @@ import "../ERC721/interfaces/IERC721Upgradeable.sol";
 contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
   using Counters for Counters.Counter;
 
-  event LevelUp(address from, uint256 tokenId, uint256 grade);
+  event LevelUp(address account, uint256 tokenId, bytes32 attribute, uint256 value);
 
   constructor(
     string memory name,
@@ -33,16 +33,23 @@ contract ERC998BlacklistUpgradeable is IERC721Upgradeable, ERC998Blacklist {
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 0);
 
     _safeMint(to, tokenId);
   }
 
-  function upgrade(uint256 tokenId) external virtual onlyRole(METADATA_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    if (attribute == TEMPLATE_ID) {
+      revert ProtectedAttribute(attribute);
+    }
+
+    return _upgrade(tokenId, attribute);
+  }
+
+  function _upgrade(uint256 tokenId, bytes32 attribute) public virtual returns (bool) {
     _requireMinted(tokenId);
-    uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    _upsertRecordField(tokenId, GRADE, grade + 1);
-    emit LevelUp(_msgSender(), tokenId, grade + 1);
+    uint256 value = isRecordFieldKey(tokenId, attribute) ? getRecordFieldValue(tokenId, attribute) : 0;
+    _upsertRecordField(tokenId, attribute, value + 1);
+    emit LevelUp(_msgSender(), tokenId, attribute, value + 1);
     emit MetadataUpdate(tokenId);
     return true;
   }

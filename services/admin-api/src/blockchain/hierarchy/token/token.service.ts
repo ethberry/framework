@@ -10,6 +10,7 @@ import {
   TokenRarity,
   TokenType,
 } from "@framework/types";
+import { ns } from "@framework/constants";
 
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -71,14 +72,14 @@ export class TokenService {
       }
     }
 
-    const grade = metadata[TokenMetadata.GRADE];
-    if (grade) {
-      if (grade.length === 1) {
-        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' = :grade`, {
-          grade: grade[0],
+    const level = metadata[TokenMetadata.LEVEL];
+    if (level) {
+      if (level.length === 1) {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' = :level`, {
+          level: level[0],
         });
       } else {
-        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' IN(:...grade)`, { grade });
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' IN(:...level)`, { level });
       }
     }
 
@@ -195,5 +196,17 @@ export class TokenService {
 
   public count(where: FindOptionsWhere<TokenEntity>): Promise<number> {
     return this.tokenEntityRepository.count({ where });
+  }
+
+  public updateAttributes(contractId: number, attribute: string, value: string): Promise<any> {
+    const queryString = `
+      UPDATE ${ns}.token
+      SET metadata = jsonb_set(metadata::jsonb, '{${attribute}}', '"${value}"', true)
+      WHERE id IN (SELECT token.id
+                   FROM ${ns}.token
+                            LEFT JOIN ${ns}.template template on template.id = token.template_id
+                            LEFT JOIN ${ns}.contract contract on contract.id = template.contract_id
+                   WHERE contract.id = $1)`;
+    return this.tokenEntityRepository.query(queryString, [contractId]);
   }
 }

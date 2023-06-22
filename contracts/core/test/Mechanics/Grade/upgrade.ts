@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { keccak256, toUtf8Bytes } from "ethers";
+
 import { METADATA_ROLE } from "@gemunion/contracts-constants";
 
-import { templateId, tokenId } from "../../constants";
-import { TokenMetadata } from "@framework/types";
+import { FrameworkInterfaceId, templateId, tokenAttributes, tokenId } from "../../constants";
 
 export function shouldBehaveLikeUpgradeable(factory: () => Promise<any>) {
   describe("upgrade", function () {
@@ -15,16 +14,48 @@ export function shouldBehaveLikeUpgradeable(factory: () => Promise<any>) {
 
       await contractInstance.mintCommon(receiver.address, templateId);
 
-      const tx = contractInstance.upgrade(tokenId);
+      const tx = contractInstance.upgrade(tokenId, tokenAttributes.LEVEL);
       await expect(tx)
         .to.emit(contractInstance, "LevelUp")
-        .withArgs(owner.address, tokenId, 1)
+        .withArgs(owner.address, tokenId, tokenAttributes.LEVEL, 1)
         .to.emit(contractInstance, "MetadataUpdate")
         .withArgs(tokenId);
 
-      const value = await contractInstance.getRecordFieldValue(tokenId, keccak256(toUtf8Bytes(TokenMetadata.GRADE)));
+      const value = await contractInstance.getRecordFieldValue(tokenId, tokenAttributes.LEVEL);
 
       expect(value).to.equal(1);
+    });
+
+    it("should fail: upgrade protected property", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const contractInstance = await factory();
+
+      await contractInstance.mintCommon(receiver.address, templateId);
+
+      const tx = contractInstance.upgrade(tokenId, tokenAttributes.TEMPLATE_ID);
+      await expect(tx)
+        .to.be.revertedWithCustomError(contractInstance, "ProtectedAttribute")
+        .withArgs(tokenAttributes.TEMPLATE_ID);
+
+      const isSupported = await contractInstance.supportsInterface(FrameworkInterfaceId.ERC721Random);
+      if (isSupported) {
+        const tx = contractInstance.upgrade(tokenId, tokenAttributes.RARITY);
+        await expect(tx)
+          .to.be.revertedWithCustomError(contractInstance, "ProtectedAttribute")
+          .withArgs(tokenAttributes.RARITY);
+      }
+    });
+
+    it("should fail: get level for unregistered property", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const contractInstance = await factory();
+
+      await contractInstance.mintCommon(receiver.address, templateId);
+
+      const tx = contractInstance.getRecordFieldValue(tokenId, tokenAttributes.LEVEL);
+      await expect(tx).to.be.revertedWith("GC: field not found");
     });
 
     it("should fail: wrong role", async function () {
@@ -34,7 +65,7 @@ export function shouldBehaveLikeUpgradeable(factory: () => Promise<any>) {
 
       await contractInstance.mintCommon(receiver.address, templateId);
 
-      const tx = contractInstance.connect(receiver).upgrade(tokenId);
+      const tx = contractInstance.connect(receiver).upgrade(tokenId, tokenAttributes.LEVEL);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${METADATA_ROLE}`,
       );

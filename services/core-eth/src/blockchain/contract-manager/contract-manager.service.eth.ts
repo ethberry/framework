@@ -38,8 +38,8 @@ import {
 
 import { UserService } from "../../infrastructure/user/user.service";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
-import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
-import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
+import { Erc721LogService } from "../tokens/erc721/token/log/log.service";
+import { Erc998LogService } from "../tokens/erc998/token/log/log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
@@ -72,9 +72,9 @@ export class ContractManagerServiceEth {
     private readonly eventHistoryService: EventHistoryService,
     private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
-    private readonly erc721LogService: Erc721TokenLogService,
+    private readonly erc721LogService: Erc721LogService,
     private readonly erc721RandomLogService: Erc721TokenRandomLogService,
-    private readonly erc998LogService: Erc998TokenLogService,
+    private readonly erc998LogService: Erc998LogService,
     private readonly erc998RandomLogService: Erc998TokenRandomLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
@@ -181,10 +181,6 @@ export class ContractManagerServiceEth {
         this.ethersSignerProvider,
       );
       this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
-    }
-
-    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
-      await this.gradeService.create({ contract: contractEntity });
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
@@ -328,10 +324,6 @@ export class ContractManagerServiceEth {
       this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
     }
 
-    if (contractEntity.contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
-      await this.gradeService.create({ contract: contractEntity });
-    }
-
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
       await this.templateService.create({
         title: name,
@@ -358,7 +350,6 @@ export class ContractManagerServiceEth {
       });
     }
   }
-  //
 
   public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {

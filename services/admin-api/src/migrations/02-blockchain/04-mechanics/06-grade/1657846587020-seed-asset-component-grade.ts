@@ -29,13 +29,19 @@ export class SeedAssetComponentGrade1657846587020 implements MigrationInterface 
         10501,
         1050101, -- Gold
         '1000',
-        50201
+        50103
       ), (
         'ERC1155',
         10501,
         1050101, -- Gold
         '1000',
-        50202
+        50104
+      ), (
+        'ERC1155',
+        10280,
+        1028001, -- Gold
+        '1000',
+        50105
       );
     `);
   }

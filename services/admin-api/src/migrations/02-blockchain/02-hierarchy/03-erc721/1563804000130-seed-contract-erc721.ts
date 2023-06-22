@@ -201,6 +201,24 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10380,
+        '${erc721ContractUpgradeableAddress}',
+        '${chainId}',
+        'Under Armour (lvl)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Farmour.png?alt=media&token=32650855-c62b-4ca0-b4f6-bfc01f40e53e',
+        'UA',
+        'UA721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{UPGRADEABLE}',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         20301,
         '${wallet}',
         56,
