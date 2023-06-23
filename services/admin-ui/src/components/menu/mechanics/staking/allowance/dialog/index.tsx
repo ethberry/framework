@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -29,6 +29,15 @@ export interface IStakingAllowanceDialogProps {
 export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contract.address", option?.address ?? "0x");
+      form.setValue("contract.contractType", option?.contractType ?? "0x");
+      form.setValue("contract.decimals", option?.decimals ?? 0);
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -42,12 +51,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
       <CommonContractInput
         name="contractId"
         controller="contracts"
-        onChangeOptions={[
-          { name: "contractId", optionName: "id", defaultValue: 0 },
-          { name: "contract.address", optionName: "address", defaultValue: "0x" },
-          { name: "contract.contractType", optionName: "contractType", defaultValue: "0x" },
-          { name: "contract.decimals", optionName: "decimals", defaultValue: 0 },
-        ]}
+        onChange={handleContractChange}
         autoselect
         useTokenType
       />

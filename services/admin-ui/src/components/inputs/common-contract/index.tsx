@@ -16,35 +16,21 @@ export interface ICommonContractInputProps {
     contractModule?: Array<ModuleType>;
     contractFeatures?: Array<ContractFeatures>;
   };
-  onChangeOptions?: Array<{ name: string; optionName: string; defaultValue: string | number }>;
+  onChange?: (form: any) => (_event: ChangeEvent<unknown>, option: any | null) => void;
 }
 
 export const CommonContractInput: FC<ICommonContractInputProps> = props => {
-  const {
-    autoselect,
-    multiple,
-    name,
-    onChangeOptions = [],
-    controller = "contracts",
-    data = {},
-    useTokenType = false,
-  } = props;
+  const { autoselect, multiple, name, onChange, controller = "contracts", data = {}, useTokenType = false } = props;
 
   const form = useFormContext<any>();
   const tokenType = useWatch({ name: "tokenType" });
-
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
-    onChangeOptions?.forEach(({ name, optionName, defaultValue }) => {
-      form.setValue(name, option?.[optionName] ?? defaultValue);
-    });
-  };
 
   return (
     <EntityInput
       name={name}
       controller={controller}
       data={{ ...data, ...(useTokenType ? { contractType: [tokenType] } : {}) }}
-      onChange={onChangeOptions.length ? handleChange : undefined}
+      onChange={onChange?.(form)}
       autoselect={autoselect}
       multiple={multiple}
     />

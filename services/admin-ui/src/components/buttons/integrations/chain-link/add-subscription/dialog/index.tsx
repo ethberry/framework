@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { ContractFeatures } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -22,6 +22,13 @@ export interface IChainLinkSubscriptionDialogProps {
 export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("address", option?.address ?? "0x");
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -34,10 +41,7 @@ export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> 
         name="contractId"
         controller="contracts"
         data={{ contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
-        onChangeOptions={[
-          { name: "contractId", optionName: "id", defaultValue: 0 },
-          { name: "address", optionName: "address", defaultValue: "0x" },
-        ]}
+        onChange={handleContractChange}
         autoselect
       />
       <TextInput name="subscriptionId" />

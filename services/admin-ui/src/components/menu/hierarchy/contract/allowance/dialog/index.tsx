@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { ContractFeatures, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -24,6 +24,13 @@ export interface IAllowanceDialogProps {
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("address", option?.address ?? "0x");
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -36,10 +43,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
         name="contractId"
         controller="contracts"
         data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}
-        onChangeOptions={[
-          { name: "contractId", optionName: "id", defaultValue: 0 },
-          { name: "address", optionName: "address", defaultValue: "0x" },
-        ]}
+        onChange={handleContractChange}
         autoselect
         useTokenType
       />

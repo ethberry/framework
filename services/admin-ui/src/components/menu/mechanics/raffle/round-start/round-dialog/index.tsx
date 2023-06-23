@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { Grid } from "@mui/material";
 
 import { ContractFeatures, IAsset, ModuleType, TokenType } from "@framework/types";
@@ -33,6 +33,13 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
     maxTicket,
   };
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("address", option?.address ?? "0x");
+    };
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -48,10 +55,7 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
           contractModule: [ModuleType.RAFFLE],
           contractFeatures: [ContractFeatures.RANDOM],
         }}
-        onChangeOptions={[
-          { name: "contractId", optionName: "id", defaultValue: 0 },
-          { name: "address", optionName: "address", defaultValue: "0x" },
-        ]}
+        onChange={handleContractChange}
         autoselect
       />
       <Grid container spacing={2}>
