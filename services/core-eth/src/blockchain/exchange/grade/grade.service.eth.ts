@@ -40,16 +40,17 @@ export class ExchangeGradeServiceEth {
     }
 
     const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+
     await this.assetService.saveAssetHistory(
       history,
       // we have to change tokenId to templateId for proper asset history
       [{ tokenType, token, tokenId: tokenEntity.template.id.toString(), amount }],
       price,
     );
+
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
     const gradeEntity = await this.gradeService.findOneWithRelations({ id: Number(externalId) });
-
     if (!gradeEntity) {
       this.loggerService.error("gradeNotFound", tokenEntity.id, attribute, ExchangeGradeServiceEth.name);
       throw new NotFoundException("gradeNotFound");

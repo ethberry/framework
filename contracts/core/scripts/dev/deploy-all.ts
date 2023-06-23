@@ -325,7 +325,7 @@ async function main() {
   await debug(contracts);
 
   const vestingFactory = await ethers.getContractFactory("Vesting");
-  contracts.vestingLinear = await vestingFactory.deploy(wallet, timestamp, 12, 417);
+  contracts.vesting = await vestingFactory.deploy(wallet, timestamp, 12, 417);
   await debug(contracts);
 
   const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");

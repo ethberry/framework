@@ -1,8 +1,7 @@
-import { ethers } from "ethers";
-
-import { MetadataHash } from "@framework/types";
+import { ethers, stripZerosLeft, toUtf8String } from "ethers";
 
 import { blockAwait } from "./blockAwait";
+import { recursivelyDecodeResult } from "./decodeResult";
 
 export const getMetadata = async function (
   tokenId: string,
@@ -13,12 +12,12 @@ export const getMetadata = async function (
   // todo error handling
   const contract = new ethers.Contract(address, abi, provider);
   await blockAwait(1, provider);
-  const tokenMetaData = await contract.getTokenMetadata(tokenId);
+  const tokenMetaData = recursivelyDecodeResult(await contract.getTokenMetadata(tokenId));
 
   return tokenMetaData.reduce(
-    (memo: Record<string, string>, current: { key: keyof typeof MetadataHash; value: string }) =>
+    (memo: Record<string, string>, current: { key: string; value: string }) =>
       Object.assign(memo, {
-        [MetadataHash[current.key]]: BigInt(current.value).toString(),
+        [toUtf8String(stripZerosLeft(current.key))]: current.value,
       }),
     {} as Record<string, string>,
   ) as Record<string, string>;
