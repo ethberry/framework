@@ -58,6 +58,8 @@ import { RaffleLogService } from "../mechanics/raffle/log/log.service";
 import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
 import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
 import { addConsumer } from "../integrations/chain-link/utils";
+import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.service";
+import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -82,7 +84,9 @@ export class ContractManagerServiceEth {
     private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly lotteryLogService: LotteryLogService,
+    private readonly lotteryTicketLogService: LotteryTicketLogService,
     private readonly raffleLogService: RaffleLogService,
+    private readonly raffleTicketLogService: RaffleTicketLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
@@ -141,6 +145,28 @@ export class ContractManagerServiceEth {
     });
   }
 
+  public parseTemplate(contractTemplate: string): {
+    contractFeatures: Array<ContractFeatures>;
+    contractModule: ModuleType;
+  } {
+    switch (Object.values(Erc721ContractTemplates)[Number(contractTemplate)]) {
+      case Erc721ContractTemplates.RAFFLE:
+        return { contractFeatures: [], contractModule: ModuleType.RAFFLE };
+      case Erc721ContractTemplates.LOTTERY:
+        return { contractFeatures: [], contractModule: ModuleType.LOTTERY };
+      default:
+        return {
+          contractFeatures:
+            contractTemplate === "0"
+              ? []
+              : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split(
+                  "_",
+                ) as Array<ContractFeatures>),
+          contractModule: ModuleType.HIERARCHY,
+        };
+    }
+  }
+
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { account, args, externalId },
@@ -152,6 +178,8 @@ export class ContractManagerServiceEth {
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
+    const { contractFeatures, contractModule } = this.parseTemplate(contractTemplate);
+
     const contractEntity = await this.contractService.create({
       address: account.toLowerCase(),
       title: name,
@@ -159,11 +187,9 @@ export class ContractManagerServiceEth {
       symbol,
       description: emptyStateString,
       imageUrl,
-      contractFeatures:
-        contractTemplate === "0"
-          ? []
-          : (Object.values(Erc721ContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+      contractFeatures,
       contractType: TokenType.ERC721,
+      contractModule,
       chainId,
       royalty: Number(royalty),
       baseTokenURI,
@@ -203,6 +229,16 @@ export class ContractManagerServiceEth {
       contractEntity.contractFeatures.includes(ContractFeatures.GENES)
     ) {
       this.erc721RandomLogService.addListener({
+        address: [account.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    } else if (contractEntity.contractModule === ModuleType.LOTTERY) {
+      this.lotteryTicketLogService.addListener({
+        address: [account.toLowerCase()],
+        fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      });
+    } else if (contractEntity.contractModule === ModuleType.RAFFLE) {
+      this.raffleTicketLogService.addListener({
         address: [account.toLowerCase()],
         fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       });

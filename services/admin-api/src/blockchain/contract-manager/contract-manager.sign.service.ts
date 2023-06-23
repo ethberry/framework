@@ -135,6 +135,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc20ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -184,13 +185,14 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
           baseTokenURI: dto.baseTokenURI,
-          royalty: dto.royalty,
+          royalty: BigInt(dto.royalty),
         },
       },
     );

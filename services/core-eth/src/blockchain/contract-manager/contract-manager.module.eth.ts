@@ -30,6 +30,8 @@ import { Erc721TokenRandomLogModule } from "../tokens/erc721/token/log-random/lo
 import { Erc998TokenRandomLogModule } from "../tokens/erc998/token/log-random/log.module";
 import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
+import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module";
+import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
 
 @Module({
   imports: [
@@ -45,7 +47,9 @@ import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
     StakingLogModule,
     PyramidLogModule,
     LotteryLogModule,
+    LotteryTicketLogModule,
     RaffleLogModule,
+    RaffleTicketLogModule,
     ContractManagerLogModule,
     EventHistoryModule,
     VestingModule,
