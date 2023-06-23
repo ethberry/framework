@@ -9,13 +9,13 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "./interfaces/IERC721RaffleTicket.sol";
+import "../../ERC721/extensions/MetaData.sol";
 import "../../utils/errors.sol";
+import "./interfaces/IERC721RaffleTicket.sol";
 
-contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
+contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, MetaData {
   using Counters for Counters.Counter;
 
   mapping(uint256 => TicketRaffle) private _data;

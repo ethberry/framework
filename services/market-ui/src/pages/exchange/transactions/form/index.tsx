@@ -9,6 +9,7 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 export enum ContractEventType {
   WaitListRewardClaimed = "WaitListRewardClaimed",
   Claim = "Claim",
+  Upgrade = "Upgrade",
   Purchase = "Purchase",
   PurchaseRaffle = "PurchaseRaffle",
   PurchaseLottery = "PurchaseLottery",

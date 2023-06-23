@@ -239,6 +239,24 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10480,
+        '${erc998ContractUpgradeableAddress}',
+        '${chainId}',
+        'Anti-Heros (lvl)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=46414a13-c538-49af-a001-b93bd92a922c',
+        'AH',
+        'AH998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{UPGRADEABLE}',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         20401,
         '${wallet}',
         56,

@@ -10,20 +10,23 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        50101
+        102000301
       ), (
-        50102
+        102000302
       ), (
-        50103
+        102000308
       ), (
-        50104
+        102000401
       ), (
-        50105
+        102000402
+      ), (
+        102000408
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.grade (
+        id,
         grade_strategy,
         attribute,
         growth_rate,
@@ -32,43 +35,57 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        10301,
         'FLAT',
         'LEVEL',
         0,
-        50101,
-        10305,
+        102000301,
+        10305, -- Armour
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10302,
         'EXPONENTIAL',
         'LEVEL',
         0,
-        50102,
-        10306,
+        102000302,
+        10306, -- Weapon
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10308,
         'LINEAR',
         'LEVEL',
         1,
-        50103,
-        10405,
+        102000308,
+        10380, -- Under Armour
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10401,
         'LINEAR',
         'LEVEL',
         1,
-        50104,
-        10406, -- hero
+        102000401,
+        10405, -- Spell book
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10402,
         'LINEAR',
         'LEVEL',
         1,
-        50105,
-        10380, -- under armour
+        102000402,
+        10406, -- Heros
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10408,
+        'LINEAR',
+        'LEVEL',
+        1,
+        102000308,
+        10480, -- Anti-heros
         '${currentDateTime}',
         '${currentDateTime}'
       );

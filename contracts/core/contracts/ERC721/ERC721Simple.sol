@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 import "../utils/constants.sol";
 import "../utils/errors.sol";
 import "./interfaces/IERC721Simple.sol";
-import "./extensions/MetaDataGetter.sol";
+import "./extensions/MetaData.sol";
 
 contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, MetaData {
   using Counters for Counters.Counter;

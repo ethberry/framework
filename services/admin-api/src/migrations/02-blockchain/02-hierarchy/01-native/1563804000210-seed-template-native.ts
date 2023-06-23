@@ -46,6 +46,18 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        1010801,
+        'Fake token (BESU)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '${(1000n * WeiPerEther).toString()}',
+        'ACTIVE',
+        10108,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         2010101,
         'Native token (BNB)',
         '${simpleFormatting}',
