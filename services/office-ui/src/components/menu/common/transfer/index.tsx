@@ -85,7 +85,7 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
         onCancel={handleTransferCancel}
         open={isTransferDialogOpen}
         initialValues={{
-          token: getEmptyToken(contractType, id),
+          token: getEmptyToken(contractType!, id),
           address: "",
         }}
       />

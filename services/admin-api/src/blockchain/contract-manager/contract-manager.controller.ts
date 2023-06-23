@@ -85,7 +85,7 @@ export class ContractManagerController {
   // MODULE:MYSTERY
   @Post("/mysterybox")
   public mysterybox(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.mysterybox(dto, userEntity);
+    return this.contractManagerSignService.mystery(dto, userEntity);
   }
 
   // MODULE:VESTING

@@ -5,10 +5,9 @@ import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repo
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, TokenType } from "@framework/types";
 
-import { ContractEntity } from "./contract.entity";
-import { TemplateEntity } from "../template/template.entity";
-import { IContractUpdateDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractEntity } from "./contract.entity";
+import { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -192,7 +191,11 @@ export class ContractService {
     return contractEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
+  public delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     return this.update(where, { contractStatus: ContractStatus.INACTIVE });
+  }
+
+  public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
+    return this.contractEntityRepository.count({ where });
   }
 }

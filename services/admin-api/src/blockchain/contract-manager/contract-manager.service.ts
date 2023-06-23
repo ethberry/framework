@@ -1,10 +1,12 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { ForbiddenException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { IContractManagerSearchDto } from "@framework/types";
+import { IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
+import { RatePlanService } from "../../infrastructure/plan/plan.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 import { IContractManagerCreateDto } from "./interfaces";
 import { ContractManagerEntity } from "./contract-manager.entity";
 
@@ -13,9 +15,10 @@ export class ContractManagerService {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly configService: ConfigService,
     @InjectRepository(ContractManagerEntity)
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
+    private readonly planService: RatePlanService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<IContractManagerSearchDto>): Promise<[Array<ContractManagerEntity>, number]> {
@@ -79,5 +82,22 @@ export class ContractManagerService {
     Object.assign(contractManagerEntity, dto);
 
     return contractManagerEntity.save();
+  }
+
+  public async validateDeployment(
+    userEntity: UserEntity,
+    contractModule: ModuleType,
+    contractType: TokenType | null,
+  ): Promise<void> {
+    const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+
+    const count = await this.contractService.count({
+      contractModule,
+      contractType: contractType || IsNull(),
+    });
+
+    if (count >= limit) {
+      throw new ForbiddenException("rateLimitExceeded");
+    }
   }
 }

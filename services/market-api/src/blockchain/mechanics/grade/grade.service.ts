@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
@@ -8,10 +8,10 @@ import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { ContractFeatures, GradeStatus, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
+import { sorter } from "../../../common/utils/sorter";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
-import { sorter } from "../../../common/utils/sorter";
 import type { IAutocompleteGradeDto, ISearchGradeDto, ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 
@@ -131,7 +131,7 @@ export class GradeService {
       account,
       params,
       {
-        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",

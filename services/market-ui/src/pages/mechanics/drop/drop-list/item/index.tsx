@@ -19,7 +19,7 @@ export const DropItem: FC<IDropItemProps> = props => {
       <CardActionArea
         component={RouterLink}
         // prettier-ignore
-        to={`/${drop.item!.components[0].contract!.contractType.toLowerCase()}-templates/${drop.item!.components[0].templateId || 0}`}
+        to={`/${drop.item!.components[0].contract!.contractType!.toLowerCase()}-templates/${drop.item!.components[0].templateId || 0}`}
       >
         <CardHeader title={drop.item?.components[0]?.template?.title} />
         <CardMedia sx={{ height: 200 }} image={drop.item?.components[0]?.template?.imageUrl} />

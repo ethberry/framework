@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 export interface IAllowanceDto {
   address: string;
   amount: string;
-  contractType: TokenType;
+  contractType: TokenType | null;
   decimals: number;
 }
 

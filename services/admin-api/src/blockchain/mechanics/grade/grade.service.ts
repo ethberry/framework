@@ -6,11 +6,11 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
-import { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
-import { GradeEntity } from "./grade.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { IGradeCreateDto, IGradeUpdateDto } from "./interfaces";
+import { GradeEntity } from "./grade.entity";
 
 @Injectable()
 export class GradeService {

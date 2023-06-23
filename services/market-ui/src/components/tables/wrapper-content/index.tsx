@@ -52,7 +52,7 @@ export const WrapperContent: FC<IWrapperContentProps> = props => {
             <Grid xs={4} item>
               <Link
                 component={RouterLink}
-                to={`/${component.token!.template!.contract!.contractType.toLowerCase()}/tokens/${component.tokenId}`}
+                to={`/${component.token!.template!.contract!.contractType!.toLowerCase()}/tokens/${component.tokenId}`}
               >
                 {component.token!.template!.title}
               </Link>

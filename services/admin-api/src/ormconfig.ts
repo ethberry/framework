@@ -75,6 +75,7 @@ import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
 import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
 
 import {
+  AlterMerchant1687519905550,
   CreateAccessControl1653616447200,
   CreateAccessList1653616447300,
   CreateAchievementItem1681273013050,
@@ -117,6 +118,7 @@ import {
   CreatePyramidDeposit1660436477300,
   CreatePyramidRules1660436477200,
   CreateRaffleRoundAt1685961136110,
+  CreateRatePlan1687519905500,
   CreateReferralRewardAt1660103709900,
   CreateRent1678931845500,
   CreateSettings1563803000010,
@@ -251,7 +253,7 @@ import {
   SeedMysteryboxErc998At1653616447940,
   SeedMysteryboxMixedAt1653616447970,
   SeedOrder1683724062010,
-  SeedPages1563803000220,
+  SeedPage1563803000220,
   SeedParameter1683724061610,
   SeedPhoto1683724061810,
   SeedProduct1683724061410,
@@ -265,6 +267,7 @@ import {
   SeedPyramidRulesErc20At1660436477220,
   SeedPyramidRulesNativeAt1660436477210,
   SeedRaffleRoundAt1685961136120,
+  SeedRatePlan1687519905500,
   SeedReferralRewardAt1660103709910,
   SeedRent1678931845510,
   SeedSettings1563803000020,
@@ -407,7 +410,10 @@ const config: PostgresConnectionOptions = {
     CreateAuth1563803000150,
     CreateOtp1563803000160,
     CreatePage1563803000210,
-    SeedPages1563803000220,
+    SeedPage1563803000220,
+    CreateRatePlan1687519905500,
+    SeedRatePlan1687519905500,
+    AlterMerchant1687519905550,
 
     CreateAsset1563804000100,
 

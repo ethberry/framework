@@ -24,9 +24,11 @@ import {
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  ModuleType,
   MysteryContractTemplates,
   PyramidContractTemplates,
   StakingContractTemplates,
+  TokenType,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -91,6 +93,7 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { ContractManagerService } from "./contract-manager.service";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -98,11 +101,14 @@ export class ContractManagerSignService {
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
+    private readonly contractManagerService: ContractManagerService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc20ContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC20);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -153,6 +159,14 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
 
+    const moduleType =
+      dto.contractTemplate === Erc721ContractTemplates.LOTTERY
+        ? ModuleType.LOTTERY
+        : dto.contractTemplate === Erc721ContractTemplates.RAFFLE
+        ? ModuleType.RAFFLE
+        : ModuleType.HIERARCHY;
+    await this.contractManagerService.validateDeployment(userEntity, moduleType, TokenType.ERC721);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -202,6 +216,8 @@ export class ContractManagerSignService {
   public async erc998Token(dto: IErc998ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc998ContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC998);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -254,6 +270,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc1155ContractTemplates(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC1155);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -298,9 +316,11 @@ export class ContractManagerSignService {
   }
 
   // MODULE:MYSTERY
-  public async mysterybox(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async mystery(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByMysteryContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.MYSTERY, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -355,6 +375,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -405,6 +427,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByPyramidContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PYRAMID, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -452,6 +476,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByStakingContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.STAKING, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -494,6 +520,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByWaitListContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -528,6 +556,8 @@ export class ContractManagerSignService {
   public async raffle(dto: IRaffleContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByRaffleContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.RAFFLE, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -575,6 +605,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByLotteryContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -620,6 +652,8 @@ export class ContractManagerSignService {
   public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByCollectionTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.COLLECTION, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain

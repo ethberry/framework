@@ -38,7 +38,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           extra: utils.formatBytes32String("0x"),
         },
         {
-          tokenType: Object.values(TokenType).indexOf(template.contract!.contractType),
+          tokenType: Object.values(TokenType).indexOf(template.contract!.contractType!),
           token: template.contract?.address,
           tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
           amount: values.amount || 1,

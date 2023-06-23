@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
-import { ArrayOverlap, In, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { testChainId } from "@framework/constants";
 
@@ -214,7 +214,7 @@ export class ContractService {
     if (contractFeatures) {
       // queryBuilder.andWhere("contract.contractFeatures = ANY(:...contractFeatures)", {
       queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", {
-        contractFeatures: contractFeatures,
+        contractFeatures,
       });
     }
 

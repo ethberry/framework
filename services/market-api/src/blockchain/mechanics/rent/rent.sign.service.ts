@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { hexlify, zeroPadValue, toBeHex, randomBytes } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -68,7 +68,7 @@ export class RentSignService {
       account,
       params,
       {
-        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(tokenEntity.template.contract.contractType!),
         token: tokenEntity.template.contract.address,
         tokenId: tokenEntity.tokenId,
         amount: "1", // todo get from DTO? (for 1155)

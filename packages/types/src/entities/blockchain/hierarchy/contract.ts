@@ -185,7 +185,7 @@ export interface IContract extends IDeployable, ISearchable {
   isPaused: boolean;
   fromBlock: number;
   contractStatus: ContractStatus;
-  contractType: TokenType;
+  contractType: TokenType | null;
   contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
   templates: Array<ITemplate>;
