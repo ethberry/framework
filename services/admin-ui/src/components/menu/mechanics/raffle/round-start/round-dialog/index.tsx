@@ -1,14 +1,12 @@
-import { FC } from "react";
-
+import { ChangeEvent, FC } from "react";
 import { Grid } from "@mui/material";
 
+import { ContractFeatures, IAsset, ModuleType, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
-
-import { IAsset, ModuleType, TokenType } from "@framework/types";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
-import { ContractInput } from "./contract-input";
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 
 export interface IRaffleRound {
   address: string;
@@ -35,6 +33,13 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
     maxTicket,
   };
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("address", option?.address ?? "0x");
+    };
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -43,7 +48,15 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
       testId="RaffleRoundStartForm"
       {...rest}
     >
-      <ContractInput />
+      <CommonContractInput
+        name="contractId"
+        data={{
+          contractModule: [ModuleType.RAFFLE],
+          contractFeatures: [ContractFeatures.RANDOM],
+        }}
+        onChange={handleContractChange}
+        autoselect
+      />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TemplateAssetInput

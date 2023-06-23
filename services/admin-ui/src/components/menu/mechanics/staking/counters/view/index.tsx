@@ -106,25 +106,25 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.allUsers" />
               </TableCell>
-              <TableCell align="right">{stakingInfo.userStakes}</TableCell>
+              <TableCell align="right">{stakingInfo?.userStakes}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.allStakes" />
               </TableCell>
-              <TableCell align="right">{stakingInfo.allStakes}</TableCell>
+              <TableCell align="right">{stakingInfo?.allStakes}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.userStakes" />
               </TableCell>
-              <TableCell align="right">{stakingInfo.userStakes}</TableCell>
+              <TableCell align="right">{stakingInfo?.userStakes}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.ruleCounter" />
               </TableCell>
-              <TableCell align="right">{stakingInfo.ruleCounter}</TableCell>
+              <TableCell align="right">{stakingInfo?.ruleCounter}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

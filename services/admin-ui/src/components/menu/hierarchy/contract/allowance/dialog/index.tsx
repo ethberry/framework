@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
-import { ContractInput } from "./contract-input";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {
@@ -24,6 +24,13 @@ export interface IAllowanceDialogProps {
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("address", option?.address ?? "0x");
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -32,7 +39,13 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       testId="AllowanceForm"
       {...rest}
     >
-      <ContractInput />
+      <CommonContractInput
+        name="contractId"
+        data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}
+        onChange={handleContractChange}
+        autoselect
+        withTokenType
+      />
       <AmountInput />
     </FormDialog>
   );
