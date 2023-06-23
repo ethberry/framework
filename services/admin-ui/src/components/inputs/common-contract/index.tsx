@@ -9,7 +9,7 @@ export interface ICommonContractInputProps {
   controller?: string;
   multiple?: boolean;
   autoselect?: boolean;
-  useTokenType?: boolean;
+  withTokenType?: boolean;
   data?: {
     contractType?: Array<TokenType>;
     contractStatus?: Array<ContractStatus>;
@@ -20,7 +20,7 @@ export interface ICommonContractInputProps {
 }
 
 export const CommonContractInput: FC<ICommonContractInputProps> = props => {
-  const { autoselect, multiple, name, onChange, controller = "contracts", data = {}, useTokenType = false } = props;
+  const { autoselect, multiple, name, onChange, controller = "contracts", data = {}, withTokenType = false } = props;
 
   const form = useFormContext<any>();
   const tokenType = useWatch({ name: "tokenType" });
@@ -29,8 +29,8 @@ export const CommonContractInput: FC<ICommonContractInputProps> = props => {
     <EntityInput
       name={name}
       controller={controller}
-      data={{ ...data, ...(useTokenType ? { contractType: [tokenType] } : {}) }}
-      onChange={onChange?.(form)}
+      data={{ ...data, ...(withTokenType ? { contractType: [tokenType] } : {}) }}
+      onChange={onChange ? onChange(form) : undefined}
       autoselect={autoselect}
       multiple={multiple}
     />

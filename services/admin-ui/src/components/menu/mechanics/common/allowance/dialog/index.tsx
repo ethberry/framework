@@ -51,7 +51,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
         data={{ contractType: [TokenType.ERC20] }}
         onChange={handleContractChange}
         autoselect
-        multiple
       />
       <AmountInput />
     </FormDialog>

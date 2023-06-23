@@ -50,7 +50,7 @@ export const MarketplaceRaritySearchForm: FC<IMarketplaceRaritySearchFormProps> 
                 contractFeatures: [ContractFeatures.RANDOM],
               }}
               multiple
-              useTokenType
+              withTokenType
             />
           </Grid>
           <Grid item xs={6}>

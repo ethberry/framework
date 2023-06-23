@@ -53,7 +53,7 @@ export const StakingAllowanceDialog: FC<IStakingAllowanceDialogProps> = props =>
         controller="contracts"
         onChange={handleContractChange}
         autoselect
-        useTokenType
+        withTokenType
       />
       <AmountInput />
     </FormDialog>

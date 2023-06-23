@@ -50,7 +50,7 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
                 contractFeatures: [ContractFeatures.UPGRADEABLE],
               }}
               multiple
-              useTokenType
+              withTokenType
             />
           </Grid>
           <Grid item xs={6}>
