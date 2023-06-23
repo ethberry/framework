@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { RaffleDeployButton } from "../../../../components/buttons";
+import { RaffleContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { RaffleActionsMenu } from "../../../../components/menu/mechanics/raffle";
 import { RaffleEditDialog } from "./edit";
@@ -74,7 +74,7 @@ export const RaffleContracts: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <RaffleDeployButton />
+        <RaffleContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm

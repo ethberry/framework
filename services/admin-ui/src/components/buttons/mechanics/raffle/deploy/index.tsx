@@ -10,13 +10,13 @@ import type { IRaffleConfigDto, IUser } from "@framework/types";
 
 import DeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
-import { RaffleDeployDialog } from "./dialog";
+import { RaffleContractDeployDialog } from "./dialog";
 
-export interface IRaffleDeployButtonProps {
+export interface IRaffleContractDeployButtonProps {
   className?: string;
 }
 
-export const RaffleDeployButton: FC<IRaffleDeployButtonProps> = props => {
+export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = props => {
   const { className } = props;
 
   const user = useUser<IUser>();
@@ -69,7 +69,7 @@ export const RaffleDeployButton: FC<IRaffleDeployButtonProps> = props => {
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <RaffleDeployDialog
+      <RaffleContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

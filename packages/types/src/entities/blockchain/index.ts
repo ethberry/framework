@@ -15,16 +15,22 @@ export * from "./mechanics/claim/claim";
 export * from "./mechanics/craft/craft";
 export * from "./mechanics/drop/drop";
 export * from "./mechanics/grade/grade";
+
 export * from "./mechanics/lottery/leaderboard";
 export * from "./mechanics/lottery/round";
 export * from "./mechanics/lottery/ticket";
+export * from "./mechanics/lottery/token";
+
 export * from "./mechanics/mysterybox/mysterybox";
 export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/rule";
 export * from "./mechanics/pyramid/deposit";
+
 export * from "./mechanics/raffle/leaderboard";
 export * from "./mechanics/raffle/round";
+export * from "./mechanics/raffle/token";
 export * from "./mechanics/raffle/ticket";
+
 export * from "./mechanics/rent/rent";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";

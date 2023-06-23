@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { RafflePurchase } from "./purchase";
 import { RaffleLeaderboard } from "./leaderboard";
-import { RaffleTicketList } from "./ticket-list";
+import { RaffleTokenList } from "./token-list";
 import { WalletWrapper } from "../../wallet-wrapper";
 import { IndexWrapper } from "../../index-wrapper";
 import { RaffleSection } from "../../dashboard/mechanics/raffle";
@@ -27,8 +27,8 @@ export const raffleRoutes: Array<RouteObject> = [
       {
         path: "/raffle/ticket",
         children: [
-          { index: true, element: <RaffleTicketList /> },
-          { path: "/raffle/ticket/:id", element: <RaffleTicketList /> },
+          { index: true, element: <RaffleTokenList /> },
+          { path: "/raffle/ticket/:id", element: <RaffleTokenList /> },
         ],
       },
       { path: "/raffle/leaderboard", element: <RaffleLeaderboard /> },

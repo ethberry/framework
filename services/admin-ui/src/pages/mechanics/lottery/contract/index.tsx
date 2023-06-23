@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { LotteryDeployButton } from "../../../../components/buttons";
+import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { LotteryActionsMenu } from "../../../../components/menu/mechanics/lottery";
 import { LotteryEditDialog } from "./edit";
@@ -74,7 +74,7 @@ export const LotteryContracts: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <LotteryDeployButton />
+        <LotteryContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm

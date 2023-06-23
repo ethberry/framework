@@ -178,7 +178,9 @@
       "GENES": "Genes",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
+      "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
       "RENTABLE": "Rentable",
@@ -1094,7 +1096,10 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Lottery"
+      "title": "Lottery",
+      "tokens": {
+        "title": "Tokens"
+      }
     },
     "marketplace": {
       "chart": {
@@ -1209,7 +1214,10 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Raffle"
+      "title": "Raffle",
+      "tokens": {
+        "title": "Tokens"
+      }
     },
     "rent": {
       "title": "Rent"
@@ -1251,15 +1259,15 @@
       "title": "Vesting"
     },
     "waitlist": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "item": {
         "defaultItemTitle": "{account}",
         "title": "Accounts"
       },
       "list": {
         "title": "Lists"
-      },
-      "contracts": {
-        "title": "Contracts"
       },
       "title": "Waitlist"
     },

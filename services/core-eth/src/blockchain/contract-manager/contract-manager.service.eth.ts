@@ -21,10 +21,10 @@ import type {
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
 import {
+  CollectionContractTemplates,
   ContractFeatures,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
-  Erc721CollectionTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
   IContractManagerLotteryDeployedEvent,
@@ -238,7 +238,9 @@ export class ContractManagerServiceEth {
       contractFeatures:
         contractTemplate === "0"
           ? []
-          : (Object.values(Erc721CollectionTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+          : (Object.values(CollectionContractTemplates)[Number(contractTemplate)].split(
+              "_",
+            ) as Array<ContractFeatures>),
       contractType: TokenType.ERC721,
       contractModule: ModuleType.COLLECTION,
       chainId,

@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, Erc721CollectionFeatures, IContract, IContractSearchDto } from "@framework/types";
+import { CollectionContractFeatures, ContractStatus, IContract, IContractSearchDto } from "@framework/types";
 
 import { CollectionContractDeployButton } from "../../../../components/buttons";
 import { CollectionActionsMenu } from "../../../../components/menu/mechanics/collection";
@@ -84,7 +84,7 @@ export const CollectionContract: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={Erc721CollectionFeatures}
+        contractFeaturesOptions={CollectionContractFeatures}
       />
 
       <ProgressOverlay isLoading={isLoading}>

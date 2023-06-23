@@ -6,16 +6,21 @@ import { IContract, ILotteryConfigDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface ILotteryDeployDialogProps {
+export interface ILotteryContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: ILotteryConfigDto;
 }
 
-export const LotteryDeployDialog: FC<ILotteryDeployDialogProps> = props => {
+export const LotteryContractDeployDialog: FC<ILotteryContractDeployDialogProps> = props => {
   return (
-    <FormDialog message="dialogs.deploy" testId="LotteryDeployForm" validationSchema={validationSchema} {...props}>
+    <FormDialog
+      message="dialogs.deploy"
+      testId="LotteryContractDeployForm"
+      validationSchema={validationSchema}
+      {...props}
+    >
       <NumberInput name="timeLagBeforeRelease" />
       <NumberInput name="commission" />
     </FormDialog>

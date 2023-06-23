@@ -9,9 +9,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
+import { DefaultContractActionsMenu } from "../../../../components/menu/mechanics/default";
 import { WaitListDeployButton } from "../../../../components/buttons";
 import { WaitListEditDialog } from "./edit";
-import { WaitListContractActionsMenu } from "../../../../components/menu/mechanics/waitlist-contract";
 
 export const WaitListContracts: FC = () => {
   const {
@@ -67,7 +67,7 @@ export const WaitListContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <WaitListContractActionsMenu
+                <DefaultContractActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

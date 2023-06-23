@@ -5,9 +5,9 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
+  ICollectionContractDeployDto,
   IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
-  IErc721CollectionDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   ILotteryContractDeployDto,
@@ -19,9 +19,9 @@ import type {
   IWaitListContractDeployDto,
 } from "@framework/types";
 import {
+  CollectionContractTemplates,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
-  Erc721CollectionTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
   MysteryContractTemplates,
@@ -83,8 +83,12 @@ import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/LinearReferralPyramid.sol/LinearReferralPyramid.json";
 
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
+
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/RaffleRandom.sol/RaffleRandom.json";
+import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
+
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/LotteryRandom.sol/LotteryRandom.json";
+import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -187,58 +191,6 @@ export class ContractManagerSignService {
           symbol: dto.symbol,
           baseTokenURI: dto.baseTokenURI,
           royalty: dto.royalty,
-        },
-      },
-    );
-    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
-  public async erc721Collection(dto: IErc721CollectionDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc721CollectionTemplates(dto);
-
-    const signature = await this.signer.signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "CollectionArgs" },
-        ],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-          { name: "externalId", type: "uint256" },
-        ],
-        CollectionArgs: [
-          { name: "name", type: "string" },
-          { name: "symbol", type: "string" },
-          { name: "royalty", type: "uint96" },
-          { name: "baseTokenURI", type: "string" },
-          { name: "batchSize", type: "uint96" },
-          { name: "contractTemplate", type: "string" },
-        ],
-      },
-      // Values
-      {
-        params: {
-          nonce,
-          bytecode,
-          externalId: userEntity.id,
-        },
-        args: {
-          name: dto.name,
-          symbol: dto.symbol,
-          royalty: dto.royalty,
-          baseTokenURI: dto.baseTokenURI,
-          batchSize: dto.batchSize,
-          contractTemplate: Object.values(Erc721CollectionTemplates).indexOf(dto.contractTemplate).toString(),
         },
       },
     );
@@ -662,6 +614,59 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
+  // MODULE:COLLECTION
+  public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const bytecode = this.getBytecodeByCollectionTemplates(dto);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "CollectionArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        CollectionArgs: [
+          { name: "name", type: "string" },
+          { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
+          { name: "batchSize", type: "uint96" },
+          { name: "contractTemplate", type: "string" },
+        ],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          name: dto.name,
+          symbol: dto.symbol,
+          royalty: dto.royalty,
+          baseTokenURI: dto.baseTokenURI,
+          batchSize: dto.batchSize,
+          contractTemplate: Object.values(CollectionContractTemplates).indexOf(dto.contractTemplate).toString(),
+        },
+      },
+    );
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
   public getBytecodeByErc20ContractTemplates(dto: IErc20TokenDeployDto) {
     const { contractTemplate } = dto;
 
@@ -708,6 +713,10 @@ export class ContractManagerSignService {
         return ERC721BlacklistUpgradeableRentableSol.bytecode;
       case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM:
         return ERC721BlacklistUpgradeableRentableRandomSol.bytecode;
+      case Erc721ContractTemplates.RAFFLE:
+        return RaffleTicketSol.bytecode;
+      case Erc721ContractTemplates.LOTTERY:
+        return LotteryTicketSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -789,13 +798,13 @@ export class ContractManagerSignService {
   }
 
   // MODULE:COLLECTION
-  public getBytecodeByErc721CollectionTemplates(dto: IErc721CollectionDeployDto) {
+  public getBytecodeByCollectionTemplates(dto: ICollectionContractDeployDto) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
-      case Erc721CollectionTemplates.SIMPLE:
+      case CollectionContractTemplates.SIMPLE:
         return ERC721CSimpleSol.bytecode;
-      case Erc721CollectionTemplates.BLACKLIST:
+      case CollectionContractTemplates.BLACKLIST:
         return ERC721CBlacklistSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");

@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { LotteryPurchase } from "./purchase";
 import { LotteryLeaderboard } from "./leaderboard";
-import { LotteryTicketList } from "./ticket-list";
+import { LotteryTokenList } from "./token-list";
 import { WalletWrapper } from "../../wallet-wrapper";
 import { IndexWrapper } from "../../index-wrapper";
 import { LotterySection } from "../../dashboard/mechanics/lottery";
@@ -27,8 +27,8 @@ export const lotteryRoutes: Array<RouteObject> = [
       {
         path: "/lottery/ticket",
         children: [
-          { index: true, element: <LotteryTicketList /> },
-          { path: "/lottery/ticket/:id", element: <LotteryTicketList /> },
+          { index: true, element: <LotteryTokenList /> },
+          { path: "/lottery/ticket/:id", element: <LotteryTokenList /> },
         ],
       },
       { path: "/lottery/leaderboard", element: <LotteryLeaderboard /> },

@@ -97,7 +97,7 @@ export class ContractManagerController {
   // MODULE:COLLECTION
   @Post("/erc721collection")
   public collection(@Body() dto: Erc721CollectionDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.erc721Collection(dto, userEntity);
+    return this.contractManagerSignService.collection(dto, userEntity);
   }
 
   // MODULE:STAKING

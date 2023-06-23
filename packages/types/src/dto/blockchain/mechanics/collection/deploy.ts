@@ -1,7 +1,7 @@
-import { Erc721CollectionTemplates } from "../../../../entities";
+import { CollectionContractTemplates } from "../../../../entities";
 
-export interface IErc721CollectionDeployDto {
-  contractTemplate: Erc721CollectionTemplates;
+export interface ICollectionContractDeployDto {
+  contractTemplate: CollectionContractTemplates;
   name: string;
   symbol: string;
   baseTokenURI: string;

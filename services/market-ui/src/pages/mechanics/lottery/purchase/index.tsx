@@ -7,7 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { CronExpression, ILotteryOption } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
-import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";
+import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
 
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 import { formatPrice } from "../../../../utils/money";
@@ -15,7 +15,7 @@ import { formatPrice } from "../../../../utils/money";
 const maxNumbers = 6;
 
 export const LotteryPurchase: FC = () => {
-  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultTickets());
+  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
   const [lottery, setLottery] = useState<ILotteryOption>({
@@ -60,7 +60,7 @@ export const LotteryPurchase: FC = () => {
   };
 
   const clearForm = () => {
-    setTicketNumbers(getDefaultTickets());
+    setTicketNumbers(getDefaultNumbers());
   };
 
   return (

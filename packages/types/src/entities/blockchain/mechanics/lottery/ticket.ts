@@ -1,11 +1,7 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import type { ILotteryRound } from "./round";
 import type { IToken } from "../../hierarchy/token";
-
-export interface ITicketLottery extends IToken {
-  round: Partial<ILotteryRound>;
-}
+import type { ILotteryRound } from "./round";
 
 export interface ILotteryTicket extends IIdDateBase {
   account: string;

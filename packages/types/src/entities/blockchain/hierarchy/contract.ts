@@ -59,6 +59,8 @@ export enum Erc721ContractTemplates {
   "SOULBOUND_VOTES" = "SOULBOUND_VOTES",
   "UPGRADEABLE" = "UPGRADEABLE",
   "UPGRADEABLE_RANDOM" = "UPGRADEABLE_RANDOM",
+  "LOTTERY" = "LOTTERY",
+  "RAFFLE" = "RAFFLE",
 }
 
 export enum Erc998ContractFeatures {
@@ -113,11 +115,11 @@ export enum MysteryContractTemplates {
   "BLACKLIST" = "BLACKLIST",
 }
 
-export enum Erc721CollectionFeatures {
+export enum CollectionContractFeatures {
   "BLACKLIST" = "BLACKLIST",
 }
 
-export enum Erc721CollectionTemplates {
+export enum CollectionContractTemplates {
   "SIMPLE" = "SIMPLE",
   "BLACKLIST" = "BLACKLIST",
 }

@@ -1,11 +1,11 @@
-export * from "./tokens/erc20/contract-deploy";
-export * from "./tokens/erc721/contract-deploy";
-export * from "./tokens/erc998/contract-deploy";
-export * from "./tokens/erc1155/contract-deploy";
+export * from "./tokens/erc20/deploy";
+export * from "./tokens/erc721/deploy";
+export * from "./tokens/erc998/deploy";
+export * from "./tokens/erc1155/deploy";
 
 export * from "./mechanics/claim/upload";
 export * from "./mechanics/breed/breed-limits";
-export * from "./mechanics/collection/contract-deploy";
+export * from "./mechanics/collection/deploy";
 
 export * from "./mechanics/lottery/deploy";
 

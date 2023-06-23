@@ -1,11 +1,24 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { RaffleTicketSearchDto } from "./dto";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
 import { RaffleTicketService } from "./ticket.service";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
 @Controller("/raffle/tickets")
@@ -14,13 +27,27 @@ export class RaffleTicketController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: RaffleTicketSearchDto): Promise<[Array<TokenEntity>, number]> {
-    return this.raffleTicketService.search(dto);
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
+    return this.raffleTicketService.search(dto, userEntity);
+  }
+
+  @Put("/:id")
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
+    return this.raffleTicketService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.raffleTicketService.findOneWithRelations({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity | null> {
+    return this.raffleTicketService.findOne({ id });
+  }
+
+  @Delete("/:id")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
+    await this.raffleTicketService.delete({ id });
   }
 }

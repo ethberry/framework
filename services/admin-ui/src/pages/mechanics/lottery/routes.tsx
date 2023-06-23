@@ -5,8 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../index-wrapper";
 import { LotterySection } from "../../dashboard/mechanics/lottery";
 import { LotteryContracts } from "./contract";
-import { LotteryRounds } from "./rounds";
 import { LotteryTickets } from "./tickets";
+import { LotteryRounds } from "./rounds";
+import { LotteryTokens } from "./tokens";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -29,6 +30,14 @@ export const lotteryRoutes: Array<RouteObject> = [
         ],
       },
       {
+        path: "/lottery/tickets",
+        element: <Protected />,
+        children: [
+          { index: true, element: <LotteryTickets /> },
+          { path: "/lottery/tickets/:id", element: <LotteryTickets /> },
+        ],
+      },
+      {
         path: "/lottery/rounds",
         element: <Protected />,
         children: [
@@ -37,11 +46,11 @@ export const lotteryRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/lottery/tickets",
+        path: "/lottery/tokens",
         element: <Protected />,
         children: [
-          { index: true, element: <LotteryTickets /> },
-          { path: "/lottery/tickets/:id", element: <LotteryTickets /> },
+          { index: true, element: <LotteryTokens /> },
+          { path: "/lottery/tokens/:id", element: <LotteryTokens /> },
         ],
       },
     ],

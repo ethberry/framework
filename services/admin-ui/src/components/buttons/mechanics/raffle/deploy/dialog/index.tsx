@@ -6,16 +6,21 @@ import { IContract, IRaffleConfigDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IRaffleDeployDialogProps {
+export interface IRaffleContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IRaffleConfigDto;
 }
 
-export const RaffleDeployDialog: FC<IRaffleDeployDialogProps> = props => {
+export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = props => {
   return (
-    <FormDialog message="dialogs.deploy" testId="RaffleDeployForm" validationSchema={validationSchema} {...props}>
+    <FormDialog
+      message="dialogs.deploy"
+      testId="RaffleContractDeployForm"
+      validationSchema={validationSchema}
+      {...props}
+    >
       <NumberInput name="timeLagBeforeRelease" />
       <NumberInput name="commission" />
     </FormDialog>

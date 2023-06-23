@@ -5,8 +5,9 @@ import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../../index-wrapper";
 import { RaffleSection } from "../../dashboard/mechanics/raffle";
 import { RaffleContracts } from "./contract";
-import { RaffleRounds } from "./rounds";
 import { RaffleTickets } from "./tickets";
+import { RaffleRounds } from "./rounds";
+import { RaffleTokens } from "./tokens";
 
 export const raffleRoutes: Array<RouteObject> = [
   {
@@ -29,6 +30,14 @@ export const raffleRoutes: Array<RouteObject> = [
         ],
       },
       {
+        path: "/raffle/tickets",
+        element: <Protected />,
+        children: [
+          { index: true, element: <RaffleTickets /> },
+          { path: "/raffle/tickets/:id", element: <RaffleTickets /> },
+        ],
+      },
+      {
         path: "/raffle/rounds",
         element: <Protected />,
         children: [
@@ -37,11 +46,11 @@ export const raffleRoutes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/raffle/tickets",
+        path: "/raffle/tokens",
         element: <Protected />,
         children: [
-          { index: true, element: <RaffleTickets /> },
-          { path: "/raffle/tickets/:id", element: <RaffleTickets /> },
+          { index: true, element: <RaffleTokens /> },
+          { path: "/raffle/tokens/:id", element: <RaffleTokens /> },
         ],
       },
     ],

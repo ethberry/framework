@@ -10,13 +10,13 @@ import type { ILotteryConfigDto, IUser } from "@framework/types";
 
 import DeployLotteryABI from "../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
 
-import { LotteryDeployDialog } from "./dialog";
+import { LotteryContractDeployDialog } from "./dialog";
 
-export interface ILotteryDeployButtonProps {
+export interface ILotteryContractDeployButtonProps {
   className?: string;
 }
 
-export const LotteryDeployButton: FC<ILotteryDeployButtonProps> = props => {
+export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> = props => {
   const { className } = props;
 
   const user = useUser<IUser>();
@@ -69,7 +69,7 @@ export const LotteryDeployButton: FC<ILotteryDeployButtonProps> = props => {
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <LotteryDeployDialog
+      <LotteryContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
