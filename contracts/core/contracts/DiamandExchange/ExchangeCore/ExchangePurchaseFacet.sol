@@ -12,8 +12,8 @@ import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-import "../../Diamond/lib/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../Exchange/ExchangeUtils.sol";
+//import "../../Exchange/interfaces/IAsset.sol";
 
 contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, PausableInternal {
     event Purchase(address from, uint256 externalId, Asset item, Asset[] price);

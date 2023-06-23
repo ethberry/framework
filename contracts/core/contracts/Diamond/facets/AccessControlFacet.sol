@@ -7,7 +7,6 @@ import "../override/AccessControlInternal.sol";
 
 contract AccessControlFacet is AccessControlInternal {
 
-
     /**
      * @dev Returns `true` if `account` has been granted `role`.
      */

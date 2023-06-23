@@ -14,7 +14,7 @@ import "../override/PausableInternal.sol";
  * the functions of your contract. Note that they will not be pausable by
  * simply including this module, only once the modifiers are put in place.
  */
-abstract contract PausableFacet is PausableInternal {
+contract PausableFacet is PausableInternal {
 
     /**
      * @dev Returns true if the contract is paused, and false otherwise.

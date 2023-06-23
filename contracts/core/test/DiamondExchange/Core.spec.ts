@@ -4,11 +4,27 @@ import { deployErc721Base } from "../Exchange/shared/fixture";
 import { METADATA_ROLE, MINTER_ROLE, amount } from "@gemunion/contracts-constants";
 import { externalId, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
-import { BigNumber, Contract, constants } from "ethers";
+import { Contract, ZeroAddress, ZeroHash, toBigInt } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./fixture";
 
 describe("Diamond Exchange Core", function () {
+  const factory = async () =>
+    deployDiamond(
+      "DiamondExchange",
+      [
+        "ExchangePurchaseFacet",
+        "PausableFacet",
+        "AccessControlFacet",
+        "WalletFacet", //
+      ],
+      "DiamondExchangeInit",
+      {
+        // log: true,
+        logSelectors: true, //
+      },
+    );
+
   const getSignatures = async (contractInstance: Contract) => {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
@@ -27,20 +43,22 @@ describe("Diamond Exchange Core", function () {
   it("should purchase", async function () {
     const [_owner, receiver] = await ethers.getSigners();
 
-    const diamondInstance = await deployDiamond();
-    const exchangeInstance = await ethers.getContractAt("ExchangePurchaseFacet", diamondInstance.address);
-    const { generateOneToManySignature } = await getSignatures(exchangeInstance);
+    const diamondInstance = await factory();
+    const diamondAddress = await diamondInstance.getAddress();
+
+    const exchangeInstance = await ethers.getContractAt("ExchangePurchaseFacet", diamondAddress);
+    const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
     const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
-    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-    await erc721Instance.grantRole(METADATA_ROLE, exchangeInstance.address);
+    await erc721Instance.grantRole(MINTER_ROLE, diamondAddress);
+    await erc721Instance.grantRole(METADATA_ROLE, diamondAddress);
 
     const signature = await generateOneToManySignature({
       account: receiver.address,
       params,
       item: {
         tokenType: 2,
-        token: erc721Instance.address,
+        token: await erc721Instance.getAddress(),
         tokenId,
         amount,
       },
@@ -58,7 +76,7 @@ describe("Diamond Exchange Core", function () {
       params,
       {
         tokenType: 2,
-        token: erc721Instance.address,
+        token: await erc721Instance.getAddress(),
         tokenId,
         amount,
       },
@@ -71,7 +89,7 @@ describe("Diamond Exchange Core", function () {
         },
       ],
       signature,
-      { value: BigNumber.from("123000000000000000"), gasLimit: 500000 },
+      { value: toBigInt("123000000000000000"), gasLimit: 500000 },
     );
 
     await expect(tx1)
@@ -80,17 +98,48 @@ describe("Diamond Exchange Core", function () {
         receiver.address,
         externalId,
         isEqualEventArgObj({
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId: BigNumber.from(tokenId),
-          amount: BigNumber.from(amount),
+          tokenType: "2",
+          token: await erc721Instance.getAddress(),
+          tokenId: toBigInt(tokenId),
+          amount: toBigInt(amount),
         }),
         isEqualEventArgArrObj({
-          tokenType: 0,
-          token: constants.AddressZero,
-          tokenId: BigNumber.from("0"),
-          amount: BigNumber.from("123000000000000000"),
+          tokenType: "0",
+          token: ZeroAddress,
+          tokenId: toBigInt("0"),
+          amount: toBigInt("123000000000000000"),
         }),
       );
+  });
+
+  it("should fail: paused", async function () {
+    const diamondInstance = await factory();
+    const diamondAddress = await diamondInstance.getAddress();
+
+    const exchangeInstance = await ethers.getContractAt("ExchangePurchaseFacet", diamondAddress);
+    const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
+
+    await pausableInstance.pause();
+
+    const tx1 = exchangeInstance.purchase(
+      params,
+      {
+        tokenType: 0,
+        token: ZeroAddress,
+        tokenId,
+        amount,
+      },
+      [
+        {
+          tokenType: 0,
+          token: ZeroAddress,
+          tokenId,
+          amount,
+        },
+      ],
+      ZeroHash,
+    );
+
+    await expect(tx1).to.be.revertedWith("Pausable: paused");
   });
 });

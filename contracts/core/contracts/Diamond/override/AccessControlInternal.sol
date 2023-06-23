@@ -55,7 +55,7 @@ abstract contract AccessControlInternal is Context {
      */
     event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender);
 
-    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
+    bytes32 internal constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**
      * @dev Modifier that checks that an account has a specific role. Reverts

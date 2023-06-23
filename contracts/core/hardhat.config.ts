@@ -3,7 +3,7 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-web3";
 import "hardhat-contract-sizer";
-import "hardhat-deploy";
+// import "hardhat-deploy";
 
 import "./tasks";
 
