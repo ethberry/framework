@@ -45,6 +45,7 @@
     "sell": "Sell",
     "transfer": "Transfer",
     "view": "View",
+    "upgrade": "Upgrade",
     "withdraw": "Withdraw balance"
   },
   "enums": {
@@ -804,6 +805,7 @@
       "title": "ERC721",
       "token": {
         "genesis": "Genesis",
+        "grade": "Grade",
         "level": "Level: {level}",
         "price": "Base price: {amount}",
         "rarity": "Rarity: {rarity}",

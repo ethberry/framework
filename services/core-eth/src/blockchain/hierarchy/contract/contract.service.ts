@@ -242,8 +242,8 @@ export class ContractService {
       .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
       .andWhere("contract.chainId = :chainId", { chainId })
       // it should be nested array
-      .andWhere("contract.contractFeatures NOT IN (:...features)", {
-        features: [[ContractFeatures.EXTERNAL, ContractFeatures.RANDOM]],
+      .andWhere("NOT (contract.contractFeatures && :contractFeatures)", {
+        contractFeatures: [ContractFeatures.EXTERNAL, ContractFeatures.RANDOM, ContractFeatures.GENES],
       });
 
     if (contractType) {

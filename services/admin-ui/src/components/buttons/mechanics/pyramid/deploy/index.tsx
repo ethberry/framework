@@ -9,7 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import type { IPyramidContractDeployDto, IUser } from "@framework/types";
 import { PyramidContractTemplates } from "@framework/types";
 
-import PyramidDeployPyramidABI from "../../../../../abis/mechanics/pyramid/deploy/deployPyramid.abi.json";
+import DeployPyramidABI from "../../../../../abis/mechanics/pyramid/deploy/deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
 
@@ -27,7 +27,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        PyramidDeployPyramidABI,
+        DeployPyramidABI,
         web3Context.provider?.getSigner(),
       );
 

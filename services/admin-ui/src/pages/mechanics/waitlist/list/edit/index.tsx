@@ -5,11 +5,12 @@ import { FormattedMessage } from "react-intl";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import type { IWaitListList } from "@framework/types";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import type { IWaitListList } from "@framework/types";
+import { ContractStatus, ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ModuleType } from "@framework/types";
 
 export interface IWaitListListEditDialogProps {
   open: boolean;
@@ -44,6 +45,16 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
         prefix="item"
         readOnly={!!id}
         contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+      />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        readOnly={!!id}
+        autoselect
+        data={{
+          contractStatus: [ContractStatus.ACTIVE],
+          contractModule: [ModuleType.WAITLIST],
+        }}
       />
     </FormDialog>
   );

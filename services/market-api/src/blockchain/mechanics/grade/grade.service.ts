@@ -99,7 +99,6 @@ export class GradeService {
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
-
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
@@ -126,7 +125,7 @@ export class GradeService {
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const level = tokenEntity.metadata[attribute];
+    const level = tokenEntity.metadata[attribute] || 0;
 
     return this.signerService.getOneToManySignature(
       account,

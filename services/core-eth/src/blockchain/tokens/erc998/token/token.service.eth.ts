@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { JsonRpcProvider, Log, toUtf8String, ZeroAddress } from "ethers";
+import { JsonRpcProvider, Log, toUtf8String, ZeroAddress, stripZerosLeft } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import {
@@ -352,7 +352,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc998TokenEntity.metadata, { [toUtf8String(attribute)]: value });
+    Object.assign(erc998TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
+
     await erc998TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc998TokenEntity.id);

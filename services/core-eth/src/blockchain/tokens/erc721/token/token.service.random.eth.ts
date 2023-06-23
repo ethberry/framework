@@ -52,6 +52,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     if (from === ZeroAddress) {
       const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
+
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
         this.loggerService.error("templateNotFound", templateId, Erc721TokenRandomServiceEth.name);
@@ -144,19 +145,19 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     // const {
-    //   args: { tokenId, to },
     // } = event;
-    const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+    // const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
+    await this.eventHistoryService.updateHistory(event, context);
 
-    const entityWithRelations = await this.eventHistoryService.findOne(
-      { id: eventHistoryEntity.id },
-      { relations: { parent: true, assets: true } },
-    );
-
-    if (!entityWithRelations) {
-      this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
-      throw new NotFoundException("historyNotFound");
-    }
+    // const entityWithRelations = await this.eventHistoryService.findOne(
+    //   { id: eventHistoryEntity.id },
+    //   { relations: { parent: true, assets: true } },
+    // );
+    //
+    // if (!entityWithRelations) {
+    //   this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
+    //   throw new NotFoundException("historyNotFound");
+    // }
   }
 
   // get Purchase parent event and send notification about purchase

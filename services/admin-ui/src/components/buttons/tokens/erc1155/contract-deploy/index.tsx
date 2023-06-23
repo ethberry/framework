@@ -9,7 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import type { IErc1155ContractDeployDto, IUser } from "@framework/types";
 import { Erc1155ContractTemplates } from "@framework/types";
 
-import ERC1155DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
+import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
 
 import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 
@@ -27,7 +27,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ERC1155DeployERC1155TokenABI,
+        DeployERC1155TokenABI,
         web3Context.provider?.getSigner(),
       );
 

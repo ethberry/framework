@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ValidateNested } from "class-validator";
+import { IsInt, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
@@ -14,4 +14,9 @@ export class WaitListListCreateDto extends SearchableDto implements IWaitListLis
   @ValidateNested()
   @Type(() => ItemDto)
   public item: ItemDto;
+
+  @ApiProperty()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public contractId: number;
 }

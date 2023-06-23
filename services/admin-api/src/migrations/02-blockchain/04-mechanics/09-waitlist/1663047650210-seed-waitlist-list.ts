@@ -35,7 +35,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       INSERT INTO ${ns}.wait_list_list (
         title,
         description,
-        merchant_id,
+        contract_id,
         item_id,
         root,
         created_at,
@@ -43,7 +43,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ) VALUES (
         'WaitList NATIVE',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090001,
         null,
         '${currentDateTime}',
@@ -51,7 +51,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList ERC20',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090002,
         null,
         '${currentDateTime}',
@@ -59,7 +59,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList ERC721',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090003,
         null,
         '${currentDateTime}',
@@ -67,7 +67,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList ERC998',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090004,
         null,
         '${currentDateTime}',
@@ -75,7 +75,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList ERC1155',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090005,
         null,
         '${currentDateTime}',
@@ -83,7 +83,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList MIXED',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090006,
         null,
         '${currentDateTime}',
@@ -91,7 +91,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList ###',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090007,
         '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
         '${currentDateTime}',
@@ -99,7 +99,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList @@@',
         '${simpleFormatting}',
-        1,
+        1020901,
         102090008,
         '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
         '${currentDateTime}',
@@ -107,7 +107,7 @@ export class SeedWaitListListAt1663047650210 implements MigrationInterface {
       ), (
         'WaitList $$$',
         '${simpleFormatting}',
-        2,
+        1020902,
         102090009,
         '0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a',
         '${currentDateTime}',

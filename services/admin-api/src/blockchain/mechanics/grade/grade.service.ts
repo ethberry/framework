@@ -53,7 +53,7 @@ export class GradeService {
   }
 
   public async createGrade(dto: IGradeCreateDto, userEntity: UserEntity): Promise<GradeEntity> {
-    const { contractId, attribute, price } = dto;
+    const { contractId, /* attribute, */ price } = dto;
 
     const contractEntity = await this.contractService.findOne({
       id: contractId,
@@ -78,7 +78,7 @@ export class GradeService {
       price: assetEntity,
     });
 
-    await this.tokenService.updateAttributes(contractId, attribute, "0");
+    // await this.tokenService.updateAttributes(contractId, attribute, "0");
 
     return gradeEntity;
   }

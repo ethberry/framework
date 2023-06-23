@@ -6,6 +6,7 @@ import { WaitListSection } from "../../dashboard/mechanics/waitlist";
 import { IndexWrapper } from "../../index-wrapper";
 import { WaitListList } from "./list";
 import { WaitListItem } from "./item";
+import { WaitListContracts } from "./contract";
 
 export const waitlistRoutes: Array<RouteObject> = [
   {
@@ -18,6 +19,14 @@ export const waitlistRoutes: Array<RouteObject> = [
             <WaitListSection />
           </IndexWrapper>
         ),
+      },
+      {
+        path: "/waitlist/contracts",
+        element: <Protected />,
+        children: [
+          { index: true, element: <WaitListContracts /> },
+          { path: "/waitlist/contracts/:id", element: <WaitListContracts /> },
+        ],
       },
       {
         path: "/waitlist/list",

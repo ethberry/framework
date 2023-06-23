@@ -1,4 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ExchangeGradeServiceEth } from "./grade.service.eth";
@@ -10,9 +12,12 @@ import { OpenSeaModule } from "../../integrations/opensea/opensea.module";
 import { GradeService } from "../../mechanics/grade/grade.service";
 import { NotificatorModule } from "../../../game/notificator/notificator.module";
 import { GradeEntity } from "../../mechanics/grade/grade.entity";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
   imports: [
+    ConfigModule,
+    ContractModule,
     EventHistoryModule,
     TokenModule,
     AssetModule,

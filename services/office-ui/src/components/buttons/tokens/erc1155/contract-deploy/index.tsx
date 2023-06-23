@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155ContractTemplates, IErc1155ContractDeployDto } from "@framework/types";
 
-import ERC1155DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
+import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
 
 import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 
@@ -23,7 +23,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        ERC1155DeployERC1155TokenABI,
+        DeployERC1155TokenABI,
         web3Context.provider?.getSigner(),
       );
 

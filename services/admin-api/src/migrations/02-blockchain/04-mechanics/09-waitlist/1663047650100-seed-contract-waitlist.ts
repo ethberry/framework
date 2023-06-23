@@ -30,7 +30,7 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        5,
+        1020901,
         '${waitListAddr}',
         '${chainId}',
         'WAITLIST',
@@ -44,6 +44,23 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         'WAITLIST',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1020902,
+        '${waitListAddr}',
+        '${chainId}',
+        'WAITLIST',
+        '${simpleFormatting}',
+        '',
+        'Waitlist',
+        '',
+        '',
+        'ACTIVE',
+        '{}',
+        'WAITLIST',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

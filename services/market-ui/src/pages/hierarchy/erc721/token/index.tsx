@@ -16,6 +16,7 @@ import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { StyledPaper } from "./styled";
+import { TokenGradeView } from "../../grade";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
@@ -79,11 +80,9 @@ export const Erc721Token: FC = () => {
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <StyledPaper>
               <Typography>
-                <FormattedMessage
-                  id="pages.erc721.token.level"
-                  values={{ level: selected.metadata[TokenMetadata.LEVEL] }}
-                />
+                <FormattedMessage id="pages.erc721.token.grade" />
               </Typography>
+              <TokenGradeView metadata={selected.metadata} />
               <GradeButton token={selected} />
             </StyledPaper>
           ) : null}
