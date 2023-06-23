@@ -76,21 +76,77 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
       ), (
         '${wallet}',
         1,
-        103050601, -- Shield
+        103050601, -- Round Shield
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103050701, -- Heater Shield
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103050801, -- Royal Shield
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103050901, -- Cloak
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103051001, -- Robe
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103051101, -- Mage''s Hat
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103051201, -- Witch''s Hat
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103051301, -- Viking''s Helmet
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        103060101, -- Sword
+        103060101, -- Sword #1
         104060101, -- Warrior
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        103060102, -- Sword
+        103060102, -- Sword #2
+        null,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        103060103, -- Sword #3
         null,
         '${currentDateTime}',
         '${currentDateTime}'

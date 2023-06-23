@@ -67,8 +67,8 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          await accessInstance.grantRole(roles[k], grantee[j]);
-          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          // await accessInstance.grantRole(roles[k], grantee[j]);
+          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
@@ -6,7 +6,7 @@ import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "et
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import { ContractFeatures, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
+import { ContractFeatures, GradeStatus, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
@@ -94,6 +94,10 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
+    if (gradeEntity.gradeStatus !== GradeStatus.ACTIVE) {
+      throw new ForbiddenException("gradeNotActive");
+    }
+
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
     const nonce = randomBytes(32);
@@ -156,9 +160,13 @@ export class GradeService {
     }
   }
 
-  public autocomplete(where: IAutocompleteGradeDto): Promise<Array<GradeEntity>> {
+  public autocomplete(dto: IAutocompleteGradeDto): Promise<Array<GradeEntity>> {
+    const { contractId } = dto;
     return this.gradeEntityRepository.find({
-      where,
+      where: {
+        gradeStatus: GradeStatus.ACTIVE,
+        contractId,
+      },
       join: {
         alias: "grade",
         leftJoinAndSelect: {

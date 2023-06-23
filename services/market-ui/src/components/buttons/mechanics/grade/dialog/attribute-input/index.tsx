@@ -4,14 +4,14 @@ import { useFormContext } from "react-hook-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IGrade } from "@framework/types";
 
-export interface IContractInputProps {
+export interface IAttributeInputProps {
   name: string;
   data: {
     contractId: number;
   };
 }
 
-export const AttributeInput: FC<IContractInputProps> = props => {
+export const AttributeInput: FC<IAttributeInputProps> = props => {
   const { name, data = {} } = props;
 
   const form = useFormContext<any>();
