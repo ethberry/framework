@@ -122,6 +122,18 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
       ), (
         104050102, -- Grimoire #2
         '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1040501",
+          [TokenMetadata.LEVEL]: "10",
+        })}',
+        100,
+        '104050102',
+        'MINTED',
+        1040501,
+        '${subDays(now, 2).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        104050201, -- Foliant
+        '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "1040502",
           [TokenMetadata.LEVEL]: "10",
         })}',
@@ -240,6 +252,18 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         'MINTED',
         1041301,
         '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        104800101, -- Voldemort
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1048001",
+          [TokenMetadata.LEVEL]: "7",
+        })}',
+        100,
+        '104800101',
+        'MINTED',
+        1048001,
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         204010101,

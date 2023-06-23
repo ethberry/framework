@@ -3,7 +3,7 @@ import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements MigrationInterface {
+export class SeedEventHistoryErc998GradeComponentsAt1687481746420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
@@ -13,40 +13,40 @@ export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements Migr
         token_id,
         amount
       ) VALUES (
-        10202010,
+        10406010,
         'ITEM',
-        10201,
-        102010101,
+        10405,
+        104050101, -- Grimoire #1
+        1
+      ), (
+        10406010,
+        'PRICE',
+        10101,
+        101010101, -- ETH
         '${WeiPerEther.toString()}'
       ), (
-        10202020,
+        10406020,
         'ITEM',
+        10405,
+        104050201, -- Foliant
+        1
+      ), (
+        10406020,
+        'PRICE',
         10201,
-        102010101,
+        102010101, -- Space Credits
         '${WeiPerEther.toString()}'
       ), (
-        10202030,
+        10406030,
         'ITEM',
-        10201,
-        102010101,
-        '${WeiPerEther.toString()}'
+        10480,
+        104800101, -- Voldemort
+        1
       ), (
-        10202030,
-        'ITEM',
-        10201,
-        102010101,
-        '${WeiPerEther.toString()}'
-      ), (
-        10202040,
-        'ITEM',
-        10201,
-        102010101,
-        '${WeiPerEther.toString()}'
-      ), (
-        10202040,
-        'ITEM',
-        10201,
-        102010101,
+        10406030,
+        'PRICE',
+        10280,
+        102800101, -- Warp Credits
         '${WeiPerEther.toString()}'
       );
     `);

@@ -29,6 +29,8 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       ), (
         101040501
       ), (
+        101040502
+      ), (
         101040601
       ), (
         101040602
@@ -48,6 +50,8 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         101041201
       ), (
         101041301
+      ), (
+        101048001
       ), (
         201040101
       );
@@ -175,6 +179,18 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        1040502,
+        'Foliant',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fgrimoire.png?alt=media&token=4eba93cd-c1ca-4aa1-b002-b501bd2fb5c6',
+        101040501,
+        0,
+        1,
+        'ACTIVE',
+        10405,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         1040601,
         'Warrior',
         '${simpleFormatting}',
@@ -292,6 +308,18 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         1,
         'ACTIVE',
         10413,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1048001,
+        'Voldemort',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmage.png?alt=media&token=44bb311d-4513-4b9f-a6ca-5a05c053e6f9',
+        101048001,
+        0,
+        1,
+        'ACTIVE',
+        10480,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
