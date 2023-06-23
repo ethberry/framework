@@ -27,8 +27,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any | null): void => {
-      console.log("form", form);
-      console.log("option", option);
       form.setValue("contractId", option?.id ?? 0);
       form.setValue("address", option?.address ?? "0x");
     };
@@ -43,7 +41,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     >
       <CommonContractInput
         name="contractId"
-        controller="contracts"
         data={{ contractFeatures: [ContractFeatures.ALLOWANCE] }}
         onChange={handleContractChange}
         autoselect

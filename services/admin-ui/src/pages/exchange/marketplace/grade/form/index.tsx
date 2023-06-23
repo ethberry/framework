@@ -44,7 +44,6 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
           <Grid item xs={6}>
             <CommonContractInput
               name="contractIds"
-              controller="contracts"
               data={{
                 contractStatus: [ContractStatus.ACTIVE],
                 contractFeatures: [ContractFeatures.UPGRADEABLE],

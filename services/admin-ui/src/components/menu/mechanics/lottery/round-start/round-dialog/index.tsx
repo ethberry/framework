@@ -50,7 +50,6 @@ export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props 
     >
       <CommonContractInput
         name="contractId"
-        controller="contracts"
         data={{
           contractModule: [ModuleType.LOTTERY],
           contractFeatures: [ContractFeatures.RANDOM],

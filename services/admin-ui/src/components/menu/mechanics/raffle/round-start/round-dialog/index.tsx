@@ -50,7 +50,6 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
     >
       <CommonContractInput
         name="contractId"
-        controller="contracts"
         data={{
           contractModule: [ModuleType.RAFFLE],
           contractFeatures: [ContractFeatures.RANDOM],

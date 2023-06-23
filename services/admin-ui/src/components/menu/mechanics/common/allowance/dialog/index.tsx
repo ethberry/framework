@@ -47,7 +47,6 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     >
       <CommonContractInput
         name="contractId"
-        controller="contracts"
         data={{ contractType: [TokenType.ERC20] }}
         onChange={handleContractChange}
         autoselect

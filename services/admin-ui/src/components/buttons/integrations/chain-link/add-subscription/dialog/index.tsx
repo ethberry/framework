@@ -39,7 +39,6 @@ export const ChainLinkSubscriptionDialog: FC<IChainLinkSubscriptionDialogProps> 
     >
       <CommonContractInput
         name="contractId"
-        controller="contracts"
         data={{ contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.GENES] }}
         onChange={handleContractChange}
         autoselect
