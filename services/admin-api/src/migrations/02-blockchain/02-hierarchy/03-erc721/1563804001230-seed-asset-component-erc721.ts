@@ -266,6 +266,12 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         101030905
       ), (
         'ERC20',
+        10280,
+        1028001, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        101038001
+      ), (
+        'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',

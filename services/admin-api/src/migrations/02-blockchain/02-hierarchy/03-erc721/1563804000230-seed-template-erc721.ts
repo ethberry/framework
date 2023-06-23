@@ -328,7 +328,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1030511,
-        'Mage Hat',
+        'Mage''s Hat',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmages_hat.png?alt=media&token=ccef2e90-83e9-4a96-8eef-74fa9903dad9',
         101030511,

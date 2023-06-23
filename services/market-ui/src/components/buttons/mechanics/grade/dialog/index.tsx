@@ -4,20 +4,21 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { validationSchema } from "./validation";
 import { AttributeInput } from "./attribute-input";
+import { AttributePrice } from "./attribute-price";
 
 export interface IUpgradeDto {
   attribute: string;
   contractId: number;
 }
 
-export interface IAmountDialogProps {
+export interface IUpgradeDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IUpgradeDto, form: any) => Promise<void>;
   initialValues: IUpgradeDto;
 }
 
-export const UpgradeDialog: FC<IAmountDialogProps> = props => {
+export const UpgradeDialog: FC<IUpgradeDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { attribute, contractId } = initialValues;
@@ -27,10 +28,11 @@ export const UpgradeDialog: FC<IAmountDialogProps> = props => {
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message="dialogs.amount"
-      testId="AmountForm"
+      message="dialogs.grade"
+      testId="UpgradeAttributeForm"
       {...rest}
     >
+      <AttributePrice />
       <AttributeInput
         name="gradeId"
         data={{
