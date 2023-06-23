@@ -43,6 +43,7 @@ export enum ModuleType {
   VESTING = "VESTING",
   POLYGON = "POLYGON",
   STAKING = "STAKING",
+  WAITLIST = "WAITLIST",
 }
 
 export enum DurationUnit {

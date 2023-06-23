@@ -9,7 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import type { IErc721CollectionDeployDto, IUser } from "@framework/types";
 import { Erc721CollectionTemplates } from "@framework/types";
 
-import CollectionDeployCollectionABI from "../../../../../abis/mechanics/collection/contract-deploy/deployCollection.abi.json";
+import DeployCollectionABI from "../../../../../abis/mechanics/collection/contract-deploy/deployCollection.abi.json";
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
@@ -27,7 +27,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        CollectionDeployCollectionABI,
+        DeployCollectionABI,
         web3Context.provider?.getSigner(),
       );
 

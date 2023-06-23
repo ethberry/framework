@@ -8,7 +8,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import type { IRaffleConfigDto, IUser } from "@framework/types";
 
-import RaffleDeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
+import DeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
 import { RaffleDeployDialog } from "./dialog";
 
@@ -26,7 +26,7 @@ export const RaffleDeployButton: FC<IRaffleDeployButtonProps> = props => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        RaffleDeployRaffleABI,
+        DeployRaffleABI,
         web3Context.provider?.getSigner(),
       );
 

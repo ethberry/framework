@@ -39,9 +39,11 @@ export class WaitListListService {
 
     const queryBuilder = this.waitListListEntityRepository.createQueryBuilder("waitlist");
 
+    queryBuilder.leftJoin("waitlist.contract", "contract");
+
     queryBuilder.select();
 
-    queryBuilder.andWhere("waitlist.merchantId = :merchantId", {
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
 
@@ -94,7 +96,7 @@ export class WaitListListService {
     });
   }
 
-  public async create(dto: IWaitListListCreateDto, userEntity: UserEntity): Promise<WaitListListEntity> {
+  public async create(dto: IWaitListListCreateDto): Promise<WaitListListEntity> {
     const { item } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -107,7 +109,6 @@ export class WaitListListService {
       .create({
         ...dto,
         item: assetEntity,
-        merchantId: userEntity.merchantId,
       })
       .save();
   }
@@ -123,6 +124,7 @@ export class WaitListListService {
       join: {
         alias: "waitlist",
         leftJoinAndSelect: {
+          contract: "waitlist.contract",
           item: "waitlist.item",
           components: "item.components",
         },
@@ -133,7 +135,7 @@ export class WaitListListService {
       throw new NotFoundException("waitlistNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
@@ -149,23 +151,26 @@ export class WaitListListService {
   public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
     return this.waitListListEntityRepository.find({
       where: {
-        merchantId: userEntity.merchantId,
+        contract: {
+          merchantId: userEntity.merchantId,
+        },
       },
       select: {
         id: true,
         title: true,
       },
+      relations: { contract: true },
     });
   }
 
   public async delete(where: FindOptionsWhere<WaitListListEntity>, userEntity: UserEntity): Promise<DeleteResult> {
-    const waitListListEntity = await this.findOne(where);
+    const waitListListEntity = await this.findOne(where, { relations: { contract: true } });
 
     if (!waitListListEntity) {
       throw new NotFoundException("waitListListNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
@@ -194,13 +199,13 @@ export class WaitListListService {
   public async upload(dto: IWaitListUploadDto, userEntity: UserEntity): Promise<Array<WaitListItemEntity>> {
     const { items, listId } = dto;
 
-    const waitListListEntity = await this.findOne({ id: listId });
+    const waitListListEntity = await this.findOne({ id: listId }, { relations: { contract: true } });
 
     if (!waitListListEntity) {
       throw new NotFoundException("waitListListNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 

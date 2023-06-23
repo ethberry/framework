@@ -21,6 +21,8 @@ export * from "./mechanics/staking/penalty";
 export * from "./mechanics/staking/withdraw";
 export * from "./mechanics/staking/rule-toggle";
 
+export * from "./mechanics/waitlist/deploy";
+
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";

@@ -8,7 +8,7 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
 import type { ILotteryConfigDto, IUser } from "@framework/types";
 
-import LotteryDeployLotteryABI from "../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
+import DeployLotteryABI from "../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
 
 import { LotteryDeployDialog } from "./dialog";
 
@@ -26,7 +26,7 @@ export const LotteryDeployButton: FC<ILotteryDeployButtonProps> = props => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        LotteryDeployLotteryABI,
+        DeployLotteryABI,
         web3Context.provider?.getSigner(),
       );
 

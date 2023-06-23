@@ -11,7 +11,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import type { IWaitListList } from "@framework/types";
 
-import { WaitListActionsMenu } from "../../../../components/menu/mechanics/waitlist";
+import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/waitlist-list";
 import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
@@ -76,7 +76,7 @@ export const WaitListList: FC = () => {
                 <IconButton onClick={handleDelete(waitListList)}>
                   <Delete />
                 </IconButton>
-                <WaitListActionsMenu waitListList={waitListList} disabled={!!waitListList.root} />
+                <WaitListListActionsMenu waitListList={waitListList} disabled={!!waitListList.root} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
