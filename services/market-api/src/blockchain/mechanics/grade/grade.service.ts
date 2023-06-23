@@ -139,7 +139,8 @@ export class GradeService {
       gradeEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: (component.templateId || 0).toString(),
+        // tokenId: (component.templateId || 0).toString(),
+        tokenId: component.template.tokens[0].tokenId,
         amount: this.getMultiplier(level, component.amount, gradeEntity).toString(),
       })),
     );

@@ -86,13 +86,13 @@ export class NotificatorService {
 
   // MODULE:WAITLIST
   public async rewardSet(data: IWaitListRewardSetData): Promise<any> {
-    return this.sendMessage(data.waitListList.merchantId, clientProxy => {
+    return this.sendMessage(data.waitListList.contract.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.WAITLIST_REWARD_SET, data).toPromise();
     });
   }
 
   public async rewardClaimed(data: IWaitListRewardClaimedData): Promise<any> {
-    return this.sendMessage(data.waitListItem.list!.merchantId, clientProxy => {
+    return this.sendMessage(data.waitListItem.list!.contract.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.WAITLIST_REWARD_CLAIMED, data).toPromise();
     });
   }
@@ -108,6 +108,7 @@ export class NotificatorService {
 
   // MODULE:GRADE
   public grade(data: IGradeData): Promise<any> {
+    console.log("GRADEgrade", data);
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.UPGRADE, data).toPromise();
     });

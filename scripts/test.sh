@@ -10,7 +10,7 @@ export POSTGRES_URL=$POSTGRES_URL
 export CHAIN_ID=$CHAIN_ID
 export PRIVATE_KEY=$PRIVATE_KEY
 export RINKEBY_RPC_URL=$RINKEBY_RPC_URL
-export JSON_RPC_ADDR_GORLY=$JSON_RPC_ADDR_GORLY
+export JSON_RPC_ADDR_GOERLY=$JSON_RPC_ADDR_GOERLY
 
 lerna bootstrap --concurrency 1 --hoist --ignore-scripts
 lerna run build --stream

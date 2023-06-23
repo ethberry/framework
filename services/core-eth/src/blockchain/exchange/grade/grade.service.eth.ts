@@ -41,7 +41,7 @@ export class ExchangeGradeServiceEth {
 
     const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
 
-    await this.assetService.saveAssetHistory(
+    const assets = await this.assetService.saveAssetHistory(
       history,
       // we have to change tokenId to templateId for proper asset history
       [{ tokenType, token, tokenId: tokenEntity.template.id.toString(), amount }],
@@ -59,6 +59,7 @@ export class ExchangeGradeServiceEth {
     await this.notificatorService.grade({
       grade: gradeEntity,
       token: tokenEntity,
+      price: assets.price,
       address,
       transactionHash,
     });

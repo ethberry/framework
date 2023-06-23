@@ -176,7 +176,7 @@ export class AssetService {
       items: await Promise.allSettled(
         items.map(async ({ tokenType, tokenId, amount }) => {
           const assetComponentHistoryItem = {
-            historyId: eventHistoryEntity.id,
+            history: eventHistoryEntity,
             exchangeType: ExchangeType.ITEM,
             amount,
           };
@@ -215,7 +215,7 @@ export class AssetService {
       price: await Promise.allSettled(
         price.map(async ({ token, tokenId, amount }) => {
           const assetComponentHistoryPrice = {
-            historyId: eventHistoryEntity.id,
+            history: eventHistoryEntity,
             exchangeType: ExchangeType.PRICE,
             amount,
           };

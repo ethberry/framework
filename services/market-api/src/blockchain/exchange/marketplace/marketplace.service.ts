@@ -75,11 +75,6 @@ export class MarketplaceService {
       templateEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        // pass templateId instead of tokenId = 0
-        // tokenId:
-        //   component.template.tokens[0].tokenId === "0"
-        //     ? component.template.tokens[0].templateId.toString()
-        //     : component.template.tokens[0].tokenId,
         tokenId: component.template.tokens[0].tokenId,
         amount: (BigInt(component.amount) * BigInt(amount)).toString(),
       })),
