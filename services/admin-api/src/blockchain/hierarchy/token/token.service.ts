@@ -199,12 +199,9 @@ export class TokenService {
   }
 
   public updateAttributes(contractId: number, attribute: string, value: string): Promise<any> {
-    const json_attribute = `'{${attribute}}'`;
-    const json_value = `"${value}"`;
-    const jsonBSetString = `jsonb_set(metadata::jsonb,${json_attribute},'${json_value}',true)`;
     const queryString = `
       UPDATE ${ns}.token
-      SET metadata = ${jsonBSetString}
+      SET metadata = jsonb_set(metadata::jsonb, '{${attribute}}', '"${value}"', true)
       WHERE id IN (SELECT token.id
                    FROM ${ns}.token
                             LEFT JOIN ${ns}.template template on template.id = token.template_id

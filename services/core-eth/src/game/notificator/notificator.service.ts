@@ -108,7 +108,6 @@ export class NotificatorService {
 
   // MODULE:GRADE
   public grade(data: IGradeData): Promise<any> {
-    console.log("GRADEgrade", data);
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.UPGRADE, data).toPromise();
     });

@@ -32,11 +32,11 @@ export class GradeService {
         alias: "grade",
         leftJoinAndSelect: {
           contract: "grade.contract",
-          price: "grade.price",
-          price_components: "price.components",
-          price_contract: "price_components.contract",
-          price_template: "price_components.template",
-          price_tokens: "price_template.tokens",
+          // price: "grade.price",
+          // price_components: "price.components",
+          // price_contract: "price_components.contract",
+          // price_template: "price_components.template",
+          // price_tokens: "price_template.tokens",
         },
       },
     });
