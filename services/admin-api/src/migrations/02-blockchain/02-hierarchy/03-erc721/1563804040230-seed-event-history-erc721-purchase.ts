@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, WeiPerEther, ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -30,7 +30,7 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1030101",
           item: {
             tokenType: 2,
@@ -82,7 +82,7 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1030101",
           item: {
             tokenType: 2,
@@ -134,7 +134,7 @@ export class SeedEventHistoryErc721PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1030101",
           item: {
             tokenType: 2,

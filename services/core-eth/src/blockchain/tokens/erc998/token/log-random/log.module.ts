@@ -2,8 +2,8 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractFeatures, ContractType, TokenType } from "@framework/types";
 
 // custom contracts
@@ -52,7 +52,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.TransferChild,
               ContractEventType.UnWhitelistedChild,
               ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysterybox,
+              ContractEventType.UnpackMysteryBox,
               ContractEventType.Unpaused,
               ContractEventType.WhitelistedChild,
               ContractEventType.LevelUp,

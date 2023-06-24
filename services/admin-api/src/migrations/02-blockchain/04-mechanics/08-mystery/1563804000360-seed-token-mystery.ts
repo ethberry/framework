@@ -22,7 +22,51 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
       ) VALUES (
         111010101,
         '${JSON.stringify({
-          [TokenMetadata.TEMPLATE_ID]: "10101",
+          [TokenMetadata.TEMPLATE_ID]: "1110101",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        1110101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        111010102,
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1110101",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        1110101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        111010103,
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1110101",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        1110101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        111010104,
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1110101",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        1110101,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        111010105,
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1110101",
         })}',
         100,
         '1',
@@ -61,6 +105,17 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
         '1',
         'MINTED',
         1110601,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        111800101,
+        '${JSON.stringify({
+          [TokenMetadata.TEMPLATE_ID]: "1118001",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        1118001,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (

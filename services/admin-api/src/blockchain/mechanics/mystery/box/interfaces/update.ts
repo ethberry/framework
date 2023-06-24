@@ -1,6 +1,6 @@
 import { IAssetDto, MysteryboxStatus } from "@framework/types";
 
-export interface IMysteryboxUpdateDto {
+export interface IMysteryBoxUpdateDto {
   title: string;
   description: string;
   item: IAssetDto;

@@ -15,7 +15,14 @@ import "./interfaces/IAsset.sol";
 import "./interfaces/ILottery.sol";
 
 abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable {
-  event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
+  event PurchaseLottery(
+    address account,
+    uint256 externalId,
+    Asset[] items,
+    Asset price,
+    uint256 roundId,
+    bytes32 numbers
+  );
 
   function purchaseLottery(
     Params memory params,
@@ -47,7 +54,7 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
     // set tokenID = ticketID
     items[1].tokenId = tokenId;
 
-    emit PurchaseLottery(_msgSender(), items, price, roundId, params.extra);
+    emit PurchaseLottery(_msgSender(), params.externalId, items, price, roundId, params.extra);
 
     _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }

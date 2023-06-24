@@ -63,10 +63,10 @@ hardhat flatten contracts/Mechanics/Lottery/ERC721Lottery.sol > dist/Mechanics/L
 hardhat flatten contracts/Mechanics/Lottery/LotteryRandom.sol > dist/Mechanics/Lottery/LotteryRandom.sol
 
 mkdir -p dist/Mechanics/Mysterybox
-hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol > dist/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol
-hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol > dist/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol
-hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol > dist/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol
-hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol > dist/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol
+hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryBoxBlacklist.sol > dist/Mechanics/Mysterybox/ERC721MysteryBoxBlacklist.sol
+hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryBoxBlacklistPausable.sol > dist/Mechanics/Mysterybox/ERC721MysteryBoxBlacklistPausable.sol
+hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryBoxPausable.sol > dist/Mechanics/Mysterybox/ERC721MysteryBoxPausable.sol
+hardhat flatten contracts/Mechanics/Mysterybox/ERC721MysteryBoxSimple.sol > dist/Mechanics/Mysterybox/ERC721MysteryBoxSimple.sol
 
 mkdir -p dist/Mechanics/Pyramid
 hardhat flatten contracts/Mechanics/Pyramid/Pyramid.sol > dist/Mechanics/Pyramid/Pyramid.sol

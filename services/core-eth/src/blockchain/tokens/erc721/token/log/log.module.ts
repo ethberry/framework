@@ -44,7 +44,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.TokenRoyaltyInfo,
               ContractEventType.Transfer,
               ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysterybox,
+              ContractEventType.UnpackMysteryBox,
               ContractEventType.Unpaused,
               ContractEventType.ConsecutiveTransfer,
               ContractEventType.LevelUp,

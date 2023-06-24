@@ -17,31 +17,37 @@ export class SeedAssetComponentsMysteryboxAt1563804001260 implements MigrationIn
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110101
+        102110101
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110102
+        102110102
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110401
+        102110401
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110501
+        102110501
       ), (
         'ERC20',
         10201,
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
-        101110601
+        102110601
+      ), (
+        'ERC20',
+        10108,
+        1010801, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        102118001
       ), (
         'ERC20',
         20217,

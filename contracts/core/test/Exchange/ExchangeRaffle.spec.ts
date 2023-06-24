@@ -7,7 +7,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
-import { expiresAt, extra } from "../constants";
+import { expiresAt, externalId, extra } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeRaffle", function () {
@@ -114,12 +114,13 @@ describe("ExchangeRaffle", function () {
           },
           signature,
         );
-        // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
 
+        // PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
         await expect(tx1)
           .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,
@@ -485,11 +486,13 @@ describe("ExchangeRaffle", function () {
           },
           signature,
         );
-        // event PurchaseRaffle(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
+
+        // PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
         await expect(tx1)
           .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,

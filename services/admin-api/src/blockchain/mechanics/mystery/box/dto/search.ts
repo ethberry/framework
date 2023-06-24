@@ -6,7 +6,7 @@ import { SearchDto } from "@gemunion/collection";
 import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
-export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
+export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
   @ApiPropertyOptional({
     enum: MysteryboxStatus,
     isArray: true,

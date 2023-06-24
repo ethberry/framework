@@ -78,7 +78,7 @@ export enum ContractEventType {
   UnpackWrapper = "UnpackWrapper",
 
   // MODULE MYSTERY
-  UnpackMysterybox = "UnpackMysterybox",
+  UnpackMysteryBox = "UnpackMysteryBox",
 
   // MODULE:PAUSE
   Paused = "Paused",
@@ -121,7 +121,7 @@ export enum ContractEventType {
   UpdateUser = "UpdateUser",
   Lend = "Lend",
   // MODULE:MYSTERY
-  Mysterybox = "Mysterybox",
+  PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:GRADE
   Upgrade = "Upgrade",
   // MODULE:WAITLIST

@@ -7,7 +7,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE, tokenName } from "@gemunion/contracts-constants";
 
-import { expiresAt, extra, params, tokenId } from "../../constants";
+import { expiresAt, externalId, extra, params, tokenId } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
@@ -390,6 +390,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -533,6 +534,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -697,6 +699,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -868,6 +871,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -959,6 +963,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -1365,6 +1370,7 @@ describe("Lottery", function () {
         .to.emit(exchangeInstance, "PurchaseLottery")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,

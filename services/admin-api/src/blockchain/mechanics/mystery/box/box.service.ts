@@ -8,7 +8,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 
 import { MysteryBoxEntity } from "./box.entity";
-import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
+import { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
@@ -179,11 +179,11 @@ export class MysteryBoxService {
 
   public async update(
     where: FindOptionsWhere<MysteryBoxEntity>,
-    dto: Partial<IMysteryboxUpdateDto>,
+    dto: Partial<IMysteryBoxUpdateDto>,
   ): Promise<MysteryBoxEntity> {
     const { price, item, ...rest } = dto;
 
-    const mysteryboxEntity = await this.findOne(where, {
+    const mysteryBoxEntity = await this.findOne(where, {
       join: {
         alias: "box",
         leftJoinAndSelect: {
@@ -196,24 +196,24 @@ export class MysteryBoxService {
       },
     });
 
-    if (!mysteryboxEntity) {
-      throw new NotFoundException("mysteryboxNotFound");
+    if (!mysteryBoxEntity) {
+      throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    Object.assign(mysteryboxEntity, rest);
+    Object.assign(mysteryBoxEntity, rest);
 
     if (price) {
-      await this.assetService.update(mysteryboxEntity.template.price, price);
+      await this.assetService.update(mysteryBoxEntity.template.price, price);
     }
 
     if (item) {
-      await this.assetService.update(mysteryboxEntity.item, item);
+      await this.assetService.update(mysteryBoxEntity.item, item);
     }
 
-    return mysteryboxEntity.save();
+    return mysteryBoxEntity.save();
   }
 
-  public async create(dto: IMysteryboxCreateDto): Promise<MysteryBoxEntity> {
+  public async create(dto: IMysteryBoxCreateDto): Promise<MysteryBoxEntity> {
     const { price, item, contractId } = dto;
 
     const priceEntity = await this.assetService.create({
@@ -250,7 +250,7 @@ export class MysteryBoxService {
     const mysteryboxEntity = await this.findOne({ id: where.id });
 
     if (!mysteryboxEntity) {
-      throw new NotFoundException("mysteryboxNotFound");
+      throw new NotFoundException("mysteryBoxNotFound");
     }
 
     const count = await this.tokenService.count({ templateId: mysteryboxEntity.templateId });

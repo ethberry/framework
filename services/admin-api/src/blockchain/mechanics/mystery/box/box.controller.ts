@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
-import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
+import { MysteryBoxCreateDto, MysteryBoxSearchDto, MysteryBoxUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { MysteryBoxAutocompleteDto } from "./dto/autocomplete";
 
@@ -30,7 +30,7 @@ export class MysteryBoxController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: MysteryboxSearchDto,
+    @Query() dto: MysteryBoxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
     return this.mysteryboxService.search(dto, userEntity);
@@ -45,7 +45,7 @@ export class MysteryBoxController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MysteryboxUpdateDto): Promise<MysteryBoxEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MysteryBoxUpdateDto): Promise<MysteryBoxEntity> {
     return this.mysteryboxService.update({ id }, dto);
   }
 
@@ -56,7 +56,7 @@ export class MysteryBoxController {
   }
 
   @Post("/")
-  public create(@Body() dto: MysteryboxCreateDto): Promise<MysteryBoxEntity> {
+  public create(@Body() dto: MysteryBoxCreateDto): Promise<MysteryBoxEntity> {
     return this.mysteryboxService.create(dto);
   }
 

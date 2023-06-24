@@ -95,7 +95,7 @@ export class AchievementsRuleService {
     const { contractId, eventType, eventData } = event;
 
     if (eventData && "from" in eventData) {
-      const wallet = eventData.from;
+      const wallet = eventData.account;
       // TODO filter all db.contracts or limit rule events
       const allContracts = await this.contractService.findAll(
         {},

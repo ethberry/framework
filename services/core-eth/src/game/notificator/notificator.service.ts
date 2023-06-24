@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
-import { MobileEventType, RmqProviderType } from "@framework/types";
+import { MobileEventType } from "@framework/types";
 
 import { MerchantService } from "../../infrastructure/merchant/merchant.service";
 import type {
@@ -10,8 +10,6 @@ import type {
   IGradeData,
   IPurchaseData,
   IPurchaseRandomData,
-  IRentData,
-  IRentUserUpdateData,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
@@ -25,8 +23,6 @@ export class NotificatorService {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    @Inject(RmqProviderType.MOBILE_SERVICE)
-    private mobileClientProxy: ClientProxy,
     private readonly configService: ConfigService,
     private readonly merchantService: MerchantService,
   ) {}
@@ -59,22 +55,43 @@ export class NotificatorService {
   }
 
   // MODULE:CORE
-  public purchase(data: IPurchaseData): void {
-    this.mobileClientProxy.emit(MobileEventType.PURCHASE, data);
+  public purchase(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE, data).toPromise();
+    });
   }
 
-  public purchaseRandom(data: IPurchaseRandomData): void {
-    this.mobileClientProxy.emit(MobileEventType.PURCHASE_RANDOM, data);
-  }
-
-  // MODULE:LOTTERY
-  public purchaseLottery(data: IPurchaseData): void {
-    this.mobileClientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data);
+  public purchaseRandom(data: IPurchaseRandomData): Promise<any> {
+    return this.sendMessage(data.item.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_RANDOM, data).toPromise();
+    });
   }
 
   // MODULE:RAFFLE
-  public purchaseRaffle(data: IPurchaseData): void {
-    this.mobileClientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data);
+  public purchaseRaffle(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
+    });
+  }
+
+  // MODULE:LOTTERY
+  public purchaseLottery(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_LOTTERY, data).toPromise();
+    });
+  }
+
+  // MODULE:MYSTERY
+  public purchaseMystery(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+    });
+  }
+
+  public unpackMystery(data: IPurchaseData): Promise<any> {
+    return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
+    });
   }
 
   // MODULE:CLAIM
@@ -97,15 +114,6 @@ export class NotificatorService {
     });
   }
 
-  // MODULE:RENTABLE
-  public rent(data: IRentData): void {
-    this.mobileClientProxy.emit(MobileEventType.RENT, data);
-  }
-
-  public updateUser(data: IRentUserUpdateData): void {
-    this.mobileClientProxy.emit(MobileEventType.RENT_USER, data);
-  }
-
   // MODULE:GRADE
   public grade(data: IGradeData): Promise<any> {
     return this.sendMessage(data.grade.contract!.merchantId, clientProxy => {
@@ -113,25 +121,28 @@ export class NotificatorService {
     });
   }
 
-  // MODULE:GENES
-  // public breed(data: IGradeData): void {
-  //   this.mobileClientProxy.emit(MobileEventType.UPGRADE, data);
-  // }
-
   // MODULE:STAKING
-  public stakingDepositStart(data: IStakingDepositStartData): void {
-    this.mobileClientProxy.emit(MobileEventType.STAKING_START, data);
+  public stakingDepositStart(data: IStakingDepositStartData): Promise<any> {
+    return this.sendMessage(data.stakingDeposit.stakingRule!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_DEPOSIT_START, data).toPromise();
+    });
   }
 
-  public stakingDepositFinish(data: IStakingDepositFinishData): void {
-    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  public stakingDepositFinish(data: IStakingDepositFinishData): Promise<any> {
+    return this.sendMessage(data.stakingDeposit.stakingRule!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_DEPOSIT_FINISH, data).toPromise();
+    });
   }
 
-  public stakingRuleCreated(data: IStakingRuleCreatedData): void {
-    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  public stakingRuleCreated(data: IStakingRuleCreatedData): Promise<any> {
+    return this.sendMessage(data.stakingRule.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_RULE_CREATED, data).toPromise();
+    });
   }
 
-  public stakingRuleUpdated(data: IStakingRuleUpdatedData): void {
-    this.mobileClientProxy.emit(MobileEventType.STAKING_FINISH, data);
+  public stakingRuleUpdated(data: IStakingRuleUpdatedData): Promise<any> {
+    return this.sendMessage(data.stakingRule.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.STAKING_RULE_UPDATED, data).toPromise();
+    });
   }
 }

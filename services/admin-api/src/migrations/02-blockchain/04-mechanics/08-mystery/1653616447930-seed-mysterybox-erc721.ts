@@ -11,11 +11,13 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        33101
+        102120101
       ), (
-        33201
+        102120102
       ), (
-        33301
+        102128002
+      ), (
+        202120101
       );
     `);
 
@@ -29,21 +31,27 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
-        33101
+        102120101
       ), (
         'ERC721',
         10306,
-        1030601, -- sword
+        1030601, -- Sword
         '1',
-        33201
+        102120102
+      ), (
+        'ERC721',
+        10380,
+        1038001, -- Trousers
+        '1',
+        102128002
       ), (
         'ERC721',
         20301,
         2030101, -- bep
         '1',
-        33301
+        202120101
       );
     `);
 
@@ -58,28 +66,37 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Sword Mysterybox',
+        'Sword Mystery box',
         '${simpleFormatting}',
         '${imageUrl}',
-        33101,
+        102120101,
         1110101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Sword Mysterybox (inactive)',
+        'Sword Mystery box (inactive)',
         '${simpleFormatting}',
         '${imageUrl}',
-        33201,
+        102120102,
         1110102,
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Mysterybox (BEP)',
+        'Trousers Loot bob',
         '${simpleFormatting}',
         '${imageUrl}',
-        33301,
+        102128002,
+        1118001,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Mystery box (BEP)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        202120101,
         2110101,
         'ACTIVE',
         '${currentDateTime}',

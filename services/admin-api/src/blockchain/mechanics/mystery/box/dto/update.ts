@@ -4,10 +4,10 @@ import { Type } from "class-transformer";
 
 import { MysteryboxStatus } from "@framework/types";
 
-import { IMysteryboxUpdateDto } from "../interfaces";
+import { IMysteryBoxUpdateDto } from "../interfaces";
 import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
 
-export class MysteryboxUpdateDto implements IMysteryboxUpdateDto {
+export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

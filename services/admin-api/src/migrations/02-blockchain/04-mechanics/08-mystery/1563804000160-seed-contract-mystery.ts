@@ -7,10 +7,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractMysteryboxSimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
-    const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
-    const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
-    const erc721ContractMysteryboxBlacklistPausableAddress =
+    const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
+    const erc721ContractMysteryPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
+    const erc721ContractMysteryBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
+    const erc721ContractMysteryBlacklistPausableAddress =
       process.env.ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
@@ -37,7 +37,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         updated_at
       ) VALUES (
         11101,
-        '${erc721ContractMysteryboxSimpleAddress}',
+        '${erc721ContractMysterySimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (weapon)',
         '${simpleFormatting}',
@@ -56,7 +56,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11102,
-        '${erc721ContractMysteryboxPausableAddress}',
+        '${erc721ContractMysteryPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
         '${simpleFormatting}',
@@ -75,7 +75,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11103,
-        '${erc721ContractMysteryboxSimpleAddress}',
+        '${erc721ContractMysterySimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (new)',
         '${simpleFormatting}',
@@ -94,7 +94,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11104,
-        '${erc721ContractMysteryboxPausableAddress}',
+        '${erc721ContractMysteryPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (pausable)',
         '${simpleFormatting}',
@@ -113,7 +113,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         11105,
-        '${erc721ContractMysteryboxBlacklistAddress}',
+        '${erc721ContractMysteryBlacklistAddress}',
         '${chainId}',
         'MYSTERY BOX (blacklist)',
         '${simpleFormatting}',
@@ -131,8 +131,27 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        11180,
+        '${erc721ContractMysterySimpleAddress}',
+        '${chainId}',
+        'LOOT BOX',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'LOOT BOX',
+        'LB721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{}',
+        'MYSTERY',
+        '${fromBlock}',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         11106,
-        '${erc721ContractMysteryboxBlacklistPausableAddress}',
+        '${erc721ContractMysteryBlacklistPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (mixed)',
         '${simpleFormatting}',
@@ -151,7 +170,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         21101,
-        '${erc721ContractMysteryboxSimpleAddress}',
+        '${erc721ContractMysterySimpleAddress}',
         56,
         'MYSTERY BOX (BEP)',
         '${simpleFormatting}',

@@ -11,7 +11,7 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        34101
+        102120201
       );
     `);
 
@@ -27,7 +27,7 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
         10406,
         1040601, -- warrior
         '1',
-        34101
+        102120201
       );
     `);
 
@@ -45,7 +45,7 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
         'Warrior Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        34101,
+        102120201,
         1110401,
         'ACTIVE',
         '${currentDateTime}',

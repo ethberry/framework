@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, WeiPerEther, ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -31,6 +31,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
+          externalId: "1220101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
@@ -84,6 +85,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
+          externalId: "1220101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
@@ -137,6 +139,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
+          externalId: "1220101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
@@ -190,6 +193,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[1],
+          externalId: "1220101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
@@ -243,6 +247,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[2],
+          externalId: "1220101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,

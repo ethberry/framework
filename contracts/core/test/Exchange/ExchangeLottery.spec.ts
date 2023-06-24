@@ -7,7 +7,7 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
-import { expiresAt, extra, params } from "../constants";
+import { expiresAt, externalId, extra, params } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeLottery", function () {
@@ -110,12 +110,13 @@ describe("ExchangeLottery", function () {
           },
           signature,
         );
-        // event PurchaseLottery(address account, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
 
+        // PurchaseLottery(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId, bytes32 numbers);
         await expect(tx1)
           .to.emit(exchangeInstance, "PurchaseLottery")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,
@@ -486,6 +487,7 @@ describe("ExchangeLottery", function () {
           .to.emit(exchangeInstance, "PurchaseLottery")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,

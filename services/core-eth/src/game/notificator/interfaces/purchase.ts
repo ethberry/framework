@@ -1,8 +1,9 @@
 import type { IAssetComponentHistory } from "@framework/types";
+
 // import { IAssetItem } from "@framework/types";
 
 export interface IPurchaseData {
-  account: string;
+  address: string;
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
   transactionHash: string;

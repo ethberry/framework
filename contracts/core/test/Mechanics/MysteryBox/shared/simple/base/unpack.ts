@@ -96,8 +96,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
           .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount]);
       });
     });
@@ -125,8 +125,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
           .to.emit(erc20SimpleInstance, "Transfer")
           .withArgs(await mysteryboxInstance.getAddress(), receiver.address, amount);
       });
@@ -155,8 +155,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
           .to.emit(erc721SimpleInstance, "Transfer")
           .withArgs(ZeroAddress, receiver.address, tokenId);
       });
@@ -188,10 +188,10 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId);
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId);
 
         // RANDOM
         await randomRequest(erc721RandomInstance, vrfInstance);
@@ -224,8 +224,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
           .to.emit(erc998SimpleInstance, "Transfer")
           .withArgs(ZeroAddress, receiver.address, tokenId);
       });
@@ -257,8 +257,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId);
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId);
 
         await randomRequest(erc998RandomInstance, vrfInstance);
 
@@ -291,8 +291,8 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
-          .withArgs(tokenId)
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
+          .withArgs(receiver.address, tokenId)
           .to.emit(erc1155SimpleInstance, "TransferSingle")
           .withArgs(await mysteryboxInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount);
       });
@@ -367,7 +367,7 @@ export function shouldUnpackBox(factory: () => Promise<any>) {
         await expect(tx2)
           .to.emit(mysteryboxInstance, "Transfer")
           .withArgs(receiver.address, ZeroAddress, tokenId)
-          .to.emit(mysteryboxInstance, "UnpackMysterybox")
+          .to.emit(mysteryboxInstance, "UnpackMysteryBox")
           .withArgs(tokenId)
           .to.changeEtherBalances([receiver, mysteryboxInstance], [amount, -amount])
           .to.emit(erc20SimpleInstance, "Transfer")

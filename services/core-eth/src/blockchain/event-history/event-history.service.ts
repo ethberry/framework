@@ -154,7 +154,7 @@ export class EventHistoryService {
           ExchangeEventType.Purchase,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
-          ExchangeEventType.Mysterybox,
+          ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
         ]),
       });
@@ -190,7 +190,7 @@ export class EventHistoryService {
           ExchangeEventType.Upgrade,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
-          ExchangeEventType.Mysterybox,
+          ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,
           ExchangeEventType.PurchaseLottery,

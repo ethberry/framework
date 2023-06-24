@@ -72,7 +72,7 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc721_mysterybox`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc721_mysterybox_status_enum;`);
+    await queryRunner.dropTable(`${ns}.mysterybox`);
+    await queryRunner.query(`DROP TYPE ${ns}.mysterybox_status_enum;`);
   }
 }

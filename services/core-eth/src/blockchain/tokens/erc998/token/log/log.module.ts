@@ -49,7 +49,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.TransferChild,
               ContractEventType.UnWhitelistedChild,
               ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysterybox,
+              ContractEventType.UnpackMysteryBox,
               ContractEventType.Unpaused,
               ContractEventType.WhitelistedChild,
               ContractEventType.LevelUp,

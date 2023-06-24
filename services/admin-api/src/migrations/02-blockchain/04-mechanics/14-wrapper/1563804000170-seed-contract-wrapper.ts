@@ -32,7 +32,7 @@ export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        11201,
+        11301,
         '${erc721ContractWrapperAddress}',
         '${chainId}',
         'WRAPPER',

@@ -20,36 +20,36 @@ export class SeedWrapperAt1563804000370 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        112010101,
+        113010101,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
-        112010101,
+        113010101,
         'MINTED',
-        1120101,
+        1130101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        112010102,
+        113010102,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
-        112010102,
+        113010102,
         'MINTED',
-        1120101,
+        1130101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        112010103,
+        113010103,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "170101",
         })}',
         100,
-        112010103,
+        113010103,
         'MINTED',
-        1120101,
+        1130101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );

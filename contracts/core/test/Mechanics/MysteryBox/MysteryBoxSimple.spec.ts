@@ -8,8 +8,8 @@ import { shouldBehaveLikeERC721MysteryBox } from "./shared/simple/base";
 import { customMint } from "./shared/simple/customMintFn";
 import { shouldBehaveLikeTopUp } from "../../shared/topUp";
 
-describe("ERC721MysteryboxSimple", function () {
-  const factory = () => deployERC721("ERC721MysteryboxSimple");
+describe("ERC721MysteryBoxSimple", function () {
+  const factory = () => deployERC721("ERC721MysteryBoxSimple");
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 

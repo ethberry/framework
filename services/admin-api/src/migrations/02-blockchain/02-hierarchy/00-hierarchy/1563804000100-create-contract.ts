@@ -75,7 +75,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 040x - erc998
     // 050x - erc1155
     // 011x - mystery
-    // 012x - wrapper
+    // 012x - mystery
+    // 013x - wrapper
     // 021x - raffle
     // 022x - lottery
 

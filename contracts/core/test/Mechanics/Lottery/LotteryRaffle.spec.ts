@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers, network, web3 } from "hardhat";
-import { encodeBytes32String, getUint, parseEther, ZeroAddress, toQuantity } from "ethers";
+import { encodeBytes32String, getUint, parseEther, toQuantity, ZeroAddress } from "ethers";
 
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -9,7 +9,7 @@ import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemuni
 
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE, tokenName } from "@gemunion/contracts-constants";
 
-import { expiresAt, extra, tokenId } from "../../constants";
+import { expiresAt, externalId, extra, tokenId } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
@@ -385,6 +385,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -525,6 +526,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -688,6 +690,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -778,6 +781,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -943,6 +947,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -1113,6 +1118,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -1203,6 +1209,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,
@@ -1553,6 +1560,7 @@ describe("Raffle", function () {
         .to.emit(exchangeInstance, "PurchaseRaffle")
         .withArgs(
           receiver.address,
+          externalId,
           isEqualEventArgArrObj(
             {
               tokenType: 0n,

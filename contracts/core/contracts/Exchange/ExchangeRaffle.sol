@@ -15,7 +15,7 @@ import "./interfaces/IAsset.sol";
 import "./interfaces/ILottery.sol";
 
 abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable {
-  event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
+  event PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
 
   function purchaseRaffle(
     Params memory params,
@@ -44,7 +44,7 @@ abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable 
     // set tokenID = ticketID
     items[1].tokenId = tokenId;
 
-    emit PurchaseRaffle(_msgSender(), items, price, roundId);
+    emit PurchaseRaffle(_msgSender(), params.externalId, items, price, roundId);
 
     _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }

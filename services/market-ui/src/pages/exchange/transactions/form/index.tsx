@@ -13,6 +13,8 @@ export enum ContractEventType {
   Purchase = "Purchase",
   PurchaseRaffle = "PurchaseRaffle",
   PurchaseLottery = "PurchaseLottery",
+  PurchaseMysteryBox = "PurchaseMysteryBox",
+  UnpackMysteryBox = "UnpackMysteryBox",
   Transfer = "Transfer", // ERC20,ERC721,ERC998
   TransferSingle = "TransferSingle", // ERC1155
   TransferBatch = "TransferBatch", // ERC1155

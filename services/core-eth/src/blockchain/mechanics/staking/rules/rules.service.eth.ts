@@ -7,12 +7,12 @@ import type {
   IAssetDto,
   IErc1363TransferReceivedEvent,
   IStakingBalanceWithdrawEvent,
-  IStakingRuleCreateEvent,
-  IStakingDepositStartEvent,
   IStakingDepositFinishEvent,
   IStakingDepositReturnEvent,
-  IStakingRuleUpdateEvent,
+  IStakingDepositStartEvent,
   IStakingDepositWithdrawEvent,
+  IStakingRuleCreateEvent,
+  IStakingRuleUpdateEvent,
 } from "@framework/types";
 import { DurationUnit, StakingRuleStatus } from "@framework/types";
 
@@ -41,7 +41,7 @@ export class StakingRulesServiceEth {
     const {
       args: { rule, ruleId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const { deposit, reward, period, penalty, maxStake, recurrent, active } = rule;
 
@@ -60,7 +60,7 @@ export class StakingRulesServiceEth {
       }
 
       depositItem.components.push({
-        tokenType: depositTemplate.contract.contractType,
+        tokenType: depositTemplate.contract.contractType!,
         contractId: depositTemplate.contract.id,
         templateId: depositTemplate.id,
         amount,
@@ -83,7 +83,7 @@ export class StakingRulesServiceEth {
       }
 
       rewardItem.components.push({
-        tokenType: rewardTemplate.contract.contractType,
+        tokenType: rewardTemplate.contract.contractType!,
         contractId: rewardTemplate.contract.id,
         templateId: rewardTemplate.id,
         amount,
@@ -98,7 +98,7 @@ export class StakingRulesServiceEth {
 
     // new ACTIVE rule is NEW to hide it from display in market
     const stakingRuleStatus = active === true ? StakingRuleStatus.NEW : StakingRuleStatus.INACTIVE;
-    await this.stakingRulesService.create({
+    const stakingRuleEntity = await this.stakingRulesService.create({
       title: "new STAKING rule",
       description: emptyStateString,
       deposit: depositItem,
@@ -113,12 +113,10 @@ export class StakingRulesServiceEth {
       contractId: contractEntity.id,
     });
 
-    this.notificatorService.stakingRuleCreated({
-      externalId: ruleId,
-      deposit: depositItem,
-      reward: rewardItem,
-      penalty: Number(penalty),
-      recurrent,
+    await this.notificatorService.stakingRuleCreated({
+      stakingRule: stakingRuleEntity,
+      address,
+      transactionHash,
     });
   }
 
@@ -127,23 +125,25 @@ export class StakingRulesServiceEth {
     const {
       args: { ruleId, active },
     } = event;
+    const { address, transactionHash } = context;
 
-    const stakingEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
+    const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
 
-    if (!stakingEntity) {
+    if (!stakingRuleEntity) {
       this.loggerService.error("stakingRuleNotFound", ruleId, StakingRulesServiceEth.name);
       throw new NotFoundException("stakingRuleNotFound");
     }
 
-    Object.assign(stakingEntity, {
+    Object.assign(stakingRuleEntity, {
       stakingRuleStatus: active ? StakingRuleStatus.ACTIVE : StakingRuleStatus.INACTIVE,
     });
 
-    await stakingEntity.save();
+    await stakingRuleEntity.save();
 
-    this.notificatorService.stakingRuleUpdated({
-      externalId: ruleId,
-      active,
+    await this.notificatorService.stakingRuleUpdated({
+      stakingRule: stakingRuleEntity,
+      address,
+      transactionHash,
     });
   }
 
@@ -153,6 +153,7 @@ export class StakingRulesServiceEth {
     const {
       args: { stakingId, ruleId, owner, startTimestamp },
     } = event;
+    const { address, transactionHash } = context;
 
     const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
 
@@ -161,18 +162,18 @@ export class StakingRulesServiceEth {
       throw new NotFoundException("stakingRuleNotFound");
     }
 
-    await this.stakingDepositService.create({
+    const stakingDepositEntity = await this.stakingDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       stakingRuleId: stakingRuleEntity.id,
+      stakingRule: stakingRuleEntity,
     });
 
-    this.notificatorService.stakingDepositStart({
-      account: owner.toLowerCase(),
-      externalId: Number(stakingId),
-      startTimestamp: new Date(Number(startTimestamp) * 1000).getDate(),
-      stakingRuleId: stakingRuleEntity.id,
+    await this.notificatorService.stakingDepositStart({
+      stakingDeposit: stakingDepositEntity,
+      address,
+      transactionHash,
     });
   }
 
@@ -188,14 +189,22 @@ export class StakingRulesServiceEth {
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
-      args: { stakingId, owner, finishTimestamp, multiplier },
+      args: { stakingId },
     } = event;
+    const { address, transactionHash } = context;
 
-    this.notificatorService.stakingDepositFinish({
-      account: owner.toLowerCase(),
-      externalId: Number(stakingId),
-      startTimestamp: new Date(Number(finishTimestamp) * 1000).getDate(),
-      multiplier: Number(multiplier),
+    const stakingDepositEntity = await this.stakingDepositService.findOne({
+      externalId: stakingId,
+    });
+
+    if (!stakingDepositEntity) {
+      throw new NotFoundException("stakingDepositNotFound");
+    }
+
+    await this.notificatorService.stakingDepositFinish({
+      stakingDeposit: stakingDepositEntity,
+      address,
+      transactionHash,
     });
   }
 

@@ -11,7 +11,7 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        101120101
+        102130101
       );
     `);
 
@@ -29,15 +29,15 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1120101,
+        1130101,
         'Wrapper',
         '${simpleFormatting}',
         '${imageUrl}',
-        101120101,
+        102130101,
         0,
         4,
         'ACTIVE',
-        11201,
+        11301,
         '${currentDateTime}',
         '${currentDateTime}'
       );

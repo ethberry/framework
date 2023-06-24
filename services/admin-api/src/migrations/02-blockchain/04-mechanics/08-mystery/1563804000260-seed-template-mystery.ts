@@ -11,15 +11,17 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        101110101
+        102110101
       ), (
-        101110102
+        102110102
       ), (
-        101110401
+        102110401
       ), (
-        101110501
+        102110501
       ), (
-        101110601
+        102110601
+      ), (
+        102118001
       ), (
         201110101
       );
@@ -43,7 +45,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Sword Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        101110101,
+        102110101,
         0,
         4,
         'ACTIVE',
@@ -55,7 +57,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Sword Mysterybox Inactive',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        101110102,
+        102110102,
         0,
         1,
         'INACTIVE',
@@ -67,7 +69,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Warrior Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        101110401,
+        102110401,
         0,
         1,
         'ACTIVE',
@@ -79,7 +81,7 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Gold Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        101110501,
+        102110501,
         0,
         1,
         'ACTIVE',
@@ -91,11 +93,23 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         'Mixed Mysterybox',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
-        101110601,
+        102110601,
         0,
         1,
         'ACTIVE',
         11106,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1118001,
+        'Loot box',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fmysterybox.png?alt=media&token=868930d3-1afa-4f99-afca-c8a68310b259',
+        102118001,
+        0,
+        1,
+        'ACTIVE',
+        11180,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

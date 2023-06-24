@@ -60,7 +60,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         'UnpackWrapper',
 
         -- MODULE MYSTERY
-        'UnpackMysterybox',
+        'UnpackMysteryBox',
 
         -- MODULE:PAUSE
         'Paused',
@@ -100,7 +100,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
         -- MODULE:CRAFT
         'Craft',
         -- MODULE:MYSTERY
-        'Mysterybox',
+        'PurchaseMysteryBox',
         -- MODULE:GRADE
         'Upgrade',
         -- MODULE:WAITLIST
