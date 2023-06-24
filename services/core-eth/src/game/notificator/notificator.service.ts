@@ -17,6 +17,7 @@ import type {
   IWaitListRewardClaimedData,
   IWaitListRewardSetData,
 } from "./interfaces";
+import { IUnpackMysteryData } from "./interfaces/mystery-box";
 
 @Injectable()
 export class NotificatorService {
@@ -88,7 +89,7 @@ export class NotificatorService {
     });
   }
 
-  public unpackMystery(data: IPurchaseData): Promise<any> {
+  public unpackMystery(data: IUnpackMysteryData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_MYSTERY, data).toPromise();
     });
