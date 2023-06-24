@@ -7,7 +7,7 @@
   "dependencies": {
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/nest-js-module-license": "4.0.1",
+    "@gemunion/nest-js-module-license": "4.0.2",
     "@gemunion/nest-js-module-mailjet": "4.0.2",
     "@gemunion/nest-js-module-request-logger": "3.0.2",
     "@gemunion/nest-js-module-winston-logdna": "3.0.2",
