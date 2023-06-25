@@ -1,10 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsISO8601, IsString } from "class-validator";
+import { IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
+import { Transform } from "class-transformer";
 
-import { AccountDto } from "@gemunion/collection";
 import { IVestingContractDeployDto } from "@framework/types";
 
-export class VestingContractDeployDto extends AccountDto implements IVestingContractDeployDto {
+export class VestingContractDeployDto implements IVestingContractDeployDto {
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public beneficiary: string;
+
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
@@ -12,9 +18,12 @@ export class VestingContractDeployDto extends AccountDto implements IVestingCont
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
   public cliffInMonth: number;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Max(10000, { message: "rangeOverflow" })
   public monthlyRelease: number;
 }

@@ -5,7 +5,9 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IVestingContractDeployDto } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+
+import { IVestingContractDeployDto, IUser } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
@@ -18,9 +20,11 @@ export interface IVestingDeployButtonProps {
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className } = props;
 
+  const user = useUser<IUser>();
+
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingContractDeployDto, web3Context, sign) => {
-      const { contractTemplate, account, startTimestamp, duration } = values;
+      const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = values;
 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
@@ -33,12 +37,13 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         {
-          account,
+          beneficiary,
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
-          duration: duration * 60 * 60 * 24, // days in seconds
-          contractTemplate,
+          cliffInMonth,
+          monthlyRelease,
         },
         sign.signature,
       ) as Promise<void>;

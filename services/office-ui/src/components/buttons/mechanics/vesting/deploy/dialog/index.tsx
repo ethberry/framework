@@ -15,7 +15,7 @@ export interface IVestingDeployDialogProps {
 
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
   const fixedValues: IVestingContractDeployDto = {
-    account: "",
+    beneficiary: "",
     startTimestamp: new Date().toISOString(),
     cliffInMonth: 12,
     monthlyRelease: 1000,
