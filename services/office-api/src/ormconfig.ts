@@ -29,6 +29,10 @@ import { PhotoEntity } from "./ecommerce/photo/photo.entity";
 import { AddressEntity } from "./ecommerce/address/address.entity";
 import { OrderItemEntity } from "./ecommerce/order-item/order-item.entity";
 import { CategoryEntity } from "./ecommerce/category/category.entity";
+import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity";
+import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
+import { StockEntity } from "./ecommerce/stock/stock.entity";
+import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -66,6 +70,10 @@ const config: PostgresConnectionOptions = {
     PhotoEntity,
     ProductEntity,
     PromoEntity,
+    ParameterEntity,
+    ProductItemEntity,
+    ProductItemParameterEntity,
+    StockEntity,
   ],
   // We are using migrations, synchronize should market-api set to false.
   synchronize: false,
