@@ -10,6 +10,7 @@ import {
   IRaffleRoundEndedEvent,
   IRaffleRoundFinalizedEvent,
   IRaffleRoundStartedEvent,
+  TokenType,
 } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
@@ -75,7 +76,7 @@ export class RaffleRoundServiceEth {
     const priceAsset = {
       components: [
         {
-          tokenType: priceTemplate.contract.contractType,
+          tokenType: priceTemplate.contract.contractType || TokenType.NATIVE,
           contractId: priceTemplate.contract.id,
           templateId: priceTemplate.id,
           amount: Number(amount).toString(),

@@ -103,6 +103,11 @@ export class AccessControlServiceEth {
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
 
-    this.notificatorService.updateUser({ tokenId, user, expires });
+    await this.notificatorService.updateUser({
+      merchantId: erc721TokenEntity.template.contract.merchantId,
+      tokenId,
+      user,
+      expires,
+    });
   }
 }

@@ -19,6 +19,13 @@ import type {
 } from "./interfaces";
 import { IUnpackMysteryData } from "./interfaces/mystery-box";
 
+export interface IRentUserUpdateData {
+  merchantId: number;
+  tokenId: string;
+  user: string;
+  expires: string;
+}
+
 @Injectable()
 export class NotificatorService {
   constructor(
@@ -53,6 +60,12 @@ export class NotificatorService {
       .catch(e => {
         this.loggerService.error(e, NotificatorService.name);
       });
+  }
+
+  public updateUser(data: IRentUserUpdateData): Promise<any> {
+    return this.sendMessage(data.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RENT_USER, data).toPromise();
+    });
   }
 
   // MODULE:CORE

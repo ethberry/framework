@@ -10,6 +10,7 @@ import {
   IRoundEndedEvent,
   IRoundFinalizedEvent,
   IRoundStartedEvent,
+  TokenType,
 } from "@framework/types";
 
 import { LotteryRoundService } from "./round.service";
@@ -76,7 +77,7 @@ export class LotteryRoundServiceEth {
     const priceAsset = {
       components: [
         {
-          tokenType: priceTemplate.contract.contractType,
+          tokenType: priceTemplate.contract.contractType || TokenType.NATIVE,
           contractId: priceTemplate.contract.id,
           templateId: priceTemplate.id,
           amount: Number(amount).toString(),
