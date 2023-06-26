@@ -19,7 +19,7 @@ export interface IPyramidContractEditDialogProps {
 export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, imageUrl, contractStatus, description, address } = initialValues;
+  const { id, title, imageUrl, contractStatus, description, address, contractFeatures } = initialValues;
 
   const fixedValues = {
     id,
@@ -28,6 +28,7 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
     imageUrl,
     description,
     contractStatus,
+    contractFeatures,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -38,7 +39,7 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
       validationSchema={validationSchema}
       message={message}
       testId="PyramidContractEditForm"
-      action={<BlockchainInfoPopover address={address} />}
+      action={<BlockchainInfoPopover address={address} contractFeatures={contractFeatures} />}
       {...rest}
     >
       <TextInput name="title" />

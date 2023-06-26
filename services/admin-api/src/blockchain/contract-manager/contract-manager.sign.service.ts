@@ -81,8 +81,8 @@ import ERC721CBlacklistSol from "@framework/core-contracts/artifacts/contracts/M
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
-import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/LinearReferralPyramid.sol/LinearReferralPyramid.json";
+import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
+import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
@@ -864,9 +864,9 @@ export class ContractManagerSignService {
     const { contractTemplate } = dto;
     switch (contractTemplate) {
       case PyramidContractTemplates.SIMPLE:
-        return PyramidSol.bytecode;
+        return PyramidBasicSol.bytecode;
       case PyramidContractTemplates.SPLITTER:
-        return PyramidSol.bytecode;
+        return PyramidReferralSol.bytecode;
       case PyramidContractTemplates.REFERRAL:
         return PyramidReferralSol.bytecode;
       default:

@@ -28,17 +28,14 @@ export class RatePlanService {
     contractModule: ModuleType,
     contractType: TokenType | null,
   ): Promise<number> {
-    const merchantEntity = await this.merchantService.findOne({ id: userEntity.merchantId });
-
-    if (!merchantEntity) {
-      throw new NotFoundException("merchantNotFound");
-    }
-
     return this.findOne({
       contractModule,
       contractType: contractType || IsNull(),
-      ratePlan: merchantEntity.ratePlan,
+      ratePlan: userEntity.merchant.ratePlan,
     }).then(rateLimitEntity => {
+      if (userEntity.merchantId === 1) {
+        return 0;
+      }
       if (!rateLimitEntity) {
         return 0;
       }

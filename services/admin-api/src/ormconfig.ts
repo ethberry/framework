@@ -326,6 +326,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { RatePlanEntity } from "./infrastructure/plan/plan.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -338,6 +339,7 @@ const config: PostgresConnectionOptions = {
     OtpEntity,
     SettingsEntity,
     PageEntity,
+    RatePlanEntity,
     /* blockchain */
     ContractManagerEntity,
     EventHistoryEntity,

@@ -90,13 +90,12 @@ export class ContractManagerService {
     contractType: TokenType | null,
   ): Promise<void> {
     const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
-
     const count = await this.contractService.count({
       contractModule,
       contractType: contractType || IsNull(),
     });
 
-    if (count >= limit) {
+    if (limit > 0 && count >= limit) {
       throw new ForbiddenException("rateLimitExceeded");
     }
   }
