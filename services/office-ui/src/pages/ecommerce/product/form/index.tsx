@@ -37,7 +37,7 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
               <SelectInput multiple name="productStatus" options={ProductStatus} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <EntityInput multiple name="categoryIds" controller="categories" />
+              <EntityInput multiple name="categoryIds" controller="ecommerce/categories" />
             </Grid>
           </Grid>
         </Collapse>
