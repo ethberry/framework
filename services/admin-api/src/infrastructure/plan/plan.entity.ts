@@ -1,12 +1,12 @@
 import { Column, Entity } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 import type { IRatePlan } from "@framework/types";
 import { ModuleType, RatePlan, TokenType } from "@framework/types";
 
 @Entity({ schema: ns, name: "rate_plan" })
-export class RatePlanEntity extends IdDateBaseEntity implements IRatePlan {
+export class RatePlanEntity extends IdBaseEntity implements IRatePlan {
   @Column({
     type: "enum",
     enum: RatePlan,
