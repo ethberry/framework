@@ -61,10 +61,10 @@ export const Dashboard: FC = () => {
           <VestingSection />
           <WaitListSection />
           <ClaimSection />
+          <GradeSection />
+          <CraftSection />
           <DropSection />
           <RentSection />
-          <CraftSection />
-          <GradeSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
           <RaffleSection />

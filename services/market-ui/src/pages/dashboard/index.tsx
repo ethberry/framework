@@ -46,12 +46,12 @@ export const Dashboard: FC = () => {
           <WrapperSection />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <VestingSection />
           <WaitListSection />
           <ClaimSection />
+          <VestingSection />
+          <CraftSection />
           <DropSection />
           <RentSection />
-          <CraftSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
           <RaffleSection />
