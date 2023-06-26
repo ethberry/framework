@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterface {
+export class SeedCraftErc721Erc1155At1653616448350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -10,13 +10,9 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        40101
+        102350101
       ), (
-        40102
-      ), (
-        40111
-      ), (
-        40112
+        102350102
       );
     `);
 
@@ -28,52 +24,42 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         amount,
         asset_id
       ) VALUES (
+        'ERC721',
+        10306,
+        1030601, -- sword
+        1,
+        102350101
+      ), (
         'ERC1155',
         10501,
         1050102, -- wood
-        1,
-        40101
+        10,
+        102350102
       ), (
         'ERC1155',
         10501,
         1050103, -- iron
         10,
-        40111
-      ), (
-        'ERC1155',
-        10501,
-        1050104, -- wood log
-        1,
-        40102
-      ), (
-        'ERC1155',
-        10501,
-        1050105, -- iron ingot
-        10,
-        40112
+        102350102
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.craft (
+        id,
         item_id,
         price_id,
         craft_status,
         created_at,
         updated_at
       ) VALUES (
-        40101,
-        40111,
+        1030501,
+        102350101,
+        102350102,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
-        40102,
-        40112,
-        'NEW',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      );
+      )
     `);
   }
 
