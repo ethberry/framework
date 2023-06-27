@@ -78,10 +78,16 @@ export class AccessControlServiceEth {
 
   public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
     const {
-      args: { newOwner /* previousOwner */ },
+      args: { newOwner, previousOwner },
     } = event;
 
     await this.eventHistoryService.updateHistory(event, context);
+
+    await this.accessControlService.delete({
+      address: context.address.toLowerCase(),
+      account: previousOwner.toLowerCase(),
+      role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
+    });
 
     await this.accessControlService.create({
       address: context.address.toLowerCase(),
