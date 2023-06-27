@@ -11,7 +11,7 @@ import { getContractName } from "../../test/utils";
 import { expiresAt, externalId } from "../../test/constants";
 
 const delay = 1; // block delay
-const delayMs = 900; // block delay ms
+const delayMs = 1500; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 interface IObj {
@@ -19,25 +19,25 @@ interface IObj {
   hash?: string;
 }
 
-const recursivelyDecodeResult = (result: Result): Record<string, any> => {
-  if (typeof result !== "object") {
-    // Raw primitive value
-    return result;
-  }
-  try {
-    const obj = result.toObject();
-    if (obj._) {
-      throw new Error("Decode as array, not object");
-    }
-    Object.keys(obj).forEach(key => {
-      obj[key] = recursivelyDecodeResult(obj[key]);
-    });
-    return obj;
-  } catch (err) {
-    // Result is array.
-    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
-  }
-};
+// const recursivelyDecodeResult = (result: Result): Record<string, any> => {
+//   if (typeof result !== "object") {
+//     // Raw primitive value
+//     return result;
+//   }
+//   try {
+//     const obj = result.toObject();
+//     if (obj._) {
+//       throw new Error("Decode as array, not object");
+//     }
+//     Object.keys(obj).forEach(key => {
+//       obj[key] = recursivelyDecodeResult(obj[key]);
+//     });
+//     return obj;
+//   } catch (err) {
+//     // Result is array.
+//     return result.toArray().map(item => recursivelyDecodeResult(item as Result));
+//   }
+// };
 
 const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   if (obj && obj.hash) {
@@ -67,8 +67,9 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          // await accessInstance.grantRole(roles[k], grantee[j]);
-          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          await blockAwaitMs(100);
+          await accessInstance.grantRole(roles[k], grantee[j]);
+          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }
@@ -212,11 +213,11 @@ async function main() {
     await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
-  await blockAwait(delay, delayMs);
-  const eventFilter = vrfInstance.filters.SubscriptionConsumerAdded();
-  const events = await vrfInstance.queryFilter(eventFilter);
-  const { subId, consumer } = recursivelyDecodeResult(events[0].args as unknown as Result);
-  console.info("SubscriptionConsumerAdded", subId, consumer);
+  // await blockAwait(delay, delayMs);
+  // const eventFilter = vrfInstance.filters.SubscriptionConsumerAdded();
+  // const events = await vrfInstance.queryFilter(eventFilter);
+  // const { subId, consumer } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  // console.info("SubscriptionConsumerAdded", subId, consumer);
 
   const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
