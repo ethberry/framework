@@ -9,7 +9,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
-    const exchangeAddressBinance = process.env.EXCHANGE_ADDR_BINANCE || wallet;
+    const exchangeAddressBinance = process.env.EXCHANGE_BINANCE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
