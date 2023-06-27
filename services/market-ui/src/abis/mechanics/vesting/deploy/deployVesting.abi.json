@@ -1,0 +1,97 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "nonce",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "bytecode",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "externalId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct AbstractFactory.Params",
+        "name": "params",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "startTimestamp",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint16",
+            "name": "cliffInMonth",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "monthlyRelease",
+            "type": "uint16"
+          }
+        ],
+        "internalType": "struct VestingFactory.VestingArgs",
+        "name": "args",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Asset[]",
+        "name": "items",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "deployVesting",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

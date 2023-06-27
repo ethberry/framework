@@ -15,6 +15,7 @@ declare global {
       RAFFLE_ADDR: string;
       WAITLIST_ADDR: string;
       CHAIN_ID: string;
+      CONTRACT_MANAGER_ADDR: string;
     }
   }
 }

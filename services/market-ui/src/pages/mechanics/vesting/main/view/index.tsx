@@ -20,6 +20,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
 
   const { address, parameters } = initialValues;
   const { account, startTimestamp, cliffInMonth, monthlyRelease } = parameters as unknown as IVestingParams;
+
   const dateStart = new Date(startTimestamp);
   const dateFinish = addMonths(dateStart, Math.ceil(10000 / monthlyRelease));
 
