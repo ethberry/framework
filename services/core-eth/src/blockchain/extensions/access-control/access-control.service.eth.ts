@@ -5,17 +5,20 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlRoleHash,
   AccessControlRoleType,
+  ContractStatus,
   IAccessControlRoleAdminChangedEvent,
   IAccessControlRoleGrantedEvent,
   IAccessControlRoleRevokedEvent,
   IErc4907UpdateUserEvent,
   IOwnershipTransferredEvent,
+  ModuleType,
 } from "@framework/types";
 
 import { AccessControlService } from "./access-control.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -24,6 +27,7 @@ export class AccessControlServiceEth {
     private readonly loggerService: LoggerService,
     private readonly accessControlService: AccessControlService,
     private readonly tokenService: TokenService,
+    private readonly contractService: ContractService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly notificatorService: NotificatorService,
   ) {}
@@ -48,6 +52,7 @@ export class AccessControlServiceEth {
     const {
       args: { role, account },
     } = event;
+    const { address } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -58,6 +63,24 @@ export class AccessControlServiceEth {
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ],
     });
+
+    if (role === AccessControlRoleHash.MINTER_ROLE) {
+      const systemContractEntity = await this.contractService.findOne({ address: account.toLowerCase() });
+      if (!systemContractEntity) {
+        throw new NotFoundException("contractNotFound");
+      }
+      // if revoked from Exchange - make contract inactive
+      if (systemContractEntity.contractModule === ModuleType.SYSTEM) {
+        const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+        if (!contractEntity) {
+          throw new NotFoundException("contractNotFound");
+        }
+        Object.assign(contractEntity, { contractStatus: ContractStatus.INACTIVE });
+        await contractEntity.save();
+      }
+    }
+    // TODO disable grade somehow if MinterRole revoked?
   }
 
   public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {

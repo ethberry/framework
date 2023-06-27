@@ -14,6 +14,6 @@ export class AccessControlController {
   @ApiAddress("address")
   @Get("/:address")
   public findAll(@Param("address", AddressPipe) address: string): Promise<Array<AccessControlEntity>> {
-    return this.accessControlService.findAll({ address });
+    return this.accessControlService.findAllWithRelations({ address });
   }
 }

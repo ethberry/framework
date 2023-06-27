@@ -10,7 +10,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import type { IAccessControl, IUser } from "@framework/types";
+import type { IAccessControl, IContract, IUser } from "@framework/types";
 import { AccessControlRoleHash } from "@framework/types";
 
 import RevokeRoleABI from "../../../../../abis/extensions/revoke-role/revokeRole.abi.json";
@@ -22,10 +22,15 @@ export interface IAccessControlRevokeRoleDialogProps {
   data: { address: string };
 }
 
+export interface IAccessControlWithRelations extends IAccessControl {
+  address_contract: IContract;
+  account_contract: IContract;
+}
+
 export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
   const { data, ...rest } = props;
 
-  const [rows, setRows] = useState<Array<IAccessControl>>([]);
+  const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
   const user = useUser<IUser>();
 
@@ -38,7 +43,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     { success: false },
   );
 
-  const metaRevokeRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
+  const metaRevokeRole = useMetamask((values: IAccessControlWithRelations, web3Context: Web3ContextType) => {
     const contract = new Contract(data.address, RevokeRoleABI, web3Context.provider?.getSigner());
     return contract.revokeRole(
       Object.values(AccessControlRoleHash)[
@@ -48,14 +53,14 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     ) as Promise<void>;
   });
 
-  const handleRevoke = (values: IAccessControl): (() => Promise<void>) => {
+  const handleRevoke = (values: IAccessControlWithRelations): (() => Promise<void>) => {
     return async () => {
       return metaRevokeRole(values);
     };
   };
 
   useEffect(() => {
-    void fn().then((rows: Array<IAccessControl>) => {
+    void fn().then((rows: Array<IAccessControlWithRelations>) => {
       setRows(rows.filter(row => row.account !== user.profile.wallet));
     });
   }, []);
@@ -68,7 +73,9 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
             {rows.map((access, i) => (
               <ListItem key={i}>
                 <ListItemText>
-                  {access.account}
+                  {access.account_contract?.title || access.account}
+                  {/* <br /> */}
+                  {/* {access.account} */}
                   <br />
                   {access.role}
                 </ListItemText>
