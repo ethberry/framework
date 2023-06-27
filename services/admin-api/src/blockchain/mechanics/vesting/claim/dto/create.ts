@@ -2,8 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import type { IVestingClaimCreateDto } from "@framework/types";
+
 import { VestingContractDeployDto } from "../../../../contract-manager/dto";
-import { IVestingClaimCreateDto } from "../interfaces";
 import { ItemDto } from "../../../../exchange/asset/dto";
 
 export class VestingClaimCreateDto implements IVestingClaimCreateDto {

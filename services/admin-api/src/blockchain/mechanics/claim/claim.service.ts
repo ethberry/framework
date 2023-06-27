@@ -20,7 +20,7 @@ import { ClaimStatus, ClaimType, TokenType } from "@framework/types";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
-import type { IClaimRow, IClaimUploadDto } from "./interfaces";
+import type { IClaimRowDto, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 
 @Injectable()
@@ -211,9 +211,9 @@ export class ClaimService {
       mapLimit(
         claims,
         10,
-        async (row: IClaimRow) => {
+        async ({ account, endTimestamp, tokenType, address, templateId, amount }: IClaimRowDto) => {
           const contractEntity = await this.contractService.findOne({
-            address: row.address,
+            address,
             merchantId: userEntity.merchantId,
           });
 
@@ -223,15 +223,15 @@ export class ClaimService {
 
           return this.create(
             {
-              account: row.account,
-              endTimestamp: row.endTimestamp,
+              account,
+              endTimestamp,
               item: {
                 components: [
                   {
-                    tokenType: row.tokenType,
+                    tokenType,
                     contractId: contractEntity.id,
-                    templateId: row.templateId,
-                    amount: row.amount,
+                    templateId,
+                    amount,
                   },
                 ],
               },

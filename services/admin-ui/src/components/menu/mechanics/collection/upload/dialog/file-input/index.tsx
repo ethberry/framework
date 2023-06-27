@@ -5,13 +5,13 @@ import { v4 } from "uuid";
 import csv2json from "csvtojson";
 
 import { FileInput as AbstractFileInput } from "@gemunion/mui-inputs-file";
+// TODO this is wrong type
+import { IClaimRowDto } from "@framework/types";
 
 import { CsvContentView } from "../../../../../../tables/csv-content";
 import { ICollectionUploadDto } from "../index";
 import { tokensValidationSchema } from "../validation";
 import { useStyles } from "./styles";
-// TODO this is wrong
-import { IClaimRow } from "../../../../../../buttons/mechanics/claim/upload/dialog/file-input";
 
 export interface IFileInputProps {
   initialValues: ICollectionUploadDto;
@@ -35,7 +35,7 @@ export const FileInput: FC<IFileInputProps> = props => {
     form.reset(initialValues);
   };
 
-  const parseCsv = async (csv: File): Promise<IClaimRow[]> => {
+  const parseCsv = async (csv: File): Promise<IClaimRowDto[]> => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = function fileReadCompleted() {
@@ -48,7 +48,7 @@ export const FileInput: FC<IFileInputProps> = props => {
           checkType: true,
         })
           .fromString(reader.result as string)
-          .then((data: IClaimRow[]) => {
+          .then((data: IClaimRowDto[]) => {
             resolve(data.map(token => ({ ...token, id: v4() })));
           });
       };

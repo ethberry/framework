@@ -1,17 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { IVestingClaimUploadDto } from "../interfaces";
-import { VestingClaimCreateDto } from "./create";
+import { BCAssetDto } from "../../../../exchange/asset/dto";
+import { VestingContractDeployDto } from "../../../../contract-manager/dto";
+import { IVestingClaimRow, IVestingClaimUploadDto } from "../interfaces";
+
+export class VestingClaimRow extends Mixin(BCAssetDto, VestingContractDeployDto) implements IVestingClaimRow {}
 
 export class VestingClaimUploadDto implements IVestingClaimUploadDto {
   @ApiProperty({
     isArray: true,
-    type: VestingClaimCreateDto,
+    type: VestingClaimRow,
   })
   @IsArray({ message: "typeMismatch" })
   @ValidateNested()
-  @Type(() => VestingClaimCreateDto)
-  public claims: Array<VestingClaimCreateDto>;
+  @Type(() => VestingClaimRow)
+  public claims: Array<VestingClaimRow>;
 }

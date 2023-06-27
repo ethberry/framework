@@ -4,9 +4,9 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import type { IClaimUploadDto } from "@framework/types";
 
 import { ClaimUploadDialog } from "./dialog";
-import type { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimUploadButtonProps {
   className?: string;

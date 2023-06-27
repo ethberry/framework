@@ -11,14 +11,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes } from "ethers";
 import { mapLimit } from "async";
-import type { IClaimSearchDto } from "@framework/types";
+import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
 import { ContractManagerSignService } from "../../../contract-manager/contract-manager.sign.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
-import type { IVestingClaimCreateDto, IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
+import type { IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
+import { IVestingClaimRow } from "./interfaces";
 import { AssetService } from "../../../exchange/asset/asset.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class VestingClaimService {
@@ -29,6 +31,7 @@ export class VestingClaimService {
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     private readonly assetService: AssetService,
     private readonly contractManagerSignService: ContractManagerSignService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
@@ -161,8 +164,41 @@ export class VestingClaimService {
       mapLimit(
         claims,
         10,
-        async (row: IVestingClaimCreateDto) => {
-          return this.create(row, userEntity);
+        async ({
+          beneficiary,
+          startTimestamp,
+          cliffInMonth,
+          monthlyRelease,
+          tokenType,
+          address,
+          templateId,
+          amount,
+        }: IVestingClaimRow) => {
+          const contractEntity = await this.contractService.findOne({
+            address,
+            merchantId: userEntity.merchantId,
+          });
+
+          if (!contractEntity) {
+            throw new NotFoundException("contractNotFound");
+          }
+
+          return this.create(
+            {
+              parameters: { beneficiary, startTimestamp, cliffInMonth, monthlyRelease },
+              item: {
+                components: [
+                  {
+                    tokenType,
+                    contractId: contractEntity.id,
+                    templateId,
+                    amount,
+                  },
+                ],
+              },
+            },
+            userEntity,
+          );
         },
         (e, results) => {
           if (e) {

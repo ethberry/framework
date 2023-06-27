@@ -1,5 +1,7 @@
-import { IVestingClaimCreateDto } from "./create";
+import type { IBCAssetDto, IVestingContractDeployDto } from "@framework/types";
+
+export interface IVestingClaimRow extends IVestingContractDeployDto, IBCAssetDto {}
 
 export interface IVestingClaimUploadDto {
-  claims: Array<IVestingClaimCreateDto>;
+  claims: Array<IVestingClaimRow>;
 }

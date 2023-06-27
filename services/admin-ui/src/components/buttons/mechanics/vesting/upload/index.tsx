@@ -4,9 +4,9 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import type { IClaimUploadDto } from "@framework/types";
 
 import { VestingClaimUploadDialog } from "./dialog";
-import type { IClaimUploadDto } from "./dialog/file-input";
 
 export interface IClaimUploadButtonProps {
   className?: string;
@@ -49,7 +49,7 @@ export const VestingClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleUpload}
-        data-testid="ClaimUploadButton"
+        data-testid="VestingClaimUploadButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.upload" />

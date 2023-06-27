@@ -1,6 +1,7 @@
-import type { IBCAssetDto } from "@framework/types";
+import { IBCAssetDto } from "../../exchange/asset/bc-asset";
 
 export interface IClaimRowDto extends IBCAssetDto {
+  id?: string;
   account: string;
   endTimestamp: string;
 }
