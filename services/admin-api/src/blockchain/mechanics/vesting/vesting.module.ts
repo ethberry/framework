@@ -1,14 +1,9 @@
 import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { VestingService } from "./vesting.service";
-import { VestingController } from "./vesting.controller";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { VestingContractModule } from "./contract/contract.module";
+import { VestingClaimModule } from "./claim/claim.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContractEntity])],
-  providers: [VestingService],
-  controllers: [VestingController],
-  exports: [VestingService],
+  imports: [VestingContractModule, VestingClaimModule],
 })
 export class VestingModule {}

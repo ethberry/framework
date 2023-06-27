@@ -12,14 +12,19 @@ export interface IVestingDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
+  initialValues: IVestingContractDeployDto;
 }
 
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
-  const fixedValues: IVestingContractDeployDto = {
-    beneficiary: "",
-    startTimestamp: new Date().toISOString(),
-    cliffInMonth: 12,
-    monthlyRelease: 1000,
+  const { initialValues, ...rest } = props;
+
+  const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = initialValues;
+
+  const fixedValues = {
+    beneficiary,
+    startTimestamp,
+    cliffInMonth,
+    monthlyRelease,
   };
 
   return (
@@ -28,7 +33,7 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="VestingDeployForm"
-      {...props}
+      {...rest}
     >
       <TextInput name="beneficiary" />
       <DateInput name="startTimestamp" />

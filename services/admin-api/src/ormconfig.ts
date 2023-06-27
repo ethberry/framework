@@ -18,6 +18,7 @@ import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { PageEntity } from "./infrastructure/page/page.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 /* blockchain */
 // hierarchy
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -326,7 +327,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { RatePlanEntity } from "./infrastructure/plan/plan.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

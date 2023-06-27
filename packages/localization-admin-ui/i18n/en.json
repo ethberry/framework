@@ -565,6 +565,7 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "beneficiary": "Beneficiary",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "LEVEL": "Level",
@@ -746,6 +747,7 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
+      "beneficiary": "0x...",
       "achievementLevel": "1",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
@@ -1265,6 +1267,9 @@
     "vesting": {
       "contracts": {
         "title": "Vesting Contracts"
+      },
+      "claims": {
+        "title": "Vesting Claims"
       },
       "title": "Vesting"
     },
