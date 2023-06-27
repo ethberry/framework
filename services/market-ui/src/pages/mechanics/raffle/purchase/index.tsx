@@ -9,7 +9,7 @@ import { CronExpression, IRaffleOption } from "@framework/types";
 
 import { RafflePurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
-import { StyledPaper, StyledTypography } from "../../lottery/purchase/styled";
+import { StyledPaper, StyledTypography } from "./styled";
 
 export const RafflePurchase: FC = () => {
   const [raffle, setRaffle] = useState<IRaffleOption>({
