@@ -11,16 +11,20 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { FormattedMessage } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { getEmptyTemplate } from "@gemunion/mui-inputs-asset";
+import { AddressLink } from "@gemunion/mui-scanner";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
-import { VestingClaimEditDialog } from "./edit";
-import { ClaimSearchForm } from "../../claim/main/form";
+
+import { cleanUpAsset } from "../../../../utils/money";
 import { VestingClaimUploadButton } from "../../../../components/buttons/mechanics/vesting/upload";
+import { ClaimSearchForm } from "../../claim/main/form";
+import { VestingClaimEditDialog } from "./edit";
 // import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
 
 export const VestingClaim: FC = () => {
@@ -32,34 +36,45 @@ export const VestingClaim: FC = () => {
     isLoading,
     isFiltersOpen,
     isEditDialogOpen,
+    isDeleteDialogOpen,
     handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
     handleDelete,
+    handleDeleteCancel,
+    handleDeleteConfirm,
     handleSearch,
     handleChangePage,
   } = useCollection<any, IClaimSearchDto>({
     baseUrl: "/vesting/claims",
     empty: {
-      beneficiary: "",
-      startTimestamp: new Date().toISOString(),
-      cliffInMonth: 12,
-      monthlyRelease: 1000,
+      parameters: {
+        beneficiary: "",
+        startTimestamp: new Date().toISOString(),
+        cliffInMonth: 12,
+        monthlyRelease: 1000,
+      },
       item: getEmptyTemplate(TokenType.ERC20),
     },
     search: {
       account: "",
       claimStatus: [],
     },
+    filter: ({ item, parameters }) => ({
+      parameters,
+      item: cleanUpAsset(item),
+    }),
   });
+
+  const { formatMessage } = useIntl();
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
+      <Breadcrumbs path={["dashboard", "vesting", "vesting.claims"]} />
 
-      <PageHeader message="pages.vesting.title">
+      <PageHeader message="pages.vesting.claims.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
@@ -75,7 +90,9 @@ export const VestingClaim: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
+                <AddressLink address={vesting.account as string} />
+              </ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },
@@ -100,6 +117,16 @@ export const VestingClaim: FC = () => {
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={{
+          ...selected,
+          title: formatMessage({ id: "pages.claims.defaultItemTitle" }, { account: selected.account }),
+        }}
       />
 
       <VestingClaimEditDialog

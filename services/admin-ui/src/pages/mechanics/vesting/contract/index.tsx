@@ -75,7 +75,7 @@ export const VestingContracts: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
 
-      <PageHeader message="pages.vesting.title">
+      <PageHeader message="pages.vesting.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>

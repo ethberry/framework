@@ -75,15 +75,35 @@ export class VestingClaimService {
     return this.claimEntityRepository.findOne({ where, ...options });
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<ClaimEntity>): Promise<ClaimEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+        },
+      },
+    });
+  }
+
   public async create(dto: IVestingClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
-    const { account, endTimestamp, parameters } = dto;
+    const { parameters } = dto;
+
+    const assetEntity = await this.assetService.create({
+      components: [],
+    });
+
     const claimEntity = await this.claimEntityRepository
       .create({
-        account,
+        account: parameters.beneficiary,
+        item: assetEntity,
         signature: "0x",
         nonce: "",
         merchantId: userEntity.merchantId,
-        endTimestamp,
+        endTimestamp: new Date(0).toISOString(),
         claimType: ClaimType.VESTING,
         parameters,
       })
@@ -97,9 +117,9 @@ export class VestingClaimService {
     dto: IVestingClaimUpdateDto,
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
-    const { account, endTimestamp, parameters } = dto;
+    const { parameters, item } = dto;
 
-    const claimEntity = await this.findOne(where);
+    let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
@@ -119,11 +139,19 @@ export class VestingClaimService {
       throw new BadRequestException("claimWrongType");
     }
 
+    await this.assetService.update(claimEntity.item, item);
+
+    claimEntity = await this.findOneWithRelations(where);
+
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
+    }
+
     const nonce = randomBytes(32);
 
     const { signature } = await this.contractManagerSignService.vesting(parameters, userEntity);
 
-    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account, endTimestamp });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.beneficiary });
     return claimEntity.save();
   }
 
