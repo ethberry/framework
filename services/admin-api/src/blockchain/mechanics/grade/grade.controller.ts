@@ -26,8 +26,12 @@ export class GradeController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: GradeUpdateDto): Promise<GradeEntity> {
-    return this.gradeService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: GradeUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<GradeEntity> {
+    return this.gradeService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

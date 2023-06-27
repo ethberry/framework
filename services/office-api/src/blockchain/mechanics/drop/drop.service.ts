@@ -83,14 +83,10 @@ export class DropService {
   public async create(dto: IDropCreateDto, userEntity: UserEntity): Promise<DropEntity> {
     const { price, item, ...rest } = dto;
 
-    const priceEntity = await this.assetService.create({
-      components: [],
-    });
+    const priceEntity = await this.assetService.create();
     await this.assetService.update(priceEntity, price);
 
-    const itemEntity = await this.assetService.create({
-      components: [],
-    });
+    const itemEntity = await this.assetService.create();
     await this.assetService.update(itemEntity, item);
 
     return this.dropEntityRepository

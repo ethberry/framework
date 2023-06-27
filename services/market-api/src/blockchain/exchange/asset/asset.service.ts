@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
@@ -33,8 +33,13 @@ export class AssetService {
     private dataSource: DataSource,
   ) {}
 
-  public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
-    return this.assetEntityRepository.create(dto).save();
+  // This method accepts no arguments because all logic is in `update`
+  public async create(): Promise<AssetEntity> {
+    return this.assetEntityRepository
+      .create({
+        components: [],
+      })
+      .save();
   }
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {

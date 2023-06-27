@@ -16,10 +16,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { Erc1155TemplateService } from "./template.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../../hierarchy/template/dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { Erc1155TemplateService } from "./template.service";
 
 @ApiBearerAuth()
 @Controller("/erc1155/templates")
@@ -36,13 +36,17 @@ export class Erc1155TemplateController {
   }
 
   @Post("/")
-  public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc1155TemplateService.create(dto);
+  public create(@Body() dto: TemplateCreateDto, @User() userEntity: UserEntity): Promise<TemplateEntity> {
+    return this.erc1155TemplateService.createTemplate(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
-    return this.erc1155TemplateService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: TemplateUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<TemplateEntity> {
+    return this.erc1155TemplateService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -53,7 +57,7 @@ export class Erc1155TemplateController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.erc1155TemplateService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.erc1155TemplateService.delete({ id }, userEntity);
   }
 }

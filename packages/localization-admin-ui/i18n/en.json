@@ -391,7 +391,7 @@
       "INACTIVE": "Inactive",
       "PENDING": "Pending"
     },
-    "mysteryboxStatus": {
+    "mysteryBoxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -656,7 +656,7 @@
       "metadata": "Attributes",
       "monthlyRelease": "Monthly release",
       "mysteryId": "Mysterybox",
-      "mysteryboxStatus": "Status",
+      "mysteryBoxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
       "orderItems": "Items",

@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { MysteryboxStatus } from "@framework/types";
+import { MysteryBoxStatus } from "@framework/types";
 
 import { IMysteryBoxUpdateDto } from "../interfaces";
 import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
@@ -42,6 +42,6 @@ export class MysteryBoxUpdateDto implements IMysteryBoxUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(MysteryboxStatus, { message: "badInput" })
-  public mysteryboxStatus: MysteryboxStatus;
+  @IsEnum(MysteryBoxStatus, { message: "badInput" })
+  public mysteryBoxStatus: MysteryBoxStatus;
 }

@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, IsNull, Repository, FindOptionsWhere, FindOneOptions } from "typeorm";
+import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { ExchangeType, IAssetDto, IAssetItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
 
@@ -20,7 +20,6 @@ import { EventHistoryService } from "../../event-history/event-history.service";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
-import { AchievementRuleEntity } from "../../../achievements/rule/rule.entity";
 
 @Injectable()
 export class AssetService {
@@ -39,8 +38,13 @@ export class AssetService {
     private dataSource: DataSource,
   ) {}
 
-  public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
-    return this.assetEntityRepository.create(dto).save();
+  // This method accepts no arguments because all logic is in `update`
+  public async create(): Promise<AssetEntity> {
+    return this.assetEntityRepository
+      .create({
+        components: [],
+      })
+      .save();
   }
 
   public findAll(

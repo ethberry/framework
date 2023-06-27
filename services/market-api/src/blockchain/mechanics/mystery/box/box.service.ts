@@ -54,8 +54,8 @@ export class MysteryBoxService {
       chainId,
     });
 
-    queryBuilder.andWhere("box.mysteryboxStatus = :mysteryboxStatus", {
-      mysteryboxStatus: TemplateStatus.ACTIVE,
+    queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {
+      mysteryBoxStatus: TemplateStatus.ACTIVE,
     });
 
     if (contractIds) {

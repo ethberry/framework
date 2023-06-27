@@ -7,6 +7,7 @@ import { CraftStatus, ICraftSearchDto } from "@framework/types";
 import { CraftEntity } from "./craft.entity";
 import { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class CraftService {
@@ -84,20 +85,16 @@ export class CraftService {
     });
   }
 
-  public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
+  public async create(dto: ICraftCreateDto, userEntity: UserEntity): Promise<CraftEntity> {
     const { price, item } = dto;
 
     // add new price
-    const priceEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(priceEntity, price);
+    const priceEntity = await this.assetService.create();
+    await this.assetService.update(priceEntity, price, userEntity);
 
     // add new item
-    const itemEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(itemEntity, item);
+    const itemEntity = await this.assetService.create();
+    await this.assetService.update(itemEntity, item, userEntity);
 
     return this.craftEntityRepository
       .create({
@@ -107,8 +104,12 @@ export class CraftService {
       .save();
   }
 
-  public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
-    const { price, ...rest } = dto;
+  public async update(
+    where: FindOptionsWhere<CraftEntity>,
+    dto: Partial<ICraftUpdateDto>,
+    userEntity: UserEntity,
+  ): Promise<CraftEntity> {
+    const { price, item, ...rest } = dto;
 
     const craftEntity = await this.findOneWithRelations(where);
 
@@ -116,12 +117,15 @@ export class CraftService {
       throw new NotFoundException("craftNotFound");
     }
 
+    if (item) {
+      await this.assetService.update(craftEntity.item, item, userEntity);
+    }
+
     if (price) {
-      await this.assetService.update(craftEntity.price, price);
+      await this.assetService.update(craftEntity.price, price, userEntity);
     }
 
     Object.assign(craftEntity, rest);
-
     return craftEntity.save();
   }
 

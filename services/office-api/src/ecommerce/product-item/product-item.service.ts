@@ -105,10 +105,7 @@ export class ProductItemService {
   public async create(dto: IProductItemCreateDto): Promise<ProductItemEntity> {
     const { photo, price, ...rest } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
-
+    const assetEntity = await this.assetService.create();
     const productItemEntity = await this.productItemEntityRepository
       .create({
         ...rest,

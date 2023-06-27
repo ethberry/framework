@@ -122,14 +122,10 @@ export class PyramidRulesService {
   public async create(dto: IPyramidCreateDto): Promise<PyramidRulesEntity> {
     const { deposit, reward } = dto;
 
-    const depositEntity = await this.assetService.create({
-      components: [],
-    });
+    const depositEntity = await this.assetService.create();
     await this.assetService.update(depositEntity, deposit);
 
-    const rewardEntity = await this.assetService.create({
-      components: [],
-    });
+    const rewardEntity = await this.assetService.create();
     await this.assetService.update(rewardEntity, reward);
 
     Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });

@@ -94,9 +94,7 @@ export class ClaimService {
   public async create(dto: IClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const assetEntity = await this.assetService.create();
 
     const claimEntity = await this.claimEntityRepository
       .create({

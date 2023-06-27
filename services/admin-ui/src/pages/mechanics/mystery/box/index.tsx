@@ -17,7 +17,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryboxStatus } from "@framework/types";
+import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryBoxStatus } from "@framework/types";
 
 import { MysteryActionsMenu } from "../../../../components/menu/mechanics/mystery/box";
 import { cleanUpAsset } from "../../../../utils/money";
@@ -56,10 +56,10 @@ export const MysteryBox: FC = () => {
     },
     search: {
       query: "",
-      mysteryboxStatus: [MysteryboxStatus.ACTIVE],
+      mysteryBoxStatus: [MysteryBoxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, template, title, description, imageUrl, item, mysteryboxStatus }) =>
+    filter: ({ id, template, title, description, imageUrl, item, mysteryBoxStatus }) =>
       id
         ? {
             title,
@@ -67,7 +67,7 @@ export const MysteryBox: FC = () => {
             imageUrl,
             item: cleanUpAsset(item),
             price: cleanUpAsset(template?.price),
-            mysteryboxStatus,
+            mysteryBoxStatus,
           }
         : {
             contractId: template?.contractId,
@@ -108,13 +108,13 @@ export const MysteryBox: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(mystery)}
-                  disabled={mystery.mysteryboxStatus === MysteryboxStatus.INACTIVE}
+                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>
                 <MysteryActionsMenu
                   mystery={mystery}
-                  disabled={mystery.mysteryboxStatus === MysteryboxStatus.INACTIVE}
+                  disabled={mystery.mysteryBoxStatus === MysteryBoxStatus.INACTIVE}
                 />
               </ListItemSecondaryAction>
             </ListItem>

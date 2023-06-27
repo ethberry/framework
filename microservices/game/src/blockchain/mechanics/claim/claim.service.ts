@@ -55,10 +55,7 @@ export class ClaimService {
   public async create(dto: IClaimCreateDto, merchantEntity: MerchantEntity): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
-
+    const assetEntity = await this.assetService.create();
     const claimEntity = await this.claimEntityRepository
       .create({
         account,
@@ -95,7 +92,7 @@ export class ClaimService {
       throw new BadRequestException("claimRedeemed");
     }
 
-    await this.assetService.update(claimEntity.item, item);
+    await this.assetService.update(claimEntity.item, item, merchantEntity);
 
     claimEntity = await this.findOneWithRelations(where);
 

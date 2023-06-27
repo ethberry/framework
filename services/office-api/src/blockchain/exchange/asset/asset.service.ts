@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -18,8 +18,13 @@ export class AssetService {
     private readonly templateService: TemplateService,
   ) {}
 
-  public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
-    return this.assetEntityRepository.create(dto).save();
+  // This method accepts no arguments because all logic is in `update`
+  public async create(): Promise<AssetEntity> {
+    return this.assetEntityRepository
+      .create({
+        components: [],
+      })
+      .save();
   }
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {

@@ -29,8 +29,12 @@ export class Erc20TokenController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
-    return this.erc20ContractService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.erc20ContractService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -40,7 +44,7 @@ export class Erc20TokenController {
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity> {
-    return this.erc20ContractService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc20ContractService.delete({ id }, userEntity);
   }
 }
