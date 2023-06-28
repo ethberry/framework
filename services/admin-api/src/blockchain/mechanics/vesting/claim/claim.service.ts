@@ -14,7 +14,10 @@ import { mapLimit } from "async";
 import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import { ContractManagerSignService } from "../../../contract-manager/contract-manager.sign.service";
+import {
+  ContractManagerSignService,
+  IVestingContractDeployDto2,
+} from "../../../contract-manager/contract-manager.sign.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
 import type { IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
@@ -95,13 +98,11 @@ export class VestingClaimService {
   public async create(dto: IVestingClaimCreateDto, userEntity: UserEntity): Promise<ClaimEntity> {
     const { parameters } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const assetEntity = await this.assetService.create();
 
     const claimEntity = await this.claimEntityRepository
       .create({
-        account: parameters.beneficiary,
+        account: parameters.beneficiary.toLowerCase(),
         item: assetEntity,
         signature: "0x",
         nonce: "",
@@ -142,7 +143,7 @@ export class VestingClaimService {
       throw new BadRequestException("claimWrongType");
     }
 
-    await this.assetService.update(claimEntity.item, item);
+    await this.assetService.update(claimEntity.item, item, userEntity);
 
     claimEntity = await this.findOneWithRelations(where);
 
@@ -152,9 +153,19 @@ export class VestingClaimService {
 
     const nonce = randomBytes(32);
 
-    const { signature } = await this.contractManagerSignService.vesting(parameters, userEntity);
+    Object.assign(parameters, { externalId: claimEntity.id });
+    console.log("Object.assignparameters", parameters);
+    const { signature, bytecode } = await this.contractManagerSignService.vesting(
+      parameters as IVestingContractDeployDto2,
+      userEntity,
+      claimEntity.item,
+    );
 
-    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.beneficiary });
+    Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.beneficiary.toLowerCase() });
+    // TODO simplify?
+    const claimParams = claimEntity.parameters;
+    Object.assign(claimParams, { bytecode });
+    Object.assign(claimEntity, { parameters: claimParams });
     return claimEntity.save();
   }
 

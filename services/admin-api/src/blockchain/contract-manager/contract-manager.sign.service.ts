@@ -5,6 +5,7 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
+  IAssetDto,
   ICollectionContractDeployDto,
   IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
@@ -94,6 +95,11 @@ import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mech
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractManagerService } from "./contract-manager.service";
+import { AssetEntity } from "../exchange/asset/asset.entity";
+
+export interface IVestingContractDeployDto2 extends IVestingContractDeployDto {
+  externalId: number;
+}
 
 @Injectable()
 export class ContractManagerSignService {
@@ -370,12 +376,30 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = dto;
+  public async vesting(
+    dto: IVestingContractDeployDto2,
+    userEntity: UserEntity,
+    asset?: AssetEntity,
+  ): Promise<IServerSignature> {
+    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
+    console.log("params", {
+      nonce,
+      bytecode,
+      // externalId: userEntity.id,
+      externalId,
+    });
+    console.log("externalId", externalId);
+    console.log("args", {
+      beneficiary: beneficiary.toLowerCase(),
+      startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
+      cliffInMonth, // in seconds
+      monthlyRelease,
+    });
+    console.log("asset", asset?.components);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -390,6 +414,7 @@ export class ContractManagerSignService {
         EIP712: [
           { name: "params", type: "Params" },
           { name: "args", type: "VestingArgs" },
+          { name: "items", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
@@ -402,20 +427,36 @@ export class ContractManagerSignService {
           { name: "cliffInMonth", type: "uint16" },
           { name: "monthlyRelease", type: "uint16" },
         ],
+        Asset: [
+          { name: "tokenType", type: "uint256" },
+          { name: "token", type: "address" },
+          { name: "tokenId", type: "uint256" },
+          { name: "amount", type: "uint256" },
+        ],
       },
       // Values
       {
         params: {
           nonce,
           bytecode,
-          externalId: userEntity.id,
+          // externalId: userEntity.id,
+          externalId,
         },
         args: {
-          beneficiary,
+          beneficiary: beneficiary.toLowerCase(),
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
           cliffInMonth, // in seconds
           monthlyRelease,
         },
+        // items: [],
+        items: asset
+          ? asset.components.map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract.address,
+              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+              amount: component.amount,
+            }))
+          : [],
       },
     );
 

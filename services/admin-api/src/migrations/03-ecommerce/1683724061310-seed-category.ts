@@ -12,11 +12,13 @@ export class SeedCategory1683724061310 implements MigrationInterface {
         title,
         description,
         parent_id,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
         'Root',
         '${simpleFormatting}',
+        null,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -24,11 +26,13 @@ export class SeedCategory1683724061310 implements MigrationInterface {
         'First',
         '${simpleFormatting}',
         1,
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Second',
         '${simpleFormatting}',
+        1,
         1,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -4,7 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import { ContractManagerSignService } from "./contract-manager.sign.service";
+import { ContractManagerSignService, IVestingContractDeployDto2 } from "./contract-manager.sign.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
 import {
@@ -90,7 +90,7 @@ export class ContractManagerController {
 
   // MODULE:VESTING
   @Post("/vesting")
-  public vesting(@Body() dto: VestingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public vesting(@Body() dto: IVestingContractDeployDto2, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.vesting(dto, userEntity);
   }
 

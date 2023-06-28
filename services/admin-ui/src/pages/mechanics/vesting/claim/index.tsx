@@ -69,7 +69,7 @@ export const VestingClaim: FC = () => {
   });
 
   const { formatMessage } = useIntl();
-
+  console.log("VESTINGCLAIMrows", rows);
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.claims"]} />
@@ -90,9 +90,12 @@ export const VestingClaim: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: 0.6 }}>
-                <AddressLink address={vesting.account as string} />
+              <ListItemText sx={{ width: 0.5 }}>
+                <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
+              <ListItemText sx={{ width: 0.1 }}>{vesting.parameters.cliffInMonth}</ListItemText>
+              <ListItemText sx={{ width: 0.05 }}>{vesting.parameters.monthlyRelease}</ListItemText>
+              <ListItemText sx={{ width: 0.1 }}>{vesting.claimStatus}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },

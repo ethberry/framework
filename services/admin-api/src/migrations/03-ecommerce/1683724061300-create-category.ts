@@ -22,6 +22,7 @@ export class CreateCategory1683724061300 implements MigrationInterface {
         {
           name: "parent_id",
           type: "int",
+          isNullable: true,
         },
         {
           name: "merchant_id",

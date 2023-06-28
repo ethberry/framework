@@ -57,7 +57,7 @@ export class VestingClaimController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<ClaimEntity | null> {
-    return this.vestingClaimService.findOne({ id });
+    return this.vestingClaimService.findOne({ id }, { relations: { item: { components: true } } });
   }
 
   @Delete("/:id")

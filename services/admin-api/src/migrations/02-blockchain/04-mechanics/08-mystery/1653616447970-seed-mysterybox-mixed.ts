@@ -57,7 +57,7 @@ export class SeedMysteryboxMixedAt1653616447970 implements MigrationInterface {
         image_url,
         item_id,
         template_id,
-        mysterybox_status,
+        mystery_box_status,
         created_at,
         updated_at
       ) VALUES (

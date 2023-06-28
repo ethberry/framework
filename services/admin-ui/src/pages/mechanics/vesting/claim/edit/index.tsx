@@ -24,6 +24,8 @@ export const VestingClaimEditDialog: FC<IClaimEditDialogProps> = props => {
     item,
   };
 
+  console.log("VestingClaimEditDialog", fixedValues);
+
   const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (

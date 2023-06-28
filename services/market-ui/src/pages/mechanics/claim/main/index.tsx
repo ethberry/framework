@@ -45,6 +45,9 @@ export const Claim: FC = () => {
           {rows.map((claim, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{claim.item.components[0]?.template?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.1 }}>
+                {claim.parameters.cliffInMonth ? claim.parameters.cliffInMonth : ""}
+              </ListItemText>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemSecondaryAction>
                 {claim.claimType === ClaimType.TOKEN ? (

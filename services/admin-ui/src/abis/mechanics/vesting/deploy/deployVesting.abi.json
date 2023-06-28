@@ -51,6 +51,33 @@
         "type": "tuple"
       },
       {
+        "components": [
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Asset[]",
+        "name": "items",
+        "type": "tuple[]"
+      },
+      {
         "internalType": "bytes",
         "name": "signature",
         "type": "bytes"

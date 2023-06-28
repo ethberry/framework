@@ -44,6 +44,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           cliffInMonth,
           monthlyRelease,
         },
+        [],
         sign.signature,
       ) as Promise<void>;
     },
