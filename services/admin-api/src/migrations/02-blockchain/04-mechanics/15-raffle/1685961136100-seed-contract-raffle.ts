@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { CronExpression } from "@nestjs/schedule";
 
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
 
@@ -22,6 +23,7 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           name,
           symbol,
           base_token_uri,
+          parameters,
           contract_status,
           contract_type,
           contract_features,
@@ -35,14 +37,15 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           '${raffleAddr}',
           '${chainId}',
           'RAFFLE',
-          '${JSON.stringify({
-            schedule: CronExpression.EVERY_WEEKEND,
-            description: "Weekend Raffle",
-          })}',
+          '${simpleFormatting}',
           '',
           'Raffle',
           '',
           '',
+          '${JSON.stringify({
+            schedule: CronExpression.EVERY_WEEKEND,
+            description: "Weekend Raffle",
+          })}',
           'ACTIVE',
           null,
           '{RANDOM, ALLOWANCE}',
