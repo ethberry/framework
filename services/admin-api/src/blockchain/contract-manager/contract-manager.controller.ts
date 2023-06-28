@@ -21,10 +21,10 @@ import {
   PyramidContractDeployDto,
   RaffleContractDeployDto,
   StakingContractDeployDto,
+  VestingContractDeployDto,
   WaitListContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { IVestingContractDeployDto } from "@framework/types";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -90,7 +90,7 @@ export class ContractManagerController {
 
   // MODULE:VESTING
   @Post("/vesting")
-  public vesting(@Body() dto: IVestingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public vesting(@Body() dto: VestingContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.vesting(dto, userEntity);
   }
 
