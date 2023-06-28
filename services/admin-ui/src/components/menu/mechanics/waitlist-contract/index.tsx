@@ -7,13 +7,14 @@ import type { IContract } from "@framework/types";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { PauseMenuItem } from "../common/pause";
 
 export interface IDefaultContractActionsMenu {
   contract: IContract;
   disabled?: boolean;
 }
 
-export const DefaultContractActionsMenu: FC<IDefaultContractActionsMenu> = props => {
+export const WaitListContractActionsMenu: FC<IDefaultContractActionsMenu> = props => {
   const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -45,6 +46,7 @@ export const DefaultContractActionsMenu: FC<IDefaultContractActionsMenu> = props
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
+        <PauseMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );
