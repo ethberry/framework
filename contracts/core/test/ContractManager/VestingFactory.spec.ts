@@ -1,14 +1,15 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ZeroAddress } from "ethers";
+import { concat, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { DEFAULT_ADMIN_ROLE, nonce, amount } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
-import { externalId, tokenId } from "../constants";
+import { claimId, externalId, tokenId, userId } from "../constants";
 import { deployERC20 } from "../ERC20/shared/fixtures";
+import { decodeTraits } from "@framework/traits-api";
 
 describe("VestingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -27,6 +28,9 @@ describe("VestingFactory", function () {
       await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const current = await time.latest();
+
+      const encodedExternalId = concat([zeroPadValue(toBeHex(userId), 3), zeroPadValue(toBeHex(claimId), 4)]);
+
       const signature = await owner.signTypedData(
         // Domain
         {
@@ -65,7 +69,7 @@ describe("VestingFactory", function () {
           params: {
             nonce,
             bytecode,
-            externalId,
+            externalId: encodedExternalId,
           },
           args: {
             beneficiary: owner.address,
@@ -88,7 +92,7 @@ describe("VestingFactory", function () {
         {
           nonce,
           bytecode,
-          externalId,
+          externalId: encodedExternalId,
         },
         {
           beneficiary: owner.address,
@@ -113,7 +117,7 @@ describe("VestingFactory", function () {
         .to.emit(contractInstance, "VestingDeployed")
         .withArgs(
           address,
-          externalId,
+          encodedExternalId,
           isEqualEventArgObj({
             beneficiary: owner.address,
             startTimestamp: current.toString(),
@@ -127,6 +131,10 @@ describe("VestingFactory", function () {
             amount,
           }),
         );
+
+      const decoded = decodeTraits(BigInt(encodedExternalId), ["user", "claim"]);
+      expect(decoded.claim).to.equal(claimId);
+      expect(decoded.user).to.equal(userId);
     });
 
     it("should fail: SignerMissingRole", async function () {

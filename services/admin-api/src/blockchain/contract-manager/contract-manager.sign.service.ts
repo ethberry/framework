@@ -5,7 +5,6 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
-  IAssetDto,
   ICollectionContractDeployDto,
   IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
@@ -96,10 +95,6 @@ import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mech
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
-
-export interface IVestingContractDeployDto2 extends IVestingContractDeployDto {
-  externalId: number;
-}
 
 @Injectable()
 export class ContractManagerSignService {
@@ -377,7 +372,7 @@ export class ContractManagerSignService {
 
   // MODULE:VESTING
   public async vesting(
-    dto: IVestingContractDeployDto2,
+    dto: IVestingContractDeployDto,
     userEntity: UserEntity,
     asset?: AssetEntity,
   ): Promise<IServerSignature> {
@@ -386,20 +381,6 @@ export class ContractManagerSignService {
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
-    console.log("params", {
-      nonce,
-      bytecode,
-      // externalId: userEntity.id,
-      externalId,
-    });
-    console.log("externalId", externalId);
-    console.log("args", {
-      beneficiary: beneficiary.toLowerCase(),
-      startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
-      cliffInMonth, // in seconds
-      monthlyRelease,
-    });
-    console.log("asset", asset?.components);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -439,8 +420,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
-          // externalId: userEntity.id,
-          externalId,
+          externalId: externalId || userEntity.id,
         },
         args: {
           beneficiary: beneficiary.toLowerCase(),

@@ -32,6 +32,7 @@ import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq"
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module";
 import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
+import { ClaimModule } from "../mechanics/claim/claim.module";
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.modu
     RentModule,
     BalanceModule,
     UserModule,
+    ClaimModule,
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],

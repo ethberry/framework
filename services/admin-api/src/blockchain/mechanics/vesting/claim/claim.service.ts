@@ -9,15 +9,12 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { hexlify, randomBytes } from "ethers";
+import { concat, hexlify, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
 import { ClaimStatus, ClaimType } from "@framework/types";
 
-import {
-  ContractManagerSignService,
-  IVestingContractDeployDto2,
-} from "../../../contract-manager/contract-manager.sign.service";
+import { ContractManagerSignService } from "../../../contract-manager/contract-manager.sign.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
 import type { IVestingClaimUpdateDto, IVestingClaimUploadDto } from "./interfaces";
@@ -122,7 +119,6 @@ export class VestingClaimService {
     userEntity: UserEntity,
   ): Promise<ClaimEntity> {
     const { parameters, item } = dto;
-
     let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
@@ -151,21 +147,27 @@ export class VestingClaimService {
       throw new NotFoundException("claimNotFound");
     }
 
-    const nonce = randomBytes(32);
+    const encodedExternalId = concat([
+      zeroPadValue(toBeHex(userEntity.id), 3),
+      zeroPadValue(toBeHex(claimEntity.id), 4),
+    ]);
 
-    Object.assign(parameters, { externalId: claimEntity.id });
-    console.log("Object.assignparameters", parameters);
-    const { signature, bytecode } = await this.contractManagerSignService.vesting(
-      parameters as IVestingContractDeployDto2,
+    const { signature, bytecode, nonce } = await this.contractManagerSignService.vesting(
+      {
+        beneficiary: parameters.beneficiary,
+        startTimestamp: parameters.startTimestamp,
+        cliffInMonth: parameters.cliffInMonth,
+        monthlyRelease: parameters.monthlyRelease,
+        externalId: encodedExternalId,
+      },
       userEntity,
       claimEntity.item,
     );
 
     Object.assign(claimEntity, { nonce: hexlify(nonce), signature, account: parameters.beneficiary.toLowerCase() });
-    // TODO simplify?
-    const claimParams = claimEntity.parameters;
-    Object.assign(claimParams, { bytecode });
-    Object.assign(claimEntity, { parameters: claimParams });
+    // TODO simplify it?
+    Object.assign(parameters, { bytecode });
+    Object.assign(claimEntity, { parameters });
     return claimEntity.save();
   }
 

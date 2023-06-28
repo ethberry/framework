@@ -20,6 +20,7 @@ import type {
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
 } from "@framework/types";
+
 import {
   CollectionContractTemplates,
   ContractFeatures,
@@ -60,6 +61,8 @@ import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/l
 import { addConsumer } from "../integrations/chain-link/utils";
 import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.service";
 import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
+import { decodeExternalId } from "../../common/utils";
+import { ClaimService } from "../mechanics/claim/claim.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -93,6 +96,7 @@ export class ContractManagerServiceEth {
     private readonly rentService: RentService,
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
+    private readonly claimService: ClaimService,
   ) {}
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
@@ -462,8 +466,12 @@ export class ContractManagerServiceEth {
 
   public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { account, args, externalId },
+      args: { account, args, externalId /* <-- userId + claimId */ },
     } = event;
+
+    const decodedExternalId: Record<string, number> = decodeExternalId(BigInt(externalId), ["userId", "claimId"]);
+
+    const { userId, claimId } = decodedExternalId;
 
     const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = args;
 
@@ -486,8 +494,12 @@ export class ContractManagerServiceEth {
       contractModule: ModuleType.VESTING,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
-      merchantId: await this.getMerchantId(externalId),
+      merchantId: await this.getMerchantId(userId),
     });
+
+    if (claimId && claimId > 0) {
+      await this.claimService.redeemClaim(claimId);
+    }
 
     this.vestingLogService.addListener({
       address: [account.toLowerCase()],
@@ -661,8 +673,8 @@ export class ContractManagerServiceEth {
     );
   }
 
-  public async getMerchantId(externalId: number): Promise<number> {
-    const userEntity = await this.userService.findOne({ id: externalId });
+  public async getMerchantId(userId: number): Promise<number> {
+    const userEntity = await this.userService.findOne({ id: userId });
     if (!userEntity) {
       this.loggerService.error("CRITICAL ERROR", GradeService.name);
       throw new NotFoundException("userNotFound");

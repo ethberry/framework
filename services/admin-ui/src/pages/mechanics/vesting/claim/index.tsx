@@ -63,13 +63,18 @@ export const VestingClaim: FC = () => {
       claimStatus: [],
     },
     filter: ({ item, parameters }) => ({
-      parameters,
+      parameters: {
+        beneficiary: parameters.beneficiary,
+        monthlyRelease: parameters.monthlyRelease,
+        cliffInMonth: parameters.cliffInMonth,
+        startTimestamp: parameters.startTimestamp,
+      },
       item: cleanUpAsset(item),
     }),
   });
 
   const { formatMessage } = useIntl();
-  console.log("VESTINGCLAIMrows", rows);
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.claims"]} />
