@@ -3,9 +3,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
-import { VestingService } from "./vesting.service";
-import { VestingSearchDto } from "./dto";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { VestingService } from "./contract.service";
+import { VestingContractSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/vesting/contracts")
@@ -14,7 +14,7 @@ export class VestingController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: VestingSearchDto): Promise<[Array<ContractEntity>, number]> {
+  public search(@Query() dto: VestingContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.vestingService.search(dto);
   }
 

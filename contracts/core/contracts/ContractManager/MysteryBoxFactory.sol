@@ -27,7 +27,7 @@ contract MysteryBoxFactory is AbstractFactory {
     string contractTemplate;
   }
 
-  event MysteryboxDeployed(address account, uint256 externalId, MysteryArgs args);
+  event MysteryBoxDeployed(address account, uint256 externalId, MysteryArgs args);
 
   function deployMysterybox(
     Params calldata params,
@@ -36,7 +36,7 @@ contract MysteryBoxFactory is AbstractFactory {
   ) external returns (address account) {
     _checkNonce(params.nonce);
 
-    address signer = _recoverSigner(_hashMysterybox(params, args), signature);
+    address signer = _recoverSigner(_hashMysteryBox(params, args), signature);
 
     if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
       revert SignerMissingRole();
@@ -49,7 +49,7 @@ contract MysteryBoxFactory is AbstractFactory {
     );
     _mysterybox_tokens.push(account);
 
-    emit MysteryboxDeployed(account, params.externalId, args);
+    emit MysteryBoxDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
@@ -61,7 +61,7 @@ contract MysteryBoxFactory is AbstractFactory {
     addFactory(account, MINTER_ROLE);
   }
 
-  function _hashMysterybox(Params calldata params, MysteryArgs calldata args) internal view returns (bytes32) {
+  function _hashMysteryBox(Params calldata params, MysteryArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
         keccak256(abi.encodePacked(MYSTERYBOX_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashMysteryStruct(args)))

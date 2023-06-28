@@ -71,7 +71,17 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <VestingDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <VestingDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+        initialValues={{
+          beneficiary: "",
+          startTimestamp: new Date().toISOString(),
+          cliffInMonth: 12,
+          monthlyRelease: 1000,
+        }}
+      />
     </Fragment>
   );
 };

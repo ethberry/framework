@@ -5,7 +5,7 @@ import { DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } fr
 import { IContractManagerSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { RatePlanService } from "../../infrastructure/plan/plan.service";
+import { RatePlanService } from "../../infrastructure/rate-plan/rate-plan.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { IContractManagerCreateDto } from "./interfaces";
 import { ContractManagerEntity } from "./contract-manager.entity";
@@ -95,7 +95,7 @@ export class ContractManagerService {
       contractType: contractType || IsNull(),
     });
 
-    if (limit > 0 && count >= limit) {
+    if (count >= limit) {
       throw new ForbiddenException("rateLimitExceeded");
     }
   }

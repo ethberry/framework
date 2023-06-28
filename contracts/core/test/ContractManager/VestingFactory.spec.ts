@@ -1,12 +1,14 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { ZeroAddress } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { DEFAULT_ADMIN_ROLE, nonce, amount } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { isEqualEventArgObj } from "../utils";
-import { externalId } from "../constants";
+import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { externalId, tokenId } from "../constants";
+import { deployERC20 } from "../ERC20/shared/fixtures";
 
 describe("VestingFactory", function () {
   const factory = () => deployContract(this.title);
@@ -19,6 +21,10 @@ describe("VestingFactory", function () {
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
+
+      const erc20Instance = await deployERC20();
+      await erc20Instance.mint(owner.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const current = await time.latest();
       const signature = await owner.signTypedData(
@@ -34,6 +40,7 @@ describe("VestingFactory", function () {
           EIP712: [
             { name: "params", type: "Params" },
             { name: "args", type: "VestingArgs" },
+            { name: "items", type: "Asset[]" },
           ],
           Params: [
             { name: "nonce", type: "bytes32" },
@@ -45,6 +52,12 @@ describe("VestingFactory", function () {
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
           ],
         },
         // Values
@@ -60,6 +73,14 @@ describe("VestingFactory", function () {
             cliffInMonth: 12,
             monthlyRelease: 417,
           },
+          items: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
         },
       );
 
@@ -75,6 +96,14 @@ describe("VestingFactory", function () {
           cliffInMonth: 12,
           monthlyRelease: 417,
         },
+        [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
         signature,
       );
 
@@ -91,6 +120,12 @@ describe("VestingFactory", function () {
             cliffInMonth: "12",
             monthlyRelease: "417",
           }),
+          isEqualEventArgArrObj({
+            tokenType: "1",
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          }),
         );
     });
 
@@ -101,6 +136,10 @@ describe("VestingFactory", function () {
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
+
+      const erc20Instance = await deployERC20();
+      await erc20Instance.mint(owner.address, amount);
+      await erc20Instance.approve(await contractInstance.getAddress(), amount);
 
       const current = await time.latest();
       const signature = await owner.signTypedData(
@@ -116,6 +155,7 @@ describe("VestingFactory", function () {
           EIP712: [
             { name: "params", type: "Params" },
             { name: "args", type: "VestingArgs" },
+            { name: "items", type: "Asset[]" },
           ],
           Params: [
             { name: "nonce", type: "bytes32" },
@@ -127,6 +167,12 @@ describe("VestingFactory", function () {
             { name: "startTimestamp", type: "uint64" },
             { name: "cliffInMonth", type: "uint16" },
             { name: "monthlyRelease", type: "uint16" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
           ],
         },
         // Values
@@ -142,6 +188,14 @@ describe("VestingFactory", function () {
             cliffInMonth: 12,
             monthlyRelease: 417,
           },
+          items: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
         },
       );
 
@@ -159,10 +213,110 @@ describe("VestingFactory", function () {
           cliffInMonth: 12,
           monthlyRelease: 417,
         },
+        [
+          {
+            tokenType: 1,
+            token: await erc20Instance.getAddress(),
+            tokenId,
+            amount,
+          },
+        ],
         signature,
       );
 
       await expect(tx).to.be.revertedWithCustomError(contractInstance, "SignerMissingRole");
+    });
+
+    it("should fail: UnsupportedTokenType", async function () {
+      const [owner] = await ethers.getSigners();
+      const network = await ethers.provider.getNetwork();
+      const { bytecode } = await ethers.getContractFactory("Vesting");
+
+      const contractInstance = await factory();
+      const verifyingContract = await contractInstance.getAddress();
+
+      const current = await time.latest();
+      const signature = await owner.signTypedData(
+        // Domain
+        {
+          name: "ContractManager",
+          version: "1.0.0",
+          chainId: network.chainId,
+          verifyingContract,
+        },
+        // Types
+        {
+          EIP712: [
+            { name: "params", type: "Params" },
+            { name: "args", type: "VestingArgs" },
+            { name: "items", type: "Asset[]" },
+          ],
+          Params: [
+            { name: "nonce", type: "bytes32" },
+            { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
+          ],
+          VestingArgs: [
+            { name: "beneficiary", type: "address" },
+            { name: "startTimestamp", type: "uint64" },
+            { name: "cliffInMonth", type: "uint16" },
+            { name: "monthlyRelease", type: "uint16" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
+          ],
+        },
+        // Values
+        {
+          params: {
+            nonce,
+            bytecode,
+            externalId,
+          },
+          args: {
+            beneficiary: owner.address,
+            startTimestamp: current.toNumber(),
+            cliffInMonth: 12,
+            monthlyRelease: 417,
+          },
+          items: [
+            {
+              tokenType: 0,
+              token: ZeroAddress,
+              tokenId,
+              amount,
+            },
+          ],
+        },
+      );
+
+      const tx = contractInstance.deployVesting(
+        {
+          nonce,
+          bytecode,
+          externalId,
+        },
+        {
+          beneficiary: owner.address,
+          startTimestamp: current.toNumber(),
+          cliffInMonth: 12,
+          monthlyRelease: 417,
+        },
+        [
+          {
+            tokenType: 0,
+            token: ZeroAddress,
+            tokenId,
+            amount,
+          },
+        ],
+        signature,
+      );
+
+      await expect(tx).to.be.revertedWithCustomError(contractInstance, "UnsupportedTokenType");
     });
   });
 });

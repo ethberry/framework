@@ -7,8 +7,9 @@ import { FormattedMessage } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IClaim, IClaimSearchDto } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
+import { VestingDeployButton } from "../../../../components/buttons/mechanics/vesting/deploy";
 import { ClaimRedeemButton } from "../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
 
@@ -44,9 +45,13 @@ export const Claim: FC = () => {
           {rows.map((claim, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{claim.item.components[0]?.template?.title}</ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimStatus}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
               <ListItemSecondaryAction>
-                <ClaimRedeemButton claim={claim} />
+                {claim.claimType === ClaimType.TOKEN ? (
+                  <ClaimRedeemButton claim={claim} />
+                ) : (
+                  <VestingDeployButton claim={claim} />
+                )}
               </ListItemSecondaryAction>
             </ListItem>
           ))}

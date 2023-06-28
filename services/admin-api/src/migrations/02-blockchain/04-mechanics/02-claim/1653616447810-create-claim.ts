@@ -13,6 +13,13 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.claim_type_enum AS ENUM (
+        'TOKEN',
+        'VESTING'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.claim`,
       columns: [
@@ -30,9 +37,19 @@ export class CreateClaim1653616447810 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "parameters",
+          type: "json",
+          default: "'{}'",
+        },
+        {
           name: "claim_status",
           type: `${ns}.claim_status_enum`,
           default: "'NEW'",
+        },
+        {
+          name: "claim_type",
+          type: `${ns}.claim_type_enum`,
+          default: "'TOKEN'",
         },
         {
           name: "signature",
@@ -77,7 +94,7 @@ export class CreateClaim1653616447810 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    await queryRunner.query(`SELECT setval('${ns}.claim_id_seq', 500, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.claim_id_seq', 5000000, true);`);
 
     await queryRunner.query(`
       CREATE OR REPLACE FUNCTION update_expired_claims() RETURNS trigger
@@ -99,6 +116,8 @@ export class CreateClaim1653616447810 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.claim`);
+    await queryRunner.query(`DROP TYPE ${ns}.claim_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.claim_type_enum;`);
     await queryRunner.query("DROP FUNCTION update_expired_claims();");
   }
 }

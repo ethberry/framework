@@ -18,6 +18,7 @@ import { SettingsEntity } from "./infrastructure/settings/settings.entity";
 import { PageEntity } from "./infrastructure/page/page.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 /* blockchain */
 // hierarchy
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -182,6 +183,7 @@ import {
   SeedClaimErc998At1653616447840,
   SeedClaimMixedAt1653616447870,
   SeedClaimMysteryboxAt1653616447860,
+  SeedClaimVestingAt1687835680100,
   SeedCompositionAt1658980520010,
   SeedContractChainLinkAt1563804000105,
   SeedContractCollectionAt1679894500000,
@@ -214,6 +216,8 @@ import {
   SeedDropErc721At1658980521030,
   SeedDropErc998At1658980521040,
   SeedDropErcMysteryboxAt1658980521050,
+  SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
+  SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
   SeedEventHistoryErc1155PurchaseAt1563804040230,
   SeedEventHistoryErc1155PurchaseComponentsAt1563804040240,
   SeedEventHistoryErc1155TransferBatchAt1563804040140,
@@ -224,9 +228,7 @@ import {
   SeedEventHistoryErc721ClaimAt1653616447930,
   SeedEventHistoryErc721ClaimComponentsAt1653616447935,
   SeedEventHistoryErc721Erc1155CraftAt1687760533510,
-  SeedEventHistoryErc1155Erc1155CraftAt1687760535510,
   SeedEventHistoryErc721Erc1155CraftComponentsAt1687760533520,
-  SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520,
   SeedEventHistoryErc721GradeAt1687481746310,
   SeedEventHistoryErc721GradeComponentsAt1687481746320,
   SeedEventHistoryErc721LendAt1678931845530,
@@ -326,7 +328,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { RatePlanEntity } from "./infrastructure/plan/plan.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -514,6 +515,7 @@ const config: PostgresConnectionOptions = {
     SeedContractVestingAt1563804000190,
     SeedBalanceVestingAt1563804000490,
     SeedEventHistoryVestingTransferOwnershipAt1687338973200,
+    SeedClaimVestingAt1687835680100,
 
     CreateMysterybox1653616447910,
     SeedContractMysteryAt1563804000160,

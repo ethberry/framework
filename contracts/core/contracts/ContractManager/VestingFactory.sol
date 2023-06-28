@@ -7,6 +7,8 @@
 pragma solidity ^0.8.13;
 
 import "../utils/errors.sol";
+import "../Exchange/interfaces/IAsset.sol";
+import "../Exchange/ExchangeUtils.sol";
 import "./AbstractFactory.sol";
 
 /**
@@ -18,8 +20,18 @@ contract VestingFactory is AbstractFactory {
     "VestingArgs(address beneficiary,uint64 startTimestamp,uint16 cliffInMonth,uint16 monthlyRelease)";
   bytes32 private constant VESTING_ARGUMENTS_TYPEHASH = keccak256(VESTING_ARGUMENTS_SIGNATURE);
 
+  bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
+  bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
+
   bytes32 private immutable VESTING_PERMIT_SIGNATURE =
-    keccak256(bytes.concat("EIP712(Params params,VestingArgs args)", PARAMS_SIGNATURE, VESTING_ARGUMENTS_SIGNATURE));
+    keccak256(
+      bytes.concat(
+        "EIP712(Params params,VestingArgs args,Asset[] items)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE,
+        VESTING_ARGUMENTS_SIGNATURE
+      )
+    );
 
   // Array of all deployed vesting contracts.
   address[] private _vesting;
@@ -32,7 +44,7 @@ contract VestingFactory is AbstractFactory {
     uint16 monthlyRelease;
   }
 
-  event VestingDeployed(address account, uint256 externalId, VestingArgs args);
+  event VestingDeployed(address account, uint256 externalId, VestingArgs args, Asset[] items);
 
   /**
    * @dev Deploys a vesting contract with the specified arguments.
@@ -45,13 +57,14 @@ contract VestingFactory is AbstractFactory {
   function deployVesting(
     Params calldata params,
     VestingArgs calldata args,
+    Asset[] memory items,
     bytes calldata signature
   ) external returns (address account) {
     // Check that the transaction with the same nonce was not executed yet
     _checkNonce(params.nonce);
 
     // Recover the signer from signature
-    address signer = _recoverSigner(_hashVesting(params, args), signature);
+    address signer = _recoverSigner(_hashVesting(params, args, items), signature);
     // verify that signer has required permissions
     if (!hasRole(DEFAULT_ADMIN_ROLE, signer)) {
       revert SignerMissingRole();
@@ -63,11 +76,14 @@ contract VestingFactory is AbstractFactory {
       abi.encode(args.beneficiary, args.startTimestamp, args.cliffInMonth, args.monthlyRelease),
       params.nonce
     );
+
+    ExchangeUtils.spendFrom(items, signer, _msgSender(), DisabledTokenTypes(true, false, true, true, true));
+
     // add deployed address to the list of vesting contracts
     _vesting.push(account);
 
     // Notify our server about successful deployment
-    emit VestingDeployed(account, params.externalId, args);
+    emit VestingDeployed(account, params.externalId, args, items);
   }
 
   /**
@@ -75,12 +91,24 @@ contract VestingFactory is AbstractFactory {
    *
    * @param params struct containing bytecode and nonce
    * @param args The arguments for the vesting contract deployment.
+   * @param items Vested asset
    * @return bytes32 The keccak256 hash of the arguments and params.
    */
-  function _hashVesting(Params calldata params, VestingArgs calldata args) internal view returns (bytes32) {
+  function _hashVesting(
+    Params calldata params,
+    VestingArgs calldata args,
+    Asset[] memory items
+  ) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encodePacked(VESTING_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashVestingStruct(args)))
+        keccak256(
+          abi.encodePacked(
+            VESTING_PERMIT_SIGNATURE,
+            _hashParamsStruct(params),
+            _hashVestingStruct(args),
+            _hashAssetStructArray(items)
+          )
+        )
       );
   }
 
@@ -101,6 +129,22 @@ contract VestingFactory is AbstractFactory {
           args.monthlyRelease
         )
       );
+  }
+
+  function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {
+    return keccak256(abi.encode(ASSET_TYPEHASH, item.tokenType, item.token, item.tokenId, item.amount));
+  }
+
+  function _hashAssetStructArray(Asset[] memory items) private pure returns (bytes32) {
+    uint256 length = items.length;
+    bytes32[] memory padded = new bytes32[](length);
+    for (uint256 i = 0; i < length; ) {
+      padded[i] = _hashAssetStruct(items[i]);
+      unchecked {
+        i++;
+      }
+    }
+    return keccak256(abi.encodePacked(padded));
   }
 
   /**

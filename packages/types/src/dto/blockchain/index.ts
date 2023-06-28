@@ -17,9 +17,12 @@ export * from "./exchange/asset/bc-asset";
 
 export * from "./mechanics/breed/leaderboard";
 export * from "./mechanics/breed/search";
+
 export * from "./mechanics/claim/create";
 export * from "./mechanics/claim/search";
 export * from "./mechanics/claim/update";
+export * from "./mechanics/claim/upload";
+
 export * from "./mechanics/craft/search";
 export * from "./mechanics/rent/search";
 export * from "./mechanics/drop/search";
@@ -42,8 +45,11 @@ export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/report";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
+
+export * from "./mechanics/vesting/create";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
+export * from "./mechanics/vesting/upload";
 
 export * from "./mechanics/waitlist/item/create";
 export * from "./mechanics/waitlist/item/search";

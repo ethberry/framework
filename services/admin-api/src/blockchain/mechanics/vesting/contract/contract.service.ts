@@ -4,9 +4,10 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IVestingSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { AchievementLevelEntity } from "../../../achievements/level/level.entity";
-import { BalanceEntity } from "../../hierarchy/balance/balance.entity";
+
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { AchievementLevelEntity } from "../../../../achievements/level/level.entity";
+import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class VestingService {

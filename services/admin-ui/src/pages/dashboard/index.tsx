@@ -58,9 +58,9 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />
-          <VestingSection />
           <WaitListSection />
           <ClaimSection />
+          <VestingSection />
           <GradeSection />
           <CraftSection />
           <DropSection />

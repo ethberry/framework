@@ -25,7 +25,7 @@ contract ContractManager is
   ERC721Factory,
   ERC998Factory,
   ERC1155Factory,
-MysteryBoxFactory,
+  MysteryBoxFactory,
   CollectionFactory,
   PyramidFactory,
   StakingFactory,
