@@ -35,8 +35,12 @@ export class LotteryTicketController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
-    return this.lotteryTicketService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.lotteryTicketService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -47,7 +51,7 @@ export class LotteryTicketController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.lotteryTicketService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.lotteryTicketService.delete({ id }, userEntity);
   }
 }

@@ -35,8 +35,8 @@ export class WaitListListController {
   }
 
   @Post("/")
-  public create(@Body() dto: WaitListListCreateDto): Promise<WaitListListEntity> {
-    return this.waitListListService.create(dto);
+  public create(@Body() dto: WaitListListCreateDto, @User() userEntity: UserEntity): Promise<WaitListListEntity> {
+    return this.waitListListService.create(dto, userEntity);
   }
 
   @Post("/generate")

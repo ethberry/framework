@@ -2,7 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
+
+import { ComboEntityInput } from "@gemunion/mui-inputs-entity";
 import { AccessControlRoleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -31,7 +32,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} />
-      <EntityInput name="address" controller="contracts" />
+      <ComboEntityInput name="address" controller="contracts" />
     </FormDialog>
   );
 };

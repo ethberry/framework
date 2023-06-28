@@ -3,7 +3,7 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryBoxStatus } from "@framework/types";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
@@ -34,5 +34,5 @@ export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchD
   public maxPrice: string;
 
   public templateIds: Array<number>;
-  public mysteryboxStatus: Array<MysteryboxStatus>;
+  public mysteryBoxStatus: Array<MysteryBoxStatus>;
 }

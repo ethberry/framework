@@ -21,6 +21,7 @@ import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class WaitListListService {
@@ -32,6 +33,7 @@ export class WaitListListService {
     @Inject(forwardRef(() => WaitListItemService))
     private readonly waitListItemService: WaitListItemService,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {
@@ -96,14 +98,21 @@ export class WaitListListService {
     });
   }
 
-  public async create(dto: IWaitListListCreateDto): Promise<WaitListListEntity> {
-    const { item } = dto;
+  public async create(dto: IWaitListListCreateDto, userEntity: UserEntity): Promise<WaitListListEntity> {
+    const { item, contractId } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const contractEntity = await this.contractService.findOne({ id: contractId });
 
-    await this.assetService.update(assetEntity, item);
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, item, userEntity);
 
     return this.waitListListEntityRepository
       .create({

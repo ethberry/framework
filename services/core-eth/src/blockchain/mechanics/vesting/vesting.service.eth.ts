@@ -71,9 +71,11 @@ export class VestingServiceEth {
   }
 
   public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-    const { args } = event;
-    const { previousOwner, newOwner } = args;
+    // event history processed by AccessControlServiceEth
+    // await this.eventHistoryService.updateHistory(event, context);
+    const {
+      args: { newOwner, previousOwner },
+    } = event;
     const { address } = context;
 
     const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });

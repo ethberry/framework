@@ -45,8 +45,12 @@ export class MysteryBoxController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MysteryBoxUpdateDto): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: MysteryBoxUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<MysteryBoxEntity> {
+    return this.mysteryboxService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -56,13 +60,13 @@ export class MysteryBoxController {
   }
 
   @Post("/")
-  public create(@Body() dto: MysteryBoxCreateDto): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.create(dto);
+  public create(@Body() dto: MysteryBoxCreateDto, @User() userEntity: UserEntity): Promise<MysteryBoxEntity> {
+    return this.mysteryboxService.create(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return this.mysteryboxService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    return this.mysteryboxService.delete({ id }, userEntity);
   }
 }

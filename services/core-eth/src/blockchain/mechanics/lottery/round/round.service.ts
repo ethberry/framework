@@ -27,9 +27,7 @@ export class LotteryRoundService {
   }
 
   public async createEmptyPrice(): Promise<AssetEntity> {
-    return this.assetService.create({
-      components: [],
-    });
+    return this.assetService.create();
   }
 
   public async updatePrice(asset: AssetEntity, price: IAssetDto): Promise<void> {

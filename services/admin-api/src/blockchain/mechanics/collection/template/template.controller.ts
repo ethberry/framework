@@ -23,8 +23,12 @@ export class Erc721CollectionController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
-    return this.erc721CollectionService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: TemplateUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<TemplateEntity> {
+    return this.erc721CollectionService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

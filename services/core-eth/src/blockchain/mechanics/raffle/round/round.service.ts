@@ -56,8 +56,6 @@ export class RaffleRoundService {
   }
 
   public async createEmptyPrice(): Promise<AssetEntity> {
-    return this.assetService.create({
-      components: [],
-    });
+    return this.assetService.create();
   }
 }

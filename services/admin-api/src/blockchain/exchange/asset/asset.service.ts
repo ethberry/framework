@@ -1,4 +1,5 @@
 import {
+  ForbiddenException,
   forwardRef,
   Inject,
   Injectable,
@@ -8,15 +9,16 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { AssetEntity } from "./asset.entity";
-import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetComponentEntity } from "./asset-component.entity";
+import { AssetEntity } from "./asset.entity";
 
 @Injectable()
 export class AssetService {
@@ -33,28 +35,44 @@ export class AssetService {
     private dataSource: DataSource,
   ) {}
 
-  public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
-    return this.assetEntityRepository.create(dto).save();
+  // This method accepts no arguments because all logic is in `update`
+  public async create(): Promise<AssetEntity> {
+    return this.assetEntityRepository
+      .create({
+        components: [],
+      })
+      .save();
   }
 
-  public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
+  public async update(asset: AssetEntity, dto: IAssetDto, userEntity: UserEntity): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       // patch NATIVE and ERC20 tokens
       for (const component of dto.components) {
-        if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-          const templateEntity = await queryRunner.manager.findOne(TemplateEntity, {
-            where: { contractId: component.contractId },
-          });
+        const templateEntity = await queryRunner.manager.findOne(TemplateEntity, {
+          where: {
+            contractId: component.contractId,
+          },
+          relations: {
+            contract: true,
+          },
+        });
 
-          if (!templateEntity) {
-            throw new NotFoundException("templateNotFound");
-          }
+        if (!templateEntity) {
+          throw new NotFoundException("templateNotFound");
+        }
+
+        if (templateEntity.contract.merchantId !== userEntity.merchantId) {
+          throw new ForbiddenException("insufficientPermissions");
+        }
+
+        if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
           component.templateId = templateEntity.id;
         }
       }
+
       if (dto.components.length) {
         // remove old
         await Promise.allSettled(

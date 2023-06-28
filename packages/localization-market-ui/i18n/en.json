@@ -898,7 +898,7 @@
         "selected": "Selected {selected}/6.",
         "title": "Buy a ticket"
       },
-      "tickets": {
+      "tokens": {
         "title": "My tickets"
       },
       "title": "Lottery"
@@ -1016,10 +1016,10 @@
         "rules": "Just buy a ticket. Random will choose a winner",
         "title": "Buy a ticket"
       },
-      "tickets": {
+      "tokens": {
         "title": "My tickets"
       },
-      "title": "Lottery"
+      "title": "Raffle"
     },
     "referral": {
       "cabinet": {

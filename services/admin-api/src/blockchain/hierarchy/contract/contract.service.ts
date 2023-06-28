@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
@@ -179,6 +179,7 @@ export class ContractService {
   public async update(
     where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IContractUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
@@ -186,13 +187,16 @@ export class ContractService {
       throw new NotFoundException("contractNotFound");
     }
 
-    Object.assign(contractEntity, dto);
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
+    Object.assign(contractEntity, dto);
     return contractEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
-    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
+  public delete(where: FindOptionsWhere<ContractEntity>, userEntity: UserEntity): Promise<ContractEntity> {
+    return this.update(where, { contractStatus: ContractStatus.INACTIVE }, userEntity);
   }
 
   public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {

@@ -30,7 +30,7 @@ import {
   IContractManagerLotteryDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
-  PyramidContractTemplates,
+  // PyramidContractTemplates,
   StakingContractTemplates,
   TemplateStatus,
   TokenType,
@@ -499,6 +499,7 @@ export class ContractManagerServiceEth {
     const {
       args: { account, args, externalId },
     } = event;
+
     const { payees, shares, contractTemplate } = args;
 
     await this.eventHistoryService.updateHistory(event, ctx);
@@ -516,8 +517,8 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractFeatures:
         contractTemplate === "0"
-          ? []
-          : (Object.values(PyramidContractTemplates)[Number(contractTemplate)].split("_") as Array<ContractFeatures>),
+          ? (["ALLOWANCE", "PAUSABLE"] as Array<ContractFeatures>)
+          : (["WITHDRAW", "ALLOWANCE", "SPLITTER", "REFERRAL", "PAUSABLE"] as Array<ContractFeatures>),
       contractModule: ModuleType.PYRAMID,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

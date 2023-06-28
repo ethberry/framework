@@ -67,11 +67,8 @@ export class GradeService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
-
-    await this.assetService.update(assetEntity, price);
+    const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, price, userEntity);
 
     const gradeEntity = await this.create({
       ...dto,
@@ -87,14 +84,18 @@ export class GradeService {
     return this.gradeEntityRepository.create(dto).save();
   }
 
-  public async update(where: FindOptionsWhere<GradeEntity>, dto: Partial<IGradeUpdateDto>): Promise<GradeEntity> {
+  public async update(
+    where: FindOptionsWhere<GradeEntity>,
+    dto: Partial<IGradeUpdateDto>,
+    userEntity: UserEntity,
+  ): Promise<GradeEntity> {
     const { price, ...rest } = dto;
+
     const gradeEntity = await this.findOne(where, {
-      join: {
-        alias: "grade",
-        leftJoinAndSelect: {
-          price: "grade.price",
-          components: "price.components",
+      relations: {
+        contract: true,
+        price: {
+          components: true,
         },
       },
     });
@@ -103,12 +104,15 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
+    if (gradeEntity.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
     if (price) {
-      await this.assetService.update(gradeEntity.price, price);
+      await this.assetService.update(gradeEntity.price, price, userEntity);
     }
 
     Object.assign(gradeEntity, rest);
-
     return gradeEntity.save();
   }
 

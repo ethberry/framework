@@ -13,8 +13,9 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementLevelService } from "./level.service";
 import { AchievementLevelEntity } from "./level.entity";
 import { AchievementLevelCreateDto, AchievementLevelSearchDto, AddressUpdateDto } from "./dto";
@@ -37,18 +38,25 @@ export class AchievementLevelController {
   }
 
   @Post("/")
-  public create(@Body() dto: AchievementLevelCreateDto): Promise<AchievementLevelEntity> {
-    return this.achievementLevelService.create(dto);
+  public create(
+    @Body() dto: AchievementLevelCreateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<AchievementLevelEntity> {
+    return this.achievementLevelService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: AddressUpdateDto): Promise<AchievementLevelEntity | undefined> {
-    return this.achievementLevelService.update({ id }, dto);
+  public update(
+    @Param("id") id: number,
+    @Body() dto: AddressUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<AchievementLevelEntity | undefined> {
+    return this.achievementLevelService.update({ id }, dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
-    await this.achievementLevelService.delete({ id });
+  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.achievementLevelService.delete({ id }, userEntity);
   }
 }

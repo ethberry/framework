@@ -25,14 +25,10 @@ export class StakingRulesService {
   public async create(dto: IStakingCreateDto): Promise<StakingRulesEntity> {
     const { deposit, reward } = dto;
 
-    const depositEntity = await this.assetService.create({
-      components: [],
-    });
+    const depositEntity = await this.assetService.create();
     await this.assetService.update(depositEntity, deposit);
 
-    const rewardEntity = await this.assetService.create({
-      components: [],
-    });
+    const rewardEntity = await this.assetService.create();
     await this.assetService.update(rewardEntity, reward);
 
     Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
@@ -41,8 +37,6 @@ export class StakingRulesService {
   }
 
   public async createEmptyAsset(): Promise<AssetEntity> {
-    return this.assetService.create({
-      components: [],
-    });
+    return this.assetService.create();
   }
 }

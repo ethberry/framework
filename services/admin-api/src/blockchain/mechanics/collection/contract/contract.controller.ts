@@ -38,8 +38,12 @@ export class CollectionContractController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
-    return this.collectionCollectionService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.collectionCollectionService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -50,8 +54,8 @@ export class CollectionContractController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.collectionCollectionService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.collectionCollectionService.delete({ id }, userEntity);
   }
 
   @ApiAddress("address")
@@ -59,7 +63,8 @@ export class CollectionContractController {
   public upload(
     @Param("address", AddressPipe) address: string,
     @Body() dto: CollectionUploadDto,
+    @User() userEntity: UserEntity,
   ): Promise<Array<TokenEntity>> {
-    return this.collectionCollectionService.upload(address, dto);
+    return this.collectionCollectionService.upload(address, dto, userEntity);
   }
 }

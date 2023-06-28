@@ -38,8 +38,12 @@ export class DropController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: DropUpdateDto): Promise<DropEntity> {
-    return this.dropService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: DropUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<DropEntity> {
+    return this.dropService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

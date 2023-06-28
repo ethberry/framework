@@ -4,7 +4,7 @@ import type { IAsset } from "../../exchange/asset";
 import type { ITemplate } from "../../hierarchy/template";
 import type { IToken } from "../../hierarchy/token";
 
-export enum MysteryboxStatus {
+export enum MysteryBoxStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }
@@ -15,5 +15,5 @@ export interface IMysterybox extends ISearchable {
   templateId: number;
   template?: ITemplate;
   tokens?: Array<IToken>;
-  mysteryboxStatus: MysteryboxStatus;
+  mysteryBoxStatus: MysteryBoxStatus;
 }

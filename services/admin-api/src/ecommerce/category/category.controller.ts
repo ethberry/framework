@@ -13,9 +13,10 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { SearchDto } from "@gemunion/collection";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { CategoryService } from "./category.service";
 import { CategoryEntity } from "./category.entity";
 import { CategoryCreateDto, CategoryUpdateDto } from "./dto";
@@ -37,13 +38,17 @@ export class CategoryController {
   }
 
   @Post("/")
-  public create(@Body() dto: CategoryCreateDto): Promise<CategoryEntity> {
-    return this.categoryService.create(dto);
+  public create(@Body() dto: CategoryCreateDto, @User() userEntity: UserEntity): Promise<CategoryEntity> {
+    return this.categoryService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
-    return this.categoryService.update({ id }, dto);
+  public update(
+    @Param("id") id: number,
+    @Body() dto: CategoryUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<CategoryEntity | undefined> {
+    return this.categoryService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -54,7 +59,7 @@ export class CategoryController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
-    await this.categoryService.delete({ id });
+  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.categoryService.delete({ id }, userEntity);
   }
 }

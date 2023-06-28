@@ -9,6 +9,7 @@ import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDt
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
 import { AssetService } from "../../blockchain/exchange/asset/asset.service";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()
 export class ProductItemService {
@@ -101,12 +102,10 @@ export class ProductItemService {
     return this.productItemEntityRepository.find({ where, ...options });
   }
 
-  public async create(dto: IProductItemCreateDto): Promise<ProductItemEntity> {
+  public async create(dto: IProductItemCreateDto, userEntity: UserEntity): Promise<ProductItemEntity> {
     const { photo, price, ...rest } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const assetEntity = await this.assetService.create();
 
     const productItemEntity = await this.productItemEntityRepository
       .create({
@@ -115,7 +114,7 @@ export class ProductItemService {
       })
       .save();
 
-    await this.assetService.update(productItemEntity.price, price);
+    await this.assetService.update(productItemEntity.price, price, userEntity);
 
     // add new
     await Promise.allSettled([this.photoService.create({ ...photo, priority: 0 }, null, productItemEntity)]).then(
@@ -132,6 +131,7 @@ export class ProductItemService {
   public async update(
     where: FindOptionsWhere<ProductItemEntity>,
     dto: IProductItemUpdateDto,
+    userEntity: UserEntity,
   ): Promise<ProductItemEntity> {
     const { photo, price, ...rest } = dto;
 
@@ -165,7 +165,7 @@ export class ProductItemService {
     });
 
     if (price) {
-      await this.assetService.update(productItemEntity.price, price);
+      await this.assetService.update(productItemEntity.price, price, userEntity);
     }
 
     return productItemEntity.save();

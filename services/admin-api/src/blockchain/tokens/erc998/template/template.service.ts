@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ModuleType, TokenType } from "@framework/types";
 import type { ITemplateSearchDto } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc998TokenService } from "../token/token.service";
@@ -18,8 +19,9 @@ export class Erc998TemplateService extends TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc998TokenService,
+    protected readonly contractService: ContractService,
   ) {
-    super(templateEntityRepository, assetService, tokenService);
+    super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

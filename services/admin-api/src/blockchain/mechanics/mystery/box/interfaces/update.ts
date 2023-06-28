@@ -1,4 +1,4 @@
-import { IAssetDto, MysteryboxStatus } from "@framework/types";
+import { IAssetDto, MysteryBoxStatus } from "@framework/types";
 
 export interface IMysteryBoxUpdateDto {
   title: string;
@@ -6,5 +6,5 @@ export interface IMysteryBoxUpdateDto {
   item: IAssetDto;
   price: IAssetDto;
   imageUrl: string;
-  mysteryboxStatus: MysteryboxStatus;
+  mysteryBoxStatus: MysteryBoxStatus;
 }
