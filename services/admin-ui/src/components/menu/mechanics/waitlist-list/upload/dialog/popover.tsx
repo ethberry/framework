@@ -38,10 +38,10 @@ export const WaitListInfoPopover: FC<Record<string, string | number>> = () => {
       >
         <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
-          <pre>account,listId</pre>
+          <pre>account</pre>
           <Typography>Example: </Typography>
           <pre>
-            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,1
+            0xfe3b557e8fb62b89f4916b721be55ceb828dbd73
             <br />
           </pre>
         </Box>

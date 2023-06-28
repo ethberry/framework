@@ -90,6 +90,18 @@ export class SeedAssetComponentsWaitListAt1663047650220 implements MigrationInte
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         102090009
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        102090010
+      ), (
+        'ERC20',
+        10108,
+        1010801, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        102090011
       );
     `);
   }

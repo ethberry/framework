@@ -34,6 +34,11 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "is_private",
+          type: "boolean",
+          default: false,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

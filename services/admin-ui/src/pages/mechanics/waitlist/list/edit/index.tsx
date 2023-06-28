@@ -3,7 +3,7 @@ import { Alert, Box } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { SwitchInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -23,8 +23,8 @@ export interface IWaitListListEditDialogProps {
 export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item } = initialValues;
-  const fixedValues = { id, title, description, item };
+  const { id, title, description, item, contractId, isPrivate } = initialValues;
+  const fixedValues = { id, title, description, item, contractId, isPrivate };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
@@ -56,6 +56,7 @@ export const WaitListListEditDialog: FC<IWaitListListEditDialogProps> = props =>
           contractModule: [ModuleType.WAITLIST],
         }}
       />
+      <SwitchInput name="isPrivate" readOnly={!!id} />
     </FormDialog>
   );
 };

@@ -5,4 +5,5 @@ import { IAssetDto } from "../../../exchange/asset/asset";
 export interface IWaitListListCreateDto extends ISearchableDto {
   item: IAssetDto;
   contractId: number;
+  isPrivate: boolean;
 }

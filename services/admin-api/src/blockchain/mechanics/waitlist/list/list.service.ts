@@ -8,12 +8,13 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -41,9 +42,10 @@ export class WaitListListService {
 
     const queryBuilder = this.waitListListEntityRepository.createQueryBuilder("waitlist");
 
-    queryBuilder.leftJoin("waitlist.contract", "contract");
-
     queryBuilder.select();
+
+    queryBuilder.leftJoin("waitlist.contract", "contract");
+    queryBuilder.addSelect(["contract.contractStatus"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
@@ -88,6 +90,7 @@ export class WaitListListService {
       join: {
         alias: "waitlist",
         leftJoinAndSelect: {
+          contract: "waitlist.contract",
           items: "waitlist.items",
           item: "waitlist.item",
           item_components: "item.components",
@@ -160,8 +163,10 @@ export class WaitListListService {
   public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
     return this.waitListListEntityRepository.find({
       where: {
+        root: IsNull(),
         contract: {
           merchantId: userEntity.merchantId,
+          contractStatus: ContractStatus.ACTIVE,
         },
       },
       select: {

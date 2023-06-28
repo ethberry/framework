@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 import type { IWaitListItem } from "@framework/types";
-import { WaitListStatus } from "@framework/types";
+import { WaitListItemStatus } from "@framework/types";
 
 import { WaitListListEntity } from "../list/list.entity";
 
@@ -14,9 +14,9 @@ export class WaitListItemEntity extends IdDateBaseEntity implements IWaitListIte
 
   @Column({
     type: "enum",
-    enum: WaitListStatus,
+    enum: WaitListItemStatus,
   })
-  public waitListStatus: WaitListStatus;
+  public waitListItemStatus: WaitListItemStatus;
 
   @Column({ type: "int" })
   public listId: number;

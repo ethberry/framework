@@ -35,9 +35,10 @@ export class WaitListItemService {
     queryBuilder.select();
 
     queryBuilder.leftJoin("waitlist.list", "list");
-    queryBuilder.addSelect(["list.title"]);
+    queryBuilder.addSelect(["list.title", "list.contract", "list.root"]);
 
     queryBuilder.leftJoin("list.contract", "contract");
+    queryBuilder.addSelect(["contract.contractStatus"]);
 
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,

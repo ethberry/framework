@@ -11,4 +11,5 @@ export interface IWaitListList extends ISearchable {
   itemId: number;
   contractId: number;
   contract: IContract;
+  isPrivate: boolean;
 }

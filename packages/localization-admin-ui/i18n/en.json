@@ -565,7 +565,6 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
-      "beneficiary": "Beneficiary",
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
       "LEVEL": "Level",
@@ -592,6 +591,7 @@
       "attribute": "Attribute",
       "baseTokenURI": "Base token URI",
       "batchSize": "Collection size",
+      "beneficiary": "Beneficiary",
       "breeder": "Breeder",
       "cap": "Cap",
       "categoryIds": "Categories",
@@ -640,6 +640,7 @@
       "id": "ID",
       "imageUrl": "Avatar",
       "isDefault": "Is default",
+      "isPrivate": "Private",
       "item": "Item",
       "items": "Items",
       "language": "Language",
@@ -656,8 +657,8 @@
       "merchantStatus": "Status",
       "metadata": "Attributes",
       "monthlyRelease": "Monthly release",
-      "mysteryId": "Mysterybox",
       "mysteryBoxStatus": "Status",
+      "mysteryId": "Mysterybox",
       "name": "Name",
       "numbers": "Numbers",
       "orderItems": "Items",
@@ -747,7 +748,6 @@
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
-      "beneficiary": "0x...",
       "achievementLevel": "1",
       "achievementRuleId": "Achievement",
       "achievementRuleIds": "Achievement",
@@ -759,6 +759,7 @@
       "attribute": "...",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
+      "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Root",
       "childId": "Contract",
@@ -1265,11 +1266,11 @@
       "title": "Users"
     },
     "vesting": {
-      "contracts": {
-        "title": "Vesting Contracts"
-      },
       "claims": {
         "title": "Vesting Claims"
+      },
+      "contracts": {
+        "title": "Vesting Contracts"
       },
       "title": "Vesting"
     },

@@ -16,6 +16,9 @@ export class WaitListListEntity extends SearchableEntity implements IWaitListLis
   @Column({ type: "varchar" })
   public root: string;
 
+  @Column({ type: "boolean" })
+  public isPrivate: boolean;
+
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
   public item: AssetEntity;
