@@ -65,9 +65,9 @@ export const LotteryTickets: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.contracts"]} />
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.tickets"]} />
 
-      <PageHeader message="pages.lottery.title">
+      <PageHeader message="pages.lottery.tickets.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
