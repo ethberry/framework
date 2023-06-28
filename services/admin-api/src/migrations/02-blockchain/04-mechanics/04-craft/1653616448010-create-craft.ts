@@ -29,6 +29,10 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "craft_status",
           type: `${ns}.craft_status_enum`,
           default: "'NEW'",
@@ -53,6 +57,12 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
       ],

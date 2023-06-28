@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -100,6 +100,7 @@ export class CraftService {
       .create({
         price: priceEntity,
         item: itemEntity,
+        merchantId: userEntity.merchantId,
       })
       .save();
   }
@@ -117,6 +118,10 @@ export class CraftService {
       throw new NotFoundException("craftNotFound");
     }
 
+    if (craftEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
     if (item) {
       await this.assetService.update(craftEntity.item, item, userEntity);
     }
@@ -129,11 +134,15 @@ export class CraftService {
     return craftEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<CraftEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<CraftEntity>, userEntity: UserEntity): Promise<void> {
     const craftEntity = await this.findOne(where);
 
     if (!craftEntity) {
-      return;
+      throw new NotFoundException("craftNotFound");
+    }
+
+    if (craftEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     if (craftEntity.craftStatus === CraftStatus.NEW) {

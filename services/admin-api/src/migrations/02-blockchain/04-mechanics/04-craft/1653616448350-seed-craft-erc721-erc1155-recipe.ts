@@ -50,6 +50,7 @@ export class SeedCraftErc721Erc1155At1653616448350 implements MigrationInterface
         item_id,
         price_id,
         craft_status,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -57,6 +58,7 @@ export class SeedCraftErc721Erc1155At1653616448350 implements MigrationInterface
         102350101,
         102350102,
         'ACTIVE',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       )

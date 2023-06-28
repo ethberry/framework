@@ -60,6 +60,7 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         item_id,
         price_id,
         craft_status,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
@@ -67,6 +68,7 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         102010101,
         102010102,
         'ACTIVE',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -74,6 +76,7 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         102010201,
         102010202,
         'NEW',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

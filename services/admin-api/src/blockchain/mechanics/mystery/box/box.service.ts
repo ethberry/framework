@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IMysteryBoxSearchDto, MysteryBoxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryBoxStatus, TemplateStatus } from "@framework/types";
 
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -189,6 +189,7 @@ export class MysteryBoxService {
         alias: "box",
         leftJoinAndSelect: {
           template: "box.template",
+          contract: "template.contract",
           item: "box.item",
           item_components: "item.components",
           price: "template.price",
@@ -201,7 +202,9 @@ export class MysteryBoxService {
       throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    Object.assign(mysteryBoxEntity, rest);
+    if (mysteryBoxEntity.template.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     if (price) {
       await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
@@ -211,6 +214,7 @@ export class MysteryBoxService {
       await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
+    Object.assign(mysteryBoxEntity, rest);
     return mysteryBoxEntity.save();
   }
 
@@ -248,20 +252,27 @@ export class MysteryBoxService {
   }
 
   public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<void> {
-    const mysteryBoxEntity = await this.findOne({ id: where.id });
+    const mysteryBoxEntity = await this.findOne({ id: where.id }, { relations: { template: { contract: true } } });
 
     if (!mysteryBoxEntity) {
       throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    // TODO validate merchant
+    if (mysteryBoxEntity.template.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     const count = await this.tokenService.count({ templateId: mysteryBoxEntity.templateId });
 
     if (!count) {
       await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
-      // await this.mysteryBoxEntityRepository.delete(where);
+      await mysteryBoxEntity.remove();
     } else {
+      await this.templateService.update(
+        { id: mysteryBoxEntity.templateId },
+        { templateStatus: TemplateStatus.INACTIVE },
+        userEntity,
+      );
       await this.update(where, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE }, userEntity);
     }
   }

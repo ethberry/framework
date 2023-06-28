@@ -54,7 +54,7 @@ export class CraftController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.craftService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.craftService.delete({ id }, userEntity);
   }
 }
