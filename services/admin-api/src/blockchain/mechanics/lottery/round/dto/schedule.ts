@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsEthereumAddress, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { CronExpression } from "@nestjs/schedule";
 
@@ -11,11 +11,6 @@ export class LotteryScheduleUpdateDto implements ILotteryScheduleUpdateDto {
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public address: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  public description: string;
 
   @ApiPropertyOptional({
     enum: ContractStatus,

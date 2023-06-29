@@ -23,6 +23,4 @@ export interface ILotteryRound extends IIdDateBase {
 export interface ILotteryScheduleUpdateDto {
   address: string;
   schedule: CronExpression;
-  description?: string;
-  round?: Partial<ILotteryRound>;
 }
