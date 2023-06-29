@@ -328,6 +328,7 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
+import { SeedEventHistoryWaitListComponentsAt1663047650360 } from "./migrations/02-blockchain/04-mechanics/09-waitlist/1663047650360-seed-event-history-waitlist-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -635,6 +636,7 @@ const config: PostgresConnectionOptions = {
     CreateWaitListItem1663047650300,
     SeedWaitListItemAt1663047650310,
     SeedEventHistoryWaitListAt1663047650350,
+    SeedEventHistoryWaitListComponentsAt1663047650360,
 
     CreateBreed1663047650400,
     SeedBreed1663047650401,

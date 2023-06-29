@@ -68,6 +68,13 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
+    "attributeName": {
+      "GENES": "Genes",
+      "LEVEL": "Level",
+      "RARITY": "Rarity",
+      "TEMPLATE_ID": "Template",
+      "TRAITS": "Traits"
+    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
@@ -124,6 +131,8 @@
       "amounts": "Amounts",
       "approved": "Approved",
       "args": "Arguments",
+      "attribute": "Attribute",
+      "attributes": "Attributes",
       "borrow": "Borrow",
       "callbackGasLimit": "Callback gas limit",
       "childContract": "Child contract",
@@ -132,6 +141,7 @@
       "claimId": "Claim ID",
       "collection": "Collection",
       "contract": "Contract",
+      "contractModule": "Contract module",
       "data": "Data",
       "endTimestamp": "End date",
       "expires": "Lend expires",
@@ -151,6 +161,7 @@
       "multiplier": "Multiplier",
       "newAdminRole": "New admin role",
       "newOwner": "New owner",
+      "noData": "No data",
       "numWords": "Num words",
       "numbers": "Numbers",
       "operator": "Operator",

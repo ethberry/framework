@@ -7,19 +7,19 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IPaginationDto } from "@gemunion/types-collection";
 
 export enum ContractEventType {
-  WaitListRewardClaimed = "WaitListRewardClaimed",
-  Claim = "Claim",
-  Craft = "Craft",
-  Upgrade = "Upgrade",
-  Purchase = "Purchase",
-  PurchaseRaffle = "PurchaseRaffle",
-  PurchaseLottery = "PurchaseLottery",
-  PurchaseMysteryBox = "PurchaseMysteryBox",
-  UnpackMysteryBox = "UnpackMysteryBox",
-  Transfer = "Transfer", // ERC20,ERC721,ERC998
-  TransferSingle = "TransferSingle", // ERC1155
-  TransferBatch = "TransferBatch", // ERC1155
-  OwnershipTransferred = "OwnershipTransferred", // Vesting, Extensions
+  WaitListRewardClaimed = "WaitListRewardClaimed", // +
+  Claim = "Claim", // +
+  Craft = "Craft", // +
+  Upgrade = "Upgrade", // +
+  Purchase = "Purchase", // +
+  PurchaseRaffle = "PurchaseRaffle", // assets; lucky number
+  PurchaseLottery = "PurchaseLottery", // assets; numbers - array
+  PurchaseMysteryBox = "PurchaseMysteryBox", // assets
+  UnpackMysteryBox = "UnpackMysteryBox", // assets
+  Transfer = "Transfer", // ERC20,ERC721,ERC998 - no assets
+  TransferSingle = "TransferSingle", // ERC1155 // from to assets - no assets
+  TransferBatch = "TransferBatch", // ERC1155 // from to assets - no assets
+  OwnershipTransferred = "OwnershipTransferred", // Vesting, Extensions // + - no assets
 }
 
 export interface IEventSearchDto extends IPaginationDto {
