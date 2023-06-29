@@ -7,6 +7,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryMysteryErc721PurchaseAt1687580606310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;

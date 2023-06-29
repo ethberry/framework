@@ -41,7 +41,31 @@ export class SeedUser1563803000140 implements MigrationInterface {
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
+      );
+    `);
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.user (
+        email,
+        sub,
+        display_name,
+        image_url,
+        language,
+        country,
+        gender,
+        comment,
+        user_status,
+        user_roles,
+        merchant_id,
+        wallet,
+        chain_id,
+        created_at,
+        updated_at
+      ) VALUES (
         'trejgun@gemunion.io',
         'ia31Zjm8NUTstqI3Ug9mbHtiVbH2',
         'CTAPbIu_MABP',

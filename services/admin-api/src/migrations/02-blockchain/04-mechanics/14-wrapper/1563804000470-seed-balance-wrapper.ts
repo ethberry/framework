@@ -6,6 +6,10 @@ import { wallet } from "@gemunion/constants";
 
 export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 

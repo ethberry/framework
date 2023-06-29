@@ -5,6 +5,10 @@ import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateLotteryTicketAt1563804000280 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

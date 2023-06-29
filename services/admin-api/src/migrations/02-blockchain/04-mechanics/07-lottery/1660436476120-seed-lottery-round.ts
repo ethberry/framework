@@ -14,6 +14,10 @@ const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 
 export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 

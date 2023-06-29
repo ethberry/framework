@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc1155Erc1155CraftAt1687760535510 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
 

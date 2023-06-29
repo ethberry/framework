@@ -94,8 +94,6 @@ export class CreateClaim1653616447810 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    await queryRunner.query(`SELECT setval('${ns}.claim_id_seq', 5000000, true);`);
-
     await queryRunner.query(`
       CREATE OR REPLACE FUNCTION update_expired_claims() RETURNS trigger
       LANGUAGE plpgsql
@@ -112,6 +110,12 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       AFTER INSERT ON ${ns}.claim
       EXECUTE PROCEDURE update_expired_claims();
     `);
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.claim_id_seq', 5000000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

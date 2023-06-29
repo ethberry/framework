@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedTokenErc20WETHAt1563804000322 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 

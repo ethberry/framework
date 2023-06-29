@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedAccessListErc1155At1653616447350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
 

@@ -4,6 +4,10 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractManager1700000000000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
         insert into ${ns}.contract_manager(address, contract_type, from_block, created_at, updated_at)
         select address,

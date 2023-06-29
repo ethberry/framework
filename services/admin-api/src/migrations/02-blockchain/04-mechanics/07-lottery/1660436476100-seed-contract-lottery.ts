@@ -7,6 +7,10 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const lotteryAddr = process.env.LOTTERY_ADDR || wallet;

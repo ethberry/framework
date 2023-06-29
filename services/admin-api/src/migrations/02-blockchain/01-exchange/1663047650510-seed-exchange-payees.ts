@@ -5,6 +5,10 @@ import { wallets } from "@gemunion/constants";
 
 export class SeedExchangePayees1663047650510 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc1155Erc1155CraftComponentsAt1687760535520 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
         history_id,

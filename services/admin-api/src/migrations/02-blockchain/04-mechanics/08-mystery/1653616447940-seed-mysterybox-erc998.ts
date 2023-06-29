@@ -3,8 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
+export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

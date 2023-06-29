@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedCraftErc721Erc1155RecipesAt1653616448350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`

@@ -69,6 +69,10 @@ export class CreateCraft1653616448010 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`SELECT setval('${ns}.craft_id_seq', 5000000, true);`);
   }
 

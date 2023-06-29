@@ -3,6 +3,10 @@ import { ns } from "@framework/constants";
 
 export class CreateMysterybox1653616447910 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.mystery_box_status_enum AS ENUM (
         'ACTIVE',

@@ -5,6 +5,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractErc721CryptoKittiesAt1563804000131 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

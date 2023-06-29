@@ -74,6 +74,12 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.achievement_level_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -6,6 +6,10 @@ import { wallet } from "@gemunion/constants";
 
 export class SeedBalanceStakingAt1654751224530 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const stakingAddr = process.env.STAKING_ADDR || wallet;
 

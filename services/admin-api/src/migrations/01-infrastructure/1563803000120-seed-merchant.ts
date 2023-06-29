@@ -19,7 +19,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'trejgun+merchant1@gmail.com',
+        'trejgun@gemunion.io',
         'GEMUNION',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
@@ -28,8 +28,26 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '11111111-2222-3333-4444-555555555555',
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
-        'trejgun+merchant2@gmail.com',
+      );
+    `);
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.merchant (
+        email,
+        title,
+        description,
+        phone_number,
+        image_url,
+        merchant_status,
+        api_key,
+        created_at,
+        updated_at
+      ) VALUES (
+        'trejgun+merchant2@gemunion.io',
         'MEOW DOA',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',
@@ -39,7 +57,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'trejgun+merchant3@gmail.com',
+        'trejgun+merchant3@gemunion.io',
         'CTAPbIu SHOP',
         '${simpleFormatting}',
         '+62 (812) 3919-8760',

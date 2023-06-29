@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
         history_id,

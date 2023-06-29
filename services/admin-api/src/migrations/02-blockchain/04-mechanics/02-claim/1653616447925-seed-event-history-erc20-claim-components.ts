@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
         history_id,

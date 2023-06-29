@@ -3,8 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedAccessControlCollectionAt20At1679894502230 implements MigrationInterface {
+export class SeedAccessControlCollectionAt1679894502230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc721ContractGenerativeAddress = process.env.ERC721_GENERATIVE_ADDR || wallet;
 

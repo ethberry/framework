@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedAssetComponentsAchievementRule1681273013025 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

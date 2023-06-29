@@ -61,6 +61,10 @@ export class CreateProductItem1683724061500 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`SELECT setval('${ns}.product_item_id_seq', 500, true);`);
   }
 

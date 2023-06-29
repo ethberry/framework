@@ -6,6 +6,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractPyramidAt1660436477100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;

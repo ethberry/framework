@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 

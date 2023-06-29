@@ -6,6 +6,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;

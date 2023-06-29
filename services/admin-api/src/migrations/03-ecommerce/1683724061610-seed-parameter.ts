@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedParameter1683724061610 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.parameter (
         parameter_name,

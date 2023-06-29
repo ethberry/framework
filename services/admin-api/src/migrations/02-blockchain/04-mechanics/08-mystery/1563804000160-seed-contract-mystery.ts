@@ -6,6 +6,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc721ContractMysterySimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
     const erc721ContractMysteryPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;

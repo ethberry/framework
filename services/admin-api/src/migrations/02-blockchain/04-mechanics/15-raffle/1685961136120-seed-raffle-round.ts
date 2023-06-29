@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 
