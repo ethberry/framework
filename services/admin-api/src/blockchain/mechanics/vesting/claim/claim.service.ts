@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { concat, hexlify, toBeHex, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 import type { IClaimSearchDto, IVestingClaimCreateDto } from "@framework/types";
@@ -223,7 +223,7 @@ export class VestingClaimService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<ClaimEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<ClaimEntity>, userEntity: UserEntity): Promise<ClaimEntity> {
     const claimEntity = await this.findOne(where);
 
     if (!claimEntity) {
@@ -238,6 +238,6 @@ export class VestingClaimService {
       throw new NotFoundException("claimRedeemed");
     }
 
-    return this.claimEntityRepository.delete(where);
+    return claimEntity.remove();
   }
 }

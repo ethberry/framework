@@ -58,7 +58,7 @@ export class ProductItemController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
-    await this.productItemService.delete({ id });
+  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.productItemService.delete({ id }, userEntity);
   }
 }

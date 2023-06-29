@@ -28,7 +28,7 @@ export class UserService {
     return this.userEntityRepository.create(dto).save();
   }
 
-  public async count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
     return this.userEntityRepository.count({ where });
   }
 }

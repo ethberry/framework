@@ -1,6 +1,6 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 
@@ -92,7 +92,7 @@ export class CategoryService {
     return categoryEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<CategoryEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<CategoryEntity>, userEntity: UserEntity): Promise<CategoryEntity> {
     if (where.id === 1) {
       throw new BadRequestException("cantDeleteRootCategory");
     }
@@ -119,6 +119,6 @@ export class CategoryService {
       throw new BadRequestException("cantDeleteNotEmptyCategory");
     }
 
-    return this.categoryEntityRepository.delete(where);
+    return categoryEntity.remove();
   }
 }

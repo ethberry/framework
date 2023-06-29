@@ -13,10 +13,10 @@ import {
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { EventHistoryEntity } from "./event-history.entity";
-import { ContractService } from "../hierarchy/contract/contract.service";
-import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
 import { AchievementsRuleService } from "../../achievements/rule/rule.service";
+import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
+import { ContractService } from "../hierarchy/contract/contract.service";
+import { EventHistoryEntity } from "./event-history.entity";
 
 @Injectable()
 export class EventHistoryService {

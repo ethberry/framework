@@ -5,12 +5,12 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
-import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
-import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { TokenService } from "../token/token.service";
 import { ContractService } from "../contract/contract.service";
+import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
+import { TemplateEntity } from "./template.entity";
 
 @Injectable()
 export class TemplateService {
@@ -262,7 +262,7 @@ export class TemplateService {
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>, userEntity: UserEntity): Promise<void> {
+  public async delete(where: FindOptionsWhere<TemplateEntity>, userEntity: UserEntity): Promise<TemplateEntity> {
     const templateEntity = await this.findOne(where, {
       relations: {
         contract: true,
@@ -278,10 +278,11 @@ export class TemplateService {
     }
 
     const count = await this.tokenService.count({ templateId: where.id });
-    if (!count) {
-      await templateEntity.remove();
+    if (count) {
+      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.save();
     } else {
-      await this.update(where, { templateStatus: TemplateStatus.INACTIVE }, userEntity);
+      return templateEntity.remove();
     }
   }
 }

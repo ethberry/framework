@@ -251,7 +251,7 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
-  public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<void> {
+  public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<MysteryBoxEntity> {
     const mysteryBoxEntity = await this.findOne({ id: where.id }, { relations: { template: { contract: true } } });
 
     if (!mysteryBoxEntity) {
@@ -264,16 +264,17 @@ export class MysteryBoxService {
 
     const count = await this.tokenService.count({ templateId: mysteryBoxEntity.templateId });
 
-    if (!count) {
-      await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
-      await mysteryBoxEntity.remove();
-    } else {
+    if (count) {
       await this.templateService.update(
         { id: mysteryBoxEntity.templateId },
         { templateStatus: TemplateStatus.INACTIVE },
         userEntity,
       );
-      await this.update(where, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE }, userEntity);
+      Object.assign(mysteryBoxEntity, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE });
+      return mysteryBoxEntity.save();
+    } else {
+      await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
+      return mysteryBoxEntity.remove();
     }
   }
 }

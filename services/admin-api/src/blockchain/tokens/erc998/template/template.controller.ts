@@ -58,6 +58,6 @@ export class Erc998TemplateController {
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    return this.erc998TemplateService.delete({ id }, userEntity);
+    await this.erc998TemplateService.delete({ id }, userEntity);
   }
 }

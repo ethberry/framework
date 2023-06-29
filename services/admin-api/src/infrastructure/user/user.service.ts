@@ -99,6 +99,7 @@ export class UserService {
     }
 
     await this.authService.delete(userEntity);
+
     return userEntity.remove();
   }
 }

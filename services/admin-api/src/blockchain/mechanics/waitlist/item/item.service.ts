@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IWaitListItemCreateDto, IWaitListItemSearchDto } from "@framework/types";
 
@@ -103,7 +103,10 @@ export class WaitListItemService {
     return this.waitListItemEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<WaitListItemEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+  public async delete(
+    where: FindOptionsWhere<WaitListItemEntity>,
+    userEntity: UserEntity,
+  ): Promise<WaitListItemEntity> {
     const waitListItemEntity = await this.findOne(where, { relations: { list: { contract: true } } });
 
     if (!waitListItemEntity) {
@@ -114,6 +117,6 @@ export class WaitListItemService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.waitListItemEntityRepository.delete(where);
+    return waitListItemEntity.remove();
   }
 }

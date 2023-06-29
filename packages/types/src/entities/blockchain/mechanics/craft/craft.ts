@@ -5,7 +5,6 @@ import type { IEventHistory } from "../../event-history";
 import type { IMerchant } from "../../../infrastructure";
 
 export enum CraftStatus {
-  NEW = "NEW",
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }

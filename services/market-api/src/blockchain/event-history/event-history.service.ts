@@ -6,8 +6,8 @@ import type { IErc1155TokenApprovalForAllEvent, IEventHistorySearchDto } from "@
 import { ContractEventType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
-import { EventHistoryEntity } from "./event-history.entity";
 import { ContractEntity } from "../hierarchy/contract/contract.entity";
+import { EventHistoryEntity } from "./event-history.entity";
 
 @Injectable()
 export class EventHistoryService {

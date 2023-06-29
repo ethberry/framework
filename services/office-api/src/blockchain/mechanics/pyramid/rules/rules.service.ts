@@ -152,18 +152,18 @@ export class PyramidRulesService {
     return pyramidEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<PyramidRulesEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<PyramidRulesEntity>): Promise<PyramidRulesEntity> {
     const pyramidEntity = await this.findOne(where);
 
     if (!pyramidEntity) {
-      return;
+      throw new NotFoundException("pyramidRuleNotFound");
     }
 
     if (pyramidEntity.pyramidRuleStatus === PyramidRuleStatus.NEW) {
-      await pyramidEntity.remove();
+      return pyramidEntity.remove();
     } else {
       Object.assign(pyramidEntity, { pyramidRuleStatus: PyramidRuleStatus.INACTIVE });
-      await pyramidEntity.save();
+      return pyramidEntity.save();
     }
   }
 }

@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
@@ -153,10 +153,11 @@ export class WaitListListService {
 
     Object.assign(waitListListEntity, rest);
 
-    // update of the item is not allowed
+    // update of the item is not allowed, because user signed off for certain item
     // if (item) {
     //   await this.assetService.update(waitListListEntity.item, item);
     // }
+
     return waitListListEntity.save();
   }
 
@@ -177,7 +178,10 @@ export class WaitListListService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<WaitListListEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+  public async delete(
+    where: FindOptionsWhere<WaitListListEntity>,
+    userEntity: UserEntity,
+  ): Promise<WaitListListEntity> {
     const waitListListEntity = await this.findOne(where, { relations: { contract: true } });
 
     if (!waitListListEntity) {
@@ -188,7 +192,7 @@ export class WaitListListService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.waitListListEntityRepository.delete(where);
+    return waitListListEntity.remove();
   }
 
   public async generate(dto: IWaitListGenerateDto): Promise<WaitListListEntity> {

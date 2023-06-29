@@ -67,6 +67,6 @@ export class MysteryBoxController {
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    return this.mysteryboxService.delete({ id }, userEntity);
+    await this.mysteryboxService.delete({ id }, userEntity);
   }
 }

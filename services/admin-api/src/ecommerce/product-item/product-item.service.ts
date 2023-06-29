@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -181,24 +181,22 @@ export class ProductItemService {
     return queryBuilder.getMany();
   }
 
-  public async delete(where: FindOptionsWhere<ProductItemEntity>): Promise<void> {
-    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product_item");
-    queryBuilder.select();
-    queryBuilder.where(where);
-
-    const productItemEntity = await queryBuilder.getOne();
+  public async delete(where: FindOptionsWhere<ProductItemEntity>, userEntity: UserEntity): Promise<ProductItemEntity> {
+    const productItemEntity = await this.findOne(where);
 
     if (!productItemEntity) {
       throw new NotFoundException("productItemNotFound");
     }
 
-    if (productItemEntity) {
-      if (productItemEntity.orderItems) {
-        Object.assign(productItemEntity, { productStatus: ProductStatus.INACTIVE });
-        await productItemEntity.save();
-      } else {
-        await productItemEntity.remove();
-      }
+    if (productItemEntity.product.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (productItemEntity.orderItems) {
+      Object.assign(productItemEntity, { productStatus: ProductStatus.INACTIVE });
+      return productItemEntity.save();
+    } else {
+      return productItemEntity.remove();
     }
   }
 }

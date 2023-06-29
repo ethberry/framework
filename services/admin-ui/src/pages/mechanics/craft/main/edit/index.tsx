@@ -34,10 +34,14 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       testId="CraftEditForm"
       {...rest}
     >
-      {id ? <SelectInput name="craftStatus" options={CraftStatus} disabledOptions={[CraftStatus.NEW]} /> : null}
       <TemplateAssetInput autoSelect prefix="item" contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }} />
-      {/* all token types are available */}
-      <TemplateAssetInput autoSelect prefix="price" multiple />
+      <TemplateAssetInput
+        autoSelect
+        prefix="price"
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+        multiple
+      />
+      {id ? <SelectInput name="craftStatus" options={CraftStatus} /> : null}
     </FormDialog>
   );
 };

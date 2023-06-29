@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 import { mapLimit } from "async";
 
@@ -170,7 +170,7 @@ export class ClaimService {
     return claimEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<ClaimEntity>, userEntity: UserEntity): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<ClaimEntity>, userEntity: UserEntity): Promise<ClaimEntity> {
     const claimEntity = await this.findOne(where);
 
     if (!claimEntity) {
@@ -185,7 +185,7 @@ export class ClaimService {
       throw new NotFoundException("claimRedeemed");
     }
 
-    return this.claimEntityRepository.delete(where);
+    return claimEntity.remove();
   }
 
   public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {

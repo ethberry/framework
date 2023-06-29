@@ -52,7 +52,7 @@ export const Craft: FC = () => {
     },
     search: {
       query: "",
-      craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
+      craftStatus: [CraftStatus.ACTIVE],
     },
     filter: ({ item, price, craftStatus }) => ({
       craftStatus,
@@ -91,7 +91,7 @@ export const Craft: FC = () => {
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(craft)} disabled={craft.craftStatus !== CraftStatus.NEW}>
+                <IconButton onClick={handleDelete(craft)}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
