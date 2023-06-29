@@ -37,7 +37,7 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           created_at,
           updated_at
         ) VALUES (
-          121,
+          12201,
           '${raffleAddr}',
           '${chainId}',
           'RAFFLE',

@@ -19,8 +19,8 @@ export class SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320 imple
       ) VALUES (
         102210010,
         'ITEM',
-        12201,
-        122010101,
+        12101,
+        121010101,
         1
       ), (
         102210010,
@@ -31,8 +31,8 @@ export class SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320 imple
       ), (
         102210020,
         'ITEM',
-        12201,
-        122010102,
+        12101,
+        121010102,
         1
       ), (
         102210020,
@@ -43,8 +43,8 @@ export class SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320 imple
       ), (
         102210030,
         'ITEM',
-        12201,
-        122010103,
+        12101,
+        121010103,
         1
       ), (
         102210030,
@@ -55,8 +55,8 @@ export class SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320 imple
       ), (
         102210040,
         'ITEM',
-        12201,
-        122010104,
+        12101,
+        121010104,
         1
       ), (
         102210040,
@@ -67,8 +67,8 @@ export class SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320 imple
       ), (
         102210050,
         'ITEM',
-        12201,
-        122010105,
+        12101,
+        121010105,
         1
       ), (
         102210050,

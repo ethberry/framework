@@ -68,7 +68,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ) VALUES (
         '1',
         '1',
-        121,
+        12201,
         12101,
         102210001,
         0,
@@ -79,7 +79,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ), (
         '2',
         '2',
-        121,
+        12201,
         12101,
         102210002,
         0,
@@ -90,7 +90,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
       ), (
         null,
         '3',
-        121,
+        12201,
         12101,
         102210003,
         5,

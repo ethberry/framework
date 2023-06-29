@@ -35,11 +35,11 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: "1220101",
+          externalId: "1230101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
-            tokenId: "1220101",
+            tokenId: "1230101",
             amount: "1",
           },
           price: [
@@ -64,7 +64,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "122010101",
+          tokenId: "123010101",
         })}',
         102220010,
         '${subDays(now, 9).toISOString()}',
@@ -89,11 +89,11 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: "1220101",
+          externalId: "1230101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
-            tokenId: "1220101",
+            tokenId: "1230101",
             amount: "1",
           },
           price: [
@@ -118,7 +118,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "122010102",
+          tokenId: "123010102",
         })}',
         102220020,
         '${subDays(now, 9).toISOString()}',
@@ -143,11 +143,11 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[0],
-          externalId: "1220101",
+          externalId: "1230101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
-            tokenId: "1220101",
+            tokenId: "1230101",
             amount: "1",
           },
           price: [
@@ -172,7 +172,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[0],
-          tokenId: "122010103",
+          tokenId: "123010103",
         })}',
         102220030,
         '${subDays(now, 8).toISOString()}',
@@ -197,11 +197,11 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[1],
-          externalId: "1220101",
+          externalId: "1230101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
-            tokenId: "1220101",
+            tokenId: "1230101",
             amount: "1",
           },
           price: [
@@ -226,7 +226,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[1],
-          tokenId: "122010104",
+          tokenId: "123010104",
         })}',
         102220040,
         '${subDays(now, 8).toISOString()}',
@@ -251,11 +251,11 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         'PurchaseLottery',
         '${JSON.stringify({
           account: wallets[2],
-          externalId: "1220101",
+          externalId: "1230101",
           item: {
             tokenType: 2,
             token: erc721ContractLotteryAddress,
-            tokenId: "1220101",
+            tokenId: "1230101",
             amount: "1",
           },
           price: [
@@ -280,7 +280,7 @@ export class SeedEventHistoryLotteryTicketPurchaseAt1660436476310 implements Mig
         '${JSON.stringify({
           from: ZeroAddress,
           to: wallets[2],
-          tokenId: "122010105",
+          tokenId: "123010105",
         })}',
         102220050,
         '${subDays(now, 8).toISOString()}',

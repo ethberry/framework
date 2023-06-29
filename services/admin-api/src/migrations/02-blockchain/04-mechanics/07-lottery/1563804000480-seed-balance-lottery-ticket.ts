@@ -21,31 +21,31 @@ export class SeedBalanceLotteryTicketAt1563804020480 implements MigrationInterfa
       ) VALUES (
         '${wallets[0]}',
         1,
-        122010101,
+        123010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        122010102,
+        123010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         1,
-        122010103,
+        123010103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[1]}',
         1,
-        122010104,
+        123010104,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[2]}',
         1,
-        122010105,
+        123010105,
         '${currentDateTime}',
         '${currentDateTime}'
       );

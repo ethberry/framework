@@ -23,7 +23,7 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        122010101,
+        123010101,
         '${JSON.stringify({
           ROUND: "1",
           NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
@@ -31,11 +31,11 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         100,
         '1',
         'MINTED',
-        1220101,
+        1230101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        122010102,
+        123010102,
         '${JSON.stringify({
           ROUND: "2",
           NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
@@ -43,11 +43,11 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         100,
         '2',
         'MINTED',
-        1220101,
+        1230101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        122010103,
+        123010103,
         '${JSON.stringify({
           ROUND: "3",
           NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
@@ -55,11 +55,11 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         100,
         '3',
         'MINTED',
-        1220101,
+        1230101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        122010104,
+        123010104,
         '${JSON.stringify({
           ROUND: "1",
           NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
@@ -67,11 +67,11 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         100,
         '4',
         'MINTED',
-        1220101,
+        1230101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        122010105,
+        123010105,
         '${JSON.stringify({
           ROUND: "1",
           NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
@@ -79,7 +79,7 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
         100,
         '5',
         'MINTED',
-        1220101,
+        1230101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );
