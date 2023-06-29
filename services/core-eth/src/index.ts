@@ -20,7 +20,7 @@ async function bootstrap(): Promise<void> {
   const configService = app.get(ConfigService);
 
   const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_ETHLOGGER", "ethlogger");
+  const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_CORE_ETH", "core_eth");
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

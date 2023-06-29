@@ -54,8 +54,8 @@ export const Dashboard: FC = () => {
           <RentSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
-          <RaffleSection />
           <LotterySection />
+          <RaffleSection />
           <StakingSection />
           <PyramidSection />
         </Grid>

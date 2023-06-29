@@ -901,7 +901,13 @@
       "tokens": {
         "title": "My tickets"
       },
+      "contract": {
+        "title": "Contracts"
+      },
       "title": "Lottery"
+    },
+    "lottery-list": {
+      "title": "Lottery contracts"
     },
     "marketplace": {
       "erc1155": {

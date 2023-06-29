@@ -19,6 +19,7 @@ export enum TokenMetadata {
   GENES = "GENES",
   ROUND = "ROUND",
   NUMBERS = "NUMBERS",
+  PRIZE = "PRIZE",
 }
 
 export enum TokenGenes {

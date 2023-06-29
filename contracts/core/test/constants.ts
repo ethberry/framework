@@ -40,6 +40,9 @@ export const contractTemplate = "SIMPLE";
 
 // toUtf8String(stripZerosLeft(tokenAttribute))
 export const tokenAttributes = {
+  PRIZE: zeroPadValue(toUtf8Bytes(TokenMetadata.PRIZE), 32),
+  ROUND: zeroPadValue(toUtf8Bytes(TokenMetadata.ROUND), 32),
+  NUMBERS: zeroPadValue(toUtf8Bytes(TokenMetadata.NUMBERS), 32),
   LEVEL: zeroPadValue(toUtf8Bytes(TokenMetadata.LEVEL), 32),
   RARITY: zeroPadValue(toUtf8Bytes(TokenMetadata.RARITY), 32),
   GENES: zeroPadValue(toUtf8Bytes(TokenMetadata.GENES), 32),

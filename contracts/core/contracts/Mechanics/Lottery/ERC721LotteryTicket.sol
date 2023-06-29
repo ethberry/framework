@@ -13,16 +13,13 @@ import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "../../ERC721/extensions/MetaData.sol";
 import "../../utils/errors.sol";
+import "../../utils/constants.sol";
 import "./interfaces/IERC721LotteryTicket.sol";
 
 contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl, MetaData {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Ticket) private _data;
-
-  bytes32 constant ROUND = keccak256("ROUND");
-  bytes32 constant NUMBERS = keccak256("NUMBERS");
-  bytes32 constant PRIZE = keccak256("PRIZE");
 
   constructor(
     string memory name,

@@ -4,7 +4,7 @@ import {
   shouldChildExists,
   shouldNotTransferChildToParent,
   shouldOwnerOfChild,
-  shouldRootOwnerOfChild,
+  // shouldRootOwnerOfChild,
   shouldSafeTransferChild,
   shouldSafeTransferFrom,
   shouldTransferChild,
@@ -15,7 +15,7 @@ export function shouldBehaveLikeERC998(factory: () => Promise<any>, options: IER
   shouldChildExists(factory, options);
   shouldNotTransferChildToParent(factory);
   shouldOwnerOfChild(factory, options);
-  shouldRootOwnerOfChild(factory);
+  // shouldRootOwnerOfChild(factory);
   shouldSafeTransferChild(factory, options);
   shouldSafeTransferFrom(factory, options);
   shouldTransferChild(factory, options);

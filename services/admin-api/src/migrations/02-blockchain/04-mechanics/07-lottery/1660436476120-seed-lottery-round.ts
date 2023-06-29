@@ -112,6 +112,8 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.lottery_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

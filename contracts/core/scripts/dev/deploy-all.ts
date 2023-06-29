@@ -11,7 +11,7 @@ import { getContractName } from "../../test/utils";
 import { expiresAt, externalId } from "../../test/constants";
 
 const delay = 1; // block delay
-const delayMs = 1500; // block delay ms
+const delayMs = 900; // block delay ms
 // const linkAmountInEth = parseEther("1");
 const batchSize = 3; // Generative collection size
 interface IObj {
@@ -67,7 +67,7 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          await blockAwaitMs(100);
+          await blockAwaitMs(50);
           await accessInstance.grantRole(roles[k], grantee[j]);
           // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }

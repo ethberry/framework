@@ -18,31 +18,39 @@ export class ContractService {
   public async search(
     dto: ISearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractType?: TokenType,
+    contractModule?: ModuleType,
+    templates = true,
   ): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
-    // filter out contract without templates
-    queryBuilder.andWhereExists(
-      // https://github.com/typeorm/typeorm/issues/2815
-      this.contractEntityRepository
-        .createQueryBuilder("c")
-        .select()
-        .innerJoinAndSelect("c.templates", "template", "template.id IS NOT NULL")
-        .where("c.id = contract.id"),
-    );
-
+    if (templates) {
+      // filter out contract without templates
+      queryBuilder.andWhereExists(
+        // https://github.com/typeorm/typeorm/issues/2815
+        this.contractEntityRepository
+          .createQueryBuilder("c")
+          .select()
+          .innerJoinAndSelect("c.templates", "template", "template.id IS NOT NULL")
+          .where("c.id = contract.id"),
+      );
+    }
     queryBuilder.select();
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+    if (contractType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", {
+        contractType,
+      });
+    } else {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+    if (contractModule) {
+      queryBuilder.andWhere("contract.contractModule = :contractModule", {
+        contractModule,
+      });
+    }
 
     // do not display external contracts as there is no way to mint tokens from it
     queryBuilder.andWhere("NOT(:contractFeature = ANY(contract.contractFeatures))", {

@@ -6,6 +6,7 @@ import { LotteryRoundEntity } from "./round.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { IAssetDto } from "@framework/types";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class LotteryRoundService {
@@ -20,6 +21,30 @@ export class LotteryRoundService {
     options?: FindOneOptions<LotteryRoundEntity>,
   ): Promise<LotteryRoundEntity | null> {
     return this.roundEntityRepository.findOne({ where, ...options });
+  }
+
+  public getRound(roundId: string, address: string, chainId?: number): Promise<LotteryRoundEntity | null> {
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
+
+    queryBuilder.andWhere("round.roundId = :roundId", {
+      roundId: Number(roundId).toString(),
+    });
+
+    queryBuilder.andWhere("contract.address = :address", {
+      address: address.toLowerCase(),
+    });
+
+    if (chainId) {
+      queryBuilder.andWhere("contract.chainId = :chainId", {
+        chainId,
+      });
+    }
+
+    return queryBuilder.getOne();
   }
 
   public async create(dto: DeepPartial<LotteryRoundEntity>): Promise<LotteryRoundEntity> {

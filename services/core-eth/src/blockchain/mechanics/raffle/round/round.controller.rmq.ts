@@ -9,7 +9,7 @@ import { RoundServiceRmq } from "./round.service.rmq";
 export class RoundControllerRmq {
   constructor(private readonly roundServiceRmq: RoundServiceRmq) {}
 
-  @EventPattern(RmqProviderType.SCHEDULE_SERVICE)
+  @EventPattern(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
   async updateSchedule(@Payload() dto: IRaffleScheduleUpdateDto): Promise<void> {
     return this.roundServiceRmq.updateSchedule(dto);
   }

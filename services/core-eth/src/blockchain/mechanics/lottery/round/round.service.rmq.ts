@@ -18,17 +18,12 @@ export class RoundServiceRmq {
       throw new NotFoundException("contractNotFound");
     }
 
-    // TODO pass empty description?
-    // TODO Validate json?
-    const descriptionJson = JSON.parse(lotteryEntity.description);
-    Object.assign(descriptionJson, {
+    // TODO simplify?
+    const currentParams = lotteryEntity.parameters;
+    Object.assign(currentParams, {
       schedule: dto.schedule,
-      description: JSON.parse(dto.description || "{}"),
     });
-
-    Object.assign(lotteryEntity, {
-      description: JSON.stringify(descriptionJson),
-    });
+    Object.assign(lotteryEntity.parameters, currentParams);
 
     await lotteryEntity.save();
 

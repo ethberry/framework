@@ -48,7 +48,6 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           '',
           '${JSON.stringify({
             schedule: CronExpression.EVERY_WEEKEND,
-            description: "Weekend Raffle",
           })}',
           'ACTIVE',
           null,

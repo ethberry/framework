@@ -3,7 +3,6 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { ManageHistory } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useApiCall } from "@gemunion/react-hooks";
 import { CronExpression, IContract } from "@framework/types";
 
@@ -59,7 +58,6 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
         initialValues={{
           address,
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-          description: emptyStateString,
         }}
       />
     </Fragment>

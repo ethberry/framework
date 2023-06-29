@@ -40,12 +40,12 @@ export class RaffleRoundService {
 
     const raffleRound = await this.findCurrentRoundWithRelations();
 
-    const descriptionJson: Partial<IRaffleScheduleUpdateDto> = JSON.parse(raffleEntity.description);
+    // const descriptionJson: Partial<IRaffleOption> = JSON.parse(raffleEntity.description);
 
     return {
       address: raffleEntity.address,
-      description: descriptionJson.description,
-      schedule: descriptionJson.schedule || CronExpression.EVERY_DAY_AT_MIDNIGHT,
+      description: raffleEntity.description,
+      schedule: raffleEntity.parameters.schedule as unknown as CronExpression,
       round: raffleRound || undefined,
     };
   }

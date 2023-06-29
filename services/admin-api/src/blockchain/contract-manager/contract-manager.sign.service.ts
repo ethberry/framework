@@ -86,10 +86,12 @@ import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Me
 
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
-import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/RaffleRandom.sol/RaffleRandom.json";
+import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/LotteryRandom.sol/LotteryRandom.json";
+// TODO get contract by chainId
+// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBesu.sol/LotteryRandomBesu.json";
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";

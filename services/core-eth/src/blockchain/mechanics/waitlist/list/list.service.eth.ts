@@ -35,6 +35,7 @@ export class WaitListListServiceEth {
         join: {
           alias: "wait_list_list",
           leftJoinAndSelect: {
+            contract: "wait_list_list.contract",
             item: "wait_list_list.item",
             item_components: "item.components",
             item_template: "item_components.template",

@@ -6,7 +6,7 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import type { IRaffleConfigDto, IUser } from "@framework/types";
+import type { IRaffleContractDeployDto, IUser } from "@framework/types";
 
 import DeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
@@ -22,7 +22,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
   const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IRaffleConfigDto, web3Context, sign) => {
+    (values: IRaffleContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -38,8 +38,8 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
         },
         {
           config: {
-            timeLagBeforeRelease: values.timeLagBeforeRelease,
-            commission: values.commission,
+            timeLagBeforeRelease: values.config.timeLagBeforeRelease,
+            commission: values.config.commission,
           },
         },
         sign.signature,

@@ -28,21 +28,28 @@ export class LotteryRoundServiceCron {
   public async lotteryRound(address: string): Promise<void> {
     const contract = new Contract(address, LotterySol.abi, this.signer);
     const currentRound = await getCurrentRound(address, LotterySol.abi, this.jsonRpcProvider);
-    const { endTimestamp, acceptedAsset, ticketAsset } = currentRound;
+    this.loggerService.log(JSON.stringify(currentRound, null, "\t"), LotteryRoundServiceCron.name);
 
-    try {
-      // if round still active
-      if (endTimestamp !== "0") {
-        await contract.endRound();
+    const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;
+
+    // if not dummy round
+    if (BigInt(roundId) !== 0n) {
+      // if current round still active - end round
+      if (BigInt(endTimestamp) === 0n) {
+        try {
+          await contract.endRound();
+        } catch (e) {
+          this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+        }
       }
-    } catch (e) {
-      this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
-    } finally {
       // wait block
       await blockAwait(1, this.jsonRpcProvider);
-
-      // start round with same parameters
-      await contract.startRound(acceptedAsset, ticketAsset);
+      try {
+        // start round with the same parameters
+        await contract.startRound(acceptedAsset, ticketAsset, maxTicket);
+      } catch (e) {
+        this.loggerService.log(JSON.stringify(e, null, "\t"), LotteryRoundServiceCron.name);
+      }
     }
   }
 

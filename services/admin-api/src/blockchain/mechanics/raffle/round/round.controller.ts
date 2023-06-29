@@ -38,7 +38,7 @@ export class RaffleRoundController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<RaffleRoundEntity | null> {
-    return this.raffleRoundService.findOne({ id });
+    return this.raffleRoundService.findOne({ id }, { relations: { contract: true } });
   }
 
   @Post("/schedule")

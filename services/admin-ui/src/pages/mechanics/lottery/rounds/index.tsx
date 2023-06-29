@@ -9,6 +9,7 @@ import type { ILotteryRound } from "@framework/types";
 
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
+import { CronExpression } from "@framework/types";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -39,8 +40,18 @@ export const LotteryRounds: FC = () => {
         <List>
           {rows.map((round, i) => (
             <ListItem key={i}>
-              <ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
                 {round.roundId} - {round.numbers ? getNumbers(round.numbers) : "awaiting results"}
+              </ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>
+                {round.contract?.parameters.schedule
+                  ? Object.keys(CronExpression)[
+                      Object.values(CronExpression).indexOf(
+                        round.contract?.parameters.schedule as unknown as CronExpression,
+                      )
+                    ]
+                  : ""}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>

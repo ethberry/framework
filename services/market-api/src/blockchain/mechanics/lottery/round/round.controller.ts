@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Query, Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
@@ -6,6 +6,7 @@ import type { ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
+import { LotteryOptionsDto } from "./dto";
 
 @Public()
 @ApiBearerAuth()
@@ -19,7 +20,7 @@ export class LotteryRoundController {
   }
 
   @Get("/options")
-  public options(): Promise<ILotteryScheduleUpdateDto> {
-    return this.lotteryRoundService.options();
+  public options(@Query() dto: LotteryOptionsDto): Promise<ILotteryScheduleUpdateDto> {
+    return this.lotteryRoundService.options(dto);
   }
 }

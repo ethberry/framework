@@ -6,7 +6,7 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-import type { ILotteryConfigDto, IUser } from "@framework/types";
+import type { ILotteryContractDeployDto, IUser } from "@framework/types";
 
 import DeployLotteryABI from "../../../../../abis/mechanics/lottery/contract/deployLottery.abi.json";
 
@@ -22,7 +22,7 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
   const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: ILotteryConfigDto, web3Context, sign) => {
+    (values: ILotteryContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -38,8 +38,8 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
         },
         {
           config: {
-            timeLagBeforeRelease: values.timeLagBeforeRelease,
-            commission: values.commission,
+            timeLagBeforeRelease: values.config.timeLagBeforeRelease,
+            commission: values.config.commission,
           },
         },
         sign.signature,

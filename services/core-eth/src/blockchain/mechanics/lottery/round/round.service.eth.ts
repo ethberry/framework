@@ -102,8 +102,9 @@ export class LotteryRoundServiceEth {
     const {
       args: { round, winValues },
     } = event;
+    const { address } = context;
 
-    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
+    const roundEntity = await this.lotteryRoundService.getRound(round, address);
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");

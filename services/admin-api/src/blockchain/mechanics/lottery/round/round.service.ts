@@ -15,7 +15,7 @@ export class LotteryRoundService {
   constructor(
     @InjectRepository(LotteryRoundEntity)
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE)
+    @Inject(RmqProviderType.SCHEDULE_SERVICE_LOTTERY)
     private readonly scheduleProxy: ClientProxy,
   ) {}
 
@@ -25,6 +25,7 @@ export class LotteryRoundService {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
 
     queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -54,6 +55,6 @@ export class LotteryRoundService {
   }
 
   public async updateSchedule(dto: ILotteryScheduleUpdateDto): Promise<any> {
-    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE, dto).toPromise();
+    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, dto).toPromise();
   }
 }

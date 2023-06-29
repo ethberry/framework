@@ -16,6 +16,7 @@ import type {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPyramidDeployedEvent,
+  IContractManagerLotteryDeployedEvent,
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
@@ -28,7 +29,6 @@ import {
   Erc20ContractTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
-  IContractManagerLotteryDeployedEvent,
   ModuleType,
   MysteryContractTemplates,
   // PyramidContractTemplates,
@@ -63,6 +63,7 @@ import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.ser
 import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
 import { decodeExternalId } from "../../common/utils";
 import { ClaimService } from "../mechanics/claim/claim.service";
+import { ChainLinkLogService } from "../integrations/chain-link/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -97,6 +98,7 @@ export class ContractManagerServiceEth {
     private readonly balanceService: BalanceService,
     private readonly userService: UserService,
     private readonly claimService: ClaimService,
+    private readonly chainLinkLogService: ChainLinkLogService,
   ) {}
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
@@ -211,6 +213,7 @@ export class ContractManagerServiceEth {
         this.ethersSignerProvider,
       );
       this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+      await this.chainLinkLogService.updateListener();
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RENTABLE)) {
@@ -364,6 +367,7 @@ export class ContractManagerServiceEth {
         this.ethersSignerProvider,
       );
       this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
+      await this.chainLinkLogService.updateListener();
     }
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.GENES)) {
@@ -576,6 +580,7 @@ export class ContractManagerServiceEth {
     const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
+    await this.chainLinkLogService.updateListener();
     this.lotteryLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
@@ -615,6 +620,7 @@ export class ContractManagerServiceEth {
     const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
+    await this.chainLinkLogService.updateListener();
     this.raffleLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

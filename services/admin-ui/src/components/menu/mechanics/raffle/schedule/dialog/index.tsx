@@ -2,7 +2,6 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
 import { validationSchema } from "./validation";
 import { CronExpression, IRaffleScheduleUpdateDto } from "@framework/types";
@@ -26,7 +25,6 @@ export const RaffleScheduleDialog: FC<IRaffleScheduleDialogProps> = props => {
       {...rest}
     >
       <SelectInput name="schedule" options={CronExpression} />
-      <RichTextEditor name="description" />
     </FormDialog>
   );
 };

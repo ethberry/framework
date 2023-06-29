@@ -14,7 +14,7 @@ export class RaffleRoundService {
   constructor(
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE)
+    @Inject(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
     private readonly scheduleProxy: ClientProxy,
   ) {}
 
@@ -24,6 +24,7 @@ export class RaffleRoundService {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
 
     queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -53,6 +54,6 @@ export class RaffleRoundService {
   }
 
   public async updateSchedule(dto: RaffleScheduleUpdateDto): Promise<any> {
-    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE, dto).toPromise();
+    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE_RAFFLE, dto).toPromise();
   }
 }

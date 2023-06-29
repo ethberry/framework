@@ -64,6 +64,7 @@ contract LotteryFactory is AbstractFactory {
     roles[0] = PAUSER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
+    grantFactoryMintPermission(account);
     fixPermissions(account, roles);
   }
 

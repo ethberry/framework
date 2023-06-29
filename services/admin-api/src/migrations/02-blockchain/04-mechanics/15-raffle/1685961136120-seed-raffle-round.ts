@@ -100,6 +100,8 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.raffle_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

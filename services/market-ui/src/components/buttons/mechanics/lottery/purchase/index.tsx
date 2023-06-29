@@ -13,6 +13,7 @@ import { TokenType } from "@framework/types";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { boolArrayToByte32 } from "./utils";
 
 export interface ILotteryPurchaseButtonProps {
   round: Partial<ILotteryRound>;
@@ -20,24 +21,8 @@ export interface ILotteryPurchaseButtonProps {
   clearForm: () => void;
 }
 
-export const boolArrayToByte32 = (booleans: Array<boolean>) => {
-  if (booleans.length > 256) {
-    throw new Error("Array length cannot exceed 256");
-  }
-  const result: Array<string> = [];
-  booleans.forEach((value, index) => {
-    if (value) {
-      result.push(utils.hexZeroPad(utils.hexValue(index + 1), 1));
-    }
-  });
-  const concat = `0x${result.map(res => res.substring(2)).join("")}`;
-
-  return utils.hexZeroPad(concat, 32);
-};
-
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const { clearForm, ticketNumbers, round } = props;
-
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -67,12 +52,21 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
               amount: "1",
             },
           ],
+          // rule.deposit?.components[0].contract!.address,
+          // {
+          //   tokenType: Object.values(TokenType).indexOf(round.price?.components[0].tokenType),
+          //   token: round.price?.components?[0].contract!.address,
+          //   tokenId: round.price?.components[0].template.tokens[0].tokenId,
+          //   amount: round.price!.components[0].amount,
+          // },
+          // "AccessControl: account 0x89feec659955df9ec7f57e88ebcd6ce046d6d9e2 is missing role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
+          // "AccessControl: account 0x89feec659955df9ec7f57e88e is missing role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
           round.price?.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract?.address,
-            tokenId: component.templateId || 0,
+            tokenId: component.template?.tokens![0].tokenId,
             amount: component.amount,
-          })),
+          }))[0],
           sign.signature,
           {
             value: getEthPrice(round.price),

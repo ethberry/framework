@@ -38,7 +38,7 @@ export class LotteryRoundController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<LotteryRoundEntity | null> {
-    return this.lotteryRoundService.findOne({ id });
+    return this.lotteryRoundService.findOne({ id }, { relations: { contract: true } });
   }
 
   @Post("/schedule")

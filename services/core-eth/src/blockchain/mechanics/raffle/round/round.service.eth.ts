@@ -101,8 +101,9 @@ export class RaffleRoundServiceEth {
     const {
       args: { round, prizeNumber },
     } = event;
+    const { address } = context;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+    const roundEntity = await this.raffleRoundService.getRound(round, address);
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");

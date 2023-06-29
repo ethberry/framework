@@ -4,7 +4,9 @@ import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, ILotteryScheduleUpdateDto } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
+
+import { CronExpression, IContract, ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
@@ -14,13 +16,17 @@ import { formatPrice } from "../../../../utils/money";
 
 const maxNumbers = 6;
 
-export const LotteryPurchase: FC = () => {
+interface ILotteryPurchaseProps {
+  contract: IContract;
+}
+
+export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
+  const { contract } = props;
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
   const [lottery, setLottery] = useState<ILotteryScheduleUpdateDto>({
     address: constants.AddressZero,
-    description: "Lottery",
     schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
     round: {},
   });
@@ -29,6 +35,9 @@ export const LotteryPurchase: FC = () => {
     async api => {
       return api.fetchJson({
         url: "/lottery/rounds/options",
+        data: {
+          contractId: contract.id,
+        },
       });
     },
     { success: false, error: false },
@@ -76,6 +85,13 @@ export const LotteryPurchase: FC = () => {
           </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
+      <StyledTypography variant="body1">
+        {
+          Object.keys(CronExpression)[
+            Object.values(CronExpression).indexOf(lottery.schedule as unknown as CronExpression)
+          ]
+        }
+      </StyledTypography>
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
         <StyledTypography variant="h6">
           <FormattedMessage
@@ -107,15 +123,6 @@ export const LotteryPurchase: FC = () => {
         </StyledWrapper>
       </StyledPaper>
 
-      {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
-      <StyledTypography variant="h6">{lottery.description}</StyledTypography>
-      <StyledTypography variant="body1">
-        {
-          Object.keys(CronExpression)[
-            Object.values(CronExpression).indexOf(lottery.schedule as unknown as CronExpression)
-          ]
-        }
-      </StyledTypography>
       <StyledTypography variant="h6">
         <FormattedMessage id="pages.lottery.purchase.rules" />
       </StyledTypography>
