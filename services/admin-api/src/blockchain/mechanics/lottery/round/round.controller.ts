@@ -17,7 +17,7 @@ import { PaginationDto } from "@gemunion/collection";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
-import { ScheduleUpdateDto } from "./dto";
+import { LotteryScheduleUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/lottery/rounds")
@@ -43,7 +43,7 @@ export class LotteryRoundController {
 
   @Post("/schedule")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public update(@Body() dto: ScheduleUpdateDto): Promise<any> {
+  public update(@Body() dto: LotteryScheduleUpdateDto): Promise<any> {
     return this.lotteryRoundService.updateSchedule(dto);
   }
 }

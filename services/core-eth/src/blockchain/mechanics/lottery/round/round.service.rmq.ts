@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ILotteryOption } from "@framework/types";
+import { ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryRoundServiceCron } from "./round.service.cron";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -11,7 +11,7 @@ export class RoundServiceRmq {
     private readonly contractService: ContractService,
   ) {}
 
-  public async updateSchedule(dto: ILotteryOption): Promise<void> {
+  public async updateSchedule(dto: ILotteryScheduleUpdateDto): Promise<void> {
     const lotteryEntity = await this.contractService.findOne({ address: dto.address });
 
     if (!lotteryEntity) {

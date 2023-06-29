@@ -2,7 +2,7 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
-import type { ILotteryOption } from "@framework/types";
+import type { ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
@@ -19,7 +19,7 @@ export class LotteryRoundController {
   }
 
   @Get("/options")
-  public options(): Promise<ILotteryOption> {
+  public options(): Promise<ILotteryScheduleUpdateDto> {
     return this.lotteryRoundService.options();
   }
 }

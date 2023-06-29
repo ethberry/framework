@@ -22,7 +22,7 @@ export class ExchangeBreedServiceEth {
     } = event;
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    const assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
+    const _assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
 
     // this.notificatorService.breed({
     //   account,

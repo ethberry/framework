@@ -5,13 +5,13 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
 import { validationSchema } from "./validation";
-import { CronExpression, IRaffleOption } from "@framework/types";
+import { CronExpression, IRaffleScheduleUpdateDto } from "@framework/types";
 
 export interface IRaffleScheduleDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IRaffleOption>, form: any) => Promise<void>;
-  initialValues: IRaffleOption;
+  onConfirm: (values: Partial<IRaffleScheduleUpdateDto>, form: any) => Promise<void>;
+  initialValues: IRaffleScheduleUpdateDto;
 }
 
 export const RaffleScheduleDialog: FC<IRaffleScheduleDialogProps> = props => {

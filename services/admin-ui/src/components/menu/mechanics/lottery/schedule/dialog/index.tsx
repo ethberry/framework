@@ -5,13 +5,13 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
 import { validationSchema } from "./validation";
-import { CronExpression, ILotteryOption } from "@framework/types";
+import { CronExpression, ILotteryScheduleUpdateDto } from "@framework/types";
 
 export interface ILotteryScheduleDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<ILotteryOption>, form: any) => Promise<void>;
-  initialValues: ILotteryOption;
+  onConfirm: (values: Partial<ILotteryScheduleUpdateDto>, form: any) => Promise<void>;
+  initialValues: ILotteryScheduleUpdateDto;
 }
 
 export const LotteryScheduleDialog: FC<ILotteryScheduleDialogProps> = props => {

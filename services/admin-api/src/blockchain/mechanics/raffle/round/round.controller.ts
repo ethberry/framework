@@ -17,7 +17,7 @@ import { PaginationDto } from "@gemunion/collection";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
-import { ScheduleUpdateDto } from "./dto";
+import { RaffleScheduleUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/raffle/rounds")
@@ -43,7 +43,7 @@ export class RaffleRoundController {
 
   @Post("/schedule")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public update(@Body() dto: ScheduleUpdateDto): Promise<any> {
+  public update(@Body() dto: RaffleScheduleUpdateDto): Promise<any> {
     return this.raffleRoundService.updateSchedule(dto);
   }
 }

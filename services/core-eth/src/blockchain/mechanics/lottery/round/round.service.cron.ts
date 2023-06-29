@@ -9,7 +9,7 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 
 import { blockAwait, getCurrentRound } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ILotteryOption, ModuleType } from "@framework/types";
+import { ILotteryScheduleUpdateDto, ModuleType } from "@framework/types";
 
 @Injectable()
 export class LotteryRoundServiceCron {
@@ -80,7 +80,7 @@ export class LotteryRoundServiceCron {
       throw new NotFoundException("contractNotFound");
     }
 
-    const { schedule }: ILotteryOption = JSON.parse(lotteryEntity.description);
+    const { schedule }: ILotteryScheduleUpdateDto = JSON.parse(lotteryEntity.description);
 
     this.schedulerRegistry.deleteCronJob(`lotteryRound@${lotteryEntity.address}`);
     const job = new CronJob(schedule, async () => {

@@ -4,7 +4,7 @@ import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, ILotteryOption } from "@framework/types";
+import { CronExpression, ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
@@ -18,7 +18,7 @@ export const LotteryPurchase: FC = () => {
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
-  const [lottery, setLottery] = useState<ILotteryOption>({
+  const [lottery, setLottery] = useState<ILotteryScheduleUpdateDto>({
     address: constants.AddressZero,
     description: "Lottery",
     schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
@@ -36,7 +36,7 @@ export const LotteryPurchase: FC = () => {
 
   const fetchLottery = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryOption) => {
+      .then((json: ILotteryScheduleUpdateDto) => {
         setLottery(json);
       })
       .catch(e => {

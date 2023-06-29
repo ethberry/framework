@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
+import type { ILotteryScheduleUpdateDto } from "@framework/types";
 import { CronExpression, ModuleType, TokenType } from "@framework/types";
-import type { ILotteryOption } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { LotteryRoundEntity } from "./round.entity";
@@ -28,7 +28,7 @@ export class LotteryRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<ILotteryOption> {
+  public async options(): Promise<ILotteryScheduleUpdateDto> {
     const lotteryEntity = await this.contractService.findOne({
       contractModule: ModuleType.LOTTERY,
       contractType: undefined,
@@ -40,7 +40,7 @@ export class LotteryRoundService {
 
     const lotteryRound = await this.findCurrentRoundWithRelations();
 
-    const descriptionJson: Partial<ILotteryOption> = JSON.parse(lotteryEntity.description);
+    const descriptionJson: Partial<ILotteryScheduleUpdateDto> = JSON.parse(lotteryEntity.description);
 
     return {
       address: lotteryEntity.address,

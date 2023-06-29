@@ -20,7 +20,7 @@ export interface ILotteryRound extends IIdDateBase {
   price?: IAsset;
 }
 
-export interface ILotteryOption {
+export interface ILotteryScheduleUpdateDto {
   address: string;
   schedule: CronExpression;
   description?: string;

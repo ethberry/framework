@@ -9,7 +9,7 @@ import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/R
 
 import { blockAwait, getCurrentRound } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { IRaffleOption, ModuleType } from "@framework/types";
+import { IRaffleScheduleUpdateDto, ModuleType } from "@framework/types";
 
 @Injectable()
 export class RaffleRoundServiceCron {
@@ -81,7 +81,7 @@ export class RaffleRoundServiceCron {
       throw new NotFoundException("contractNotFound");
     }
 
-    const { schedule }: IRaffleOption = JSON.parse(raffleEntity.description);
+    const { schedule }: IRaffleScheduleUpdateDto = JSON.parse(raffleEntity.description);
 
     this.schedulerRegistry.deleteCronJob(`raffleRound@${raffleEntity.address}`);
     const job = new CronJob(schedule, async () => {

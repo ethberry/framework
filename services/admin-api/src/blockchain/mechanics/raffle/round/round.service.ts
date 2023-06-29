@@ -7,7 +7,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IPaginationDto } from "@gemunion/types-collection";
 import { RmqProviderType } from "@framework/types";
 import { RaffleRoundEntity } from "./round.entity";
-import { ScheduleUpdateDto } from "./dto";
+import { RaffleScheduleUpdateDto } from "./dto";
 
 @Injectable()
 export class RaffleRoundService {
@@ -52,7 +52,7 @@ export class RaffleRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async updateSchedule(dto: ScheduleUpdateDto): Promise<any> {
+  public async updateSchedule(dto: RaffleScheduleUpdateDto): Promise<any> {
     return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE, dto).toPromise();
   }
 }

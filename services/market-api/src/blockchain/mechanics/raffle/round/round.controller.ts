@@ -2,7 +2,7 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
-import type { IRaffleOption } from "@framework/types";
+import type { IRaffleScheduleUpdateDto } from "@framework/types";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
@@ -19,7 +19,7 @@ export class RaffleRoundController {
   }
 
   @Get("/options")
-  public options(): Promise<IRaffleOption> {
+  public options(): Promise<IRaffleScheduleUpdateDto> {
     return this.raffleRoundService.options();
   }
 }
