@@ -40,7 +40,7 @@ export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props =>
     });
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production" && process.env.GEMUNION_BUSINESS_MODEL === "B2B") {
     return null;
   }
 

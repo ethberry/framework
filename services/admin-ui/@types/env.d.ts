@@ -18,6 +18,7 @@ declare global {
       LOTTERY_ADDR: string;
       RAFFLE_ADDR: string;
       DISPENSER_ADDR: string;
+      GEMUNION_BUSINESS_MODEL: string;
     }
   }
 }
