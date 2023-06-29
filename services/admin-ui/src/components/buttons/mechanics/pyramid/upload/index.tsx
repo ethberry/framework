@@ -1,99 +1,128 @@
-import { FC } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
-import { Check, Close, CloudUpload } from "@mui/icons-material";
+import { FC, Fragment, useState } from "react";
+import { FormattedMessage } from "react-intl";
+
+import { Button } from "@mui/material";
+import { Add } from "@mui/icons-material";
+
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
+import { DurationUnit, IMysterybox, IPyramidRule, TokenType } from "@framework/types";
 
 import PyramidSetRulesABI from "../../../../../abis/mechanics/pyramid/upload/setRules.abi.json";
-import PyramidUpdateRuleABI from "../../../../../abis/mechanics/pyramid/upload/updateRule.abi.json";
+import { PyramidRuleUploadDialog } from "./upload-dialog";
 
-export interface IPyramidUploadButtonProps {
-  rule: IPyramidRule;
+export interface IPyramidRuleCreateButtonProps {
+  className?: string;
 }
 
-export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
-  const { rule } = props;
-  const { formatMessage } = useIntl();
+export const PyramidRuleCreateButton: FC<IPyramidRuleCreateButtonProps> = props => {
+  const { className } = props;
 
-  const metaLoadRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
-    if (rule.pyramidRuleStatus !== PyramidRuleStatus.NEW) {
-      return Promise.reject(new Error(""));
-    }
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-    const stakingRule = {
-      externalId: rule.id,
+  const handleUpload = () => {
+    setIsUploadDialogOpen(true);
+  };
+
+  const handleUploadCancel = () => {
+    setIsUploadDialogOpen(false);
+  };
+
+  // MODULE:MYSTERYBOX
+  const { fn } = useApiCall(
+    (api, data: { templateIds: Array<number> }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return api.fetchJson({
+        url: "/mystery/boxes",
+        data,
+      });
+    },
+    { success: false },
+  );
+
+  const metaLoadRule = useMetamask((rule: IPyramidRule, content: Array<any>, web3Context: Web3ContextType) => {
+    const pyramidRule = {
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.templateId || 0,
         amount: component.amount,
-      }))[0],
-      reward: rule.reward?.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract!.address,
-        tokenId: component.templateId,
-        amount: component.amount,
-      }))[0],
+      })),
+      reward: rule.reward
+        ? rule.reward.components.map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.templateId,
+            amount: component.amount,
+          }))
+        : [],
+      content,
       period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
-      active: true, // TODO new rules always ACTIVE ?
+      active: true, // todo add var in interface
     };
-
     const contract = new Contract(rule.contract.address, PyramidSetRulesABI, web3Context.provider?.getSigner());
-    return contract.setRules([stakingRule]) as Promise<void>;
+    return contract.setRules([pyramidRule]) as Promise<void>;
   });
 
-  const handleLoadRule = (rule: IPyramidRule): (() => Promise<void>) => {
-    return async (): Promise<void> => {
-      return metaLoadRule(rule);
-    };
-  };
-
-  const metaToggleRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
-    let ruleStatus: boolean;
-    if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
-      // this should never happen
-      return Promise.reject(new Error(":)"));
+  const handleLoadRule = async (rule: Partial<IPyramidRule>): Promise<void> => {
+    // MODULE:MYSTERYBOX
+    const content = [] as Array<any>;
+    if (rule.reward) {
+      for (const row of rule.reward.components) {
+        const {
+          rows: [mysteryBox],
+        } = await fn(void 0, { templateIds: [row.templateId] });
+        // MODULE:MYSTERYBOX
+        if (mysteryBox) {
+          content.push(
+            (mysteryBox as IMysterybox).item!.components.map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.templateId || 0,
+              amount: component.amount,
+            })),
+          );
+        } else {
+          content.push([]);
+        }
+      }
+      if (!content.length) content.push([]);
     } else {
-      ruleStatus = rule.pyramidRuleStatus !== PyramidRuleStatus.ACTIVE;
+      content.push([]);
     }
-
-    const contract = new Contract(rule.contract.address, PyramidUpdateRuleABI, web3Context.provider?.getSigner());
-    return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
-  });
-
-  const handleToggleRule = (rule: IPyramidRule): (() => Promise<void>) => {
-    return (): Promise<void> => {
-      return metaToggleRule(rule);
-    };
+    return metaLoadRule(rule, content).then(() => {
+      setIsUploadDialogOpen(false);
+    });
   };
-
-  if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
-    return (
-      <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
-        <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
-          <CloudUpload />
-        </IconButton>
-      </Tooltip>
-    );
-  }
 
   return (
-    <Tooltip
-      title={formatMessage({
-        id:
-          rule.pyramidRuleStatus === PyramidRuleStatus.ACTIVE
-            ? "pages.staking.rules.deactivate"
-            : "pages.staking.rules.activate",
-      })}
-    >
-      <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.pyramidRuleStatus === PyramidRuleStatus.ACTIVE ? <Close /> : <Check />}
-      </IconButton>
-    </Tooltip>
+    <Fragment>
+      <Button
+        variant="outlined"
+        startIcon={<Add />}
+        onClick={handleUpload}
+        data-testid="PyramidRuleUploadButton"
+        className={className}
+      >
+        <FormattedMessage id="form.buttons.create" />
+      </Button>
+      <PyramidRuleUploadDialog
+        onConfirm={handleLoadRule}
+        onCancel={handleUploadCancel}
+        open={isUploadDialogOpen}
+        initialValues={{
+          deposit: emptyPrice,
+          reward: emptyPrice,
+          durationAmount: 2592000,
+          durationUnit: DurationUnit.DAY,
+          penalty: 100,
+        }}
+      />
+    </Fragment>
   );
 };

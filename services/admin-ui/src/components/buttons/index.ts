@@ -12,8 +12,10 @@ export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/raffle/deploy";
 
 export * from "./mechanics/mysterybox/deploy";
+
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
+export * from "./mechanics/pyramid/rule-toggle";
 
 export * from "./mechanics/staking/deploy";
 export * from "./mechanics/staking/upload";

@@ -16,8 +16,8 @@ import { Create, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
-import { IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleSearchDto, IStakingRuleItemSearchDto } from "@framework/types";
+import { StakingRuleStatus, TokenType } from "@framework/types";
 
 import { StakingRuleCreateButton, StakingToggleRuleButton } from "../../../../components/buttons";
 import { StakingRuleEditDialog } from "./edit";
