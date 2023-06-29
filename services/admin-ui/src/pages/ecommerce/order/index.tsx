@@ -31,7 +31,6 @@ export interface IOrderSearchDto extends IPaginationDto {
   orderStatus: Array<OrderStatus>;
   isArchived?: boolean;
   dateRange: string;
-  merchantId?: number;
 }
 
 export const Order: FC = () => {

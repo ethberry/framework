@@ -2,10 +2,11 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IMerchantSearchDto, MerchantStatus, UserRole } from "@framework/types";
+import type { IMerchantSearchDto } from "@framework/types";
+import { MerchantStatus, UserRole } from "@framework/types";
 
 import { MerchantEntity } from "./merchant.entity";
-import { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
+import type { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
 import { UserEntity } from "../user/user.entity";
 
 @Injectable()
@@ -62,7 +63,10 @@ export class MerchantService {
       where: {
         merchantStatus: MerchantStatus.ACTIVE,
       },
-      select: ["id", "title"],
+      select: {
+        id: true,
+        title: true,
+      },
     });
   }
 

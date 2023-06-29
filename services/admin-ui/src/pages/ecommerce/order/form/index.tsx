@@ -17,8 +17,8 @@ interface IOrderSearchFormProps {
 export const OrderSearchForm: FC<IOrderSearchFormProps> = props => {
   const { initialValues, onSubmit, open } = props;
 
-  const { dateRange, isArchived, merchantId, orderStatus } = initialValues;
-  const fixedValues = { dateRange, isArchived, merchantId, orderStatus };
+  const { dateRange, isArchived, orderStatus } = initialValues;
+  const fixedValues = { dateRange, isArchived, orderStatus };
 
   return (
     <FormWrapper initialValues={fixedValues} onSubmit={onSubmit} showButtons={false} showPrompt={false}>

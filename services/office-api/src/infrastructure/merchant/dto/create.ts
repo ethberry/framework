@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEmail, IsInt, IsJSON, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
+// import { rePhoneNumber } from "@framework/constants";
 import { IMerchantCreateDto } from "../interfaces";
 
 export class MerchantCreateDto implements IMerchantCreateDto {
@@ -17,6 +18,12 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   @IsEmail()
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  // @Matches(rePhoneNumber, { message: "patternMismatch" })
+  public phoneNumber: string;
 
   @ApiPropertyOptional({
     type: Number,

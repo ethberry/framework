@@ -2,7 +2,6 @@ export * from "./empty-address";
 export * from "./empty-balance";
 export * from "./empty-category";
 export * from "./empty-contract";
-export * from "./empty-merchant";
 export * from "./empty-order";
 export * from "./empty-parameter";
 export * from "./empty-promo";

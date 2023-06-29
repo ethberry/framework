@@ -12,6 +12,10 @@ export const AdminSection: FC = () => {
     return null;
   }
 
+  if (process.env.GEMUNION_BUSINESS_MODEL === "B2B") {
+    return null;
+  }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List
