@@ -9,6 +9,7 @@ export interface ICommonContractInputProps {
   controller?: string;
   multiple?: boolean;
   autoselect?: boolean;
+  readOnly?: boolean;
   withTokenType?: boolean;
   data?: {
     contractType?: Array<TokenType>;
@@ -20,7 +21,16 @@ export interface ICommonContractInputProps {
 }
 
 export const CommonContractInput: FC<ICommonContractInputProps> = props => {
-  const { autoselect, multiple, name, onChange, controller = "contracts", data = {}, withTokenType = false } = props;
+  const {
+    autoselect,
+    multiple,
+    readOnly,
+    name,
+    onChange,
+    controller = "contracts",
+    data = {},
+    withTokenType = false,
+  } = props;
 
   const form = useFormContext<any>();
   const tokenType = useWatch({ name: "tokenType" });
@@ -33,6 +43,7 @@ export const CommonContractInput: FC<ICommonContractInputProps> = props => {
       onChange={onChange ? onChange(form) : undefined}
       autoselect={autoselect}
       multiple={multiple}
+      readOnly={readOnly}
     />
   );
 };

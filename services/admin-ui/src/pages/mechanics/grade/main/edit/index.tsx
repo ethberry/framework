@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ContractFeatures, ContractStatus, GradeStatus, GradeStrategy, IGrade, TokenType } from "@framework/types";
 
+import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { validationSchema } from "./validation";
 import { GrowthRateInput } from "./growth-rate-input";
 
@@ -32,6 +32,12 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+    };
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -40,10 +46,10 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <EntityInput
+      <CommonContractInput
         name="contractId"
-        controller="contracts"
         readOnly={!!id}
+        onChange={handleContractChange}
         autoselect
         data={{
           contractStatus: [ContractStatus.ACTIVE],
