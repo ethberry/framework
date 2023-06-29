@@ -1,16 +1,13 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, User } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { ContractManagerSignService } from "./contract-manager.sign.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
 import {
-  ContractManagerCreateDto,
-  ContractManagerSearchDto,
-  ContractManagerUpdateDto,
   Erc1155ContractDeployDto,
   Erc20ContractDeployDto,
   Erc721CollectionDeployDto,
@@ -33,25 +30,6 @@ export class ContractManagerController {
     private readonly contractManagerSignService: ContractManagerSignService,
     private readonly contractManagerService: ContractManagerService,
   ) {}
-
-  @Get("/")
-  @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ContractManagerSearchDto): Promise<[Array<ContractManagerEntity>, number]> {
-    return this.contractManagerService.search(dto);
-  }
-
-  @Post("/")
-  public create(@Body() dto: ContractManagerCreateDto): Promise<ContractManagerEntity | null> {
-    return this.contractManagerService.create(dto);
-  }
-
-  @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: ContractManagerUpdateDto,
-  ): Promise<ContractManagerEntity | null> {
-    return this.contractManagerService.update({ id }, dto);
-  }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
