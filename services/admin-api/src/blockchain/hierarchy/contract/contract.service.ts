@@ -158,6 +158,7 @@ export class ContractService {
         address: true,
         contractType: true,
         decimals: true,
+        symbol: true,
       },
     });
   }
