@@ -6,10 +6,6 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
@@ -36,7 +32,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        102,
+        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 102},
         '${exchangeAddress}',
         '${chainId}',
         'EXCHANGE (BESU)',
@@ -54,7 +50,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202,
+        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 202},
         '${exchangeAddressBinance}',
         56,
         'EXCHANGE (BNB)',

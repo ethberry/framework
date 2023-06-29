@@ -69,6 +69,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
+    // 01   - CM
+    // 02   - exchange
+    // 07   - VRF
     // 010x - native
     // 020x - erc20
     // 030x - erc721

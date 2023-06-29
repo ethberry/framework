@@ -6,10 +6,6 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractChainLinkAt1563804000105 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
-
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const vrfAddress = process.env.VRF_ADDR || wallet;
@@ -35,7 +31,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        7,
+        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 107},
         '${vrfAddress.toLowerCase()}',
         '${chainId}',
         'VRF COORDINATOR',
