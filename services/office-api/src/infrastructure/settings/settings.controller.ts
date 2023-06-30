@@ -1,8 +1,6 @@
 import { Body, Controller, Get, Put } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-
-import { Roles } from "@gemunion/nest-js-utils";
-import { SettingsKeys, UserRole } from "@framework/types";
+import { SettingsKeys } from "@framework/types";
 
 import { SettingsService } from "./settings.service";
 import { SettingsUpdateDto } from "./dto";
@@ -18,7 +16,6 @@ export class SettingsController {
   }
 
   @Put("/")
-  @Roles(UserRole.ADMIN)
   public update(@Body() dto: SettingsUpdateDto): Promise<Record<SettingsKeys, any>> {
     return this.settingsService.update(dto);
   }

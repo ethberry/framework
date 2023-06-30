@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { AddressLink } from "@gemunion/mui-scanner";
-import { IAssetComponentHistory, IErc1155TokenTransferBatchEvent, TContractEventData } from "@framework/types";
+import { IErc1155TokenTransferBatchEvent, TContractEventData } from "@framework/types";
 
 import {
   DataViewAddressLinkWrapper,
@@ -13,7 +13,6 @@ import {
 } from "../styled";
 
 export interface ITransferBatchDataViewProps {
-  assets?: IAssetComponentHistory[];
   eventData: TContractEventData;
 }
 
@@ -50,7 +49,7 @@ export const TransferBatchDataView: FC<ITransferBatchDataViewProps> = props => {
           <FormattedMessage id="enums.eventDataLabel.ids" />:
         </Typography>
         <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{ids.toString()}</DataViewAddressLinkWrapper>
+          <DataViewAddressLinkWrapper>{ids.join(", ")}</DataViewAddressLinkWrapper>
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
 
@@ -59,7 +58,7 @@ export const TransferBatchDataView: FC<ITransferBatchDataViewProps> = props => {
           <FormattedMessage id="enums.eventDataLabel.values" />:
         </Typography>
         <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>{values.toString()}</DataViewAddressLinkWrapper>
+          <DataViewAddressLinkWrapper>{values.join(", ")}</DataViewAddressLinkWrapper>
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
     </DataViewWrapper>

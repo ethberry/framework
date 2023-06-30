@@ -6,10 +6,10 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
-  ParseIntPipe,
   UseInterceptors,
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
@@ -44,13 +44,13 @@ export class ParameterController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: ParameterUpdateDto): Promise<ParameterEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ParameterUpdateDto): Promise<ParameterEntity> {
     return this.parameterService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.parameterService.delete({ id });
   }
 }

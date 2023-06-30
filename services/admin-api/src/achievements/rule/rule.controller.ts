@@ -48,7 +48,7 @@ export class AchievementRuleController {
 
   @Put("/:id")
   public update(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() dto: AchievementRuleUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<AchievementRuleEntity | undefined> {

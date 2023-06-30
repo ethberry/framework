@@ -4,7 +4,7 @@ import { Grid, List, ListItem, ListItemText, Pagination } from "@mui/material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { IUserSearchDto, IWalletPayee } from "@framework/types";
+import type { IUserSearchDto, IWalletPayee } from "@framework/types";
 
 export const SystemPayees: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IWalletPayee, IUserSearchDto>({

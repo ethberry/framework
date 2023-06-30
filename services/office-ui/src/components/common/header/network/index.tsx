@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 
 import { availableChains } from "@framework/constants";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { getIconByChainId, SANDBOX_CHAINS } from "@gemunion/provider-wallet";

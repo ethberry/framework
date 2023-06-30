@@ -47,7 +47,7 @@ export class AchievementLevelController {
 
   @Put("/:id")
   public update(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() dto: AddressUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<AchievementLevelEntity | undefined> {
@@ -56,7 +56,7 @@ export class AchievementLevelController {
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.achievementLevelService.delete({ id }, userEntity);
   }
 }

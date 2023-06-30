@@ -204,6 +204,6 @@ export interface IEventHistory extends IDeployable {
 }
 
 export interface IEventHistoryReport extends IEventHistory {
-  items: IAssetComponentHistory[];
-  price: IAssetComponentHistory[];
+  items: Array<IAssetComponentHistory>;
+  price: Array<IAssetComponentHistory>;
 }

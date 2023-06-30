@@ -1,5 +1,18 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseInterceptors,
+} from "@nestjs/common";
 import { Request, Response } from "express";
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, Req, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -32,13 +45,13 @@ export class OrderController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<OrderEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<OrderEntity | null> {
     return this.orderService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.orderService.delete({ id });
   }
 }

@@ -70,10 +70,6 @@ export class MerchantService {
     });
   }
 
-  public findAndCount(): Promise<[Array<MerchantEntity>, number]> {
-    return this.merchantEntityRepository.findAndCount();
-  }
-
   public findOne(
     where: FindOptionsWhere<MerchantEntity>,
     options?: FindOneOptions<MerchantEntity>,
@@ -125,9 +121,9 @@ export class MerchantService {
     }
 
     const isAdmin = userEntity.userRoles.includes(UserRole.ADMIN);
-    const isMerchant = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
+    const isSelf = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
 
-    if (!(isAdmin || isMerchant)) {
+    if (!(isAdmin || isSelf)) {
       throw new ForbiddenException("insufficientPermissions");
     }
 

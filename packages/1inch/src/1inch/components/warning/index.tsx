@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { chainIdToNetwork } from "@gemunion/provider-wallet";
 

@@ -1,12 +1,13 @@
 import { FC } from "react";
 
 import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
-import { DataViewItemWrapper, DataViewWrapper } from "../styled";
+
 import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
+import { DataViewWrapper } from "../styled";
 
 export interface IClaimDataViewProps {
-  assets?: Array<IAssetComponentHistory>;
-  contract?: IContract;
+  assets: Array<IAssetComponentHistory>;
+  contract: IContract;
 }
 
 export const ClaimDataView: FC<IClaimDataViewProps> = props => {
@@ -14,9 +15,7 @@ export const ClaimDataView: FC<IClaimDataViewProps> = props => {
 
   return (
     <DataViewWrapper>
-      <DataViewItemWrapper>
-        {<AssetsView assets={assets} contract={contract} title={ExchangeType.ITEM} />}
-      </DataViewItemWrapper>
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
     </DataViewWrapper>
   );
 };

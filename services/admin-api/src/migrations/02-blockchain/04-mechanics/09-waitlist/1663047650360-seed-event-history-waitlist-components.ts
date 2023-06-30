@@ -45,7 +45,7 @@ export class SeedEventHistoryWaitListComponentsAt1663047650360 implements Migrat
         'ITEM',
         10501,
         105010101,
-        '${WeiPerEther.toString()}'
+        '1000'
       ), (
         1700006,
         'ITEM',
@@ -75,7 +75,7 @@ export class SeedEventHistoryWaitListComponentsAt1663047650360 implements Migrat
         'ITEM',
         10501,
         105010101,
-        '${WeiPerEther.toString()}'
+        '1000'
       ), (
         1700007,
         'ITEM',

@@ -2,9 +2,15 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
-import { IAssetComponentHistory, IContract, IExchangePurchaseRaffleEvent, TContractEventData } from "@framework/types";
+import {
+  ExchangeType,
+  IAssetComponentHistory,
+  IContract,
+  IExchangePurchaseRaffleEvent,
+  TContractEventData,
+} from "@framework/types";
 
-import { EventHistoryAssetsView } from "../../../../../components/common/event-history-assets-view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
 import {
   DataViewAddressLinkWrapper,
   DataViewItemContentWrapper,
@@ -13,8 +19,8 @@ import {
 } from "../styled";
 
 export interface IPurchaseRaffleDataViewProps {
-  assets?: Array<IAssetComponentHistory>;
-  contract?: IContract;
+  assets: Array<IAssetComponentHistory>;
+  contract: IContract;
   eventData: TContractEventData;
 }
 
@@ -33,9 +39,8 @@ export const PurchaseRaffleDataView: FC<IPurchaseRaffleDataViewProps> = props =>
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
 
-      <DataViewItemWrapper>
-        <EventHistoryAssetsView assets={assets} contract={contract} />
-      </DataViewItemWrapper>
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
     </DataViewWrapper>
   );
 };

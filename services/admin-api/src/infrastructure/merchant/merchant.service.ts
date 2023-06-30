@@ -90,7 +90,7 @@ export class MerchantService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    Object.assign(merchantEntity, { ...rest, phoneNumber: "" });
+    Object.assign(merchantEntity, rest);
 
     if (userEntity.userRoles.includes(UserRole.ADMIN)) {
       Object.assign(merchantEntity, {
@@ -107,7 +107,6 @@ export class MerchantService {
     return this.merchantEntityRepository
       .create({
         ...rest,
-        phoneNumber: "",
         merchantStatus: userEntity.userRoles.includes(UserRole.ADMIN) ? MerchantStatus.ACTIVE : MerchantStatus.PENDING,
         users: userEntity.userRoles.includes(UserRole.ADMIN) ? userIds.map(id => ({ id })) : [userEntity],
       })

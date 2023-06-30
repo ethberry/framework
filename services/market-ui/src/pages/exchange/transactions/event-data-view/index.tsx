@@ -23,9 +23,9 @@ export interface IEventDataViewProps {
 }
 
 export const EventDataView: FC<IEventDataViewProps> = props => {
-  const {
-    row: { assets, contract, createdAt, eventData, eventType },
-  } = props;
+  const { row } = props;
+
+  const { assets, contract, eventData, eventType } = row as unknown as Required<IEventHistory>;
 
   switch (eventType) {
     case ContractEventType.Claim:
@@ -45,7 +45,7 @@ export const EventDataView: FC<IEventDataViewProps> = props => {
     case ContractEventType.UnpackMysteryBox:
       return <UnpackMysteryBoxDataView assets={assets} contract={contract} />;
     case ContractEventType.Upgrade:
-      return <UpgradeDataView assets={assets} contract={contract} createdAt={createdAt} eventData={eventData} />;
+      return <UpgradeDataView assets={assets} contract={contract} eventData={eventData} />;
     case ContractEventType.Transfer:
       return <TransferDataView eventData={eventData} contract={contract} />;
     case ContractEventType.TransferSingle:

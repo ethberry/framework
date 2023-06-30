@@ -27,7 +27,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun@gmail.com',
-        'E5PnxZDsjEZcDzS9o2HlDGfmNzW2',
+        'bPTD3jSwxTdqHWvlG0ek2WbHPJd2',
         'Trej Gun',
         '${imageUrl}',
         'EN',
@@ -35,7 +35,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'MALE',
         '',
         'ACTIVE',
-        '{ADMIN,OWNER}',
+        '{SUPER,ADMIN,OWNER}',
         1,
         '${chainId.toString() === testChainId.toString() ? wallets[0] : process.env.ACCOUNT}',
         '${chainId}',

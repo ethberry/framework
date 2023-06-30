@@ -98,7 +98,9 @@ export class UserService {
       throw new NotFoundException("userNotFound");
     }
 
-    await this.authService.delete(userEntity);
+    await this.authService.delete(userEntity).catch(e => {
+      this.loggerService.error(e, UserService.name);
+    });
 
     return userEntity.remove();
   }

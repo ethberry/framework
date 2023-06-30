@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, Roles } from "@gemunion/nest-js-utils";
@@ -21,7 +21,7 @@ export class PhotosController {
 
   @Put("/:id")
   @Roles(UserRole.ADMIN)
-  public update(@Param("id") id: number, @Body() dto: PhotoUpdateDto): Promise<PhotoEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: PhotoUpdateDto): Promise<PhotoEntity> {
     return this.photosService.update({ id }, dto);
   }
 }

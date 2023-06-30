@@ -7,15 +7,16 @@ import { IAssetComponentHistory, IContract, TokenType } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
 import { AssetsWrapper } from "../styled";
+import { DataViewItemWrapper } from "../../../../pages/exchange/transactions/event-data-view/styled";
 
 export interface ITokenLinkProps {
-  assets?: IAssetComponentHistory[];
-  contract?: IContract;
-  title: string;
+  assets: Array<IAssetComponentHistory>;
+  contract: IContract;
+  type: string;
 }
 
 export const AssetsView: FC<ITokenLinkProps> = props => {
-  const { assets, title } = props;
+  const { assets, type } = props;
 
   const mapAsset = (asset: IAssetComponentHistory) => {
     const { amount, token, tokenId } = asset;
@@ -62,12 +63,12 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
   };
 
   return (
-    <Box>
+    <DataViewItemWrapper>
       <Typography fontWeight={500}>
-        <FormattedMessage id={`enums.eventDataLabel.${title.toLowerCase()}`} />:
+        <FormattedMessage id={`enums.eventDataLabel.${type.toLowerCase()}`} />:
       </Typography>
 
-      <AssetsWrapper>{assets?.map(mapAsset)}</AssetsWrapper>
-    </Box>
+      <AssetsWrapper>{assets.filter(({ exchangeType }) => exchangeType === type).map(mapAsset)}</AssetsWrapper>
+    </DataViewItemWrapper>
   );
 };

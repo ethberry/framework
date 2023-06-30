@@ -3,9 +3,9 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 import { utils } from "ethers";
 
-import { IAssetComponentHistory, IContract, ILevelUp, TContractEventData } from "@framework/types";
+import { ExchangeType, IAssetComponentHistory, IContract, ILevelUp, TContractEventData } from "@framework/types";
 
-import { EventHistoryAssetsView } from "../../../../../components/common/event-history-assets-view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
 import {
   DataViewAddressLinkWrapper,
   DataViewItemContentWrapper,
@@ -14,19 +14,14 @@ import {
 } from "../styled";
 
 export interface IUpgradeDataViewProps {
-  assets?: Array<IAssetComponentHistory>;
-  contract?: IContract;
-  createdAt: string;
+  assets: Array<IAssetComponentHistory>;
+  contract: IContract;
   eventData: TContractEventData;
 }
 
-// item; attribute - toUtf8String(stripZerosLeft(tokenAttribute)); price
-
 export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
   const { assets, contract, eventData } = props;
-  const { attribute: tokenAttribute } = eventData as ILevelUp;
-
-  const attribute = utils.toUtf8String(utils.stripZeros(tokenAttribute));
+  const { attribute } = eventData as ILevelUp;
 
   return (
     <DataViewWrapper>
@@ -35,15 +30,12 @@ export const UpgradeDataView: FC<IUpgradeDataViewProps> = props => {
           <FormattedMessage id="enums.eventDataLabel.attribute" />:
         </Typography>
         <DataViewItemContentWrapper>
-          <DataViewAddressLinkWrapper>
-            <FormattedMessage id={`enums.attributeName.${attribute}`} />
-          </DataViewAddressLinkWrapper>
+          <DataViewAddressLinkWrapper>{utils.toUtf8String(utils.stripZeros(attribute))}</DataViewAddressLinkWrapper>
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
 
-      <DataViewItemWrapper>
-        <EventHistoryAssetsView assets={assets} contract={contract} />
-      </DataViewItemWrapper>
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
     </DataViewWrapper>
   );
 };

@@ -1,5 +1,4 @@
-import type { IOtp } from "@framework/types";
-import { IUser } from "@framework/types";
+import type { IOtp, IUser } from "@framework/types";
 
 export interface IPayload {
   user: IUser;

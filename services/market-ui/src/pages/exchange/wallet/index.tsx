@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 
 import { AttachWalletButton } from "./attach-wallet";
 import { AllowanceButton } from "./allowance";

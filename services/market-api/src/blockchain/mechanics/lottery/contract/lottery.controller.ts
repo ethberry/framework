@@ -9,9 +9,9 @@ import { SearchDto } from "@gemunion/collection";
 
 import { LotteryContractService } from "./lottery.service";
 
-import { ContractAutocompleteDto } from "../../hierarchy/contract/dto";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/lottery/contracts")

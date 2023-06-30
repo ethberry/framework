@@ -13,7 +13,7 @@ import {
 } from "../styled";
 
 export interface IOwnershipTransferredDataViewProps {
-  contract?: IContract;
+  contract: IContract;
   eventData: TContractEventData;
 }
 
@@ -45,30 +45,27 @@ export const OwnershipTransferredDataView: FC<IOwnershipTransferredDataViewProps
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
 
-      {contract
-        ? [
-            <DataViewItemWrapper key="0">
-              <Typography fontWeight={500}>
-                <FormattedMessage id="enums.eventDataLabel.contract" />:
-              </Typography>
-              <DataViewItemContentWrapper>
-                <DataViewAddressLinkWrapper>
-                  <AddressLink address={contract.address} />
-                </DataViewAddressLinkWrapper>
-              </DataViewItemContentWrapper>
-            </DataViewItemWrapper>,
-            <DataViewItemWrapper key="2">
-              <Typography fontWeight={500}>
-                <FormattedMessage id="enums.eventDataLabel.contractModule" />:
-              </Typography>
-              <DataViewItemContentWrapper>
-                <Typography fontSize={16} fontWeight={400} lineHeight="24px">
-                  {contract.contractModule}
-                </Typography>
-              </DataViewItemContentWrapper>
-            </DataViewItemWrapper>,
-          ]
-        : null}
+      <DataViewItemWrapper key="0">
+        <Typography fontWeight={500}>
+          <FormattedMessage id="enums.eventDataLabel.contract" />:
+        </Typography>
+        <DataViewItemContentWrapper>
+          <DataViewAddressLinkWrapper>
+            <AddressLink address={contract.address} />
+          </DataViewAddressLinkWrapper>
+        </DataViewItemContentWrapper>
+      </DataViewItemWrapper>
+
+      <DataViewItemWrapper key="2">
+        <Typography fontWeight={500}>
+          <FormattedMessage id="enums.eventDataLabel.contractModule" />:
+        </Typography>
+        <DataViewItemContentWrapper>
+          <Typography fontSize={16} fontWeight={400} lineHeight="24px">
+            {contract.contractModule}
+          </Typography>
+        </DataViewItemContentWrapper>
+      </DataViewItemWrapper>
     </DataViewWrapper>
   );
 };

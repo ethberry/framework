@@ -2,8 +2,8 @@ import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
-import type { IRaffleScheduleUpdateDto } from "@framework/types";
 
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
 
@@ -19,7 +19,7 @@ export class RaffleRoundController {
   }
 
   @Get("/options")
-  public options(): Promise<IRaffleScheduleUpdateDto> {
+  public options(): Promise<ContractEntity> {
     return this.raffleRoundService.options();
   }
 }

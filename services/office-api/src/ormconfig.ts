@@ -33,14 +33,13 @@ import { ProductItemEntity } from "./ecommerce/product-item/product-item.entity"
 import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/product-item-parameter.entity";
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
+import { OtpEntity } from "./infrastructure/otp/otp.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    UserEntity,
-    SettingsEntity,
     ContractManagerEntity,
     AccessControlEntity,
     AccessListEntity,
@@ -62,6 +61,10 @@ const config: PostgresConnectionOptions = {
     StakingRulesEntity,
     PyramidDepositEntity,
     PyramidRulesEntity,
+    /* infrastructure */
+    OtpEntity,
+    UserEntity,
+    SettingsEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

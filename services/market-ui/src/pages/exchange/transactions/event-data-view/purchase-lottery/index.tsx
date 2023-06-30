@@ -2,10 +2,16 @@ import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
-import { IAssetComponentHistory, IContract, IExchangePurchaseLotteryEvent, TContractEventData } from "@framework/types";
+import {
+  ExchangeType,
+  IAssetComponentHistory,
+  IContract,
+  IExchangePurchaseLotteryEvent,
+  TContractEventData,
+} from "@framework/types";
 import { byte32ToBoolArray } from "@framework/traits-ui";
 
-import { EventHistoryAssetsView } from "../../../../../components/common/event-history-assets-view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
 import {
   DataViewAddressLinkWrapper,
   DataViewItemContentWrapper,
@@ -14,8 +20,8 @@ import {
 } from "../styled";
 
 export interface IPurchaseLotteryDataViewProps {
-  assets?: Array<IAssetComponentHistory>;
-  contract?: IContract;
+  assets: Array<IAssetComponentHistory>;
+  contract: IContract;
   eventData: TContractEventData;
 }
 
@@ -31,14 +37,20 @@ export const PurchaseLotteryDataView: FC<IPurchaseLotteryDataViewProps> = props 
         </Typography>
         <DataViewItemContentWrapper>
           <DataViewAddressLinkWrapper>
-            {byte32ToBoolArray(numbers).join(", ").replace(/false/g, "0").replace(/true/g, "1")}
+            {byte32ToBoolArray(numbers)
+              .reduce((memo, current, i) => {
+                if (current) {
+                  memo.push(i);
+                }
+                return memo;
+              }, [] as Array<number>)
+              .join(", ")}
           </DataViewAddressLinkWrapper>
         </DataViewItemContentWrapper>
       </DataViewItemWrapper>
 
-      <DataViewItemWrapper>
-        <EventHistoryAssetsView assets={assets} contract={contract} />
-      </DataViewItemWrapper>
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.ITEM} />
+      <AssetsView assets={assets} contract={contract} type={ExchangeType.PRICE} />
     </DataViewWrapper>
   );
 };

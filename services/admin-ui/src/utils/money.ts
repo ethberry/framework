@@ -19,7 +19,7 @@ export const formatPrice = (asset?: IAsset | IAssetHistory): string => {
   );
 };
 
-export const formatPriceHistory = (components?: IAssetComponentHistory[]): string => {
+export const formatPriceHistory = (components?: Array<IAssetComponentHistory>): string => {
   return (
     components
       ?.map((component, i) => {

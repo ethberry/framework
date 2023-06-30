@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { phrase } from "@gemunion/constants";
 import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 import { ApiError } from "@gemunion/provider-api-firebase";
 
 export const AttachWalletButton: FC = () => {

@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 
 import { PaginationInterceptor, Public, Roles } from "@gemunion/nest-js-utils";
 
@@ -27,13 +39,13 @@ export class PromoController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: PromoUpdateDto): Promise<PromoEntity | undefined> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: PromoUpdateDto): Promise<PromoEntity | undefined> {
     return this.promoService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.promoService.delete({ id });
   }
 }

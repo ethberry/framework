@@ -13,6 +13,7 @@ export class CreateUser1563803000130 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.user_role_enum AS ENUM (
+        'SUPER',
         'ADMIN',
         'OWNER',
         'MANAGER',
