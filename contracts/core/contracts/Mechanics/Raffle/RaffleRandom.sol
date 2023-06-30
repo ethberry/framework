@@ -74,8 +74,10 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   // TICKET
   function printTicket(
+    uint256 externalId,
     address account
   ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+    // get current round
     roundId = _rounds.length - 1;
     Round storage currentRound = _rounds[roundId];
 
@@ -94,7 +96,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     currentRound.balance += currentRound.acceptedAsset.amount;
     currentRound.total += currentRound.acceptedAsset.amount;
 
-    tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId);
+    tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId);
   }
 
   function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -104,22 +106,17 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     Round memory nextRound;
     _rounds.push(nextRound);
 
-    uint256 roundNumber = _rounds.length - 1;
+    uint256 roundId = _rounds.length - 1;
 
-    Round storage currentRound = _rounds[roundNumber];
-    currentRound.roundId = roundNumber;
+    Round storage currentRound = _rounds[roundId];
+    currentRound.roundId = roundId;
     currentRound.startTimestamp = block.timestamp;
     currentRound.maxTicket = maxTicket;
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
-    emit RoundStarted(roundNumber, block.timestamp, maxTicket, ticket, price);
+    emit RoundStarted(roundId, block.timestamp, maxTicket, ticket, price);
   }
-
-  // TODO could be too much data to return
-  //  function getAllRounds() public view returns (Round[] memory) {
-  //    return _rounds;
-  //  }
 
   // GETTERS
   function getRoundsCount() public view returns (uint256) {
@@ -203,17 +200,24 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     emit RoundFinalized(currentRound.roundId, prizeNumber);
   }
 
-  function getPrize(uint256 tokenId) external {
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
+  function getPrize(uint256 tokenId, uint256 roundId) external {
+    if (roundId > _rounds.length - 1) {
+      revert WrongRound();
+    }
 
-    if (currentRound.endTimestamp == 0) {
+    Round storage ticketRound = _rounds[roundId];
+
+    if (ticketRound.endTimestamp == 0) {
       revert NotComplete();
     }
 
-    uint256 prizeNumber = currentRound.prizeNumber;
+    if (block.timestamp > ticketRound.endTimestamp + _timeLag) {
+      revert Expired();
+    }
 
-    IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(currentRound.ticketAsset.token);
+    uint256 prizeNumber = ticketRound.prizeNumber;
+
+    IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(ticketRound.ticketAsset.token);
 
     TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
 
@@ -222,12 +226,17 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       revert WrongToken();
     }
 
+    // revert if token's roundId differs
+    if (data.round != roundId) {
+      revert WrongRound();
+    }
+
     // ticketFactory.burn(tokenId);
     // set prize status
     ticketFactory.setTicketData(tokenId);
 
     if (tokenId == prizeNumber) {
-      emit Prize(_msgSender(), roundNumber, tokenId, 0);
+      emit Prize(_msgSender(), roundId, tokenId, 0);
     }
   }
 

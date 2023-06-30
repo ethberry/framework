@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
-import "./interfaces/ILottery.sol";
+import "./interfaces/IRaffle.sol";
 
 abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable {
   event PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
@@ -39,9 +39,9 @@ abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable 
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(_msgSender());
+    (uint256 tokenId, uint256 roundId) = IRaffle(items[0].token).printTicket(params.externalId, _msgSender());
 
-    // set tokenID = ticketID
+    // set real tokenID = ticketID
     items[1].tokenId = tokenId;
 
     emit PurchaseRaffle(_msgSender(), params.externalId, items, price, roundId);

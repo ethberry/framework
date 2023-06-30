@@ -52,7 +52,7 @@ describe("ExchangeLottery", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -83,7 +83,7 @@ describe("ExchangeLottery", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -424,7 +424,7 @@ describe("ExchangeLottery", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -455,7 +455,7 @@ describe("ExchangeLottery", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,

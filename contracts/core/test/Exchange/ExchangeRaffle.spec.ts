@@ -55,7 +55,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -87,7 +87,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -187,7 +187,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -206,7 +206,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -263,7 +263,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 1, // wtf?
+            externalId: 101,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -294,7 +294,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -359,7 +359,7 @@ describe("ExchangeRaffle", function () {
         const tx = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -428,7 +428,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -459,7 +459,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -519,7 +519,7 @@ describe("ExchangeRaffle", function () {
         const tx2 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -588,7 +588,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -619,7 +619,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -688,7 +688,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -719,7 +719,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,

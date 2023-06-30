@@ -17,8 +17,8 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 import "../../utils/constants.sol";
-import "./interfaces/IERC721LotteryTicket.sol";
 import "./interfaces/ILottery.sol";
+import "./interfaces/IERC721LotteryTicket.sol";
 
 abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   using Address for address;
@@ -74,9 +74,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
 
   // TICKET
   function printTicket(
+    uint256 externalId,
     address account,
     bytes32 numbers
   ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+    // get current round
     roundId = _rounds.length - 1;
     Round storage currentRound = _rounds[roundId];
 
@@ -93,7 +95,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     currentRound.balance += currentRound.acceptedAsset.amount;
     currentRound.total += currentRound.acceptedAsset.amount;
 
-    tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, numbers);
+    tokenId = IERC721LotteryTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId, numbers);
   }
 
   // ROUND
@@ -107,16 +109,16 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     Round memory nextRound;
     _rounds.push(nextRound);
 
-    uint256 roundNumber = _rounds.length - 1;
+    uint256 roundId = _rounds.length - 1;
 
-    Round storage currentRound = _rounds[roundNumber];
-    currentRound.roundId = roundNumber;
+    Round storage currentRound = _rounds[roundId];
+    currentRound.roundId = roundId;
     currentRound.startTimestamp = block.timestamp;
     currentRound.maxTicket = maxTicket;
     currentRound.ticketAsset = ticket;
     currentRound.acceptedAsset = price;
 
-    emit RoundStarted(roundNumber, block.timestamp, maxTicket, ticket, price);
+    emit RoundStarted(roundId, block.timestamp, maxTicket, ticket, price);
   }
 
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -156,30 +158,6 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       );
   }
 
-  // RELEASE
-  function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    Round storage currentRound = _rounds[roundNumber];
-
-    if (block.timestamp < currentRound.endTimestamp + _timeLag) {
-      revert NotComplete();
-    }
-    if (currentRound.balance == 0) {
-      revert ZeroBalance();
-    }
-
-    uint256 roundBalance = currentRound.balance;
-    currentRound.balance = 0;
-
-    currentRound.acceptedAsset.amount = roundBalance;
-    ExchangeUtils.spend(
-      ExchangeUtils._toArray(currentRound.acceptedAsset),
-      _msgSender(),
-      DisabledTokenTypes(false, false, false, false, false)
-    );
-
-    emit Released(roundNumber, roundBalance);
-  }
-
   // RANDOM
   function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
     Round storage currentRound = _rounds[_rounds.length - 1];
@@ -217,21 +195,33 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
   function getRandomNumber() internal virtual returns (uint256 requestId);
 
   // PRIZE
-  function getPrize(uint256 tokenId) external {
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
+  function getPrize(uint256 tokenId, uint256 roundId) external {
+    if (roundId > _rounds.length - 1) {
+      revert WrongRound();
+    }
 
-    if (currentRound.endTimestamp == 0) {
+    Round storage ticketRound = _rounds[roundId];
+
+    if (ticketRound.endTimestamp == 0) {
       revert NotComplete();
     }
 
-    IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(currentRound.ticketAsset.token);
+    if (block.timestamp > ticketRound.endTimestamp + _timeLag) {
+      revert Expired();
+    }
+
+    IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(ticketRound.ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
 
     // revert if prize already set
     if (data.prize) {
       revert WrongToken();
+    }
+
+    // revert if token's roundId differs
+    if (data.round != roundId) {
+      revert WrongRound();
     }
 
     // ticketFactory.burn(tokenId);
@@ -247,7 +237,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     coefficient[5] = 140;
     coefficient[6] = 220;
 
-    uint8[7] memory aggregation = currentRound.aggregation;
+    uint8[7] memory aggregation = ticketRound.aggregation;
 
     uint256 sumc;
     for (uint8 l = 0; l < 7; l++) {
@@ -256,13 +246,13 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       sumc = sumc + (ag * co);
     }
 
-    uint256 point = currentRound.total / sumc;
+    uint256 point = ticketRound.total / sumc;
 
     uint8 result = 0;
 
     for (uint8 j = 0; j < 6; j++) {
       for (uint8 k = 0; k < 6; k++) {
-        if (uint8(data.numbers[31 - k]) == currentRound.values[j]) {
+        if (uint8(data.numbers[31 - k]) == ticketRound.values[j]) {
           result++;
           break;
         }
@@ -270,16 +260,45 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     }
 
     uint256 amount = point * coefficient[result];
-    currentRound.balance -= amount;
+    ticketRound.balance -= amount;
 
-    currentRound.acceptedAsset.amount = amount;
+    ticketRound.acceptedAsset.amount = amount;
+    ExchangeUtils.spend(
+      ExchangeUtils._toArray(ticketRound.acceptedAsset),
+      _msgSender(),
+      DisabledTokenTypes(false, false, false, false, false)
+    );
+
+    emit Prize(_msgSender(), roundId, tokenId, amount);
+  }
+
+  // RELEASE
+  function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    if (roundNumber > _rounds.length - 1) {
+      revert WrongRound();
+    }
+
+    Round storage currentRound = _rounds[roundNumber];
+
+    if (block.timestamp < currentRound.endTimestamp + _timeLag) {
+      revert NotComplete();
+    }
+
+    if (currentRound.balance == 0) {
+      revert ZeroBalance();
+    }
+
+    uint256 roundBalance = currentRound.balance;
+    currentRound.balance = 0;
+
+    currentRound.acceptedAsset.amount = roundBalance;
     ExchangeUtils.spend(
       ExchangeUtils._toArray(currentRound.acceptedAsset),
       _msgSender(),
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    emit Prize(_msgSender(), roundNumber, tokenId, amount);
+    emit Released(roundNumber, roundBalance);
   }
 
   // PAUSABLE

@@ -33,15 +33,16 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
   // TICKET
   function mintTicket(
     address account,
-    uint256 round,
+    uint256 roundId,
+    uint256 externalId,
     bytes32 numbers
   ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = Ticket(round, numbers, false);
+    _data[tokenId] = Ticket(roundId, externalId, numbers, false);
 
-    _upsertRecordField(tokenId, ROUND, round);
+    _upsertRecordField(tokenId, ROUND, externalId);
     _upsertRecordField(tokenId, NUMBERS, _encodeNumbers(numbers, 6));
 
     _safeMint(account, tokenId);
@@ -69,7 +70,7 @@ contract ERC721LotteryTicket is IERC721LotteryTicket, ERC721ABER, ERC721ABaseUrl
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
-    // TODO use metadata only?
+    // TODO use only metadata as storage?
     _data[tokenId].prize = true;
     _upsertRecordField(tokenId, PRIZE, 1);
   }

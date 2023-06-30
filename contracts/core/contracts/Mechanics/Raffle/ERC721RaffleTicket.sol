@@ -32,13 +32,17 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
 
   // TICKET
 
-  function mintTicket(address account, uint256 round) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintTicket(
+    address account,
+    uint256 roundId,
+    uint256 externalId
+  ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = TicketRaffle(round, false);
+    _data[tokenId] = TicketRaffle(roundId, externalId, false);
 
-    _upsertRecordField(tokenId, ROUND, round);
+    _upsertRecordField(tokenId, ROUND, externalId);
 
     _safeMint(account, tokenId);
   }
@@ -58,6 +62,7 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
+    // TODO use only metadata as storage?
     _data[tokenId].prize = true;
     _upsertRecordField(tokenId, PRIZE, 1);
   }
