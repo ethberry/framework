@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -43,7 +44,7 @@ export class ProductItemController {
 
   @Put("/:id")
   public update(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() dto: ProductItemUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ProductItemEntity> {
@@ -52,13 +53,13 @@ export class ProductItemController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<ProductItemEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ProductItemEntity | null> {
     return this.productItemService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.productItemService.delete({ id }, userEntity);
   }
 }

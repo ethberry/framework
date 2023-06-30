@@ -14,15 +14,13 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Roles } from "@gemunion/nest-js-utils";
-import { UserRole } from "@framework/types";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { PageService } from "./page.service";
 import { PageEntity } from "./page.entity";
 import { PageCreateDto, PageSearchDto, PageUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Roles(UserRole.ADMIN)
 @Controller("/pages")
 export class PageController {
   constructor(private readonly pageService: PageService) {}

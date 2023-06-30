@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
 import { EnabledLanguages } from "@framework/constants";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";

@@ -54,6 +54,6 @@ export class PyramidRulesController {
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return this.pyramidService.delete({ id });
+    await this.pyramidService.delete({ id });
   }
 }

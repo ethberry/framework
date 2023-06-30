@@ -2,7 +2,7 @@ import { FC, Fragment, useContext } from "react";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { IUserContext, UserContext } from "@gemunion/provider-user";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 
 import { UserForm } from "./user-form";
 import { GuestForm } from "./guest-form";

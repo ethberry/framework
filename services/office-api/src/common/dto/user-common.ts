@@ -4,7 +4,7 @@ import { IsEmail, IsEnum, IsOptional, IsString, IsUrl, MaxLength, MinLength } fr
 
 import { displayNameMaxLength, displayNameMinLength, emailMaxLength } from "@gemunion/constants";
 import { EnabledLanguages } from "@framework/constants";
-import { IUserCommonDto } from "@framework/types";
+import type { IUserCommonDto } from "@framework/types";
 
 export class UserCommonDto implements IUserCommonDto {
   @ApiPropertyOptional({

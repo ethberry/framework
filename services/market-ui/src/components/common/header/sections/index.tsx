@@ -5,7 +5,7 @@ import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
 import { useUser } from "@gemunion/provider-user";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 
 import { StyledButton } from "./styled";
 

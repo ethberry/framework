@@ -1,7 +1,7 @@
 import { EnabledCountries } from "@gemunion/constants";
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IUser } from "../infrastructure";
+import type { IUser } from "../infrastructure";
 
 export enum AddressStatus {
   ACTIVE = "ACTIVE",

@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressStatus } from "@framework/types";
@@ -36,13 +48,16 @@ export class AddressController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: AddressUpdateDto): Promise<AddressEntity | undefined> {
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: AddressUpdateDto,
+  ): Promise<AddressEntity | undefined> {
     return this.addressService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.addressService.delete({ id });
   }
 }

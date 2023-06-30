@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -42,19 +43,22 @@ export class CategoryController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: CategoryUpdateDto,
+  ): Promise<CategoryEntity | undefined> {
     return this.categoryService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<CategoryEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<CategoryEntity | null> {
     return this.categoryService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.categoryService.delete({ id });
   }
 }

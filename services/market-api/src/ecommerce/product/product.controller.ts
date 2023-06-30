@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { ProductService } from "./product.service";
@@ -30,7 +30,7 @@ export class ProductController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<ProductEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ProductEntity | null> {
     return this.productsService.findOneWithRelations({ id });
   }
 }

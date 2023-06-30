@@ -13,7 +13,7 @@ export class EmailController {
   @EventPattern(EmailType.DUMMY)
   async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 12345,
+      template: 4921080,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,

@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
 import { AuthService } from "../auth/auth.service";
-import { IUserImportDto } from "./interfaces";
+import type { IUserImportDto } from "./interfaces";
 
 @Injectable()
 export class UserService {

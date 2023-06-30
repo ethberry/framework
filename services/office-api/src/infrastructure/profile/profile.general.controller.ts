@@ -3,10 +3,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 
 import { Public, User } from "@gemunion/nest-js-utils";
-
-import { ProfileService } from "./profile.service";
 import { UserEntity } from "../user/user.entity";
 import { ProfileUpdateDto } from "./dto";
+import { ProfileService } from "./profile.service";
 
 @ApiBearerAuth()
 @Controller("/profile")
