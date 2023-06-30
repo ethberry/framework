@@ -11,7 +11,7 @@ import {
 } from "@framework/types";
 import { byte32ToBoolArray } from "@framework/traits-ui";
 
-import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
   DataViewAddressLinkWrapper,
   DataViewItemContentWrapper,

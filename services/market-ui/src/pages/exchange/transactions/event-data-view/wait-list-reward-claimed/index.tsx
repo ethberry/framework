@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 
-import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import { DataViewWrapper } from "../styled";
 
 export interface IWaitListRewardClaimedDataViewProps {

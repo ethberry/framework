@@ -1,13 +1,12 @@
 import { FC } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { IAssetComponentHistory, IContract, TokenType } from "@framework/types";
 
-import { formatEther } from "../../../../utils/money";
-import { AssetsWrapper } from "../styled";
-import { DataViewItemWrapper } from "../../../../pages/exchange/transactions/event-data-view/styled";
+import { formatEther } from "../../../utils/money";
+import { AssetsWrapper, DataViewAddressLinkWrapper, DataViewItemWrapper } from "./styled";
 
 export interface ITokenLinkProps {
   assets: Array<IAssetComponentHistory>;
@@ -29,7 +28,7 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
       case TokenType.ERC721:
       case TokenType.ERC998: {
         return (
-          <Box key={asset.id}>
+          <DataViewAddressLinkWrapper key={asset.id}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
@@ -37,26 +36,26 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
               #{tokenId}
             </Link>
-          </Box>
+          </DataViewAddressLinkWrapper>
         );
       }
       case TokenType.ERC1155:
         return (
-          <Box key={asset.id}>
+          <DataViewAddressLinkWrapper key={asset.id}>
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
             {` - `}
             {amount}
-          </Box>
+          </DataViewAddressLinkWrapper>
         );
       case TokenType.NATIVE:
       case TokenType.ERC20:
       default: {
         return (
-          <Box key={asset.id}>
+          <DataViewAddressLinkWrapper>
             {formatEther(amount, token?.template?.contract?.decimals, token?.template?.contract?.symbol)}
-          </Box>
+          </DataViewAddressLinkWrapper>
         );
       }
     }

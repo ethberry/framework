@@ -5,7 +5,7 @@ import { utils } from "ethers";
 
 import { ExchangeType, IAssetComponentHistory, IContract, ILevelUp, TContractEventData } from "@framework/types";
 
-import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view";
 import {
   DataViewAddressLinkWrapper,
   DataViewItemContentWrapper,
