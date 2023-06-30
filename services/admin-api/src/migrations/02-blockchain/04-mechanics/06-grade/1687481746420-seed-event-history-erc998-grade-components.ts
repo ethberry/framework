@@ -26,7 +26,7 @@ export class SeedEventHistoryErc998GradeComponentsAt1687481746420 implements Mig
         10406010,
         'PRICE',
         10101,
-        101010101, -- ETH
+        101010101, -- BESU
         '${WeiPerEther.toString()}'
       ), (
         10406020,

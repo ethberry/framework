@@ -16,25 +16,25 @@ export class SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640 impleme
         token_id,
         amount
       ) VALUES (
-        102120110,
+        102120210,
         'ITEM',
         10201,
         102010101,
         1
       ), (
-        102120110,
+        102120210,
         'ITEM',
         10306,
         103060101,
         1
       ), (
-        102120110,
+        102120210,
         'ITEM',
         10406,
         104060101,
         1
       ), (
-        102120110,
+        102120210,
         'ITEM',
         10501,
         105010101,

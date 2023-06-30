@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import type { IContract } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { RaffleRoundEntity } from "./round.entity";
 
 @Injectable()
@@ -28,7 +28,7 @@ export class RaffleRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<IContract> {
+  public async options(): Promise<ContractEntity> {
     const raffleEntity = await this.contractService.findOne({
       contractModule: ModuleType.RAFFLE,
       contractType: undefined,

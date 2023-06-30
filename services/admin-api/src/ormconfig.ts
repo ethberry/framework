@@ -257,6 +257,7 @@ import {
   SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
   SeedEventHistoryVestingTransferOwnershipAt1687338973200,
   SeedEventHistoryWaitListAt1663047650350,
+  SeedEventHistoryWaitListComponentsAt1663047650360,
   SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
@@ -635,6 +636,7 @@ const config: PostgresConnectionOptions = {
     CreateWaitListItem1663047650300,
     SeedWaitListItemAt1663047650310,
     SeedEventHistoryWaitListAt1663047650350,
+    SeedEventHistoryWaitListComponentsAt1663047650360,
 
     CreateBreed1663047650400,
     SeedBreed1663047650401,

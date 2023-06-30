@@ -4,9 +4,8 @@ import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { CronExpression, IContract, ILotteryScheduleUpdateDto } from "@framework/types";
+import { CronExpression, IContract } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
@@ -25,9 +24,11 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
-  const [lottery, setLottery] = useState<ILotteryScheduleUpdateDto>({
+  const [lottery, setLottery] = useState<any>({
     address: constants.AddressZero,
-    schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+    parameters: {
+      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+    },
     round: {},
   });
 
@@ -45,7 +46,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const fetchLottery = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryScheduleUpdateDto) => {
+      .then((json: IContract) => {
         setLottery(json);
       })
       .catch(e => {

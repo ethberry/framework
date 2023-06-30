@@ -5,18 +5,19 @@ import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, IRaffleScheduleUpdateDto } from "@framework/types";
+import { CronExpression, IContract } from "@framework/types";
 
 import { RafflePurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { StyledPaper, StyledTypography } from "./styled";
 
 export const RafflePurchase: FC = () => {
-  const [raffle, setRaffle] = useState<IRaffleScheduleUpdateDto>({
+  const [raffle, setRaffle] = useState<any>({
     address: constants.AddressZero,
     description: "Raffle",
-    schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-    round: {},
+    parameters: {
+      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+    },
   });
 
   const { fn, isLoading } = useApiCall(
@@ -30,7 +31,7 @@ export const RafflePurchase: FC = () => {
 
   const fetchRaffle = async (): Promise<any> => {
     return fn()
-      .then((json: IRaffleScheduleUpdateDto) => {
+      .then((json: IContract) => {
         setRaffle(json);
       })
       .catch(e => {

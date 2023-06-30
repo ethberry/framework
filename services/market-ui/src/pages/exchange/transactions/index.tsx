@@ -57,14 +57,14 @@ export const MyTransactions: FC = () => {
       field: "eventType",
       headerName: formatMessage({ id: "form.labels.eventType" }),
       sortable: false,
-      flex: 1,
+      flex: 2,
       renderCell: (params: GridCellParams<IEventHistory>) => {
         const { eventData, eventType } = params.row;
         const isBorrow =
           eventType === ContractEventType.Lend && profile.wallet !== (eventData as IExchangeLendEvent).from;
         return <>{isBorrow ? formatMessage({ id: "enums.eventDataLabel.borrow" }) : eventType}</>;
       },
-      minWidth: 120,
+      minWidth: 160,
     },
     {
       field: "chainId",
