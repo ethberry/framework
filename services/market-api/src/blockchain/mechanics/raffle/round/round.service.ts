@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import type { IRaffleScheduleUpdateDto } from "@framework/types";
-import { CronExpression, ModuleType, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { RaffleRoundEntity } from "./round.entity";
@@ -28,7 +28,7 @@ export class RaffleRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<IRaffleScheduleUpdateDto> {
+  public async options(): Promise<IContract> {
     const raffleEntity = await this.contractService.findOne({
       contractModule: ModuleType.RAFFLE,
       contractType: undefined,
@@ -40,14 +40,7 @@ export class RaffleRoundService {
 
     const raffleRound = await this.findCurrentRoundWithRelations();
 
-    // const descriptionJson: Partial<IRaffleOption> = JSON.parse(raffleEntity.description);
-
-    return {
-      address: raffleEntity.address,
-      description: raffleEntity.description,
-      schedule: raffleEntity.parameters.schedule as unknown as CronExpression,
-      round: raffleRound || undefined,
-    };
+    return Object.assign(raffleEntity, { round: raffleRound });
   }
 
   public findCurrentRoundWithRelations(where?: FindOptionsWhere<RaffleRoundEntity>): Promise<RaffleRoundEntity | null> {
