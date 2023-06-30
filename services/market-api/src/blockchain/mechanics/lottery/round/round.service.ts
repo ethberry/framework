@@ -2,10 +2,9 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import { TokenType } from "@framework/types";
+import { ILotteryContractRound, TokenType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { LotteryRoundEntity } from "./round.entity";
 import { ILotteryOptionsDto } from "./interfaces";
 
@@ -29,7 +28,7 @@ export class LotteryRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(dto: ILotteryOptionsDto): Promise<ContractEntity> {
+  public async options(dto: ILotteryOptionsDto): Promise<ILotteryContractRound> {
     const { contractId } = dto;
 
     const lotteryEntity = await this.contractService.findOne({ id: contractId });

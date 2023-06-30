@@ -33,7 +33,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         .purchaseLottery(
           {
             nonce: utils.arrayify(sign.nonce),
-            externalId: 0,
+            externalId: round.id,
             expiresAt: sign.expiresAt,
             referrer: settings.getReferrer(),
             extra: boolArrayToByte32(ticketNumbers),

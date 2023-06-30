@@ -37,7 +37,7 @@ export const LotteryTokenList: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<ILotteryToken, ILotteryTokenSearchDto>({
-    baseUrl: "/lottery/token",
+    baseUrl: "/lottery/tokens",
     empty: {
       round: {
         numbers: [],

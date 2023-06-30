@@ -24,3 +24,7 @@ export interface ILotteryScheduleUpdateDto {
   address: string;
   schedule: CronExpression;
 }
+
+export interface ILotteryContractRound extends IContract {
+  round?: ILotteryRound | null;
+}

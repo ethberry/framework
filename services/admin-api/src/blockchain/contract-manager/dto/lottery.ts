@@ -7,12 +7,12 @@ import type { ILotteryConfigDto, ILotteryContractDeployDto } from "@framework/ty
 export class LotteryConfigDto implements ILotteryConfigDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public timeLagBeforeRelease: number;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public commission: number;
 }
 

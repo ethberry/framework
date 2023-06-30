@@ -1,6 +1,6 @@
 import type { IContract } from "@framework/types";
 
-export const emptyContract = { id: 1, address: "" } as IContract;
+export const emptyContract = { id: 1, address: "", parameters: {} } as IContract;
 
 const vestingParameters: Record<string, string | number> = {
   account: "",

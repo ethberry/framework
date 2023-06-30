@@ -9,7 +9,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
-@Controller("/lottery/ticket")
+@Controller("/lottery/tokens")
 export class LotteryTicketController {
   constructor(private readonly lotteryTicketService: LotteryTicketService) {}
 

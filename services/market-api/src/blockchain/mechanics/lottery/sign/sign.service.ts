@@ -32,7 +32,7 @@ export class LotterySignService {
       account,
       {
         nonce,
-        externalId: 0, // TODO use it?
+        externalId: lotteryRound.id,
         expiresAt,
         referrer,
         extra: ticketNumbers,

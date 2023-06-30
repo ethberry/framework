@@ -30,6 +30,7 @@ export class LotteryTicketService extends TokenService {
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
     queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.select();
@@ -44,10 +45,12 @@ export class LotteryTicketService extends TokenService {
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
     );
 
     queryBuilder.andWhere("template.contractId = round.ticketContractId");
+
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     if (roundIds) {
       if (roundIds.length === 1) {
@@ -78,14 +81,17 @@ export class LotteryTicketService extends TokenService {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 
     queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
     );
+
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
@@ -96,6 +102,7 @@ export class LotteryTicketService extends TokenService {
     return queryBuilder.getOne();
   }
 
+  // TODO rework query
   public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {
     const { skip, take } = dto;
 

@@ -432,6 +432,7 @@
       "imageUrl": "Avatar",
       "isDefault": "Make default",
       "item": "Item",
+      "lottery": "Lottery",
       "language": "Language",
       "lendType": "Lend Type",
       "level": "Level",

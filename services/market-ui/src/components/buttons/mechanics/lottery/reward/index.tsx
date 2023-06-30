@@ -22,8 +22,8 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((ticket: ILotteryToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, LotteryGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.tokenId) as Promise<void>;
+    const contract = new Contract(token.round.contract!.address, LotteryGetPrizeABI, web3Context.provider?.getSigner());
+    return contract.getPrize(ticket.tokenId, token.round.roundId) as Promise<void>;
   });
 
   const handleReward = (ticket: ILotteryToken): (() => Promise<void>) => {

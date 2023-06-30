@@ -72,6 +72,7 @@ export const LotteryTokens: FC = () => {
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.round.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {token.metadata.PRIZE ? "Prize " : ""}
                 {getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || [])}

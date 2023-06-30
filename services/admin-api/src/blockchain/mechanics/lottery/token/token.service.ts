@@ -35,7 +35,7 @@ export class LotteryTokenService extends TokenService {
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id AND template.contract_id = round.ticket_contract_id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
     queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
@@ -64,17 +64,17 @@ export class LotteryTokenService extends TokenService {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 
     queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
     );
-    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("ticket.id = :id", {
       id: where.id,

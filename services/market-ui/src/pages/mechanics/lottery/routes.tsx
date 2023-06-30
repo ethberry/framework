@@ -3,9 +3,9 @@ import { LotteryLeaderboard } from "./leaderboard";
 import { LotteryTokenList } from "./token-list";
 import { IndexWrapper } from "../../index-wrapper";
 import { LotterySection } from "../../dashboard/mechanics/lottery";
-import { Erc721Contract } from "../../hierarchy/erc721/contract";
 import { LotteryList } from "./lottery-list";
 import { LotteryContract } from "./lottery";
+import { Erc721Token } from "../../hierarchy/erc721/token";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -26,11 +26,13 @@ export const lotteryRoutes: Array<RouteObject> = [
           { path: "/lottery/contracts/:id", element: <LotteryContract /> },
         ],
       },
-      // {
-      //   path: "/lottery/purchase",
-      //   element: <WalletWrapper />,
-      //   children: [{ index: true, element: <LotteryPurchase /> }],
-      // },
+      {
+        path: "/lottery/tokens/",
+        children: [
+          { index: true, element: <LotteryTokenList /> },
+          { path: "/lottery/tokens/:id", element: <LotteryTokenList /> },
+        ],
+      },
       {
         path: "/lottery/ticket",
         children: [

@@ -7,12 +7,12 @@ import type { IRaffleConfigDto, IRaffleContractDeployDto } from "@framework/type
 export class RaffleConfigDto implements IRaffleConfigDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public timeLagBeforeRelease: number;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public commission: number;
 }
 

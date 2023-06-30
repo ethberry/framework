@@ -1,17 +1,18 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+// import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { CronExpression, IContract } from "@framework/types";
+import { CronExpression, IContract, ILotteryContractRound } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
 import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
 
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 import { formatPrice } from "../../../../utils/money";
+import { emptyLottery } from "../../../../components/common/interfaces";
 
 const maxNumbers = 6;
 
@@ -24,13 +25,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
-  const [lottery, setLottery] = useState<any>({
-    address: constants.AddressZero,
-    parameters: {
-      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-    },
-    round: {},
-  });
+  const [lottery, setLottery] = useState<ILotteryContractRound>(emptyLottery);
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -46,7 +41,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const fetchLottery = async (): Promise<any> => {
     return fn()
-      .then((json: IContract) => {
+      .then((json: ILotteryContractRound) => {
         setLottery(json);
       })
       .catch(e => {
@@ -72,7 +67,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   const clearForm = () => {
     setTicketNumbers(getDefaultNumbers());
   };
-
+  console.log("lottery.parameters", lottery.parameters);
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
@@ -87,11 +82,11 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">
-        {
-          Object.keys(CronExpression)[
-            Object.values(CronExpression).indexOf(lottery.schedule as unknown as CronExpression)
-          ]
-        }
+        {lottery.parameters.schedule
+          ? Object.keys(CronExpression)[
+              Object.values(CronExpression).indexOf(lottery.parameters.schedule as unknown as CronExpression)
+            ]
+          : "not yet scheduled"}
       </StyledTypography>
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
         <StyledTypography variant="h6">
