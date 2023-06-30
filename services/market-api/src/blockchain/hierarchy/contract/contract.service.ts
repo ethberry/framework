@@ -20,13 +20,16 @@ export class ContractService {
     userEntity: UserEntity,
     contractType?: TokenType,
     contractModule?: ModuleType,
-    templates = true,
   ): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
-    if (templates) {
+    if (
+      contractModule === ModuleType.HIERARCHY ||
+      contractModule === ModuleType.COLLECTION ||
+      contractModule === ModuleType.MYSTERY
+    ) {
       // filter out contract without templates
       queryBuilder.andWhereExists(
         // https://github.com/typeorm/typeorm/issues/2815
