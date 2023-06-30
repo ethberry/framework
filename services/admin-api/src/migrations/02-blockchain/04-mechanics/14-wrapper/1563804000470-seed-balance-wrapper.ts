@@ -31,7 +31,7 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
       ), (
         '${erc721ContractWrapperAddress}',
         '${WeiPerEther.toString()}',
-        101010101,
+        101010101, -- BESU
         113010101,
         '${currentDateTime}',
         '${currentDateTime}'

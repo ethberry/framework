@@ -257,6 +257,7 @@ import {
   SeedEventHistoryRaffleTicketPurchaseComponentsAt1685961136320,
   SeedEventHistoryVestingTransferOwnershipAt1687338973200,
   SeedEventHistoryWaitListAt1663047650350,
+  SeedEventHistoryWaitListComponentsAt1663047650360,
   SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
@@ -328,7 +329,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { SeedEventHistoryWaitListComponentsAt1663047650360 } from "./migrations/02-blockchain/04-mechanics/09-waitlist/1663047650360-seed-event-history-waitlist-components";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

@@ -32,9 +32,9 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
-            {` - #`}
+            {` - `}
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/tokens/${tokenId as number}`}>
-              {tokenId}
+              #{tokenId}
             </Link>
           </Box>
         );
@@ -45,7 +45,8 @@ export const AssetsView: FC<ITokenLinkProps> = props => {
             <Link component={RouterLink} to={`/${contractType.toLowerCase()}/templates/${templateId}`}>
               {name}
             </Link>
-            {` - ${amount}`}
+            {` - `}
+            {amount}
           </Box>
         );
       case TokenType.NATIVE:

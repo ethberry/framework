@@ -1,10 +1,8 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
 
-import { IAssetComponentHistory, IContract } from "@framework/types";
-
-import { EventHistoryAssetsView } from "../../../../../components/common/event-history-assets-view";
+import { ExchangeType, IAssetComponentHistory, IContract } from "@framework/types";
 import { DataViewItemWrapper, DataViewWrapper } from "../styled";
+import { AssetsView } from "../../../../../components/common/event-history-assets-view/view";
 
 export interface IClaimDataViewProps {
   assets?: Array<IAssetComponentHistory>;
@@ -17,11 +15,7 @@ export const ClaimDataView: FC<IClaimDataViewProps> = props => {
   return (
     <DataViewWrapper>
       <DataViewItemWrapper>
-        {assets?.length ? (
-          <EventHistoryAssetsView assets={assets} contract={contract} />
-        ) : (
-          <FormattedMessage id="enums.eventDataLabel.noData" />
-        )}
+        {<AssetsView assets={assets} contract={contract} title={ExchangeType.ITEM} />}
       </DataViewItemWrapper>
     </DataViewWrapper>
   );

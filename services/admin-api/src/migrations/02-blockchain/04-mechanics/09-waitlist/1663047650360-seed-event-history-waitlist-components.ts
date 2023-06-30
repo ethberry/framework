@@ -19,12 +19,72 @@ export class SeedEventHistoryWaitListComponentsAt1663047650360 implements Migrat
       ) VALUES (
         1700001,
         'ITEM',
-        12301,
-        123010101,
-        1
+        10101,
+        101010101, -- BESU
+        '${WeiPerEther.toString()}'
       ), (
-        1700001,
-        'PRICE',
+        1700002,
+        'ITEM',
+        10201,
+        102010101, -- Space Credits
+        '${WeiPerEther.toString()}'
+      ), (
+        1700003,
+        'ITEM',
+        10301,
+        103010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700004,
+        'ITEM',
+        10401,
+        104010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700005,
+        'ITEM',
+        10501,
+        105010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700006,
+        'ITEM',
+        10101,
+        101010101, -- BESU
+        '${WeiPerEther.toString()}'
+      ), (
+        1700006,
+        'ITEM',
+        10201,
+        102010101, -- Space Credits
+        '${WeiPerEther.toString()}'
+      ), (
+        1700006,
+        'ITEM',
+        10301,
+        103010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700006,
+        'ITEM',
+        10401,
+        104010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700006,
+        'ITEM',
+        10501,
+        105010101,
+        '${WeiPerEther.toString()}'
+      ), (
+        1700007,
+        'ITEM',
+        10201,
+        102010101, -- Space Credits
+        '${WeiPerEther.toString()}'
+      ), (
+        1700008,
+        'ITEM',
         10201,
         102010101, -- Space Credits
         '${WeiPerEther.toString()}'

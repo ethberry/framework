@@ -68,13 +68,6 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon"
     },
-    "attributeName": {
-      "GENES": "Genes",
-      "LEVEL": "Level",
-      "RARITY": "Rarity",
-      "TEMPLATE_ID": "Template",
-      "TRAITS": "Traits"
-    },
     "blockchainError": {
       "BalanceExceed": "The balance exceeds the limit",
       "CountExceed": "The count exceeds the limit",
