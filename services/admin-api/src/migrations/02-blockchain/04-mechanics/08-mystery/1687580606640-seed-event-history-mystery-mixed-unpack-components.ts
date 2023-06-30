@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -19,8 +20,8 @@ export class SeedEventHistoryMysteryMixedUnpackComponentsAt1687580606640 impleme
         102120210,
         'ITEM',
         10201,
-        102010101,
-        1
+        102010101, -- Space Credits
+        '${WeiPerEther.toString()}'
       ), (
         102120210,
         'ITEM',
