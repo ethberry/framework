@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "@gemunion/eslint-config/presets/ts",
+    "@gemunion/eslint-config/tests/jest"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.test.json"
+  },
+  "root": true,
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/test/**/*.ts",
+          "**/*.seed.service.ts",
+          "**/*.seed.module.ts",
+          "**/*.spec.ts"
+        ]
+      }
+    ]
+  }
+}
