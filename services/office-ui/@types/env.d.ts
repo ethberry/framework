@@ -13,6 +13,7 @@ declare global {
       CHAIN_ID: string;
       LINK_ADDR: string;
       STAKING_ADDR: string;
+      DISPENSER_ADDR: string;
     }
   }
 }
