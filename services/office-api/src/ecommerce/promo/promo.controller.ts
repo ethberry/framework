@@ -12,16 +12,13 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 
-import { PaginationInterceptor, Public, Roles } from "@gemunion/nest-js-utils";
-
-import { UserRole } from "@framework/types";
+import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { PromoService } from "./promo.service";
 import { PromoEntity } from "./promo.entity";
 import { PromoCreateDto, PromoSearchDto, PromoUpdateDto } from "./dto";
 
 @Public()
-@Roles(UserRole.ADMIN)
 @Controller("/promos")
 export class PromoController {
   constructor(private readonly promoService: PromoService) {}

@@ -10,12 +10,20 @@ export enum MerchantStatus {
   PENDING = "PENDING",
 }
 
+export interface IMerchantSocial {
+  twitterUrl: string;
+  instagramUrl: string;
+  youtubeUrl: string;
+  facebookUrl: string;
+}
+
 export interface IMerchant extends IIdDateBase {
   title: string;
   description: string;
   email: string;
   imageUrl: string;
   merchantStatus: MerchantStatus;
+  social: IMerchantSocial;
   ratePlan: RatePlan;
   users: Array<IUser>;
   products: Array<IProduct>;

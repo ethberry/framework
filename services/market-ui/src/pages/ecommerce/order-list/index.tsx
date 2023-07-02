@@ -5,7 +5,7 @@ import { DateRange } from "@mui/x-date-pickers-pro";
 import { IOrder, OrderStatus } from "@framework/types";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { OrderItem } from "./item";
 import { OrderSearchForm } from "./form";

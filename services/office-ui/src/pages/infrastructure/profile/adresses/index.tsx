@@ -12,7 +12,8 @@ import {
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AddressStatus, IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
+import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";

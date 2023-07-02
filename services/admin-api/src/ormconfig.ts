@@ -15,7 +15,6 @@ import {
 /* infrastructure */
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { SettingsEntity } from "./infrastructure/settings/settings.entity";
-import { PageEntity } from "./infrastructure/page/page.entity";
 import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
@@ -340,7 +339,6 @@ const config: PostgresConnectionOptions = {
     UserEntity,
     OtpEntity,
     SettingsEntity,
-    PageEntity,
     RatePlanEntity,
     /* blockchain */
     ContractManagerEntity,

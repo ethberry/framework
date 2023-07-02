@@ -4,11 +4,10 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import type { IDropSearchDto } from "@framework/types";
 
-import { DropEntity } from "./drop.entity";
-import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { PageEntity } from "../../../infrastructure/page/page.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
+import { DropEntity } from "./drop.entity";
 
 @Injectable()
 export class DropService {
@@ -125,7 +124,7 @@ export class DropService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<PageEntity>, userEntity: UserEntity): Promise<DropEntity> {
+  public async delete(where: FindOptionsWhere<DropEntity>, userEntity: UserEntity): Promise<DropEntity> {
     const dropEntity = await this.findOne(where);
 
     if (!dropEntity) {

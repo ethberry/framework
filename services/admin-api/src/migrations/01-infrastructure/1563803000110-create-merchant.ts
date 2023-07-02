@@ -51,6 +51,11 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           type: `${ns}.merchant_status_enum`,
         },
         {
+          name: "social",
+          type: "json",
+          default: "'{}'",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

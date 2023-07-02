@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { AuthModule } from "./auth/auth.module";
 import { EmailModule } from "./email/email.module";
 import { HealthModule } from "./health/health.module";
+import { OtpModule } from "./otp/otp.module";
 import { MerchantModule } from "./merchant/merchant.module";
 import { PageModule } from "./page/page.module";
 import { ProfileModule } from "./profile/profile.module";
@@ -15,6 +16,7 @@ import { UserModule } from "./user/user.module";
     EmailModule,
     HealthModule,
     MerchantModule,
+    OtpModule,
     PageModule,
     ProfileModule,
     SettingsModule,

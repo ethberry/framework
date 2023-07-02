@@ -4,8 +4,6 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { AllowanceMenuItem } from "../common/allowance";
 import { TopUpMenuItem } from "../common/top-up";
 import { TransferOwnershipMenuItem } from "./transfer-ownership";
@@ -47,8 +45,6 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
         <AllowanceMenuItem contract={vesting} />
         <TopUpMenuItem contract={vesting} />
         <TransferOwnershipMenuItem vesting={vesting} />
-        <EthListenerAddMenuItem contract={vesting} />
-        <EthListenerRemoveMenuItem contract={vesting} />
       </Menu>
     </Fragment>
   );

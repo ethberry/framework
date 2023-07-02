@@ -743,9 +743,17 @@
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
       "year": "Year",
-      "zip": "ZIP code"
+      "zip": "ZIP code",
+      "facebookUrl": "Facebook",
+      "instagramUrl": "Instagram",
+      "twitterUrl": "Twitter",
+      "youtubeUrl": "Youtube"
     },
     "placeholders": {
+      "facebookUrl": "https://facebook.com/",
+      "instagramUrl": "https://instagram.com/",
+      "twitterUrl": "https://twitter.com/",
+      "youtubeUrl": "https://youtube.com/",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
@@ -995,13 +1003,8 @@
       },
       "infrastructure": {
         "admin": {
-          "balances": "System Balances",
-          "emails": "Emails",
-          "pages": "Pages",
-          "payees": "System Payees",
-          "settings": "Settings",
           "title": "Admin",
-          "users": "Users"
+          "merchant": "Merchant"
         }
       },
       "integrations": {
@@ -1028,6 +1031,9 @@
         "waitlist": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "merchant": {
+      "title": "Merchant"
     },
     "dispenser": {
       "title": "Dispenser"

@@ -13,11 +13,12 @@ import {
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AddressStatus, IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
+import { AddressStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyAddress } from "../../../../../components/common/interfaces";
 import { useFormatAddress } from "../../../../../utils/address";
