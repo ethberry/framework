@@ -3,34 +3,18 @@
 // Author: TrejGun
 // Email: trejgun@gemunion.io
 // Website: https://gemunion.io/
-// import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
-import "../Exchange/interfaces/IAsset.sol";
 
 pragma solidity ^0.8.13;
 
-interface IStaking {
-  function deposit(Params memory params, uint256[] calldata tokenIds) external payable;
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
+import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Receiver.sol";
+import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Spender.sol";
 
-  function withdrawBalance(Asset memory item) external;
-}
-
-interface IERC1363Receiver {
-  function onTransferReceived(
-    address operator,
-    address from,
-    uint256 value,
-    bytes memory data
-  ) external returns (bytes4);
-}
-
-interface IERC1363Spender {
-  function onApprovalReceived(address owner, uint256 value, bytes memory data) external returns (bytes4);
-}
+import "../Exchange/interfaces/IAsset.sol";
+import "../Mechanics/Staking/interfaces/IStaking.sol";
 
 contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
   bytes32 constant RECEIVE_REWARD = keccak256("RECEIVE_REWARD");
@@ -60,7 +44,7 @@ contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {
       abi.encodeWithSelector(IStaking.deposit.selector, param, tokenIds)
     );
     if (!success) {
-      revert("Attaker: Deposit fail");
+      revert("Attacker: Deposit fail");
     }
   }
 

@@ -11,7 +11,7 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 pragma solidity ^0.8.13;
 
-abstract contract MetaData is AccessControl, GeneralizedCollection {
+abstract contract ERC721GeneralizedCollection is AccessControl, GeneralizedCollection {
   constructor() {
     _grantRole(METADATA_ROLE, _msgSender());
   }

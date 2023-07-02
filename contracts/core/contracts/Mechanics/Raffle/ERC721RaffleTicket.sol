@@ -11,12 +11,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "../../ERC721/extensions/MetaData.sol";
+import "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
 import "../../utils/errors.sol";
 import "../../utils/constants.sol";
 import "./interfaces/IERC721RaffleTicket.sol";
 
-contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, MetaData {
+contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
   using Counters for Counters.Counter;
 
   mapping(uint256 => TicketRaffle) private _data;

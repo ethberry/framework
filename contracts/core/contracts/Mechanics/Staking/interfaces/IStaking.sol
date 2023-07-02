@@ -28,4 +28,10 @@ interface IStaking {
     uint256 cycles;
     bool activeDeposit;
   }
+
+  function deposit(Params memory params, uint256[] calldata tokenIds) external payable;
+
+  function receiveReward(uint256 stakeId, bool withdrawDeposit, bool breakLastPeriod) external;
+
+  function withdrawBalance(Asset memory item) external;
 }
