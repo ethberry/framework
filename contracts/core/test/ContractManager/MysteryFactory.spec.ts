@@ -15,7 +15,7 @@ import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, externalId, templateId, tokenId } from "../constants";
 
-describe("MysteryboxFactory", function () {
+describe("MysteryBoxFactory", function () {
   const factory = () => deployContract(this.title);
 
   describe("deployMysteryToken", function () {
@@ -90,7 +90,7 @@ describe("MysteryboxFactory", function () {
       const [address] = await contractInstance.allMysteryboxes();
 
       await expect(tx)
-        .to.emit(contractInstance, "MysteryboxDeployed")
+        .to.emit(contractInstance, "MysteryBoxDeployed")
         .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc721Instance = await ethers.getContractAt("ERC721MysteryBoxSimple", address);
