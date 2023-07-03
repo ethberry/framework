@@ -28,7 +28,7 @@ export const RatePlanTab: FC<ITabPanelProps> = props => {
     await fn(form, values);
   };
 
-  if (!open) {
+  if (!open || !limits?.length) {
     return null;
   }
 
