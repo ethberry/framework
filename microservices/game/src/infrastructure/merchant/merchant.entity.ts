@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany } from "typeorm";
 
 import type { IMerchant, IMerchantSocial } from "@framework/types";
-import { MerchantStatus, RatePlan } from "@framework/types";
+import { MerchantStatus, RatePlanType } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 
@@ -32,9 +32,9 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
 
   @Column({
     type: "enum",
-    enum: RatePlan,
+    enum: RatePlanType,
   })
-  public ratePlan: RatePlan;
+  public ratePlan: RatePlanType;
 
   @OneToMany(_type => UserEntity, user => user.merchant)
   public users: Array<UserEntity>;

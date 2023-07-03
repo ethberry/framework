@@ -34,6 +34,7 @@ import { ProductItemParameterEntity } from "./ecommerce/product-item-parameter/p
 import { StockEntity } from "./ecommerce/stock/stock.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
+import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -45,7 +46,6 @@ const config: PostgresConnectionOptions = {
     AccessListEntity,
     ContractEntity,
     TemplateEntity,
-    PageEntity,
     AssetEntity,
     AssetComponentEntity,
     AssetComponentHistoryEntity,
@@ -55,7 +55,6 @@ const config: PostgresConnectionOptions = {
     BalanceEntity,
     ClaimEntity,
     DropEntity,
-    MerchantEntity,
     EventHistoryEntity,
     StakingDepositEntity,
     StakingRulesEntity,
@@ -65,6 +64,9 @@ const config: PostgresConnectionOptions = {
     OtpEntity,
     UserEntity,
     SettingsEntity,
+    RatePlanEntity,
+    PageEntity,
+    MerchantEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

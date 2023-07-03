@@ -39,6 +39,11 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'WAITLIST',
         null,
+        1
+      ), (
+        'BRONZE',
+        'VESTING',
+        null,
         1000
       ), (
         'BRONZE',
@@ -74,7 +79,147 @@ export class SeedRatePlan1687519905500 implements MigrationInterface {
         'BRONZE',
         'STAKING',
         null,
+        1
+      ), (
+        'SILVER',
+        'HIERARCHY',
+        'NATIVE',
+        1
+      ), (
+        'SILVER',
+        'HIERARCHY',
+        'ERC20',
+        1
+      ), (
+        'SILVER',
+        'HIERARCHY',
+        'ERC721',
         10
+      ), (
+        'SILVER',
+        'HIERARCHY',
+        'ERC998',
+        0
+      ), (
+        'SILVER',
+        'HIERARCHY',
+        'ERC1155',
+        2
+      ), (
+        'SILVER',
+        'WAITLIST',
+        null,
+        1
+      ), (
+        'SILVER',
+        'VESTING',
+        null,
+        1000
+      ), (
+        'SILVER',
+        'MYSTERY',
+        'ERC721',
+        1
+      ), (
+        'SILVER',
+        'LOTTERY',
+        null,
+        1
+      ), (
+        'SILVER',
+        'LOTTERY',
+        'ERC721',
+        1
+      ), (
+        'SILVER',
+        'RAFFLE',
+        null,
+        1
+      ), (
+        'SILVER',
+        'RAFFLE',
+        'ERC721',
+        1
+      ), (
+        'SILVER',
+        'COLLECTION',
+        'ERC721',
+        10
+      ), (
+        'SILVER',
+        'STAKING',
+        null,
+        1
+      ), (
+        'GOLD',
+        'HIERARCHY',
+        'NATIVE',
+        1
+      ), (
+        'GOLD',
+        'HIERARCHY',
+        'ERC20',
+        1
+      ), (
+        'GOLD',
+        'HIERARCHY',
+        'ERC721',
+        10
+      ), (
+        'GOLD',
+        'HIERARCHY',
+        'ERC998',
+        0
+      ), (
+        'GOLD',
+        'HIERARCHY',
+        'ERC1155',
+        2
+      ), (
+        'GOLD',
+        'WAITLIST',
+        null,
+        1
+      ), (
+        'GOLD',
+        'VESTING',
+        null,
+        1000
+      ), (
+        'GOLD',
+        'MYSTERY',
+        'ERC721',
+        1
+      ), (
+        'GOLD',
+        'LOTTERY',
+        null,
+        1
+      ), (
+        'GOLD',
+        'LOTTERY',
+        'ERC721',
+        1
+      ), (
+        'GOLD',
+        'RAFFLE',
+        null,
+        1
+      ), (
+        'GOLD',
+        'RAFFLE',
+        'ERC721',
+        1
+      ), (
+        'GOLD',
+        'COLLECTION',
+        'ERC721',
+        10
+      ), (
+        'GOLD',
+        'STAKING',
+        null,
+        1
       );
     `);
   }
