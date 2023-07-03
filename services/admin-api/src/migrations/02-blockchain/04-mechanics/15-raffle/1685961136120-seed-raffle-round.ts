@@ -55,6 +55,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.raffle_round (
+        id,
         number,
         round_id,
         contract_id,
@@ -66,8 +67,9 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        101,
         '1',
-        '1',
+        '101',
         12201,
         12101,
         102210001,
@@ -77,8 +79,9 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        102,
         '2',
-        '2',
+        '102',
         12201,
         12101,
         102210002,
@@ -88,8 +91,9 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        103,
         null,
-        '3',
+        '103',
         12201,
         12101,
         102210003,

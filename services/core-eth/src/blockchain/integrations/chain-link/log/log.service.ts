@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
@@ -11,6 +11,8 @@ import { ChainLinkEventSignatures } from "./interfaces";
 @Injectable()
 export class ChainLinkLogService {
   constructor(
+    @Inject(Logger)
+    protected readonly loggerService: LoggerService,
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
@@ -26,6 +28,7 @@ export class ChainLinkLogService {
         [...new Set(randomContracts?.map(addr => abiEncode(addr, "address")))],
       ];
       this.ethersContractService.updateListener([], 0, topics);
+      this.loggerService.log(`VRF Listener updated: ${JSON.stringify(topics)}`, ChainLinkLogService.name);
     }
   }
 

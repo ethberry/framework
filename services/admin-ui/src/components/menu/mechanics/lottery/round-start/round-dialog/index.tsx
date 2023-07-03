@@ -9,6 +9,7 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 
 export interface ILotteryRound {
+  contractId: number;
   address: string;
   maxTicket: number;
   ticket: IAsset;
@@ -25,8 +26,9 @@ export interface ILotteryStartRoundDialogProps {
 export const LotteryStartRoundDialog: FC<ILotteryStartRoundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { ticket, price, address, maxTicket } = initialValues;
+  const { ticket, price, address, maxTicket, contractId } = initialValues;
   const fixedValues = {
+    contractId,
     ticket,
     price,
     address,

@@ -47,6 +47,8 @@ export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
           '',
           '',
           '${JSON.stringify({
+            timeLagBeforeRelease: "100",
+            commission: "30",
             schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
           })}',
           'ACTIVE',

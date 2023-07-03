@@ -25,8 +25,8 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
       ) VALUES (
         123010101,
         '${JSON.stringify({
-          ROUND: "1",
-          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          ROUND: "101",
+          NUMBERS: "1108320851738", // 10,20 ???
         })}',
         100,
         '1',
@@ -37,8 +37,8 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
       ), (
         123010102,
         '${JSON.stringify({
-          ROUND: "2",
-          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          ROUND: "102",
+          NUMBERS: "1108320851738", // 10,20
         })}',
         100,
         '2',
@@ -49,8 +49,8 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
       ), (
         123010103,
         '${JSON.stringify({
-          ROUND: "3",
-          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          ROUND: "103",
+          NUMBERS: "1108320851738", // 10,20
         })}',
         100,
         '3',
@@ -61,8 +61,8 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
       ), (
         123010104,
         '${JSON.stringify({
-          ROUND: "1",
-          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          ROUND: "101",
+          NUMBERS: "1108320851738", // 10,20
         })}',
         100,
         '4',
@@ -73,8 +73,8 @@ export class SeedTokenLotteryTicketAt1563804000380 implements MigrationInterface
       ), (
         123010105,
         '${JSON.stringify({
-          ROUND: "1",
-          NUMBERS: "0x0000000000000000000000000000000000000000000000000000000000100400", // 10,20
+          ROUND: "101",
+          NUMBERS: "1108320851738", // 10,20
         })}',
         100,
         '5',

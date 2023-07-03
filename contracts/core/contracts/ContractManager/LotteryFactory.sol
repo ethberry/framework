@@ -53,9 +53,10 @@ contract LotteryFactory is AbstractFactory {
 
     account = deploy2(
       params.bytecode,
-      abi.encodeWithSelector(bytes4(LOTTERY_CONFIG_TYPEHASH), args.config.timeLagBeforeRelease, args.config.commission),
+      abi.encode(args.config.timeLagBeforeRelease, args.config.commission),
       params.nonce
     );
+
     _lotterys.push(account);
 
     emit LotteryDeployed(account, params.externalId, args);

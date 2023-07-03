@@ -64,8 +64,9 @@ export const LotteryTokenList: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((token, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{decodeNumbers(token.metadata.NUMBERS)}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}

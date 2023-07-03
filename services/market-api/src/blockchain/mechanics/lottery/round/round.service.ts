@@ -73,6 +73,10 @@ export class LotteryRoundService {
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
     queryBuilder.leftJoinAndSelect("round.contract", "contract");
     queryBuilder.leftJoinAndSelect("round.ticketContract", "ticketContract");
+    // queryBuilder;
+    // .leftJoinAndSelect("round.tickets", "tickets")
+    // .leftJoin("round.tickets", "tickets")
+    // .select(["tickets.id"]);
     queryBuilder.leftJoinAndSelect("round.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");

@@ -29,12 +29,14 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   const { fn, isLoading } = useApiCall(
     async api => {
-      return api.fetchJson({
-        url: "/lottery/rounds/options",
-        data: {
-          contractId: contract.id,
-        },
-      });
+      return contract.id
+        ? api.fetchJson({
+            url: "/lottery/rounds/options",
+            data: {
+              contractId: contract.id,
+            },
+          })
+        : null;
     },
     { success: false, error: false },
   );
@@ -67,7 +69,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   const clearForm = () => {
     setTicketNumbers(getDefaultNumbers());
   };
-  console.log("lottery.parameters", lottery.parameters);
+
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
@@ -78,6 +80,14 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
               <LotteryPurchaseButton round={lottery.round} clearForm={clearForm} ticketNumbers={ticketNumbers} />
             ) : null}
             {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
+          </StyledPaper>
+          <StyledPaper sx={{ maxWidth: "8em", flexDirection: "row" }}>
+            {lottery.round && lottery.round.maxTickets > 0 ? (
+              <FormattedMessage
+                id="pages.lottery.purchase.count"
+                values={{ current: 1, max: lottery.round?.maxTickets }}
+              />
+            ) : null}
           </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
@@ -120,7 +130,12 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
       </StyledPaper>
 
       <StyledTypography variant="h6">
-        <FormattedMessage id="pages.lottery.purchase.rules" />
+        <FormattedMessage
+          id="pages.lottery.purchase.rules"
+          values={{
+            commission: contract.parameters.commission || 0,
+          }}
+        />
       </StyledTypography>
 
       <StyledPaper>

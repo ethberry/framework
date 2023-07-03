@@ -44,4 +44,7 @@ export class LotteryRoundEntity extends IdDateBaseEntity implements ILotteryRoun
 
   @Column({ type: "timestamptz" })
   public endTimestamp: string;
+
+  // @OneToMany(_type => TokenEntity, token => token.template)
+  // public tokens: Array<TokenEntity>;
 }

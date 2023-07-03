@@ -898,10 +898,11 @@
         "title": "Leaderboard"
       },
       "purchase": {
+        "title": "Buy a ticket",
         "price": "Ticket Price",
-        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "title": "Buy a ticket"
+        "count": "{current} of {max} tickets left"
       },
       "tokens": {
         "title": "My tickets"

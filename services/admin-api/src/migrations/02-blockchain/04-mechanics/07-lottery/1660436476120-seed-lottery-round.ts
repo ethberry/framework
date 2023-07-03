@@ -75,9 +75,9 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
+        101,
         '${getNumbers()}',
-        '1',
+        '101',
         12401,
         12301,
         102220001,
@@ -87,9 +87,9 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2,
+        102,
         '${getNumbers()}',
-        '2',
+        '102',
         12401,
         12301,
         102220002,
@@ -99,9 +99,9 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        103,
         null,
-        '3',
+        '103',
         12401,
         12301,
         102220002,

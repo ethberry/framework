@@ -17,6 +17,9 @@ export const LotteryContract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      parameters: {
+        commission: 0,
+      },
     },
     redirect: () => "",
   });

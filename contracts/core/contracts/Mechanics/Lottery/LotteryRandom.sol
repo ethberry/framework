@@ -160,6 +160,10 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       );
   }
 
+  function getLotteryInfo() public view returns (LotteryConfig memory) {
+    return LotteryConfig(_timeLag, comm);
+  }
+
   // RANDOM
   function fulfillRandomWords(uint256, uint256[] memory randomWords) internal virtual {
     Round storage currentRound = _rounds[_rounds.length - 1];
@@ -290,7 +294,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       revert ZeroBalance();
     }
 
-    uint256 roundBalance = currentRound.balance;
+    uint256 roundBalance = currentRound.total;
     currentRound.balance = 0;
 
     currentRound.acceptedAsset.amount = roundBalance;

@@ -19,7 +19,7 @@ export interface ILotteryRoundStartMenuItemProps {
 
 export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, id },
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
@@ -75,7 +75,8 @@ export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = pr
         onCancel={handleStartRoundCancel}
         open={isStartRoundDialogOpen}
         initialValues={{
-          address: "",
+          contractId: id,
+          address,
           ticket: emptyItem,
           price: emptyPrice,
           maxTicket: 0,

@@ -37,6 +37,12 @@ export const LotteryTokenViewDialog: FC<ILotteryTokenViewDialogProps> = props =>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.roundId" />
+              </TableCell>
+              <TableCell align="right">{round.roundId}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
               <TableCell align="right">{tokenId}</TableCell>
@@ -46,12 +52,6 @@ export const LotteryTokenViewDialog: FC<ILotteryTokenViewDialogProps> = props =>
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
               <TableCell align="right">{metadata ? decodeNumbers(metadata.NUMBERS) : ""}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.roundId" />
-              </TableCell>
-              <TableCell align="right">{round.roundId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

@@ -88,7 +88,9 @@ export const LotteryContracts: FC = () => {
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.05 }}>{contract.parameters.commission}</ListItemText>
+              <ListItemText sx={{ width: 0.05 }}>{contract.parameters.timeLagBeforeRelease}</ListItemText>
               <ListItemText sx={{ width: 0.4 }}>
                 {contract.parameters.schedule
                   ? Object.keys(CronExpression)[

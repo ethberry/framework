@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { getContractName, isEqualArray } from "../utils";
+import { getContractName, isEqualArray, recursivelyDecodeResult } from "../utils";
 import { externalId } from "../constants";
 
 describe("RaffleFactory", function () {
@@ -80,6 +80,14 @@ describe("RaffleFactory", function () {
       await expect(tx)
         .to.emit(contractInstance, "RaffleDeployed")
         .withArgs(address, externalId, isEqualArray(["100", "30"]));
+
+      const raffleInstance = await ethers.getContractAt(getContractName("RaffleRandom", network.name), address);
+
+      const raffleConfig = await raffleInstance.getLotteryInfo();
+      expect(recursivelyDecodeResult(raffleConfig)).deep.include({
+        timeLagBeforeRelease: 100n,
+        commission: 30n,
+      });
     });
 
     it("should fail: SignerMissingRole", async function () {

@@ -53,9 +53,10 @@ contract RaffleFactory is AbstractFactory {
 
     account = deploy2(
       params.bytecode,
-      abi.encodeWithSelector(bytes4(RAFFLE_CONFIG_TYPEHASH), args.config.timeLagBeforeRelease, args.config.commission),
+      abi.encode(args.config.timeLagBeforeRelease, args.config.commission),
       params.nonce
     );
+
     _raffles.push(account);
 
     emit RaffleDeployed(account, params.externalId, args);
