@@ -16,10 +16,12 @@ export interface ITabPanelProps {
 export const RatePlanTab: FC<ITabPanelProps> = props => {
   const { open, limits } = props;
 
-  const { fn } = useApiCall((api, { tokenId }: { tokenId: number }) => {
+  const { fn } = useApiCall((api, { limits }) => {
     return api
       .fetchJson({
-        url: `/rate-plans/${tokenId}`,
+        method: "PUT",
+        url: `/rate-plans`,
+        data: { limits: limits.map(({ ratePlanId, amount }: any) => ({ ratePlanId, amount })) },
       })
       .then(console.info);
   });

@@ -26,7 +26,7 @@ export class RatePlanService {
   }
 
   public async update(dto: IRatePlanUpdateDto): Promise<void> {
-    for (const { ratePlanId, amount } of dto.list) {
+    for (const { ratePlanId, amount } of dto.limits) {
       await this.ratePlanEntityRepository.update({ id: ratePlanId }, { amount });
     }
   }

@@ -4,5 +4,5 @@ export interface IRatePlanRowUpdateDto {
 }
 
 export interface IRatePlanUpdateDto {
-  list: Array<IRatePlanRowUpdateDto>;
+  limits: Array<IRatePlanRowUpdateDto>;
 }

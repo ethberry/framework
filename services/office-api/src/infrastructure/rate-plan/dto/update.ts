@@ -12,7 +12,7 @@ export class RatePlanRowUpdateDto implements IRatePlanRowUpdateDto {
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 }
 
@@ -24,5 +24,5 @@ export class RatePlanUpdateDto implements IRatePlanUpdateDto {
   @IsArray()
   @ValidateNested()
   @Type(() => RatePlanRowUpdateDto)
-  public list: Array<RatePlanRowUpdateDto>;
+  public limits: Array<RatePlanRowUpdateDto>;
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Put, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -18,6 +18,7 @@ export class RatePlanController {
   }
 
   @Put("/")
+  @HttpCode(HttpStatus.NO_CONTENT)
   public setProfile(@Body() dto: RatePlanUpdateDto): Promise<void> {
     return this.ratePlanService.update(dto);
   }
