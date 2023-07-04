@@ -902,7 +902,7 @@
         "price": "Ticket Price",
         "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "count": "{current} of {max} tickets left"
+        "count": "{current} of {max} sold"
       },
       "tokens": {
         "title": "My tickets"
@@ -1021,17 +1021,26 @@
       "title": "Pyramid"
     },
     "raffle": {
+      "contract": {
+        "title": "Contracts"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
       "purchase": {
         "rules": "Just buy a ticket. Random will choose a winner",
-        "title": "Buy a ticket"
+        "commission": "{commission}% commission",
+        "title": "Buy a ticket",
+        "count": "{current} of {max} sold",
+        "sold": "{count} sold"
       },
       "tokens": {
         "title": "My tickets"
       },
       "title": "Raffle"
+    },
+    "raffle-list": {
+      "title": "Raffle contracts"
     },
     "referral": {
       "cabinet": {

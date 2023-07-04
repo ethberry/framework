@@ -36,7 +36,7 @@ export const RaffleTokenList: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IRaffleToken, IRaffleTokenSearchDto>({
-    baseUrl: "/raffle/token",
+    baseUrl: "/raffle/tokens",
     empty: {
       round: {
         number: "0",
@@ -63,15 +63,14 @@ export const RaffleTokenList: FC = () => {
         <List sx={{ overflowX: "scroll" }}>
           {rows.map((token, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.2 }}>{token.round?.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>{token.metadata.NUMBER}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.metadata.NUMBER}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
-                {token.round.number === token.tokenId ? "winner" : ""}
-              </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.round.number === token.tokenId ? "winner" : ""}</ListItemText>
               <ListItemSecondaryAction>
                 <RaffleRewardButton token={token} />
                 <IconButton onClick={handleView(token)}>

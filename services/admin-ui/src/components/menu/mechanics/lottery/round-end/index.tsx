@@ -28,9 +28,10 @@ export const LotteryRoundEndMenuItem: FC<ILotteryRoundEndMenuItemProps> = props 
     return metaFn();
   };
 
-  if (process.env.NODE_ENV === "production") {
-    return null;
-  }
+  // TODO should allow manual end round?
+  // if (process.env.NODE_ENV === "production") {
+  //   return null;
+  // }
 
   return (
     <MenuItem onClick={handleEndRound} data-testid="LotteryRoundEndButton">

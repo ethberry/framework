@@ -115,13 +115,14 @@ export class LotteryRoundServiceEth {
   }
 
   public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
-    await this.eventHistoryService.updateHistory(event, context);
-
     const {
       args: { round, endTimestamp },
     } = event;
+    const { address } = context;
 
-    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
+    await this.eventHistoryService.updateHistory(event, context);
+
+    const roundEntity = await this.lotteryRoundService.getRound(round, address.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -138,10 +139,13 @@ export class LotteryRoundServiceEth {
     const {
       args: { roundId, ticketId },
     } = event;
+    const { address } = context;
+
     // const { address } = context;
     // TODO use it, check ticketId?
     // TODO find ticket.round.ticketContract.address
-    const roundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+    // const roundEntity = await this.lotteryRoundService.findOne({ roundId }, { relations: { ticketContract: true } });
+    const roundEntity = await this.lotteryRoundService.getRound(roundId, address.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -160,7 +164,8 @@ export class LotteryRoundServiceEth {
   }
 
   public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
-    // TODO use it somehow?
+    // TODO use it somehow
+    //  notification?
     await this.eventHistoryService.updateHistory(event, context);
   }
 }

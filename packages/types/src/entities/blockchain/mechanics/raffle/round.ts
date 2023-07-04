@@ -24,3 +24,8 @@ export interface IRaffleScheduleUpdateDto {
   address: string;
   schedule: CronExpression;
 }
+
+export interface IRaffleContractRound extends IContract {
+  round?: IRaffleRound | null;
+  count: number;
+}

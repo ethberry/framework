@@ -27,4 +27,5 @@ export interface ILotteryScheduleUpdateDto {
 
 export interface ILotteryContractRound extends IContract {
   round?: ILotteryRound | null;
+  count: number;
 }

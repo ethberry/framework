@@ -143,6 +143,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
+  // GET INFO
   function getCurrentRoundInfo() public view returns (LotteryRoundInfo memory) {
     Round storage round = _rounds[_rounds.length - 1];
     return
@@ -266,6 +267,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     }
 
     uint256 amount = point * coefficient[result];
+
+    if (amount > ticketRound.total) {
+      revert BalanceExceed();
+    }
+
     ticketRound.balance -= amount;
 
     ticketRound.acceptedAsset.amount = amount;
@@ -278,7 +284,7 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
     emit Prize(_msgSender(), roundId, tokenId, amount);
   }
 
-  // RELEASE
+  // RELEASE BALANCE
   function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
     if (roundNumber > _rounds.length - 1) {
       revert WrongRound();

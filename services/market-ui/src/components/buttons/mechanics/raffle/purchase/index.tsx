@@ -16,9 +16,10 @@ import { getEthPrice } from "../../../../../utils/money";
 
 export interface IRafflePurchaseButtonProps {
   round: Partial<IRaffleRound>;
+  disabled: boolean;
 }
 export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
-  const { round } = props;
+  const { round, disabled } = props;
 
   const settings = useSettings();
 
@@ -29,7 +30,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
       return contract.purchaseRaffle(
         {
           nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
+          externalId: round.id,
           expiresAt: sign.expiresAt,
           referrer: settings.getReferrer(),
           extra: utils.formatBytes32String("0x"),
@@ -51,9 +52,9 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
         round.price?.components.map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,
-          tokenId: component.templateId || 0,
+          tokenId: component.template?.tokens![0].tokenId,
           amount: component.amount,
-        })),
+        }))[0],
         sign.signature,
         {
           value: getEthPrice(round.price),
@@ -86,7 +87,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="RaffleBuyTicket">
+    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="RaffleBuyTicket">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

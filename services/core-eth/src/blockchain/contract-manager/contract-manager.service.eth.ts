@@ -609,7 +609,7 @@ export class ContractManagerServiceEth {
       },
       imageUrl,
       contractFeatures: [ContractFeatures.RANDOM],
-      contractModule: ModuleType.LOTTERY,
+      contractModule: ModuleType.RAFFLE,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
       merchantId: await this.getMerchantId(externalId),

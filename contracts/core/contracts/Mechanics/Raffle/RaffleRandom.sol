@@ -142,6 +142,10 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       );
   }
 
+  function getLotteryInfo() public view returns (RaffleConfig memory) {
+    return RaffleConfig(_timeLag, comm);
+  }
+
   // RANDOM
   function getRandomNumber() internal virtual returns (uint256 requestId);
 

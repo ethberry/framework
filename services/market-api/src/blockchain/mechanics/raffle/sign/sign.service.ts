@@ -35,7 +35,7 @@ export class RaffleSignService {
       account,
       {
         nonce,
-        externalId: 0,
+        externalId: raffleRound.id,
         expiresAt,
         referrer,
         extra: encodeBytes32String("0x"),

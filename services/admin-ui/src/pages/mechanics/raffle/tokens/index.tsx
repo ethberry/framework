@@ -66,10 +66,12 @@ export const RaffleTokens: FC = () => {
           {rows.map((token, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.2 }}>{token.id}</ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.tokenId}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
               </ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{token.round.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {token.metadata.PRIZE ? "Prize " : ""}
                 {token.round.number === token.tokenId ? "winner" : ""}

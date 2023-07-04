@@ -19,10 +19,11 @@ export interface ILotteryPurchaseButtonProps {
   round: Partial<ILotteryRound>;
   ticketNumbers: Array<boolean>;
   clearForm: () => void;
+  disabled: boolean;
 }
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { clearForm, ticketNumbers, round } = props;
+  const { clearForm, ticketNumbers, round, disabled } = props;
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -52,15 +53,6 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
               amount: "1",
             },
           ],
-          // rule.deposit?.components[0].contract!.address,
-          // {
-          //   tokenType: Object.values(TokenType).indexOf(round.price?.components[0].tokenType),
-          //   token: round.price?.components?[0].contract!.address,
-          //   tokenId: round.price?.components[0].template.tokens[0].tokenId,
-          //   amount: round.price!.components[0].amount,
-          // },
-          // "AccessControl: account 0x89feec659955df9ec7f57e88ebcd6ce046d6d9e2 is missing role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
-          // "AccessControl: account 0x89feec659955df9ec7f57e88e is missing role 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
           round.price?.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract?.address,
@@ -101,7 +93,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="LotteryBuyTicket">
+    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="LotteryBuyTicket">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

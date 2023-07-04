@@ -4,12 +4,12 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { RaffleTicketSearchDto } from "./dto";
-import { RaffleTicketService } from "./token.service";
+import { RaffleTicketService } from "./ticket.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
-@Controller("/raffle/ticket")
+@Controller("/raffle/tokens")
 export class RaffleTicketController {
   constructor(private readonly raffleTicketService: RaffleTicketService) {}
 

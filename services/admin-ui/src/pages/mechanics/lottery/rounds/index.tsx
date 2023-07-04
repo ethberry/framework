@@ -10,6 +10,7 @@ import type { ILotteryRound } from "@framework/types";
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
 import { CronExpression } from "@framework/types";
+import { LotteryReleaseButton } from "../../../../components/buttons/mechanics/lottery/release";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -41,7 +42,7 @@ export const LotteryRounds: FC = () => {
           {rows.map((round, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
-              <ListItemText sx={{ width: 0.6 }}>
+              <ListItemText sx={{ width: 0.4 }}>
                 {round.roundId} - {round.numbers ? getNumbers(round.numbers) : "awaiting results"}
               </ListItemText>
               <ListItemText sx={{ width: 0.3 }}>
@@ -57,6 +58,7 @@ export const LotteryRounds: FC = () => {
                 <IconButton onClick={handleView(round)}>
                   <Visibility />
                 </IconButton>
+                <LotteryReleaseButton round={round} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

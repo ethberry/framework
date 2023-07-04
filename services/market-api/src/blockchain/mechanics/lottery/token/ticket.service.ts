@@ -45,12 +45,12 @@ export class LotteryTicketService extends TokenService {
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
-
     queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
+
+    queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
     if (roundIds) {
       if (roundIds.length === 1) {
@@ -88,18 +88,39 @@ export class LotteryTicketService extends TokenService {
       "ticket.round",
       LotteryRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
     queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
-
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
     queryBuilder.andWhere("ticket.id = :id", {
       id: where.id,
     });
 
     return queryBuilder.getOne();
+  }
+
+  public getTicketCount(roundId: number): Promise<number> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+
+    queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
+    );
+
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
+
+    queryBuilder.andWhere("round.id = :id", {
+      id: roundId,
+    });
+
+    return queryBuilder.getCount();
   }
 
   // TODO rework query

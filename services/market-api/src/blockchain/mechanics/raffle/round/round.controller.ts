@@ -1,11 +1,11 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
-
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
+import { RaffleOptionsDto } from "./dto";
+import { IRaffleContractRound } from "@framework/types";
 
 @Public()
 @ApiBearerAuth()
@@ -19,7 +19,7 @@ export class RaffleRoundController {
   }
 
   @Get("/options")
-  public options(): Promise<ContractEntity> {
-    return this.raffleRoundService.options();
+  public options(@Query() dto: RaffleOptionsDto): Promise<IRaffleContractRound> {
+    return this.raffleRoundService.options(dto);
   }
 }

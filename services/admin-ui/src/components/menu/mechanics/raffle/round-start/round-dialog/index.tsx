@@ -9,6 +9,7 @@ import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { CommonContractInput } from "../../../../../inputs/common-contract";
 
 export interface IRaffleRound {
+  contractId: number;
   address: string;
   maxTicket: number;
   ticket: IAsset;
@@ -25,12 +26,13 @@ export interface IRaffleStartRoundDialogProps {
 export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { ticket, price, address, maxTicket } = initialValues;
+  const { ticket, price, address, maxTicket, contractId } = initialValues;
   const fixedValues = {
     ticket,
     price,
     address,
     maxTicket,
+    contractId,
   };
 
   const handleContractChange =

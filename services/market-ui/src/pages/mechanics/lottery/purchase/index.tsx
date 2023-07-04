@@ -77,15 +77,20 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
         <PageHeader message="pages.lottery.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
             {lottery.round ? (
-              <LotteryPurchaseButton round={lottery.round} clearForm={clearForm} ticketNumbers={ticketNumbers} />
+              <LotteryPurchaseButton
+                round={lottery.round}
+                clearForm={clearForm}
+                ticketNumbers={ticketNumbers}
+                disabled={lottery.round.maxTickets <= lottery.count}
+              />
             ) : null}
             {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
           </StyledPaper>
-          <StyledPaper sx={{ maxWidth: "8em", flexDirection: "row" }}>
+          <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
             {lottery.round && lottery.round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.lottery.purchase.count"
-                values={{ current: 1, max: lottery.round?.maxTickets }}
+                values={{ current: lottery.count, max: lottery.round?.maxTickets }}
               />
             ) : null}
           </StyledPaper>

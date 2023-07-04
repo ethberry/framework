@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { RaffleLeaderboardService } from "./leaderboard.service";
 import { RaffleLeaderboardController } from "./leaderboard.controller";
-import { RaffleTicketModule } from "../token/token.module";
+import { RaffleTicketModule } from "../token/ticket.module";
 
 @Module({
   imports: [RaffleTicketModule],

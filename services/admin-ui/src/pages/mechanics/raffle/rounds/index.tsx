@@ -9,6 +9,7 @@ import type { IRaffleRound } from "@framework/types";
 
 import { RaffleRoundViewDialog } from "./view";
 import { CronExpression } from "@framework/types";
+import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
 
 export const RaffleRounds: FC = () => {
   const {
@@ -56,6 +57,7 @@ export const RaffleRounds: FC = () => {
                 <IconButton onClick={handleView(round)}>
                   <Visibility />
                 </IconButton>
+                <RaffleReleaseButton round={round} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

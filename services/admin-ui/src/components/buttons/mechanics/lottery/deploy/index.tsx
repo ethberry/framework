@@ -74,8 +74,8 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          timeLagBeforeRelease: 100,
-          commission: 30,
+          timeLagBeforeRelease: 60 * 60 * 24 * 30, // 30 days in seconds
+          commission: 30, // 30%
         }}
       />
     </Fragment>

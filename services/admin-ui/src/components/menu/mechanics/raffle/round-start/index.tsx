@@ -19,7 +19,7 @@ export interface IRaffleRoundStartMenuItemProps {
 
 export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, id },
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
@@ -75,7 +75,8 @@ export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = prop
         onCancel={handleStartRoundCancel}
         open={isStartRoundDialogOpen}
         initialValues={{
-          address: "",
+          contractId: id,
+          address,
           ticket: emptyItem,
           price: emptyPrice,
           maxTicket: 0,

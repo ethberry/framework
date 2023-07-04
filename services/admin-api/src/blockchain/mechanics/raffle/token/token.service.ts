@@ -34,8 +34,10 @@ export class RaffleTokentService extends TokenService {
       "ticket.round",
       RaffleRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
+
+    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
 
     queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
@@ -68,10 +70,10 @@ export class RaffleTokentService extends TokenService {
       "ticket.round",
       RaffleRoundEntity,
       "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
+      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
     );
 
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("ticket.id = :id", {
       id: where.id,
