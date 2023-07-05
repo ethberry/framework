@@ -24,8 +24,8 @@ export class TemplateService {
   public async search(
     dto: ITemplateSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, merchantId, skip, take } = dto;
 

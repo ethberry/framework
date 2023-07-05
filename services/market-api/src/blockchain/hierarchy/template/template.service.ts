@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
@@ -6,19 +7,22 @@ import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/ty
 import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "./template.entity";
+import { testChainId } from "@framework/constants";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
+    protected readonly configService: ConfigService,
   ) {}
 
   public async search(
     dto: Partial<ITemplateSearchDto>,
-    chainId: number,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
@@ -50,19 +54,33 @@ export class TemplateService {
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
+      chainId: userEntity?.chainId || chainId,
     });
+
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,
     });

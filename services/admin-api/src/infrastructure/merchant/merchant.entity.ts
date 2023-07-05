@@ -20,7 +20,10 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({ type: "varchar" })
+  @Column({
+    type: "varchar",
+    select: false,
+  })
   public apiKey: string;
 
   @Column({

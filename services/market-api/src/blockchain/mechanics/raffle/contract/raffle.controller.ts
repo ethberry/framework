@@ -2,14 +2,11 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ConfigService } from "@nestjs/config";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { testChainId } from "@framework/constants";
-
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
 
 import { RaffleContractService } from "./raffle.service";
 
-import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";
+import { ContractAutocompleteDto, ContractSearchDto } from "../../../hierarchy/contract/dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
@@ -23,7 +20,10 @@ export class RaffleContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
     return this.raffleContractService.search(dto, userEntity);
   }
 
@@ -38,7 +38,6 @@ export class RaffleContractController {
     @Query() dto: ContractAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    return this.raffleContractService.autocomplete(dto, userEntity?.chainId || chainId);
+    return this.raffleContractService.autocomplete(dto, userEntity);
   }
 }

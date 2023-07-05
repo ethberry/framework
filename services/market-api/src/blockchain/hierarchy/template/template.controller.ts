@@ -1,20 +1,31 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
-import { ModuleType } from "@framework/types";
-import { testChainId } from "@framework/constants";
+import { ModuleType, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { TemplateService } from "./template.service";
 import { TemplateEntity } from "./template.entity";
-import { TemplateNewDto } from "./dto/new";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { TemplateAutocompleteDto } from "./dto/autocomplete";
+import { TemplateAutocompleteDto, TemplateNewDto, TemplateSearchDto } from "./dto";
 
 @Public()
 @Controller("/templates")
 export class TemplateController {
-  constructor(private readonly templateService: TemplateService, private readonly configService: ConfigService) {}
+  constructor(private readonly templateService: TemplateService) {}
+
+  @Get("/")
+  @UseInterceptors(PaginationInterceptor)
+  public search(
+    @Query() dto: TemplateSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<TemplateEntity>, number]> {
+    return this.templateService.search(
+      dto,
+      userEntity,
+      [ModuleType.HIERARCHY],
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+    );
+  }
 
   @Get("/new")
   @UseInterceptors(PaginationInterceptor)
@@ -22,12 +33,13 @@ export class TemplateController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     return this.templateService.search(
-      { take: 10 },
-      userEntity?.chainId || chainId,
-      dto.contractType,
-      ModuleType.HIERARCHY,
+      Object.assign(dto, {
+        take: 10,
+      }),
+      userEntity,
+      [ModuleType.HIERARCHY],
+      [dto.contractType],
     );
   }
 

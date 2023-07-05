@@ -18,12 +18,6 @@ export class Erc1155ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC1155],
-        contractModule: [ModuleType.HIERARCHY],
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 }

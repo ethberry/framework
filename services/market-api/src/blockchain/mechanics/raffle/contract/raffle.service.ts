@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import type { ISearchDto } from "@gemunion/types-collection";
+import type { IContractSearchDto } from "@framework/types";
 import { ModuleType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -14,11 +15,12 @@ export class RaffleContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
-  public search(dto: ISearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, void 0, ModuleType.RAFFLE);
+  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.RAFFLE], null);
   }
 }

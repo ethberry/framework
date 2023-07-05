@@ -18,12 +18,6 @@ export class RaffleTicketService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractModule: [ModuleType.RAFFLE],
-        contractType: [TokenType.ERC721],
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.RAFFLE], [TokenType.ERC721]);
   }
 }

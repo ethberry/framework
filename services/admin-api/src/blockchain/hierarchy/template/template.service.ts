@@ -26,8 +26,8 @@ export class TemplateService {
   public async search(
     dto: ITemplateSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, skip, take } = dto;
 
@@ -53,12 +53,25 @@ export class TemplateService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });

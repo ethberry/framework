@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
@@ -16,8 +16,13 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractFeatures, contractType, contractModule, skip, take } = dto;
+  public async search(
+    dto: IContractSearchDto,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
+  ): Promise<[Array<ContractEntity>, number]> {
+    const { query, contractStatus, contractFeatures, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 

@@ -2,11 +2,11 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { SearchDto } from "@gemunion/collection";
 
-import { Erc1155ContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ContractSearchDto } from "../../../hierarchy/contract/dto";
+import { Erc1155ContractService } from "./contract.service";
 
 @ApiBearerAuth()
 @Controller("/erc1155/contracts")
@@ -15,7 +15,10 @@ export class Erc1155ContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+  public search(
+    @Query() query: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
     return this.erc1155ContractService.search(query, userEntity);
   }
 

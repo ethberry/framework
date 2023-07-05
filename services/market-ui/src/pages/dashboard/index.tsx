@@ -39,6 +39,9 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
+          <PersonalSection />
+          <MarketplaceSection />
+          <ReferralSection />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
@@ -60,9 +63,6 @@ export const Dashboard: FC = () => {
           <PyramidSection />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <PersonalSection />
-          <MarketplaceSection />
-          <ReferralSection />
           <EcommerceSection />
           <DexSection />
           <CoinGeckoSection />

@@ -11,7 +11,7 @@ import { Erc998 } from "./erc998";
 import { Erc1155 } from "./erc1155";
 import { Mystery } from "./mystery";
 
-export const Marketplace: FC = () => {
+export const MarketplaceOld: FC = () => {
   const { tab = MarketplaceTabs.erc721 } = useParams<{ tab: MarketplaceTabs }>();
   const { formatMessage } = useIntl();
   const navigate = useNavigate();

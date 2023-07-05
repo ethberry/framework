@@ -24,10 +24,7 @@ export class CollectionContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, { contractType: [TokenType.ERC721], contractModule: [ModuleType.COLLECTION] }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 
   public async upload(address: string, dto: ICollectionUploadDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {

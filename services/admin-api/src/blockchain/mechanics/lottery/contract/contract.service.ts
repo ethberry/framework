@@ -18,12 +18,6 @@ export class LotteryContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractModule: [ModuleType.LOTTERY],
-        contractType: null,
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.LOTTERY], null);
   }
 }

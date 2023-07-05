@@ -18,12 +18,6 @@ export class LotteryTicketService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractModule: [ModuleType.LOTTERY],
-        contractType: [TokenType.ERC721],
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.LOTTERY], [TokenType.ERC721]);
   }
 }

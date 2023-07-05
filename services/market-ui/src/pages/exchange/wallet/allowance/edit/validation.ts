@@ -5,8 +5,8 @@ import {
   tokenAssetTokenTypeValidationSchema,
   tokenAssetTokenValidationSchema,
 } from "@gemunion/mui-inputs-asset";
-import { TokenType } from "@gemunion/types-blockchain";
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { TokenType } from "@framework/types";
 
 export const validationSchema = object().shape({
   token: object().shape({

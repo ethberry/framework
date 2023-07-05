@@ -17,7 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { MysteryContractService } from "./contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()

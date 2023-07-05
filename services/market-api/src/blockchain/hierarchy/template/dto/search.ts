@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { ITemplateSearchDto } from "@framework/types";
-import { TemplateStatus } from "@framework/types";
+import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
 export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
@@ -59,4 +59,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   public maxPrice: string;
 
   public merchantId: number;
+  public contractType: Array<TokenType>;
+  public contractModule: Array<ModuleType>;
 }

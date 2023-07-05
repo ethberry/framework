@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { MysteryContractService } from "./contract.service";
@@ -7,7 +8,7 @@ import { MysteryTokenModule } from "../token/token.module";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContractEntity]), MysteryTokenModule],
+  imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity]), MysteryTokenModule],
   providers: [MysteryContractService],
   controllers: [MysteryContractController],
   exports: [MysteryContractService],

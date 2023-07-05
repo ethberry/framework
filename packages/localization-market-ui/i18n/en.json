@@ -44,8 +44,8 @@
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
     "transfer": "Transfer",
-    "view": "View",
     "upgrade": "Upgrade",
+    "view": "View",
     "withdraw": "Withdraw balance"
   },
   "enums": {
@@ -220,8 +220,8 @@
       "PaymentReleased": "PaymentReleased",
       "Purchase": "Purchase",
       "PurchaseLottery": "PurchaseLottery",
-      "PurchaseRaffle": "PurchaseRaffle",
       "PurchaseMysteryBox": "PurchaseMysteryBox",
+      "PurchaseRaffle": "PurchaseRaffle",
       "RandomWordsRequested": "RandomWordsRequested",
       "RandomnessRequest": "RandomnessRequest",
       "RandomnessRequestId": "RandomnessRequestId",
@@ -432,11 +432,11 @@
       "imageUrl": "Avatar",
       "isDefault": "Make default",
       "item": "Item",
-      "lottery": "Lottery",
       "language": "Language",
       "lendType": "Lend Type",
       "level": "Level",
       "listId": "List ID",
+      "lottery": "Lottery",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
       "merchantId": "Merchant",
@@ -894,28 +894,50 @@
       "popular": "Popular items"
     },
     "lottery": {
+      "contract": {
+        "title": "Contracts"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
       "purchase": {
-        "title": "Buy a ticket",
         "price": "Ticket Price",
         "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "count": "{current} of {max} sold"
+        "count": "{current} of {max} sold",
+        "title": "Buy a ticket"
       },
+      "title": "Lottery",
       "tokens": {
         "title": "My tickets"
-      },
-      "contract": {
-        "title": "Contracts"
-      },
-      "title": "Lottery"
+      }
     },
     "lottery-list": {
       "title": "Lottery contracts"
     },
     "marketplace": {
+      "title": "Marketplace",
+      "merchants": {
+        "title": "Merchants"
+      },
+      "merchant": {
+        "title": "Merchant: {title}"
+      },
+      "contract": {
+        "title": "Contract: {title}"
+      },
+      "contracts": {
+        "title": "Contract"
+      },
+      "templates": {
+        "title": "Templates"
+      },
+      "template": {
+        "title": "Templates: {title}",
+        "price": "Base price: {amount}"
+      }
+    },
+    "marketplace-old": {
       "erc1155": {
         "title": "ERC1155"
       },
@@ -1034,10 +1056,10 @@
         "count": "{current} of {max} sold",
         "sold": "{count} sold"
       },
+      "title": "Raffle",
       "tokens": {
         "title": "My tickets"
-      },
-      "title": "Raffle"
+      }
     },
     "raffle-list": {
       "title": "Raffle contracts"
