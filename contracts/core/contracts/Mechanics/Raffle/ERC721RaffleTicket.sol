@@ -58,13 +58,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     return _data[tokenId];
   }
 
-  function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
+  function setPrize(uint256 tokenId, uint256 multiplier) external onlyRole(MINTER_ROLE) {
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
     // TODO use only metadata as storage?
     _data[tokenId].prize = true;
-    _upsertRecordField(tokenId, PRIZE, 1);
+    _upsertRecordField(tokenId, PRIZE, multiplier);
   }
 
   // BASE URL

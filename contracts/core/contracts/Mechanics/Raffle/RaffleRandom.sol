@@ -11,6 +11,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
@@ -45,7 +47,8 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
-    Counters.Counter ticketCounter; // all round tickets counter
+    //    Counters.Counter ticketCounter; // all round tickets counter
+    uint256[] tickets; // all round tickets
     uint256 prizeNumber; // prize number
     uint256 requestId;
     uint256 maxTicket;
@@ -86,17 +89,17 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     }
 
     // allow all
-    if (currentRound.maxTicket > 0 && currentRound.ticketCounter.current() >= currentRound.maxTicket) {
+    if (currentRound.maxTicket > 0 && currentRound.tickets.length >= currentRound.maxTicket) {
       revert LimitExceed();
     }
-
-    // workaround for struct
-    Counters.increment(currentRound.ticketCounter);
 
     currentRound.balance += currentRound.acceptedAsset.amount;
     currentRound.total += currentRound.acceptedAsset.amount;
 
     tokenId = IERC721RaffleTicket(currentRound.ticketAsset.token).mintTicket(account, roundId, externalId);
+
+    // TODO overflow check?
+    currentRound.tickets.push(tokenId);
   }
 
   function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -194,14 +197,17 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     Round storage currentRound = _rounds[_rounds.length - 1];
 
     // calculate wining numbers
-    uint256 len = currentRound.ticketCounter.current();
+    uint256 len = currentRound.tickets.length;
 
-    uint256 prizeNumber = len > 0 ? uint256(uint8(randomWords[0] % len) + 1) : 0; // if no tickets sold
+    // prizeNumber - tickets[index] or Zero if no tickets sold
+    if (len > 0) {}
+    uint256 prizeIndex = len > 0 ? uint256(uint8(randomWords[0] % len)) : 0;
 
-    // in case number is Zero - winner tokenId is 1
-    currentRound.prizeNumber = prizeNumber == 0 && len > 0 ? prizeNumber + 1 : prizeNumber;
+    // prizeNumber - winner's tokenId
+    // Zero if no tickets sold
+    currentRound.prizeNumber = len > 0 ? currentRound.tickets[prizeIndex] : 0;
 
-    emit RoundFinalized(currentRound.roundId, prizeNumber);
+    emit RoundFinalized(currentRound.roundId, currentRound.prizeNumber /* ticket Id = ticket No*/);
   }
 
   function getPrize(uint256 tokenId, uint256 roundId) external {
@@ -219,28 +225,35 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       revert Expired();
     }
 
+    // TODO OR approved?
+    if (IERC721(ticketRound.ticketAsset.token).ownerOf(tokenId) != _msgSender()) {
+      revert NotAnOwner();
+    }
+
     uint256 prizeNumber = ticketRound.prizeNumber;
 
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(ticketRound.ticketAsset.token);
 
     TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
 
-    // revert if prize already set
-    if (data.prize) {
-      revert WrongToken();
-    }
-
-    // revert if token's roundId differs
+    // check token's roundId
     if (data.round != roundId) {
       revert WrongRound();
     }
 
-    // ticketFactory.burn(tokenId);
-    // set prize status
-    ticketFactory.setTicketData(tokenId);
+    // check token's prize status
+    if (data.prize) {
+      revert WrongToken();
+    }
 
+    // check if tokenId is round winner
     if (tokenId == prizeNumber) {
+      // ticketFactory.burn(tokenId);
+      // set prize status and multiplier
+      ticketFactory.setPrize(tokenId, ticketRound.tickets.length);
       emit Prize(_msgSender(), roundId, tokenId, 0);
+    } else {
+      revert NotInList();
     }
   }
 

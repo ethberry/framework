@@ -47,10 +47,10 @@ contract RaffleRandomBesu is RaffleRandom, ChainLinkBesu {
     currentRound.balance = 10000 ether;
     currentRound.total = 10000 ether;
     currentRound.total -= (currentRound.total * comm) / 100;
-    currentRound.ticketCounter.increment();
     currentRound.ticketAsset = item;
     currentRound.acceptedAsset = price;
     // prize numbers
+    currentRound.tickets.push(prizeNumber);
     currentRound.prizeNumber = prizeNumber;
     currentRound.requestId = requestId;
   }

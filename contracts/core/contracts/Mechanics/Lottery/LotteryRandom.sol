@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
@@ -217,6 +218,11 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       revert Expired();
     }
 
+    // TODO OR approved?
+    if (IERC721(ticketRound.ticketAsset.token).ownerOf(tokenId) != _msgSender()) {
+      revert NotAnOwner();
+    }
+
     IERC721LotteryTicket ticketFactory = IERC721LotteryTicket(ticketRound.ticketAsset.token);
 
     Ticket memory data = ticketFactory.getTicketData(tokenId);
@@ -290,22 +296,22 @@ abstract contract LotteryRandom is AccessControl, Pausable, Wallet {
       revert WrongRound();
     }
 
-    Round storage currentRound = _rounds[roundNumber];
+    Round storage ticketRound = _rounds[roundNumber];
 
-    if (block.timestamp < currentRound.endTimestamp + _timeLag) {
+    if (block.timestamp < ticketRound.endTimestamp + _timeLag) {
       revert NotComplete();
     }
 
-    if (currentRound.balance == 0) {
+    if (ticketRound.balance == 0) {
       revert ZeroBalance();
     }
 
-    uint256 roundBalance = currentRound.total;
-    currentRound.balance = 0;
+    uint256 roundBalance = ticketRound.total;
+    ticketRound.balance = 0;
 
-    currentRound.acceptedAsset.amount = roundBalance;
+    ticketRound.acceptedAsset.amount = roundBalance;
     ExchangeUtils.spend(
-      ExchangeUtils._toArray(currentRound.acceptedAsset),
+      ExchangeUtils._toArray(ticketRound.acceptedAsset),
       _msgSender(),
       DisabledTokenTypes(false, false, false, false, false)
     );

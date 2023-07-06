@@ -2041,6 +2041,45 @@ describe("Lottery", function () {
       await expect(tx1).to.be.revertedWithCustomError(lotteryInstance, "WrongToken");
     });
 
+    it("should fail: not an owner", async function () {
+      const [_owner, receiver, stranger] = await ethers.getSigners();
+
+      const values = [8, 5, 3, 2, 1, 0];
+      const aggregation = [0, 0, 0, 0, 0, 0, 1];
+
+      const { lotteryInstance, erc721Instance, erc20Instance } = await factory();
+
+      const defNumbers = getNumbersBytes(values);
+      await erc721Instance.mintTicket(receiver.address, 1, 1, defNumbers);
+      await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
+      await erc20Instance.mint(lotteryInstance.getAddress(), parseEther("20000"));
+
+      await lotteryInstance.setDummyRound(
+        defNumbers,
+        values,
+        aggregation,
+        nonce,
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
+        0, // maxTicket count
+      );
+
+      await erc721Instance.connect(receiver).approve(lotteryInstance.getAddress(), 1);
+
+      const tx = lotteryInstance.connect(stranger).getPrize(tokenId, 1);
+      await expect(tx).to.be.revertedWithCustomError(lotteryInstance, "NotAnOwner");
+    });
+
     it("should fail: wrong round", async function () {
       const [_owner, receiver] = await ethers.getSigners();
 
