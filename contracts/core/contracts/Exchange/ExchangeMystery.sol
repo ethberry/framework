@@ -34,7 +34,7 @@ abstract contract ExchangeMystery is SignatureValidator, AccessControl, Pausable
 
     emit PurchaseMysteryBox(_msgSender(), params.externalId, items, price);
 
-    // TODO use slice?
+    // can't use items[:1], slice works only with calldata :(
     Asset memory box = items[0];
 
     // pop from array is not supported
