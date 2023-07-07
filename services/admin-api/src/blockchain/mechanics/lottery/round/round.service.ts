@@ -1,12 +1,8 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClientProxy } from "@nestjs/microservices";
-
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
-import { RmqProviderType } from "@framework/types";
-import type { ILotteryScheduleUpdateDto } from "@framework/types";
 
 import { LotteryRoundEntity } from "./round.entity";
 
@@ -15,8 +11,6 @@ export class LotteryRoundService {
   constructor(
     @InjectRepository(LotteryRoundEntity)
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE_LOTTERY)
-    private readonly scheduleProxy: ClientProxy,
   ) {}
 
   public async search(dto: Partial<IPaginationDto>): Promise<[Array<LotteryRoundEntity>, number]> {
@@ -52,9 +46,5 @@ export class LotteryRoundService {
     });
 
     return queryBuilder.getRawMany();
-  }
-
-  public async updateSchedule(dto: ILotteryScheduleUpdateDto): Promise<any> {
-    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, dto).toPromise();
   }
 }

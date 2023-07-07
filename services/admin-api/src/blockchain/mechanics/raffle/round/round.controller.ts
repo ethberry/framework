@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Query,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -17,7 +6,6 @@ import { PaginationDto } from "@gemunion/collection";
 
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
-import { RaffleScheduleUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/raffle/rounds")
@@ -39,11 +27,5 @@ export class RaffleRoundController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<RaffleRoundEntity | null> {
     return this.raffleRoundService.findOne({ id }, { relations: { contract: true } });
-  }
-
-  @Post("/schedule")
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public update(@Body() dto: RaffleScheduleUpdateDto): Promise<any> {
-    return this.raffleRoundService.updateSchedule(dto);
   }
 }

@@ -14,14 +14,14 @@ export interface IRaffleScheduleMenuItemProps {
 
 export const RaffleScheduleMenuItem: FC<IRaffleScheduleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { id },
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: "/raffle/rounds/schedule",
+      url: `/raffle/contracts/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -56,7 +56,6 @@ export const RaffleScheduleMenuItem: FC<IRaffleScheduleMenuItemProps> = props =>
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
-          address,
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
         }}
       />

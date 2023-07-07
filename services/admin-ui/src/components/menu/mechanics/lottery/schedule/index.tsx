@@ -14,14 +14,14 @@ export interface ILotteryScheduleMenuItemProps {
 
 export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { id },
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: "/lottery/rounds/schedule",
+      url: `/lottery/rounds/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -56,7 +56,6 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
-          address,
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
         }}
       />

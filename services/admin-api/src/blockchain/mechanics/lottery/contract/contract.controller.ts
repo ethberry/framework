@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Post,
   Put,
   Query,
   UseInterceptors,
@@ -15,10 +16,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { LotteryContractService } from "./contract.service";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto/";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { LotteryContractService } from "./contract.service";
+import { LotteryScheduleUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/lottery/contracts")
@@ -53,5 +55,15 @@ export class LotteryContractController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.lotteryContractService.delete({ id }, userEntity);
+  }
+
+  @Post("/:id/schedule")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public updateSchedule(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: LotteryScheduleUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<any> {
+    return this.lotteryContractService.updateSchedule({ id }, dto, userEntity);
   }
 }

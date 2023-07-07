@@ -178,7 +178,6 @@ export class RaffleRoundServiceEth {
   }
 
   public async release(event: ILogEvent<IRaffleReleaseEvent>, context: Log): Promise<void> {
-    // TODO use it somehow?
     await this.eventHistoryService.updateHistory(event, context);
   }
 }

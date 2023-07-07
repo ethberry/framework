@@ -21,7 +21,6 @@ export interface IRaffleRound extends IIdDateBase {
 }
 
 export interface IRaffleScheduleUpdateDto {
-  address: string;
   schedule: CronExpression;
 }
 
