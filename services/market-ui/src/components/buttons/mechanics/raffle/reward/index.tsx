@@ -20,10 +20,9 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  // TODO get raffle.add from round
   const metaFn = useMetamask((ticket: IRaffleToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.RAFFLE_ADDR, RaffleGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.tokenId) as Promise<void>;
+    const contract = new Contract(token.round.contract!.address, RaffleGetPrizeABI, web3Context.provider?.getSigner());
+    return contract.getPrize(ticket.tokenId, token.round.roundId) as Promise<void>;
   });
 
   const handleReward = (ticket: IRaffleToken): (() => Promise<void>) => {

@@ -17,10 +17,14 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
+import { UserModule } from "../../../../infrastructure/user/user.module";
 
 @Module({
   imports: [
+    NotificatorModule,
     ConfigModule,
+    UserModule,
     AssetModule,
     TemplateModule,
     TokenModule,

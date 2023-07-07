@@ -40,7 +40,7 @@ export class ContractService {
     }
 
     const modules = [ModuleType.HIERARCHY, ModuleType.COLLECTION, ModuleType.MYSTERY];
-    if (contractModule && contractModule.filter(value => modules.includes(value))) {
+    if (contractModule && contractModule.filter(value => modules.includes(value)).length > 0) {
       // filter out contract without templates
       queryBuilder.andWhereExists(
         // https://github.com/typeorm/typeorm/issues/2815

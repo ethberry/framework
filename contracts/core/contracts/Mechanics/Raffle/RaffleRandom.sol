@@ -230,8 +230,6 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       revert NotAnOwner();
     }
 
-    uint256 prizeNumber = ticketRound.prizeNumber;
-
     IERC721RaffleTicket ticketFactory = IERC721RaffleTicket(ticketRound.ticketAsset.token);
 
     TicketRaffle memory data = ticketFactory.getTicketData(tokenId);
@@ -247,11 +245,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     }
 
     // check if tokenId is round winner
-    if (tokenId == prizeNumber) {
+    if (tokenId == ticketRound.prizeNumber) {
       // ticketFactory.burn(tokenId);
       // set prize status and multiplier
       ticketFactory.setPrize(tokenId, ticketRound.tickets.length);
-      emit Prize(_msgSender(), roundId, tokenId, 0);
+      emit Prize(_msgSender(), roundId, tokenId, ticketRound.tickets.length);
     } else {
       revert NotInList();
     }

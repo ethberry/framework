@@ -20,7 +20,7 @@ export const PyramidToggleRuleButton: FC<IPyramidToggleRuleButtonProps> = props 
 
   const metaToggleRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
     const ruleStatus: boolean = rule.pyramidRuleStatus !== PyramidRuleStatus.ACTIVE;
-    const contract = new Contract(process.env.PYRAMID_ADDR, PyramidUpdateRuleABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract.address, PyramidUpdateRuleABI, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId || 0, ruleStatus) as Promise<void>;
   });
 

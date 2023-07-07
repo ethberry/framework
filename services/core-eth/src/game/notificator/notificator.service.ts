@@ -18,6 +18,7 @@ import type {
   IWaitListRewardSetData,
 } from "./interfaces";
 import { IUnpackMysteryData } from "./interfaces/mystery-box";
+import { IPrizeRaffleData } from "./interfaces";
 
 export interface IRentUserUpdateData {
   merchantId: number;
@@ -157,6 +158,13 @@ export class NotificatorService {
   public stakingRuleUpdated(data: IStakingRuleUpdatedData): Promise<any> {
     return this.sendMessage(data.stakingRule.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.STAKING_RULE_UPDATED, data).toPromise();
+    });
+  }
+
+  // MODULE:RAFFLE
+  public prizeRaffle(data: IPrizeRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.PRIZE_RAFFLE, data).toPromise();
     });
   }
 }
