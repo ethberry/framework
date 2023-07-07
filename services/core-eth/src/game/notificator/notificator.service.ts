@@ -18,7 +18,7 @@ import type {
   IWaitListRewardSetData,
 } from "./interfaces";
 import { IUnpackMysteryData } from "./interfaces/mystery-box";
-import { IPrizeRaffleData } from "./interfaces";
+import { ICraftData, IPrizeRaffleData } from "./interfaces";
 
 export interface IRentUserUpdateData {
   merchantId: number;
@@ -112,6 +112,13 @@ export class NotificatorService {
   // MODULE:CLAIM
   public async claim(data: IClaimData): Promise<any> {
     return this.sendMessage(data.claim.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
+    });
+  }
+
+  // MODULE:CRAFT
+  public async craft(data: ICraftData): Promise<any> {
+    return this.sendMessage(data.craft.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.CLAIM, data).toPromise();
     });
   }

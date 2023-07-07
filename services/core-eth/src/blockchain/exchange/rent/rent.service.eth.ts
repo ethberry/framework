@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangeLendEvent } from "@framework/types";
+import type { IExchangeLendEvent } from "@framework/types";
 
-import { EventHistoryService } from "../../event-history/event-history.service";
 import { NotificatorService } from "../../../game/notificator/notificator.service";
+import { EventHistoryService } from "../../event-history/event-history.service";
 
 @Injectable()
 export class ExchangeRentServiceEth {

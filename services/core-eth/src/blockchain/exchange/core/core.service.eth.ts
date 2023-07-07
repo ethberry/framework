@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IErc1363TransferReceivedEvent, IExchangePurchaseEvent } from "@framework/types";
+import type { IErc1363TransferReceivedEvent, IExchangePurchaseEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";

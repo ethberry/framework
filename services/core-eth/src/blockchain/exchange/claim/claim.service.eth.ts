@@ -2,7 +2,8 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ClaimStatus, IExchangeClaimEvent } from "@framework/types";
+import { ClaimStatus } from "@framework/types";
+import type { IExchangeClaimEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IExchangeBreedEvent } from "@framework/types";
+import type { IExchangeBreedEvent } from "@framework/types";
 
 import { AssetService } from "../asset/asset.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
