@@ -1,3 +1,4 @@
 **/node_modules/*
 **/dist/*
 besu/**
+contracts/core/test/shared/diamond.ts
