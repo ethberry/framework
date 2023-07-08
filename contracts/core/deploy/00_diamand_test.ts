@@ -2,7 +2,9 @@ import { DeployFunction } from "hardhat-deploy/dist/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 const DeployDiamond: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  // @ts-ignore
   const [owner] = await hre.getUnnamedAccounts();
+  // @ts-ignore
   const { diamond } = hre.deployments;
 
   // console.log("deployer:::", deployer, owner);

@@ -12,14 +12,14 @@ export async function deployDiamond(
   const [owner] = await ethers.getSigners();
 
   // deploy DiamondCutFacet
-  const DiamondCutFacet = await ethers.getContractFactory("DiamondCutFacet");
-  const diamondCutFacet = await DiamondCutFacet.deploy();
+  const diamondCutFacetFactory = await ethers.getContractFactory("DiamondCutFacet");
+  const diamondCutFacet = await diamondCutFacetFactory.deploy();
   await diamondCutFacet.waitForDeployment();
   if (log) console.info("DiamondCutFacet deployed:", await diamondCutFacet.getAddress());
 
   // deploy Diamond
-  const Diamond = await ethers.getContractFactory(DiamondName);
-  const diamond = await Diamond.deploy(owner.address, await diamondCutFacet.getAddress());
+  const diamondFactory = await ethers.getContractFactory(DiamondName);
+  const diamond = await diamondFactory.deploy(owner.address, await diamondCutFacet.getAddress());
   await diamond.waitForDeployment();
   if (log) console.info("Diamond deployed:", await diamond.getAddress());
 
@@ -27,8 +27,8 @@ export async function deployDiamond(
   // DiamondInit provides a function that is called when the diamond is upgraded to initialize state variables
   // Read about how the diamondCut function works here: https://eips.ethereum.org/EIPS/eip-2535#addingreplacingremoving-functions
   // * diamondInit
-  const DiamondInit = await ethers.getContractFactory(InitContractName);
-  const diamondInit = await DiamondInit.deploy();
+  const diamondInitFactory = await ethers.getContractFactory(InitContractName);
+  const diamondInit = await diamondInitFactory.deploy();
   await diamondInit.waitForDeployment();
   // if (log) console.info("DiamondInit deployed:", diamondInit.address);
 
@@ -38,8 +38,8 @@ export async function deployDiamond(
   // const FacetNames = ["ExchangePurchaseFacet"];
   const cut = [];
   for (const FacetName of FacetNames) {
-    const Facet = await ethers.getContractFactory(FacetName);
-    const facet = await Facet.deploy();
+    const facetFactory = await ethers.getContractFactory(FacetName);
+    const facet = await facetFactory.deploy();
     await facet.waitForDeployment();
     if (log) console.info(`${FacetName} deployed: ${await facet.getAddress()}`);
     cut.push({

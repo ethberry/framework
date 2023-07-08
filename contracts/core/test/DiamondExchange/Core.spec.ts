@@ -14,6 +14,7 @@ describe("Diamond Exchange Core", function () {
       "DiamondExchange",
       [
         "ExchangePurchaseFacet",
+        "ExchangeClaimFacet",
         "PausableFacet",
         "AccessControlFacet",
         "WalletFacet", //

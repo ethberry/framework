@@ -1,6 +1,6 @@
 /* global ethers */
 
-import { ethers, Contract, ContractInterface, FunctionFragment, BaseContract, Interface } from "ethers";
+import { BaseContract, Contract, FunctionFragment, Interface } from "ethers";
 
 export const FacetCutAction = { Add: 0, Replace: 1, Remove: 2 };
 
@@ -9,10 +9,10 @@ export function getSelectors(contract: BaseContract | Contract, options: Record<
   const { logSelectors } = options;
   const selectors: Array<string> = [];
   contract.interface.forEachFunction((func: FunctionFragment) => {
-    if (func.name !== "init") {
+    if (func.name !== "init" && func.name !== "eip712Domain") {
       selectors.push(func.selector);
     }
-    if (logSelectors) console.log([func.name], func.selector);
+    if (logSelectors) console.info([func.name], func.selector);
   });
 
   // (selectors as any).contract = contract;

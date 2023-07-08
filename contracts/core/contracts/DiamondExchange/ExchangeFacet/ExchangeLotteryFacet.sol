@@ -6,15 +6,19 @@
 
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+// import "@openzeppelin/contracts/access/AccessControl.sol";
+//import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+//import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
-import "./SignatureValidator.sol";
-import "./ExchangeUtils.sol";
-import "./interfaces/IAsset.sol";
-import "./interfaces/ILottery.sol";
+import "../override/SignatureValidator.sol";
+import "../../Diamond/override/AccessControlInternal.sol";
+import "../../Diamond/override/PausableInternal.sol";
 
-abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable {
+import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/interfaces/ILottery.sol";
+
+//import "../../Exchange/interfaces/IAsset.sol";
+contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseLottery(
     address account,
     uint256 externalId,
@@ -24,6 +28,8 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
     bytes32 numbers
   );
 
+  constructor() SignatureValidator() {}
+
   function purchaseLottery(
     Params memory params,
     Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
@@ -31,7 +37,7 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
     bytes calldata signature
   ) external payable whenNotPaused {
     // Verify signature and check signer for MINTER_ROLE
-    if (!hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
+    if (!_hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
       revert SignerMissingRole();
     }
 
@@ -56,8 +62,8 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
 
     emit PurchaseLottery(_msgSender(), params.externalId, items, price, roundId, params.extra);
 
-    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
+    //    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }
 
-  function _afterPurchase(address referrer, Asset[] memory price) internal virtual;
+  //  function _afterPurchase(address referrer, Asset[] memory price) internal virtual;
 }
