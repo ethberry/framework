@@ -4,11 +4,10 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import type { IDropSearchDto } from "@framework/types";
 
-import { DropEntity } from "./drop.entity";
-import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { PageEntity } from "../../../infrastructure/page/page.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
+import { DropEntity } from "./drop.entity";
 
 @Injectable()
 export class DropService {
@@ -68,11 +67,19 @@ export class DropService {
     return this.dropEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<DropEntity>, dto: Partial<IDropUpdateDto>): Promise<DropEntity> {
+  public async update(
+    where: FindOptionsWhere<DropEntity>,
+    dto: Partial<IDropUpdateDto>,
+    userEntity: UserEntity,
+  ): Promise<DropEntity> {
     const dropEntity = await this.findOne(where);
 
     if (!dropEntity) {
       throw new NotFoundException("dropNotFound");
+    }
+
+    if (dropEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     Object.assign(dropEntity, dto);
@@ -83,15 +90,11 @@ export class DropService {
   public async create(dto: IDropCreateDto, userEntity: UserEntity): Promise<DropEntity> {
     const { price, item, ...rest } = dto;
 
-    const priceEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(priceEntity, price);
+    const priceEntity = await this.assetService.create();
+    await this.assetService.update(priceEntity, price, userEntity);
 
-    const itemEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(itemEntity, item);
+    const itemEntity = await this.assetService.create();
+    await this.assetService.update(itemEntity, item, userEntity);
 
     return this.dropEntityRepository
       .create({
@@ -121,7 +124,7 @@ export class DropService {
     });
   }
 
-  public async delete(where: FindOptionsWhere<PageEntity>, userEntity: UserEntity): Promise<DropEntity> {
+  public async delete(where: FindOptionsWhere<DropEntity>, userEntity: UserEntity): Promise<DropEntity> {
     const dropEntity = await this.findOne(where);
 
     if (!dropEntity) {

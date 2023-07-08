@@ -51,6 +51,7 @@
     "revokeRole": "Revoke role",
     "schedule": "Set Lottery Round schedule",
     "setAmount": "Set Withdraw Amount",
+    "stakingInfo": "Staking Info",
     "startRound": "Start Lottery Round",
     "topUp": "Top up",
     "transfer": "Transfer",
@@ -65,7 +66,7 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "GRADE": {
+    "LEVEL": {
       "1": "1",
       "10": "10",
       "2": "2",
@@ -96,7 +97,7 @@
       "MARKETPLACE": "Marketplace"
     },
     "attributeName": {
-      "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
       "TEMPLATE_ID": "Template"
     },
@@ -126,6 +127,7 @@
       "13377": "GEMUNION",
       "13378": "BESU",
       "137": "POLYGON",
+      "42161": "ARBITRUM",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI",
@@ -178,7 +180,9 @@
       "GENES": "Genes",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "LOTTERY": "Lottery ticket",
       "PAUSABLE": "Pausable",
+      "RAFFLE": "Raffle ticket",
       "RANDOM": "Random",
       "REFERRAL": "Referral",
       "RENTABLE": "Rentable",
@@ -291,7 +295,6 @@
       "Blacklisted": "Blacklisted",
       "Breed": "Breed",
       "Claim": "Claim",
-      "WaitListRewardClaimed": "WaitListRewardClaimed",
       "ConsecutiveTransfer": "ConsecutiveTransfer",
       "Craft": "Craft",
       "DefaultRoyaltyInfo": "DefaultRoyaltyInfo",
@@ -314,7 +317,6 @@
       "RandomnessRequestId": "RandomnessRequestId",
       "ReceivedChild": "ReceivedChild",
       "RedeemClaim": "RedeemClaim",
-      "WaitListRewardSet": "WaitListRewardSet",
       "RoleAdminChanged": "RoleAdminChanged",
       "RoleGranted": "RoleGranted",
       "RoleRevoked": "RoleRevoked",
@@ -335,11 +337,13 @@
       "UnWhitelisted": "UnWhitelisted",
       "UnWhitelistedChild": "UnWhitelistedChild",
       "UnpackClaim": "UnpackClaim",
-      "UnpackMysterybox": "UnpackMysterybox",
+      "UnpackMysteryBox": "UnpackMysteryBox",
       "UnpackWrapper": "UnpackWrapper",
       "Unpaused": "Unpaused",
       "UpdateUser": "UpdateUser",
       "Upgrade": "Upgrade",
+      "WaitListRewardClaimed": "WaitListRewardClaimed",
+      "WaitListRewardSet": "WaitListRewardSet",
       "Whitelisted": "Whitelisted",
       "WhitelistedChild": "WhitelistedChild",
       "WithdrawBalance": "WithdrawBalance"
@@ -355,6 +359,10 @@
       "INTELLIGENCE": "Intelligence",
       "STRENGTH": "Strength",
       "WISDOM": "Wisdom"
+    },
+    "gradeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
@@ -383,7 +391,7 @@
       "INACTIVE": "Inactive",
       "PENDING": "Pending"
     },
-    "mysteryboxStatus": {
+    "mysteryBoxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -479,8 +487,8 @@
     }
   },
   "errors": {
-    "uncaughtError": "Uncaught error happened",
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "uncaughtError": "Uncaught error happened"
   },
   "form": {
     "adornment": {
@@ -534,6 +542,7 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
+      "stakingInfo": "Staking info",
       "startRound": "Start round",
       "submit": "Submit",
       "topUp": "Top up",
@@ -558,7 +567,7 @@
     "labels": {
       "DUMMY": "Dummy",
       "EXCHANGE": "EXCHANGE",
-      "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -576,10 +585,13 @@
       "addressLine2": "Address (line 2)",
       "addresses": "Addresses",
       "allDeposits": "All deposits",
+      "allStakes": "All Stakes",
+      "allUsers": "All Users",
       "amount": "Amount",
       "attribute": "Attribute",
       "baseTokenURI": "Base token URI",
       "batchSize": "Collection size",
+      "beneficiary": "Beneficiary",
       "breeder": "Breeder",
       "cap": "Cap",
       "categoryIds": "Categories",
@@ -589,7 +601,9 @@
       "childIds": "Child",
       "city": "City",
       "claimStatus": "Status",
+      "cliffInMonth": "Cliff in month",
       "comment": "Comment",
+      "commission": "Commission",
       "confirm": "Confirm",
       "content": "Content",
       "contract": "Contract",
@@ -620,14 +634,17 @@
       "from": "From",
       "fromBlock": "Listen log from block №",
       "gender": "Gender",
+      "gradeStatus": "Status",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
       "isDefault": "Is default",
+      "isPrivate": "Private",
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "lottery": "Lottery",
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
@@ -635,13 +652,14 @@
       "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
-      "maxTime": "Max Cooldown",
       "maxTicket": "Max tickets",
+      "maxTime": "Max Cooldown",
       "merchantId": "Merchant",
       "merchantStatus": "Status",
       "metadata": "Attributes",
+      "monthlyRelease": "Monthly release",
+      "mysteryBoxStatus": "Status",
       "mysteryId": "Mysterybox",
-      "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
       "orderItems": "Items",
@@ -683,6 +701,7 @@
       "roundId": "Round",
       "roundIds": "Round",
       "royalty": "Royalty",
+      "ruleCounter": "Rule Counter",
       "schedule": "Round Schedule",
       "share": "Share",
       "shares": "Shares",
@@ -699,9 +718,10 @@
       "templateId": "Template",
       "templateIds": "Templates",
       "templateStatus": "Status",
-      "time": "Cooldown time",
       "ticket": "Ticket",
       "ticketNumber": "Ticket Number",
+      "time": "Cooldown time",
+      "timeLagBeforeRelease": "Time lag before release",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
@@ -717,13 +737,23 @@
       "userId": "User",
       "userIds": "Users",
       "userRoles": "Roles",
+      "userStakes": "User Stakes",
       "userStatus": "Status",
-      "winNumbers": "Win numbers",
+      "wallet": "Wallet",
       "winNumber": "Win number",
+      "winNumbers": "Win numbers",
       "year": "Year",
-      "zip": "ZIP code"
+      "zip": "ZIP code",
+      "facebookUrl": "Facebook",
+      "instagramUrl": "Instagram",
+      "twitterUrl": "Twitter",
+      "youtubeUrl": "Youtube"
     },
     "placeholders": {
+      "facebookUrl": "https://facebook.com/",
+      "instagramUrl": "https://instagram.com/",
+      "twitterUrl": "https://twitter.com/",
+      "youtubeUrl": "https://youtube.com/",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
@@ -738,12 +768,15 @@
       "attribute": "...",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
+      "beneficiary": "0x...",
       "cap": "10",
       "categoryIds": "Root",
       "childId": "Contract",
       "childIds": "Contract",
       "city": "Hamburg",
+      "cliffInMonth": "12",
       "comment": "Fraud",
+      "commission": "30",
       "confirm": "******",
       "contract": "Contract",
       "contractId": "Contract",
@@ -771,6 +804,7 @@
       "maxTime": "0",
       "merchantId": "Gordon Freeman",
       "metadata": "{}",
+      "monthlyRelease": "10%",
       "mysteryId": "Mysterybox",
       "name": "Pink dust",
       "number": "100500",
@@ -800,6 +834,7 @@
       "share": "0",
       "shares": "0",
       "slug": "terms-of-services",
+      "stakingRule": "Staking rule",
       "stakingRuleStatus": "Status",
       "state": "Hamburg",
       "subscriptionId": "2",
@@ -808,6 +843,7 @@
       "templateIds": "Template",
       "text": "qwerty",
       "time": "0",
+      "timeLagBeforeRelease": "100",
       "title": "Title",
       "token": "Bottle of water",
       "tokenId": "Token",
@@ -816,6 +852,7 @@
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
       "userIds": "Gordon Freeman",
+      "wallet": "Wallet",
       "zip": "80576"
     },
     "tips": {
@@ -966,13 +1003,8 @@
       },
       "infrastructure": {
         "admin": {
-          "balances": "System Balances",
-          "emails": "Emails",
-          "pages": "Pages",
-          "payees": "System Payees",
-          "settings": "Settings",
           "title": "Admin",
-          "users": "Users"
+          "merchant": "Merchant"
         }
       },
       "integrations": {
@@ -999,6 +1031,9 @@
         "waitlist": "Waitlist"
       },
       "title": "Dashboard"
+    },
+    "merchant": {
+      "title": "Merchant"
     },
     "dispenser": {
       "title": "Dispenser"
@@ -1069,6 +1104,9 @@
       "title": "Orders"
     },
     "lottery": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -1078,7 +1116,10 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Lottery"
+      "title": "Lottery",
+      "tokens": {
+        "title": "Tokens"
+      }
     },
     "marketplace": {
       "chart": {
@@ -1181,6 +1222,9 @@
       "title": "Pyramid"
     },
     "raffle": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "rounds": {
         "end": "End Round",
         "start": "Start Round",
@@ -1190,7 +1234,10 @@
       "tickets": {
         "title": "Tickets"
       },
-      "title": "Raffle"
+      "title": "Raffle",
+      "tokens": {
+        "title": "Tokens"
+      }
     },
     "rent": {
       "title": "Rent"
@@ -1226,12 +1273,18 @@
       "title": "Users"
     },
     "vesting": {
+      "claims": {
+        "title": "Vesting Claims"
+      },
       "contracts": {
         "title": "Vesting Contracts"
       },
       "title": "Vesting"
     },
     "waitlist": {
+      "contracts": {
+        "title": "Contracts"
+      },
       "item": {
         "defaultItemTitle": "{account}",
         "title": "Accounts"

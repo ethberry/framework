@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 
-import { ILotteryOption, RmqProviderType } from "@framework/types";
+import { ILotteryScheduleUpdateDto, RmqProviderType } from "@framework/types";
 
 import { RoundServiceRmq } from "./round.service.rmq";
 
@@ -9,8 +9,8 @@ import { RoundServiceRmq } from "./round.service.rmq";
 export class RoundControllerRmq {
   constructor(private readonly roundServiceRmq: RoundServiceRmq) {}
 
-  @EventPattern(RmqProviderType.SCHEDULE_SERVICE)
-  async updateSchedule(@Payload() dto: ILotteryOption): Promise<void> {
+  @EventPattern(RmqProviderType.SCHEDULE_SERVICE_LOTTERY)
+  async updateSchedule(@Payload() dto: ILotteryScheduleUpdateDto): Promise<void> {
     return this.roundServiceRmq.updateSchedule(dto);
   }
 }

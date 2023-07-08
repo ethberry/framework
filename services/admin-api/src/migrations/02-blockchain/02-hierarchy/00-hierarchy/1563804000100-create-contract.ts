@@ -69,15 +69,21 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
+    // 01   - CM
+    // 02   - exchange
+    // 07   - VRF
     // 010x - native
     // 020x - erc20
     // 030x - erc721
     // 040x - erc998
     // 050x - erc1155
     // 011x - mystery
-    // 012x - wrapper
+    // 012x - mystery
+    // 013x - wrapper
     // 021x - raffle
-    // 022x - lottery
+    // 022x - raffle
+    // 023x - lottery
+    // 024x - lottery
 
     const table = new Table({
       name: `${ns}.contract`,
@@ -192,7 +198,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 5000, true);`);
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -1,42 +1,49 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { constants } from "ethers";
 
 import { useApiCall } from "@gemunion/react-hooks";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, ILotteryOption } from "@framework/types";
+// import { RichTextDisplay } from "@gemunion/mui-rte";
+
+import { CronExpression, IContract, ILotteryContractRound } from "@framework/types";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
-import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";
+import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
 
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 import { formatPrice } from "../../../../utils/money";
+import { emptyLottery } from "../../../../components/common/interfaces";
 
 const maxNumbers = 6;
 
-export const LotteryPurchase: FC = () => {
-  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultTickets());
+interface ILotteryPurchaseProps {
+  contract: IContract;
+}
+
+export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
+  const { contract } = props;
+  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
-  const [lottery, setLottery] = useState<ILotteryOption>({
-    address: constants.AddressZero,
-    description: "Lottery",
-    schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-    round: {},
-  });
+  const [lottery, setLottery] = useState<ILotteryContractRound>(emptyLottery);
 
   const { fn, isLoading } = useApiCall(
     async api => {
-      return api.fetchJson({
-        url: "/lottery/rounds/options",
-      });
+      return contract.id
+        ? api.fetchJson({
+            url: "/lottery/rounds/options",
+            data: {
+              contractId: contract.id,
+            },
+          })
+        : null;
     },
     { success: false, error: false },
   );
 
   const fetchLottery = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryOption) => {
+      .then((json: ILotteryContractRound) => {
         setLottery(json);
       })
       .catch(e => {
@@ -60,7 +67,7 @@ export const LotteryPurchase: FC = () => {
   };
 
   const clearForm = () => {
-    setTicketNumbers(getDefaultTickets());
+    setTicketNumbers(getDefaultNumbers());
   };
 
   return (
@@ -70,12 +77,32 @@ export const LotteryPurchase: FC = () => {
         <PageHeader message="pages.lottery.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
             {lottery.round ? (
-              <LotteryPurchaseButton round={lottery.round} clearForm={clearForm} ticketNumbers={ticketNumbers} />
+              <LotteryPurchaseButton
+                round={lottery.round}
+                clearForm={clearForm}
+                ticketNumbers={ticketNumbers}
+                disabled={lottery.round.maxTickets <= lottery.count}
+              />
             ) : null}
             {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
           </StyledPaper>
+          <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
+            {lottery.round && lottery.round.maxTickets > 0 ? (
+              <FormattedMessage
+                id="pages.lottery.purchase.count"
+                values={{ current: lottery.count, max: lottery.round?.maxTickets }}
+              />
+            ) : null}
+          </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
+      <StyledTypography variant="body1">
+        {lottery.parameters.schedule
+          ? Object.keys(CronExpression)[
+              Object.values(CronExpression).indexOf(lottery.parameters.schedule as unknown as CronExpression)
+            ]
+          : "not yet scheduled"}
+      </StyledTypography>
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
         <StyledTypography variant="h6">
           <FormattedMessage
@@ -107,17 +134,13 @@ export const LotteryPurchase: FC = () => {
         </StyledWrapper>
       </StyledPaper>
 
-      {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
-      <StyledTypography variant="h6">{lottery.description}</StyledTypography>
-      <StyledTypography variant="body1">
-        {
-          Object.keys(CronExpression)[
-            Object.values(CronExpression).indexOf(lottery.schedule as unknown as CronExpression)
-          ]
-        }
-      </StyledTypography>
       <StyledTypography variant="h6">
-        <FormattedMessage id="pages.lottery.purchase.rules" />
+        <FormattedMessage
+          id="pages.lottery.purchase.rules"
+          values={{
+            commission: contract.parameters.commission || 0,
+          }}
+        />
       </StyledTypography>
 
       <StyledPaper>

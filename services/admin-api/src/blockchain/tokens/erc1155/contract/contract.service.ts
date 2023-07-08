@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import type { IContractSearchDto, IErc1155ContractCreateDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -19,13 +19,7 @@ export class Erc1155ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC1155],
-        contractModule: [ModuleType.HIERARCHY],
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 
   public async create(dto: IErc1155ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {

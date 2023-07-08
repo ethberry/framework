@@ -45,7 +45,7 @@ export const SwapHeader: FC<ISwapHeaderProps> = props => {
         }}
       >
         <Typography variant="h6">
-          <FormattedMessage id="pages.1inch.swap.title" />
+          <FormattedMessage id="pages.dex.1inch.swap.title" />
         </Typography>
       </Box>
 

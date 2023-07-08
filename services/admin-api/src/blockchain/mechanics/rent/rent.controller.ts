@@ -1,11 +1,12 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 import { RentCreateDto, RentSearchDto, RentUpdateDto } from "./dto";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/rents")
@@ -19,13 +20,17 @@ export class RentController {
   }
 
   @Post("/")
-  public create(@Body() dto: RentCreateDto): Promise<RentEntity> {
-    return this.rentService.create(dto);
+  public create(@Body() dto: RentCreateDto, @User() userEntity: UserEntity): Promise<RentEntity> {
+    return this.rentService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: RentUpdateDto): Promise<RentEntity> {
-    return this.rentService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: RentUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<RentEntity> {
+    return this.rentService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

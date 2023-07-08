@@ -9,14 +9,14 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
 import "../utils/constants.sol";
 import "../utils/errors.sol";
 import "./interfaces/IERC721Simple.sol";
+import "./extensions/ERC721GeneralizedCollection.sol";
 
-contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
+contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
   using Counters for Counters.Counter;
 
   constructor(

@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
 
 import {
   AccessControlEventType,
@@ -56,7 +56,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               // MODULE:CRAFT
               ExchangeEventType.Craft,
               // MODULE:MYSTERYBOX
-              ExchangeEventType.Mysterybox,
+              ExchangeEventType.PurchaseMysteryBox,
               // MODULE:REFERRAL
               ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralWithdraw,

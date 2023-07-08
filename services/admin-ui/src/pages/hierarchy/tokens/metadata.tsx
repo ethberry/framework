@@ -12,7 +12,7 @@ export const getFilteredAttributes = (metadata: Record<string, any>) =>
   Object.entries(metadata).reduce((memo, [key, value]) => {
     switch (key) {
       // MODULE:GRADE
-      case TokenMetadata.GRADE:
+      case TokenMetadata.LEVEL:
         Object.assign(memo, { [key]: value });
         break;
       // MODULE:RANDOM

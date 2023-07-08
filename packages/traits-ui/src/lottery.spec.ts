@@ -1,6 +1,6 @@
 import { boolArrayToByte32, byte32ToBoolArray } from "./lottery";
 
-describe.only("Bitwise operations", () => {
+describe("Bitwise operations", () => {
   describe("boolArrayToByte32", () => {
     it("should encode boolean array into byte32", () => {
       const boolArray = Array(36).fill(false);

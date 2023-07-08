@@ -18,13 +18,13 @@ import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
-import "../../ERC721/interfaces/IERC721Metadata.sol";
+import "../../ERC721/interfaces/IERC721GeneralizedCollection.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Exchange/referral/LinearReferral.sol";
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../utils/errors.sol";
-import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../MysteryBox/interfaces/IERC721MysteryBox.sol";
 import "./interfaces/IStaking.sol";
 
 /**
@@ -140,7 +140,10 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
           uint256 ruleDepositTokenTemplateId = rule.deposit[i].tokenId;
 
           if (ruleDepositTokenTemplateId != 0) {
-            uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenIds[i], TEMPLATE_ID);
+            uint256 templateId = IERC721GeneralizedCollection(depositItem.token).getRecordFieldValue(
+              tokenIds[i],
+              TEMPLATE_ID
+            );
             if (templateId != ruleDepositTokenTemplateId) {
               revert WrongToken();
             }
@@ -370,9 +373,9 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
     } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
       // If the token is an ERC721 or ERC998 token, mint NFT to the receiver.
       for (uint256 k = 0; k < multiplier; ) {
-        if (IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
+        if (IERC721GeneralizedCollection(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
           // If the token supports the MysteryBox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
-          IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
+          IERC721MysteryBox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
         } else {
           // If the token does not support the MysteryBox interface, call the acquire function to mint NFTs to the receiver.
           ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);

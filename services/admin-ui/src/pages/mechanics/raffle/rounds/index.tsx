@@ -8,7 +8,8 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IRaffleRound } from "@framework/types";
 
 import { RaffleRoundViewDialog } from "./view";
-import { RaffleRoundEndButton, RaffleRoundStartButton, RaffleScheduleButton } from "../../../../components/buttons";
+import { CronExpression } from "@framework/types";
+import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
 
 export const RaffleRounds: FC = () => {
   const {
@@ -33,23 +34,30 @@ export const RaffleRounds: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "raffle", "raffle.rounds"]} />
 
-      <PageHeader message="pages.raffle.rounds.title">
-        <RaffleRoundStartButton />
-        <RaffleRoundEndButton />
-        <RaffleScheduleButton />
-      </PageHeader>
+      <PageHeader message="pages.raffle.rounds.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((round, i) => (
             <ListItem key={i}>
-              <ListItemText>
+              <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>
                 {round.roundId} - {round.number || "awaiting results"}
+              </ListItemText>
+              <ListItemText sx={{ width: 0.3 }}>
+                {round.contract?.parameters.schedule
+                  ? Object.keys(CronExpression)[
+                      Object.values(CronExpression).indexOf(
+                        round.contract?.parameters.schedule as unknown as CronExpression,
+                      )
+                    ]
+                  : ""}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>
                   <Visibility />
                 </IconButton>
+                <RaffleReleaseButton round={round} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

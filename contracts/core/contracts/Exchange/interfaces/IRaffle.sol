@@ -7,5 +7,5 @@
 pragma solidity ^0.8.13;
 
 interface IRaffle {
-  function printTicket(address account) external returns (uint256 tokenId, uint256 roundId);
+  function printTicket(uint256 externalId, address account) external returns (uint256 tokenId, uint256 roundId);
 }

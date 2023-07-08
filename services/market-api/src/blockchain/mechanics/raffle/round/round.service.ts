@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, FindOptionsWhere } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 
-import { CronExpression, ModuleType, TokenType } from "@framework/types";
-import type { IRaffleOption } from "@framework/types";
+import { IRaffleContractRound, TokenType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { RaffleRoundEntity } from "./round.entity";
+import { RaffleTicketService } from "../token/ticket.service";
+import { IRaffleOptionsDto } from "./interfaces";
 
 @Injectable()
 export class RaffleRoundService {
@@ -14,6 +15,7 @@ export class RaffleRoundService {
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
     private readonly contractService: ContractService,
+    private readonly ticketService: RaffleTicketService,
   ) {}
 
   public async autocomplete(): Promise<Array<RaffleRoundEntity>> {
@@ -28,26 +30,45 @@ export class RaffleRoundService {
     return queryBuilder.getRawMany();
   }
 
-  public async options(): Promise<IRaffleOption> {
-    const raffleEntity = await this.contractService.findOne({
-      contractModule: ModuleType.RAFFLE,
-      contractType: undefined,
-    });
+  public async options(dto: IRaffleOptionsDto): Promise<IRaffleContractRound> {
+    const { contractId } = dto;
+
+    const raffleEntity = await this.contractService.findOne({ id: contractId });
 
     if (!raffleEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    const raffleRound = await this.findCurrentRoundWithRelations();
+    const raffleRound = await this.getCurrentRound(contractId);
 
-    const descriptionJson: Partial<IRaffleOption> = JSON.parse(raffleEntity.description);
+    const ticketCount = raffleRound ? await this.ticketService.getTicketCount(raffleRound.id) : 0;
 
-    return {
-      address: raffleEntity.address,
-      description: descriptionJson.description,
-      schedule: descriptionJson.schedule || CronExpression.EVERY_DAY_AT_MIDNIGHT,
-      round: raffleRound || undefined,
-    };
+    return Object.assign(raffleEntity, { round: raffleRound, count: ticketCount });
+  }
+
+  public getCurrentRound(contractId: number): Promise<RaffleRoundEntity | null> {
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
+    queryBuilder.leftJoinAndSelect("round.ticketContract", "ticketContract");
+    queryBuilder.leftJoinAndSelect("round.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    queryBuilder.leftJoinAndSelect(
+      "price_template.tokens",
+      "price_tokens",
+      "price_contract.contractType IN(:...tokenTypes)",
+      { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
+    );
+
+    queryBuilder.andWhere("round.contractId = :contractId", {
+      contractId,
+    });
+
+    queryBuilder.andWhere("round.endTimestamp IS NULL");
+
+    return queryBuilder.getOne();
   }
 
   public findCurrentRoundWithRelations(where?: FindOptionsWhere<RaffleRoundEntity>): Promise<RaffleRoundEntity | null> {

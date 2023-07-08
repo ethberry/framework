@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { hexlify, Wallet, randomBytes } from "ethers";
+import { hexlify, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -16,16 +16,13 @@ import {
   IVestingContractDeployDto,
   PyramidContractTemplates,
   StakingContractTemplates,
-  VestingContractTemplate,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 import ERC20WhitelistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Whitelist.sol/ERC20Whitelist.json";
 
-import VestingLinearSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
-import VestingGradedSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
-import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
 
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
@@ -182,21 +179,11 @@ export class ContractManagerSignService {
 
   // MODULE:VESTING
   public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractTemplate, account, startTimestamp, duration } = dto;
-
+    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = dto;
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
-    const params = {
-      nonce,
-      bytecode,
-    };
 
-    const args = {
-      account,
-      startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
-      duration: duration * 60 * 60 * 24, // in seconds
-      contractTemplate,
-    };
+    // await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -215,18 +202,28 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         VestingArgs: [
-          { name: "account", type: "address" },
+          { name: "beneficiary", type: "address" },
           { name: "startTimestamp", type: "uint64" },
-          { name: "duration", type: "uint64" },
-          { name: "contractTemplate", type: "string" },
+          { name: "cliffInMonth", type: "uint16" },
+          { name: "monthlyRelease", type: "uint16" },
         ],
       },
       // Values
       {
-        params,
-        args,
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          beneficiary,
+          startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
+          cliffInMonth, // in seconds
+          monthlyRelease,
+        },
       },
     );
 
@@ -364,19 +361,8 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto) {
-    const { contractTemplate } = dto;
-
-    switch (contractTemplate) {
-      case VestingContractTemplate.LINEAR:
-        return VestingLinearSol.bytecode;
-      case VestingContractTemplate.GRADED:
-        return VestingGradedSol.bytecode;
-      case VestingContractTemplate.CLIFF:
-        return VestingCliffSol.bytecode;
-      default:
-        throw new NotFoundException("templateNotFound");
-    }
+  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto) {
+    return VestingSol.bytecode;
   }
 
   public getBytecodeByStakingContractTemplate(dto: IStakingContractDeployDto) {

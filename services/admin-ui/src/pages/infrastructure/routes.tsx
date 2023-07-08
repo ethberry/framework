@@ -3,10 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/common-pages";
 
 import { Profile } from "./profile";
-import { User } from "./user";
-import { Page } from "./page";
-import { Settings } from "./settings";
-import { Email } from "./email";
+import { Merchant } from "./merchant";
 
 export const infrastructureRoutes: Array<RouteObject> = [
   {
@@ -18,29 +15,11 @@ export const infrastructureRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/users",
+    path: "/merchant",
     element: <Protected />,
     children: [
-      { index: true, element: <User /> },
-      { path: "/users/:id", element: <User /> },
+      { index: true, element: <Merchant /> },
+      { path: "/merchant", element: <Merchant /> },
     ],
-  },
-  {
-    path: "/pages",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Page /> },
-      { path: "/pages/:id", element: <Page /> },
-    ],
-  },
-  {
-    path: "/settings",
-    element: <Protected />,
-    children: [{ index: true, element: <Settings /> }],
-  },
-  {
-    path: "/emails",
-    element: <Protected />,
-    children: [{ index: true, element: <Email /> }],
   },
 ];

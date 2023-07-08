@@ -31,24 +31,6 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         web3Context.provider?.getSigner(),
       );
 
-      const items = ([] as Array<any>).concat(
-        mysterybox.item?.components.sort(sorter("id")).map(component => ({
-          tokenType: Object.values(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.templateId,
-          amount: component.amount,
-        })),
-        [
-          {
-            id: mysterybox.id,
-            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: mysterybox.template!.contract!.address,
-            tokenId: mysterybox.templateId,
-            amount: "1",
-          },
-        ],
-      );
-
       return contract.purchaseMystery(
         {
           nonce: utils.arrayify(sign.nonce),
@@ -57,7 +39,20 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           referrer: constants.AddressZero,
           extra: utils.formatBytes32String("0x"),
         },
-        items,
+        [
+          {
+            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+            token: mysterybox.template!.contract!.address,
+            tokenId: mysterybox.templateId,
+            amount: "1",
+          },
+          ...mysterybox.item!.components.sort(sorter("id")).map(component => ({
+            tokenType: Object.values(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.templateId || 0,
+            amount: component.amount,
+          })),
+        ],
         mysterybox.template?.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,

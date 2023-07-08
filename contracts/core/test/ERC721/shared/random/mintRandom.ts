@@ -7,8 +7,8 @@ import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkToken, VRFCoordinatorMock } from "../../../../typechain-types";
 import { deployLinkVrfFixture } from "../../../shared/link";
-import { templateId } from "../../../constants";
-import { randomRequest } from "../../../shared/randomRequest";
+import { templateId, tokenAttributes, tokenId } from "../../../constants";
+import { randomFixRequest } from "../../../shared/randomRequest";
 
 export function shouldMintRandom(factory: () => Promise<any>) {
   describe("mintRandom", function () {
@@ -36,11 +36,17 @@ export function shouldMintRandom(factory: () => Promise<any>) {
       await contractInstance.mintRandom(receiver.address, templateId);
 
       if (network.name === "hardhat") {
-        await randomRequest(contractInstance, vrfInstance);
+        await randomFixRequest(contractInstance, vrfInstance);
       }
 
       const balance = await contractInstance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
+
+      const value1 = await contractInstance.getRecordFieldValue(tokenId, tokenAttributes.TEMPLATE_ID);
+      expect(value1).to.equal(templateId);
+
+      const value2 = await contractInstance.getRecordFieldValue(tokenId, tokenAttributes.RARITY);
+      expect(value2).to.equal(2);
     });
 
     // TODO mintRandom to receiver

@@ -3,6 +3,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
+import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleService } from "./rule.service";
 import { AchievementRuleEntity } from "./rule.entity";
 import {
@@ -11,7 +12,6 @@ import {
   AchievementRuleSearchDto,
   AchievementRuleUpdateDto,
 } from "./dto";
-import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/achievements/rules")
@@ -42,15 +42,16 @@ export class AchievementRuleController {
   }
 
   @Post("/")
-  public create(@Body() dto: AchievementRuleCreateDto): Promise<AchievementRuleEntity> {
-    return this.achievementRuleService.create(dto);
+  public create(@Body() dto: AchievementRuleCreateDto, @User() userEntity: UserEntity): Promise<AchievementRuleEntity> {
+    return this.achievementRuleService.create(dto, userEntity);
   }
 
   @Put("/:id")
   public update(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() dto: AchievementRuleUpdateDto,
+    @User() userEntity: UserEntity,
   ): Promise<AchievementRuleEntity | undefined> {
-    return this.achievementRuleService.update({ id }, dto);
+    return this.achievementRuleService.update({ id }, dto, userEntity);
   }
 }

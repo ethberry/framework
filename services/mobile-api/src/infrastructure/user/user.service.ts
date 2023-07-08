@@ -3,7 +3,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
-import { IUserImportDto } from "./interfaces";
+import type { IUserImportDto } from "./interfaces";
 
 @Injectable()
 export class UserService {

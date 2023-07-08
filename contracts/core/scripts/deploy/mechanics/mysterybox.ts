@@ -4,7 +4,7 @@ import { blockAwait } from "@gemunion/contracts-utils";
 import { baseTokenURI, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 export async function deployMysterybox(contracts: Record<string, any>) {
-  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryBoxSimple");
   const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
   contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
   await blockAwait();
@@ -22,7 +22,7 @@ export async function deployMysterybox(contracts: Record<string, any>) {
   await contracts.contractManager.addFactory(mysteryboxSimpleInstance.address, MINTER_ROLE);
   await blockAwait();
 
-  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryboxPausable");
+  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryBoxPausable");
   const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
   contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
   await blockAwait();
@@ -40,7 +40,7 @@ export async function deployMysterybox(contracts: Record<string, any>) {
   await contracts.contractManager.addFactory(mysteryboxPausableInstance.address, MINTER_ROLE);
   await blockAwait();
 
-  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryboxBlacklist");
+  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryBoxBlacklist");
   const mysteryboxBlacklistInstance = await mysteryboxBlacklistFactory.deploy(
     "Mysterybox",
     "MB-BL721",

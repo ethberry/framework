@@ -6,6 +6,10 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
@@ -128,6 +132,25 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '{WHITELIST}',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10280,
+        '${erc20TokenSimpleAddress}',
+        '${chainId}',
+        'Warp Credits',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
+        'Warp Credits',
+        'GEM20',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{}',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

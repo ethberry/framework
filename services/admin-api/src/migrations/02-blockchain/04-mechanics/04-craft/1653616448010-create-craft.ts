@@ -6,7 +6,6 @@ export class CreateCraft1653616448010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.craft_status_enum AS ENUM (
-        'NEW',
         'ACTIVE',
         'INACTIVE'
       );
@@ -29,9 +28,13 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
           name: "craft_status",
           type: `${ns}.craft_status_enum`,
-          default: "'NEW'",
+          default: "'ACTIVE'",
         },
         {
           name: "created_at",
@@ -55,10 +58,22 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
       ],
     });
 
     await queryRunner.createTable(table, true);
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    await queryRunner.query(`SELECT setval('${ns}.craft_id_seq', 5000000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

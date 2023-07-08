@@ -1,11 +1,11 @@
 import { ethers, network } from "hardhat";
-import { Contract, Result, WeiPerEther, ZeroAddress } from "ethers";
+import { Contract, WeiPerEther, ZeroAddress } from "ethers";
 import fs from "fs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
-import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, royalty, nonce } from "@gemunion/contracts-constants";
+import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
 import { getContractName } from "../../test/utils";
 import { expiresAt, externalId } from "../../test/constants";
@@ -19,25 +19,25 @@ interface IObj {
   hash?: string;
 }
 
-const recursivelyDecodeResult = (result: Result): Record<string, any> => {
-  if (typeof result !== "object") {
-    // Raw primitive value
-    return result;
-  }
-  try {
-    const obj = result.toObject();
-    if (obj._) {
-      throw new Error("Decode as array, not object");
-    }
-    Object.keys(obj).forEach(key => {
-      obj[key] = recursivelyDecodeResult(obj[key]);
-    });
-    return obj;
-  } catch (err) {
-    // Result is array.
-    return result.toArray().map(item => recursivelyDecodeResult(item as Result));
-  }
-};
+// const recursivelyDecodeResult = (result: Result): Record<string, any> => {
+//   if (typeof result !== "object") {
+//     // Raw primitive value
+//     return result;
+//   }
+//   try {
+//     const obj = result.toObject();
+//     if (obj._) {
+//       throw new Error("Decode as array, not object");
+//     }
+//     Object.keys(obj).forEach(key => {
+//       obj[key] = recursivelyDecodeResult(obj[key]);
+//     });
+//     return obj;
+//   } catch (err) {
+//     // Result is array.
+//     return result.toArray().map(item => recursivelyDecodeResult(item as Result));
+//   }
+// };
 
 const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   if (obj && obj.hash) {
@@ -67,8 +67,9 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
           const accessInstance = await ethers.getContractAt("ERC721Simple", contracts[i]);
           console.info(`grantRole [${idx} of ${max}] ${contracts[i]} ${grantee[j]}`);
           idx++;
-          // await accessInstance.grantRole(roles[k], grantee[j]);
-          await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
+          await blockAwaitMs(50);
+          await accessInstance.grantRole(roles[k], grantee[j]);
+          // await debug(await accessInstance.grantRole(roles[k], grantee[j]), "grantRole");
         }
       }
     }
@@ -134,6 +135,17 @@ async function main() {
     [1, 5, 95],
   );
   contracts.exchange = exchangeInstance;
+  await debug(contracts);
+
+  contracts.exchangeBinance = await exchangeFactory.deploy(
+    "Exchange",
+    [
+      "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+      "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+      "0x61284003e50b2d7ca2b95f93857abb78a1b0f3ca",
+    ],
+    [1, 5, 95],
+  );
   await debug(contracts);
 
   await debug(
@@ -212,11 +224,11 @@ async function main() {
     await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.erc721Random.getAddress()),
     "vrfInstance.addConsumer",
   );
-  await blockAwait(delay, delayMs);
-  const eventFilter = vrfInstance.filters.SubscriptionConsumerAdded();
-  const events = await vrfInstance.queryFilter(eventFilter);
-  const { subId, consumer } = recursivelyDecodeResult(events[0].args as unknown as Result);
-  console.info("SubscriptionConsumerAdded", subId, consumer);
+  // await blockAwait(delay, delayMs);
+  // const eventFilter = vrfInstance.filters.SubscriptionConsumerAdded();
+  // const events = await vrfInstance.queryFilter(eventFilter);
+  // const { subId, consumer } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  // console.info("SubscriptionConsumerAdded", subId, consumer);
 
   const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
@@ -324,19 +336,11 @@ async function main() {
   contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
   await debug(contracts);
 
-  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
-  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  const vestingFactory = await ethers.getContractFactory("Vesting");
+  contracts.vesting = await vestingFactory.deploy(wallet, timestamp, 12, 417);
   await debug(contracts);
 
-  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
-  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
-  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryBoxSimple");
   const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
   contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
   await debug(contracts);
@@ -346,7 +350,7 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryboxPausable");
+  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryBoxPausable");
   const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
   contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
   await debug(contracts);
@@ -356,7 +360,7 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryboxBlacklist");
+  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryBoxBlacklist");
   const mysteryboxBlacklistInstance = await mysteryboxBlacklistFactory.deploy(
     "Mysterybox",
     "MB-BL721",

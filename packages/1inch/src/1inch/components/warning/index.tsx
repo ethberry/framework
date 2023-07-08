@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { chainIdToNetwork } from "@gemunion/provider-wallet";
 
@@ -29,7 +29,7 @@ export const Warning: FC = () => {
       }}
     >
       <FormattedMessage
-        id="pages.1inch.warning.text"
+        id="pages.dex.1inch.warning.text"
         values={{
           walletNetwork: chainIdToNetwork[chainId] || `#${chainId}`,
           appNetwork: chainIdToNetwork[profile.chainId],

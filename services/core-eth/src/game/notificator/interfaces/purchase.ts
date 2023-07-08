@@ -1,13 +1,15 @@
 import type { IAssetComponentHistory } from "@framework/types";
 
 export interface IPurchaseData {
-  account: string;
+  address: string;
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;
   transactionHash: string;
 }
 
 export interface IPurchaseRandomData {
-  tokenId: string;
+  account: string;
+  item: IAssetComponentHistory;
+  price: Array<IAssetComponentHistory>;
   transactionHash: string;
 }

@@ -1,10 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { GradeStrategy, IGrade, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, GradeStatus, GradeStrategy, IGrade, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { GrowthRateInput } from "./growth-rate-input";
@@ -19,14 +19,15 @@ export interface IGradeEditDialogProps {
 export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, gradeStrategy, growthRate, price, contractId, attribute } = initialValues;
+  const { id, contractId, attribute, gradeStatus, gradeStrategy, growthRate, price } = initialValues;
   const fixedValues = {
     id,
+    contractId,
+    attribute,
+    gradeStatus,
     gradeStrategy,
     growthRate,
     price,
-    contractId,
-    attribute,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -39,8 +40,19 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
-      <EntityInput name="contractId" controller="contracts" readOnly />
-      <TextInput name="attribute" readOnly />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        readOnly={!!id}
+        autoselect
+        dirtyAutoselect={false}
+        data={{
+          contractStatus: [ContractStatus.ACTIVE],
+          contractFeatures: [ContractFeatures.UPGRADEABLE],
+        }}
+      />
+      <TextInput name="attribute" readOnly={!!id} />
+      {id ? <SelectInput name="gradeStatus" options={GradeStatus} /> : null}
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />
       <TemplateAssetInput

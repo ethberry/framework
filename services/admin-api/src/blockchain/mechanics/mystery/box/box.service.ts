@@ -1,18 +1,18 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryBoxStatus, TemplateStatus } from "@framework/types";
 
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 
-import { MysteryBoxEntity } from "./box.entity";
-import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { IMysteryBoxCreateDto, IMysteryBoxUpdateDto } from "./interfaces";
+import { IMysteryBoxAutocompleteDto } from "./interfaces/autocomplete";
+import { MysteryBoxEntity } from "./box.entity";
 
 @Injectable()
 export class MysteryBoxService {
@@ -26,7 +26,7 @@ export class MysteryBoxService {
   ) {}
 
   public async search(dto: IMysteryBoxSearchDto, userEntity: UserEntity): Promise<[Array<MysteryBoxEntity>, number]> {
-    const { query, mysteryboxStatus, contractIds, templateIds, minPrice, maxPrice, skip, take } = dto;
+    const { query, mysteryBoxStatus, contractIds, templateIds, minPrice, maxPrice, skip, take } = dto;
 
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
 
@@ -63,13 +63,13 @@ export class MysteryBoxService {
       );
     }
 
-    if (mysteryboxStatus) {
-      if (mysteryboxStatus.length === 1) {
-        queryBuilder.andWhere("box.mysteryboxStatus = :mysteryboxStatus", {
-          mysteryboxStatus: mysteryboxStatus[0],
+    if (mysteryBoxStatus) {
+      if (mysteryBoxStatus.length === 1) {
+        queryBuilder.andWhere("box.mysteryBoxStatus = :mysteryBoxStatus", {
+          mysteryBoxStatus: mysteryBoxStatus[0],
         });
       } else {
-        queryBuilder.andWhere("box.mysteryboxStatus IN(:...mysteryboxStatus)", { mysteryboxStatus });
+        queryBuilder.andWhere("box.mysteryBoxStatus IN(:...mysteryBoxStatus)", { mysteryBoxStatus });
       }
     }
 
@@ -179,15 +179,17 @@ export class MysteryBoxService {
 
   public async update(
     where: FindOptionsWhere<MysteryBoxEntity>,
-    dto: Partial<IMysteryboxUpdateDto>,
+    dto: Partial<IMysteryBoxUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<MysteryBoxEntity> {
     const { price, item, ...rest } = dto;
 
-    const mysteryboxEntity = await this.findOne(where, {
+    const mysteryBoxEntity = await this.findOne(where, {
       join: {
         alias: "box",
         leftJoinAndSelect: {
           template: "box.template",
+          contract: "template.contract",
           item: "box.item",
           item_components: "item.components",
           price: "template.price",
@@ -196,43 +198,46 @@ export class MysteryBoxService {
       },
     });
 
-    if (!mysteryboxEntity) {
-      throw new NotFoundException("mysteryboxNotFound");
+    if (!mysteryBoxEntity) {
+      throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    Object.assign(mysteryboxEntity, rest);
+    if (mysteryBoxEntity.template.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
     if (price) {
-      await this.assetService.update(mysteryboxEntity.template.price, price);
+      await this.assetService.update(mysteryBoxEntity.template.price, price, userEntity);
     }
 
     if (item) {
-      await this.assetService.update(mysteryboxEntity.item, item);
+      await this.assetService.update(mysteryBoxEntity.item, item, userEntity);
     }
 
-    return mysteryboxEntity.save();
+    Object.assign(mysteryBoxEntity, rest);
+    return mysteryBoxEntity.save();
   }
 
-  public async create(dto: IMysteryboxCreateDto): Promise<MysteryBoxEntity> {
+  public async create(dto: IMysteryBoxCreateDto, userEntity: UserEntity): Promise<MysteryBoxEntity> {
     const { price, item, contractId } = dto;
-
-    const priceEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(priceEntity, price);
-
-    const itemEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(itemEntity, item);
-
-    Object.assign(dto, { price: priceEntity, item: itemEntity });
 
     const contractEntity = await this.contractService.findOne({ id: contractId });
 
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const priceEntity = await this.assetService.create();
+    await this.assetService.update(priceEntity, price, userEntity);
+
+    const itemEntity = await this.assetService.create();
+    await this.assetService.update(itemEntity, item, userEntity);
+
+    Object.assign(dto, { price: priceEntity, item: itemEntity });
 
     const templateEntity = await this.templateService.create({
       title: dto.title,
@@ -246,20 +251,30 @@ export class MysteryBoxService {
     return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
-  public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<void> {
-    const mysteryboxEntity = await this.findOne({ id: where.id });
+  public async delete(where: FindOptionsWhere<MysteryBoxEntity>, userEntity: UserEntity): Promise<MysteryBoxEntity> {
+    const mysteryBoxEntity = await this.findOne({ id: where.id }, { relations: { template: { contract: true } } });
 
-    if (!mysteryboxEntity) {
-      throw new NotFoundException("mysteryboxNotFound");
+    if (!mysteryBoxEntity) {
+      throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    const count = await this.tokenService.count({ templateId: mysteryboxEntity.templateId });
+    if (mysteryBoxEntity.template.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
-    if (!count) {
-      await this.templateService.delete({ id: mysteryboxEntity.templateId });
-      // await this.mysteryBoxEntityRepository.delete(where);
+    const count = await this.tokenService.count({ templateId: mysteryBoxEntity.templateId });
+
+    if (count) {
+      await this.templateService.update(
+        { id: mysteryBoxEntity.templateId },
+        { templateStatus: TemplateStatus.INACTIVE },
+        userEntity,
+      );
+      Object.assign(mysteryBoxEntity, { mysteryBoxStatus: MysteryBoxStatus.INACTIVE });
+      return mysteryBoxEntity.save();
     } else {
-      await this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
+      await this.templateService.delete({ id: mysteryBoxEntity.templateId }, userEntity);
+      return mysteryBoxEntity.remove();
     }
   }
 }

@@ -30,7 +30,7 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
         <Collapse in={open}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <EntityInput multiple name="categoryIds" controller="categories" />
+              <EntityInput multiple name="categoryIds" controller="ecommerce/categories" />
             </Grid>
             {/* <Grid item xs={6}> */}
             {/*  <EntityInput name="merchantId" controller="merchants" /> */}

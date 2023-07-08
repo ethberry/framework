@@ -1,3 +1,3 @@
-import { IUserCommonDto } from "@framework/types";
+import type { IUserCommonDto } from "@framework/types";
 
 export interface IProfileUpdateDto extends IUserCommonDto {}

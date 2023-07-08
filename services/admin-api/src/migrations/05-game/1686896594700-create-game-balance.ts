@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class CreateGameBalance1686896594700 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const table = new Table({
       name: `${ns}.game_balance`,
       columns: [

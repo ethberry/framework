@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IWaitListItemCreateDto, IWaitListItemSearchDto } from "@framework/types";
 
@@ -35,9 +35,12 @@ export class WaitListItemService {
     queryBuilder.select();
 
     queryBuilder.leftJoin("waitlist.list", "list");
-    queryBuilder.addSelect(["list.title"]);
+    queryBuilder.addSelect(["list.title", "list.contract", "list.root"]);
 
-    queryBuilder.andWhere("list.merchantId = :merchantId", {
+    queryBuilder.leftJoin("list.contract", "contract");
+    queryBuilder.addSelect(["contract.contractStatus"]);
+
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
 
@@ -74,13 +77,16 @@ export class WaitListItemService {
 
   public async createItem(dto: IWaitListItemCreateDto, userEntity: UserEntity): Promise<WaitListItemEntity> {
     const { listId } = dto;
-    const waitListListEntity = await this.waitListListService.findOne({ id: listId });
+    const waitListListEntity = await this.waitListListService.findOne(
+      { id: listId },
+      { relations: { contract: true } },
+    );
 
     if (!waitListListEntity) {
       throw new NotFoundException("waitListListNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
@@ -97,17 +103,20 @@ export class WaitListItemService {
     return this.waitListItemEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<WaitListItemEntity>, userEntity: UserEntity): Promise<DeleteResult> {
-    const waitListItemEntity = await this.findOne(where, { relations: { list: true } });
+  public async delete(
+    where: FindOptionsWhere<WaitListItemEntity>,
+    userEntity: UserEntity,
+  ): Promise<WaitListItemEntity> {
+    const waitListItemEntity = await this.findOne(where, { relations: { list: { contract: true } } });
 
     if (!waitListItemEntity) {
       throw new NotFoundException("claimNotFound");
     }
 
-    if (waitListItemEntity.list.merchantId !== userEntity.merchantId) {
+    if (waitListItemEntity.list.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.waitListItemEntityRepository.delete(where);
+    return waitListItemEntity.remove();
   }
 }

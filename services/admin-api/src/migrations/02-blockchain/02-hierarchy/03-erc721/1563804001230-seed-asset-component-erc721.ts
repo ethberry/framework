@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,
@@ -258,6 +262,18 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         1020101, -- Space Credits
         '${WeiPerEther.toString()}',
         101030905
+      ), (
+        'ERC20',
+        10201,
+        1020101, -- Space Credits
+        '${WeiPerEther.toString()}',
+        101030905
+      ), (
+        'ERC20',
+        10280,
+        1028001, -- Warp Credits
+        '${WeiPerEther.toString()}',
+        101038001
       ), (
         'ERC20',
         10201,

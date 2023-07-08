@@ -3,8 +3,12 @@ import { ns } from "@framework/constants";
 
 export class CreateMysterybox1653616447910 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
-      CREATE TYPE ${ns}.mysterybox_status_enum AS ENUM (
+      CREATE TYPE ${ns}.mystery_box_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
@@ -39,8 +43,8 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "mysterybox_status",
-          type: `${ns}.mysterybox_status_enum`,
+          name: "mystery_box_status",
+          type: `${ns}.mystery_box_status_enum`,
           default: "'ACTIVE'",
         },
         {
@@ -72,7 +76,7 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc721_mysterybox`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc721_mysterybox_status_enum;`);
+    await queryRunner.dropTable(`${ns}.mysterybox`);
+    await queryRunner.query(`DROP TYPE ${ns}.mystery_box_status_enum;`);
   }
 }

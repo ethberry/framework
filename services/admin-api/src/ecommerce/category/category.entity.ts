@@ -1,9 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ICategory } from "@framework/types";
 import { ns } from "@framework/constants";
 
+import { MerchantEntity } from "../../infrastructure/merchant/merchant.entity";
 import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "category" })
@@ -22,4 +23,11 @@ export class CategoryEntity extends SearchableEntity implements ICategory {
   @ManyToMany(_type => ProductEntity, product => product.categories)
   @JoinTable({ name: "product_to_category" })
   public products: Array<ProductEntity>;
+
+  @Column({ type: "int" })
+  public merchantId: number;
+
+  @JoinColumn()
+  @OneToOne(_type => MerchantEntity)
+  public merchant: MerchantEntity;
 }

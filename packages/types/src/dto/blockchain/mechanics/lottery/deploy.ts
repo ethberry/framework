@@ -1,5 +1,4 @@
 export interface ILotteryContractDeployDto {
-  account: string;
   config: ILotteryConfigDto;
 }
 

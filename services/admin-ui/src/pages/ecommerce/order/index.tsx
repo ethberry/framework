@@ -18,7 +18,7 @@ import { IOrder, OrderStatus } from "@framework/types";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { emptyOrder } from "../../../components/common/interfaces";
 import { EditOrderDialog } from "./edit";
@@ -31,7 +31,6 @@ export interface IOrderSearchDto extends IPaginationDto {
   orderStatus: Array<OrderStatus>;
   isArchived?: boolean;
   dateRange: string;
-  merchantId?: number;
 }
 
 export const Order: FC = () => {

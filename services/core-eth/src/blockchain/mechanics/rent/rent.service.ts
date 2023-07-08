@@ -67,7 +67,9 @@ export class RentService {
       throw new NotFoundException("templateNotFound");
     }
 
-    const assetEntity = await this.assetService.create({
+    const assetEntity = await this.assetService.create();
+
+    await this.assetService.update(assetEntity, {
       components: [
         {
           tokenType: TokenType.NATIVE,

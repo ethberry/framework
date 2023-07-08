@@ -1,9 +1,7 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
-
 import { Web3ContextType } from "@web3-react/core";
 import { Grid, Typography } from "@mui/material";
-
 import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -12,14 +10,14 @@ import { useSettings } from "@gemunion/provider-settings";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import BreedABI from "../../../../abis/mechanics/breed/main/breed.abi.json";
 
-import { validationSchema } from "./validation";
-import { TokenInput } from "./token-input";
-import { ContractInput } from "./contract-input";
+import { CommonContractInput } from "../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
+import { TokenInput } from "./token-input";
+import { validationSchema } from "./validation";
 
 export interface IBreedDto {
   tokenType: TokenType;
@@ -147,12 +145,20 @@ export const Breed: FC = () => {
             />
           </Grid>
           <Grid item xs={6}>
-            <ContractInput prefix="mom" />
+            <CommonContractInput
+              name="mom.contractId"
+              data={{ contractFeatures: [ContractFeatures.GENES] }}
+              withTokenType
+            />
             <TemplateInput prefix="mom" />
             <TokenInput prefix="mom" />
           </Grid>
           <Grid item xs={6}>
-            <ContractInput prefix="dad" />
+            <CommonContractInput
+              name="dad.contractId"
+              data={{ contractFeatures: [ContractFeatures.GENES] }}
+              withTokenType
+            />
             <TemplateInput prefix="dad" />
             <TokenInput prefix="dad" />
           </Grid>

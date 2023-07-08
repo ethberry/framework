@@ -54,8 +54,9 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   @Column({
     type: "enum",
     enum: TokenType,
+    nullable: true,
   })
-  public contractType: TokenType;
+  public contractType: TokenType | null;
 
   @Column({
     type: "enum",

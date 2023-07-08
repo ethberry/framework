@@ -3,10 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { RaffleTicketService } from "./ticket.service";
 import { RaffleTicketController } from "./ticket.controller";
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TokenEntity])],
+  imports: [TypeOrmModule.forFeature([ContractEntity])],
   providers: [RaffleTicketService],
   controllers: [RaffleTicketController],
   exports: [RaffleTicketService],

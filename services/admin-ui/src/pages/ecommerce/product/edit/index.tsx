@@ -36,7 +36,7 @@ export const EditProductDialog: FC<IEditProductDialogProps> = props => {
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <EntityInput name="categoryIds" controller="categories" multiple />
+      <EntityInput name="categoryIds" controller="ecommerce/categories" multiple />
       <ParameterSelectInput multiple prefix="parameters" />
       {id ? <SelectInput name="productStatus" options={ProductStatus} /> : null}
     </FormDialog>

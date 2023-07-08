@@ -6,27 +6,27 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { ITicketLottery } from "@framework/types";
+import type { ILotteryToken } from "@framework/types";
 import { TokenStatus } from "@framework/types";
 
 import LotteryGetPrizeABI from "../../../../../abis/mechanics/lottery/reward/getPrize.abi.json";
-import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/ticket-list/utils";
+import { decodeNumbersToArr, getWinners } from "../../../../../pages/mechanics/lottery/token-list/utils";
 
 export interface ILotteryRewardButtonProps {
-  ticket: ITicketLottery;
+  token: ILotteryToken;
 }
 
 export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
-  const { ticket } = props;
+  const { token } = props;
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((ticket: ITicketLottery, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.LOTTERY_ADDR, LotteryGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.tokenId) as Promise<void>;
+  const metaFn = useMetamask((ticket: ILotteryToken, web3Context: Web3ContextType) => {
+    const contract = new Contract(token.round.contract!.address, LotteryGetPrizeABI, web3Context.provider?.getSigner());
+    return contract.getPrize(ticket.tokenId, token.round.roundId) as Promise<void>;
   });
 
-  const handleReward = (ticket: ITicketLottery): (() => Promise<void>) => {
+  const handleReward = (ticket: ILotteryToken): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(ticket).then(() => {
         // TODO reload page
@@ -34,16 +34,16 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
     };
   };
 
-  const count = getWinners(decodeNumbersToArr(ticket.metadata.NUMBERS), ticket.round.numbers || []);
-  if (ticket.metadata.PRIZE === "1") {
+  const count = getWinners(decodeNumbersToArr(token.metadata.NUMBERS), token.round.numbers || []);
+  if (token.metadata.PRIZE === "1") {
     return null;
   }
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
       <IconButton
-        onClick={handleReward(ticket)}
-        disabled={ticket.tokenStatus !== TokenStatus.MINTED || ticket.metadata.PRIZE === "1" || count === ""}
+        onClick={handleReward(token)}
+        disabled={token.tokenStatus !== TokenStatus.MINTED || token.metadata.PRIZE === "1" || count === ""}
         data-testid="LotteryRewardButton"
       >
         <Redeem />

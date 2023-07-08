@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IMysterybox, MysteryboxStatus } from "@framework/types";
+import { IMysterybox, MysteryBoxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -18,9 +18,9 @@ export class MysteryBoxEntity extends SearchableEntity implements IMysterybox {
 
   @Column({
     type: "enum",
-    enum: MysteryboxStatus,
+    enum: MysteryBoxStatus,
   })
-  public mysteryboxStatus: MysteryboxStatus;
+  public mysteryBoxStatus: MysteryBoxStatus;
 
   @Column({ type: "int" })
   public templateId: number;

@@ -26,7 +26,7 @@ abstract contract AbstractFactory is EIP712, AccessControl {
 
   mapping(bytes32 => bool) private _expired;
 
-  bytes internal constant PARAMS_SIGNATURE = "Params(bytes32 nonce,bytes bytecode)";
+  bytes internal constant PARAMS_SIGNATURE = "Params(bytes32 nonce,bytes bytecode,uint256 externalId)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(PARAMS_SIGNATURE);
 
   EnumerableSet.AddressSet private _minters;
@@ -35,6 +35,7 @@ abstract contract AbstractFactory is EIP712, AccessControl {
   struct Params {
     bytes32 nonce;
     bytes bytecode;
+    uint256 externalId;
   }
 
   constructor() EIP712("ContractManager", "1.0.0") {
@@ -198,6 +199,6 @@ abstract contract AbstractFactory is EIP712, AccessControl {
    * @return The hash of the Params struct.
    */
   function _hashParamsStruct(Params calldata params) internal pure returns (bytes32) {
-    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, keccak256(bytes(params.bytecode))));
+    return keccak256(abi.encode(PARAMS_TYPEHASH, params.nonce, keccak256(bytes(params.bytecode)), params.externalId));
   }
 }

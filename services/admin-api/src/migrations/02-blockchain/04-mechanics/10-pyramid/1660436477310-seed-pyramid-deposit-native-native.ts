@@ -6,6 +6,10 @@ import { wallets } from "@gemunion/constants";
 
 export class SeedPyramidDepositNativeNativeAt1660436477310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const now = new Date();
     const currentDateTime = now.toISOString();
 

@@ -5,7 +5,7 @@ import { ZeroAddress } from "ethers";
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate, tokenId } from "../constants";
+import { contractTemplate, externalId, tokenId } from "../constants";
 
 describe("ERC1155Factory", function () {
   const factory = () => deployContract(this.title);
@@ -14,7 +14,7 @@ describe("ERC1155Factory", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -36,6 +36,7 @@ describe("ERC1155Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc1155Args: [
             { name: "royalty", type: "uint96" },
@@ -46,8 +47,9 @@ describe("ERC1155Factory", function () {
         // Values
         {
           params: {
-            bytecode: erc1155Factory.bytecode,
             nonce,
+            bytecode,
+            externalId,
           },
           args: {
             royalty,
@@ -59,8 +61,9 @@ describe("ERC1155Factory", function () {
 
       const tx = await contractInstance.deployERC1155Token(
         {
-          bytecode: erc1155Factory.bytecode,
           nonce,
+          bytecode,
+          externalId,
         },
         {
           royalty,
@@ -74,7 +77,7 @@ describe("ERC1155Factory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "ERC1155TokenDeployed")
-        .withArgs(address, [royalty, baseTokenURI, contractTemplate]);
+        .withArgs(address, externalId, [royalty, baseTokenURI, contractTemplate]);
 
       const erc1155Instance = await ethers.getContractAt("ERC1155Simple", address);
 
@@ -99,7 +102,7 @@ describe("ERC1155Factory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc1155 = await ethers.getContractFactory("ERC1155Simple");
+      const { bytecode } = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -121,6 +124,7 @@ describe("ERC1155Factory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           Erc1155Args: [
             { name: "royalty", type: "uint96" },
@@ -131,8 +135,9 @@ describe("ERC1155Factory", function () {
         // Values
         {
           params: {
-            bytecode: erc1155.bytecode,
             nonce,
+            bytecode,
+            externalId,
           },
           args: {
             royalty,
@@ -146,8 +151,9 @@ describe("ERC1155Factory", function () {
 
       const tx = contractInstance.deployERC1155Token(
         {
-          bytecode: erc1155.bytecode,
           nonce,
+          bytecode,
+          externalId,
         },
         {
           royalty,

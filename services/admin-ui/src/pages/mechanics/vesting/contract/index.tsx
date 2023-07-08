@@ -18,14 +18,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
 
-import { IContract, IVestingSearchDto } from "@framework/types";
+import type { IContract, IVestingSearchDto } from "@framework/types";
 
-import { VestingSearchForm } from "./form";
-import { VestingViewDialog } from "./view";
+import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
-import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
+import { VestingSearchForm } from "./form";
+import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
   const {
@@ -46,7 +46,6 @@ export const VestingContracts: FC = () => {
     baseUrl: "/vesting/contracts",
     search: {
       account: "",
-      contractTemplate: [],
     },
     empty: emptyVestingContract,
   });
@@ -76,7 +75,7 @@ export const VestingContracts: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
 
-      <PageHeader message="pages.vesting.title">
+      <PageHeader message="pages.vesting.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
@@ -92,7 +91,6 @@ export const VestingContracts: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.parameters.account as string} />
               </ListItemText>
-              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractFeatures.join(", ")}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },

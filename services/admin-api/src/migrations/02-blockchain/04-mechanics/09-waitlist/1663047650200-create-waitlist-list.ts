@@ -21,7 +21,7 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "merchant_id",
+          name: "contract_id",
           type: "int",
         },
         {
@@ -34,6 +34,11 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "is_private",
+          type: "boolean",
+          default: false,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -44,9 +49,9 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["merchant_id"],
+          columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
         {

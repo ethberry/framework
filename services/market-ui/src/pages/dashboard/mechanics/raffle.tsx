@@ -15,20 +15,20 @@ export const RaffleSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/raffle/purchase">
+        <ListItem button component={RouterLink} to="/raffle/contracts">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.raffle.purchase.title" />
+            <FormattedMessage id="pages.raffle.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/ticket">
+        <ListItem button component={RouterLink} to="/raffle/tickets">
           <ListItemIcon>
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.raffle.tickets.title" />
+            <FormattedMessage id="pages.raffle.tokens.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/raffle/leaderboard">

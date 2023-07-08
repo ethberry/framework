@@ -30,7 +30,7 @@ export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public [TokenMetadata.GRADE]: Array<number>;
+  public [TokenMetadata.LEVEL]: Array<number>;
 }
 
 export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements ITokenSearchDto {

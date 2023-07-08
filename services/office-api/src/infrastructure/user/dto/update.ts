@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { UserRole, UserStatus } from "@framework/types";
 
-import { IUserUpdateDto } from "../interfaces";
+import type { IUserUpdateDto } from "../interfaces";
 import { ProfileUpdateDto } from "../../profile/dto";
 
 export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {

@@ -10,6 +10,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc721TokenService } from "../token/token.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc721TemplateService extends TemplateService {
@@ -18,11 +19,12 @@ export class Erc721TemplateService extends TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc721TokenService,
+    protected readonly contractService: ContractService,
   ) {
-    super(templateEntityRepository, assetService, tokenService);
+    super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.HIERARCHY);
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC721]);
   }
 }

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ZeroAddress, hexlify, concat, encodeBytes32String, toBeHex, zeroPadValue, randomBytes } from "ethers";
+import { concat, encodeBytes32String, hexlify, randomBytes, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -124,13 +124,13 @@ export class BreedService {
       account,
       params,
       {
-        tokenType: Object.values(TokenType).indexOf(momTokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(momTokenEntity.template.contract.contractType!),
         token: momTokenEntity.template.contract.address,
         tokenId: momTokenEntity.tokenId.toString(),
         amount: "1",
       },
       {
-        tokenType: Object.values(TokenType).indexOf(dadTokenEntity.template.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(dadTokenEntity.template.contract.contractType!),
         token: dadTokenEntity.template.contract.address,
         tokenId: dadTokenEntity.tokenId.toString(),
         amount: "1",

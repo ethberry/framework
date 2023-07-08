@@ -1,14 +1,13 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import { ContractEntity } from "./contract.entity";
-import { TemplateEntity } from "../template/template.entity";
-import { IContractUpdateDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractEntity } from "./contract.entity";
+import { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -17,8 +16,13 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractFeatures, contractType, contractModule, skip, take } = dto;
+  public async search(
+    dto: IContractSearchDto,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
+  ): Promise<[Array<ContractEntity>, number]> {
+    const { query, contractStatus, contractFeatures, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -44,6 +48,8 @@ export class ContractService {
       } else {
         queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
     }
 
     if (contractModule) {
@@ -113,6 +119,7 @@ export class ContractService {
     } = dto;
     const where = {
       chainId: userEntity.chainId,
+      merchantId: userEntity.merchantId,
     };
 
     if (contractType.length) {
@@ -156,6 +163,7 @@ export class ContractService {
         address: true,
         contractType: true,
         decimals: true,
+        symbol: true,
       },
     });
   }
@@ -177,6 +185,7 @@ export class ContractService {
   public async update(
     where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IContractUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
@@ -184,12 +193,19 @@ export class ContractService {
       throw new NotFoundException("contractNotFound");
     }
 
-    Object.assign(contractEntity, dto);
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
 
+    Object.assign(contractEntity, dto);
     return contractEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
-    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
+  public delete(where: FindOptionsWhere<ContractEntity>, userEntity: UserEntity): Promise<ContractEntity> {
+    return this.update(where, { contractStatus: ContractStatus.INACTIVE }, userEntity);
+  }
+
+  public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
+    return this.contractEntityRepository.count({ where });
   }
 }

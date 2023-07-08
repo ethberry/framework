@@ -30,7 +30,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
+        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 101},
         '${contractManagerAddress}',
         '${chainId}',
         'CONTRACT MANAGER',

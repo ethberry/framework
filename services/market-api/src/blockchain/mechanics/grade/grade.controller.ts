@@ -3,8 +3,8 @@ import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/com
 import { NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
+import { AutocompleteGradeDto, SearchGradeDto, SignGradeDto } from "./dto";
 import { GradeService } from "./grade.service";
-import { SearchGradeDto, SignGradeDto } from "./dto";
 import { GradeEntity } from "./grade.entity";
 
 @Public()
@@ -15,6 +15,11 @@ export class GradeController {
   @Post("/sign")
   public sign(@Body() dto: SignGradeDto): Promise<IServerSignature> {
     return this.gradeService.sign(dto);
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: AutocompleteGradeDto): Promise<Array<GradeEntity>> {
+    return this.gradeService.autocomplete(dto);
   }
 
   @Get("/")

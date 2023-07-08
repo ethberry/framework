@@ -71,7 +71,7 @@ export const TokenSearchDialog: FC<ITokenSearchProps> = props => {
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>
-        <FormattedMessage id="pages.1inch.token-search.title" values={{ amount: allTokens.length }} />
+        <FormattedMessage id="pages.dex.1inch.token-search.title" values={{ amount: allTokens.length }} />
         <CloseButton onClick={handleClose} />
       </DialogTitle>
       <DialogContent>

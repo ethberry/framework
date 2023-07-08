@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { ITemplate } from "@framework/types";
-import { ContractFeatures, GradeAttribute, TokenMetadata, TokenRarity } from "@framework/types";
+import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
 
 import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
@@ -16,6 +16,7 @@ import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
 import { StyledPaper } from "./styled";
+import { TokenGradeView } from "../../grade";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangePaginationModel } = useCollection<ITokenWithHistory>({
@@ -79,12 +80,10 @@ export const Erc721Token: FC = () => {
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <StyledPaper>
               <Typography>
-                <FormattedMessage
-                  id="pages.erc721.token.level"
-                  values={{ level: selected.metadata[TokenMetadata.GRADE] }}
-                />
+                <FormattedMessage id="pages.erc721.token.grade" />
               </Typography>
-              <GradeButton token={selected} attribute={GradeAttribute.GRADE} />
+              <TokenGradeView metadata={selected.metadata} />
+              <GradeButton token={selected} />
             </StyledPaper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (

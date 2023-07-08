@@ -14,7 +14,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IPage, IPageSearchDto } from "@framework/types";
+import type { IPage, IPageSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 

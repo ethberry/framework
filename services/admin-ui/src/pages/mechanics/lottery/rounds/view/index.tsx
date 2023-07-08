@@ -16,7 +16,7 @@ export interface ILotteryRoundViewDialogProps {
 
 export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { roundId } = initialValues;
+  const { roundId, contract } = initialValues;
 
   const { formatMessage } = useIntl();
 
@@ -29,6 +29,12 @@ export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props =>
       <TableContainer component={Paper}>
         <Table aria-label="lottery ticket table">
           <TableBody>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.contract" />
+              </TableCell>
+              <TableCell align="right">{contract?.title}</TableCell>
+            </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.roundId" />

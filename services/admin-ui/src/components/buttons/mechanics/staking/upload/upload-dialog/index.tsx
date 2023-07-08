@@ -5,11 +5,12 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
-
-import { IStakingRule, ModuleType } from "@framework/types";
+import type { IStakingRule } from "@framework/types";
+import { ModuleType } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+
 import { validationSchema } from "./validation";
 import { DurationInput } from "../../../../../inputs/duration";
 import { ContractInput } from "../../../../../inputs/contract";

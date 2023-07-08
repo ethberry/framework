@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { StakingRuleStatus } from "@framework/types";
-import { IStakingRuleAutocompleteDto } from "../interfaces/autocomplete";
+import { IStakingRuleAutocompleteDto } from "../interfaces";
 
 export class StakingRuleAutocompleteDto implements IStakingRuleAutocompleteDto {
   @ApiPropertyOptional({

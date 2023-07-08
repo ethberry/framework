@@ -7,7 +7,6 @@ import type {
   IERC721ConsecutiveTransfer,
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
-  IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";
 import { ContractEventType, ContractType, ILevelUp } from "@framework/types";
@@ -16,7 +15,7 @@ import { Erc721TokenServiceEth } from "./token.service.eth";
 
 @Controller()
 export class Erc721TokenControllerEth {
-  constructor(private readonly erc721TokenServiceEth: Erc721TokenServiceEth) {}
+  constructor(public readonly erc721TokenServiceEth: Erc721TokenServiceEth) {}
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
@@ -42,11 +41,6 @@ export class Erc721TokenControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IERC721TokenMintRandomEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.mintRandom(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.LevelUp })

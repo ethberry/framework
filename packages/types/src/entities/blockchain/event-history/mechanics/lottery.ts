@@ -48,6 +48,8 @@ export interface ILotteryRoundInfo {
   startTimestamp: string;
   endTimestamp: string;
   maxTicket: string;
+  balance: string;
+  total: string;
   values: Array<string>; // uint8[6] prize numbers
   aggregation: Array<string>; // uint8[7] prize counts
   acceptedAsset: IAssetItem;

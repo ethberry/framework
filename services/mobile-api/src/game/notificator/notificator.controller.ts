@@ -24,6 +24,11 @@ export class NotificatorController {
     return this.notificatorService.dummy(data);
   }
 
+  @EventPattern(MobileEventType.PURCHASE_RANDOM)
+  public purchaseRandom(@Payload() data: IMessage): void {
+    return this.notificatorService.dummy(data);
+  }
+
   @EventPattern(MobileEventType.UPGRADE)
   public upgrade(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);

@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedAchievementClaimErc721At1681273013071 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const zeroDateTime = new Date(0).toISOString();
 

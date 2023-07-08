@@ -1,9 +1,14 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { WeiPerEther } from "ethers";
 
 import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
         history_id,
@@ -16,37 +21,37 @@ export class SeedEventHistoryErc20ClaimComponentsAt1653616447925 implements Migr
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       ), (
         10202020,
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       ), (
         10202030,
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       ), (
         10202030,
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       ), (
         10202040,
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       ), (
         10202040,
         'ITEM',
         10201,
         102010101,
-        1
+        '${WeiPerEther.toString()}'
       );
     `);
   }

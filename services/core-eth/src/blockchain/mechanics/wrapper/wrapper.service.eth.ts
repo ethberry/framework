@@ -72,7 +72,7 @@ export class WrapperServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase(), void 0, true);
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

@@ -14,4 +14,8 @@ export class AuthService {
   public delete(userEntity: UserEntity): Promise<void> {
     return this.admin.auth().deleteUser(userEntity.sub);
   }
+
+  public revokeRefreshTokens(userEntity: UserEntity): Promise<void> {
+    return this.admin.auth().revokeRefreshTokens(userEntity.sub);
+  }
 }

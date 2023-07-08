@@ -6,6 +6,10 @@ import { wallet } from "@gemunion/constants";
 
 export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
@@ -20,28 +24,28 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
       ) VALUES (
         '${wallet}',
         1,
-        112010101,
+        113010101,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         '${WeiPerEther.toString()}',
-        101010101,
-        112010101,
+        101010101, -- BESU
+        113010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         '${WeiPerEther.toString()}',
         102010101, -- Space Credits
-        112010101,
+        113010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        112010102,
+        113010102,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -49,20 +53,20 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
         '${erc721ContractWrapperAddress}',
         1,
         103010101,
-        112010102,
+        113010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc721ContractWrapperAddress}',
         1,
         104010101,
-        112010102,
+        113010102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        112010103,
+        113010103,
         null,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -70,7 +74,7 @@ export class SeedBalanceErc721WrapperAt1563804020470 implements MigrationInterfa
         '${erc721ContractWrapperAddress}',
         1000,
         105010101,
-        112010103,
+        113010103,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -15,7 +15,7 @@ import "./ExchangeCore.sol";
 import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
 import "./ExchangeBreed.sol";
-import "./ExchangeMysterybox.sol";
+import "./ExchangeMystery.sol";
 import "./ExchangeClaim.sol";
 import "./ExchangeRentable.sol";
 import "./ExchangeLottery.sol";
@@ -35,7 +35,7 @@ contract Exchange is
   ExchangeCraft,
   ExchangeGrade,
   ExchangeBreed,
-  ExchangeMysterybox,
+  ExchangeMystery,
   ExchangeClaim,
   ExchangeRentable,
   ExchangeLottery,
@@ -86,7 +86,7 @@ contract Exchange is
   function _afterPurchase(
     address referrer,
     Asset[] memory price
-  ) internal override(ExchangeCore, ExchangeMysterybox, ExchangeLottery, ExchangeRaffle, LinearReferral) {
+  ) internal override(ExchangeCore, ExchangeMystery, ExchangeLottery, ExchangeRaffle, LinearReferral) {
     return super._afterPurchase(referrer, price);
   }
 }

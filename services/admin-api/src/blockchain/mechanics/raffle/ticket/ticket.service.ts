@@ -1,82 +1,23 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
-import { IRaffleTicketSearchDto, ModuleType, TokenMetadata } from "@framework/types";
+import { IContractSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { TokenService } from "../../../hierarchy/token/token.service";
-import { RaffleRoundEntity } from "../round/round.entity";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
-export class RaffleTicketService extends TokenService {
+export class RaffleTicketService extends ContractService {
   constructor(
-    @InjectRepository(TokenEntity)
-    protected readonly tokenEntityRepository: Repository<TokenEntity>,
+    @InjectRepository(ContractEntity)
+    protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {
-    super(tokenEntityRepository);
+    super(contractEntityRepository);
   }
 
-  public async search(dto: Partial<IRaffleTicketSearchDto>): Promise<[Array<TokenEntity>, number]> {
-    const { roundIds, skip, take } = dto;
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
-    queryBuilder.leftJoinAndSelect("ticket.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
-
-    queryBuilder.select();
-
-    queryBuilder.where("contract.contractModule = :contractModule", {
-      contractModule: ModuleType.RAFFLE,
-    });
-
-    queryBuilder.leftJoinAndMapOne(
-      "ticket.round",
-      RaffleRoundEntity,
-      "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
-    );
-
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
-
-    if (roundIds) {
-      if (roundIds.length === 1) {
-        queryBuilder.andWhere("round.roundId = :roundId", {
-          roundId: roundIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("round.roundId IN(:...roundIds)", { roundIds });
-      }
-    }
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy("ticket.createdAt", "DESC");
-
-    return queryBuilder.getManyAndCount();
-  }
-
-  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
-
-    queryBuilder.leftJoinAndSelect("ticket.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
-
-    queryBuilder.leftJoinAndMapOne(
-      "ticket.round",
-      RaffleRoundEntity,
-      "round",
-      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.round_id`,
-    );
-
-    queryBuilder.andWhere("template.contractId = round.ticketContractId");
-
-    queryBuilder.andWhere("ticket.id = :id", {
-      id: where.id,
-    });
-
-    return queryBuilder.getOne();
+  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, [ModuleType.RAFFLE], [TokenType.ERC721]);
   }
 }

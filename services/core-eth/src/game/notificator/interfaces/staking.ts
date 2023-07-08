@@ -1,28 +1,25 @@
-import { IAssetDto } from "@framework/types";
+import { IStakingDeposit, IStakingRule } from "@framework/types";
 
 export interface IStakingDepositStartData {
-  account: string;
-  externalId: number;
-  startTimestamp: number;
-  stakingRuleId: number;
+  stakingDeposit: IStakingDeposit;
+  address: string;
+  transactionHash: string;
 }
 
 export interface IStakingDepositFinishData {
-  account: string;
-  externalId: number;
-  startTimestamp: number;
-  multiplier: number;
+  stakingDeposit: IStakingDeposit;
+  address: string;
+  transactionHash: string;
 }
 
 export interface IStakingRuleCreatedData {
-  externalId: string;
-  deposit: IAssetDto;
-  reward: IAssetDto;
-  penalty: number;
-  recurrent: boolean;
+  stakingRule: IStakingRule;
+  address: string;
+  transactionHash: string;
 }
 
 export interface IStakingRuleUpdatedData {
-  externalId: string;
-  active: boolean;
+  stakingRule: IStakingRule;
+  address: string;
+  transactionHash: string;
 }

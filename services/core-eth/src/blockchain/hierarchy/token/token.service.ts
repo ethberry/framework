@@ -40,13 +40,15 @@ export class TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string, chainId?: number): Promise<TokenEntity | null> {
+  public getToken(tokenId: string, address: string, chainId?: number, balance = false): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("token.balance", "balance");
+    if (balance) {
+      queryBuilder.leftJoinAndSelect("token.balance", "balance");
+    }
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {

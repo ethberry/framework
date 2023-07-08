@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, WeiPerEther, ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -7,6 +7,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
@@ -32,7 +36,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040101",
           item: {
             tokenType: 3,
@@ -84,7 +88,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040101",
           item: {
             tokenType: 3,
@@ -136,7 +140,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040101",
           item: {
             tokenType: 3,
@@ -188,7 +192,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040401",
           item: {
             tokenType: 3,
@@ -240,7 +244,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040402",
           item: {
             tokenType: 3,
@@ -292,7 +296,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040403",
           item: {
             tokenType: 3,
@@ -344,7 +348,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040404",
           item: {
             tokenType: 3,
@@ -396,7 +400,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040405",
           item: {
             tokenType: 3,
@@ -448,7 +452,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040501",
           item: {
             tokenType: 3,
@@ -500,7 +504,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1040502",
           item: {
             tokenType: 3,

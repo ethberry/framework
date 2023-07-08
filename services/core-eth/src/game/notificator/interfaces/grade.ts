@@ -1,8 +1,9 @@
-import { GradeAttribute } from "@framework/types";
+import { IAssetComponentHistory, IGrade, IToken } from "@framework/types";
 
 export interface IGradeData {
-  account: string;
-  tokenId: string;
-  gradeType: GradeAttribute;
+  grade: IGrade;
+  token: IToken;
+  price: Array<IAssetComponentHistory>;
+  address: string;
   transactionHash: string;
 }

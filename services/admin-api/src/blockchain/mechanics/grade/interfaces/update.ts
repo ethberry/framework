@@ -1,9 +1,8 @@
-import { GradeAttribute, GradeStrategy, IAssetDto } from "@framework/types";
+import { GradeStatus, GradeStrategy, IAssetDto } from "@framework/types";
 
 export interface IGradeUpdateDto {
-  contractId: number;
-  attribute: GradeAttribute;
   gradeStrategy: GradeStrategy;
+  gradeStatus: GradeStatus;
   growthRate: number;
   price: IAssetDto;
 }

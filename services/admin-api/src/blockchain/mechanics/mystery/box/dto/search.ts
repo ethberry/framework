@@ -3,21 +3,21 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryBoxStatus } from "@framework/types";
 import { IsBigInt } from "@gemunion/nest-js-validators";
 
-export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
+export class MysteryBoxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
   @ApiPropertyOptional({
-    enum: MysteryboxStatus,
+    enum: MysteryBoxStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<MysteryboxStatus>)
-  @IsEnum(MysteryboxStatus, { each: true, message: "badInput" })
-  public mysteryboxStatus: Array<MysteryboxStatus>;
+  @Transform(({ value }) => value as Array<MysteryBoxStatus>)
+  @IsEnum(MysteryBoxStatus, { each: true, message: "badInput" })
+  public mysteryBoxStatus: Array<MysteryBoxStatus>;
 
   @ApiPropertyOptional({
     type: Number,

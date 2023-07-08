@@ -1,13 +1,15 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
+import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { AssetModule } from "../../exchange/asset/asset.module";
 import { GradeEntity } from "./grade.entity";
 import { GradeService } from "./grade.service";
-import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
-  imports: [AssetModule, TypeOrmModule.forFeature([GradeEntity])],
-  providers: [GradeService],
+  imports: [ConfigModule, AssetModule, ContractModule, TypeOrmModule.forFeature([GradeEntity])],
+  providers: [Logger, GradeService],
   exports: [GradeService],
 })
 export class GradeModule {}

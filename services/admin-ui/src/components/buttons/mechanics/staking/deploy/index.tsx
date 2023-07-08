@@ -5,9 +5,11 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IStakingContractDeployDto, StakingContractTemplates } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
+import type { IStakingContractDeployDto, IUser } from "@framework/types";
+import { StakingContractTemplates } from "@framework/types";
 
-import StakingDeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
+import DeployStakingABI from "../../../../../abis/mechanics/staking/deploy/deployStaking.abi.json";
 
 import { StakingDeployDialog } from "./dialog";
 
@@ -18,12 +20,14 @@ export interface IStakingDeployButtonProps {
 export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
   const { className } = props;
 
+  const user = useUser<IUser>();
+
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IStakingContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        StakingDeployStakingABI,
+        DeployStakingABI,
         web3Context.provider?.getSigner(),
       );
 
@@ -31,6 +35,7 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         // values,
         {

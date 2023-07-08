@@ -7,11 +7,11 @@ import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
 import { ContractEventType, ExchangeType, TokenType } from "@framework/types";
 
-import { formatPrice } from "./marketplace.utils";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { EventHistoryEntity } from "../../event-history/event-history.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AssetComponentHistoryEntity } from "../asset/asset-component-history.entity";
+import { formatPrice } from "./marketplace.utils";
 
 @Injectable()
 export class MarketplaceService {

@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { AddressStatus, IAddress } from "@framework/types";
+import type { IAddress } from "@framework/types";
+import { AddressStatus } from "@framework/types";
 import { EnabledCountries } from "@gemunion/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 

@@ -1,12 +1,11 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ArrayOverlap } from "typeorm/find-options/operator/ArrayOverlap";
+import { ArrayOverlap, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { IUserSearchDto } from "@framework/types";
+import type { IUserSearchDto } from "@framework/types";
 
 import { UserEntity } from "./user.entity";
-import { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
+import type { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
 
 @Injectable()
@@ -102,7 +101,10 @@ export class UserService {
       throw new NotFoundException("userNotFound");
     }
 
-    await this.authService.delete(userEntity);
+    await this.authService.delete(userEntity).catch(e => {
+      this.loggerService.error(e, UserService.name);
+    });
+
     return userEntity.remove();
   }
 }

@@ -3,7 +3,7 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type { IWaitListRewardClaimedEvent, IWaitListRewardSetEvent } from "@framework/types";
-import { WaitListStatus } from "@framework/types";
+import { WaitListItemStatus } from "@framework/types";
 
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { NotificatorService } from "../../../../game/notificator/notificator.service";
@@ -35,6 +35,7 @@ export class WaitListListServiceEth {
         join: {
           alias: "wait_list_list",
           leftJoinAndSelect: {
+            contract: "wait_list_list.contract",
             item: "wait_list_list.item",
             item_components: "item.components",
             item_template: "item_components.template",
@@ -96,7 +97,7 @@ export class WaitListListServiceEth {
       throw new NotFoundException("waitListNotFound");
     }
 
-    Object.assign(waitListItemEntity, { waitListStatus: WaitListStatus.REDEEMED });
+    Object.assign(waitListItemEntity, { waitListItemStatus: WaitListItemStatus.REDEEMED });
     await waitListItemEntity.save();
 
     await this.notificatorService.rewardClaimed({

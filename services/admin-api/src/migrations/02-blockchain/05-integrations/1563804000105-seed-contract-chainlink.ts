@@ -31,7 +31,7 @@ export class SeedContractChainLinkAt1563804000105 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        7,
+        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 107},
         '${vrfAddress.toLowerCase()}',
         '${chainId}',
         'VRF COORDINATOR',

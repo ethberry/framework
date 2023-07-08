@@ -2,19 +2,13 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { Marketplace } from "./marketplace";
 import { MyTransactions } from "./transactions";
 import { MyWallet } from "./wallet";
 import { MyTokensList } from "./tokens";
+import { marketplaceRoutes } from "./marketplace/routes";
 
 export const exchangeRoutes: Array<RouteObject> = [
-  {
-    path: "/marketplace",
-    children: [
-      { index: true, element: <Marketplace /> },
-      { path: "/marketplace/:tab", element: <Marketplace /> },
-    ],
-  },
+  ...marketplaceRoutes,
   {
     path: "/transactions",
     element: <Protected />,

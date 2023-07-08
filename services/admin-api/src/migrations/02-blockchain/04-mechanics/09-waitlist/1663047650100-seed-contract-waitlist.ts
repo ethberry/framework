@@ -6,6 +6,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
@@ -30,13 +34,13 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        5,
+        1020901,
         '${waitListAddr}',
         '${chainId}',
-        'WAITLIST',
+        'WaitList',
         '${simpleFormatting}',
         '',
-        'Waitlist',
+        'WaitList',
         '',
         '',
         'ACTIVE',
@@ -44,6 +48,40 @@ export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
         'WAITLIST',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1020902,
+        '${waitListAddr}',
+        '${chainId}',
+        'WaitList (inactive)',
+        '${simpleFormatting}',
+        '',
+        'WaitList',
+        '',
+        '',
+        'INACTIVE',
+        '{}',
+        'WAITLIST',
+        '${fromBlock}',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1020903,
+        '${waitListAddr}',
+        '${chainId}',
+        'WaitList',
+        '${simpleFormatting}',
+        '',
+        'WaitList',
+        '',
+        '',
+        'ACTIVE',
+        '{}',
+        'WAITLIST',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

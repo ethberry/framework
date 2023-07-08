@@ -18,12 +18,6 @@ export class MysteryContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, {
-        contractType: [TokenType.ERC721],
-        contractModule: [ModuleType.MYSTERY],
-      }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.MYSTERY], [TokenType.ERC721]);
   }
 }

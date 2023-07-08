@@ -3,11 +3,11 @@ import {
   Controller,
   Delete,
   Get,
-  Post,
   HttpCode,
   HttpStatus,
   Param,
   ParseIntPipe,
+  Post,
   Put,
   Query,
   UseInterceptors,
@@ -42,8 +42,12 @@ export class Erc721ContractController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
-    return this.erc721ContractService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ContractUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ContractEntity> {
+    return this.erc721ContractService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -54,7 +58,7 @@ export class Erc721ContractController {
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.erc721ContractService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.erc721ContractService.delete({ id }, userEntity);
   }
 }

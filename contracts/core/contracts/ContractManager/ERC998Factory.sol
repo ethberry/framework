@@ -27,13 +27,13 @@ contract ERC998Factory is AbstractFactory {
     string contractTemplate;
   }
 
-  event ERC998TokenDeployed(address addr, Erc998Args args);
+  event ERC998TokenDeployed(address account, uint256 externalId, Erc998Args args);
 
   function deployERC998Token(
     Params calldata params,
     Erc998Args calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC998(params, args), signature);
@@ -42,18 +42,22 @@ contract ERC998Factory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI), params.nonce);
-    _erc998_tokens.push(addr);
+    account = deploy2(
+      params.bytecode,
+      abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
+      params.nonce
+    );
+    _erc998_tokens.push(account);
 
-    emit ERC998TokenDeployed(addr, args);
+    emit ERC998TokenDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    grantFactoryMetadataPermission(addr);
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    grantFactoryMetadataPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashERC998(Params calldata params, Erc998Args calldata args) internal view returns (bytes32) {

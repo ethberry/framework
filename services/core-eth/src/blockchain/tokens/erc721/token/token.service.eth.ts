@@ -1,21 +1,18 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
-import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
+import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { JsonRpcProvider, Log, toUtf8String, stripZerosLeft, ZeroAddress } from "ethers";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { DeepPartial } from "typeorm";
 
 import {
-  ContractEventType,
   IERC721ConsecutiveTransfer,
-  IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
   ILevelUp,
   TokenMetadata,
-  TokenMintType,
   TokenStatus,
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { getMetadata, getTokenMintType, getTransactionLog } from "../../../../common/utils";
+import { getMetadata } from "../../../../common/utils";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
@@ -69,64 +66,18 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
-
-      // if RANDOM token - update tokenId in exchange asset history
-      if (metadata[TokenMetadata.RARITY] || metadata[TokenMetadata.TRAITS]) {
-        // decide if it was random mint or common mint via admin-panel
-        const txLogs = await getTransactionLog(transactionHash, this.jsonRpcProvider, address);
-        const mintType = getTokenMintType(txLogs as Array<Log>);
-
-        if (mintType === TokenMintType.MintRandom) {
-          // update Asset history
-          const historyEntity = await this.eventHistoryService.findOne({
-            transactionHash,
-            eventType: ContractEventType.MintRandom,
-          });
-          if (!historyEntity) {
-            this.loggerService.error(
-              "historyNotFound",
-              transactionHash,
-              ContractEventType.MintRandom,
-              Erc721TokenServiceEth.name,
-            );
-            throw new NotFoundException("historyNotFound");
-          }
-          const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
-          await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
-        }
-      }
-
-      // MODULE:BREEDING
-      if (metadata[TokenMetadata.TRAITS]) {
-        await this.breedServiceEth.newborn(
-          tokenEntity.id,
-          metadata[TokenMetadata.TRAITS],
-          context.transactionHash.toLowerCase(),
-        );
-      }
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      address.toLowerCase(),
+      void 0,
+      true,
+    );
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", Number(tokenId), address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
-    }
-
-    const { id } = await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);
-    const history = await this.eventHistoryService.findOneWithRelations({ id });
-
-    if (
-      history &&
-      history.parent &&
-      history.parent.parent &&
-      history.parent.parent.parent &&
-      history.parent.parent.parent.eventType === ContractEventType.Purchase
-    ) {
-      this.notificatorService.purchaseRandom({
-        transactionHash,
-        tokenId,
-      });
     }
 
     if (from === ZeroAddress) {
@@ -201,37 +152,20 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await this.balanceService.createBatch(balanceArray);
   }
 
-  public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
-    // const {
-    //   args: { tokenId, to },
-    // } = event;
-    const eventHistoryEntity = await this.eventHistoryService.updateHistory(event, context);
-
-    const entityWithRelations = await this.eventHistoryService.findOne(
-      { id: eventHistoryEntity.id },
-      { relations: { parent: true, assets: true } },
-    );
-
-    if (!entityWithRelations) {
-      this.loggerService.error("historyNotFound", eventHistoryEntity.id, TokenServiceEth.name);
-      throw new NotFoundException("historyNotFound");
-    }
-  }
-
   public async levelUp(event: ILogEvent<ILevelUp>, context: Log): Promise<void> {
     const {
-      args: { tokenId, grade },
+      args: { tokenId, attribute, value },
     } = event;
     const { address } = context;
 
-    const erc721TokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc721TokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, address.toLowerCase(), Erc721TokenServiceEth.name);
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(erc721TokenEntity.metadata, { GRADE: grade.toString() });
+    Object.assign(erc721TokenEntity.metadata, { [toUtf8String(stripZerosLeft(attribute))]: value });
     await erc721TokenEntity.save();
 
     await this.eventHistoryService.updateHistory(event, context, erc721TokenEntity.id);

@@ -1,5 +1,5 @@
-export interface IPageCreateDto {
+import type { ISearchableDto } from "@gemunion/types-collection";
+
+export interface IPageCreateDto extends ISearchableDto {
   slug: string;
-  title: string;
-  description: string;
 }

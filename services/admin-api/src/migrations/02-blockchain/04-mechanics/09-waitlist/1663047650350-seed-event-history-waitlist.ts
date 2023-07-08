@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryWaitListAt1663047650350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const waitListAddr = process.env.WAITLIST_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;

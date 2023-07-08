@@ -6,6 +6,10 @@ import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
     const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;

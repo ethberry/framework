@@ -88,11 +88,15 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 500000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc721_template`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc721_template_status_enum;`);
+    await queryRunner.dropTable(`${ns}.template`);
+    await queryRunner.query(`DROP TYPE ${ns}.template_status_enum;`);
   }
 }

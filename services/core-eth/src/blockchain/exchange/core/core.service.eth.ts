@@ -18,17 +18,17 @@ export class ExchangeCoreServiceEth {
 
   public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {
     const {
-      args: { account, item, price },
+      args: { item, price },
     } = event;
-    const { transactionHash } = context;
+    const { address, transactionHash } = context;
 
     const history = await this.eventHistoryService.updateHistory(event, context);
 
     const assets = await this.assetService.saveAssetHistory(history, [item], price);
 
-    this.notificatorService.purchase({
-      account,
+    await this.notificatorService.purchase({
       ...assets,
+      address,
       transactionHash,
     });
   }

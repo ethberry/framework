@@ -4,7 +4,8 @@ import { ethers } from "hardhat";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { getContractName, isEqualArray } from "../utils";
+import { getContractName, isEqualArray, recursivelyDecodeResult } from "../utils";
+import { externalId } from "../constants";
 
 describe("LotteryFactory", function () {
   const factory = () => deployContract(this.title);
@@ -13,7 +14,7 @@ describe("LotteryFactory", function () {
     it("should deploy contract", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const lottery = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
+      const { bytecode } = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -35,6 +36,7 @@ describe("LotteryFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           LotteryArgs: [{ name: "config", type: "LotteryConfig" }],
           LotteryConfig: [
@@ -46,7 +48,8 @@ describe("LotteryFactory", function () {
         {
           params: {
             nonce,
-            bytecode: lottery.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             config: {
@@ -60,7 +63,8 @@ describe("LotteryFactory", function () {
       const tx = await contractInstance.deployLottery(
         {
           nonce,
-          bytecode: lottery.bytecode,
+          bytecode,
+          externalId,
         },
         {
           config: {
@@ -75,13 +79,21 @@ describe("LotteryFactory", function () {
 
       await expect(tx)
         .to.emit(contractInstance, "LotteryDeployed")
-        .withArgs(address, isEqualArray(["100", "30"]));
+        .withArgs(address, externalId, isEqualArray(["100", "30"]));
+
+      const lotteryInstance = await ethers.getContractAt(getContractName("LotteryRandom", network.name), address);
+
+      const lotteryConfig = await lotteryInstance.getLotteryInfo();
+      expect(recursivelyDecodeResult(lotteryConfig)).deep.include({
+        timeLagBeforeRelease: 100n,
+        commission: 30n,
+      });
     });
 
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const lottery = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
+      const { bytecode } = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -103,6 +115,7 @@ describe("LotteryFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           LotteryArgs: [{ name: "config", type: "LotteryConfig" }],
           LotteryConfig: [
@@ -114,7 +127,8 @@ describe("LotteryFactory", function () {
         {
           params: {
             nonce,
-            bytecode: lottery.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             config: {
@@ -130,7 +144,8 @@ describe("LotteryFactory", function () {
       const tx = contractInstance.deployLottery(
         {
           nonce,
-          bytecode: lottery.bytecode,
+          bytecode,
+          externalId,
         },
         {
           config: {

@@ -70,9 +70,7 @@ export class TemplateService {
   }
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const assetEntity = await this.assetService.create();
 
     const templateEntity = await this.templateEntityRepository
       .create({

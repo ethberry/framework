@@ -107,14 +107,14 @@ export class TokenService {
       }
     }
 
-    const grade = metadata[TokenMetadata.GRADE];
-    if (grade) {
-      if (grade.length === 1) {
-        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' = :grade`, {
-          grade: grade[0],
+    const level = metadata[TokenMetadata.LEVEL];
+    if (level) {
+      if (level.length === 1) {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' = :level`, {
+          level: level[0],
         });
       } else {
-        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.GRADE}' IN(:...grade)`, { grade });
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' IN(:...level)`, { level });
       }
     }
 

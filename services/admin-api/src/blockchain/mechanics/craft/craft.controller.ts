@@ -14,11 +14,12 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
-import { CraftSearchDto, CraftUpdateDto, CraftCreateDto } from "./dto";
+import { CraftCreateDto, CraftSearchDto, CraftUpdateDto } from "./dto";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/craft")
@@ -38,18 +39,22 @@ export class CraftController {
   }
 
   @Post("/")
-  public create(@Body() dto: CraftCreateDto): Promise<CraftEntity> {
-    return this.craftService.create(dto);
+  public create(@Body() dto: CraftCreateDto, @User() userEntity: UserEntity): Promise<CraftEntity> {
+    return this.craftService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: CraftUpdateDto): Promise<CraftEntity> {
-    return this.craftService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: CraftUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<CraftEntity> {
+    return this.craftService.update({ id }, dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.craftService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.craftService.delete({ id }, userEntity);
   }
 }

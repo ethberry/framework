@@ -11,5 +11,5 @@ import "@gemunion/contracts-erc721/contracts/interfaces/IERC4906.sol";
 import "./IERC721Simple.sol";
 
 interface IERC721Upgradeable is IERC4906 {
-  function upgrade(uint256 tokenId) external returns (bool);
+  function upgrade(uint256 tokenId, bytes32 attribute) external returns (bool);
 }

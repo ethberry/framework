@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+
 import { ListenerType, ModuleType, TokenType } from "@framework/types";
+
 import { ContractService } from "../hierarchy/contract/contract.service";
-import { IEthLoggerInOutDto } from "./interfaces";
 import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
-import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
-import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
+import { Erc721LogService } from "../tokens/erc721/token/log/log.service";
+import { Erc998LogService } from "../tokens/erc998/token/log/log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
+import { IEthLoggerInOutDto } from "./interfaces";
 
 @Injectable()
 export class ContractManagerServiceRmq {
@@ -17,8 +19,8 @@ export class ContractManagerServiceRmq {
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     private readonly erc20LogService: Erc20LogService,
-    private readonly erc721LogService: Erc721TokenLogService,
-    private readonly erc998LogService: Erc998TokenLogService,
+    private readonly erc721LogService: Erc721LogService,
+    private readonly erc998LogService: Erc998LogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly mysteryLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,

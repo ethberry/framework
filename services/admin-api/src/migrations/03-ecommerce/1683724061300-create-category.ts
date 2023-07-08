@@ -22,6 +22,11 @@ export class CreateCategory1683724061300 implements MigrationInterface {
         {
           name: "parent_id",
           type: "int",
+          isNullable: true,
+        },
+        {
+          name: "merchant_id",
+          type: "int",
         },
         {
           name: "created_at",
@@ -37,6 +42,12 @@ export class CreateCategory1683724061300 implements MigrationInterface {
           columnNames: ["parent_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.category`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
           onDelete: "CASCADE",
         },
       ],

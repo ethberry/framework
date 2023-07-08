@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
-import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
+import { MysteryBoxCreateDto, MysteryBoxSearchDto, MysteryBoxUpdateDto } from "./dto";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { MysteryBoxAutocompleteDto } from "./dto/autocomplete";
 
@@ -30,7 +30,7 @@ export class MysteryBoxController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: MysteryboxSearchDto,
+    @Query() dto: MysteryBoxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
     return this.mysteryboxService.search(dto, userEntity);
@@ -45,8 +45,12 @@ export class MysteryBoxController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MysteryboxUpdateDto): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: MysteryBoxUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<MysteryBoxEntity> {
+    return this.mysteryboxService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -56,13 +60,13 @@ export class MysteryBoxController {
   }
 
   @Post("/")
-  public create(@Body() dto: MysteryboxCreateDto): Promise<MysteryBoxEntity> {
-    return this.mysteryboxService.create(dto);
+  public create(@Body() dto: MysteryBoxCreateDto, @User() userEntity: UserEntity): Promise<MysteryBoxEntity> {
+    return this.mysteryboxService.create(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return this.mysteryboxService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.mysteryboxService.delete({ id }, userEntity);
   }
 }

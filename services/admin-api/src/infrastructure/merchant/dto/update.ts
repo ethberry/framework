@@ -1,18 +1,40 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEmail, IsJSON, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
-import { MerchantStatus } from "@framework/types";
-
+// import { rePhoneNumber } from "@framework/constants";
 import { IMerchantUpdateDto } from "../interfaces";
-import { MerchantCreateDto } from "./create";
+import { MerchantSocialDto } from "./social";
 
-export class MerchantUpdateDto extends MerchantCreateDto implements IMerchantUpdateDto {
-  @ApiPropertyOptional({
-    enum: MerchantStatus,
-  })
+export class MerchantUpdateDto implements IMerchantUpdateDto {
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  public title: string;
+
+  @ApiProperty()
+  @IsJSON({ message: "patternMismatch" })
+  public description: string;
+
+  @ApiProperty()
+  @IsEmail()
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public email: string;
+
+  @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => value as MerchantStatus)
-  @IsEnum(MerchantStatus, { message: "badInput" })
-  public merchantStatus: MerchantStatus;
+  @IsString({ message: "typeMismatch" })
+  // @Matches(rePhoneNumber, { message: "patternMismatch" })
+  public phoneNumber: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  public imageUrl = "";
+
+  @ApiPropertyOptional({
+    type: MerchantSocialDto,
+  })
+  @ValidateNested()
+  @Type(() => MerchantSocialDto)
+  public social: MerchantSocialDto;
 }

@@ -1,8 +1,8 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { IUser } from "../infrastructure";
-import { IAchievementRule } from "./rule";
-import { IEventHistory } from "../blockchain";
+import type { IUser } from "../infrastructure";
+import type { IAchievementRule } from "./rule";
+import type { IEventHistory } from "../blockchain";
 
 export interface IAchievementItem extends IIdDateBase {
   userId: number;

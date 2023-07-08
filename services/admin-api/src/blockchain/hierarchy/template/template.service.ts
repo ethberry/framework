@@ -1,15 +1,16 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { TokenService } from "../token/token.service";
+import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -19,13 +20,14 @@ export class TemplateService {
     @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(
     dto: ITemplateSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, skip, take } = dto;
 
@@ -51,12 +53,25 @@ export class TemplateService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
@@ -200,21 +215,28 @@ export class TemplateService {
     });
   }
 
-  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const { price } = dto;
+  public async createTemplate(dto: ITemplateCreateDto, userEntity: UserEntity): Promise<TemplateEntity> {
+    const { price, contractId } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
+    const contractEntity = await this.contractService.findOne({
+      id: contractId,
     });
 
-    await this.assetService.update(assetEntity, price);
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
 
-    return await this.templateEntityRepository
-      .create({
-        ...dto,
-        price: assetEntity,
-      })
-      .save();
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, price, userEntity);
+
+    return this.create({
+      ...dto,
+      price: assetEntity,
+    });
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {
@@ -224,14 +246,15 @@ export class TemplateService {
   public async update(
     where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<ITemplateUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<TemplateEntity> {
     const { price, ...rest } = dto;
+
     const templateEntity = await this.findOne(where, {
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          price: "template.price",
-          components: "price.components",
+      relations: {
+        contract: true,
+        price: {
+          components: true,
         },
       },
     });
@@ -240,21 +263,39 @@ export class TemplateService {
       throw new NotFoundException("templateNotFound");
     }
 
-    Object.assign(templateEntity, rest);
-
-    if (price) {
-      await this.assetService.update(templateEntity.price, price);
+    if (templateEntity.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
+    if (price) {
+      await this.assetService.update(templateEntity.price, price, userEntity);
+    }
+
+    Object.assign(templateEntity, rest);
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<TemplateEntity>, userEntity: UserEntity): Promise<TemplateEntity> {
+    const templateEntity = await this.findOne(where, {
+      relations: {
+        contract: true,
+      },
+    });
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
+    if (templateEntity.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
     const count = await this.tokenService.count({ templateId: where.id });
-    if (!count) {
-      await this.templateEntityRepository.delete(where);
+    if (count) {
+      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.save();
     } else {
-      await this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.remove();
     }
   }
 }

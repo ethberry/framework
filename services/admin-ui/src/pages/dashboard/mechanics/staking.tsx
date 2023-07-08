@@ -5,6 +5,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 export const StakingSection: FC = () => {
+  const disabled = process.env.NODE_ENV === "production";
+
+  if (disabled) {
+    return null;
+  }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List

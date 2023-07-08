@@ -6,27 +6,26 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { ITicketRaffle } from "@framework/types";
+import type { IRaffleToken } from "@framework/types";
 import { TokenStatus } from "@framework/types";
 
 import RaffleGetPrizeABI from "../../../../../abis/mechanics/raffle/reward/getPrize.abi.json";
 
 export interface IRaffleRewardButtonProps {
-  ticket: ITicketRaffle;
+  token: IRaffleToken;
 }
 
 export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
-  const { ticket } = props;
+  const { token } = props;
 
   const { formatMessage } = useIntl();
 
-  // TODO get raffle.add from round
-  const metaFn = useMetamask((ticket: ITicketRaffle, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.RAFFLE_ADDR, RaffleGetPrizeABI, web3Context.provider?.getSigner());
-    return contract.getPrize(ticket.tokenId) as Promise<void>;
+  const metaFn = useMetamask((ticket: IRaffleToken, web3Context: Web3ContextType) => {
+    const contract = new Contract(token.round.contract!.address, RaffleGetPrizeABI, web3Context.provider?.getSigner());
+    return contract.getPrize(ticket.tokenId, token.round.roundId) as Promise<void>;
   });
 
-  const handleReward = (ticket: ITicketRaffle): (() => Promise<void>) => {
+  const handleReward = (ticket: IRaffleToken): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaFn(ticket).then(() => {
         // TODO reload page
@@ -34,18 +33,18 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
     };
   };
 
-  if (ticket.metadata.PRIZE === "1") {
+  if (token.metadata.PRIZE === "1") {
     return null;
   }
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
       <IconButton
-        onClick={handleReward(ticket)}
+        onClick={handleReward(token)}
         disabled={
-          ticket.tokenStatus !== TokenStatus.MINTED ||
-          ticket.metadata.PRIZE === "1" ||
-          ticket.tokenId !== ticket.round.number
+          token.tokenStatus !== TokenStatus.MINTED ||
+          token.metadata.PRIZE === "1" ||
+          token.tokenId !== token.round.number
         }
         data-testid="RaffleRewardButton"
       >

@@ -25,13 +25,13 @@ contract ERC1155Factory is AbstractFactory {
     string contractTemplate;
   }
 
-  event ERC1155TokenDeployed(address addr, Erc1155Args args);
+  event ERC1155TokenDeployed(address account, uint256 externalId, Erc1155Args args);
 
   function deployERC1155Token(
     Params calldata params,
     Erc1155Args calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashERC1155(params, args), signature);
@@ -40,17 +40,17 @@ contract ERC1155Factory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
-    _erc1155_tokens.push(addr);
+    account = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
+    _erc1155_tokens.push(account);
 
-    emit ERC1155TokenDeployed(addr, args);
+    emit ERC1155TokenDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    grantFactoryMintPermission(addr);
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashERC1155(Params calldata params, Erc1155Args calldata args) internal view returns (bytes32) {

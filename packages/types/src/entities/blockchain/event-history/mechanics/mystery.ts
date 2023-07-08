@@ -1,5 +1,6 @@
-export interface IMysteryUnpackEvent {
+export interface IUnpackMysteryBoxEvent {
+  account: string;
   tokenId: string;
 }
 
-export type TMysteryEvents = IMysteryUnpackEvent;
+export type TMysteryEvents = IUnpackMysteryBoxEvent;

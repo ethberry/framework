@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -24,18 +24,23 @@ export class CollectionContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(
-      Object.assign(dto, { contractType: [TokenType.ERC721], contractModule: [ModuleType.COLLECTION] }),
-      userEntity,
-    );
+    return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 
-  public async upload(address: string, dto: ICollectionUploadDto): Promise<Array<TokenEntity>> {
+  public async upload(address: string, dto: ICollectionUploadDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
     const { tokens } = dto;
-    const contractEntity = await this.findOne({ address }, { relations: { templates: true } });
+
+    const contractEntity = await this.findOne(
+      { address, chainId: userEntity.chainId },
+      { relations: { templates: true } },
+    );
 
     if (!contractEntity) {
       throw new NotFoundException("collectionNotFound");
+    }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     // should be only one template per collection
@@ -43,7 +48,6 @@ export class CollectionContractService extends ContractService {
       throw new NotFoundException("templateNotFound");
     }
 
-    // TODO use user.chainID
     return this.collectionTokenService.updateTokensBatch(contractEntity.templates[0].id, tokens);
   }
 }

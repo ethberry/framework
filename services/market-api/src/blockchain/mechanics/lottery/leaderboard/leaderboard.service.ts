@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto } from "@framework/types";
 
-import { LotteryTicketService } from "../ticket/ticket.service";
+import { LotteryTicketService } from "../token/ticket.service";
 
 @Injectable()
 export class LotteryLeaderboardService {

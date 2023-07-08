@@ -8,12 +8,13 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { mapLimit } from "async";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IWaitListListCreateDto, IWaitListListUpdateDto } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { AssetService } from "../../../exchange/asset/asset.service";
@@ -21,6 +22,7 @@ import { WaitListItemEntity } from "../item/item.entity";
 import { WaitListItemService } from "../item/item.service";
 import { WaitListListEntity } from "./list.entity";
 import type { IWaitListGenerateDto, IWaitListRow, IWaitListUploadDto } from "./interfaces";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class WaitListListService {
@@ -32,6 +34,7 @@ export class WaitListListService {
     @Inject(forwardRef(() => WaitListItemService))
     private readonly waitListItemService: WaitListItemService,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {
@@ -41,7 +44,10 @@ export class WaitListListService {
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("waitlist.merchantId = :merchantId", {
+    queryBuilder.leftJoin("waitlist.contract", "contract");
+    queryBuilder.addSelect(["contract.contractStatus"]);
+
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
 
@@ -84,6 +90,7 @@ export class WaitListListService {
       join: {
         alias: "waitlist",
         leftJoinAndSelect: {
+          contract: "waitlist.contract",
           items: "waitlist.items",
           item: "waitlist.item",
           item_components: "item.components",
@@ -95,19 +102,25 @@ export class WaitListListService {
   }
 
   public async create(dto: IWaitListListCreateDto, userEntity: UserEntity): Promise<WaitListListEntity> {
-    const { item } = dto;
+    const { item, contractId } = dto;
 
-    const assetEntity = await this.assetService.create({
-      components: [],
-    });
+    const contractEntity = await this.contractService.findOne({ id: contractId });
 
-    await this.assetService.update(assetEntity, item);
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, item, userEntity);
 
     return this.waitListListEntityRepository
       .create({
         ...dto,
         item: assetEntity,
-        merchantId: userEntity.merchantId,
       })
       .save();
   }
@@ -123,6 +136,7 @@ export class WaitListListService {
       join: {
         alias: "waitlist",
         leftJoinAndSelect: {
+          contract: "waitlist.contract",
           item: "waitlist.item",
           components: "item.components",
         },
@@ -133,43 +147,52 @@ export class WaitListListService {
       throw new NotFoundException("waitlistNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
     Object.assign(waitListListEntity, rest);
 
-    // update of the item is not allowed
+    // update of the item is not allowed, because user signed off for certain item
     // if (item) {
     //   await this.assetService.update(waitListListEntity.item, item);
     // }
+
     return waitListListEntity.save();
   }
 
   public async autocomplete(userEntity: UserEntity): Promise<Array<WaitListListEntity>> {
     return this.waitListListEntityRepository.find({
       where: {
-        merchantId: userEntity.merchantId,
+        root: IsNull(),
+        contract: {
+          merchantId: userEntity.merchantId,
+          contractStatus: ContractStatus.ACTIVE,
+        },
       },
       select: {
         id: true,
         title: true,
       },
+      relations: { contract: true },
     });
   }
 
-  public async delete(where: FindOptionsWhere<WaitListListEntity>, userEntity: UserEntity): Promise<DeleteResult> {
-    const waitListListEntity = await this.findOne(where);
+  public async delete(
+    where: FindOptionsWhere<WaitListListEntity>,
+    userEntity: UserEntity,
+  ): Promise<WaitListListEntity> {
+    const waitListListEntity = await this.findOne(where, { relations: { contract: true } });
 
     if (!waitListListEntity) {
       throw new NotFoundException("waitListListNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.waitListListEntityRepository.delete(where);
+    return waitListListEntity.remove();
   }
 
   public async generate(dto: IWaitListGenerateDto): Promise<WaitListListEntity> {
@@ -194,13 +217,13 @@ export class WaitListListService {
   public async upload(dto: IWaitListUploadDto, userEntity: UserEntity): Promise<Array<WaitListItemEntity>> {
     const { items, listId } = dto;
 
-    const waitListListEntity = await this.findOne({ id: listId });
+    const waitListListEntity = await this.findOne({ id: listId }, { relations: { contract: true } });
 
     if (!waitListListEntity) {
       throw new NotFoundException("waitListListNotFound");
     }
 
-    if (waitListListEntity.merchantId !== userEntity.merchantId) {
+    if (waitListListEntity.contract.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 

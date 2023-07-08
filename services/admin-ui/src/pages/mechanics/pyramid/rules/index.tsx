@@ -11,22 +11,17 @@ import {
   Pagination,
 } from "@mui/material";
 
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { emptyPrice } from "@gemunion/mui-inputs-asset";
-import type { IPyramidRule, IPyramidRuleSearchDto } from "@framework/types";
-import { DurationUnit, IPyramidRuleItemSearchDto, PyramidRuleStatus, TokenType } from "@framework/types";
+import type { IPyramidRule, IPyramidRuleSearchDto, IPyramidRuleItemSearchDto } from "@framework/types";
+import { PyramidRuleStatus, TokenType } from "@framework/types";
 
-import { PyramidUploadButton } from "../../../../components/buttons";
-import { cleanUpAsset } from "../../../../utils/money";
+import { PyramidRuleCreateButton, PyramidToggleRuleButton } from "../../../../components/buttons";
 import { PyramidEditDialog } from "./edit";
 import { PyramidRuleSearchForm } from "./form";
-import { PyramidFinalizeTokenButton } from "../../../../components/buttons/mechanics/pyramid/finalize/finalize-token";
-import { PyramidFinalizeRuleButton } from "../../../../components/buttons/mechanics/pyramid/finalize/finalize-rule";
 
 export const PyramidRules: FC = () => {
   const {
@@ -38,33 +33,19 @@ export const PyramidRules: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-    handleDelete,
     handleDeleteCancel,
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IPyramidRule, IPyramidRuleSearchDto>({
     baseUrl: "/pyramid/rules",
-    empty: {
-      title: "",
-      description: emptyStateString,
-      deposit: emptyPrice,
-      reward: emptyPrice,
-      durationAmount: 2592000,
-      durationUnit: DurationUnit.DAY,
-      penalty: 100,
-      contractId: 1,
-    },
-    filter: ({ deposit, reward, contractId, ...rest }) => ({
-      ...rest,
-      contractId,
-      deposit: cleanUpAsset(deposit),
-      reward: cleanUpAsset(reward),
+    filter: ({ title, description }) => ({
+      title,
+      description,
     }),
     search: {
       query: "",
@@ -78,7 +59,6 @@ export const PyramidRules: FC = () => {
     },
   });
 
-  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "pyramid", "pyramid.rules"]} />
@@ -90,9 +70,7 @@ export const PyramidRules: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="PyramidCreateButton">
-          <FormattedMessage id="form.buttons.create" />
-        </Button>
+        <PyramidRuleCreateButton />
       </PageHeader>
 
       <PyramidRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
@@ -101,21 +79,12 @@ export const PyramidRules: FC = () => {
         <List>
           {rows.map((rule, i) => (
             <ListItem key={i} disableGutters>
-              <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
-              <div></div>
-              <ListItemText sx={{ width: 0.4 }}>
-                {rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}
-              </ListItemText>
+              <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <PyramidUploadButton rule={rule} />
+                <PyramidToggleRuleButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.pyramidRuleStatus !== PyramidRuleStatus.NEW}>
-                  <Delete />
-                </IconButton>
-                <PyramidFinalizeRuleButton rule={rule} />
-                <PyramidFinalizeTokenButton rule={rule} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -142,7 +111,7 @@ export const PyramidRules: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.pyramidRuleStatus === PyramidRuleStatus.ACTIVE}
+        readOnly={true}
       />
     </Grid>
   );

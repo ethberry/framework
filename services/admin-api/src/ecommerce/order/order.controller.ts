@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -25,25 +37,28 @@ export class OrderController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: OrderUpdateDto): Promise<OrderEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: OrderUpdateDto): Promise<OrderEntity> {
     return this.orderService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<OrderEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<OrderEntity | null> {
     return this.orderService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.orderService.delete({ id });
   }
 
   @Post("/:id/move")
   @HttpCode(204)
-  public async move(@Param("id") id: number, @Body() dto: OrderMoveDto): Promise<OrderEntity | undefined> {
+  public async move(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: OrderMoveDto,
+  ): Promise<OrderEntity | undefined> {
     return this.orderService.move({ id }, dto);
   }
 }

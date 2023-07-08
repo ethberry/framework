@@ -15,12 +15,6 @@ export class ExchangeRentServiceEth {
   ) {}
 
   public async rent(event: ILogEvent<IExchangeLendEvent>, context: Log): Promise<void> {
-    const {
-      args: { from, to, expires, externalId, item, price },
-    } = event;
-
     await this.eventHistoryService.updateHistory(event, context);
-
-    this.notificatorService.rent({ from, to, expires, externalId, item, price });
   }
 }

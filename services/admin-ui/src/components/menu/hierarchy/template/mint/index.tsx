@@ -65,7 +65,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       );
       return contractErc1155.mint(
         values.account,
-        templateComponent.template.tokens[0].tokenId,
+        (templateComponent.template as any).tokens[0].tokenId,
         templateComponent.amount,
         "0x",
       ) as Promise<any>;

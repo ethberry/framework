@@ -24,7 +24,7 @@ export const StakingWithdrawButton: FC<IStakingWithdrawButtonProps> = props => {
     const contract = new Contract(balance.account, StakingWithdrawABI, web3Context.provider?.getSigner());
 
     return contract.withdrawBalance({
-      tokenType: Object.keys(TokenType).indexOf(balance.token!.template!.contract!.contractType),
+      tokenType: Object.keys(TokenType).indexOf(balance.token!.template!.contract!.contractType!),
       token: balance.token!.template!.contract?.address,
       tokenId: balance.token!.tokenId, // must match with staking.penalties[item.token][item.tokenId];
       amount: 0, // whatever

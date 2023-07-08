@@ -6,6 +6,10 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
 
@@ -62,6 +66,24 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         'NATIVE',
         '{}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10108,
+        '${ZeroAddress}',
+        '${chainId}',
+        'Fake token (BESU)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
+        'Ethereum',
+        'ETH',
+        18,
+        0,
+        '',
+        'INACTIVE',
+        'NATIVE',
+        '{}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

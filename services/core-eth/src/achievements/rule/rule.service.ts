@@ -134,7 +134,7 @@ export class AchievementsRuleService {
                     // if Rule.Asset condition met - create achievementsItem
                     if (asset.tokenType === item.tokenType && asset.contract.address === item.contract) {
                       if (asset.templateId === item.templateId || !asset.templateId) {
-                        return await this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+                        return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
                       } else {
                         return void 0;
                       }
@@ -149,7 +149,7 @@ export class AchievementsRuleService {
               }
             } else {
               // Rule condition met - create achievementsItem
-              return await this.achievementsItemService.create(userEntity.id, rule.id, event.id);
+              return this.achievementsItemService.create(userEntity.id, rule.id, event.id);
             }
           });
         }
@@ -165,14 +165,14 @@ export class AchievementsRuleService {
     // if event.tokenEntity
     if (token) {
       eventTokenAsset.push({
-        tokenType: token.template.contract.contractType,
+        tokenType: token.template.contract.contractType || TokenType.NATIVE,
         contract: token.template.contract.address,
         templateId: token.template.id,
       });
       // if event.parent.tokenEntity
     } else if (parent && parent.token) {
       eventTokenAsset.push({
-        tokenType: parent.token.template.contract.contractType,
+        tokenType: parent.token.template.contract.contractType || TokenType.NATIVE,
         contract: parent.token.template.contract.address,
         templateId: parent.token.template.id,
       });

@@ -9,7 +9,7 @@ import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/R
 
 import { blockAwait, getCurrentRound } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { IRaffleOption, ModuleType } from "@framework/types";
+import { IRaffleScheduleUpdateDto, ModuleType } from "@framework/types";
 
 @Injectable()
 export class RaffleRoundServiceCron {
@@ -29,21 +29,26 @@ export class RaffleRoundServiceCron {
     // const raffleAddr = this.configService.get<string>("RAFFLE_ADDR", "");
     const contract = new Contract(address, RaffleSol.abi, this.signer);
     const currentRound = await getCurrentRound(address, RaffleSol.abi, this.jsonRpcProvider);
-    const { endTimestamp, acceptedAsset, ticketAsset } = currentRound;
+    const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;
 
-    try {
-      // if round still active
-      if (endTimestamp !== "0") {
-        await contract.endRound();
+    // if not dummy round
+    if (BigInt(roundId) !== 0n) {
+      // if current round still active - end round
+      if (BigInt(endTimestamp) === 0n) {
+        try {
+          await contract.endRound();
+        } catch (e) {
+          this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
+        }
       }
-    } catch (e) {
-      this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
-    } finally {
       // wait block
       await blockAwait(1, this.jsonRpcProvider);
-
-      // start round with same parameters
-      await contract.startRound(acceptedAsset, ticketAsset);
+      try {
+        // start round with the same parameters
+        await contract.startRound(acceptedAsset, ticketAsset, maxTicket);
+      } catch (e) {
+        this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
+      }
     }
   }
 
@@ -81,7 +86,7 @@ export class RaffleRoundServiceCron {
       throw new NotFoundException("contractNotFound");
     }
 
-    const { schedule }: IRaffleOption = JSON.parse(raffleEntity.description);
+    const { schedule }: IRaffleScheduleUpdateDto = JSON.parse(raffleEntity.description);
 
     this.schedulerRegistry.deleteCronJob(`raffleRound@${raffleEntity.address}`);
     const job = new CronJob(schedule, async () => {

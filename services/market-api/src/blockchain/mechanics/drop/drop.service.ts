@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ZeroAddress, hexlify, randomBytes, encodeBytes32String } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";

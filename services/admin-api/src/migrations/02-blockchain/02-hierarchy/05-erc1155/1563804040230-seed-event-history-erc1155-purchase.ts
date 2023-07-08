@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ZeroHash, WeiPerEther, ZeroAddress } from "ethers";
+import { WeiPerEther, ZeroAddress, ZeroHash } from "ethers";
 import { subDays } from "date-fns";
 
 import { wallet, wallets } from "@gemunion/constants";
@@ -7,6 +7,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc1155ContractSimpleAddress = process.env.ERC1155_RANDOM_ADDR || wallet;
@@ -31,7 +35,7 @@ export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements Migration
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1050101",
           item: {
             tokenType: 3,
@@ -85,7 +89,7 @@ export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements Migration
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "1050102",
           item: {
             tokenType: 3,
@@ -139,7 +143,7 @@ export class SeedEventHistoryErc1155PurchaseAt1563804040230 implements Migration
         '${ZeroHash}',
         'Purchase',
         '${JSON.stringify({
-          from: wallets[0],
+          account: wallets[0],
           externalId: "105040",
           item: {
             tokenType: 3,

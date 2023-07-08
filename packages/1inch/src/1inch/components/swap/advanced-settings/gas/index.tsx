@@ -28,13 +28,13 @@ export const GasSettings: FC = () => {
         }}
       >
         <LocalFireDepartment sx={{ mr: 1 }} />
-        <FormattedMessage id="pages.1inch.advanced-settings.gas" />
+        <FormattedMessage id="pages.dex.1inch.advanced-settings.gas" />
       </Box>
 
       <ToggleButtonGroup value={api.getGasPrice()} exclusive onChange={handleClick} fullWidth aria-label="gas price">
         {Object.values(GasPrice).map(gasPrice => (
           <ToggleButton value={gasPrice} aria-label={gasPrice} key={gasPrice}>
-            <FormattedMessage id={`pages.1inch.enums.gasPrice.${gasPrice}`} />
+            <FormattedMessage id={`pages.dex.1inch.enums.gasPrice.${gasPrice}`} />
           </ToggleButton>
         ))}
       </ToggleButtonGroup>

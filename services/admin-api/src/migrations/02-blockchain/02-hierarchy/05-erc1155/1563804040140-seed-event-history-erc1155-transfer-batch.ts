@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
 
@@ -27,8 +31,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[0],
           to: wallets[1],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -41,8 +45,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[0],
           to: wallets[2],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -55,8 +59,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[1],
           to: wallets[0],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -69,8 +73,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[1],
           to: wallets[2],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -83,8 +87,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[2],
           to: wallets[0],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -97,8 +101,8 @@ export class SeedEventHistoryErc1155TransferBatchAt1563804040140 implements Migr
           operator: ZeroAddress,
           from: wallets[2],
           to: wallets[1],
-          id: ["105010201", "105010301"],
-          value: ["1000", "1000"],
+          ids: ["105010201", "105010301"],
+          values: ["1000", "1000"],
         })}',
         '${currentDateTime}',
         '${currentDateTime}'

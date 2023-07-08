@@ -93,7 +93,7 @@ export const useSwap = (
             setSwapStatus(SwapStatus.AWAITING_APPROVAL);
             enqueueSnackbar(
               formatMessage(
-                { id: "pages.1inch.snackbar.approve-1inch" },
+                { id: "pages.dex.1inch.snackbar.approve-1inch" },
                 fromToken as unknown as Record<string, string>,
               ),
               {
@@ -103,7 +103,7 @@ export const useSwap = (
                     href="https://help.1inch.exchange/en/articles/4585113-why-do-i-need-to-approve-my-tokens-before-a-trade"
                     target="_blank"
                   >
-                    <FormattedMessage id="pages.1inch.buttons.learn-more" />
+                    <FormattedMessage id="pages.dex.1inch.buttons.learn-more" />
                   </Button>
                 ),
               },

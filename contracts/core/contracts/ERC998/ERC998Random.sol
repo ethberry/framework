@@ -58,7 +58,6 @@ abstract contract ERC998Random is IERC721Random, ERC998Simple, Rarity {
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];

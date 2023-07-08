@@ -10,6 +10,7 @@ export enum UserStatus {
 }
 
 export enum UserRole {
+  SUPER = "SUPER",
   ADMIN = "ADMIN",
   OWNER = "OWNER",
   MANAGER = "MANAGER",

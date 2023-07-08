@@ -1,11 +1,11 @@
 import type { RouteObject } from "react-router-dom";
-
-import { LotteryPurchase } from "./purchase";
 import { LotteryLeaderboard } from "./leaderboard";
-import { LotteryTicketList } from "./ticket-list";
-import { WalletWrapper } from "../../wallet-wrapper";
+import { LotteryTokenList } from "./token-list";
 import { IndexWrapper } from "../../index-wrapper";
 import { LotterySection } from "../../dashboard/mechanics/lottery";
+import { LotteryList } from "./lottery-list";
+import { LotteryContract } from "./lottery";
+import { Erc721Token } from "../../hierarchy/erc721/token";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -20,15 +20,24 @@ export const lotteryRoutes: Array<RouteObject> = [
         ),
       },
       {
-        path: "/lottery/purchase",
-        element: <WalletWrapper />,
-        children: [{ index: true, element: <LotteryPurchase /> }],
+        path: "/lottery/contracts/",
+        children: [
+          { index: true, element: <LotteryList /> },
+          { path: "/lottery/contracts/:id", element: <LotteryContract /> },
+        ],
+      },
+      {
+        path: "/lottery/tokens/",
+        children: [
+          { index: true, element: <LotteryTokenList /> },
+          { path: "/lottery/tokens/:id", element: <LotteryTokenList /> },
+        ],
       },
       {
         path: "/lottery/ticket",
         children: [
-          { index: true, element: <LotteryTicketList /> },
-          { path: "/lottery/ticket/:id", element: <LotteryTicketList /> },
+          { index: true, element: <LotteryTokenList /> },
+          { path: "/lottery/ticket/:id", element: <LotteryTokenList /> },
         ],
       },
       { path: "/lottery/leaderboard", element: <LotteryLeaderboard /> },

@@ -20,9 +20,9 @@ export class ExchangeLotteryServiceEth {
 
   public async purchaseLottery(event: ILogEvent<IExchangePurchaseLotteryEvent>, context: Log): Promise<void> {
     const {
-      args: { account, items, price },
+      args: { items, price },
     } = event;
-    const { transactionHash } = context;
+    const { address, transactionHash } = context;
 
     // TODO find ticket-token?
     const ticketTemplate = await this.templateService.findOne(
@@ -43,9 +43,9 @@ export class ExchangeLotteryServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [items[1]] /* [lottery, ticket] */, [price]);
 
-    this.notificatorService.purchaseLottery({
-      account,
+    await this.notificatorService.purchaseLottery({
       ...assets,
+      address,
       transactionHash,
     });
   }

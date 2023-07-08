@@ -13,7 +13,7 @@ export class EmailController {
   @EventPattern(EmailType.DUMMY)
   async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 12345,
+      template: 4921134,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,
@@ -24,7 +24,7 @@ export class EmailController {
   @EventPattern(EmailType.FEEDBACK)
   async feedback(@Payload() payload: IPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
-      template: 12345,
+      template: 4921119,
       to: ["info@gemunion.io"],
       data: {
         displayName: payload.user.displayName,
@@ -37,7 +37,7 @@ export class EmailController {
   @EventPattern(EmailType.LINK_TOKEN)
   async linkToken(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 12345,
+      template: 4921143,
       to: [payload.user.email],
       data: {
         title: payload.contract.title,

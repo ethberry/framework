@@ -6,6 +6,10 @@ import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;

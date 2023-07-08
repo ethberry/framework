@@ -10,8 +10,9 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
 import type { IWaitListList } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
-import { WaitListActionsMenu } from "../../../../components/menu/mechanics/waitlist";
+import { WaitListListActionsMenu } from "../../../../components/menu/mechanics/waitlist-list";
 import { cleanUpAsset } from "../../../../utils/money";
 import { WaitListSearchForm } from "./form";
 import { WaitListListEditDialog } from "./edit";
@@ -40,15 +41,24 @@ export const WaitListList: FC = () => {
       title: "",
       description: emptyStateString,
       item: emptyItem,
+      isPrivate: false,
     },
     search: {
       query: "",
     },
-    filter: ({ title, description, item }) => ({
-      title,
-      description,
-      item: cleanUpAsset(item),
-    }),
+    filter: ({ id, title, description, contractId, isPrivate, item }) =>
+      id
+        ? {
+            title,
+            description,
+          }
+        : {
+            title,
+            description,
+            contractId,
+            isPrivate,
+            item: cleanUpAsset(item),
+          },
   });
 
   return (
@@ -67,7 +77,6 @@ export const WaitListList: FC = () => {
         <List>
           {rows.map((waitListList, i) => (
             <ListItem key={i}>
-              <ListItemText>{waitListList.id || "new"}</ListItemText>
               <ListItemText>{waitListList.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(waitListList)}>
@@ -76,7 +85,10 @@ export const WaitListList: FC = () => {
                 <IconButton onClick={handleDelete(waitListList)}>
                   <Delete />
                 </IconButton>
-                <WaitListActionsMenu waitListList={waitListList} disabled={!!waitListList.root} />
+                <WaitListListActionsMenu
+                  waitListList={waitListList}
+                  disabled={!!waitListList.root || waitListList.contract.contractStatus !== ContractStatus.ACTIVE}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

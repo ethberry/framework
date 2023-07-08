@@ -32,7 +32,7 @@ export const EditCategoryDialog: FC<IEditCategoryDialogProps> = props => {
       <RichTextEditor name="description" />
       <EntityInput
         name="parentId"
-        controller="categories"
+        controller="ecommerce/categories"
         label={formatMessage({ id: "form.labels.parentCategoryId" })}
         placeholder={formatMessage({ id: "form.placeholders.parentCategoryId" })}
       />

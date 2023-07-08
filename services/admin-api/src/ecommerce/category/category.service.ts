@@ -1,11 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { CategoryEntity } from "./category.entity";
 import { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @Injectable()
 export class CategoryService {
@@ -63,10 +64,11 @@ export class CategoryService {
     });
   }
 
-  public async create(data: ICategoryCreateDto): Promise<CategoryEntity> {
+  public async create(dto: ICategoryCreateDto, userEntity: UserEntity): Promise<CategoryEntity> {
     return this.categoryEntityRepository
       .create({
-        ...data,
+        ...dto,
+        merchantId: userEntity.merchantId,
       })
       .save();
   }
@@ -74,6 +76,7 @@ export class CategoryService {
   public async update(
     where: FindOptionsWhere<CategoryEntity>,
     data: ICategoryUpdateDto,
+    userEntity: UserEntity,
   ): Promise<CategoryEntity | undefined> {
     const categoryEntity = await this.categoryEntityRepository.findOne({ where });
 
@@ -81,11 +84,15 @@ export class CategoryService {
       throw new NotFoundException("categoryNotFound");
     }
 
+    if (categoryEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
     Object.assign(categoryEntity, data);
     return categoryEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<CategoryEntity>): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<CategoryEntity>, userEntity: UserEntity): Promise<CategoryEntity> {
     if (where.id === 1) {
       throw new BadRequestException("cantDeleteRootCategory");
     }
@@ -104,10 +111,14 @@ export class CategoryService {
       throw new NotFoundException("categoryNotFound");
     }
 
+    if (categoryEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
     if (categoryEntity.children.length) {
       throw new BadRequestException("cantDeleteNotEmptyCategory");
     }
 
-    return this.categoryEntityRepository.delete(where);
+    return categoryEntity.remove();
   }
 }

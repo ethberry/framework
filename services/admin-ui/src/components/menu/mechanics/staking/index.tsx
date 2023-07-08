@@ -5,8 +5,6 @@ import { MoreVert } from "@mui/icons-material";
 import { IContract } from "@framework/types";
 
 import { TopUpMenuItem } from "../common/top-up";
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
@@ -15,12 +13,12 @@ import { AllowanceMenu } from "./allowance";
 import { StakingInfoMenuItem } from "./counters";
 
 export interface IStakingActionsMenu {
-  staking: IContract;
+  contract: IContract;
   disabled?: boolean;
 }
 
 export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
-  const { staking, disabled } = props;
+  const { contract, disabled } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -48,15 +46,13 @@ export const StakingActionsMenu: FC<IStakingActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="staking-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={staking} />
-        <ContractRevokeRoleMenuItem contract={staking} />
-        <ContractRenounceRoleMenuItem contract={staking} />
-        <AllowanceMenu contract={staking} />
-        <TopUpMenuItem contract={staking} />
-        <StakingInfoMenuItem contract={staking} />
-        <PauseMenuItem contract={staking} />
-        <EthListenerAddMenuItem contract={staking} />
-        <EthListenerRemoveMenuItem contract={staking} />
+        <ContractGrantRoleMenuItem contract={contract} />
+        <ContractRevokeRoleMenuItem contract={contract} />
+        <ContractRenounceRoleMenuItem contract={contract} />
+        <AllowanceMenu contract={contract} />
+        <TopUpMenuItem contract={contract} />
+        <StakingInfoMenuItem contract={contract} />
+        <PauseMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressStatus } from "@framework/types";
@@ -33,7 +44,7 @@ export class ProfileAddressController {
 
   @Put("/:id")
   public updateAddress(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @User() userEntity: UserEntity,
     @Body() dto: Omit<AddressUpdateDto, "userId">,
   ): Promise<AddressEntity | undefined> {
@@ -42,7 +53,7 @@ export class ProfileAddressController {
 
   @Delete("/:id")
   @HttpCode(204)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.addressService.delete({ id });
   }
 }

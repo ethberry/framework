@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
@@ -17,8 +17,13 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractFeatures, contractType, contractModule, merchantId, skip, take } = dto;
+  public async search(
+    dto: IContractSearchDto,
+    userEntity: UserEntity,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType> | null,
+  ): Promise<[Array<ContractEntity>, number]> {
+    const { query, contractStatus, contractFeatures, merchantId, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -147,6 +152,7 @@ export class ContractService {
         address: true,
         contractType: true,
         decimals: true,
+        symbol: true,
       },
     });
   }

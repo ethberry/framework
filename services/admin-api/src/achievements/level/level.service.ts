@@ -1,12 +1,14 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IAchievementLevelSearchDto } from "@framework/types";
 
+import { AssetService } from "../../blockchain/exchange/asset/asset.service";
+import { UserEntity } from "../../infrastructure/user/user.entity";
+import { AchievementRuleService } from "../rule/rule.service";
 import { AchievementLevelEntity } from "./level.entity";
 import { IAchievementLevelCreateDto, IAchievementLevelUpdateDto } from "./interfaces";
-import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 
 @Injectable()
 export class AchievementLevelService {
@@ -14,6 +16,7 @@ export class AchievementLevelService {
     @InjectRepository(AchievementLevelEntity)
     private readonly achievementLevelEntityRepository: Repository<AchievementLevelEntity>,
     protected readonly assetService: AssetService,
+    protected readonly achievementRuleService: AchievementRuleService,
   ) {}
 
   public search(dto: IAchievementLevelSearchDto): Promise<[Array<AchievementLevelEntity>, number]> {
@@ -91,19 +94,32 @@ export class AchievementLevelService {
     });
   }
 
-  public async create(dto: IAchievementLevelCreateDto): Promise<AchievementLevelEntity> {
-    const { item, parameters } = dto;
+  public async create(dto: IAchievementLevelCreateDto, userEntity: UserEntity): Promise<AchievementLevelEntity> {
+    const { item, parameters, achievementRuleId, ...rest } = dto;
 
-    // add new item
-    const itemEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(itemEntity, item);
+    const achievementRuleEntity = await this.achievementRuleService.findOne(
+      {
+        id: achievementRuleId,
+      },
+      { relations: { contract: true } },
+    );
 
-    return await this.achievementLevelEntityRepository
+    if (!achievementRuleEntity) {
+      throw new NotFoundException("achievementRuleNotFound");
+    }
+
+    if (achievementRuleEntity.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const itemEntity = await this.assetService.create();
+    await this.assetService.update(itemEntity, item, userEntity);
+
+    return this.achievementLevelEntityRepository
       .create({
-        ...dto,
+        ...rest,
         parameters,
+        achievementRuleId,
         item: itemEntity,
       })
       .save();
@@ -112,14 +128,17 @@ export class AchievementLevelService {
   public async update(
     where: FindOptionsWhere<AchievementLevelEntity>,
     dto: IAchievementLevelUpdateDto,
+    userEntity: UserEntity,
   ): Promise<AchievementLevelEntity> {
     const { item, parameters, ...rest } = dto;
+
     const achievementLevelEntity = await this.findOne(where, {
-      join: {
-        alias: "level",
-        leftJoinAndSelect: {
-          item: "level.item",
-          components: "item.components",
+      relations: {
+        achievementRule: {
+          contract: true,
+        },
+        item: {
+          components: true,
         },
       },
     });
@@ -128,20 +147,39 @@ export class AchievementLevelService {
       throw new NotFoundException("achievementLevelNotFound");
     }
 
+    if (achievementLevelEntity.achievementRule.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    if (item) {
+      await this.assetService.update(achievementLevelEntity.item, item, userEntity);
+    }
+
     if (parameters) {
       Object.assign(achievementLevelEntity, { parameters });
     }
 
     Object.assign(achievementLevelEntity, rest);
-
-    if (item) {
-      await this.assetService.update(achievementLevelEntity.item, item);
-    }
-
     return achievementLevelEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<AchievementLevelEntity>): Promise<void> {
-    await this.achievementLevelEntityRepository.delete(where);
+  public async delete(where: FindOptionsWhere<AchievementLevelEntity>, userEntity: UserEntity): Promise<void> {
+    const achievementLevelEntity = await this.findOne(where, {
+      relations: {
+        achievementRule: {
+          contract: true,
+        },
+      },
+    });
+
+    if (!achievementLevelEntity) {
+      throw new NotFoundException("achievementLevelNotFound");
+    }
+
+    if (achievementLevelEntity.achievementRule.contract.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    await achievementLevelEntity.remove();
   }
 }

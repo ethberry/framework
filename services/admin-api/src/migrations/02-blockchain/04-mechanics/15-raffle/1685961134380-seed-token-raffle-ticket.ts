@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 
@@ -21,7 +25,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ) VALUES (
         121010101,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '1',
@@ -32,7 +36,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010102,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '2',
@@ -43,7 +47,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010103,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '3',
@@ -54,7 +58,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010104,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '4',
@@ -65,7 +69,7 @@ export class SeedTokenRaffleTicketAt1685961134380 implements MigrationInterface 
       ), (
         121010105,
         '${JSON.stringify({
-          ROUND: "1",
+          ROUND: "101",
         })}',
         100,
         '5',

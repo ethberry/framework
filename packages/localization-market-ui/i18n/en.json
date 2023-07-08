@@ -36,6 +36,7 @@
     "edit": "Edit",
     "fund": "Fund",
     "get-reward": "Receive reward",
+    "grade": "Upgrade attribute",
     "join": "Join",
     "lend": "Lend token",
     "penalty": "Penalty: {item}% of deposit {description}",
@@ -43,6 +44,7 @@
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
     "transfer": "Transfer",
+    "upgrade": "Upgrade",
     "view": "View",
     "withdraw": "Withdraw balance"
   },
@@ -92,6 +94,7 @@
       "13377": "GEMUNION",
       "13378": "BESU",
       "137": "POLYGON",
+      "42161": "ARBITRUM",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI",
@@ -121,6 +124,8 @@
       "amounts": "Amounts",
       "approved": "Approved",
       "args": "Arguments",
+      "attribute": "Attribute",
+      "attributes": "Attributes",
       "borrow": "Borrow",
       "callbackGasLimit": "Callback gas limit",
       "childContract": "Child contract",
@@ -129,6 +134,7 @@
       "claimId": "Claim ID",
       "collection": "Collection",
       "contract": "Contract",
+      "contractModule": "Contract module",
       "data": "Data",
       "endTimestamp": "End date",
       "expires": "Lend expires",
@@ -148,6 +154,7 @@
       "multiplier": "Multiplier",
       "newAdminRole": "New admin role",
       "newOwner": "New owner",
+      "noData": "No data",
       "numWords": "Num words",
       "numbers": "Numbers",
       "operator": "Operator",
@@ -204,6 +211,7 @@
       "Lend": "Lend",
       "MintRandom": "MintRandom",
       "Mysterybox": "Mysterybox",
+      "OwnershipTransferred": "OwnershipTransferred",
       "Paused": "Paused",
       "PayeeAdded": "PayeeAdded",
       "PaymentEthReceived": "PaymentEthReceived",
@@ -212,6 +220,7 @@
       "PaymentReleased": "PaymentReleased",
       "Purchase": "Purchase",
       "PurchaseLottery": "PurchaseLottery",
+      "PurchaseMysteryBox": "PurchaseMysteryBox",
       "PurchaseRaffle": "PurchaseRaffle",
       "RandomWordsRequested": "RandomWordsRequested",
       "RandomnessRequest": "RandomnessRequest",
@@ -238,7 +247,7 @@
       "UnWhitelisted": "UnWhitelisted",
       "UnWhitelistedChild": "UnWhitelistedChild",
       "UnpackClaim": "UnpackClaim",
-      "UnpackMysterybox": "UnpackMysterybox",
+      "UnpackMysteryBox": "UnpackMysteryBox",
       "UnpackWrapper": "UnpackWrapper",
       "Unpaused": "Unpaused",
       "UpdateUser": "UpdateUser",
@@ -379,12 +388,14 @@
       "addressLine1": "Address (line 1)",
       "addressLine2": "Address (line 2)",
       "amount": "Amount",
+      "attribute": "Attribute",
       "breakLastPeriod": "Break last period",
       "categoryId": "categoryId",
       "categoryIds": "Category",
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Status",
+      "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contract": "Contract",
@@ -416,6 +427,7 @@
       "externalId": "External ID",
       "from": "From",
       "gender": "Gender",
+      "gradeId": "Grade",
       "id": "ID",
       "imageUrl": "Avatar",
       "isDefault": "Make default",
@@ -424,6 +436,7 @@
       "lendType": "Lend Type",
       "level": "Level",
       "listId": "List ID",
+      "lottery": "Lottery",
       "mainContractId": "Contract",
       "maxPrice": "Max. price",
       "merchantId": "Merchant",
@@ -480,6 +493,7 @@
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "100",
+      "attribute": "LEVEL",
       "categoryId": "categoryId",
       "categoryIds": "Root",
       "city": "Hamburg",
@@ -491,6 +505,7 @@
       "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "gradeId": "LEVEL",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -552,86 +567,6 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "1inch": {
-      "advanced-settings": {
-        "gas": "Gas",
-        "slippage": "Slippage tolerance",
-        "title": "Advanced settings"
-      },
-      "buttons": {
-        "buy-crypto": "Buy Crypto",
-        "cancel": "Cancel",
-        "confirm": "Confirm",
-        "connect-wallet": "Connect wallet",
-        "download-metamask": "Download Metamask",
-        "learn-more": "Learn more",
-        "swap-tokens": "Swap Tokens",
-        "swapAgain": "Swap Again"
-      },
-      "enums": {
-        "gasPrice": {
-          "HIGH": "High",
-          "LOW": "Low",
-          "MEDIUM": "MEDIUM"
-        },
-        "networks": {
-          "ARBITRUM": "Arbitrum",
-          "BINANCE": "Binance",
-          "ETHEREUM": "Ethereum",
-          "OPTIMISM": "Optimism",
-          "POLYGON": "Polygon"
-        },
-        "slippage": {
-          "HIGH": "1%",
-          "LOW": "0.1%",
-          "MEDIUM": "0.5%",
-          "VERY_HIGH": "3%"
-        },
-        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
-      },
-      "header": {
-        "bridge": "Bridge",
-        "network": "Network"
-      },
-      "snackbar": {
-        "accountNotFound": "Account not found in list",
-        "approve-1inch": "Please approve 1inch to spend your {symbol}",
-        "web3-not-detected": "Web3 provider not detected"
-      },
-      "swap": {
-        "ETH": "ETH",
-        "approve": "Approve",
-        "approving": "Approving...",
-        "balanceOf": "Balance of",
-        "buyPrice": "buy price",
-        "complete": "Complete",
-        "confirm": "Confirm Swap",
-        "cost": "Cost",
-        "fee": "Fee",
-        "gas": "Gas",
-        "gasPrice": "Gas Price",
-        "gwei": "GWEI",
-        "maxPriceSlippage": "Max price slippage",
-        "preparing": "Preparing Swap",
-        "product": "Product",
-        "quantity": "Quantity",
-        "rate": "Rate",
-        "selected": "Selected",
-        "spread": "Spread across DEXes",
-        "swapping": "Swapping Tokens",
-        "title": "SWAP",
-        "total": "Total",
-        "txCost": "Tx cost"
-      },
-      "title": "1inch",
-      "token-search": {
-        "title": "Search {amount} tokens"
-      },
-      "warning": {
-        "cannotBeSame": "Tokens cannot be the same",
-        "insufficient": "Insufficient {symbol} balance"
-      }
-    },
     "achievements": {
       "info": {
         "contract": "Contract",
@@ -720,8 +655,12 @@
         }
       },
       "integrations": {
-        "1inch": "1inch",
         "coin-gecko": "CoinGecko",
+        "dex": {
+          "1inch": "1inch",
+          "title": "Dex",
+          "uniswap": "Uniswap"
+        },
         "ipfs": "IPFS"
       },
       "mechanics": {
@@ -740,6 +679,92 @@
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
+    },
+    "dex": {
+      "1inch": {
+        "advanced-settings": {
+          "gas": "Gas",
+          "slippage": "Slippage tolerance",
+          "title": "Advanced settings"
+        },
+        "buttons": {
+          "buy-crypto": "Buy Crypto",
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "connect-wallet": "Connect wallet",
+          "download-metamask": "Download Metamask",
+          "learn-more": "Learn more",
+          "swap-tokens": "Swap Tokens",
+          "swapAgain": "Swap Again"
+        },
+        "enums": {
+          "gasPrice": {
+            "HIGH": "High",
+            "LOW": "Low",
+            "MEDIUM": "MEDIUM"
+          },
+          "networks": {
+            "ARBITRUM": "Arbitrum",
+            "BINANCE": "Binance",
+            "ETHEREUM": "Ethereum",
+            "OPTIMISM": "Optimism",
+            "POLYGON": "Polygon"
+          },
+          "slippage": {
+            "HIGH": "1%",
+            "LOW": "0.1%",
+            "MEDIUM": "0.5%",
+            "VERY_HIGH": "3%"
+          },
+          "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
+        },
+        "header": {
+          "bridge": "Bridge",
+          "network": "Network"
+        },
+        "snackbar": {
+          "accountNotFound": "Account not found in list",
+          "approve-1inch": "Please approve 1inch to spend your {symbol}",
+          "web3-not-detected": "Web3 provider not detected"
+        },
+        "swap": {
+          "ETH": "ETH",
+          "approve": "Approve",
+          "approving": "Approving...",
+          "balanceOf": "Balance of",
+          "buyPrice": "buy price",
+          "complete": "Complete",
+          "confirm": "Confirm Swap",
+          "cost": "Cost",
+          "fee": "Fee",
+          "gas": "Gas",
+          "gasPrice": "Gas Price",
+          "gwei": "GWEI",
+          "maxPriceSlippage": "Max price slippage",
+          "preparing": "Preparing Swap",
+          "product": "Product",
+          "quantity": "Quantity",
+          "rate": "Rate",
+          "selected": "Selected",
+          "spread": "Spread across DEXes",
+          "swapping": "Swapping Tokens",
+          "title": "SWAP",
+          "total": "Total",
+          "txCost": "Tx cost"
+        },
+        "title": "1inch",
+        "token-search": {
+          "title": "Search {amount} tokens"
+        },
+        "warning": {
+          "cannotBeSame": "Tokens cannot be the same",
+          "insufficient": "Insufficient {symbol} balance"
+        }
+      },
+      "title": "Dex",
+      "uniswap": {
+        "title": "Uniswap"
+      }
     },
     "drop-list": {
       "title": "Drops"
@@ -787,6 +812,7 @@
       "title": "ERC721",
       "token": {
         "genesis": "Genesis",
+        "grade": "Grade",
         "level": "Level: {level}",
         "price": "Base price: {amount}",
         "rarity": "Rarity: {rarity}",
@@ -868,21 +894,50 @@
       "popular": "Popular items"
     },
     "lottery": {
+      "contract": {
+        "title": "Contracts"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
       "purchase": {
         "price": "Ticket Price",
-        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
+        "count": "{current} of {max} sold",
         "title": "Buy a ticket"
       },
-      "tickets": {
+      "title": "Lottery",
+      "tokens": {
         "title": "My tickets"
-      },
-      "title": "Lottery"
+      }
+    },
+    "lottery-list": {
+      "title": "Lottery contracts"
     },
     "marketplace": {
+      "title": "Marketplace",
+      "merchants": {
+        "title": "Merchants"
+      },
+      "merchant": {
+        "title": "Merchant: {title}"
+      },
+      "contract": {
+        "title": "Contract: {title}"
+      },
+      "contracts": {
+        "title": "Contract"
+      },
+      "templates": {
+        "title": "Templates"
+      },
+      "template": {
+        "title": "Templates: {title}",
+        "price": "Base price: {amount}"
+      }
+    },
+    "marketplace-old": {
       "erc1155": {
         "title": "ERC1155"
       },
@@ -988,17 +1043,26 @@
       "title": "Pyramid"
     },
     "raffle": {
+      "contract": {
+        "title": "Contracts"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
       "purchase": {
         "rules": "Just buy a ticket. Random will choose a winner",
-        "title": "Buy a ticket"
+        "commission": "{commission}% commission",
+        "title": "Buy a ticket",
+        "count": "{current} of {max} sold",
+        "sold": "{count} sold"
       },
-      "tickets": {
+      "title": "Raffle",
+      "tokens": {
         "title": "My tickets"
-      },
-      "title": "Lottery"
+      }
+    },
+    "raffle-list": {
+      "title": "Raffle contracts"
     },
     "referral": {
       "cabinet": {
@@ -1081,6 +1145,7 @@
     "duplicateAccount": "Duplicate account",
     "error": "Unknown Error",
     "featureIsNotSupported": "Feature is not supported",
+    "gradeNotActive": "Attribute is not active",
     "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",

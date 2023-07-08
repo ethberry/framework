@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
+import { CommonContractInput } from "../../../../../inputs/common-contract";
 import { AmountInput } from "./amount-input";
-import { ContractInput } from "./contract-input";
 import { validationSchema } from "./validation";
 
 export interface IAllowanceDto {
@@ -27,6 +27,19 @@ export interface IAllowanceDialogProps {
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      if (option?.title === "USDT") {
+        // TODO make it MUI\Alert?
+        alert("USDT: You must revoke existing allowance first (set to 0)");
+      }
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contract.address", option?.address ?? "0x");
+      form.setValue("contract.contractType", option?.contractType ?? "0x");
+      form.setValue("contract.decimals", option?.decimals ?? 0);
+    };
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -36,7 +49,12 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       showDebug={true}
       {...rest}
     >
-      <ContractInput />
+      <CommonContractInput
+        name="contractId"
+        data={{ contractType: [TokenType.ERC20] }}
+        onChange={handleContractChange}
+        autoselect
+      />
       <AmountInput />
     </FormDialog>
   );

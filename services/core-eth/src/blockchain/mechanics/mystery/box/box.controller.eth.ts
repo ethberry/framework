@@ -9,23 +9,23 @@ import {
   IERC721TokenApprovedForAllEvent,
   IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
-  IMysteryUnpackEvent,
+  IUnpackMysteryBoxEvent,
 } from "@framework/types";
 
 import { MysteryBoxServiceEth } from "./box.service.eth";
 
 @Controller()
 export class MysteryBoxControllerEth {
-  constructor(private readonly mysteryboxServiceEth: MysteryBoxServiceEth) {}
+  constructor(private readonly mysteryBoxServiceEth: MysteryBoxServiceEth) {}
 
   @EventPattern({ contractType: ContractType.MYSTERY, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
-    return this.mysteryboxServiceEth.transfer(event, context);
+    return this.mysteryBoxServiceEth.transfer(event, context);
   }
 
   @EventPattern({ contractType: ContractType.MYSTERY, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
-    return this.mysteryboxServiceEth.approval(event, context);
+    return this.mysteryBoxServiceEth.approval(event, context);
   }
 
   @EventPattern({ contractType: ContractType.MYSTERY, eventName: ContractEventType.ApprovalForAll })
@@ -33,11 +33,11 @@ export class MysteryBoxControllerEth {
     @Payload() event: ILogEvent<IERC721TokenApprovedForAllEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.mysteryboxServiceEth.approvalForAll(event, context);
+    return this.mysteryBoxServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.MYSTERY, eventName: ContractEventType.UnpackMysterybox })
-  public unpackItem(@Payload() event: ILogEvent<IMysteryUnpackEvent>, @Ctx() context: Log): Promise<void> {
-    return this.mysteryboxServiceEth.unpack(event, context);
+  @EventPattern({ contractType: ContractType.MYSTERY, eventName: ContractEventType.UnpackMysteryBox })
+  public unpackItem(@Payload() event: ILogEvent<IUnpackMysteryBoxEvent>, @Ctx() context: Log): Promise<void> {
+    return this.mysteryBoxServiceEth.unpack(event, context);
   }
 }

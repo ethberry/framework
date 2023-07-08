@@ -12,6 +12,11 @@
             "internalType": "bytes",
             "name": "bytecode",
             "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "externalId",
+            "type": "uint256"
           }
         ],
         "internalType": "struct AbstractFactory.Params",
@@ -60,7 +65,7 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "addr",
+        "name": "account",
         "type": "address"
       }
     ],

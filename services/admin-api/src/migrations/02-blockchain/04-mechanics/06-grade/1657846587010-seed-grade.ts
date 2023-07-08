@@ -4,24 +4,33 @@ import { ns } from "@framework/constants";
 
 export class SeedGrade1657846587010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        50101
+        102000301
       ), (
-        50102
+        102000302
       ), (
-        50201
+        102000308
       ), (
-        50202
+        102000401
+      ), (
+        102000402
+      ), (
+        102000408
       );
     `);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.grade (
+        id,
         grade_strategy,
         attribute,
         growth_rate,
@@ -30,35 +39,57 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        10301,
         'FLAT',
-        'GRADE',
+        'LEVEL',
         0,
-        50101,
-        10305,
+        102000301,
+        10305, -- Armour
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10302,
         'EXPONENTIAL',
-        'GRADE',
+        'LEVEL',
         0,
-        50102,
-        10306,
+        102000302,
+        10306, -- Weapon
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        10308,
         'LINEAR',
-        'GRADE',
+        'LEVEL',
         1,
-        50201,
-        10405,
+        102000308,
+        10380, -- Under Armour
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'EXPONENTIAL',
-        'GRADE',
+        10401,
+        'LINEAR',
+        'LEVEL',
         1,
-        50202,
-        10406, -- hero
+        102000401,
+        10405, -- Spell book
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10402,
+        'LINEAR',
+        'LEVEL',
+        1,
+        102000402,
+        10406, -- Heros
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10408,
+        'LINEAR',
+        'LEVEL',
+        1,
+        102000308,
+        10480, -- Anti-heros
         '${currentDateTime}',
         '${currentDateTime}'
       );

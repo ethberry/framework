@@ -1,0 +1,52 @@
+{
+  "author": {
+    "email": "trejgun@gemunion.io",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/framework/issues"
+  },
+  "description": "react uniswap-widget",
+  "dependencies": {
+    "@gemunion/provider-wallet": "3.3.27",
+    "@mui/material": "5.13.6",
+    "@uniswap/widgets": "2.51.2",
+    "@web3-react/core": "8.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.14",
+    "react": "18.2.0"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/uniswap-widget",
+  "peerDependencies": {
+    "notistack": "^3.0.0",
+    "react": "^18.0.0",
+    "react-intl": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist",
+    "prepare": "npm run build",
+    "preversion": "npm run build && npm run test",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

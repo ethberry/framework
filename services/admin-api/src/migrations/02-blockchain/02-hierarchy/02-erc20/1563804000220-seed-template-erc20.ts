@@ -6,6 +6,10 @@ import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -79,6 +83,18 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         10205,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1028001,
+        'Warp token',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '${(1000n * WeiPerEther).toString()}',
+        'ACTIVE',
+        10280,
         '${currentDateTime}',
         '${currentDateTime}'
       );

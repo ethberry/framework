@@ -1,6 +1,7 @@
 export interface ICreateListenerPayload {
   address: Array<string>;
   fromBlock: number;
+  topics?: (string | string[] | null)[];
 }
 
 export interface IContractListenerResult {

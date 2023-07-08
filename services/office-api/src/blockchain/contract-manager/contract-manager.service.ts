@@ -7,6 +7,7 @@ import { IContractManagerSearchDto } from "@framework/types";
 
 import { IContractManagerCreateDto } from "./interfaces";
 import { ContractManagerEntity } from "./contract-manager.entity";
+import { AST } from "eslint";
 
 @Injectable()
 export class ContractManagerService {
@@ -80,4 +81,21 @@ export class ContractManagerService {
 
     return contractManagerEntity.save();
   }
+
+  // public async validateDeployment(
+  //   userEntity: UserEntity,
+  //   contractModule: ModuleType,
+  //   contractType: TokenType | null,
+  // ): Promise<void> {
+  //   const limit = await this.planService.getPlanLimits(userEntity, contractModule, contractType);
+  //
+  //   const count = await this.contractService.count({
+  //     contractModule,
+  //     contractType: contractType || IsNull(),
+  //   });
+  //
+  //   if (count >= limit) {
+  //     throw new ForbiddenException("rateLimitExceeded");
+  //   }
+  // }
 }

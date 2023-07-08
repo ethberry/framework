@@ -29,13 +29,13 @@ export const SlippageSettings: FC = () => {
         }}
       >
         <Waves sx={{ mr: 1 }} />
-        <FormattedMessage id="pages.1inch.advanced-settings.slippage" />
+        <FormattedMessage id="pages.dex.1inch.advanced-settings.slippage" />
       </Box>
 
       <ToggleButtonGroup value={api.getSlippage()} exclusive onChange={handleClick} fullWidth aria-label="gas price">
         {Object.values(Slippage).map(slippage => (
           <ToggleButton value={slippage} aria-label={slippage} key={slippage}>
-            <FormattedMessage id={`pages.1inch.enums.slippage.${slippage}`} />
+            <FormattedMessage id={`pages.dex.1inch.enums.slippage.${slippage}`} />
           </ToggleButton>
         ))}
       </ToggleButtonGroup>

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -6,6 +6,8 @@ import { RentEntity } from "./rent.entity";
 import { IRentCreateDto, IRentUpdateDto } from "./interfaces";
 import { AssetService } from "../../exchange/asset/asset.service";
 import { IRentSearchDto, RentRuleStatus } from "@framework/types";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class RentService {
@@ -13,6 +15,7 @@ export class RentService {
     @InjectRepository(RentEntity)
     private readonly rentEntityRepository: Repository<RentEntity>,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(dto: IRentSearchDto): Promise<[Array<RentEntity>, number]> {
@@ -62,26 +65,37 @@ export class RentService {
     return this.rentEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IRentCreateDto): Promise<RentEntity> {
-    const { price, title, contractId, rentStatus } = dto;
+  public async create(dto: IRentCreateDto, userEntity: UserEntity): Promise<RentEntity> {
+    const { price, title, contractId, rentStatus = RentRuleStatus.NEW } = dto;
 
-    // add new price
-    const priceEntity = await this.assetService.create({
-      components: [],
-    });
-    await this.assetService.update(priceEntity, price);
+    const contractEntity = await this.contractService.findOne({ id: contractId });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (contractEntity.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const priceEntity = await this.assetService.create();
+    await this.assetService.update(priceEntity, price, userEntity);
 
     return this.rentEntityRepository
       .create({
         price: priceEntity,
         title,
         contractId,
-        rentStatus: rentStatus || RentRuleStatus.NEW,
+        rentStatus,
       })
       .save();
   }
 
-  public async update(where: FindOptionsWhere<RentEntity>, dto: Partial<IRentUpdateDto>): Promise<RentEntity> {
+  public async update(
+    where: FindOptionsWhere<RentEntity>,
+    dto: Partial<IRentUpdateDto>,
+    userEntity: UserEntity,
+  ): Promise<RentEntity> {
     const { price, ...rest } = dto;
     const rentEntity = await this.findOne(where, {
       join: {
@@ -98,7 +112,7 @@ export class RentService {
     }
 
     if (price) {
-      await this.assetService.update(rentEntity.price, price);
+      await this.assetService.update(rentEntity.price, price, userEntity);
     }
 
     Object.assign(rentEntity, rest);

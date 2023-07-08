@@ -5,6 +5,10 @@ import { ns } from "@framework/constants";
 
 export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component_history (
         history_id,
@@ -15,8 +19,8 @@ export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 impl
       ) VALUES (
         102220010,
         'ITEM',
-        12201,
-        122010101,
+        12301,
+        123010101,
         1
       ), (
         102220010,
@@ -27,8 +31,8 @@ export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 impl
       ), (
         102220020,
         'ITEM',
-        12201,
-        122010102,
+        12301,
+        123010102,
         1
       ), (
         102220020,
@@ -39,8 +43,8 @@ export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 impl
       ), (
         102220030,
         'ITEM',
-        12201,
-        122010103,
+        12301,
+        123010103,
         1
       ), (
         102220030,
@@ -51,8 +55,8 @@ export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 impl
       ), (
         102220040,
         'ITEM',
-        12201,
-        122010104,
+        12301,
+        123010104,
         1
       ), (
         102220040,
@@ -63,8 +67,8 @@ export class SeedEventHistoryLotteryTicketPurchaseComponentsAt1660436476310 impl
       ), (
         102220050,
         'ITEM',
-        12201,
-        122010105,
+        12301,
+        123010105,
         1
       ), (
         102220050,

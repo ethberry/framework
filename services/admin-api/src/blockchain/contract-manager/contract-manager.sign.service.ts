@@ -5,38 +5,37 @@ import { hexlify, randomBytes, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
-  IPyramidContractDeployDto,
-  IStakingContractDeployDto,
-  IWaitListContractDeployDto,
+  ICollectionContractDeployDto,
   IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
-  IErc721CollectionDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
-  IMysteryContractDeployDto,
-  IVestingContractDeployDto,
-  IRaffleContractDeployDto,
   ILotteryContractDeployDto,
+  IMysteryContractDeployDto,
+  IPyramidContractDeployDto,
+  IRaffleContractDeployDto,
+  IStakingContractDeployDto,
+  IVestingContractDeployDto,
+  IWaitListContractDeployDto,
 } from "@framework/types";
 import {
+  CollectionContractTemplates,
   Erc1155ContractTemplates,
   Erc20ContractTemplates,
-  Erc721CollectionTemplates,
   Erc721ContractTemplates,
   Erc998ContractTemplates,
+  ModuleType,
   MysteryContractTemplates,
   PyramidContractTemplates,
   StakingContractTemplates,
-  VestingContractTemplate,
+  TokenType,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 import ERC20WhitelistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Whitelist.sol/ERC20Whitelist.json";
 
-import VestingLinearSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
-import VestingGradedSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
-import VestingCliffSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
+import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/random/gemunion/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
@@ -72,24 +71,33 @@ import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 import ERC1155SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json";
 
-import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
-import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
-import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
-import MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
+import MysteryBoxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol/ERC721MysteryBoxSimple.json";
+import MysteryBoxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklist.sol/ERC721MysteryBoxBlacklist.json";
+import MysteryBoxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol/ERC721MysteryBoxPausable.json";
+import MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
 
 import ERC721CSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json";
 import ERC721CBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
-import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
-import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/LinearReferralPyramid.sol/LinearReferralPyramid.json";
+import PyramidBasicSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/PyramidBasic.sol/PyramidBasic.json";
+import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
-import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/RaffleRandom.sol/RaffleRandom.json";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/LotteryRandom.sol/LotteryRandom.json";
+
+// import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
+import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomBesu.sol/RaffleRandomBesu.json";
+import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
+
+// TODO get contract by chainId
+// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBesu.sol/LotteryRandomBesu.json";
+import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { ContractManagerService } from "./contract-manager.service";
+import { AssetEntity } from "../exchange/asset/asset.entity";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -97,11 +105,14 @@ export class ContractManagerSignService {
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
+    private readonly contractManagerService: ContractManagerService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc20ContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC20);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -120,6 +131,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc20Args: [
           { name: "name", type: "string" },
@@ -133,6 +145,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc20ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -149,6 +162,14 @@ export class ContractManagerSignService {
   public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc721ContractTemplates(dto);
+
+    const moduleType =
+      dto.contractTemplate === Erc721ContractTemplates.LOTTERY
+        ? ModuleType.LOTTERY
+        : dto.contractTemplate === Erc721ContractTemplates.RAFFLE
+        ? ModuleType.RAFFLE
+        : ModuleType.HIERARCHY;
+    await this.contractManagerService.validateDeployment(userEntity, moduleType, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -167,6 +188,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc721Args: [
           { name: "name", type: "string" },
@@ -181,63 +203,14 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc721ContractTemplates).indexOf(dto.contractTemplate).toString(),
           name: dto.name,
           symbol: dto.symbol,
           baseTokenURI: dto.baseTokenURI,
-          royalty: dto.royalty,
-        },
-      },
-    );
-    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
-  public async erc721Collection(dto: IErc721CollectionDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByErc721CollectionTemplates(dto);
-
-    const signature = await this.signer.signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "params", type: "Params" },
-          { name: "args", type: "CollectionArgs" },
-        ],
-        Params: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-        ],
-        CollectionArgs: [
-          { name: "name", type: "string" },
-          { name: "symbol", type: "string" },
-          { name: "royalty", type: "uint96" },
-          { name: "baseTokenURI", type: "string" },
-          { name: "batchSize", type: "uint96" },
-          { name: "contractTemplate", type: "string" },
-        ],
-      },
-      // Values
-      {
-        params: {
-          nonce,
-          bytecode,
-        },
-        args: {
-          name: dto.name,
-          symbol: dto.symbol,
-          royalty: dto.royalty,
-          baseTokenURI: dto.baseTokenURI,
-          batchSize: dto.batchSize,
-          contractTemplate: Object.values(Erc721CollectionTemplates).indexOf(dto.contractTemplate).toString(),
+          royalty: BigInt(dto.royalty),
         },
       },
     );
@@ -247,6 +220,8 @@ export class ContractManagerSignService {
   public async erc998Token(dto: IErc998ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc998ContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC998);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -265,6 +240,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc998Args: [
           { name: "name", type: "string" },
@@ -279,6 +255,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc998ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -297,6 +274,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByErc1155ContractTemplates(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.HIERARCHY, TokenType.ERC1155);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -314,6 +293,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         Erc1155Args: [
           { name: "royalty", type: "uint96" },
@@ -326,6 +306,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(Erc1155ContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -339,9 +320,11 @@ export class ContractManagerSignService {
   }
 
   // MODULE:MYSTERY
-  public async mysterybox(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async mystery(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByMysteryContractTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.MYSTERY, TokenType.ERC721);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -360,6 +343,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         MysteryArgs: [
           { name: "name", type: "string" },
@@ -374,6 +358,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(MysteryContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -389,10 +374,16 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public async vesting(dto: IVestingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { contractTemplate, account, startTimestamp, duration } = dto;
+  public async vesting(
+    dto: IVestingContractDeployDto,
+    userEntity: UserEntity,
+    asset?: AssetEntity,
+  ): Promise<IServerSignature> {
+    const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease, externalId } = dto;
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByVestingContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.VESTING, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -407,16 +398,24 @@ export class ContractManagerSignService {
         EIP712: [
           { name: "params", type: "Params" },
           { name: "args", type: "VestingArgs" },
+          { name: "items", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         VestingArgs: [
-          { name: "account", type: "address" },
+          { name: "beneficiary", type: "address" },
           { name: "startTimestamp", type: "uint64" },
-          { name: "duration", type: "uint64" },
-          { name: "contractTemplate", type: "string" },
+          { name: "cliffInMonth", type: "uint16" },
+          { name: "monthlyRelease", type: "uint16" },
+        ],
+        Asset: [
+          { name: "tokenType", type: "uint256" },
+          { name: "token", type: "address" },
+          { name: "tokenId", type: "uint256" },
+          { name: "amount", type: "uint256" },
         ],
       },
       // Values
@@ -424,13 +423,23 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: externalId || userEntity.id,
         },
         args: {
-          account,
+          beneficiary: beneficiary.toLowerCase(),
           startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
-          duration: duration * 60 * 60 * 24, // in seconds
-          contractTemplate: Object.values(VestingContractTemplate).indexOf(contractTemplate).toString(),
+          cliffInMonth, // in seconds
+          monthlyRelease,
         },
+        // items: [],
+        items: asset
+          ? asset.components.map(component => ({
+              tokenType: Object.values(TokenType).indexOf(component.tokenType),
+              token: component.contract.address,
+              tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+              amount: component.amount,
+            }))
+          : [],
       },
     );
 
@@ -441,6 +450,8 @@ export class ContractManagerSignService {
   public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByPyramidContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.PYRAMID, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -459,6 +470,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         PyramidArgs: [
           { name: "payees", type: "address[]" },
@@ -471,6 +483,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           payees: dto.payees,
@@ -486,6 +499,8 @@ export class ContractManagerSignService {
   public async staking(dto: IStakingContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByStakingContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.STAKING, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -504,6 +519,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         StakingArgs: [{ name: "contractTemplate", type: "string" }],
       },
@@ -512,6 +528,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           contractTemplate: Object.values(StakingContractTemplates).indexOf(dto.contractTemplate).toString(),
@@ -527,6 +544,8 @@ export class ContractManagerSignService {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByWaitListContractTemplate(dto);
 
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
+
     const signature = await this.signer.signTypedData(
       // Domain
       {
@@ -541,6 +560,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
       },
       // Values
@@ -548,6 +568,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
       },
     );
@@ -559,6 +580,8 @@ export class ContractManagerSignService {
   public async raffle(dto: IRaffleContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByRaffleContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.RAFFLE, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -577,6 +600,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
         RaffleConfig: [
@@ -589,6 +613,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           config: dto.config,
@@ -599,10 +624,12 @@ export class ContractManagerSignService {
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:WAITLIST
+  // MODULE:LOTTERY
   public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
     const bytecode = this.getBytecodeByLotteryContractTemplate(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
 
     const signature = await this.signer.signTypedData(
       // Domain
@@ -621,6 +648,7 @@ export class ContractManagerSignService {
         Params: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
         ],
         LotteryArgs: [{ name: "config", type: "LotteryConfig" }],
         LotteryConfig: [
@@ -633,6 +661,7 @@ export class ContractManagerSignService {
         params: {
           nonce,
           bytecode,
+          externalId: userEntity.id,
         },
         args: {
           config: dto.config,
@@ -640,6 +669,61 @@ export class ContractManagerSignService {
       },
     );
 
+    return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:COLLECTION
+  public async collection(dto: ICollectionContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const nonce = randomBytes(32);
+    const bytecode = this.getBytecodeByCollectionTemplates(dto);
+
+    await this.contractManagerService.validateDeployment(userEntity, ModuleType.COLLECTION, TokenType.ERC721);
+
+    const signature = await this.signer.signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "params", type: "Params" },
+          { name: "args", type: "CollectionArgs" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "externalId", type: "uint256" },
+        ],
+        CollectionArgs: [
+          { name: "name", type: "string" },
+          { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
+          { name: "batchSize", type: "uint96" },
+          { name: "contractTemplate", type: "string" },
+        ],
+      },
+      // Values
+      {
+        params: {
+          nonce,
+          bytecode,
+          externalId: userEntity.id,
+        },
+        args: {
+          name: dto.name,
+          symbol: dto.symbol,
+          royalty: dto.royalty,
+          baseTokenURI: dto.baseTokenURI,
+          batchSize: dto.batchSize,
+          contractTemplate: Object.values(CollectionContractTemplates).indexOf(dto.contractTemplate).toString(),
+        },
+      },
+    );
     return { nonce: hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
@@ -689,6 +773,10 @@ export class ContractManagerSignService {
         return ERC721BlacklistUpgradeableRentableSol.bytecode;
       case Erc721ContractTemplates.BLACKLIST_UPGRADEABLE_RENTABLE_RANDOM:
         return ERC721BlacklistUpgradeableRentableRandomSol.bytecode;
+      case Erc721ContractTemplates.RAFFLE:
+        return RaffleTicketSol.bytecode;
+      case Erc721ContractTemplates.LOTTERY:
+        return LotteryTicketSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }
@@ -747,19 +835,8 @@ export class ContractManagerSignService {
   }
 
   // MODULE:VESTING
-  public getBytecodeByVestingContractTemplate(dto: IVestingContractDeployDto) {
-    const { contractTemplate } = dto;
-
-    switch (contractTemplate) {
-      case VestingContractTemplate.LINEAR:
-        return VestingLinearSol.bytecode;
-      case VestingContractTemplate.GRADED:
-        return VestingGradedSol.bytecode;
-      case VestingContractTemplate.CLIFF:
-        return VestingCliffSol.bytecode;
-      default:
-        throw new NotFoundException("templateNotFound");
-    }
+  public getBytecodeByVestingContractTemplate(_dto: IVestingContractDeployDto) {
+    return VestingSol.bytecode;
   }
 
   // MODULE:MYSTERY
@@ -768,26 +845,26 @@ export class ContractManagerSignService {
 
     switch (contractTemplate) {
       case MysteryContractTemplates.SIMPLE:
-        return MysteryboxSimpleSol.bytecode;
+        return MysteryBoxSimpleSol.bytecode;
       case MysteryContractTemplates.PAUSABLE:
-        return MysteryboxPausableSol.bytecode;
+        return MysteryBoxPausableSol.bytecode;
       case MysteryContractTemplates.BLACKLIST:
-        return MysteryboxBlacklistSol.bytecode;
+        return MysteryBoxBlacklistSol.bytecode;
       case MysteryContractTemplates.BLACKLIST_PAUSABLE:
-        return MysteryboxBlacklistPausableSol.bytecode;
+        return MysteryBoxBlacklistPausableSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }
   }
 
   // MODULE:COLLECTION
-  public getBytecodeByErc721CollectionTemplates(dto: IErc721CollectionDeployDto) {
+  public getBytecodeByCollectionTemplates(dto: ICollectionContractDeployDto) {
     const { contractTemplate } = dto;
 
     switch (contractTemplate) {
-      case Erc721CollectionTemplates.SIMPLE:
+      case CollectionContractTemplates.SIMPLE:
         return ERC721CSimpleSol.bytecode;
-      case Erc721CollectionTemplates.BLACKLIST:
+      case CollectionContractTemplates.BLACKLIST:
         return ERC721CBlacklistSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
@@ -811,9 +888,9 @@ export class ContractManagerSignService {
     const { contractTemplate } = dto;
     switch (contractTemplate) {
       case PyramidContractTemplates.SIMPLE:
-        return PyramidSol.bytecode;
+        return PyramidBasicSol.bytecode;
       case PyramidContractTemplates.SPLITTER:
-        return PyramidSol.bytecode;
+        return PyramidReferralSol.bytecode;
       case PyramidContractTemplates.REFERRAL:
         return PyramidReferralSol.bytecode;
       default:

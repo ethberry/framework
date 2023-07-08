@@ -13,31 +13,17 @@ import { TokenType } from "@framework/types";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
+import { boolArrayToByte32 } from "./utils";
 
 export interface ILotteryPurchaseButtonProps {
   round: Partial<ILotteryRound>;
   ticketNumbers: Array<boolean>;
   clearForm: () => void;
+  disabled: boolean;
 }
 
-export const boolArrayToByte32 = (booleans: Array<boolean>) => {
-  if (booleans.length > 256) {
-    throw new Error("Array length cannot exceed 256");
-  }
-  const result: Array<string> = [];
-  booleans.forEach((value, index) => {
-    if (value) {
-      result.push(utils.hexZeroPad(utils.hexValue(index + 1), 1));
-    }
-  });
-  const concat = `0x${result.map(res => res.substring(2)).join("")}`;
-
-  return utils.hexZeroPad(concat, 32);
-};
-
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { clearForm, ticketNumbers, round } = props;
-
+  const { clearForm, ticketNumbers, round, disabled } = props;
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
@@ -48,7 +34,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         .purchaseLottery(
           {
             nonce: utils.arrayify(sign.nonce),
-            externalId: 0,
+            externalId: round.id,
             expiresAt: sign.expiresAt,
             referrer: settings.getReferrer(),
             extra: boolArrayToByte32(ticketNumbers),
@@ -70,9 +56,9 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
           round.price?.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract?.address,
-            tokenId: component.templateId || 0,
+            tokenId: component.template?.tokens![0].tokenId,
             amount: component.amount,
-          })),
+          }))[0],
           sign.signature,
           {
             value: getEthPrice(round.price),
@@ -107,7 +93,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="LotteryBuyTicket">
+    <Button startIcon={<Casino />} onClick={handlePurchase} disabled={disabled} data-testid="LotteryBuyTicket">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

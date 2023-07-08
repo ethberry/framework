@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
 import { AuthService } from "../auth/auth.service";
-import { IUserImportDto } from "./interfaces";
+import type { IUserImportDto } from "./interfaces";
 
 @Injectable()
 export class UserService {
@@ -28,7 +28,7 @@ export class UserService {
     return this.userEntityRepository.create(dto).save();
   }
 
-  public async count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
     return this.userEntityRepository.count({ where });
   }
 }

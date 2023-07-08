@@ -1,9 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateInput } from "@gemunion/mui-inputs-picker";
-import { IContract, IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
+import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import type { IContract, IVestingContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -11,14 +12,19 @@ export interface IVestingDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
+  initialValues: IVestingContractDeployDto;
 }
 
 export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
-  const fixedValues: IVestingContractDeployDto = {
-    contractTemplate: VestingContractTemplate.LINEAR,
-    account: "",
-    startTimestamp: new Date().toISOString(),
-    duration: 30,
+  const { initialValues, ...rest } = props;
+
+  const { beneficiary, startTimestamp, cliffInMonth, monthlyRelease } = initialValues;
+
+  const fixedValues = {
+    beneficiary,
+    startTimestamp,
+    cliffInMonth,
+    monthlyRelease,
   };
 
   return (
@@ -27,12 +33,12 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
       validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="VestingDeployForm"
-      {...props}
+      {...rest}
     >
-      <SelectInput name="contractTemplate" options={VestingContractTemplate} />
-      <TextInput name="account" />
+      <TextInput name="beneficiary" />
       <DateInput name="startTimestamp" />
-      <NumberInput name="duration" />
+      <NumberInput name="cliffInMonth" />
+      <CurrencyInput name="monthlyRelease" symbol="%" />
     </FormDialog>
   );
 };

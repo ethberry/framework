@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedOrderItems1683724062110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     // @TODO fix to seed order items correctly with asset-component-history

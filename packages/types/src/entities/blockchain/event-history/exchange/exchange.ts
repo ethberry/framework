@@ -1,6 +1,6 @@
 import type { IExchangePurchaseEvent } from "./core";
 import type { IExchangeClaimEvent } from "./claim";
-import type { IExchangePurchaseMysteryEvent } from "./mystery";
+import type { IExchangePurchaseMysteryBoxEvent } from "./mystery";
 import type { IExchangeLendEvent } from "./rentable";
 import type { IExchangeCraftEvent } from "./craft";
 import type { IExchangeBreedEvent } from "./breeding";
@@ -16,7 +16,7 @@ export enum ExchangeEventType {
   // MODULE:CRAFT
   Craft = "Craft",
   // MODULE:MYSTERY
-  Mysterybox = "Mysterybox",
+  PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:GRADE
   Upgrade = "Upgrade",
   // MODULE:LOTTERY
@@ -67,7 +67,7 @@ export type TExchangeEvents =
   | IExchangeClaimEvent
   | IExchangeCraftEvent
   | IExchangeGradeEvent
-  | IExchangePurchaseMysteryEvent
+  | IExchangePurchaseMysteryBoxEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent
   | IExchangePaymentReceivedEvent

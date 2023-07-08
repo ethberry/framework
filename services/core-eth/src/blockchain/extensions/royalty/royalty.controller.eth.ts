@@ -21,7 +21,15 @@ export class RoyaltyControllerEth {
       eventName: ContractEventType.DefaultRoyaltyInfo,
     },
     {
+      contractType: ContractType.ERC998_TOKEN_RANDOM,
+      eventName: ContractEventType.DefaultRoyaltyInfo,
+    },
+    {
       contractType: ContractType.ERC721_TOKEN,
+      eventName: ContractEventType.DefaultRoyaltyInfo,
+    },
+    {
+      contractType: ContractType.ERC721_TOKEN_RANDOM,
       eventName: ContractEventType.DefaultRoyaltyInfo,
     },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.DefaultRoyaltyInfo },

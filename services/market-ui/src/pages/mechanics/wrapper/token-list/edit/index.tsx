@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { ITokenAsset, TokenAssetInput } from "@gemunion/mui-inputs-asset";
-import { TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
-import { validationSchema } from "./validation";
+import { CommonContractInput } from "../../../../../components/inputs/common-contract";
 import { TemplateInput } from "./template-input";
-import { ContractInput } from "./contract-input";
+import { validationSchema } from "./validation";
 
 export interface ICreateWrappedToken {
   tokenType: TokenType;
@@ -31,6 +31,14 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
 
   const fixedValues = { item, tokenType, contract, templateId };
 
+  const handleContractChange =
+    (form: any) =>
+    (_event: ChangeEvent<unknown>, option: any | null): void => {
+      form.setValue("contractId", option?.id ?? 0);
+      form.setValue("contract.address", option?.address ?? "0x");
+      form.setValue("contract.decimals", option?.decimals ?? 0);
+    };
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -39,7 +47,12 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
       testId="WrapperEditForm"
       {...rest}
     >
-      <ContractInput />
+      <CommonContractInput
+        name="contractId"
+        data={{ contractModule: [ModuleType.WRAPPER] }}
+        onChange={handleContractChange}
+        withTokenType
+      />
       <TemplateInput />
       <TokenAssetInput prefix="item" multiple />
     </FormDialog>

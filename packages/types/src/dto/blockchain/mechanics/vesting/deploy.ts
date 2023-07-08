@@ -1,8 +1,7 @@
-import { VestingContractTemplate } from "../../../../entities";
-
 export interface IVestingContractDeployDto {
-  contractTemplate: VestingContractTemplate;
-  account: string;
+  beneficiary: string;
   startTimestamp: string;
-  duration: number;
+  cliffInMonth: number;
+  monthlyRelease: number;
+  externalId?: string;
 }

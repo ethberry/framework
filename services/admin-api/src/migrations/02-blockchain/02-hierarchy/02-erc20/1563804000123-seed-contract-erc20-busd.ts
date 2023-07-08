@@ -6,6 +6,10 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const busdAddr = process.env.BUSD_ADDR || wallet;

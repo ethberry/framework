@@ -2,13 +2,13 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, TokenType } from "@framework/types";
 
 // custom contracts
 import { ABI } from "./interfaces";
-import { Erc998TokenLogService } from "./log.service";
+import { Erc998LogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
@@ -21,7 +21,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const erc998Contracts = await contractService.findAllTokensByType(TokenType.ERC998);
+        const erc998Contracts = await contractService.findAllCommonTokensByType(TokenType.ERC998);
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
@@ -49,7 +49,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.TransferChild,
               ContractEventType.UnWhitelistedChild,
               ContractEventType.UnpackClaim,
-              ContractEventType.UnpackMysterybox,
+              ContractEventType.UnpackMysteryBox,
               ContractEventType.Unpaused,
               ContractEventType.WhitelistedChild,
               ContractEventType.LevelUp,
@@ -67,11 +67,11 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
       },
     }),
   ],
-  providers: [Erc998TokenLogService, Logger],
-  exports: [Erc998TokenLogService],
+  providers: [Erc998LogService, Logger],
+  exports: [Erc998LogService],
 })
 export class Erc998TokenLogModule implements OnModuleDestroy {
-  constructor(private readonly erc998TokenLogService: Erc998TokenLogService) {}
+  constructor(private readonly erc998TokenLogService: Erc998LogService) {}
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {

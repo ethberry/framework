@@ -2,10 +2,12 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { RaffleRounds } from "./rounds";
-import { RaffleTickets } from "./tickets";
 import { IndexWrapper } from "../../index-wrapper";
 import { RaffleSection } from "../../dashboard/mechanics/raffle";
+import { RaffleContracts } from "./contract";
+import { RaffleTickets } from "./tickets";
+import { RaffleRounds } from "./rounds";
+import { RaffleTokens } from "./tokens";
 
 export const raffleRoutes: Array<RouteObject> = [
   {
@@ -20,11 +22,11 @@ export const raffleRoutes: Array<RouteObject> = [
         ),
       },
       {
-        path: "/raffle/rounds",
+        path: "/raffle/contracts",
         element: <Protected />,
         children: [
-          { index: true, element: <RaffleRounds /> },
-          { path: "/raffle/rounds/:id", element: <RaffleRounds /> },
+          { index: true, element: <RaffleContracts /> },
+          { path: "/raffle/contracts/:id", element: <RaffleContracts /> },
         ],
       },
       {
@@ -33,6 +35,22 @@ export const raffleRoutes: Array<RouteObject> = [
         children: [
           { index: true, element: <RaffleTickets /> },
           { path: "/raffle/tickets/:id", element: <RaffleTickets /> },
+        ],
+      },
+      {
+        path: "/raffle/rounds",
+        element: <Protected />,
+        children: [
+          { index: true, element: <RaffleRounds /> },
+          { path: "/raffle/rounds/:id", element: <RaffleRounds /> },
+        ],
+      },
+      {
+        path: "/raffle/tokens",
+        element: <Protected />,
+        children: [
+          { index: true, element: <RaffleTokens /> },
+          { path: "/raffle/tokens/:id", element: <RaffleTokens /> },
         ],
       },
     ],

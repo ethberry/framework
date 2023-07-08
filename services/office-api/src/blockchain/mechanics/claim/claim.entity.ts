@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { ClaimStatus, IClaim } from "@framework/types";
+import { ClaimStatus, ClaimType, IClaim } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { AssetEntity } from "../../exchange/asset/asset.entity";
@@ -24,6 +24,15 @@ export class ClaimEntity extends IdDateBaseEntity implements IClaim {
     enum: ClaimStatus,
   })
   public claimStatus: ClaimStatus;
+
+  @Column({
+    type: "enum",
+    enum: ClaimType,
+  })
+  public claimType: ClaimType;
+
+  @Column({ type: "json" })
+  public parameters: any;
 
   @Column({ type: "varchar" })
   public signature: string;

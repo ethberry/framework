@@ -47,11 +47,12 @@ abstract contract ExchangeLottery is SignatureValidator, AccessControl, Pausable
     );
 
     (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(
+      params.externalId,
       _msgSender(),
       params.extra // selected numbers
     );
 
-    // set tokenID = ticketID
+    // set real tokenID = ticketID
     items[1].tokenId = tokenId;
 
     emit PurchaseLottery(_msgSender(), params.externalId, items, price, roundId, params.extra);

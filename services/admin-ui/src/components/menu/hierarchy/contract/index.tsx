@@ -5,8 +5,6 @@ import { MoreVert } from "@mui/icons-material";
 import { IContract } from "@framework/types";
 
 import { RoyaltyMenuItem } from "../../common/royalty";
-import { EthListenerAddMenuItem } from "../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../common/eth-remove";
 import { TransferMenuItem } from "../../common/transfer";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
@@ -69,9 +67,6 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
 
         <AllowanceMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
-
-        <EthListenerAddMenuItem contract={contract} />
-        <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

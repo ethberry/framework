@@ -99,7 +99,10 @@ export const StakingContracts: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <StakingActionsMenu staking={contract} disabled={contract.contractStatus === ContractStatus.INACTIVE} />
+                <StakingActionsMenu
+                  contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

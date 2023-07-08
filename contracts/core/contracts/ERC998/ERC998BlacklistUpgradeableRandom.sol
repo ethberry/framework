@@ -42,7 +42,6 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     _tokenIdTracker.increment();
 
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, 0);
 
     _safeMint(account, tokenId);
@@ -59,6 +58,13 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
+  function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
+    if (attribute == TEMPLATE_ID || attribute == RARITY) {
+      revert ProtectedAttribute(attribute);
+    }
+    return _upgrade(tokenId, attribute);
+  }
+
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
     uint256 tokenId = _tokenIdTracker.current();
@@ -66,10 +72,10 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    _upsertRecordField(tokenId, GRADE, 0);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
+
     _mintCommon(request.account, request.templateId);
   }
 

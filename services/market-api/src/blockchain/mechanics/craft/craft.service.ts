@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ZeroAddress, hexlify, encodeBytes32String, randomBytes } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";

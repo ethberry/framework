@@ -2,8 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
 import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
+import { SearchDto } from "@gemunion/collection";
 
 export class UserSearchDto extends SearchDto implements IUserSearchDto {
   @ApiPropertyOptional({

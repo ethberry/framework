@@ -9,19 +9,17 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
-import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721e/contracts/preset/ERC721ABER.sol";
 
-import "./interfaces/IERC721RaffleTicket.sol";
+import "../../ERC721/extensions/ERC721GeneralizedCollection.sol";
 import "../../utils/errors.sol";
+import "../../utils/constants.sol";
+import "./interfaces/IERC721RaffleTicket.sol";
 
-contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
+contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, ERC721GeneralizedCollection {
   using Counters for Counters.Counter;
 
   mapping(uint256 => TicketRaffle) private _data;
-
-  bytes32 constant ROUND = keccak256("ROUND");
-  bytes32 constant PRIZE = keccak256("PRIZE");
 
   constructor(
     string memory name,
@@ -34,13 +32,17 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
 
   // TICKET
 
-  function mintTicket(address account, uint256 round) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintTicket(
+    address account,
+    uint256 roundId,
+    uint256 externalId
+  ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = TicketRaffle(round, false);
+    _data[tokenId] = TicketRaffle(roundId, externalId, false);
 
-    _upsertRecordField(tokenId, ROUND, round);
+    _upsertRecordField(tokenId, ROUND, externalId);
 
     _safeMint(account, tokenId);
   }
@@ -56,12 +58,13 @@ contract ERC721RaffleTicket is IERC721RaffleTicket, ERC721ABER, ERC721ABaseUrl, 
     return _data[tokenId];
   }
 
-  function setTicketData(uint256 tokenId) external onlyRole(MINTER_ROLE) {
+  function setPrize(uint256 tokenId, uint256 multiplier) external onlyRole(MINTER_ROLE) {
     if (!_exists(tokenId)) {
       revert WrongToken();
     }
+    // TODO use only metadata as storage?
     _data[tokenId].prize = true;
-    _upsertRecordField(tokenId, PRIZE, 1);
+    _upsertRecordField(tokenId, PRIZE, multiplier);
   }
 
   // BASE URL

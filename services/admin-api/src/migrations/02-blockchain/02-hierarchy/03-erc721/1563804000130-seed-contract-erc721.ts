@@ -6,6 +6,10 @@ import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
     const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
@@ -198,6 +202,24 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '{RENTABLE}',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10380,
+        '${erc721ContractUpgradeableAddress}',
+        '${chainId}',
+        'Under Armour (lvl)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Farmour.png?alt=media&token=32650855-c62b-4ca0-b4f6-bfc01f40e53e',
+        'UA',
+        'UA721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{UPGRADEABLE}',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

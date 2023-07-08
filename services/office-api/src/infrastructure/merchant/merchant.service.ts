@@ -2,10 +2,11 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IMerchantSearchDto, MerchantStatus, UserRole } from "@framework/types";
+import type { IMerchantSearchDto } from "@framework/types";
+import { MerchantStatus, UserRole } from "@framework/types";
 
 import { MerchantEntity } from "./merchant.entity";
-import { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
+import type { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
 import { UserEntity } from "../user/user.entity";
 
 @Injectable()
@@ -62,12 +63,11 @@ export class MerchantService {
       where: {
         merchantStatus: MerchantStatus.ACTIVE,
       },
-      select: ["id", "title"],
+      select: {
+        id: true,
+        title: true,
+      },
     });
-  }
-
-  public findAndCount(): Promise<[Array<MerchantEntity>, number]> {
-    return this.merchantEntityRepository.findAndCount();
   }
 
   public findOne(
@@ -121,9 +121,9 @@ export class MerchantService {
     }
 
     const isAdmin = userEntity.userRoles.includes(UserRole.ADMIN);
-    const isMerchant = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
+    const isSelf = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
 
-    if (!(isAdmin || isMerchant)) {
+    if (!(isAdmin || isSelf)) {
       throw new ForbiddenException("insufficientPermissions");
     }
 

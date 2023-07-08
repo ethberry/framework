@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
@@ -33,6 +37,15 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         '0',
         'MINTED',
         1010201,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        101080101, -- BESU (fake)
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        1010801,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

@@ -6,6 +6,10 @@ import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
     const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
@@ -236,6 +240,24 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '{ALLOWANCE,ERC20OWNER,ERC1155OWNER}',
         '${fromBlock}',
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        10480,
+        '${erc998ContractUpgradeableAddress}',
+        '${chainId}',
+        'Anti-Heros (lvl)',
+        '${simpleFormatting}',
+        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fheroes.png?alt=media&token=46414a13-c538-49af-a001-b93bd92a922c',
+        'AH',
+        'AH998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{UPGRADEABLE}',
+        '${fromBlock}',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

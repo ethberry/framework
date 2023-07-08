@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { GradeAttribute, IExchangeGradeEvent } from "@framework/types";
+import { IExchangeGradeEvent } from "@framework/types";
 
 import { NotificatorService } from "../../../game/notificator/notificator.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
@@ -26,13 +26,13 @@ export class ExchangeGradeServiceEth {
 
   public async upgrade(event: ILogEvent<IExchangeGradeEvent>, context: Log): Promise<void> {
     const {
-      args: { item, price, from },
+      args: { externalId, attribute, item, price },
     } = event;
-    const { transactionHash } = context;
+    const { transactionHash, address } = context;
 
     const { tokenType, token, tokenId, amount } = item;
 
-    const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, token.toLowerCase());
 
     if (!tokenEntity) {
       this.loggerService.error("tokenNotFound", tokenId, token.toLowerCase(), ExchangeGradeServiceEth.name);
@@ -40,26 +40,27 @@ export class ExchangeGradeServiceEth {
     }
 
     const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
-    await this.assetService.saveAssetHistory(
+
+    const assets = await this.assetService.saveAssetHistory(
       history,
       // we have to change tokenId to templateId for proper asset history
       [{ tokenType, token, tokenId: tokenEntity.template.id.toString(), amount }],
       price,
     );
+
     await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
-    const gradeEntity = await this.gradeService.findOneByToken(tokenEntity, GradeAttribute.GRADE);
-
+    const gradeEntity = await this.gradeService.findOneWithRelations({ id: Number(externalId) });
     if (!gradeEntity) {
-      this.loggerService.error("gradeNotFound", tokenEntity.id, GradeAttribute.GRADE, ExchangeGradeServiceEth.name);
+      this.loggerService.error("gradeNotFound", tokenEntity.id, attribute, ExchangeGradeServiceEth.name);
       throw new NotFoundException("gradeNotFound");
     }
 
-    // Notify about Grade
-    this.notificatorService.grade({
-      account: from,
-      tokenId,
-      gradeType: gradeEntity.attribute,
+    await this.notificatorService.grade({
+      grade: gradeEntity,
+      token: tokenEntity,
+      price: assets.price,
+      address,
       transactionHash,
     });
 

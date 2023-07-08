@@ -5,6 +5,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 export const LotterySection: FC = () => {
+  // const disabled = process.env.NODE_ENV === "production";
+  //
+  // if (disabled) {
+  //   return null;
+  // }
+
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -15,12 +21,12 @@ export const LotterySection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/purchase">
+        <ListItem button component={RouterLink} to="/lottery/contracts">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.lottery.purchase.title" />
+            <FormattedMessage id="pages.lottery.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/lottery/ticket">
@@ -28,7 +34,7 @@ export const LotterySection: FC = () => {
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.lottery.tickets.title" />
+            <FormattedMessage id="pages.lottery.tokens.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/lottery/leaderboard">

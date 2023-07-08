@@ -5,9 +5,10 @@ import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundController } from "./round.controller";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { LotteryTicketModule } from "../token/ticket.module";
 
 @Module({
-  imports: [ContractModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
+  imports: [ContractModule, LotteryTicketModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
   providers: [LotteryRoundService],
   controllers: [LotteryRoundController],
   exports: [LotteryRoundService],

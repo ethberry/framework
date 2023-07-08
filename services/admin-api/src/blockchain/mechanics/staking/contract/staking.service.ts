@@ -4,9 +4,9 @@ import { Repository } from "typeorm";
 
 import { IContractSearchDto, ModuleType } from "@framework/types";
 
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class StakingService extends ContractService {
@@ -18,6 +18,6 @@ export class StakingService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(Object.assign(dto, { contractModule: [ModuleType.STAKING] }), userEntity);
+    return super.search(dto, userEntity, [ModuleType.STAKING], null);
   }
 }

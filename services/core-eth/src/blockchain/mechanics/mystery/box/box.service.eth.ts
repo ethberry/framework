@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { Log, ZeroAddress, JsonRpcProvider } from "ethers";
+import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
-import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenMetadata, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
 import { ABI } from "../../../tokens/erc721/token/log/interfaces";
@@ -14,6 +14,7 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { MysteryBoxService } from "./box.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class MysteryBoxServiceEth extends TokenServiceEth {
@@ -28,7 +29,8 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
     protected readonly eventHistoryService: EventHistoryService,
-    protected readonly mysteryboxService: MysteryBoxService,
+    protected readonly mysteryBoxService: MysteryBoxService,
+    protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
   }
@@ -49,13 +51,13 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     if (from === ZeroAddress) {
       const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
-      const mysteryboxEntity = await this.mysteryboxService.findOne({ templateId });
+      const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 
-      if (!mysteryboxEntity) {
-        throw new NotFoundException("mysteryboxNotFound");
+      if (!mysteryBoxEntity) {
+        throw new NotFoundException("mysteryBoxNotFound");
       }
 
-      const templateEntity = await this.templateService.findOne({ id: mysteryboxEntity.templateId });
+      const templateEntity = await this.templateService.findOne({ id: mysteryBoxEntity.templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -72,51 +74,64 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
     }
 
-    const mysteryboxTokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), address.toLowerCase());
+    const mysteryBoxTokenEntity = await this.tokenService.getToken(
+      Number(tokenId).toString(),
+      address.toLowerCase(),
+      void 0,
+      true,
+    );
 
-    if (!mysteryboxTokenEntity) {
+    if (!mysteryBoxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, mysteryboxTokenEntity.id);
+    await this.eventHistoryService.updateHistory(event, context, mysteryBoxTokenEntity.id);
 
     if (from === ZeroAddress) {
-      mysteryboxTokenEntity.template.amount += 1;
-      // mysteryboxTokenEntity.erc721Template
-      //   ? (mysteryboxTokenEntity.template.instanceCount += 1)
-      //   : (mysteryboxTokenEntity.mystery.template.instanceCount += 1);
-      mysteryboxTokenEntity.tokenStatus = TokenStatus.MINTED;
+      mysteryBoxTokenEntity.template.amount += 1;
+      // mysteryBoxTokenEntity.erc721Template
+      //   ? (mysteryBoxTokenEntity.template.instanceCount += 1)
+      //   : (mysteryBoxTokenEntity.mystery.template.instanceCount += 1);
+      mysteryBoxTokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === ZeroAddress) {
-      // mysteryboxTokenEntity.erc721Template.instanceCount -= 1;
-      mysteryboxTokenEntity.tokenStatus = TokenStatus.BURNED;
+      // mysteryBoxTokenEntity.erc721Template.instanceCount -= 1;
+      mysteryBoxTokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
-      mysteryboxTokenEntity.balance[0].account = to.toLowerCase();
+      mysteryBoxTokenEntity.balance[0].account = to.toLowerCase();
     }
 
-    await mysteryboxTokenEntity.save();
+    await mysteryBoxTokenEntity.save();
 
     // need to save updates in nested entities too
-    await mysteryboxTokenEntity.template.save();
-    await mysteryboxTokenEntity.balance[0].save();
+    await mysteryBoxTokenEntity.template.save();
+    await mysteryBoxTokenEntity.balance[0].save();
 
-    // mysteryboxTokenEntity.erc721Template
-    //   ? await mysteryboxTokenEntity.template.save()
-    //   : await mysteryboxTokenEntity.mystery.template.save();
+    // mysteryBoxTokenEntity.erc721Template
+    //   ? await mysteryBoxTokenEntity.template.save()
+    //   : await mysteryBoxTokenEntity.mystery.template.save();
   }
 
-  public async unpack(event: ILogEvent<IMysteryUnpackEvent>, context: Log): Promise<void> {
+  public async unpack(event: ILogEvent<IUnpackMysteryBoxEvent>, context: Log): Promise<void> {
     const {
-      args: { tokenId },
+      args: { account, tokenId },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, account.toLowerCase());
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+    const history = await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
+
+    const assets = await this.assetService.saveAssetHistory(history, [], []);
+
+    await this.notificatorService.unpackMystery({
+      ...assets,
+      address,
+      transactionHash,
+    });
   }
 }

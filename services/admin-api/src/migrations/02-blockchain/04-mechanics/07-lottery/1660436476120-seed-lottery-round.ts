@@ -14,6 +14,10 @@ const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 
 export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 
@@ -71,11 +75,11 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
+        101,
         '${getNumbers()}',
-        '1',
-        122,
-        12201,
+        '101',
+        12401,
+        12301,
         102220001,
         0,
         '${subDays(now, 3).toISOString()}',
@@ -83,11 +87,11 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        2,
+        102,
         '${getNumbers()}',
-        '2',
-        122,
-        12201,
+        '102',
+        12401,
+        12301,
         102220002,
         0,
         '${subDays(now, 1).toISOString()}',
@@ -95,11 +99,11 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        103,
         null,
-        '3',
-        122,
-        12201,
+        '103',
+        12401,
+        12301,
         102220002,
         5,
         '${addDays(now, 1).toISOString()}',
@@ -108,6 +112,8 @@ export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.lottery_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

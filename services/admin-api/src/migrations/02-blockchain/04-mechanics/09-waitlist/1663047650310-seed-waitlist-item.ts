@@ -5,13 +5,17 @@ import { wallets } from "@gemunion/constants";
 
 export class SeedWaitListItemAt1663047650310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.wait_list_item (
         account,
         list_id,
-        wait_list_status,
+        wait_list_item_status,
         created_at,
         updated_at
       ) VALUES (
@@ -53,19 +57,25 @@ export class SeedWaitListItemAt1663047650310 implements MigrationInterface {
       ), (
         '${wallets[0]}',
         7,
-        'NEW',
+        'REDEEMED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         8,
-        'REDEEMED',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallets[0]}',
         9,
-        'REDEEMED',
+        'NEW',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallets[0]}',
+        10,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

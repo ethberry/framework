@@ -2,16 +2,16 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import type { IErc721CollectionDeployDto } from "@framework/types";
-import { Erc721CollectionTemplates } from "@framework/types";
+import type { ICollectionContractDeployDto } from "@framework/types";
+import { CollectionContractTemplates } from "@framework/types";
 
-export class Erc721CollectionDeployDto implements IErc721CollectionDeployDto {
+export class Erc721CollectionDeployDto implements ICollectionContractDeployDto {
   @ApiProperty({
-    enum: Erc721CollectionTemplates,
+    enum: CollectionContractTemplates,
   })
-  @Transform(({ value }) => value as Erc721CollectionTemplates)
-  @IsEnum(Erc721CollectionTemplates, { message: "badInput" })
-  public contractTemplate: Erc721CollectionTemplates;
+  @Transform(({ value }) => value as CollectionContractTemplates)
+  @IsEnum(CollectionContractTemplates, { message: "badInput" })
+  public contractTemplate: CollectionContractTemplates;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

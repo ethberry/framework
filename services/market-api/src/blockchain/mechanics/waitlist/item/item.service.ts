@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import type { IWaitListItemCreateDto } from "@framework/types";
-import { WaitListStatus } from "@framework/types";
+import { WaitListItemStatus } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { WaitListItemEntity } from "./item.entity";
@@ -28,7 +28,9 @@ export class WaitListItemService {
     queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
 
     queryBuilder.andWhere("wait_list_item.account = :account", { account: userEntity.wallet });
-    queryBuilder.andWhere("wait_list_item.waitListStatus = :waitListStatus", { waitListStatus: WaitListStatus.NEW });
+    queryBuilder.andWhere("wait_list_item.waitListItemStatus = :waitListItemStatus", {
+      waitListItemStatus: WaitListItemStatus.NEW,
+    });
 
     return queryBuilder.getManyAndCount();
   }

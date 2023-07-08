@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -14,12 +15,10 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { UserRole } from "@framework/types";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
 import { MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto } from "./dto";
-import { Roles } from "../../common/decorators";
 import { UserEntity } from "../user/user.entity";
 
 @ApiBearerAuth()
@@ -45,7 +44,7 @@ export class MerchantController {
 
   @Put("/:id")
   public update(
-    @Param("id") id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() dto: MerchantUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<MerchantEntity | null> {
@@ -54,14 +53,20 @@ export class MerchantController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<MerchantEntity | null> {
-    return this.merchantService.findOne({ id }, { relations: { users: true } });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<MerchantEntity | null> {
+    return this.merchantService.findOne(
+      { id },
+      {
+        relations: {
+          users: true,
+        },
+      },
+    );
   }
 
   @Delete("/:id")
-  @Roles(UserRole.ADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.merchantService.delete({ id }, userEntity);
   }
 }

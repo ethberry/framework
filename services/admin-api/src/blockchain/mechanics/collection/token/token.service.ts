@@ -50,7 +50,6 @@ export class CollectionTokenService extends TokenService {
   }
 
   public async updateTokensBatch(templateId: number, files: Array<ITokenUploadDto>): Promise<Array<TokenEntity>> {
-    // todo use user.chainID
     const tokens = await this.getAllTokens(templateId);
 
     if (!tokens.length) {

@@ -36,8 +36,12 @@ export class Erc721TemplateController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
-    return this.erc721TemplateService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: TemplateUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<TemplateEntity> {
+    return this.erc721TemplateService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -47,13 +51,13 @@ export class Erc721TemplateController {
   }
 
   @Post("/")
-  public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc721TemplateService.createTemplate(dto);
+  public create(@Body() dto: TemplateCreateDto, @User() userEntity: UserEntity): Promise<TemplateEntity> {
+    return this.erc721TemplateService.createTemplate(dto, userEntity);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    return this.erc721TemplateService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.erc721TemplateService.delete({ id }, userEntity);
   }
 }

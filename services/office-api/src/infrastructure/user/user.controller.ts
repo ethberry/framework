@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Put,
   Query,
   UseInterceptors,
@@ -35,19 +36,19 @@ export class UserController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: UserUpdateDto): Promise<UserEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: UserUpdateDto): Promise<UserEntity> {
     return this.userService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<UserEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UserEntity | null> {
     return this.userService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.userService.delete({ id });
   }
 }

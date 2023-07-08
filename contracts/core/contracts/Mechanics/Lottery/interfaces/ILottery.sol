@@ -19,6 +19,8 @@ struct LotteryRoundInfo {
   uint256 startTimestamp;
   uint256 endTimestamp;
   uint256 maxTicket;
+  uint256 balance; // left after get prize
+  uint256 total; // max money before
   uint8[6] values; // prize numbers
   uint8[7] aggregation; // prize counts
   Asset acceptedAsset;

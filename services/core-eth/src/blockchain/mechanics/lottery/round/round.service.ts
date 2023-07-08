@@ -22,14 +22,37 @@ export class LotteryRoundService {
     return this.roundEntityRepository.findOne({ where, ...options });
   }
 
+  public getRound(roundId: string, address: string, chainId?: number): Promise<LotteryRoundEntity | null> {
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("round.contract", "contract");
+    queryBuilder.leftJoinAndSelect("round.ticketContract", "ticket_contract");
+
+    queryBuilder.andWhere("round.roundId = :roundId", {
+      roundId: Number(roundId).toString(),
+    });
+
+    queryBuilder.andWhere("contract.address = :address", {
+      address: address.toLowerCase(),
+    });
+
+    if (chainId) {
+      queryBuilder.andWhere("contract.chainId = :chainId", {
+        chainId,
+      });
+    }
+
+    return queryBuilder.getOne();
+  }
+
   public async create(dto: DeepPartial<LotteryRoundEntity>): Promise<LotteryRoundEntity> {
     return this.roundEntityRepository.create(dto).save();
   }
 
   public async createEmptyPrice(): Promise<AssetEntity> {
-    return await this.assetService.create({
-      components: [],
-    });
+    return this.assetService.create();
   }
 
   public async updatePrice(asset: AssetEntity, price: IAssetDto): Promise<void> {

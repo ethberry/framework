@@ -6,8 +6,8 @@ import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployERC20 } from "../ERC20/shared/fixtures";
-import { getContractName, isEqualEventArgArrObj } from "../utils";
-import { expiresAt, extra } from "../constants";
+import { getContractName, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { expiresAt, externalId, extra } from "../constants";
 import { deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeRaffle", function () {
@@ -55,7 +55,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -87,7 +87,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -106,22 +106,21 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
-        // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
 
+        // PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
         await expect(tx1)
           .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,
@@ -136,7 +135,7 @@ describe("ExchangeRaffle", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -188,7 +187,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -203,23 +202,22 @@ describe("ExchangeRaffle", function () {
             },
           ],
         });
+
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
           },
           [],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 
@@ -265,7 +263,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 1, // wtf?
+            externalId: 101,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -296,7 +294,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -315,14 +313,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 
@@ -363,7 +359,7 @@ describe("ExchangeRaffle", function () {
         const tx = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -382,14 +378,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx).to.be.revertedWith("ECDSA: invalid signature length");
@@ -434,7 +428,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -465,7 +459,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -484,21 +478,21 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
-        // event PurchaseRaffle(address account, Asset item, Asset price, uint256 round, bytes32 numbers);
+
+        // PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
         await expect(tx1)
           .to.emit(exchangeInstance, "PurchaseRaffle")
           .withArgs(
             receiver.address,
+            externalId,
             isEqualEventArgArrObj(
               {
                 tokenType: 0n,
@@ -513,7 +507,7 @@ describe("ExchangeRaffle", function () {
                 amount: 1n,
               },
             ),
-            isEqualEventArgArrObj({
+            isEqualEventArgObj({
               tokenType: 1n,
               token: await erc20Instance.getAddress(),
               tokenId: 121n,
@@ -525,7 +519,7 @@ describe("ExchangeRaffle", function () {
         const tx2 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -544,14 +538,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "ExpiredSignature");
@@ -596,7 +588,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -627,7 +619,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -646,14 +638,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
         await expect(tx1).to.be.revertedWith("ERC20: insufficient allowance");
@@ -698,7 +688,7 @@ describe("ExchangeRaffle", function () {
           account: receiver.address,
           params: {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0, // wtf?
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -729,7 +719,7 @@ describe("ExchangeRaffle", function () {
         const tx1 = exchangeInstance.connect(receiver).purchaseRaffle(
           {
             nonce: encodeBytes32String("nonce"),
-            externalId: 0,
+            externalId,
             expiresAt,
             referrer: ZeroAddress,
             extra,
@@ -748,14 +738,12 @@ describe("ExchangeRaffle", function () {
               amount: 1,
             },
           ],
-          [
-            {
-              tokenType: 1n,
-              token: await erc20Instance.getAddress(),
-              tokenId: 121,
-              amount,
-            },
-          ],
+          {
+            tokenType: 1n,
+            token: await erc20Instance.getAddress(),
+            tokenId: 121,
+            amount,
+          },
           signature,
         );
 

@@ -21,7 +21,7 @@ export const AdvancedSettingsDialog: FC<IAdvancedSettingsDialogProps> = props =>
   return (
     <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
-        <FormattedMessage id="pages.1inch.advanced-settings.title" />
+        <FormattedMessage id="pages.dex.1inch.advanced-settings.title" />
         <CloseButton onClick={handleClose} />
       </DialogTitle>
       <DialogContent>

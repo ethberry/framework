@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { UserRole } from "@framework/types";
 
-import { IUserAutocompleteDto } from "../interfaces";
+import type { IUserAutocompleteDto } from "../interfaces";
 
 export class UserAutocompleteDto implements IUserAutocompleteDto {
   @ApiPropertyOptional({

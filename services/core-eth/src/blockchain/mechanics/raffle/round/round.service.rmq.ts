@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { IRaffleOption } from "@framework/types";
+import { IRaffleScheduleUpdateDto } from "@framework/types";
 
 import { RaffleRoundServiceCron } from "./round.service.cron";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -11,24 +11,19 @@ export class RoundServiceRmq {
     private readonly contractService: ContractService,
   ) {}
 
-  public async updateSchedule(dto: IRaffleOption): Promise<void> {
+  public async updateSchedule(dto: IRaffleScheduleUpdateDto): Promise<void> {
     const raffleEntity = await this.contractService.findOne({ address: dto.address });
 
     if (!raffleEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
-    // TODO pass empty description?
-    // TODO Validate json?
-    const descriptionJson = JSON.parse(raffleEntity.description);
-    Object.assign(descriptionJson, {
+    // TODO simplify?
+    const currentParams = raffleEntity.parameters;
+    Object.assign(currentParams, {
       schedule: dto.schedule,
-      description: JSON.parse(dto.description || "{}"),
     });
-
-    Object.assign(raffleEntity, {
-      description: JSON.stringify(descriptionJson),
-    });
+    Object.assign(raffleEntity.parameters, currentParams);
 
     await raffleEntity.save();
 

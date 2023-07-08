@@ -4,8 +4,6 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
-import { EthListenerAddMenuItem } from "../../../common/eth-add";
-import { EthListenerRemoveMenuItem } from "../../../common/eth-remove";
 import { ContractGrantRoleMenuItem } from "../../../extensions/grant-role";
 import { ContractRevokeRoleMenuItem } from "../../../extensions/revoke-role";
 import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role";
@@ -68,9 +66,6 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
         <UnBlacklistMenuItem contract={contract} />
         <WhitelistMenuItem contract={contract} />
         <UnWhitelistMenuItem contract={contract} />
-
-        <EthListenerAddMenuItem contract={contract} />
-        <EthListenerRemoveMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

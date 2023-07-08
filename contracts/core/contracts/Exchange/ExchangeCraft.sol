@@ -14,7 +14,7 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeCraft is SignatureValidator, AccessControl, Pausable {
-  event Craft(address from, uint256 externalId, Asset[] items, Asset[] price);
+  event Craft(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   function craft(
     Params memory params,

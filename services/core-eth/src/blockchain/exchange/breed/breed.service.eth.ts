@@ -5,15 +5,15 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IExchangeBreedEvent } from "@framework/types";
 
 import { AssetService } from "../asset/asset.service";
-import { BreedServiceEth } from "../../mechanics/breed/breed.service.eth";
 import { EventHistoryService } from "../../event-history/event-history.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 
 @Injectable()
 export class ExchangeBreedServiceEth {
   constructor(
     private readonly assetService: AssetService,
     private readonly eventHistoryService: EventHistoryService,
-    private readonly breedServiceEth: BreedServiceEth,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async breed(event: ILogEvent<IExchangeBreedEvent>, context: Log): Promise<void> {
@@ -22,6 +22,12 @@ export class ExchangeBreedServiceEth {
     } = event;
     const history = await this.eventHistoryService.updateHistory(event, context);
 
-    await this.assetService.saveAssetHistory(history, [matron], [sire]);
+    const _assets = await this.assetService.saveAssetHistory(history, [matron], [sire]);
+
+    // this.notificatorService.breed({
+    //   account,
+    //   ...assets,
+    //   transactionHash,
+    // });
   }
 }

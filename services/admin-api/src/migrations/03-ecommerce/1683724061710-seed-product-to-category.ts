@@ -4,6 +4,10 @@ import { ns } from "@framework/constants";
 
 export class SeedProductToCategory1683724061710 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     await queryRunner.query(`
       INSERT INTO ${ns}.product_to_category (
         category_id,

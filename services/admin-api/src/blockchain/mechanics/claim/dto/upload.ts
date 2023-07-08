@@ -5,10 +5,10 @@ import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@gemunion/collection";
 
-import { IClaimRow, IClaimUploadDto } from "../interfaces";
+import { IClaimRowDto, IClaimUploadDto } from "../interfaces";
 import { BCAssetDto } from "../../../exchange/asset/dto";
 
-export class ClaimRowDto extends Mixin(BCAssetDto, AccountDto) implements IClaimRow {
+export class ClaimRowDto extends Mixin(BCAssetDto, AccountDto) implements IClaimRowDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })

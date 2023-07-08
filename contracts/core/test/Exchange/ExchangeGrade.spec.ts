@@ -4,7 +4,7 @@ import { ZeroAddress, ZeroHash } from "ethers";
 
 import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
 
-import { externalId, params, templateId, tokenId } from "../constants";
+import { externalId, extra, params, templateId, tokenId } from "../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 
@@ -66,6 +66,7 @@ describe("ExchangeGrade", function () {
         .withArgs(
           receiver.address,
           externalId,
+          extra,
           isEqualEventArgObj({
             tokenType: 2n,
             token: await erc721Instance.getAddress(),
@@ -80,7 +81,7 @@ describe("ExchangeGrade", function () {
           }),
         )
         .to.emit(erc721Instance, "LevelUp")
-        .withArgs(await exchangeInstance.getAddress(), tokenId, 1);
+        .withArgs(await exchangeInstance.getAddress(), tokenId, extra, 1);
     });
 
     it("should fail: insufficient allowance", async function () {

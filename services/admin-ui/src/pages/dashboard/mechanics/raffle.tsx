@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { ConfirmationNumber, Savings } from "@mui/icons-material";
+import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +15,12 @@ export const RaffleSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/raffle/rounds">
+        <ListItem button component={RouterLink} to="/raffle/contracts">
           <ListItemIcon>
-            <Savings />
+            <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.raffle.rounds.title" />
+            <FormattedMessage id="pages.raffle.contracts.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/raffle/tickets">
@@ -29,6 +29,22 @@ export const RaffleSection: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.tickets.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/raffle/rounds">
+          <ListItemIcon>
+            <Savings />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.raffle.rounds.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/raffle/tokens">
+          <ListItemIcon>
+            <Storage />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.raffle.tokens.title" />
           </ListItemText>
         </ListItem>
       </List>

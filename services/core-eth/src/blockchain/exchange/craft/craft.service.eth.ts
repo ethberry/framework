@@ -17,5 +17,6 @@ export class ExchangeCraftServiceEth {
     } = event;
     const history = await this.eventHistoryService.updateHistory(event, context);
     await this.assetService.saveAssetHistory(history, items, price);
+    // TODO add notification
   }
 }

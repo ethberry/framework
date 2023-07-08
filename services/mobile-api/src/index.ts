@@ -73,7 +73,7 @@ async function bootstrap(): Promise<void> {
 
   await app
     .startAllMicroservices()
-    .then(() => console.info(`Email service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
+    .then(() => console.info(`Mobile service is subscribed to ${rmqUrl}/${rmqQueueMobile}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<string>("PORT", "3000");

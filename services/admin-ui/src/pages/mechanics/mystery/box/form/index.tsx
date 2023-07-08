@@ -5,7 +5,7 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IMysteryBoxSearchDto } from "@framework/types";
-import { ModuleType, MysteryboxStatus, TokenType } from "@framework/types";
+import { ModuleType, MysteryBoxStatus, TokenType } from "@framework/types";
 
 interface IMysteryboxSearchFormProps {
   onSubmit: (values: IMysteryBoxSearchDto) => Promise<void>;
@@ -16,8 +16,8 @@ interface IMysteryboxSearchFormProps {
 export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { query, mysteryboxStatus, contractIds } = initialValues;
-  const fixedValues = { query, mysteryboxStatus, contractIds };
+  const { query, mysteryBoxStatus, contractIds } = initialValues;
+  const fixedValues = { query, mysteryBoxStatus, contractIds };
 
   return (
     <FormWrapper
@@ -46,7 +46,7 @@ export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
             />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="mysteryboxStatus" options={MysteryboxStatus} />
+            <SelectInput multiple name="mysteryBoxStatus" options={MysteryBoxStatus} />
           </Grid>
         </Grid>
       </Collapse>

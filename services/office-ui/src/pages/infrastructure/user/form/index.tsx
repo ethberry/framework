@@ -2,7 +2,8 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
+import type { IUserSearchDto } from "@framework/types";
+import { UserRole, UserStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 interface IUserSearchFormProps {

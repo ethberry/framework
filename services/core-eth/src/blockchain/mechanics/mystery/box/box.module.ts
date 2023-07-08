@@ -15,6 +15,7 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { EventHistoryModule } from "../../../event-history/event-history.module";
 import { AssetModule } from "../../../exchange/asset/asset.module";
+import { NotificatorModule } from "../../../../game/notificator/notificator.module";
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AssetModule } from "../../../exchange/asset/asset.module";
     TemplateModule,
     EventHistoryModule,
     ContractModule,
+    NotificatorModule,
     TypeOrmModule.forFeature([MysteryBoxEntity]),
   ],
   providers: [Logger, MysteryBoxService, MysteryBoxServiceEth, ethersRpcProvider],

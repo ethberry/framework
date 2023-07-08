@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Email, MenuBook, PeopleAlt, Settings, Storefront } from "@mui/icons-material";
+import { Email, MenuBook, PeopleAlt, Settings, SignalCellularAlt, Storefront } from "@mui/icons-material";
 
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -65,22 +65,14 @@ export const AdminSection: FC = () => {
             <FormattedMessage id="pages.dashboard.infrastructure.admin.merchants" />
           </ListItemText>
         </ListItem>
-        {/* <ListItem button component={RouterLink} to="/payees"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Storefront /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.dashboard.infrastructure.admin.payees" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItem> */}
-        {/* <ListItem button component={RouterLink} to="/payees/balances"> */}
-        {/*  <ListItemIcon> */}
-        {/*    <Storefront /> */}
-        {/*  </ListItemIcon> */}
-        {/*  <ListItemText> */}
-        {/*    <FormattedMessage id="pages.dashboard.infrastructure.admin.balances" /> */}
-        {/*  </ListItemText> */}
-        {/* </ListItem> */}
+        <ListItem button component={RouterLink} to="/rate-plans">
+          <ListItemIcon>
+            <SignalCellularAlt />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.infrastructure.admin.rate-plans" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );

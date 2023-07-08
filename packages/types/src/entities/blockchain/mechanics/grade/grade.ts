@@ -9,8 +9,9 @@ export enum GradeStrategy {
   EXPONENTIAL = "EXPONENTIAL",
 }
 
-export enum GradeAttribute {
-  GRADE = "GRADE",
+export enum GradeStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
 }
 
 export interface IGrade extends IIdDateBase {
@@ -18,6 +19,7 @@ export interface IGrade extends IIdDateBase {
   contract?: IContract;
   price?: IAsset;
   gradeStrategy: GradeStrategy;
+  gradeStatus: GradeStatus;
   growthRate: number;
-  attribute: GradeAttribute;
+  attribute: string;
 }

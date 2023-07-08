@@ -4,11 +4,12 @@ import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
-import type { IPyramidContractDeployDto } from "@framework/types";
-import { PyramidContractTemplates } from "@framework/types";
 import { useDeploy } from "@gemunion/react-hooks-eth";
+import { useUser } from "@gemunion/provider-user";
+import type { IPyramidContractDeployDto, IUser } from "@framework/types";
+import { PyramidContractTemplates } from "@framework/types";
 
-import PyramidDeployPyramidABI from "../../../../../abis/mechanics/pyramid/deploy/deployPyramid.abi.json";
+import DeployPyramidABI from "../../../../../abis/mechanics/pyramid/deploy/deployPyramid.abi.json";
 
 import { PyramidContractDeployDialog } from "./dialog";
 
@@ -19,12 +20,14 @@ export interface IPyramidContractDeployButtonProps {
 export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props => {
   const { className } = props;
 
+  const user = useUser<IUser>();
+
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPyramidContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        PyramidDeployPyramidABI,
+        DeployPyramidABI,
         web3Context.provider?.getSigner(),
       );
 
@@ -32,6 +35,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
         {
           nonce,
           bytecode: sign.bytecode,
+          externalId: user.profile.id,
         },
         // values,
         {

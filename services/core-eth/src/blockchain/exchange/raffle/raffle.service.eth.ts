@@ -18,12 +18,12 @@ export class ExchangeRaffleServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  // event PurchaseRaffle(address account, Asset[] items, Asset price, uint256 roundId);
+  // PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
   public async purchaseRaffle(event: ILogEvent<IExchangePurchaseRaffleEvent>, context: Log): Promise<void> {
     const {
-      args: { account, items, price },
+      args: { items, price },
     } = event;
-    const { transactionHash } = context;
+    const { address, transactionHash } = context;
 
     // TODO find ticket-token?
     const ticketTemplate = await this.templateService.findOne(
@@ -44,9 +44,9 @@ export class ExchangeRaffleServiceEth {
 
     const assets = await this.assetService.saveAssetHistory(history, [items[1]], [price]);
 
-    this.notificatorService.purchaseRaffle({
-      account,
+    await this.notificatorService.purchaseRaffle({
       ...assets,
+      address,
       transactionHash,
     });
   }

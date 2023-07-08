@@ -8,7 +8,6 @@ import { Root } from "./styled";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
-import { OneInchSection } from "./integrations/1inch";
 import { PersonalSection } from "./exchange/personal";
 import { MarketplaceSection } from "./exchange/marketplace";
 import { MysterySection } from "./mechanics/mystery";
@@ -31,6 +30,7 @@ import { WaitListSection } from "./mechanics/waitlist";
 import { FeedbackSection } from "./infrastructure/feedback";
 import { RentSection } from "./mechanics/rent";
 import { AchievementsSection } from "./achievements";
+import { DexSection } from "./integrations/dex";
 
 export const Dashboard: FC = () => {
   return (
@@ -39,6 +39,9 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
+          <PersonalSection />
+          <MarketplaceSection />
+          <ReferralSection />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
@@ -46,25 +49,22 @@ export const Dashboard: FC = () => {
           <WrapperSection />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <VestingSection />
           <WaitListSection />
           <ClaimSection />
+          <VestingSection />
+          <CraftSection />
           <DropSection />
           <RentSection />
-          <CraftSection />
           <BreedSection />
           <Divider sx={{ m: 2 }} />
-          <RaffleSection />
           <LotterySection />
+          <RaffleSection />
           <StakingSection />
           <PyramidSection />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <PersonalSection />
-          <MarketplaceSection />
-          <ReferralSection />
           <EcommerceSection />
-          <OneInchSection />
+          <DexSection />
           <CoinGeckoSection />
           <IpfsSection />
           <PagesSection />

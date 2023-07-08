@@ -22,7 +22,7 @@ export const formatComplexPrice = (asset?: IAsset): string => {
           component.contract!.decimals,
           component.contract!.symbol
             ? component.contract!.symbol
-            : `${component.contract!.contractType} ${component.template!.title}`,
+            : `${component.contract!.contractType || ""} ${component.template!.title}`,
         ),
       )
       .join(", ") || ""

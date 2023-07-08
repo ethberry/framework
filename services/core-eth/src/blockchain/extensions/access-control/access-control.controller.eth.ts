@@ -40,7 +40,9 @@ export class AccessControlControllerEth {
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleGranted },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleGranted },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleGranted },
     { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleGranted },
   ])
   public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGrantedEvent>, @Ctx() context: Log): Promise<void> {
@@ -64,9 +66,12 @@ export class AccessControlControllerEth {
     { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleRevoked },
+    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleRevoked },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleRevoked },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleRevoked },
     { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleRevoked },
   ])
   public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevokedEvent>, @Ctx() context: Log): Promise<void> {
@@ -90,9 +95,12 @@ export class AccessControlControllerEth {
     { contractType: ContractType.PYRAMID, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.WRAPPER, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.LOTTERY, eventName: AccessControlEventType.RoleAdminChanged },
+    { contractType: ContractType.RAFFLE, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.ERC998_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
+    { contractType: ContractType.ERC998_TOKEN_RANDOM, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
+    { contractType: ContractType.ERC721_TOKEN_RANDOM, eventName: AccessControlEventType.RoleAdminChanged },
     { contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },
   ])
   public roleAdmin(
@@ -118,7 +126,15 @@ export class AccessControlControllerEth {
       eventName: Erc4907EventType.UpdateUser,
     },
     {
+      contractType: ContractType.ERC721_TOKEN_RANDOM,
+      eventName: Erc4907EventType.UpdateUser,
+    },
+    {
       contractType: ContractType.ERC998_TOKEN,
+      eventName: Erc4907EventType.UpdateUser,
+    },
+    {
+      contractType: ContractType.ERC998_TOKEN_RANDOM,
       eventName: Erc4907EventType.UpdateUser,
     },
   ])

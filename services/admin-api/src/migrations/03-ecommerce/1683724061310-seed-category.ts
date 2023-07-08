@@ -5,6 +5,10 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 
 export class SeedCategory1683724061310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -12,11 +16,13 @@ export class SeedCategory1683724061310 implements MigrationInterface {
         title,
         description,
         parent_id,
+        merchant_id,
         created_at,
         updated_at
       ) VALUES (
         'Root',
         '${simpleFormatting}',
+        null,
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -24,11 +30,13 @@ export class SeedCategory1683724061310 implements MigrationInterface {
         'First',
         '${simpleFormatting}',
         1,
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Second',
         '${simpleFormatting}',
+        1,
         1,
         '${currentDateTime}',
         '${currentDateTime}'

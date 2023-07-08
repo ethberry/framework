@@ -1,39 +1,35 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsNumber, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
-import { GradeAttribute, GradeStrategy } from "@framework/types";
+import { GradeStatus, GradeStrategy } from "@framework/types";
 
-import { IGradeUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../exchange/asset/dto";
+import { IGradeUpdateDto } from "../interfaces";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
-  @ApiProperty({
-    minimum: 1,
+  @ApiPropertyOptional({
+    enum: GradeStatus,
   })
   @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public contractId: number;
+  @Transform(({ value }) => value as GradeStatus)
+  @IsEnum(GradeStatus, { message: "badInput" })
+  public gradeStatus: GradeStatus;
 
-  @ApiProperty({
-    enum: GradeAttribute,
-  })
-  @IsEnum(GradeAttribute, { message: "badInput" })
-  public attribute: GradeAttribute;
-
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) => value as GradeStrategy)
   @IsEnum(GradeStrategy, { message: "badInput" })
   public gradeStrategy: GradeStrategy;
 
   @ApiPropertyOptional()
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: "typeMismatch" })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @ValidateIf(o => o.gradeStrategy === GradeStrategy.EXPONENTIAL)
   public growthRate: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: PriceDto,
   })
   @IsOptional()

@@ -150,7 +150,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       const stakeRule1: IRule = {
         deposit: [
@@ -1849,7 +1849,7 @@ describe("Staking", function () {
 
       const stakingInstance = await factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -2316,7 +2316,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc20Instance = await erc20Factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -2404,7 +2404,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc20Instance = await erc20Factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -2999,7 +2999,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
       const erc721RandomInstance = await erc721Factory("ERC721RandomHardhat");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -3401,7 +3401,7 @@ describe("Staking", function () {
       const stakingInstance = await factory();
       const erc721Instance = await erc721Factory("ERC721Simple");
       const erc998Instance = await erc721Factory("ERC998Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -3486,7 +3486,7 @@ describe("Staking", function () {
 
       const stakingInstance = await factory();
       const erc998Instance = await erc721Factory("ERC998Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());
 
@@ -4151,7 +4151,7 @@ describe("Staking", function () {
 
       const stakingInstance = await factory();
       const erc721SimpleInstance = await erc721Factory("ERC721Simple");
-      const mysteryboxInstance = await erc721Factory("ERC721MysteryboxSimple");
+      const mysteryboxInstance = await erc721Factory("ERC721MysteryBoxSimple");
       const erc1155Instance = await erc1155Factory();
 
       await mysteryboxInstance.grantRole(MINTER_ROLE, await stakingInstance.getAddress());

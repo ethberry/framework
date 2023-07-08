@@ -7,6 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import type { IWaitListItem, IWaitListItemSearchDto } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { WaitListSearchForm } from "./form";
 import { WaitListItemEditDialog } from "./edit";
@@ -73,7 +74,12 @@ export const WaitListItem: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <IconButton onClick={handleDelete(waitListItem)}>
+                <IconButton
+                  onClick={handleDelete(waitListItem)}
+                  disabled={
+                    !!waitListItem.list?.root || waitListItem.list?.contract.contractStatus !== ContractStatus.ACTIVE
+                  }
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

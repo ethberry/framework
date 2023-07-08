@@ -6,6 +6,10 @@ import { baseTokenURI, imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_TICKET_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || testChainId;
@@ -32,7 +36,7 @@ export class SeedContractLotteryTicketAt1563804000180 implements MigrationInterf
         created_at,
         updated_at
       ) VALUES (
-        12201,
+        12301,
         '${erc721ContractLotteryAddress}',
         '${chainId}',
         'LOTTERY TICKET',

@@ -1,22 +1,46 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsISO8601, IsString } from "class-validator";
+import { IsEthereumAddress, IsInt, IsISO8601, IsString, Max, Min } from "class-validator";
+import { Transform } from "class-transformer";
+import { decorate } from "ts-mixer";
 
-import { AccountDto } from "@gemunion/collection";
-import { IVestingContractDeployDto, VestingContractTemplate } from "@framework/types";
+import { IVestingContractDeployDto } from "@framework/types";
 
-export class VestingContractDeployDto extends AccountDto implements IVestingContractDeployDto {
-  @ApiProperty({
-    enum: VestingContractTemplate,
-  })
-  @IsEnum(VestingContractTemplate, { message: "badInput" })
-  public contractTemplate: VestingContractTemplate;
+export class VestingContractDeployDto implements IVestingContractDeployDto {
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  @decorate(IsEthereumAddress({ message: "patternMismatch" }))
+  @decorate(Transform(({ value }: { value: string }) => value.toLowerCase()))
+  public beneficiary: string;
 
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsISO8601({}, { message: "patternMismatch" })
+  @decorate(
+    ApiProperty({
+      type: String,
+    }),
+  )
+  @decorate(IsString({ message: "typeMismatch" }))
+  @decorate(IsISO8601({}, { message: "patternMismatch" }))
   public startTimestamp: string;
 
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  public duration: number;
+  @decorate(
+    ApiProperty({
+      type: Number,
+    }),
+  )
+  @decorate(IsInt({ message: "typeMismatch" }))
+  @decorate(Min(0, { message: "rangeUnderflow" }))
+  public cliffInMonth: number;
+
+  @decorate(
+    ApiProperty({
+      type: Number,
+    }),
+  )
+  @decorate(IsInt({ message: "typeMismatch" }))
+  @decorate(Min(1, { message: "rangeUnderflow" }))
+  @decorate(Max(10000, { message: "rangeOverflow" }))
+  public monthlyRelease: number;
 }

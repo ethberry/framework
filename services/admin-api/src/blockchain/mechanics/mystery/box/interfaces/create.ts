@@ -1,6 +1,6 @@
 import { IAssetDto } from "@framework/types";
 
-export interface IMysteryboxCreateDto {
+export interface IMysteryBoxCreateDto {
   title: string;
   description: string;
   item: IAssetDto;

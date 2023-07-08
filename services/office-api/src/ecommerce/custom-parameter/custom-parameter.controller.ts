@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -37,13 +38,16 @@ export class CustomParameterController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: CustomParameterUpdateDto): Promise<CustomParameterEntity> {
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: CustomParameterUpdateDto,
+  ): Promise<CustomParameterEntity> {
     return this.customParameterService.update({ id }, dto);
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
     await this.customParameterService.delete({ id });
   }
 }

@@ -39,9 +39,9 @@ abstract contract ExchangeRaffle is SignatureValidator, AccessControl, Pausable 
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = IRaffle(items[0].token).printTicket(_msgSender());
+    (uint256 tokenId, uint256 roundId) = IRaffle(items[0].token).printTicket(params.externalId, _msgSender());
 
-    // set tokenID = ticketID
+    // set real tokenID = ticketID
     items[1].tokenId = tokenId;
 
     emit PurchaseRaffle(_msgSender(), params.externalId, items, price, roundId);

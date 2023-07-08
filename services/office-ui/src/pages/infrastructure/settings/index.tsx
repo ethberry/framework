@@ -22,7 +22,7 @@ export const Settings: FC = () => {
         .fetchJson({
           url: "/settings",
         })
-        .then((json: Record<string, string>) => {
+        .then((json: Record<SettingsKeys, any>) => {
           setSettings(json);
         });
     },
@@ -41,7 +41,7 @@ export const Settings: FC = () => {
     return call1.fn();
   };
 
-  const onSubmit = (settings: Record<SettingsKeys, any>, form: any) => {
+  const handleSubmit = (settings: Record<SettingsKeys, any>, form: any) => {
     return call2.fn(form, settings).then(() => {
       return fetchSettings();
     });
@@ -58,7 +58,7 @@ export const Settings: FC = () => {
       <PageHeader message="pages.settings.title" />
 
       <ProgressOverlay isLoading={call1.isLoading || call2.isLoading}>
-        <FormWrapper initialValues={settings} onSubmit={onSubmit} testId="Settings">
+        <FormWrapper initialValues={settings} onSubmit={handleSubmit} testId="Settings">
           <TextInput name={SettingsKeys.DUMMY} />
           <NumberInput name={SettingsKeys.SIGNATURE_TTL} />
         </FormWrapper>

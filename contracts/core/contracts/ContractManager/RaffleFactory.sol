@@ -36,13 +36,13 @@ contract RaffleFactory is AbstractFactory {
     RaffleConfig config;
   }
 
-  event RaffleDeployed(address addr, RaffleArgs args);
+  event RaffleDeployed(address account, uint256 externalId, RaffleArgs args);
 
   function deployRaffle(
     Params calldata params,
     RaffleArgs calldata args,
     bytes calldata signature
-  ) external returns (address addr) {
+  ) external returns (address account) {
     _checkNonce(params.nonce);
 
     address signer = _recoverSigner(_hashRaffle(params, args), signature);
@@ -51,20 +51,22 @@ contract RaffleFactory is AbstractFactory {
       revert SignerMissingRole();
     }
 
-    addr = deploy2(
+    account = deploy2(
       params.bytecode,
-      abi.encodeWithSelector(bytes4(RAFFLE_CONFIG_TYPEHASH), args.config.timeLagBeforeRelease, args.config.commission),
+      abi.encode(args.config.timeLagBeforeRelease, args.config.commission),
       params.nonce
     );
-    _raffles.push(addr);
 
-    emit RaffleDeployed(addr, args);
+    _raffles.push(account);
+
+    emit RaffleDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = PAUSER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
-    fixPermissions(addr, roles);
+    grantFactoryMintPermission(account);
+    fixPermissions(account, roles);
   }
 
   function _hashRaffle(Params calldata params, RaffleArgs calldata args) internal view returns (bytes32) {

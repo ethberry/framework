@@ -26,7 +26,7 @@ import { Erc998TokenServiceEth } from "./token.service.eth";
 
 @Controller()
 export class Erc998TokenControllerEth {
-  constructor(private readonly erc998TokenServiceEth: Erc998TokenServiceEth) {}
+  constructor(public readonly erc998TokenServiceEth: Erc998TokenServiceEth) {}
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {

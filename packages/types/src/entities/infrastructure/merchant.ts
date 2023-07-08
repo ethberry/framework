@@ -1,12 +1,20 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 import type { IUser } from "./user";
-import { IOrder, IProduct } from "../ecommerce";
+import type { IOrder, IProduct } from "../ecommerce";
+import { RatePlanType } from "./rate-plan";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
   PENDING = "PENDING",
+}
+
+export interface IMerchantSocial {
+  twitterUrl: string;
+  instagramUrl: string;
+  youtubeUrl: string;
+  facebookUrl: string;
 }
 
 export interface IMerchant extends IIdDateBase {
@@ -15,6 +23,8 @@ export interface IMerchant extends IIdDateBase {
   email: string;
   imageUrl: string;
   merchantStatus: MerchantStatus;
+  social: IMerchantSocial;
+  ratePlan: RatePlanType;
   users: Array<IUser>;
   products: Array<IProduct>;
   orders: Array<IOrder>;

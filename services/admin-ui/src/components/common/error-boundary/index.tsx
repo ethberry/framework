@@ -50,7 +50,7 @@ class ErrorBoundary extends Component<IProps, IState> {
           >
             <FormattedMessage id="errors.uncaughtError" />
           </Alert>
-          {process.env.NODE_ENV === "production" ? (
+          {process.env.NODE_ENV !== "production" ? (
             <Box>
               <Box component="pre" sx={{ mb: 0 }}>
                 {this.state.error?.toString() || ""}

@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -13,11 +14,12 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { ProductItemService } from "./product-item.service";
 import { ProductItemEntity } from "./product-item.entity";
 import { ProductItemCreateDto, ProductItemSearchDto, ProductItemUpdateDto } from "./dto";
+import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/ecommerce/product-item")
@@ -36,24 +38,28 @@ export class ProductItemController {
   }
 
   @Post("/")
-  public create(@Body() dto: ProductItemCreateDto): Promise<ProductItemEntity> {
-    return this.productItemService.create(dto);
+  public create(@Body() dto: ProductItemCreateDto, @User() userEntity: UserEntity): Promise<ProductItemEntity> {
+    return this.productItemService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: ProductItemUpdateDto): Promise<ProductItemEntity> {
-    return this.productItemService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ProductItemUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ProductItemEntity> {
+    return this.productItemService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<ProductItemEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ProductItemEntity | null> {
     return this.productItemService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id") id: number): Promise<void> {
-    await this.productItemService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.productItemService.delete({ id }, userEntity);
   }
 }

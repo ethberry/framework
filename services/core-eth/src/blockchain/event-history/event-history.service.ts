@@ -13,10 +13,10 @@ import {
 } from "@framework/types";
 import { testChainId } from "@framework/constants";
 
-import { EventHistoryEntity } from "./event-history.entity";
-import { ContractService } from "../hierarchy/contract/contract.service";
-import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
 import { AchievementsRuleService } from "../../achievements/rule/rule.service";
+import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
+import { ContractService } from "../hierarchy/contract/contract.service";
+import { EventHistoryEntity } from "./event-history.entity";
 
 @Injectable()
 export class EventHistoryService {
@@ -61,6 +61,7 @@ export class EventHistoryService {
     queryBuilder.leftJoinAndSelect("event.parent", "parent");
     queryBuilder.leftJoinAndSelect("parent.parent", "grand_parent");
     queryBuilder.leftJoinAndSelect("grand_parent.parent", "grand_grand_parent");
+    queryBuilder.leftJoinAndSelect("grand_grand_parent.token", "exchange_event");
 
     queryBuilder.andWhere("event.id = :id", {
       id: where.id,
@@ -153,7 +154,7 @@ export class EventHistoryService {
           ExchangeEventType.Purchase,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
-          ExchangeEventType.Mysterybox,
+          ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
         ]),
       });
@@ -189,7 +190,7 @@ export class EventHistoryService {
           ExchangeEventType.Upgrade,
           ExchangeEventType.Breed,
           ExchangeEventType.Craft,
-          ExchangeEventType.Mysterybox,
+          ExchangeEventType.PurchaseMysteryBox,
           ExchangeEventType.Claim,
           ExchangeEventType.Lend,
           ExchangeEventType.PurchaseLottery,
@@ -227,6 +228,7 @@ export class EventHistoryService {
     }
   }
 
+  // get NESTED events
   public async findNestedHistory(transactionHash: string, parentId: number) {
     const nestedEvents = await this.findAll({
       transactionHash,

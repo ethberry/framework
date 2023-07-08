@@ -122,14 +122,10 @@ export class PyramidRulesService {
   public async create(dto: IPyramidCreateDto): Promise<PyramidRulesEntity> {
     const { deposit, reward } = dto;
 
-    const depositEntity = await this.assetService.create({
-      components: [],
-    });
+    const depositEntity = await this.assetService.create();
     await this.assetService.update(depositEntity, deposit);
 
-    const rewardEntity = await this.assetService.create({
-      components: [],
-    });
+    const rewardEntity = await this.assetService.create();
     await this.assetService.update(rewardEntity, reward);
 
     Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
@@ -156,18 +152,18 @@ export class PyramidRulesService {
     return pyramidEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<PyramidRulesEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<PyramidRulesEntity>): Promise<PyramidRulesEntity> {
     const pyramidEntity = await this.findOne(where);
 
     if (!pyramidEntity) {
-      return;
+      throw new NotFoundException("pyramidRuleNotFound");
     }
 
     if (pyramidEntity.pyramidRuleStatus === PyramidRuleStatus.NEW) {
-      await pyramidEntity.remove();
+      return pyramidEntity.remove();
     } else {
       Object.assign(pyramidEntity, { pyramidRuleStatus: PyramidRuleStatus.INACTIVE });
-      await pyramidEntity.save();
+      return pyramidEntity.save();
     }
   }
 }

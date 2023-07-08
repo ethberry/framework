@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedAchievementLevel1681273013040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const now = new Date();
     const currentDateTime = now.toISOString();
     const defaultJSON = JSON.stringify({});
@@ -137,8 +141,6 @@ export class SeedAchievementLevel1681273013040 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
-
-    await queryRunner.query(`SELECT setval('${ns}.achievement_level_id_seq', 500, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

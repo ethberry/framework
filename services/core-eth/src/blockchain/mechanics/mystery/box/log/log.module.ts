@@ -3,11 +3,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
-import ERC721MysteryboxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
+import ERC721MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
 
 import { MysteryLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
@@ -32,7 +32,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
           contract: {
             contractType: ContractType.MYSTERY,
             contractAddress: mysteryContracts.address || [],
-            contractInterface: new Interface(ERC721MysteryboxBlacklistPausableSol.abi),
+            contractInterface: new Interface(ERC721MysteryBoxBlacklistPausableSol.abi),
             // prettier-ignore
             eventNames: [
               ContractEventType.Approval,
@@ -40,7 +40,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
               ContractEventType.DefaultRoyaltyInfo,
               ContractEventType.TokenRoyaltyInfo,
               ContractEventType.Transfer,
-              ContractEventType.UnpackMysterybox,
+              ContractEventType.UnpackMysteryBox,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,

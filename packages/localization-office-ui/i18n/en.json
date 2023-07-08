@@ -78,6 +78,7 @@
       "13377": "BESU (remote)",
       "13378": "BESU (local)",
       "137": "POLYGON",
+      "42161": "ARBITRUM",
       "5": "GOERLI",
       "56": "BINANCE",
       "80001": "MUMBAI",
@@ -176,6 +177,19 @@
       "PAUSER_ROLE": "PAUSER_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
+    "moduleType": {
+      "HIERARCHY": "HIERARCHY",
+      "COLLECTION": "COLLECTION",
+      "MYSTERY": "MYSTERY",
+      "WRAPPER": "WRAPPER",
+      "LOTTERY": "LOTTERY",
+      "RAFFLE": "RAFFLE",
+      "PYRAMID": "PYRAMID",
+      "VESTING": "VESTING",
+      "POLYGON": "POLYGON",
+      "STAKING": "STAKING",
+      "WAITLIST": "WAITLIST"
     },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
@@ -285,6 +299,7 @@
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
+      "ratePlanId": "Id",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
@@ -395,10 +410,17 @@
       "userRoles": "Roles",
       "userStatus": "Status",
       "year": "Year",
-      "zip": "ZIP code"
+      "zip": "ZIP code",
+      "contractModule": "Module type",
+      "contractType": "Token type",
+      "moduleType": "Module type"
     },
     "placeholders": {
+      "contractModule": "HIERARCHY",
+      "contractType": "\uFEFF",
+      "moduleType": "HIERARCHY",
       "DUMMY": "Dummy",
+      "ratePlanId": "1",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
       "address": "0x...",
@@ -416,6 +438,7 @@
       "contractId": "Contract",
       "contractIds": "Contracts",
       "country": "Germany",
+      "tokenType": "SYSTEM",
       "createdAt": "now",
       "decimals": "18",
       "definition": "10",
@@ -531,7 +554,7 @@
       },
       "infrastructure": {
         "admin": {
-          "balances": "System Balances",
+          "rate-plans": "Rate Plans",
           "emails": "Emails",
           "merchants": "Merchants",
           "pages": "Pages",
@@ -558,6 +581,7 @@
       },
       "mechanics": {
         "claim": "Claim",
+        "dispenser": "Dispenser",
         "drop": "Drop",
         "pyramid": "Pyramid",
         "staking": "Staking",
@@ -569,6 +593,9 @@
         "payees": "System Payees",
         "title": "System Wallet"
       }
+    },
+    "dispenser": {
+      "title": "Dispenser"
     },
     "drop": {
       "title": "Drops"
@@ -630,6 +657,14 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "rate-plan": {
+      "title": "Rate plans",
+      "tabs": {
+        "BRONZE": "Bronze",
+        "GOLD": "Gold",
+        "SILVER": "Silver"
+      }
     },
     "payees": {
       "attach": "Attach",

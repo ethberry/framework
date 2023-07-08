@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { ZeroAddress, hexlify, randomBytes, encodeBytes32String } from "ethers";
+import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -9,7 +9,7 @@ import { SettingsKeys, TokenType } from "@framework/types";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
-import { ISignTemplateDto } from "./interfaces";
+import type { ISignTemplateDto } from "./interfaces";
 import { sorter } from "../../../common/utils/sorter";
 
 @Injectable()
@@ -64,7 +64,7 @@ export class MarketplaceService {
       account,
       params,
       {
-        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType),
+        tokenType: Object.values(TokenType).indexOf(templateEntity.contract.contractType!),
         token: templateEntity.contract.address,
         tokenId:
           templateEntity.contract.contractType === TokenType.ERC1155
@@ -75,11 +75,6 @@ export class MarketplaceService {
       templateEntity.price.components.sort(sorter("id")).map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        // pass templateId instead of tokenId = 0
-        // tokenId:
-        //   component.template.tokens[0].tokenId === "0"
-        //     ? component.template.tokens[0].templateId.toString()
-        //     : component.template.tokens[0].tokenId,
         tokenId: component.template.tokens[0].tokenId,
         amount: (BigInt(component.amount) * BigInt(amount)).toString(),
       })),

@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeepPartial, IsNull, Repository } from "typeorm";
+import { DataSource, DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { ExchangeType, IAssetDto, IAssetItem, IExchangePurchaseEvent, TokenType } from "@framework/types";
 
@@ -38,8 +38,20 @@ export class AssetService {
     private dataSource: DataSource,
   ) {}
 
-  public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
-    return this.assetEntityRepository.create(dto).save();
+  // This method accepts no arguments because all logic is in `update`
+  public async create(): Promise<AssetEntity> {
+    return this.assetEntityRepository
+      .create({
+        components: [],
+      })
+      .save();
+  }
+
+  public findAll(
+    where: FindOptionsWhere<AssetComponentHistoryEntity>,
+    options?: FindOneOptions<AssetComponentHistoryEntity>,
+  ): Promise<Array<AssetComponentHistoryEntity>> {
+    return this.assetComponentHistoryEntityRepository.find({ where, ...options });
   }
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
@@ -168,11 +180,13 @@ export class AssetService {
       items: await Promise.allSettled(
         items.map(async ({ tokenType, tokenId, amount }) => {
           const assetComponentHistoryItem = {
-            historyId: eventHistoryEntity.id,
+            history: eventHistoryEntity,
             exchangeType: ExchangeType.ITEM,
             amount,
           };
 
+          const relations =
+            ~~tokenType === 2 || ~~tokenType === 3 ? { contract: true } : { tokens: true, contract: true };
           const templateEntity = await this.templateService.findOne(
             {
               id:
@@ -180,15 +194,17 @@ export class AssetService {
                   ? Number((eventHistoryEntity.eventData as IExchangePurchaseEvent).externalId)
                   : Number(tokenId),
             },
-            { relations: { tokens: true } },
+            { relations },
           );
           if (!templateEntity) {
             this.loggerService.error(new NotFoundException("templateNotFound"), AssetService.name);
             throw new NotFoundException("templateNotFound");
           }
           Object.assign(assetComponentHistoryItem, {
-            tokenId: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0].id : null,
-            contractId: templateEntity.contractId,
+            // for 721 & 998 tokenId will be updated at Transfer event
+            // tokenId: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0].id : null,
+            token: ~~tokenType === 0 || ~~tokenType === 1 || ~~tokenType === 4 ? templateEntity.tokens[0] : null,
+            contract: templateEntity.contract,
           });
 
           return this.createAssetHistory(assetComponentHistoryItem);
@@ -203,18 +219,24 @@ export class AssetService {
       price: await Promise.allSettled(
         price.map(async ({ token, tokenId, amount }) => {
           const assetComponentHistoryPrice = {
-            historyId: eventHistoryEntity.id,
+            history: eventHistoryEntity,
             exchangeType: ExchangeType.PRICE,
             amount,
           };
 
-          const tokenEntity = await this.tokenService.getToken(Number(tokenId).toString(), token.toLowerCase());
+          // do not join balances
+          const tokenEntity = await this.tokenService.getToken(
+            Number(tokenId).toString(),
+            token.toLowerCase(),
+            void 0,
+            false,
+          );
           if (!tokenEntity) {
             this.loggerService.error(new NotFoundException("tokenNotFound"), AssetService.name);
             throw new NotFoundException("tokenNotFound");
           }
           Object.assign(assetComponentHistoryPrice, {
-            tokenId: tokenEntity.id,
+            token: tokenEntity,
             contractId: tokenEntity.template.contractId,
           });
 

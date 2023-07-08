@@ -78,7 +78,7 @@ export enum ContractEventType {
   UnpackWrapper = "UnpackWrapper",
 
   // MODULE MYSTERY
-  UnpackMysterybox = "UnpackMysterybox",
+  UnpackMysteryBox = "UnpackMysteryBox",
 
   // MODULE:PAUSE
   Paused = "Paused",
@@ -99,6 +99,7 @@ export enum ContractEventType {
   RoleGranted = "RoleGranted",
   RoleRevoked = "RoleRevoked",
   RoleAdminChanged = "RoleAdminChanged",
+  OwnershipTransferred = "OwnershipTransferred",
 
   // MODULE:STAKING
   RuleCreated = "RuleCreated",
@@ -120,7 +121,7 @@ export enum ContractEventType {
   UpdateUser = "UpdateUser",
   Lend = "Lend",
   // MODULE:MYSTERY
-  Mysterybox = "Mysterybox",
+  PurchaseMysteryBox = "PurchaseMysteryBox",
   // MODULE:GRADE
   Upgrade = "Upgrade",
   // MODULE:WAITLIST
@@ -203,6 +204,6 @@ export interface IEventHistory extends IDeployable {
 }
 
 export interface IEventHistoryReport extends IEventHistory {
-  items: IAssetComponentHistory[];
-  price: IAssetComponentHistory[];
+  items: Array<IAssetComponentHistory>;
+  price: Array<IAssetComponentHistory>;
 }

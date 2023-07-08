@@ -6,6 +6,10 @@ import { ns } from "@framework/constants";
 
 export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
     const now = new Date();
 
@@ -51,6 +55,7 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.raffle_round (
+        id,
         number,
         round_id,
         contract_id,
@@ -62,9 +67,10 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        101,
         '1',
-        '1',
-        121,
+        '101',
+        12201,
         12101,
         102210001,
         0,
@@ -73,9 +79,10 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        102,
         '2',
-        '2',
-        121,
+        '102',
+        12201,
         12101,
         102210002,
         0,
@@ -84,9 +91,10 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        103,
         null,
-        '3',
-        121,
+        '103',
+        12201,
         12101,
         102210003,
         5,
@@ -96,6 +104,8 @@ export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.raffle_round_id_seq', 50000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

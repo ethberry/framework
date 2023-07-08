@@ -12,6 +12,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc1155TokenService } from "../token/token.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {
@@ -20,23 +21,13 @@ export class Erc1155TemplateService extends TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc1155TokenService,
+    protected readonly contractService: ContractService,
   ) {
-    super(templateEntityRepository, assetService, tokenService);
+    super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.HIERARCHY);
-  }
-
-  public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {
-    const queryString = `
-        select coalesce(max(token_id::integer), 0) as "tokenId"
-        from ${ns}.token
-        where template_id = $1
-    `;
-
-    const result: Array<{ tokenId: number }> = await this.templateEntityRepository.query(queryString, [templateId]);
-    return result[0].tokenId;
+    return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 
   public async getMaxTokenIdForContract(contractId: number): Promise<number> {
@@ -53,8 +44,8 @@ export class Erc1155TemplateService extends TemplateService {
     return result[0].tokenId;
   }
 
-  public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const templateEntity = await super.createTemplate(dto);
+  public async createTemplate(dto: ITemplateCreateDto, userEntity: UserEntity): Promise<TemplateEntity> {
+    const templateEntity = await super.createTemplate(dto, userEntity);
     const maxTokenId = await this.getMaxTokenIdForContract(templateEntity.contractId);
 
     await this.tokenService.create({

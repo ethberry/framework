@@ -13,16 +13,16 @@ import {
 } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { contractTemplate, templateId, tokenId } from "../constants";
+import { contractTemplate, externalId, templateId, tokenId } from "../constants";
 
-describe("MysteryboxFactory", function () {
+describe("MysteryBoxFactory", function () {
   const factory = () => deployContract(this.title);
 
   describe("deployMysteryToken", function () {
     it("should deploy contract", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721Factory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+      const { bytecode } = await ethers.getContractFactory("ERC721MysteryBoxSimple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -44,6 +44,7 @@ describe("MysteryboxFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           MysteryArgs: [
             { name: "name", type: "string" },
@@ -57,7 +58,8 @@ describe("MysteryboxFactory", function () {
         {
           params: {
             nonce,
-            bytecode: erc721Factory.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -72,7 +74,8 @@ describe("MysteryboxFactory", function () {
       const tx = await contractInstance.deployMysterybox(
         {
           nonce,
-          bytecode: erc721Factory.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,
@@ -87,10 +90,10 @@ describe("MysteryboxFactory", function () {
       const [address] = await contractInstance.allMysteryboxes();
 
       await expect(tx)
-        .to.emit(contractInstance, "MysteryboxDeployed")
-        .withArgs(address, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
+        .to.emit(contractInstance, "MysteryBoxDeployed")
+        .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
-      const erc721Instance = await ethers.getContractAt("ERC721MysteryboxSimple", address);
+      const erc721Instance = await ethers.getContractAt("ERC721MysteryBoxSimple", address);
 
       const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, await contractInstance.getAddress());
       expect(hasRole1).to.equal(false);
@@ -121,7 +124,7 @@ describe("MysteryboxFactory", function () {
     it("should fail: SignerMissingRole", async function () {
       const [owner] = await ethers.getSigners();
       const network = await ethers.provider.getNetwork();
-      const erc721 = await ethers.getContractFactory("ERC721MysteryboxSimple");
+      const { bytecode } = await ethers.getContractFactory("ERC721MysteryBoxSimple");
 
       const contractInstance = await factory();
       const verifyingContract = await contractInstance.getAddress();
@@ -143,6 +146,7 @@ describe("MysteryboxFactory", function () {
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
+            { name: "externalId", type: "uint256" },
           ],
           MysteryArgs: [
             { name: "name", type: "string" },
@@ -156,7 +160,8 @@ describe("MysteryboxFactory", function () {
         {
           params: {
             nonce,
-            bytecode: erc721.bytecode,
+            bytecode,
+            externalId,
           },
           args: {
             name: tokenName,
@@ -173,7 +178,8 @@ describe("MysteryboxFactory", function () {
       const tx = contractInstance.deployMysterybox(
         {
           nonce,
-          bytecode: erc721.bytecode,
+          bytecode,
+          externalId,
         },
         {
           name: tokenName,

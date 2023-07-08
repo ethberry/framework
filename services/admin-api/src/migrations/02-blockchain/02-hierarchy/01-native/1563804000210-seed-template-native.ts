@@ -6,6 +6,10 @@ import { imageUrl, ns } from "@framework/constants";
 
 export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
@@ -43,6 +47,18 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         '${(1000n * WeiPerEther).toString()}',
         'ACTIVE',
         10102,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        1010801,
+        'Fake token (BESU)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '${(1000n * WeiPerEther).toString()}',
+        'ACTIVE',
+        10108,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

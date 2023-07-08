@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateWaitListItem1663047650300 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.wait_list_status_enum AS ENUM (
+      CREATE TYPE ${ns}.wait_list_item_status_enum AS ENUM (
         'NEW',
         'REDEEMED'
       );
@@ -24,8 +24,8 @@ export class CreateWaitListItem1663047650300 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "wait_list_status",
-          type: `${ns}.wait_list_status_enum`,
+          name: "wait_list_item_status",
+          type: `${ns}.wait_list_item_status_enum`,
           default: "'NEW'",
         },
         {

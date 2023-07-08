@@ -3,15 +3,19 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { imageUrl, ns } from "@framework/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 
-export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface {
+export class SeedMysteryBoxErc1155At1653616447950 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        35101
+        102120301
       );
     `);
 
@@ -27,7 +31,7 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         10501,
         1050101, -- Gold
         '1000',
-        35101
+        102120301
       );
     `);
 
@@ -38,14 +42,14 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         image_url,
         item_id,
         template_id,
-        mysterybox_status,
+        mystery_box_status,
         created_at,
         updated_at
       ) VALUES (
         'Gold Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        35101,
+        102120301,
         1110501,
         'ACTIVE',
         '${currentDateTime}',

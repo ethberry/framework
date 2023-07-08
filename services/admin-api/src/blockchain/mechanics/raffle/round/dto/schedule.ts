@@ -1,21 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsString, IsEthereumAddress } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 import { CronExpression } from "@nestjs/schedule";
 
+import type { IRaffleScheduleUpdateDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
-import type { IRaffleOption } from "@framework/types";
 
-export class ScheduleUpdateDto implements IRaffleOption {
+export class RaffleScheduleUpdateDto implements IRaffleScheduleUpdateDto {
   @ApiProperty()
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public address: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  public description: string;
 
   @ApiPropertyOptional({
     enum: ContractStatus,
