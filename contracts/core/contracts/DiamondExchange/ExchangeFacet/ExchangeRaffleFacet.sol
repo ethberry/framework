@@ -45,7 +45,7 @@ contract ExchangeRaffleFacet is SignatureValidator, AccessControlInternal, Pausa
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = IRaffle(items[0].token).printTicket(_msgSender());
+    (uint256 tokenId, uint256 roundId) = IRaffle(items[0].token).printTicket(params.externalId, _msgSender());
 
     // set tokenID = ticketID
     items[1].tokenId = tokenId;

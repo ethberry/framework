@@ -10,7 +10,7 @@ import "./ERC20Factory.sol";
 import "./ERC721Factory.sol";
 import "./ERC998Factory.sol";
 import "./ERC1155Factory.sol";
-import "./MysteryBoxFactory.sol";
+import "./MysteryboxFactory.sol";
 import "./CollectionFactory.sol";
 import "./PyramidFactory.sol";
 import "./LotteryFactory.sol";
@@ -25,7 +25,7 @@ contract ContractManager is
   ERC721Factory,
   ERC998Factory,
   ERC1155Factory,
-  MysteryBoxFactory,
+  MysteryboxFactory,
   CollectionFactory,
   PyramidFactory,
   StakingFactory,

@@ -18,7 +18,7 @@ import { VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";
 
-describe.only("Diamond Exchange Claim", function () {
+describe("Diamond Exchange Claim", function () {
   const factory = async () =>
     deployDiamond(
       "DiamondExchange",
@@ -68,7 +68,7 @@ describe.only("Diamond Exchange Claim", function () {
 
   describe("claim", function () {
     describe("ERC20", function () {
-      it.only("should claim", async function () {
+      it("should claim", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();

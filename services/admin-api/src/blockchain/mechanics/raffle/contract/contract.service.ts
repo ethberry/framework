@@ -15,7 +15,7 @@ export class RaffleContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
-    @Inject(RmqProviderType.SCHEDULE_SERVICE_LOTTERY)
+    @Inject(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
     private readonly scheduleProxy: ClientProxy,
   ) {
     super(contractEntityRepository);

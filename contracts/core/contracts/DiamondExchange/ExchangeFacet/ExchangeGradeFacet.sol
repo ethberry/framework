@@ -38,6 +38,6 @@ contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, Pausab
 
     emit Upgrade(_msgSender(), params.externalId, item, price);
 
-    IERC721Upgradeable(item.token).upgrade(item.tokenId);
+    IERC721Upgradeable(item.token).upgrade(item.tokenId, params.extra);
   }
 }

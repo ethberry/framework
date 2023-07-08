@@ -14,7 +14,7 @@ export interface IRaffleScheduleMenuItemProps {
 
 export const RaffleScheduleMenuItem: FC<IRaffleScheduleMenuItemProps> = props => {
   const {
-    contract: { id },
+    contract: { id, address },
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
@@ -56,6 +56,7 @@ export const RaffleScheduleMenuItem: FC<IRaffleScheduleMenuItemProps> = props =>
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
+          address,
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
         }}
       />

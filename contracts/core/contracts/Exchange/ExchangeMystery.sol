@@ -9,12 +9,12 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
+import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
 abstract contract ExchangeMystery is SignatureValidator, AccessControl, Pausable {
-  event PurchaseMysteryBox(address account, uint256 externalId, Asset[] items, Asset[] price);
+  event PurchaseMysterybox(address account, uint256 externalId, Asset[] items, Asset[] price);
 
   function purchaseMystery(
     Params memory params,
@@ -32,7 +32,7 @@ abstract contract ExchangeMystery is SignatureValidator, AccessControl, Pausable
 
     ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
 
-    emit PurchaseMysteryBox(_msgSender(), params.externalId, items, price);
+    emit PurchaseMysterybox(_msgSender(), params.externalId, items, price);
 
     // can't use items[:1], slice works only with calldata :(
     Asset memory box = items[0];
@@ -47,7 +47,7 @@ abstract contract ExchangeMystery is SignatureValidator, AccessControl, Pausable
       }
     }
 
-    IERC721MysteryBox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
+    IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
 
     _afterPurchase(params.referrer, price);
   }

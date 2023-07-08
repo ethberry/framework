@@ -352,16 +352,8 @@ async function main() {
   contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
   await debug(contracts);
 
-  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
-  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
-  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await debug(contracts);
-
-  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
-  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  const vestingFactory = await ethers.getContractFactory("Vesting");
+  contracts.vesting = await vestingFactory.deploy(wallet, timestamp, 12, 417);
   await debug(contracts);
 
   const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");

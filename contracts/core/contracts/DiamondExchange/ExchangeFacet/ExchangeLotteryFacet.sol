@@ -53,6 +53,7 @@ contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, Paus
     );
 
     (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(
+      params.externalId,
       _msgSender(),
       params.extra // selected numbers
     );
