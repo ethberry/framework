@@ -40,6 +40,11 @@ export class LotteryContractService extends ContractService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, dto).toPromise();
+    return this.scheduleProxy
+      .emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, {
+        address: lotteryEntity.address,
+        schedule: dto.schedule,
+      })
+      .toPromise();
   }
 }
