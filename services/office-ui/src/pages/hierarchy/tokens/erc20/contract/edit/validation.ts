@@ -2,14 +2,12 @@ import { number, object, string } from "yup";
 
 import { draftValidationSchema } from "@gemunion/yup-rules";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
+import { dbIdValidationSchema } from "../../../../../../components/validation";
 
 export const editValidationSchema = object().shape({
   title: string().required("form.validations.valueMissing"),
   description: draftValidationSchema,
-  merchantId: number()
-    .required("form.validations.valueMissing")
-    .integer("form.validations.badInput")
-    .min(1, "form.validations.rangeUnderflow"),
+  merchantId: dbIdValidationSchema,
 });
 
 export const createValidationSchema = object().shape({
@@ -21,8 +19,5 @@ export const createValidationSchema = object().shape({
     .typeError("form.validations.badInput")
     .required("form.validations.valueMissing")
     .max(32, "form.validations.rangeOverflow"),
-  merchantId: number()
-    .required("form.validations.valueMissing")
-    .integer("form.validations.badInput")
-    .min(1, "form.validations.rangeUnderflow"),
+  merchantId: dbIdValidationSchema,
 });

@@ -15,8 +15,5 @@ export const validationSchema = object().shape({
   eventType: mixed<ContractEventType>()
     .oneOf(Object.values(ContractEventType))
     .required("form.validations.valueMissing"),
-  // contractId: number()
-  //   .required("form.validations.valueMissing")
-  //   .integer("form.validations.badInput")
-  //   .min(1, "form.validations.rangeUnderflow"),
+  // contractId: dbIdValidationSchema,
 });
