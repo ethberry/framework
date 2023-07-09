@@ -7,7 +7,7 @@ import { ILotteryContractRound, TokenType } from "@framework/types";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { LotteryRoundEntity } from "./round.entity";
 import { ILotteryOptionsDto } from "./interfaces";
-import { LotteryTicketService } from "../token/ticket.service";
+import { LotteryTokenService } from "../token/token.service";
 
 @Injectable()
 export class LotteryRoundService {
@@ -15,7 +15,7 @@ export class LotteryRoundService {
     @InjectRepository(LotteryRoundEntity)
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
     private readonly contractService: ContractService,
-    private readonly ticketService: LotteryTicketService,
+    private readonly ticketService: LotteryTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<LotteryRoundEntity>> {

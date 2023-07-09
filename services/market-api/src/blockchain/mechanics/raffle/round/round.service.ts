@@ -6,7 +6,7 @@ import { IRaffleContractRound, TokenType } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { RaffleRoundEntity } from "./round.entity";
-import { RaffleTicketService } from "../token/ticket.service";
+import { RaffleTokenService } from "../token/token.service";
 import { IRaffleOptionsDto } from "./interfaces";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class RaffleRoundService {
     @InjectRepository(RaffleRoundEntity)
     private readonly roundEntityRepository: Repository<RaffleRoundEntity>,
     private readonly contractService: ContractService,
-    private readonly ticketService: RaffleTicketService,
+    private readonly ticketService: RaffleTokenService,
   ) {}
 
   public async autocomplete(): Promise<Array<RaffleRoundEntity>> {

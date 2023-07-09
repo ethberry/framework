@@ -3,16 +3,16 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import type { IRaffleLeaderboard, IRaffleLeaderboardSearchDto, IRaffleTokenSearchDto } from "@framework/types";
+import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
-import { RaffleRoundEntity } from "../round/round.entity";
+import { LotteryRoundEntity } from "../round/round.entity";
 
 @Injectable()
-export class RaffleTicketService extends TokenService {
+export class LotteryTokenService extends TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
@@ -23,7 +23,7 @@ export class RaffleTicketService extends TokenService {
   }
 
   public async search(
-    dto: Partial<IRaffleTokenSearchDto>,
+    dto: Partial<ILotteryTokenSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<TokenEntity>, number]> {
     const { roundIds, skip, take } = dto;
@@ -36,19 +36,19 @@ export class RaffleTicketService extends TokenService {
     queryBuilder.select();
 
     queryBuilder.where("contract.contractModule = :contractModule", {
-      contractModule: ModuleType.RAFFLE,
+      contractModule: ModuleType.LOTTERY,
     });
 
     queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
-      RaffleRoundEntity,
+      LotteryRoundEntity,
       "round",
       `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
-    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("template.contractId = round.ticketContractId");
 
@@ -86,12 +86,12 @@ export class RaffleTicketService extends TokenService {
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
-      RaffleRoundEntity,
+      LotteryRoundEntity,
       "round",
-      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
-    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("ticket.id = :id", {
       id: where.id,
@@ -109,12 +109,12 @@ export class RaffleTicketService extends TokenService {
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
-      RaffleRoundEntity,
+      LotteryRoundEntity,
       "round",
-      `template.contract_id = round.ticket_contract_id AND (ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id`,
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
-    queryBuilder.leftJoinAndSelect("round.contract", "raffle_contract");
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("round.id = :id", {
       id: roundId,
@@ -123,8 +123,8 @@ export class RaffleTicketService extends TokenService {
     return queryBuilder.getCount();
   }
 
-  // TODO leaderboard
-  public async leaderboard(dto: Partial<IRaffleLeaderboardSearchDto>): Promise<[Array<IRaffleLeaderboard>, number]> {
+  // TODO rework query
+  public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {
     const { skip, take } = dto;
 
     const queryString = `
@@ -132,7 +132,7 @@ export class RaffleTicketService extends TokenService {
                SUM(amount)   AS                              amount,
                COUNT(amount) AS                              count,
                account
-        FROM ${ns}.raffle_ticket
+        FROM ${ns}.lottery_ticket
         GROUP BY account
     `;
 
