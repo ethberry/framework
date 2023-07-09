@@ -1,4 +1,5 @@
 import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
@@ -14,7 +15,9 @@ export const Dispenser: FC = () => {
         <DispenserUploadButton />
       </PageHeader>
 
-      <Typography>Here be dragons</Typography>
+      <Typography>
+        <FormattedMessage id="pages.dispenser.description" />
+      </Typography>
     </Fragment>
   );
 };

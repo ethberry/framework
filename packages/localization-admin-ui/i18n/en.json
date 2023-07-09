@@ -1036,7 +1036,8 @@
       "title": "Merchant"
     },
     "dispenser": {
-      "title": "Dispenser"
+      "title": "Dispenser",
+      "description": "This mechanic allows to mass-transact tokens."
     },
     "drop": {
       "title": "Drops"
