@@ -8,6 +8,7 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
+    "@framework/traits-api": "0.0.1",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.0.3",

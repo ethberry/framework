@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, ZeroAddress } from "ethers";
+
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
+import { boolArrayToByte32 } from "@framework/traits-api";
 
-import { ISignLotteryDto } from "./interfaces";
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
+import { ISignLotteryDto } from "./interfaces";
 
 @Injectable()
 export class LotterySignService {
@@ -35,7 +37,7 @@ export class LotterySignService {
         externalId: lotteryRound.id,
         expiresAt,
         referrer,
-        extra: ticketNumbers,
+        extra: boolArrayToByte32(ticketNumbers),
       },
       lotteryRound,
     );
