@@ -22,7 +22,7 @@ import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 import "../../Exchange/interfaces/IAsset.sol";
 
-library ExchangeUtils {
+library DiamondExchangeUtils {
   using Address for address;
   using SafeERC20 for IERC20;
 

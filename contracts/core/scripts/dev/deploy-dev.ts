@@ -126,7 +126,7 @@ async function main() {
   // process.exit(0);
 
   // OLD EXCHANGE
-  // const exchangeInstance = await ethers.getContractAt("ExchangeMysteryboxFacet", diamondAddress);
+  // const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
   // const exchangeFactory = await ethers.getContractFactory("Exchange");
   // const exchangeInstance = await exchangeFactory.deploy(
   //   "Exchange",
@@ -149,7 +149,7 @@ async function main() {
       "ExchangeGradeFacet",
       "ExchangeLotteryFacet",
       "ExchangeRaffleFacet",
-      "ExchangeMysteryboxFacet",
+      "ExchangeMysteryBoxFacet",
       "ExchangeRentableFacet",
       "PausableFacet",
       "AccessControlFacet",

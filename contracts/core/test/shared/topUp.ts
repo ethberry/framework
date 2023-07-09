@@ -4,11 +4,11 @@ import { ZeroAddress } from "ethers";
 
 import { amount } from "@gemunion/contracts-constants";
 
+import { templateId, tokenId } from "../constants";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 import { deployBusd, deployERC1363, deployERC20, deployUsdt, deployWeth } from "../ERC20/shared/fixtures";
 import { deployERC998 } from "../ERC998/shared/fixtures";
 import { deployERC1155 } from "../ERC1155/shared/fixtures";
-import { templateId, tokenId } from "../constants";
 import { shouldReceive } from "./receive";
 
 export function shouldBehaveLikeTopUp(factory: () => Promise<any>) {

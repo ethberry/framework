@@ -9,7 +9,7 @@ import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./fixture";
 import { blockAwait } from "@gemunion/contracts-utils";
 
-describe.only("Diamond Exchange Core", function () {
+describe("Diamond Exchange Core", function () {
   const factory = async () =>
     deployDiamond(
       "DiamondExchange",
