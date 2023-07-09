@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { Send } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -74,7 +74,7 @@ export const TransferMenuItem: FC<ITransferMenuItemProps> = props => {
     <Fragment>
       <MenuItem onClick={handleTransfer} disabled={contractFeatures.includes(ContractFeatures.SOULBOUND)}>
         <ListItemIcon>
-          <SendIcon />
+          <Send />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.transfer" />

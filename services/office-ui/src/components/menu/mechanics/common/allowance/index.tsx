@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
+import { AddReaction } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -53,7 +53,7 @@ export const AllowanceMenuItem: FC<IAllowanceMenuItemProps> = props => {
     <Fragment>
       <MenuItem onClick={handleAllowance}>
         <ListItemIcon>
-          <AddReactionIcon />
+          <AddReaction />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.allowance" />
