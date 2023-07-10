@@ -7,9 +7,8 @@ import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature 
 import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./fixture";
-import { blockAwait } from "@gemunion/contracts-utils";
 
-describe.only("Diamond Exchange Core", function () {
+describe("Diamond Exchange Core", function () {
   const factory = async () =>
     deployDiamond(
       "DiamondExchange",
@@ -31,9 +30,9 @@ describe.only("Diamond Exchange Core", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
 
     return {
       generateOneToOneSignature,
@@ -42,7 +41,7 @@ describe.only("Diamond Exchange Core", function () {
     };
   };
 
-  it.only("should purchase", async function () {
+  it("should purchase", async function () {
     const [_owner, receiver] = await ethers.getSigners();
 
     const diamondInstance = await factory();
@@ -74,8 +73,7 @@ describe.only("Diamond Exchange Core", function () {
       ],
     });
 
-    await blockAwait(2, 100);
-    const tx1 = await exchangeInstance.connect(receiver).purchase(
+    const tx1 = exchangeInstance.connect(receiver).purchase(
       params,
       {
         tokenType: 2,
@@ -94,24 +92,24 @@ describe.only("Diamond Exchange Core", function () {
       signature,
       { value: toBigInt("123000000000000000"), gasLimit: 500000 },
     );
-    console.log("tx1.hash", tx1.hash);
-    // await expect(tx1).to.emit(exchangeInstance, "Purchase");
-    // .withArgs(
-    //   receiver.address,
-    //   externalId,
-    //   isEqualEventArgObj({
-    //     tokenType: "2",
-    //     token: await erc721Instance.getAddress(),
-    //     tokenId: toBigInt(tokenId),
-    //     amount: toBigInt(amount),
-    //   }),
-    //   isEqualEventArgArrObj({
-    //     tokenType: "0",
-    //     token: ZeroAddress,
-    //     tokenId: toBigInt("0"),
-    //     amount: toBigInt("123000000000000000"),
-    //   }),
-    // );
+    await expect(tx1)
+      .to.emit(exchangeInstance, "Purchase")
+      .withArgs(
+        receiver.address,
+        externalId,
+        isEqualEventArgObj({
+          tokenType: "2",
+          token: await erc721Instance.getAddress(),
+          tokenId: toBigInt(tokenId),
+          amount: toBigInt(amount),
+        }),
+        isEqualEventArgArrObj({
+          tokenType: "0",
+          token: ZeroAddress,
+          tokenId: toBigInt("0"),
+          amount: toBigInt("123000000000000000"),
+        }),
+      );
   });
 
   it("should fail: paused", async function () {

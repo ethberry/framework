@@ -15,31 +15,29 @@ import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 import "../../Exchange/interfaces/IAsset.sol";
 
-
 library SigValStorage {
-    struct Layout {
-        mapping(bytes32 => bool) _expired;
-    }
+  struct Layout {
+    mapping(bytes32 => bool) _expired;
+  }
 
-    bytes32 internal constant STORAGE_SLOT =
-        keccak256('signature-validator.contracts.storage.exchange');
+  bytes32 internal constant STORAGE_SLOT = keccak256("signature-validator.contracts.storage.exchange");
 
-    function layout() internal pure returns (Layout storage l) {
-        bytes32 slot = STORAGE_SLOT;
-        assembly {
-            l.slot := slot
-        }
+  function layout() internal pure returns (Layout storage l) {
+    bytes32 slot = STORAGE_SLOT;
+    assembly {
+      l.slot := slot
     }
+  }
 }
 
 contract SignatureValidator is EIP712, Context {
   using ECDSA for bytes32;
   using Address for address;
 
-//   mapping(bytes32 => bool) private _expired;
+  //   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE =
-    "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt,address referrer,bytes32 extra)";
+    "Params(uint256 externalId,uint256 expiresAt,bytes32 nonce,bytes32 extra,address receiver,address referrer)";
   bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
 
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
@@ -63,7 +61,7 @@ contract SignatureValidator is EIP712, Context {
     );
 
   // constructor(string memory name) EIP712(name, "1.0.0") {}
-  constructor() EIP712() {} 
+  constructor() EIP712() {}
 
   function _recoverOneToOneSignature(
     Params memory params,
@@ -192,7 +190,15 @@ contract SignatureValidator is EIP712, Context {
   function _hashParamsStruct(Params memory params) private pure returns (bytes32) {
     return
       keccak256(
-        abi.encode(PARAMS_TYPEHASH, params.nonce, params.externalId, params.expiresAt, params.referrer, params.extra)
+        abi.encode(
+          PARAMS_TYPEHASH,
+          params.externalId,
+          params.expiresAt,
+          params.nonce,
+          params.extra,
+          params.receiver,
+          params.referrer
+        )
       );
   }
 

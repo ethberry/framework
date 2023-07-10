@@ -29,11 +29,12 @@ export const expiresAt = 0;
 export const extra = ZeroHash;
 
 export const params = {
-  nonce,
   externalId,
   expiresAt,
-  referrer: ZeroAddress,
+  nonce,
   extra,
+  referrer: ZeroAddress,
+  receiver: ZeroAddress,
 };
 
 export const contractTemplate = "SIMPLE";

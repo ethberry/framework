@@ -17,7 +17,7 @@
     "@gemunion/nest-js-guards": "3.0.3",
     "@gemunion/nest-js-module-coin-gecko": "4.0.3",
     "@gemunion/nest-js-module-coin-market-cap": "3.0.3",
-    "@gemunion/nest-js-module-exchange-signer": "3.0.3",
+    "@gemunion/nest-js-module-exchange-signer": "3.1.0",
     "@gemunion/nest-js-module-helmet": "4.0.3",
     "@gemunion/nest-js-module-license": "4.0.3",
     "@gemunion/nest-js-module-passport": "3.0.3",

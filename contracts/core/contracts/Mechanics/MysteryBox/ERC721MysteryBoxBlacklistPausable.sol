@@ -9,15 +9,15 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "@gemunion/contracts-misc/contracts/constants.sol";
-import "./ERC721MysteryBoxBlacklist.sol";
+import "./ERC721MysteryboxBlacklist.sol";
 
-contract ERC721MysteryBoxBlacklistPausable is ERC721MysteryBoxBlacklist, Pausable {
+contract ERC721MysteryboxBlacklistPausable is ERC721MysteryboxBlacklist, Pausable {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721MysteryBoxBlacklist(name, symbol, royalty, baseTokenURI) {
+  ) ERC721MysteryboxBlacklist(name, symbol, royalty, baseTokenURI) {
     _grantRole(PAUSER_ROLE, _msgSender());
   }
 

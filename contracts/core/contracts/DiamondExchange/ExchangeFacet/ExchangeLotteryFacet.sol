@@ -19,49 +19,46 @@ import "../../Exchange/interfaces/ILottery.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event PurchaseLottery(
-    address account,
-    uint256 externalId,
-    Asset[] items,
-    Asset price,
-    uint256 roundId,
-    bytes32 numbers
-  );
+  event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);
 
   constructor() SignatureValidator() {}
 
   function purchaseLottery(
     Params memory params,
-    Asset[] memory items, // [0] - lottery contract, [1] - ticket contract
+    Asset memory item, // ticket contract
     Asset memory price,
     bytes calldata signature
   ) external payable whenNotPaused {
     // Verify signature and check signer for MINTER_ROLE
-    if (!_hasRole(MINTER_ROLE, _recoverManyToManySignature(params, items, ExchangeUtils._toArray(price), signature))) {
+    if (!_hasRole(MINTER_ROLE, _recoverOneToOneSignature(params, item, price, signature))) {
       revert SignerMissingRole();
     }
 
-    if (items.length == 0) {
-      revert WrongAmount();
+    if (item.token == address(0)) {
+      revert WrongToken();
+    }
+
+    if (params.receiver == address(0)) {
+      revert NotExist();
     }
 
     ExchangeUtils.spendFrom(
       ExchangeUtils._toArray(price),
       _msgSender(),
-      items[0].token,
+      params.receiver, // LOTTERY CONTRACT
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = ILottery(items[0].token).printTicket(
+    (uint256 tokenId, uint256 roundId) = ILottery(params.receiver).printTicket(
       params.externalId,
       _msgSender(),
       params.extra // selected numbers
     );
 
     // set tokenID = ticketID
-    items[1].tokenId = tokenId;
+    item.tokenId = tokenId;
 
-    emit PurchaseLottery(_msgSender(), params.externalId, items, price, roundId, params.extra);
+    emit PurchaseLottery(_msgSender(), params.externalId, item, price, roundId, params.extra);
 
     //    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }

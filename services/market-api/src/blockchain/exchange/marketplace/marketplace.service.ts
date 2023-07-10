@@ -34,19 +34,23 @@ export class MarketplaceService {
       throw new BadRequestException("limitExceeded");
     }
 
+    // TODO get receiver from merchant \ settings?
+    const receiver = ZeroAddress;
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);
 
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
+
     const signature = await this.getSignature(
       account,
       amount,
       {
-        nonce,
         externalId: templateEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver,
+        referrer,
       },
       templateEntity,
     );

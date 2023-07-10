@@ -26,6 +26,7 @@ struct Params {
   uint256 expiresAt;
   bytes32 nonce;
   bytes32 extra;
+  address receiver;
   address referrer;
 }
 
