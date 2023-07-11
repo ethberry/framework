@@ -1,16 +1,8 @@
 import { ethers } from "ethers";
-import { IAssetItem } from "@framework/types";
-import { recursivelyDecodeResult } from "./decodeResult";
 
-// TODO move to @types
-export interface ILotteryCurrentRound {
-  roundId: string;
-  startTimestamp: string;
-  endTimestamp: string;
-  acceptedAsset: IAssetItem;
-  ticketAsset: IAssetItem;
-  maxTicket: string;
-}
+import type { ILotteryCurrentRound } from "@framework/types";
+
+import { recursivelyDecodeResult } from "./decodeResult";
 
 export const getLotteryNumbers = (selected: Array<number>) => {
   const numbers: Array<boolean> = new Array(36).fill(false);

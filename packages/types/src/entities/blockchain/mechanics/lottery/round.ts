@@ -4,6 +4,7 @@ import { CronExpression } from "../../../common";
 import { IAsset } from "../../exchange/asset";
 import { IContract } from "../../hierarchy/contract";
 import { IToken } from "../../hierarchy/token";
+import { IAssetItem } from "../../event-history";
 
 export interface ILotteryRound extends IIdDateBase {
   numbers: Array<boolean>;
@@ -32,4 +33,13 @@ export interface ILotteryScheduleUpdateRmq {
 export interface ILotteryContractRound extends IContract {
   round?: ILotteryRound | null;
   count: number;
+}
+
+export interface ILotteryCurrentRound {
+  roundId: string;
+  startTimestamp: string;
+  endTimestamp: string;
+  acceptedAsset: IAssetItem;
+  ticketAsset: IAssetItem;
+  maxTicket: string;
 }
