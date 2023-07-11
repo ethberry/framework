@@ -145,12 +145,13 @@ export class ClaimService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         // @TODO fix to use expiresAt as extra, temporary set to empty
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       },
 
       claimEntity,

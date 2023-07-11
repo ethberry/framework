@@ -25,6 +25,11 @@
           },
           {
             "internalType": "address",
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
             "name": "referrer",
             "type": "address"
           }

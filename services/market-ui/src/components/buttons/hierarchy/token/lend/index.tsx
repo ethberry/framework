@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, utils, constants } from "ethers";
 
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -32,11 +32,12 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, TemplateLendABI, web3Context.provider?.getSigner());
 
       const params = {
-        nonce: utils.arrayify(sign.nonce),
         externalId: values.rentRule, // DB rent rule id
         expiresAt: sign.expiresAt,
-        referrer: values.account,
+        nonce: utils.arrayify(sign.nonce),
         extra: expires,
+        receiver: constants.AddressZero,
+        referrer: values.account,
       };
       const item = {
         tokenType: Object.values(TokenType).indexOf(token.template!.contract!.contractType!),

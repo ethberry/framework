@@ -1,10 +1,10 @@
 import { IAssetItem } from "./common";
 
-// PurchaseRaffle(address account, uint256 externalId, Asset[] items, Asset price, uint256 roundId);
+// event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId);
 export interface IExchangePurchaseRaffleEvent {
   account: string;
   externalId: string;
-  items: Array<IAssetItem>;
+  item: IAssetItem;
   price: IAssetItem;
   roundId: string;
 }

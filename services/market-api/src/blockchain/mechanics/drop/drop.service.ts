@@ -132,11 +132,12 @@ export class DropService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: dropEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       dropEntity,
     );

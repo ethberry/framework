@@ -447,11 +447,12 @@ describe("ExchangeCore", function () {
 
       const expiresAt = (await time.latest()).toString();
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -504,11 +505,12 @@ describe("ExchangeCore", function () {
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const signature = await generateOneToManySignature({

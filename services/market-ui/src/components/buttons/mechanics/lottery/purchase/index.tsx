@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -33,26 +33,19 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
       return contract
         .purchaseLottery(
           {
-            nonce: utils.arrayify(sign.nonce),
             externalId: round.id,
             expiresAt: sign.expiresAt,
-            referrer: settings.getReferrer(),
+            nonce: utils.arrayify(sign.nonce),
             extra: boolArrayToByte32(ticketNumbers),
+            receiver: round.contract?.address,
+            referrer: settings.getReferrer(),
           },
-          [
-            {
-              tokenType: 0,
-              token: round.contract?.address,
-              tokenId: "0",
-              amount: "0",
-            },
-            {
-              tokenType: 2,
-              token: round.ticketContract?.address,
-              tokenId: "0",
-              amount: "1",
-            },
-          ],
+          {
+            tokenType: 2,
+            token: round.ticketContract?.address,
+            tokenId: "0",
+            amount: "1",
+          },
           round.price?.components.map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract?.address,

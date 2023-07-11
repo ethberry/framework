@@ -594,11 +594,12 @@ async function main() {
   const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
   const params = {
-    nonce,
     externalId,
     expiresAt,
-    referrer: ZeroAddress,
+    nonce,
     extra: merkleTree.root,
+    receiver: ZeroAddress,
+    referrer: ZeroAddress,
   };
   const items = [
     {

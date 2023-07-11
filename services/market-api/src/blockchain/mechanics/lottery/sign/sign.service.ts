@@ -31,11 +31,12 @@ export class LotterySignService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: lotteryRound.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: ticketNumbers,
+        receiver: lotteryRound.contract.address,
+        referrer,
       },
       lotteryRound,
     );
@@ -44,31 +45,21 @@ export class LotterySignService {
   }
 
   public async getSignature(account: string, params: IParams, roundEntity: LotteryRoundEntity): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToOneSignature(
       account,
       params,
-      [
-        {
-          tokenType: 0,
-          token: roundEntity.contract.address,
-          tokenId: "0",
-          amount: "0",
-        },
-        {
-          tokenType: 2,
-          token: roundEntity.ticketContract.address,
-          tokenId: "0",
-          amount: "1",
-        },
-      ],
-      [
-        {
-          tokenType: Object.values(TokenType).indexOf(roundEntity.price.components[0].tokenType),
-          token: roundEntity.price.components[0].contract.address,
-          tokenId: roundEntity.price.components[0].template.tokens[0].tokenId,
-          amount: roundEntity.price.components[0].amount,
-        },
-      ],
+      {
+        tokenType: 2,
+        token: roundEntity.ticketContract.address,
+        tokenId: "0",
+        amount: "1",
+      },
+      {
+        tokenType: Object.values(TokenType).indexOf(roundEntity.price.components[0].tokenType),
+        token: roundEntity.price.components[0].contract.address,
+        tokenId: roundEntity.price.components[0].template.tokens[0].tokenId,
+        amount: roundEntity.price.components[0].amount,
+      },
     );
   }
 }

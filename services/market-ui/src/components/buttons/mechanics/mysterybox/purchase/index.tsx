@@ -33,11 +33,12 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
 
       return contract.purchaseMystery(
         {
-          nonce: utils.arrayify(sign.nonce),
           externalId: mysterybox.id,
           expiresAt: sign.expiresAt,
-          referrer: constants.AddressZero,
+          nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
+          receiver: constants.AddressZero,
+          referrer: constants.AddressZero,
         },
         [
           {

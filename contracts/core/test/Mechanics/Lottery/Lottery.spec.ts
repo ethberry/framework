@@ -26,7 +26,6 @@ describe("Lottery", function () {
 
   const lotteryConfig = {
     timeLagBeforeRelease: 100, // production: release after 2592000 seconds = 30 days
-    maxTickets: 2, // production: 5000 (dev: 2)
     commission: 30, // lottery wallet gets 30% commission from each round balance
   };
 

@@ -29,11 +29,12 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
 
       return contract.craft(
         {
-          nonce: utils.arrayify(sign.nonce),
           externalId: craft.id,
           expiresAt: sign.expiresAt,
-          referrer: constants.AddressZero,
+          nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
+          receiver: constants.AddressZero,
+          referrer: constants.AddressZero,
         },
         craft.item?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),

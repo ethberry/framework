@@ -28,11 +28,12 @@ describe("ExchangeReferral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       const refParams1 = {
-        nonce: randomBytes(32),
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce: randomBytes(32),
         extra,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const signature1 = await generateOneToManySignature({
@@ -79,11 +80,12 @@ describe("ExchangeReferral", function () {
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
 
       const refParams2 = {
-        nonce: randomBytes(32),
         externalId,
         expiresAt,
-        referrer: owner.address,
+        nonce: randomBytes(32),
         extra,
+        receiver: owner.address,
+        referrer: owner.address,
       };
 
       const signature2 = await generateOneToManySignature({
@@ -139,11 +141,12 @@ describe("ExchangeReferral", function () {
         );
 
       const refParams3 = {
-        nonce: randomBytes(32),
         externalId,
         expiresAt,
-        referrer: receiver.address,
+        nonce: randomBytes(32),
         extra,
+        receiver: receiver.address,
+        referrer: receiver.address,
       };
 
       const signature3 = await generateOneToManySignature({
@@ -230,11 +233,12 @@ describe("ExchangeReferral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       const params = {
-        nonce: randomBytes(32),
         externalId,
         expiresAt,
-        referrer: owner.address,
+        nonce: randomBytes(32),
         extra,
+        receiver: owner.address,
+        referrer: owner.address,
       };
 
       const signature = await generateOneToManySignature({

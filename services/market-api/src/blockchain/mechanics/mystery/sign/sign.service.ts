@@ -44,11 +44,12 @@ export class MysterySignService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: mysteryboxEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       mysteryboxEntity,
     );

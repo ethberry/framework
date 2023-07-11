@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -29,26 +29,19 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
 
       return contract.purchaseRaffle(
         {
-          nonce: utils.arrayify(sign.nonce),
           externalId: round.id,
           expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
+          nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
+          receiver: round.contract?.address,
+          referrer: settings.getReferrer(),
         },
-        [
-          {
-            tokenType: 0,
-            token: round.contract?.address,
-            tokenId: "0",
-            amount: "0",
-          },
-          {
-            tokenType: 2,
-            token: round.ticketContract?.address,
-            tokenId: "0",
-            amount: "1",
-          },
-        ],
+        {
+          tokenType: 2,
+          token: round.ticketContract?.address,
+          tokenId: "0",
+          amount: "1",
+        },
         round.price?.components.map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -45,11 +45,12 @@ export const AchievementRedeemButton: FC<IAchievementRedeemButtonProps> = props 
 
     return contract.claim(
       {
-        nonce: utils.arrayify(sign.nonce),
         externalId: sign.bytecode, // claimEntity ID
         expiresAt: sign.expiresAt,
-        referrer: settings.getReferrer(),
+        nonce: utils.arrayify(sign.nonce),
         extra: utils.hexZeroPad(utils.hexlify(achievementLevel.id), 32),
+        receiver: constants.AddressZero,
+        referrer: settings.getReferrer(),
       },
       achievementLevel.item?.components.map(component => ({
         tokenType: Object.values(TokenType).indexOf(component.tokenType),

@@ -11,7 +11,6 @@ declare global {
       ACCOUNT: string;
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
-      STAKING_ADDR: string;
       LINK_ADDR: string;
       VRF_ADDR: string;
       DISPENSER_ADDR: string;

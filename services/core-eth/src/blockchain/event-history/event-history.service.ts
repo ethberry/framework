@@ -234,7 +234,7 @@ export class EventHistoryService {
       transactionHash,
       parentId: undefined,
     });
-    // TODO nested ?== parent
+
     if (nestedEvents) {
       nestedEvents.map(async nested => {
         if (nested.id !== parentId) {

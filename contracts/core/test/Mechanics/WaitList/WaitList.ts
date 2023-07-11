@@ -41,11 +41,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx = contractInstance.setReward(params, items);
@@ -67,11 +68,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx = contractInstance.connect(receiver).setReward(params, []);
@@ -93,11 +95,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx = contractInstance.setReward(params, []);
@@ -126,11 +129,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx = contractInstance.setReward(params, items);
@@ -166,11 +170,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx1 = contractInstance.setReward(params, items);
@@ -208,11 +213,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx1 = contractInstance.setReward(params, items);
@@ -287,11 +293,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx1 = contractInstance.setReward(params, items);
@@ -327,11 +334,12 @@ describe("WaitList", function () {
       const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
       const params = {
-        nonce,
         externalId,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: merkleTree.root,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
       };
 
       const tx1 = contractInstance.setReward(params, items);

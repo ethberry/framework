@@ -53,11 +53,12 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
           const contract = new Contract(process.env.EXCHANGE_ADDR, UpgradeABI, web3Context.provider?.getSigner());
           return contract.upgrade(
             {
-              nonce: utils.arrayify(sign.nonce),
               externalId: grade.id,
               expiresAt: sign.expiresAt,
-              referrer: constants.AddressZero,
+              nonce: utils.arrayify(sign.nonce),
               extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
+              receiver: constants.AddressZero,
+              referrer: constants.AddressZero,
             },
             // ITEM
             {

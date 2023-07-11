@@ -129,11 +129,12 @@ export class CraftService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: craftEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       craftEntity,
     );
