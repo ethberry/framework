@@ -6,13 +6,13 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 import { CronExpression, IContract } from "@framework/types";
 
-import { LotteryScheduleDialog } from "./dialog";
+import { RaffleScheduleDialog } from "./dialog";
 
-export interface ILotteryScheduleMenuItemProps {
+export interface IRaffleScheduleFullMenuItemProps {
   contract: IContract;
 }
 
-export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props => {
+export const RaffleScheduleFullMenuItem: FC<IRaffleScheduleFullMenuItemProps> = props => {
   const {
     contract: { id },
   } = props;
@@ -21,7 +21,7 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: `/lottery/rounds/${id}/schedule`,
+      url: `/raffle/contracts/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -43,7 +43,7 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
 
   return (
     <Fragment>
-      <MenuItem onClick={handleSchedule} data-testid="LotteryScheduleButton">
+      <MenuItem onClick={handleSchedule} data-testid="RaffleScheduleButton">
         <ListItemIcon>
           <ManageHistory fontSize="small" />
         </ListItemIcon>
@@ -51,7 +51,7 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
           <FormattedMessage id="form.buttons.schedule" />
         </Typography>
       </MenuItem>
-      <LotteryScheduleDialog
+      <RaffleScheduleDialog
         onConfirm={handleScheduleConfirm}
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
