@@ -1,11 +1,13 @@
-import { array, object, string } from "yup";
+import { array, object } from "yup";
 
 import { jsonValidationSchema } from "@gemunion/yup-rules";
 import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
+import { urlValidationSchema } from "../../../../../validation";
+
 export const tokenValidationSchema = object().shape({
   tokenId: bigNumberValidationSchema,
-  imageUrl: string().required("form.validations.valueMissing"),
+  imageUrl: urlValidationSchema,
   metadata: jsonValidationSchema,
 });
 

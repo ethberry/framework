@@ -10,10 +10,10 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import type { ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
+import { boolArrayToByte32 } from "@framework/traits-ui";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
-import { boolArrayToByte32 } from "./utils";
 
 export interface ILotteryPurchaseButtonProps {
   round: Partial<ILotteryRound>;
@@ -72,7 +72,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         data: {
           account,
           referrer: settings.getReferrer(),
-          ticketNumbers: boolArrayToByte32(ticketNumbers),
+          ticketNumbers,
           roundId: round.id,
         },
       },

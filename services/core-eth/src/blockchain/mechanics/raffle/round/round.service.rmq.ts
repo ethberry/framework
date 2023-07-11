@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { IRaffleScheduleUpdateDto } from "@framework/types";
+import { IRaffleScheduleUpdateRmq } from "@framework/types";
 
 import { RaffleRoundServiceCron } from "./round.service.cron";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -11,7 +11,7 @@ export class RoundServiceRmq {
     private readonly contractService: ContractService,
   ) {}
 
-  public async updateSchedule(dto: IRaffleScheduleUpdateDto): Promise<void> {
+  public async updateSchedule(dto: IRaffleScheduleUpdateRmq): Promise<void> {
     const raffleEntity = await this.contractService.findOne({ address: dto.address });
 
     if (!raffleEntity) {
@@ -27,6 +27,6 @@ export class RoundServiceRmq {
 
     await raffleEntity.save();
 
-    this.raffleRoundServiceCron.updateOrCreateRoundCronJob({ cron: dto.schedule, address: dto.address });
+    this.raffleRoundServiceCron.updateOrCreateRoundCronJob(dto);
   }
 }

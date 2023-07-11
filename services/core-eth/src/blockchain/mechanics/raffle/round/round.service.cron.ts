@@ -1,15 +1,14 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
 import { ConfigService } from "@nestjs/config";
 import { Contract, JsonRpcProvider, Wallet } from "ethers";
 
 import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { IRaffleScheduleUpdateRmq } from "@framework/types";
 import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
 
 import { blockAwait, getCurrentRound } from "../../../../common/utils";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { IRaffleScheduleUpdateDto, ModuleType } from "@framework/types";
 
 @Injectable()
 export class RaffleRoundServiceCron {
@@ -21,8 +20,7 @@ export class RaffleRoundServiceCron {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
-    private schedulerRegistry: SchedulerRegistry,
-    private readonly contractService: ContractService,
+    private readonly schedulerRegistry: SchedulerRegistry,
   ) {}
 
   public async raffleRound(address: string): Promise<void> {
@@ -52,47 +50,18 @@ export class RaffleRoundServiceCron {
     }
   }
 
-  public setRoundCronJob(dto: { cron: CronExpression; raffle: string }): void {
-    const job = new CronJob(dto.cron, async () => {
-      await this.raffleRound(dto.raffle);
-    });
-
-    this.schedulerRegistry.addCronJob(`raffleRound@${dto.raffle}`, job);
-    job.start();
-  }
-
-  public updateOrCreateRoundCronJob(dto: { cron: CronExpression; address: string }): void {
+  public updateOrCreateRoundCronJob(dto: IRaffleScheduleUpdateRmq): void {
     try {
       this.schedulerRegistry.deleteCronJob(`raffleRound@${dto.address}`);
     } catch (e) {
       this.loggerService.log(JSON.stringify(e, null, "\t"), RaffleRoundServiceCron.name);
     } finally {
-      const job = new CronJob(dto.cron, async () => {
+      const job = new CronJob(dto.schedule, async () => {
         await this.raffleRound(dto.address);
       });
       this.schedulerRegistry.addCronJob(`raffleRound@${dto.address}`, job);
       job.start();
       this.loggerService.log(JSON.stringify(dto, null, "\t"), RaffleRoundServiceCron.name);
     }
-  }
-
-  public async updateRoundCronJobDb(): Promise<void> {
-    const raffleEntity = await this.contractService.findOne({
-      contractModule: ModuleType.RAFFLE,
-      contractType: undefined,
-    });
-
-    if (!raffleEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    const { schedule }: IRaffleScheduleUpdateDto = JSON.parse(raffleEntity.description);
-
-    this.schedulerRegistry.deleteCronJob(`raffleRound@${raffleEntity.address}`);
-    const job = new CronJob(schedule, async () => {
-      await this.raffleRound(raffleEntity.address);
-    });
-    this.schedulerRegistry.addCronJob(`raffleRound@${raffleEntity.address}`, job);
-    job.start();
   }
 }

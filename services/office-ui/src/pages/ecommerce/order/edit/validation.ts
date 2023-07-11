@@ -1,6 +1,7 @@
-import { number, object } from "yup";
+import { object } from "yup";
+import { dbIdValidationSchema } from "../../../../components/validation";
 
 export const validationSchema = object().shape({
-  userId: number().min(1, "form.validations.valueMissing").required("form.validations.valueMissing"),
-  addressId: number().min(1, "form.validations.valueMissing").required("form.validations.valueMissing"),
+  userId: dbIdValidationSchema,
+  addressId: dbIdValidationSchema,
 });

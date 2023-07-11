@@ -4,6 +4,7 @@ import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yu
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
 import { TokenType } from "@framework/types";
+import { dbIdValidationSchema } from "../../../../../validation";
 
 // TODO better TOKEN validation
 
@@ -21,10 +22,7 @@ export const tokenAssetComponentValidationSchema = object().shape({
       .required("form.validations.valueMissing"),
     address: addressValidationSchema,
   }),
-  contractId: number()
-    .required("form.validations.valueMissing")
-    .integer("form.validations.badInput")
-    .min(1, "form.validations.rangeUnderflow"),
+  contractId: dbIdValidationSchema,
   token: object().when("tokenType", {
     is: (tokenType: TokenType) => tokenType !== TokenType.ERC20 && tokenType !== TokenType.NATIVE,
     then: schema =>

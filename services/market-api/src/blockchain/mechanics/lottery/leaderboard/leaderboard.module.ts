@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 
 import { LotteryLeaderboardService } from "./leaderboard.service";
 import { LotteryLeaderboardController } from "./leaderboard.controller";
-import { LotteryTicketModule } from "../token/ticket.module";
+import { LotteryTokenModule } from "../token/token.module";
 
 @Module({
-  imports: [LotteryTicketModule],
+  imports: [LotteryTokenModule],
   providers: [LotteryLeaderboardService],
   controllers: [LotteryLeaderboardController],
   exports: [LotteryLeaderboardService],

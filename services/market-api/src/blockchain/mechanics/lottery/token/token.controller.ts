@@ -3,28 +3,28 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { RaffleTicketSearchDto } from "./dto";
-import { RaffleTicketService } from "./ticket.service";
+import { LotteryTicketSearchDto } from "./dto";
+import { LotteryTokenService } from "./token.service";
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @ApiBearerAuth()
-@Controller("/raffle/tokens")
-export class RaffleTicketController {
-  constructor(private readonly raffleTicketService: RaffleTicketService) {}
+@Controller("/lottery/tokens")
+export class LotteryTokenController {
+  constructor(private readonly lotteryTicketService: LotteryTokenService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: RaffleTicketSearchDto,
+    @Query() dto: LotteryTicketSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TokenEntity>, number]> {
-    return this.raffleTicketService.search(dto, userEntity);
+    return this.lotteryTicketService.search(dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.raffleTicketService.findOneWithRelations({ id });
+    return this.lotteryTicketService.findOneWithRelations({ id });
   }
 }

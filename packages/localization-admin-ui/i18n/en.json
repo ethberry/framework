@@ -878,7 +878,6 @@
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
       "typeMismatch": "{label} is invalid",
-      "unsupportedCombination": "{label} contains unsupported combination",
       "valid": "??",
       "valueMissing": "{label} is required",
       "weak": "{label} is too weak",
@@ -1036,7 +1035,8 @@
       "title": "Merchant"
     },
     "dispenser": {
-      "title": "Dispenser"
+      "title": "Dispenser",
+      "description": "This mechanic allows to mass-transact tokens."
     },
     "drop": {
       "title": "Drops"
@@ -1352,7 +1352,6 @@
     "tooManyRequests": "Too Many Requests.",
     "transactionSent": "Transaction sent",
     "unauthorized": "Incorrect login or password",
-    "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",

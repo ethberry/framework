@@ -14,7 +14,7 @@ describe("Diamond Exchange Mysterybox", function () {
     deployDiamond(
       "DiamondExchange",
       [
-        "ExchangeMysteryboxFacet",
+        "ExchangeMysteryBoxFacet",
         "PausableFacet",
         "AccessControlFacet",
         "WalletFacet", //
@@ -47,7 +47,7 @@ describe("Diamond Exchange Mysterybox", function () {
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
-        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryboxFacet", diamondAddress);
+        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -148,7 +148,7 @@ describe("Diamond Exchange Mysterybox", function () {
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
-        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryboxFacet", diamondAddress);
+        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
@@ -249,7 +249,7 @@ describe("Diamond Exchange Mysterybox", function () {
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
-        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryboxFacet", diamondAddress);
+        const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -435,7 +435,7 @@ describe("Diamond Exchange Mysterybox", function () {
     const diamondInstance = await factory();
     const diamondAddress = await diamondInstance.getAddress();
 
-    const exchangeInstance = await ethers.getContractAt("ExchangeMysteryboxFacet", diamondAddress);
+    const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
     const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
     const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
     await pausableInstance.pause();

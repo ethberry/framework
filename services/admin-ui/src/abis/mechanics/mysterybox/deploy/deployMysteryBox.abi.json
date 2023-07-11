@@ -51,7 +51,7 @@
             "type": "string"
           }
         ],
-        "internalType": "struct MysteryboxFactory.MysteryArgs",
+        "internalType": "struct MysteryBoxFactory.MysteryArgs",
         "name": "args",
         "type": "tuple"
       },

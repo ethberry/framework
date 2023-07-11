@@ -9,7 +9,7 @@ import { useUser } from "@gemunion/provider-user";
 import type { IMysteryContractDeployDto, IUser } from "@framework/types";
 import { MysteryContractTemplates } from "@framework/types";
 
-import DeployMysteryboxABI from "../../../../../abis/mechanics/mysterybox/deploy/deployMysterybox.abi.json";
+import DeployMysteryboxABI from "../../../../../abis/mechanics/mysterybox/deploy/deployMysteryBox.abi.json";
 
 import { MysteryContractDeployDialog } from "./dialog";
 

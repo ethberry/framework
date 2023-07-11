@@ -14,7 +14,7 @@ export interface ILotteryScheduleMenuItemProps {
 
 export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props => {
   const {
-    contract: { id, address },
+    contract: { id },
   } = props;
 
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
@@ -56,7 +56,6 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleMenuItemProps> = props 
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
-          address,
           schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
         }}
       />

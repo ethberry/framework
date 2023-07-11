@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import { ChangeCircle } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -43,7 +43,7 @@ export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = pr
     <Fragment>
       <MenuItem onClick={handleTransferOwnership}>
         <ListItemIcon>
-          <ChangeCircleIcon />
+          <ChangeCircle />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.transferOwnership" />

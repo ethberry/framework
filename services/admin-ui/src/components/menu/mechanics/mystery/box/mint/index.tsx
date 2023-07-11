@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { AddCircleOutline } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -60,7 +60,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     <Fragment>
       <MenuItem onClick={handleMintToken}>
         <ListItemIcon>
-          <AddCircleOutlineIcon />
+          <AddCircleOutline />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.mintToken" />

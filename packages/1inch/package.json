@@ -16,16 +16,16 @@
     "@gemunion/provider-user": "6.0.30",
     "@gemunion/provider-wallet": "3.3.27",
     "@gemunion/react-hooks-eth": "1.0.111",
-    "@mui/material": "5.13.6",
-    "@mui/icons-material": "5.11.16",
+    "@mui/material": "5.13.7",
+    "@mui/icons-material": "5.13.7",
     "@web3-react/core": "8.2.0",
-    "cross-fetch": "3.1.6",
+    "cross-fetch": "3.1.8",
     "ethers": "5.7.2",
     "mathjs": "11.8.2",
     "notistack": "3.0.1",
     "react-intl": "6.4.4",
     "react-window": "1.8.9",
-    "type-fest": "3.12.0"
+    "type-fest": "3.13.0"
   },
   "devDependencies": {
     "@types/react": "18.2.14",

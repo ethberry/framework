@@ -20,8 +20,7 @@ import "../../Exchange/interfaces/IAsset.sol";
  * @dev Basic preset of Vesting contract that includes the following extensions:
  *      - Ownable (OpenZeppelin)
  *      - VestingWallet (OpenZeppelin)
- *      - Multicall (OpenZeppelin)
- *      - ERC1363 (OpenZeppelin)
+ *      - TopUp (Gemunion)
  *      This contract abstracts all common functions and is used as an foundation for other vesting contracts
  */
 contract Vesting is VestingWallet, Ownable, TopUp {

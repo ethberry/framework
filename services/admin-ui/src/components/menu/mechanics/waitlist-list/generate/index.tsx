@@ -57,9 +57,13 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   });
 
   const handleUpload = async () => {
-    // TODO handle 500 error
-    const proof = await fn(null as unknown as any, id);
-    return metaFn(proof);
+    await fn(null as unknown as any, id).then(async proof => {
+      // proof can de undefined in case of http error
+      // the error is handled by useApiCall
+      if (proof) {
+        await metaFn(proof);
+      }
+    });
   };
 
   return (

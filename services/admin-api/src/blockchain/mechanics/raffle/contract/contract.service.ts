@@ -30,16 +30,21 @@ export class RaffleContractService extends ContractService {
     dto: IRaffleScheduleUpdateDto,
     userEntity: UserEntity,
   ): Promise<any> {
-    const lotteryEntity = await this.findOne(where);
+    const raffleEntity = await this.findOne(where);
 
-    if (!lotteryEntity) {
+    if (!raffleEntity) {
       throw new NotFoundException("lotteryNotFound");
     }
 
-    if (lotteryEntity.merchantId !== userEntity.merchantId) {
+    if (raffleEntity.merchantId !== userEntity.merchantId) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    return this.scheduleProxy.emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, dto).toPromise();
+    return this.scheduleProxy
+      .emit(RmqProviderType.SCHEDULE_SERVICE_LOTTERY, {
+        address: raffleEntity.address,
+        schedule: dto.schedule,
+      })
+      .toPromise();
   }
 }
