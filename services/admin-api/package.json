@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
-    "@gemunion/eslint-config": "3.0.2",
+    "@gemunion/eslint-config": "4.0.2",
     "@nestjs/testing": "10.0.5",
     "@types/archiver": "5.3.2",
     "@types/async": "3.2.20",
