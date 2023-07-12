@@ -403,6 +403,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         )
         .to.emit(erc721Instance, "Transfer")
         .withArgs(ZeroAddress, receiver.address, tokenId);
@@ -522,6 +523,7 @@ describe("Raffle", function () {
             tokenId: 0n,
             amount: amount * 1n,
           }),
+          1n,
           1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
@@ -665,6 +667,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -732,6 +735,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          2n,
         );
       await expect(tx01).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -878,6 +882,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -945,6 +950,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          2n,
         );
       await expect(tx01).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1012,6 +1018,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          3n,
         );
       await expect(tx02).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1163,6 +1170,7 @@ describe("Raffle", function () {
             tokenId: 0n,
             amount: amount * 1n,
           }),
+          1n,
           1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
@@ -1322,6 +1330,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1471,6 +1480,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1538,6 +1548,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          2n,
         );
       await expect(tx1).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1838,6 +1849,7 @@ describe("Raffle", function () {
             amount: amount * 1n,
           }),
           1n,
+          1n,
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, raffleInstance], [-amount, amount]);
 
@@ -1997,6 +2009,7 @@ describe("Raffle", function () {
             tokenId: 0n,
             amount: amount * 1n,
           }),
+          1n,
           1n,
         )
         .to.emit(erc721Instance, "Transfer")

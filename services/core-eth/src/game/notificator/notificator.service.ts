@@ -18,7 +18,7 @@ import type {
   IWaitListRewardSetData,
 } from "./interfaces";
 import { IUnpackMysteryData } from "./interfaces/mystery-box";
-import { ICraftData, IPrizeRaffleData } from "./interfaces";
+import { ICraftData, IFinalizeRaffleData, IPrizeRaffleData, IPurchaseRaffleData } from "./interfaces";
 
 export interface IRentUserUpdateData {
   merchantId: number;
@@ -83,7 +83,7 @@ export class NotificatorService {
   }
 
   // MODULE:RAFFLE
-  public purchaseRaffle(data: IPurchaseData): Promise<any> {
+  public purchaseRaffle(data: IPurchaseRaffleData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PURCHASE_RAFFLE, data).toPromise();
     });
@@ -169,6 +169,12 @@ export class NotificatorService {
   }
 
   // MODULE:RAFFLE
+  public finalizeRaffle(data: IFinalizeRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.FINALIZE_RAFFLE, data).toPromise();
+    });
+  }
+
   public prizeRaffle(data: IPrizeRaffleData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.PRIZE_RAFFLE, data).toPromise();

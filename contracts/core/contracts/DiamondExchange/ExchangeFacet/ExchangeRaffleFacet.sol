@@ -19,7 +19,7 @@ import "../../Exchange/interfaces/IRaffle.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeRaffleFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId);
+  event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, uint256 index);
 
   constructor() SignatureValidator() {}
 
@@ -49,12 +49,15 @@ contract ExchangeRaffleFacet is SignatureValidator, AccessControlInternal, Pausa
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    (uint256 tokenId, uint256 roundId) = IRaffle(params.receiver).printTicket(params.externalId, _msgSender());
+    (uint256 tokenId, uint256 roundId, uint256 index) = IRaffle(params.receiver).printTicket(
+      params.externalId,
+      _msgSender()
+    );
 
     // set tokenID = ticketID
     item.tokenId = tokenId;
 
-    emit PurchaseRaffle(_msgSender(), params.externalId, item, price, roundId);
+    emit PurchaseRaffle(_msgSender(), params.externalId, item, price, roundId, index);
 
     //    _afterPurchase(params.referrer, ExchangeUtils._toArray(price));
   }

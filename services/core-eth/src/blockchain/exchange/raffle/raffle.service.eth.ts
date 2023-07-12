@@ -18,10 +18,10 @@ export class ExchangeRaffleServiceEth {
     private readonly notificatorService: NotificatorService,
   ) {}
 
-  // event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId);
+  // event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, uint256 index);
   public async purchaseRaffle(event: ILogEvent<IExchangePurchaseRaffleEvent>, context: Log): Promise<void> {
     const {
-      args: { item, price },
+      args: { item, price, index },
     } = event;
     const { address, transactionHash } = context;
 
@@ -46,6 +46,7 @@ export class ExchangeRaffleServiceEth {
     await this.notificatorService.purchaseRaffle({
       ...assets,
       address,
+      index,
       transactionHash,
     });
   }

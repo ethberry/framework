@@ -18,6 +18,7 @@ export interface IRaffleRoundStartedEvent {
 
 export interface IRaffleRoundFinalizedEvent {
   round: string;
+  prizeIndex: string;
   prizeNumber: string;
 }
 
