@@ -92,6 +92,7 @@ describe("Diamond Exchange Core", function () {
       signature,
       { value: toBigInt("123000000000000000"), gasLimit: 500000 },
     );
+
     await expect(tx1)
       .to.emit(exchangeInstance, "Purchase")
       .withArgs(

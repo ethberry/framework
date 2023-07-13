@@ -41,7 +41,6 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
 
     emit Mysterybox(_msgSender(), params.externalId, items, price);
 
-    // TODO use slice?
     Asset memory box = items[items.length - 1];
 
     // pop from array is not supported

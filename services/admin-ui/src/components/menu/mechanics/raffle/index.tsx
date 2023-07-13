@@ -6,7 +6,7 @@ import { IContract } from "@framework/types";
 
 import { RaffleRoundStartMenuItem } from "./round-start";
 import { RaffleRoundEndMenuItem } from "./round-end";
-import { RaffleScheduleMenuItem } from "./schedule";
+import { RaffleScheduleLightMenuItem } from "./schedule-light";
 
 export interface IRaffleActionsMenu {
   contract: IContract;
@@ -44,7 +44,7 @@ export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
       <Menu id="raffle-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <RaffleRoundStartMenuItem contract={contract} />
         <RaffleRoundEndMenuItem contract={contract} />
-        <RaffleScheduleMenuItem contract={contract} />
+        <RaffleScheduleLightMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

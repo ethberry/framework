@@ -6,7 +6,7 @@ import { IContract } from "@framework/types";
 
 import { LotteryRoundStartMenuItem } from "./round-start";
 import { LotteryRoundEndMenuItem } from "./round-end";
-import { LotteryScheduleMenuItem } from "./schedule";
+import { LotteryScheduleLightMenuItem } from "./schedule-light";
 
 export interface ILotteryActionsMenu {
   contract: IContract;
@@ -44,7 +44,7 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
       <Menu id="lottery-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <LotteryRoundStartMenuItem contract={contract} />
         <LotteryRoundEndMenuItem contract={contract} />
-        <LotteryScheduleMenuItem contract={contract} />
+        <LotteryScheduleLightMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

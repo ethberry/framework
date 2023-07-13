@@ -6,7 +6,7 @@ import { imageUrl, ns, testChainId } from "@framework/constants";
 export class SeedUser1563803000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || testChainId;
+    const chainId = BigInt(process.env.CHAIN_ID || testChainId);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.user (
@@ -37,7 +37,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'ACTIVE',
         '{SUPER,ADMIN,OWNER}',
         1,
-        '${chainId.toString() === testChainId.toString() ? wallets[0] : process.env.ACCOUNT}',
+        '${chainId === testChainId ? wallets[0] : process.env.ACCOUNT}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
