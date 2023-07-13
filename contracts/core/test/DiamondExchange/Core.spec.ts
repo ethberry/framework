@@ -42,7 +42,7 @@ describe("Diamond Exchange Core", function () {
     };
   };
 
-  it.only("should purchase", async function () {
+  it("should purchase", async function () {
     const [_owner, receiver] = await ethers.getSigners();
 
     const diamondInstance = await factory();
@@ -94,24 +94,25 @@ describe("Diamond Exchange Core", function () {
       signature,
       { value: toBigInt("123000000000000000"), gasLimit: 500000 },
     );
-    console.log("tx1.hash", tx1.hash);
-    // await expect(tx1).to.emit(exchangeInstance, "Purchase");
-    // .withArgs(
-    //   receiver.address,
-    //   externalId,
-    //   isEqualEventArgObj({
-    //     tokenType: "2",
-    //     token: await erc721Instance.getAddress(),
-    //     tokenId: toBigInt(tokenId),
-    //     amount: toBigInt(amount),
-    //   }),
-    //   isEqualEventArgArrObj({
-    //     tokenType: "0",
-    //     token: ZeroAddress,
-    //     tokenId: toBigInt("0"),
-    //     amount: toBigInt("123000000000000000"),
-    //   }),
-    // );
+
+    await expect(tx1)
+      .to.emit(exchangeInstance, "Purchase")
+      .withArgs(
+        receiver.address,
+        externalId,
+        isEqualEventArgObj({
+          tokenType: "2",
+          token: await erc721Instance.getAddress(),
+          tokenId: toBigInt(tokenId),
+          amount: toBigInt(amount),
+        }),
+        isEqualEventArgArrObj({
+          tokenType: "0",
+          token: ZeroAddress,
+          tokenId: toBigInt("0"),
+          amount: toBigInt("123000000000000000"),
+        }),
+      );
   });
 
   it("should fail: paused", async function () {

@@ -2,7 +2,7 @@ import { deployContract } from "@gemunion/contracts-mocks";
 import { shouldReceive } from "../shared/receive";
 import { shouldBehaveLikeTopUp } from "../shared/topUp";
 
-describe.only("TopUp", function () {
+describe("TopUp", function () {
   const factory = () => deployContract(this.title);
 
   shouldBehaveLikeTopUp(factory);
