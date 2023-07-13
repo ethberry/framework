@@ -71,10 +71,10 @@ import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 import ERC1155SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Soulbound.sol/ERC1155Soulbound.json";
 
-import MysteryBoxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxSimple.sol/ERC721MysteryBoxSimple.json";
-import MysteryBoxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklist.sol/ERC721MysteryBoxBlacklist.json";
-import MysteryBoxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxPausable.sol/ERC721MysteryBoxPausable.json";
-import MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MysteryBox/ERC721MysteryBoxBlacklistPausable.sol/ERC721MysteryBoxBlacklistPausable.json";
+import MysteryBoxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
+import MysteryBoxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
+import MysteryBoxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
+import MysteryBoxBlacklistPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklistPausable.sol/ERC721MysteryboxBlacklistPausable.json";
 
 import ERC721CSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CSimple.sol/ERC721CSimple.json";
 import ERC721CBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Collection/ERC721CBlacklist.sol/ERC721CBlacklist.json";
@@ -87,12 +87,23 @@ import PyramidReferralSol from "@framework/core-contracts/artifacts/contracts/Me
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
 // import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
-import RaffleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomBesu.sol/RaffleRandomBesu.json";
+import RaffleSol13378 from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomBesu.sol/RaffleRandomBesu.json";
+import RaffleSol13377 from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGemunion.sol/RaffleRandomGemunion.json";
+import RaffleSol5 from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomGoerli.sol/RaffleRandomGoerli.json";
+// eslint-disable-next-line import/no-duplicates
+import RaffleSol56 from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomBinance.sol/RaffleRandomBinance.json";
+// eslint-disable-next-line import/no-duplicates
+import RaffleSol97 from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/random/RaffleRandomBinance.sol/RaffleRandomBinance.json";
 import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 
-// TODO get contract by chainId
 // import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBesu.sol/LotteryRandomBesu.json";
+import LotterySol13378 from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBesu.sol/LotteryRandomBesu.json";
+import LotterySol13377 from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
+import LotterySol5 from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGoerli.sol/LotteryRandomGoerli.json";
+// eslint-disable-next-line import/no-duplicates
+import LotterySol56 from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBinance.sol/LotteryRandomBinance.json";
+// eslint-disable-next-line import/no-duplicates
+import LotterySol97 from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomBinance.sol/LotteryRandomBinance.json";
 import LotteryTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/ERC721LotteryTicket.sol/ERC721LotteryTicket.json";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -579,7 +590,7 @@ export class ContractManagerSignService {
   // MODULE:RAFFLE
   public async raffle(dto: IRaffleContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByRaffleContractTemplate(dto);
+    const bytecode = this.getBytecodeByRaffleContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.RAFFLE, null);
 
@@ -627,7 +638,7 @@ export class ContractManagerSignService {
   // MODULE:LOTTERY
   public async lottery(dto: ILotteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const bytecode = this.getBytecodeByLotteryContractTemplate(dto);
+    const bytecode = this.getBytecodeByLotteryContractTemplate(dto, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.LOTTERY, null);
 
@@ -904,12 +915,38 @@ export class ContractManagerSignService {
   }
 
   // MODULE:RAFFLE
-  public getBytecodeByRaffleContractTemplate(_dto: IRaffleContractDeployDto) {
-    return RaffleSol.bytecode;
+  public getBytecodeByRaffleContractTemplate(_dto: IRaffleContractDeployDto, chainId: number) {
+    switch (chainId) {
+      case 13378:
+        return RaffleSol13378.bytecode;
+      case 13377:
+        return RaffleSol13377.bytecode;
+      case 5:
+        return RaffleSol5.bytecode;
+      case 56:
+        return RaffleSol56.bytecode;
+      case 97:
+        return RaffleSol97.bytecode;
+      default:
+        throw new NotFoundException("chainNotFound");
+    }
   }
 
   // MODULE:LOTTERY
-  public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto) {
-    return LotterySol.bytecode;
+  public getBytecodeByLotteryContractTemplate(_dto: ILotteryContractDeployDto, chainId: number) {
+    switch (chainId) {
+      case 13378:
+        return LotterySol13378.bytecode;
+      case 13377:
+        return LotterySol13377.bytecode;
+      case 5:
+        return LotterySol5.bytecode;
+      case 56:
+        return LotterySol56.bytecode;
+      case 97:
+        return LotterySol97.bytecode;
+      default:
+        throw new NotFoundException("chainNotFound");
+    }
   }
 }

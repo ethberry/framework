@@ -92,11 +92,12 @@ describe("Factory Exchange Referral", function () {
 
       const tx1 = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: ZeroAddress,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: ZeroAddress,
         },
         {
           // ERC721
@@ -166,11 +167,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx1 = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: stranger.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: stranger.address,
         },
         {
           // ERC721
@@ -251,11 +253,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: receiver.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: receiver.address,
         },
         {
           // ERC721
@@ -322,11 +325,12 @@ describe("Factory Exchange Referral", function () {
 
       const tx1 = exchangeInstance.connect(stranger).purchase(
         {
-          nonce: nonce1,
           externalId: templateId,
           expiresAt: 0,
-          referrer: owner.address,
+          nonce: nonce1,
           extra,
+          receiver: ZeroAddress,
+          referrer: owner.address,
         },
         {
           // ERC721
@@ -400,11 +404,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx2 = exchangeInstance.connect(receiver).purchase(
         {
-          nonce: nonce2,
           externalId: templateId,
           expiresAt: 0,
-          referrer: stranger.address,
+          nonce: nonce2,
           extra,
+          receiver: ZeroAddress,
+          referrer: stranger.address,
         },
         {
           // ERC721
@@ -507,11 +512,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: receiver.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: receiver.address,
         },
         {
           // ERC721
@@ -577,11 +583,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx1 = exchangeInstance.connect(stranger).purchase(
         {
-          nonce: nonce1,
           externalId: templateId,
           expiresAt: 0,
-          referrer: owner.address,
+          nonce: nonce1,
           extra,
+          receiver: ZeroAddress,
+          referrer: owner.address,
         },
         {
           // ERC721
@@ -654,11 +661,12 @@ describe("Factory Exchange Referral", function () {
       });
       const tx2 = exchangeInstance.connect(receiver).purchase(
         {
-          nonce: nonce2,
           externalId: templateId,
           expiresAt: 0,
-          referrer: stranger.address,
+          nonce: nonce2,
           extra,
+          receiver: ZeroAddress,
+          referrer: stranger.address,
         },
         {
           // ERC721
@@ -766,11 +774,12 @@ describe("Factory Exchange Referral", function () {
 
       const tx = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: receiver.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: receiver.address,
         },
         {
           // ERC721
@@ -877,11 +886,12 @@ describe("Factory Exchange Referral", function () {
 
       const tx = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: receiver.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: receiver.address,
         },
         {
           // ERC721
@@ -996,11 +1006,12 @@ describe("Factory Exchange Referral", function () {
 
       const tx = exchangeInstance.connect(owner).purchase(
         {
-          nonce,
           externalId: templateId,
           expiresAt: 0,
-          referrer: receiver.address,
+          nonce,
           extra,
+          receiver: ZeroAddress,
+          referrer: receiver.address,
         },
         {
           // ERC721

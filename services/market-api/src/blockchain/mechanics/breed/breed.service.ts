@@ -101,11 +101,12 @@ export class BreedService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: encodedExternalId.toString(),
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       momTokenEntity.token,
       dadTokenEntity.token,

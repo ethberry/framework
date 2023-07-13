@@ -8,20 +8,20 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/IERC721MysteryBox.sol";
+import "./interfaces/IERC721Mysterybox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
 import "../../utils/TopUp.sol";
 
-contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
+contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, TopUp {
   using Counters for Counters.Counter;
 
   using Address for address;
 
   mapping(uint256 => Asset[]) internal _itemData;
 
-  event UnpackMysteryBox(address account, uint256 tokenId);
+  event UnpackMysterybox(address account, uint256 tokenId);
 
   constructor(
     string memory name,
@@ -54,7 +54,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   function unpack(uint256 tokenId) public {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
 
-    emit UnpackMysteryBox(_msgSender(), tokenId);
+    emit UnpackMysterybox(_msgSender(), tokenId);
 
     _burn(tokenId);
 

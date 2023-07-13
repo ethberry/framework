@@ -35,7 +35,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
-  event RoundFinalized(uint256 round, uint256 prizeNumber);
+  event RoundFinalized(uint256 round, uint256 prizeIndex, uint256 prizeNumber);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 roundId, uint256 ticketId, uint256 amount);
   event PaymentEthReceived(address from, uint256 amount);
@@ -48,7 +48,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     uint256 balance; // left after get prize
     uint256 total; // max money before
     //    Counters.Counter ticketCounter; // all round tickets counter
-    uint256[] tickets; // all round tickets
+    uint256[] tickets; // all round tickets ids
     uint256 prizeNumber; // prize number
     uint256 requestId;
     uint256 maxTicket;
@@ -79,7 +79,7 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   function printTicket(
     uint256 externalId,
     address account
-  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId) {
+  ) external onlyRole(MINTER_ROLE) whenNotPaused returns (uint256 tokenId, uint256 roundId, uint256 index) {
     // get current round
     roundId = _rounds.length - 1;
     Round storage currentRound = _rounds[roundId];
@@ -100,6 +100,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
     // TODO overflow check?
     currentRound.tickets.push(tokenId);
+
+    // serial number of ticket inside round
+    index = currentRound.tickets.length;
   }
 
   function startRound(Asset memory ticket, Asset memory price, uint256 maxTicket) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -200,14 +203,13 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     uint256 len = currentRound.tickets.length;
 
     // prizeNumber - tickets[index] or Zero if no tickets sold
-    if (len > 0) {}
     uint256 prizeIndex = len > 0 ? uint256(uint8(randomWords[0] % len)) : 0;
 
     // prizeNumber - winner's tokenId
     // Zero if no tickets sold
     currentRound.prizeNumber = len > 0 ? currentRound.tickets[prizeIndex] : 0;
 
-    emit RoundFinalized(currentRound.roundId, currentRound.prizeNumber /* ticket Id = ticket No*/);
+    emit RoundFinalized(currentRound.roundId, prizeIndex, currentRound.prizeNumber /* ticket Id = ticket No*/);
   }
 
   function getPrize(uint256 tokenId, uint256 roundId) external {

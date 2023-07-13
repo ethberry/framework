@@ -55,11 +55,12 @@ export class MarketplaceService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: templateEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: encodeBytes32String("0x"),
+        receiver: ZeroAddress,
+        referrer,
       },
       templateEntity,
     );

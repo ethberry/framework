@@ -40,9 +40,9 @@ describe("Diamond Exchange Claim", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
 
     return {
       generateOneToOneSignature,
@@ -145,6 +145,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -164,6 +165,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -389,6 +391,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt: 1,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -408,6 +411,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt: 1,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -500,6 +504,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -519,6 +524,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
+            receiver: ZeroAddress,
             referrer: ZeroAddress,
             extra,
           },
@@ -629,6 +635,7 @@ describe("Diamond Exchange Claim", function () {
         nonce,
         externalId,
         expiresAt,
+        receiver: ZeroAddress,
         referrer: ZeroAddress,
         extra,
       },
@@ -648,6 +655,7 @@ describe("Diamond Exchange Claim", function () {
         nonce,
         externalId,
         expiresAt,
+        receiver: ZeroAddress,
         referrer: ZeroAddress,
         extra,
       },

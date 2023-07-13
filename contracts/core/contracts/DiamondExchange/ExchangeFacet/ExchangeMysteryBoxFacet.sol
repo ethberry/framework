@@ -15,7 +15,7 @@ import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
-import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
+import "../../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
@@ -53,7 +53,7 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
       }
     }
 
-    IERC721MysteryBox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
+    IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
 
     //    _afterPurchase(params.referrer, price);
   }

@@ -27,11 +27,12 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     const params = {
-      nonce: utils.formatBytes32String("nonce"),
       externalId: rule.externalId,
       expiresAt: 0,
-      referrer: constants.AddressZero,
+      nonce: utils.formatBytes32String("nonce"),
       extra: utils.formatBytes32String("0x"),
+      receiver: constants.AddressZero,
+      referrer: constants.AddressZero,
     };
     return contract.deposit(params, values.tokenIds, {
       value: getEthPrice(rule.deposit),

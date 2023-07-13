@@ -24,7 +24,7 @@ import "../../Exchange/referral/LinearReferral.sol";
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../utils/errors.sol";
-import "../MysteryBox/interfaces/IERC721MysteryBox.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "./interfaces/IStaking.sol";
 
 /**
@@ -375,7 +375,7 @@ contract Staking is IStaking, AccessControl, Pausable, TopUp, Wallet, LinearRefe
       for (uint256 k = 0; k < multiplier; ) {
         if (IERC721GeneralizedCollection(rewardItem.token).supportsInterface(IERC721_MYSTERY_ID)) {
           // If the token supports the Mysterybox interface, call the mintBox function to mint the tokens and transfer them to the receiver.
-          IERC721MysteryBox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
+          IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content[itemIndex]);
         } else {
           // If the token does not support the Mysterybox interface, call the acquire function to mint NFTs to the receiver.
           ExchangeUtils.acquire(ExchangeUtils._toArray(rewardItem), receiver, _disabledTypes);

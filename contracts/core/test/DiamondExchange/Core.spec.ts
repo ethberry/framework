@@ -7,7 +7,6 @@ import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature 
 import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./fixture";
-import { blockAwait } from "@gemunion/contracts-utils";
 
 describe("Diamond Exchange Core", function () {
   const factory = async () =>
@@ -31,9 +30,9 @@ describe("Diamond Exchange Core", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
 
     return {
       generateOneToOneSignature,
@@ -74,8 +73,7 @@ describe("Diamond Exchange Core", function () {
       ],
     });
 
-    await blockAwait(2, 100);
-    const tx1 = await exchangeInstance.connect(receiver).purchase(
+    const tx1 = exchangeInstance.connect(receiver).purchase(
       params,
       {
         tokenType: 2,

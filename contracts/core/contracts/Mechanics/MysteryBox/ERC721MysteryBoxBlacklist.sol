@@ -8,15 +8,15 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
-import "./ERC721MysteryBoxSimple.sol";
+import "./ERC721MysteryboxSimple.sol";
 
-contract ERC721MysteryBoxBlacklist is ERC721MysteryBoxSimple, BlackList {
+contract ERC721MysteryboxBlacklist is ERC721MysteryboxSimple, BlackList {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721MysteryBoxSimple(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721MysteryboxSimple(name, symbol, royalty, baseTokenURI) {}
 
   function _beforeTokenTransfer(
     address from,
@@ -31,7 +31,7 @@ contract ERC721MysteryBoxBlacklist is ERC721MysteryBoxSimple, BlackList {
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC721MysteryBoxSimple) returns (bool) {
+  ) public view virtual override(AccessControl, ERC721MysteryboxSimple) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

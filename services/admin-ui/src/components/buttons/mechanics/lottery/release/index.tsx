@@ -32,16 +32,14 @@ export const LotteryReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
     };
   };
 
-  // TODO disabled by time lag?
-  // if (!round.numbers) {
-  //   return null;
-  // }
+  const timeAfterRound = Math.ceil((new Date().getTime() - new Date(round.endTimestamp).getTime()) / 1000);
+  const release = timeAfterRound >= Number(round.contract!.parameters.timeLagBeforeRelease);
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.release" })}>
       <IconButton
         onClick={handleRelease()}
-        disabled={!round.numbers || !round.endTimestamp /* || not yet time lag */}
+        disabled={!round.numbers || !round.endTimestamp || !release}
         data-testid="LotteryReleaseButton"
       >
         <Redeem />

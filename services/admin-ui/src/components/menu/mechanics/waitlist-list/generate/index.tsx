@@ -37,11 +37,12 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
     const contract = new Contract(result.contract.address, WaitListSetRewardABI, web3Context.provider?.getSigner());
 
     const params = {
-      nonce: constants.HashZero,
       externalId: id,
       expiresAt: 0,
-      referrer: constants.AddressZero,
+      nonce: constants.HashZero,
       extra: utils.arrayify(result.root),
+      receiver: constants.AddressZero,
+      referrer: constants.AddressZero,
     };
 
     return contract.setReward(

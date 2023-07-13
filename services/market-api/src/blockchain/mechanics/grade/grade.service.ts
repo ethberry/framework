@@ -104,11 +104,12 @@ export class GradeService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: gradeEntity.id,
         expiresAt,
-        referrer,
+        nonce,
         extra: zeroPadValue(toUtf8Bytes(attribute), 32),
+        receiver: ZeroAddress,
+        referrer,
       },
       attribute,
       tokenEntity,

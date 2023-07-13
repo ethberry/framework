@@ -169,7 +169,6 @@ export class ContractService {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
     }
 
-    // TODO fix search in array
     if (contractFeatures) {
       if (contractFeatures.length === 1) {
         queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
@@ -210,9 +209,7 @@ export class ContractService {
       queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
     }
 
-    // TODO fix search in array
     if (contractFeatures) {
-      // queryBuilder.andWhere("contract.contractFeatures = ANY(:...contractFeatures)", {
       queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", {
         contractFeatures,
       });

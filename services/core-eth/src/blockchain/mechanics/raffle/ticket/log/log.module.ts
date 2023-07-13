@@ -35,7 +35,6 @@ import { RaffleTicketLogService } from "./log.service";
             contractInterface: new Interface(RaffleTicketSol.abi),
             // prettier-ignore
             eventNames: [
-              // TODO add other events
               ContractEventType.Transfer,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,

@@ -30,11 +30,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         item: {
           tokenType: 2,
@@ -46,11 +47,12 @@ describe("ExchangeRentable", function () {
       });
       const tx1 = exchangeInstance.connect(receiver).lend(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         {
           tokenType: 2,
@@ -108,11 +110,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         item: {
           tokenType: 2,
@@ -132,11 +135,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lend(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         {
           tokenType: 2,
@@ -207,11 +211,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateOneToManySignature({
         account: stranger.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         item: {
           tokenType: 2,
@@ -231,11 +236,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lend(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         {
           tokenType: 2,
@@ -278,11 +284,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateOneToManySignature({
         account: owner.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         item: {
           tokenType: 2,
@@ -302,11 +309,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.lend(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         {
           tokenType: 2,
@@ -374,11 +382,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateOneToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         item: {
           tokenType: 2,
@@ -393,11 +402,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lend(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         {
           tokenType: 2,
@@ -433,11 +443,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [
           {
@@ -452,11 +463,12 @@ describe("ExchangeRentable", function () {
       });
       const tx1 = exchangeInstance.connect(receiver).lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [
           {
@@ -516,11 +528,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [
           {
@@ -542,11 +555,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [
           {
@@ -619,11 +633,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: stranger.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [
           {
@@ -645,11 +660,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [
           {
@@ -695,11 +711,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [],
         price: [
@@ -715,11 +732,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [],
         [
@@ -757,11 +775,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: owner.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [
           {
@@ -784,11 +803,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [
           {
@@ -860,11 +880,12 @@ describe("ExchangeRentable", function () {
       const signature = await generateManyToManySignature({
         account: receiver.address,
         params: {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         items: [
           {
@@ -882,11 +903,12 @@ describe("ExchangeRentable", function () {
 
       const tx1 = exchangeInstance.connect(receiver).lendMany(
         {
-          nonce,
           externalId /* lendType */,
           expiresAt,
-          referrer: stranger.address,
+          nonce,
           extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
         },
         [
           {

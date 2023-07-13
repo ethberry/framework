@@ -103,7 +103,7 @@ export class RaffleRoundServiceEth {
   public async finalize(event: ILogEvent<IRaffleRoundFinalizedEvent>, context: Log): Promise<void> {
     await this.eventHistoryService.updateHistory(event, context);
     const {
-      args: { round, prizeNumber },
+      args: { round, prizeNumber, prizeIndex },
     } = event;
     const { address } = context;
 
@@ -113,9 +113,15 @@ export class RaffleRoundServiceEth {
       throw new NotFoundException("roundNotFound");
     }
 
-    // TODO BigInt ?
     Object.assign(roundEntity, { number: Number(prizeNumber).toString() });
     await roundEntity.save();
+
+    // NOTIFY
+    await this.notificatorService.finalizeRaffle({
+      round: roundEntity,
+      prizeIndex,
+      prizeNumber,
+    });
   }
 
   public async end(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {

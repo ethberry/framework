@@ -24,11 +24,12 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
     // TODO pass real tokenId of selected ERC721 or ERC998
     const params = {
-      nonce: utils.formatBytes32String("nonce"),
       externalId: rule.externalId,
       expiresAt: 0,
-      referrer: constants.AddressZero,
+      nonce: utils.formatBytes32String("nonce"),
       extra: utils.formatBytes32String("0x"),
+      receiver: constants.AddressZero,
+      referrer: constants.AddressZero,
     };
     const tokenId = rule.deposit!.components[0].templateId; // for 1155
     return contract.deposit(params, [tokenId], {

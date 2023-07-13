@@ -71,7 +71,7 @@ export class VestingServiceEth {
   }
 
   public async ownershipChanged(event: ILogEvent<IOwnershipTransferredEvent>, context: Log): Promise<void> {
-    // event history processed by AccessControlServiceEth
+    // history processed by AccessControlServiceEth
     // await this.eventHistoryService.updateHistory(event, context);
     const {
       args: { newOwner, previousOwner },
@@ -83,7 +83,6 @@ export class VestingServiceEth {
       throw new NotFoundException("vestingNotFound");
     }
 
-    // TODO simplify?
     const vestingParams = vestingEntity.parameters;
     if (vestingParams.account && vestingParams.account === previousOwner.toLowerCase()) {
       Object.assign(vestingParams, { account: newOwner.toLowerCase() });

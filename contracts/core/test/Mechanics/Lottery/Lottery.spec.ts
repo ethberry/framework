@@ -5,22 +5,17 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl, shouldBehaveLikePausable } from "@gemunion/contracts-mocha";
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE, tokenName } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, extra, params, tokenId } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLottery } from "./fixture";
-import { wrapManyToManySignature } from "../../Exchange/shared/utils";
-import {
-  getBytesNumbersArr,
-  getNumbersBytes,
-  isEqualEventArgArrObj,
-  isEqualEventArgObj,
-  recursivelyDecodeResult,
-} from "../../utils";
+import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
+import { getBytesNumbersArr, getNumbersBytes, isEqualEventArgObj, recursivelyDecodeResult } from "../../utils";
 import { decodeMetadata } from "../../shared/metadata";
+import { deployDiamond } from "../../DiamondExchange/fixture";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -31,9 +26,24 @@ describe("Lottery", function () {
 
   const lotteryConfig = {
     timeLagBeforeRelease: 100, // production: release after 2592000 seconds = 30 days
-    maxTickets: 2, // production: 5000 (dev: 2)
     commission: 30, // lottery wallet gets 30% commission from each round balance
   };
+
+  const factoryDiamond = async () =>
+    deployDiamond(
+      "DiamondExchange",
+      [
+        "ExchangeLotteryFacet",
+        "PausableFacet",
+        "AccessControlFacet",
+        "WalletFacet", //
+      ],
+      "DiamondExchangeInit",
+      {
+        // log: true,
+        logSelectors: false, //
+      },
+    );
 
   const factory = () => deployLottery(lotteryConfig);
 
@@ -291,8 +301,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
@@ -325,64 +337,54 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
       const values = [1, 2, 3, 4, 5, 6];
       const ticketNumbers = getNumbersBytes(values);
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
           externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra: ticketNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
+      // externalId,
+      //   expiresAt,
+      //   nonce: encodeBytes32String("nonce"),
+      //   extra,
+      //   receiver: await lotteryInstance.getAddress(),
+      //   referrer: ZeroAddress,
       const tx0 = await exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce"),
           externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra: ticketNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2n,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -397,20 +399,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           externalId,
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -437,8 +431,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
@@ -471,40 +467,31 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
       const dbRoundId = 101;
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -512,23 +499,16 @@ describe("Lottery", function () {
           nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -542,20 +522,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           dbRoundId, // externalId: db roundId
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -596,8 +568,17 @@ describe("Lottery", function () {
       await time.advanceBlockTo(latest.add(web3.utils.toBN(lotteryConfig.timeLagBeforeRelease + 1)));
 
       const tx1 = lotteryInstance.releaseFunds(1);
-      await expect(tx1).to.emit(lotteryInstance, "Released").withArgs(1, amount);
-      await expect(tx1).changeTokenBalances(erc20Instance, [owner, lotteryInstance], [amount, -amount]);
+      await expect(tx1)
+        .to.emit(lotteryInstance, "Released")
+        .withArgs(1, amount - (amount / 100n) * BigInt(lotteryConfig.commission));
+      await expect(tx1).changeTokenBalances(
+        erc20Instance,
+        [owner, lotteryInstance],
+        [
+          amount - (amount / 100n) * BigInt(lotteryConfig.commission),
+          -(amount - (amount / 100n) * BigInt(lotteryConfig.commission)),
+        ],
+      );
     });
 
     it("should finish ETH round with 1 ticket and release funds", async function () {
@@ -605,8 +586,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await lotteryInstance.grantRole(MINTER_ROLE, exchangeInstance.getAddress());
       await erc721Instance.grantRole(MINTER_ROLE, lotteryInstance.getAddress());
@@ -637,43 +620,34 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
       const dbRoundId = 101;
       const values = [8, 5, 3, 2, 1, 0];
       const defNumbers = getNumbersBytes(values);
       console.info("defNumbers", defNumbers);
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra: defNumbers,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 0,
-            token: ZeroAddress,
-            tokenId: 0,
-            amount: WeiPerEther,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 0,
+          token: ZeroAddress,
+          tokenId: 0,
+          amount: WeiPerEther,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -681,23 +655,16 @@ describe("Lottery", function () {
           nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra: defNumbers,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 0,
           token: ZeroAddress,
@@ -713,20 +680,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           dbRoundId, // externalId: db roundId
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 0n,
             token: ZeroAddress,
@@ -778,8 +737,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount * 2n);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount * 2n);
@@ -814,40 +775,31 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
       const dbRoundId = 101;
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -855,23 +807,16 @@ describe("Lottery", function () {
           nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -885,20 +830,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           dbRoundId, // externalId: db roundId
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -987,8 +924,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount * 2n);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount * 2n);
@@ -1023,40 +962,31 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
       const dbRoundId = 101;
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
@@ -1064,23 +994,16 @@ describe("Lottery", function () {
           nonce: encodeBytes32String("nonce"),
           externalId: dbRoundId, // externalId: db roundId
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1094,20 +1017,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           dbRoundId, // externalId: db roundId
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -1191,8 +1106,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
@@ -1225,63 +1142,47 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce"),
-          externalId,
+          externalId, // wtf?
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1295,20 +1196,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           externalId,
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -1363,8 +1256,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount * 3n);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount * 3n);
@@ -1397,63 +1292,47 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce1"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0n,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0n,
-            amount: 0n,
-          },
-          {
-            tokenType: 2n,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0n,
-            amount: 1n,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1n,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0n,
-            amount: amount * 1n,
-          },
-        ],
+        item: {
+          tokenType: 2n,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0n,
+          amount: 1n,
+        },
+        price: {
+          tokenType: 1n,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0n,
+          amount: amount * 1n,
+        },
       });
 
       const tx0 = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce"),
           externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce1"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1467,20 +1346,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           externalId,
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -1492,60 +1363,44 @@ describe("Lottery", function () {
         );
       await expect(tx0).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
 
-      const signature1 = await generateManyToManySignature({
+      const signature1 = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce1"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
       const tx1 = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce1"),
+          nonce: encodeBytes32String("nonce2"),
           externalId,
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1559,20 +1414,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           externalId,
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 2n, // ticketId = 2
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 2n, // ticketId = 2
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),
@@ -1584,60 +1431,44 @@ describe("Lottery", function () {
         );
       await expect(tx1).changeTokenBalances(erc20Instance, [receiver, lotteryInstance], [-amount, amount]);
 
-      const signature2 = await generateManyToManySignature({
+      const signature2 = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce2"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce3"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
       const tx2 = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce2"),
+          nonce: encodeBytes32String("nonce3"),
           externalId,
           expiresAt,
+          receiver: await lotteryInstance.getAddress(),
           referrer: ZeroAddress,
           extra,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1654,8 +1485,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
@@ -1692,63 +1525,47 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce"),
           externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1858,8 +1675,10 @@ describe("Lottery", function () {
 
       const { lotteryInstance, erc20Instance, erc721Instance } = await factory();
 
-      const exchangeFactory = await ethers.getContractFactory("Exchange");
-      const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
+      const diamondInstance = await factoryDiamond();
+      const diamondAddress = await diamondInstance.getAddress();
+
+      const exchangeInstance = await ethers.getContractAt("ExchangeLotteryFacet", diamondAddress);
 
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(exchangeInstance.getAddress(), amount);
@@ -1896,63 +1715,47 @@ describe("Lottery", function () {
 
       // BUY TICKET @EXCHANGE
       const networkE = await ethers.provider.getNetwork();
-      const generateManyToManySignature = wrapManyToManySignature(networkE, exchangeInstance, owner);
+      const generateOneToOneSignature = wrapOneToOneSignature(networkE, exchangeInstance, "Exchange", owner);
 
-      const signature = await generateManyToManySignature({
+      const signature = await generateOneToOneSignature({
         account: receiver.address,
         params: {
-          nonce: encodeBytes32String("nonce"),
-          externalId, // wtf?
+          externalId,
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        items: [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
-        price: [
-          {
-            tokenType: 1,
-            token: await erc20Instance.getAddress(),
-            tokenId: 0,
-            amount,
-          },
-        ],
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
+        price: {
+          tokenType: 1,
+          token: await erc20Instance.getAddress(),
+          tokenId: 0,
+          amount,
+        },
       });
 
       const tx = exchangeInstance.connect(receiver).purchaseLottery(
         {
-          nonce: encodeBytes32String("nonce"),
-          externalId,
+          externalId, // wtf?
           expiresAt,
-          referrer: ZeroAddress,
+          nonce: encodeBytes32String("nonce2"),
           extra,
+          receiver: await lotteryInstance.getAddress(),
+          referrer: ZeroAddress,
         },
-        [
-          {
-            tokenType: 0,
-            token: await lotteryInstance.getAddress(),
-            tokenId: 0,
-            amount: 0,
-          },
-          {
-            tokenType: 2,
-            token: await erc721Instance.getAddress(),
-            tokenId: 0,
-            amount: 1,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId: 0,
+          amount: 1,
+        },
         {
           tokenType: 1,
           token: await erc20Instance.getAddress(),
@@ -1966,20 +1769,12 @@ describe("Lottery", function () {
         .withArgs(
           receiver.address,
           externalId,
-          isEqualEventArgArrObj(
-            {
-              tokenType: 0n,
-              token: await lotteryInstance.getAddress(),
-              tokenId: 0n,
-              amount: 0n,
-            },
-            {
-              tokenType: 2n,
-              token: await erc721Instance.getAddress(),
-              tokenId: 1n, // ticketId = 1
-              amount: 1n,
-            },
-          ),
+          isEqualEventArgObj({
+            tokenType: 2n,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1n, // ticketId = 1
+            amount: 1n,
+          }),
           isEqualEventArgObj({
             tokenType: 1n,
             token: await erc20Instance.getAddress(),

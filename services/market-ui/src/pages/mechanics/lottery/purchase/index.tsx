@@ -81,7 +81,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
                 round={lottery.round}
                 clearForm={clearForm}
                 ticketNumbers={ticketNumbers}
-                disabled={lottery.round.maxTickets <= lottery.count}
+                disabled={lottery.round.maxTickets > 0 && lottery.round.maxTickets <= lottery.count}
               />
             ) : null}
             {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
