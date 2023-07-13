@@ -51,6 +51,12 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           type: `${ns}.merchant_status_enum`,
         },
         {
+          name: "wallet",
+          type: "varchar",
+          isNullable: false, // always needed
+          isUnique: true,
+        },
+        {
           name: "social",
           type: "json",
           default: "'{}'",

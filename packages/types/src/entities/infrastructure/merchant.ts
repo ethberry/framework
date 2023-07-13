@@ -22,6 +22,7 @@ export interface IMerchant extends IIdDateBase {
   description: string;
   email: string;
   imageUrl: string;
+  wallet: string;
   merchantStatus: MerchantStatus;
   social: IMerchantSocial;
   ratePlan: RatePlanType;

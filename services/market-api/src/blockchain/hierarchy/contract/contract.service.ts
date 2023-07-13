@@ -33,6 +33,10 @@ export class ContractService {
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
+    // get merchant wallet
+    queryBuilder.leftJoin("contract.merchant", "merchant");
+    queryBuilder.addSelect(["merchant.id", "merchant.wallet"]);
+
     if (merchantId) {
       queryBuilder.andWhere("contract.merchantId = :merchantId", {
         merchantId,
