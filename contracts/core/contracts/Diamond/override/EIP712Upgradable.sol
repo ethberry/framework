@@ -65,7 +65,7 @@ abstract contract EIP712 is IERC5267 {
    */
   // constructor(string memory name, string memory version) {
   constructor() {
-    // todo use this variables in separate facet or pull all this variables in separate InitContract.abi
+    // TODO use this variables in separate facet or pull all this variables in separate InitContract.abi
     // Or also would need to create custom deploy function, for fixing this
     string memory name = "Exchange";
     string memory version = "1.0.0";

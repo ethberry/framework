@@ -48,6 +48,7 @@ export class BreedService {
           token: "breed.token",
           template: "token.template",
           contract: "template.contract",
+          merchant: "contract.merchant",
         },
       },
     });
@@ -105,7 +106,7 @@ export class BreedService {
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        receiver: momTokenEntity.token.template.contract.merchant.wallet,
         referrer,
       },
       momTokenEntity.token,

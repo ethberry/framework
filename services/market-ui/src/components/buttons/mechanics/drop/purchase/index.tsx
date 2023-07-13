@@ -32,7 +32,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: constants.AddressZero,
+          receiver: drop.merchant!.wallet,
           referrer: settings.getReferrer(),
         },
         drop.item?.components.sort(sorter("id")).map(component => ({

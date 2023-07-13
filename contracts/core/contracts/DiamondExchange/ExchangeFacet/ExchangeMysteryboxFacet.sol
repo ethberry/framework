@@ -18,7 +18,7 @@ import "../../Exchange/ExchangeUtils.sol";
 import "../../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
-contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeMysteryboxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}

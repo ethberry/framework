@@ -37,7 +37,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: constants.AddressZero,
+          receiver: mysterybox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
         [

@@ -214,6 +214,7 @@ export class TemplateService {
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     // get single token for ERC1155, to use in purchase
     queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {

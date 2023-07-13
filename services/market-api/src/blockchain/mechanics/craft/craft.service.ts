@@ -84,6 +84,7 @@ export class CraftService {
   public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
+    queryBuilder.leftJoinAndSelect("craft.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("craft.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
@@ -133,7 +134,7 @@ export class CraftService {
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        receiver: craftEntity.merchant.wallet,
         referrer,
       },
       craftEntity,

@@ -7,6 +7,7 @@ import type { ITemplate } from "./template";
 import type { IComposition } from "./composition";
 import { ModuleType } from "../../common";
 import { IRent } from "../mechanics/rent/rent";
+import { IMerchant } from "../../infrastructure";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -174,7 +175,6 @@ export enum ContractFeatures {
 }
 
 export interface IContract extends IDeployable, ISearchable {
-  merchantId: number;
   imageUrl: string;
   name: string;
   symbol: string;
@@ -193,4 +193,6 @@ export interface IContract extends IDeployable, ISearchable {
   parent?: Array<IComposition>;
   children?: Array<IComposition>;
   rent?: Array<IRent>;
+  merchantId: number;
+  merchant?: IMerchant;
 }

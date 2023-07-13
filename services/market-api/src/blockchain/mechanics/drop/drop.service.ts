@@ -74,6 +74,7 @@ export class DropService {
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<DropEntity | null> {
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
 
+    queryBuilder.leftJoinAndSelect("drop.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("drop.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
@@ -136,7 +137,7 @@ export class DropService {
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        receiver: dropEntity.merchant.wallet,
         referrer,
       },
       dropEntity,

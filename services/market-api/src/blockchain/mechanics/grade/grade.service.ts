@@ -51,6 +51,8 @@ export class GradeService {
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
     queryBuilder.leftJoinAndSelect("grade.price", "price");
+    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
@@ -108,7 +110,7 @@ export class GradeService {
         expiresAt,
         nonce,
         extra: zeroPadValue(toUtf8Bytes(attribute), 32),
-        receiver: ZeroAddress,
+        receiver: gradeEntity.contract.merchant.wallet,
         referrer,
       },
       attribute,

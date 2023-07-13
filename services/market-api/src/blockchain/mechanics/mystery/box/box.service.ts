@@ -125,6 +125,7 @@ export class MysteryBoxService {
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
     queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
 
     queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");

@@ -1,8 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { deployErc721Base } from "../Exchange/shared/fixture";
-import { amount, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { externalId, params, tokenId } from "../constants";
+import { amount, nonce, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
 import { Contract, toBigInt, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
@@ -56,7 +57,14 @@ describe("Diamond Exchange Core", function () {
 
     const signature = await generateOneToManySignature({
       account: receiver.address,
-      params,
+      params: {
+        externalId,
+        expiresAt,
+        nonce,
+        extra,
+        receiver: await exchangeInstance.getAddress(),
+        referrer: ZeroAddress,
+      },
       item: {
         tokenType: 2,
         token: await erc721Instance.getAddress(),
@@ -65,7 +73,7 @@ describe("Diamond Exchange Core", function () {
       },
       price: [
         {
-          amount: "123000000000000000",
+          amount,
           token: "0x0000000000000000000000000000000000000000",
           tokenId: "0",
           tokenType: 0,
@@ -74,7 +82,14 @@ describe("Diamond Exchange Core", function () {
     });
 
     const tx1 = exchangeInstance.connect(receiver).purchase(
-      params,
+      {
+        externalId,
+        expiresAt,
+        nonce,
+        extra,
+        receiver: await exchangeInstance.getAddress(),
+        referrer: ZeroAddress,
+      },
       {
         tokenType: 2,
         token: await erc721Instance.getAddress(),
@@ -83,14 +98,14 @@ describe("Diamond Exchange Core", function () {
       },
       [
         {
-          amount: "123000000000000000",
+          amount,
           token: "0x0000000000000000000000000000000000000000",
           tokenId: "0",
           tokenType: 0,
         },
       ],
       signature,
-      { value: toBigInt("123000000000000000"), gasLimit: 500000 },
+      { value: amount, gasLimit: 500000 },
     );
 
     await expect(tx1)
@@ -108,9 +123,80 @@ describe("Diamond Exchange Core", function () {
           tokenType: "0",
           token: ZeroAddress,
           tokenId: toBigInt("0"),
-          amount: toBigInt("123000000000000000"),
+          amount,
         }),
       );
+
+    await expect(tx1).to.changeEtherBalances([receiver, exchangeInstance], [-amount, amount]);
+  });
+
+  it("should fail: receiver not exist", async function () {
+    const [_owner, receiver] = await ethers.getSigners();
+
+    const diamondInstance = await factory();
+    const diamondAddress = await diamondInstance.getAddress();
+
+    const exchangeInstance = await ethers.getContractAt("ExchangePurchaseFacet", diamondAddress);
+    const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+    const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+    await erc721Instance.grantRole(MINTER_ROLE, diamondAddress);
+    await erc721Instance.grantRole(METADATA_ROLE, diamondAddress);
+
+    const signature = await generateOneToManySignature({
+      account: receiver.address,
+      params: {
+        externalId,
+        expiresAt,
+        nonce,
+        extra,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
+      },
+      item: {
+        tokenType: 2,
+        token: await erc721Instance.getAddress(),
+        tokenId,
+        amount,
+      },
+      price: [
+        {
+          amount,
+          token: "0x0000000000000000000000000000000000000000",
+          tokenId: "0",
+          tokenType: 0,
+        },
+      ],
+    });
+
+    const tx1 = exchangeInstance.connect(receiver).purchase(
+      {
+        externalId,
+        expiresAt,
+        nonce,
+        extra,
+        receiver: ZeroAddress,
+        referrer: ZeroAddress,
+      },
+      {
+        tokenType: 2,
+        token: await erc721Instance.getAddress(),
+        tokenId,
+        amount,
+      },
+      [
+        {
+          amount,
+          token: "0x0000000000000000000000000000000000000000",
+          tokenId: "0",
+          tokenType: 0,
+        },
+      ],
+      signature,
+      { value: amount, gasLimit: 500000 },
+    );
+
+    await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "NotExist");
   });
 
   it("should fail: paused", async function () {

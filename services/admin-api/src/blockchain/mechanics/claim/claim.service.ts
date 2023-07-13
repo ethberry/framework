@@ -161,7 +161,7 @@ export class ClaimService {
         expiresAt,
         nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
-        receiver: ZeroAddress,
+        receiver: claimEntity.merchant.wallet,
         referrer: ZeroAddress,
       },
       claimEntity,

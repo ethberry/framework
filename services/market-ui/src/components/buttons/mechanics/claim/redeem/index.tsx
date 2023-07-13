@@ -29,7 +29,7 @@ export const ClaimRedeemButton: FC<IClaimRedeemButtonProps> = props => {
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
         nonce: utils.arrayify(claim.nonce),
         extra: utils.hexZeroPad(utils.hexlify(Math.ceil(new Date(claim.endTimestamp).getTime() / 1000)), 32),
-        receiver: constants.AddressZero,
+        receiver: claim.merchant!.wallet,
         referrer: constants.AddressZero,
       },
       claim.item?.components.sort(sorter("id")).map(component => ({

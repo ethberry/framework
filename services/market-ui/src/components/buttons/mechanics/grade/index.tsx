@@ -57,7 +57,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
               expiresAt: sign.expiresAt,
               nonce: utils.arrayify(sign.nonce),
               extra: utils.hexZeroPad(utils.toUtf8Bytes(values.attribute), 32),
-              receiver: constants.AddressZero,
+              receiver: grade.contract!.merchant!.wallet,
               referrer: constants.AddressZero,
             },
             // ITEM

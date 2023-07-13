@@ -36,7 +36,7 @@ export class LotterySignService {
         externalId: lotteryRound.id,
         expiresAt,
         nonce,
-        extra: ticketNumbers,
+        extra: boolArrayToByte32(ticketNumbers),
         receiver: lotteryRound.contract.address,
         referrer,
       },

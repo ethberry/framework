@@ -6,15 +6,10 @@
 
 pragma solidity ^0.8.13;
 
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-// import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/ExchangeUtils.sol";
-
-//import "../../Exchange/interfaces/IAsset.sol";
 
 contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Purchase(address from, uint256 externalId, Asset item, Asset[] price);
@@ -32,7 +27,16 @@ contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, Pau
       revert SignerMissingRole();
     }
 
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    if (params.receiver == address(0)) {
+      revert NotExist();
+    }
+
+    ExchangeUtils.spendFrom(
+      price,
+      _msgSender(),
+      params.receiver,
+      DisabledTokenTypes(false, false, false, false, false)
+    );
 
     ExchangeUtils.acquire(
       ExchangeUtils._toArray(item),

@@ -48,7 +48,7 @@ export class MysterySignService {
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        receiver: mysteryboxEntity.template.contract.merchant.wallet,
         referrer,
       },
       mysteryboxEntity,

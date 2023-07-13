@@ -82,6 +82,7 @@ export class ClaimService {
       join: {
         alias: "claim",
         leftJoinAndSelect: {
+          merchant: "claim.merchant",
           item: "claim.item",
           item_components: "item.components",
           item_contract: "item_components.contract",
@@ -150,7 +151,7 @@ export class ClaimService {
         nonce,
         // @TODO fix to use expiresAt as extra, temporary set to empty
         extra: encodeBytes32String("0x"),
-        receiver: ZeroAddress,
+        receiver: claimEntity.merchant.wallet,
         referrer: ZeroAddress,
       },
 

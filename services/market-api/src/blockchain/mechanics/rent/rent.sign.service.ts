@@ -49,7 +49,7 @@ export class RentSignService {
         expiresAt, // sign expires
         nonce,
         extra: lendExpires,
-        receiver: ZeroAddress,
+        receiver: rentEntity.contract.merchant.wallet,
         referrer, // to
       },
       tokenEntity,

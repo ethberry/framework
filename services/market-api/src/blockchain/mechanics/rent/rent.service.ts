@@ -71,6 +71,7 @@ export class RentService {
   public findOneWithRelations(where: FindOptionsWhere<RentEntity>): Promise<RentEntity | null> {
     const queryBuilder = this.rentEntityRepository.createQueryBuilder("rent");
     queryBuilder.leftJoinAndSelect("rent.contract", "contract");
+    queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("rent.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
