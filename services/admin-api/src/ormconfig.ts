@@ -168,7 +168,6 @@ import {
   SeedBalanceErc721MysteryAt1563804020460,
   SeedBalanceErc721WrapperAt1563804020470,
   SeedBalanceErc998At1563804020440,
-  SeedBalanceExchangeAt1563804020402,
   SeedBalanceLotteryTicketAt1563804020480,
   SeedBalancePyramidAt1663047650530,
   SeedBalanceRaffleTicketAt1685961134480,
@@ -257,7 +256,6 @@ import {
   SeedEventHistoryVestingTransferOwnershipAt1687338973200,
   SeedEventHistoryWaitListAt1663047650350,
   SeedEventHistoryWaitListComponentsAt1663047650360,
-  SeedExchangePayees1663047650510,
   SeedGameBalance1686896594710,
   SeedGrade1657846587010,
   SeedLotteryRoundAt1660436476120,
@@ -469,7 +467,6 @@ const config: PostgresConnectionOptions = {
     SeedWrapperAt1563804000370,
 
     CreateBalance1563804000400,
-    SeedBalanceExchangeAt1563804020402,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc20UsdtAt1563804020421,
     SeedBalanceErc20WethAt1563804020422,
@@ -647,7 +644,6 @@ const config: PostgresConnectionOptions = {
     SeedAccessControlCollectionAt1679894502230,
 
     CreateWalletPayees1663047650500,
-    SeedExchangePayees1663047650510,
     SeedContractChainLinkAt1563804000105,
 
     CreateRent1678931845500,

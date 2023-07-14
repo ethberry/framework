@@ -10,7 +10,6 @@ import { AchievementsSection } from "./achievements";
 import { EcommerceSection } from "./ecommerce";
 
 import { MarketplaceSection } from "./exchange/marketplace";
-import { WalletSection } from "./exchange/wallet";
 
 import { AdminSection } from "./infrastructure";
 
@@ -77,7 +76,6 @@ export const Dashboard: FC = () => {
           <CoinGeckoSection />
           <CoinMarketCapSection />
           <MarketplaceSection />
-          <WalletSection />
           <EcommerceSection />
           <AchievementsSection />
           <AdminSection />

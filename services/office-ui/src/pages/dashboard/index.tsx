@@ -12,7 +12,6 @@ import { ClaimSection } from "./mechanics/claim";
 import { DropSection } from "./mechanics/drop";
 import { AdminSection } from "./infrastructure";
 import { MarketplaceSection } from "./exchange/marketplace";
-import { WalletSection } from "./exchange/wallet";
 import { PyramidSection } from "./mechanics/pyramid";
 import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
@@ -40,7 +39,6 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <MarketplaceSection />
-          <WalletSection />
           <AdminSection />
         </Grid>
       </Grid>
