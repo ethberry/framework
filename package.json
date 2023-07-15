@@ -9,7 +9,7 @@
     "nx": "15.8.9"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "4.0.2",
+    "@gemunion/eslint-config": "4.0.3",
     "@types/node": "18.16.19",
     "@types/react": "18.2.15",
     "@typescript-eslint/eslint-plugin": "6.0.0",
