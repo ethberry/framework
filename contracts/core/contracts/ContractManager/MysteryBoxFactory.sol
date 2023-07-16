@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "../utils/errors.sol";
 import "./AbstractFactory.sol";
 
-contract MysteryboxFactory is AbstractFactory {
+contract MysteryBoxFactory is AbstractFactory {
   bytes private constant MYSTERYBOX_ARGUMENTS_SIGNATURE =
     "MysteryArgs(string name,string symbol,uint96 royalty,string baseTokenURI,string contractTemplate)";
   bytes32 private constant MYSTERYBOX_ARGUMENTS_TYPEHASH = keccak256(MYSTERYBOX_ARGUMENTS_SIGNATURE);

@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
@@ -47,7 +47,7 @@ abstract contract ExchangeMystery is SignatureValidator, AccessControl, Pausable
       }
     }
 
-    IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
+    IERC721MysteryBox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
 
     _afterPurchase(params.referrer, price);
   }

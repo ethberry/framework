@@ -8,13 +8,13 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/IERC721Mysterybox.sol";
+import "./interfaces/IERC721MysteryBox.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
 import "../../utils/TopUp.sol";
 
-contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, TopUp {
+contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   using Counters for Counters.Counter;
 
   using Address for address;

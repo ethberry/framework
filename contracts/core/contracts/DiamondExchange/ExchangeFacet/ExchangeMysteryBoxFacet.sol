@@ -15,10 +15,10 @@ import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
-import "../../Mechanics/Mysterybox/interfaces/IERC721Mysterybox.sol";
+import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
-contract ExchangeMysteryboxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
+contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
@@ -53,7 +53,7 @@ contract ExchangeMysteryboxFacet is SignatureValidator, AccessControlInternal, P
       }
     }
 
-    IERC721Mysterybox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
+    IERC721MysteryBox(box.token).mintBox(_msgSender(), box.tokenId, mysteryItems);
 
     //    _afterPurchase(params.referrer, price);
   }
