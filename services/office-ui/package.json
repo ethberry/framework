@@ -65,7 +65,7 @@
     "@mui/x-license-pro": "6.0.4",
     "@observablehq/plot": "0.6.9",
     "@web3-react/core": "8.2.0",
-    "clsx": "1.2.1",
+    "clsx": "2.0.0",
     "csvtojson": "2.0.10",
     "date-fns": "2.30.0",
     "ethers": "5.7.2",
