@@ -15,7 +15,7 @@ import { WhitelistMenuItem } from "../../extensions/whitelist-add";
 import { UnWhitelistMenuItem } from "../../extensions/whitelist-remove";
 import { AllowanceMenuItem } from "./allowance";
 import { MintMenuItem } from "./mint";
-import { Erc20TokenSnapshotMenuItem } from "./snapshot";
+import { SnapshotMenuItem } from "./snapshot";
 
 export interface IContractActionsMenu {
   contract: IContract;
@@ -55,18 +55,17 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
 
-        <MintMenuItem contract={contract} />
-        <Erc20TokenSnapshotMenuItem contract={contract} />
-        <RoyaltyMenuItem contract={contract} />
-
         <BlacklistMenuItem contract={contract} />
         <UnBlacklistMenuItem contract={contract} />
-
         <WhitelistMenuItem contract={contract} />
         <UnWhitelistMenuItem contract={contract} />
 
+        <MintMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
+
+        <SnapshotMenuItem contract={contract} />
+        <RoyaltyMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );
