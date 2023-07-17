@@ -335,6 +335,7 @@
   },
   "form": {
     "buttons": {
+      "join": "Join",
       "GRADE": "Grade",
       "add": "Add",
       "allowance": "Allowance",

@@ -93,7 +93,7 @@ export const Order: FC = () => {
           />
         </Button>
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
-          <FormattedMessage id="form.buttons.add" />
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 

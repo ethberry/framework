@@ -38,7 +38,7 @@ export const WaitListItem: FC = () => {
 
       <PageHeader message="pages.waitlist.item.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WrapperCreateButton">
-          <FormattedMessage id="form.buttons.create" />
+          <FormattedMessage id="form.buttons.join" />
         </Button>
       </PageHeader>
 
