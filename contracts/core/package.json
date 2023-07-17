@@ -10,7 +10,7 @@
     "@framework/traits-api": "0.0.1",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/constants": "0.12.2",
+    "@gemunion/constants": "0.12.3",
     "@gemunion/contracts-access-list": "4.0.8",
     "@gemunion/contracts-chain-link-v2": "4.0.8",
     "@gemunion/contracts-constants": "4.0.8",
