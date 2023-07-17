@@ -8,7 +8,6 @@ export class CreateClaim1653616447810 implements MigrationInterface {
       CREATE TYPE ${ns}.claim_status_enum AS ENUM (
         'NEW',
         'REDEEMED',
-        'UNPACKED',
         'EXPIRED'
       );
     `);

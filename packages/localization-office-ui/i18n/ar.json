@@ -72,11 +72,6 @@
       "80001": "مومباي",
       "97": "بينانس (testnet)"
     },
-    "claimStatus": {
-      "NEW": "جديد",
-      "REDEEMED": "مخلص",
-      "UNPACKED": "غير معبأ"
-    },
     "durationUnit": {
       "DAY": "{count} {count، plural، =0 {يوم} one {يوم} other {يوم}}",
       "HOUR": "{count} {count، plural، =0 {ساعات} one {ساعة} other {ساعات}}",

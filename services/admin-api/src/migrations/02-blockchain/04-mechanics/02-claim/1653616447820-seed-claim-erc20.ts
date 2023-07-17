@@ -90,7 +90,7 @@ export class SeedClaimErc20At1653616447820 implements MigrationInterface {
         1010203,
         '${wallet}',
         102020203,
-        'UNPACKED',
+        'EXPIRED',
         '0xa5eb1c7f0edf69c9bdc89ef28773ecbeb44f0960d7c2d2b13741faee14f6f96931f5cc38d539de4ea48f55c78f4decc39f8d30df0ab21fc4100153c46010747b1c',
         '0x151aa8477d5770833002170e74834ce285adc242b33ffde12ad87d2a500cf369',
         '${zeroDateTime}',

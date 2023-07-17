@@ -11,13 +11,11 @@ import {
   Tooltip,
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
-
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
-
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";

@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination, Typography } from "@mui/material";
+import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
@@ -12,7 +12,6 @@ import { ClaimStatus, ClaimType } from "@framework/types";
 import { VestingDeployButton } from "../../../../components/buttons/mechanics/vesting/deploy";
 import { ClaimRedeemButton } from "../../../../components/buttons";
 import { ClaimSearchForm } from "./form";
-import { formatPrice } from "../../../../utils/money";
 
 export const Claim: FC = () => {
   const { account } = useWeb3React();
@@ -23,6 +22,7 @@ export const Claim: FC = () => {
       search: {
         account,
         claimStatus: [ClaimStatus.NEW],
+        claimType: [ClaimType.VESTING, ClaimType.TOKEN],
       },
     });
 
@@ -47,15 +47,8 @@ export const Claim: FC = () => {
           {rows.map((claim, i) => (
             <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimType}</ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
-                {claim.item.components.length === 1 ? claim.item.components[0]?.template?.title : "MULTIPLE"}
-              </ListItemText>
-              <ListItemText sx={{ width: 0.2 }}>
-                <Typography>{formatPrice(claim.item)}</Typography>
-              </ListItemText>
-              <ListItemText sx={{ width: 0.1 }}>
-                {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
-                {claim.parameters.cliffInMonth ? `Cliff: ${claim.parameters.cliffInMonth}` : ""}
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
+                {claim.item.components.map(component => component.template?.title).join(", ")}
               </ListItemText>
               <ListItemSecondaryAction>
                 {claim.claimType === ClaimType.TOKEN ? (

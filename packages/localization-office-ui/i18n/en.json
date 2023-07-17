@@ -87,8 +87,7 @@
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
-      "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked"
+      "REDEEMED": "Redeemed"
     },
     "contractFeatures": {
       "BLACKLIST": "Blacklist",

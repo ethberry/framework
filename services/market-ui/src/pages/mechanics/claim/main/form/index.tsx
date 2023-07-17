@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IClaimSearchDto } from "@framework/types";
-import { ClaimStatus } from "@framework/types";
+import { ClaimStatus, ClaimType } from "@framework/types";
 
 interface IClaimSearchFormProps {
   onSubmit: (values: IClaimSearchDto) => Promise<void>;
@@ -15,8 +15,8 @@ interface IClaimSearchFormProps {
 export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { account, claimStatus } = initialValues;
-  const fixedValues = { account, claimStatus };
+  const { account, claimStatus, claimType } = initialValues;
+  const fixedValues = { account, claimStatus, claimType };
 
   return (
     <FormWrapper
@@ -28,8 +28,11 @@ export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
     >
       <Collapse in={open}>
         <Grid container columnSpacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <SelectInput multiple name="claimStatus" options={ClaimStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="claimType" options={ClaimType} />
           </Grid>
         </Grid>
       </Collapse>

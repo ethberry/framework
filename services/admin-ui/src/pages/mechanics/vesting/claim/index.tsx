@@ -60,7 +60,7 @@ export const VestingClaim: FC = () => {
     },
     search: {
       account: "",
-      claimStatus: [],
+      claimStatus: [ClaimStatus.NEW],
     },
     filter: ({ item, parameters }) => ({
       parameters: {
@@ -98,9 +98,6 @@ export const VestingClaim: FC = () => {
               <ListItemText sx={{ width: 0.5 }}>
                 <AddressLink address={vesting.account as string} length={42} />
               </ListItemText>
-              <ListItemText sx={{ width: 0.1 }}>{vesting.parameters.cliffInMonth}</ListItemText>
-              <ListItemText sx={{ width: 0.05 }}>{vesting.parameters.monthlyRelease}</ListItemText>
-              <ListItemText sx={{ width: 0.1 }}>{vesting.claimStatus}</ListItemText>
               <ListItemSecondaryAction
                 sx={{
                   top: { xs: "80%", sm: "50%" },

@@ -85,11 +85,6 @@
       "80001": "مومباي",
       "97": "بينانس (testnet)"
     },
-    "claimStatus": {
-      "NEW": "جديد",
-      "REDEEMED": "مخلص",
-      "UNPACKED": "غير معبأ"
-    },
     "contractFeatures": {
       "BLACKLIST": "القائمة السوداء",
       "ERC1155OWNER": "ERC1155OWNER",

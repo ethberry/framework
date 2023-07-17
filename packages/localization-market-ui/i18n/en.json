@@ -103,8 +103,11 @@
     "claimStatus": {
       "EXPIRED": "Expired",
       "NEW": "New",
-      "REDEEMED": "Redeemed",
-      "UNPACKED": "Unpacked"
+      "REDEEMED": "Redeemed"
+    },
+    "claimType": {
+      "TOKEN": "Token",
+      "VESTING": "Vesting"
     },
     "durationUnit": {
       "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
@@ -382,6 +385,7 @@
     "labels": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
+      "claimType": "Type",
       "account": "Account",
       "achievementLevel": "Level to reach",
       "address": "Address",
