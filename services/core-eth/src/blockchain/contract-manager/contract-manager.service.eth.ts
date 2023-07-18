@@ -20,6 +20,7 @@ import type {
   IContractManagerRaffleDeployedEvent,
   IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
+  IContractManagerWaitListDeployedEvent,
 } from "@framework/types";
 
 import {
@@ -64,6 +65,7 @@ import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.servi
 import { decodeExternalId } from "../../common/utils";
 import { ClaimService } from "../mechanics/claim/claim.service";
 import { ChainLinkLogService } from "../integrations/chain-link/log/log.service";
+import { WaitListLogService } from "../mechanics/waitlist/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -90,6 +92,7 @@ export class ContractManagerServiceEth {
     private readonly lotteryLogService: LotteryLogService,
     private readonly lotteryTicketLogService: LotteryTicketLogService,
     private readonly raffleLogService: RaffleLogService,
+    private readonly waitListLogService: WaitListLogService,
     private readonly raffleTicketLogService: RaffleTicketLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
@@ -622,6 +625,33 @@ export class ContractManagerServiceEth {
 
     await this.chainLinkLogService.updateListener();
     this.raffleLogService.addListener({
+      address: [account.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async waitList(event: ILogEvent<IContractManagerWaitListDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { account, externalId },
+    } = event;
+
+    await this.eventHistoryService.updateHistory(event, ctx);
+
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+
+    await this.contractService.create({
+      address: account.toLowerCase(),
+      title: `${ModuleType.WAITLIST} (new)`,
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: [],
+      contractModule: ModuleType.WAITLIST,
+      chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+      merchantId: await this.getMerchantId(externalId),
+    });
+
+    this.waitListLogService.addListener({
       address: [account.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

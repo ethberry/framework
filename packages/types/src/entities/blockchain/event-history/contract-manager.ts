@@ -10,6 +10,7 @@ export enum ContractManagerEventType {
   StakingDeployed = "StakingDeployed",
   LotteryDeployed = "LotteryDeployed",
   RaffleDeployed = "RaffleDeployed",
+  WaitListDeployed = "WaitListDeployed",
 }
 
 // struct CollectionArgs {
@@ -207,6 +208,11 @@ export interface IContractManagerRaffleDeployedEvent {
   args: IRaffleDeployedEventArgs;
 }
 
+export interface IContractManagerWaitListDeployedEvent {
+  account: string;
+  externalId: number;
+}
+
 export type TContractManagerEventData =
   | IContractManagerVestingDeployedEvent
   | IContractManagerERC20TokenDeployedEvent
@@ -218,4 +224,5 @@ export type TContractManagerEventData =
   | IContractManagerStakingDeployedEvent
   | IContractManagerPyramidDeployedEvent
   | IContractManagerLotteryDeployedEvent
-  | IContractManagerRaffleDeployedEvent;
+  | IContractManagerRaffleDeployedEvent
+  | IContractManagerWaitListDeployedEvent;

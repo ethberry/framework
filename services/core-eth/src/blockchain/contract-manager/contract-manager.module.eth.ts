@@ -34,6 +34,7 @@ import { RaffleTicketLogModule } from "../mechanics/raffle/ticket/log/log.module
 import { LotteryTicketLogModule } from "../mechanics/lottery/ticket/log/log.module";
 import { ClaimModule } from "../mechanics/claim/claim.module";
 import { ChainLinkLogModule } from "../integrations/chain-link/log/log.module";
+import { WaitListLogModule } from "../mechanics/waitlist/log/log.module";
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { ChainLinkLogModule } from "../integrations/chain-link/log/log.module";
     LotteryLogModule,
     LotteryTicketLogModule,
     RaffleLogModule,
+    WaitListLogModule,
     RaffleTicketLogModule,
     ContractManagerLogModule,
     EventHistoryModule,
