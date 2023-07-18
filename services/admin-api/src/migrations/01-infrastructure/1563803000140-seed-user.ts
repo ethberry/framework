@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
-import { imageUrl, ns, testChainId } from "@framework/constants";
+import { avatarUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedUser1563803000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -29,7 +29,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'trejgun@gmail.com',
         'bPTD3jSwxTdqHWvlG0ek2WbHPJd2',
         'Trej Gun',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
@@ -69,7 +69,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'trejgun@gemunion.io',
         'ia31Zjm8NUTstqI3Ug9mbHtiVbH2',
         'CTAPbIu_MABP',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
@@ -85,7 +85,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'meowdao@gmail.com',
         's1dBg1j0WtOyRutwwJfCSBLurqi2',
         'Meow Dao',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
@@ -101,7 +101,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test1@gemunion.io',
         'qwerty',
         'Yuri',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
@@ -117,7 +117,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test2@gemunion.io',
         'qwerty',
         'Arthur',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
@@ -133,7 +133,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test3@gemunion.io',
         'qwerty',
         'Jenya',
-        '${imageUrl}',
+        '${avatarUrl}',
         'EN',
         'US',
         'MALE',
