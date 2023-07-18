@@ -325,14 +325,6 @@
       "INACTIVE": "Inactive"
     }
   },
-  "errors": {
-    "access-denied": "Access Denied",
-    "internal-server-error": "Server Error",
-    "page-not-found": "Page Not Found",
-    "service-unavailable": "Service Unavailable",
-    "uncaughtError": "Uncaught error happened",
-    "unknown": "Unknown Error"
-  },
   "form": {
     "buttons": {
       "join": "Join",
@@ -568,6 +560,7 @@
     }
   },
   "messages": {
+    "uncaughtError": "Uncaught error happened",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"
   },

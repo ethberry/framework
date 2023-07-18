@@ -485,10 +485,6 @@
       "INACTIVE": "Inactive"
     }
   },
-  "errors": {
-    "page-not-found": "Page Not Found",
-    "uncaughtError": "Uncaught error happened"
-  },
   "form": {
     "adornment": {
       "days": "days",

@@ -207,9 +207,6 @@
       "INACTIVE": "غير نشط"
     }
   },
-  "errors": {
-    "page-not-found": "الصفحة غير موجودة"
-  },
   "form": {
     "adornment": {
       "days": "أيام",

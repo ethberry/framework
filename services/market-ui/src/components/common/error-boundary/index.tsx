@@ -48,7 +48,7 @@ class ErrorBoundary extends Component<IProps, IState> {
               </IconButton>
             }
           >
-            <FormattedMessage id="errors.uncaughtError" />
+            <FormattedMessage id="messages.uncaughtError" />
           </Alert>
           {process.env.NODE_ENV !== "production" ? (
             <Box>

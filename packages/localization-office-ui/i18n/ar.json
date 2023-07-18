@@ -124,10 +124,6 @@
     }
   },
   "errors": {
-    "access-denied": "تم الرفض",
-    "internal-server-error": "خطأ في الخادم",
-    "page-not-found": "الصفحة غير موجودة",
-    "service-unavailable": "الخدمة غير متوفرة",
     "unknown": "خطأ غير معروف"
   },
   "form": {
