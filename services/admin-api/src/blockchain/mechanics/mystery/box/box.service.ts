@@ -93,6 +93,10 @@ export class MysteryBoxService {
       }
     }
 
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });

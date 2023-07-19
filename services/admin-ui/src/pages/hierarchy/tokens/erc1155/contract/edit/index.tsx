@@ -21,8 +21,18 @@ export interface IErc1155ContractEditDialogProps {
 export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, address, contractStatus, baseTokenURI, chainId, contractFeatures } =
-    initialValues;
+  const {
+    id,
+    title,
+    description,
+    imageUrl,
+    address,
+    contractStatus,
+    baseTokenURI,
+    royalty,
+    chainId,
+    contractFeatures,
+  } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -43,6 +53,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
         <BlockchainInfoPopover
           address={address}
           baseTokenURI={baseTokenURI}
+          royalty={`${royalty / 100}%`}
           chainId={chainId}
           contractFeatures={contractFeatures}
         />

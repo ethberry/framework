@@ -65,7 +65,7 @@ export class SeedMysteryBoxMixedAt1653616447970 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Mixed Mysterybox',
+        'Mixed Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102120401,

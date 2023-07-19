@@ -70,7 +70,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Sword Mystery box',
+        'Sword Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102120101,
@@ -79,7 +79,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Sword Mystery box (inactive)',
+        'Sword Mystery Box (inactive)',
         '${simpleFormatting}',
         '${imageUrl}',
         102120102,
@@ -88,7 +88,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Trousers Loot bob',
+        'Trousers Loot Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102128002,
@@ -97,7 +97,7 @@ export class SeedMysteryBoxErc721At1653616447930 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Mystery box (BEP)',
+        'Mystery Box (BEP)',
         '${simpleFormatting}',
         '${imageUrl}',
         202120101,

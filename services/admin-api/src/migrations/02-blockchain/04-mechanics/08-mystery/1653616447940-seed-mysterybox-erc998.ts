@@ -46,7 +46,7 @@ export class SeedMysteryBoxErc998At1653616447940 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Warrior Mysterybox',
+        'Warrior Mystery Box',
         '${simpleFormatting}',
         '${imageUrl}',
         102120201,
