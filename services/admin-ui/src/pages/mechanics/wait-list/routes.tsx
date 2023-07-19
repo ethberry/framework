@@ -10,7 +10,7 @@ import { WaitListContracts } from "./contract";
 
 export const waitlistRoutes: Array<RouteObject> = [
   {
-    path: "/waitlist",
+    path: "/wait-list",
     children: [
       {
         index: true,
