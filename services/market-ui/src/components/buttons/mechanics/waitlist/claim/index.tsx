@@ -44,7 +44,7 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.waitlist" })}>
+    <Tooltip title={formatMessage({ id: "form.tips.claim" })}>
       <IconButton onClick={handleClick} data-testid="ClaimWaitListButton">
         <Redeem />
       </IconButton>

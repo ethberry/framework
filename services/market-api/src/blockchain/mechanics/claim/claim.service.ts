@@ -5,8 +5,8 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import { ClaimStatus, TokenType } from "@framework/types";
 
 import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -22,7 +22,7 @@ export class ClaimService {
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, account, claimStatus, templateIds } = dto;
+    const { skip, take, account, claimStatus, claimType } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
@@ -50,13 +50,11 @@ export class ClaimService {
       }
     }
 
-    if (templateIds) {
-      if (templateIds.length === 1) {
-        queryBuilder.andWhere("claim.templateId = :templateId", {
-          templateId: templateIds[0],
-        });
+    if (claimType) {
+      if (claimType.length === 1) {
+        queryBuilder.andWhere("claim.claimType = :claimType", { claimType: claimType[0] });
       } else {
-        queryBuilder.andWhere("claim.templateId IN(:...templateIds)", { templateIds });
+        queryBuilder.andWhere("claim.claimType IN(:...claimType)", { claimType });
       }
     }
 

@@ -19,9 +19,9 @@ import { ClaimStatus, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 import type { IClaimRow, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
-import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ClaimService {

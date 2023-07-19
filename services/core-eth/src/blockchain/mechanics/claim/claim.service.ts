@@ -2,8 +2,9 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ClaimEntity } from "./claim.entity";
 import { ClaimStatus } from "@framework/types";
+
+import { ClaimEntity } from "./claim.entity";
 
 @Injectable()
 export class ClaimService {

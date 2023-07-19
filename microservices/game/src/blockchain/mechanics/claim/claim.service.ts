@@ -13,8 +13,8 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
-import type { IClaimCreateDto, IClaimUpdateDto } from "@framework/types";
-import { ClaimStatus, TokenType } from "@framework/types";
+import type { IClaimCreateDto, IClaimSearchDto, IClaimUpdateDto } from "@framework/types";
+import { ClaimStatus, ClaimType, TokenType } from "@framework/types";
 
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
@@ -30,6 +30,56 @@ export class ClaimService {
     protected readonly assetService: AssetService,
     private readonly signerService: SignerService,
   ) {}
+
+  public async search(dto: IClaimSearchDto, merchantEntity: MerchantEntity): Promise<[Array<ClaimEntity>, number]> {
+    const { account, claimStatus, claimType, skip, take } = dto;
+
+    const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
+
+    queryBuilder.leftJoinAndSelect("claim.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("claim.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
+    queryBuilder.andWhere("claim.claimType = :claimType", {
+      claimType: ClaimType.TOKEN,
+    });
+
+    if (account) {
+      queryBuilder.andWhere("claim.account ILIKE '%' || :account || '%'", { account });
+    }
+
+    if (claimStatus) {
+      if (claimStatus.length === 1) {
+        queryBuilder.andWhere("claim.claimStatus = :claimStatus", { claimStatus: claimStatus[0] });
+      } else {
+        queryBuilder.andWhere("claim.claimStatus IN(:...claimStatus)", { claimStatus });
+      }
+    }
+
+    if (claimType) {
+      if (claimType.length === 1) {
+        queryBuilder.andWhere("claim.claimType = :claimType", { claimType: claimType[0] });
+      } else {
+        queryBuilder.andWhere("claim.claimType IN(:...claimType)", { claimType });
+      }
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "claim.createdAt": "ASC",
+    });
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public findOne(
     where: FindOptionsWhere<ClaimEntity>,

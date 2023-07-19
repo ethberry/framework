@@ -540,7 +540,7 @@
       "transfer": "Transfer",
       "transferOwnership": "Transfer ownership",
       "view": "View",
-      "waitlist": "Waitlist"
+      "claim": "Claim"
     },
     "validations": {
       "badInput": "{label} is invalid",

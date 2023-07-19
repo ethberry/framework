@@ -35,7 +35,7 @@ export class ClaimService {
     private readonly contractService: ContractService,
   ) {}
 
-  public async search(dto: Partial<IClaimSearchDto>, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
+  public async search(dto: IClaimSearchDto, userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     const { account, claimStatus, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");

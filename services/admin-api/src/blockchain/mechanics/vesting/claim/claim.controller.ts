@@ -19,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
 import { VestingClaimService } from "./claim.service";
-import { VestingClaimCreateDto, ClaimTokenSearchDto, VestingClaimUpdateDto, VestingClaimUploadDto } from "./dto";
+import { ClaimSearchDto, VestingClaimCreateDto, VestingClaimUpdateDto, VestingClaimUploadDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/vesting/claims")
@@ -28,10 +28,7 @@ export class VestingClaimController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(
-    @Query() dto: ClaimTokenSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<[Array<ClaimEntity>, number]> {
+  public search(@Query() dto: ClaimSearchDto, @User() userEntity: UserEntity): Promise<[Array<ClaimEntity>, number]> {
     return this.vestingClaimService.search(dto, userEntity);
   }
 
