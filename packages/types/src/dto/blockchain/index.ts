@@ -51,11 +51,11 @@ export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
 export * from "./mechanics/vesting/upload";
 
-export * from "./mechanics/waitlist/item/create";
-export * from "./mechanics/waitlist/item/search";
-export * from "./mechanics/waitlist/list/create";
-export * from "./mechanics/waitlist/list/update";
-export * from "./mechanics/waitlist/deploy";
+export * from "./mechanics/wait-list/item/create";
+export * from "./mechanics/wait-list/item/search";
+export * from "./mechanics/wait-list/list/create";
+export * from "./mechanics/wait-list/list/update";
+export * from "./mechanics/wait-list/deploy";
 
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/chart";

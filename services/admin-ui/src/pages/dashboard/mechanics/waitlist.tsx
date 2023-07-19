@@ -15,7 +15,7 @@ export const WaitListSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/waitlist/contracts">
+        <ListItem button component={RouterLink} to="/wait-list/contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
@@ -23,7 +23,7 @@ export const WaitListSection: FC = () => {
             <FormattedMessage id="pages.waitlist.contracts.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/waitlist/list">
+        <ListItem button component={RouterLink} to="/wait-list/list">
           <ListItemIcon>
             <HourglassBottom />
           </ListItemIcon>
@@ -31,7 +31,7 @@ export const WaitListSection: FC = () => {
             <FormattedMessage id="pages.waitlist.list.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/waitlist/item">
+        <ListItem button component={RouterLink} to="/wait-list/item">
           <ListItemIcon>
             <Person />
           </ListItemIcon>

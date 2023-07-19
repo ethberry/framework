@@ -13,7 +13,7 @@ import { RaffleModule } from "./raffle/raffle.module";
 import { RentModule } from "./rent/rent.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
-import { WaitListModule } from "./waitlist/waitlist.module";
+import { WaitListModule } from "./wait-list/waitlist.module";
 
 @Module({
   imports: [

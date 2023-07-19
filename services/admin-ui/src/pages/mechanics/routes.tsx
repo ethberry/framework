@@ -14,7 +14,7 @@ import { raffleRoutes } from "./raffle/routes";
 import { rentingRoutes } from "./rent/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
-import { waitlistRoutes } from "./waitlist/routes";
+import { waitlistRoutes } from "./wait-list/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...breedRoutes,

@@ -9,7 +9,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IWaitListList, TokenType } from "@framework/types";
 
-import WaitListSetRewardABI from "../../../../../abis/mechanics/waitlist/list/setReward.abi.json";
+import WaitListSetRewardABI from "../../../../../abis/mechanics/wait-list/list/setReward.abi.json";
 
 export interface IGenerateMenuItemProps {
   waitListList: IWaitListList;
@@ -23,7 +23,7 @@ export const GenerateMenuItem: FC<IGenerateMenuItemProps> = props => {
   const { fn } = useApiCall(
     async (api, values) => {
       return api.fetchJson({
-        url: `/waitlist/list/generate`,
+        url: `/wait-list/list/generate`,
         method: "POST",
         data: {
           listId: values,

@@ -27,5 +27,5 @@ export * from "./mechanics/staking/reward-complex";
 export * from "./mechanics/grade";
 export * from "./mechanics/vesting/release";
 export * from "./mechanics/vesting/releasable";
-export * from "./mechanics/waitlist/claim";
+export * from "./mechanics/wait-list/claim";
 export * from "./mechanics/wrapper/unpack";

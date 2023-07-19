@@ -51,8 +51,8 @@ import { RaffleRoundEntity } from "./blockchain/mechanics/raffle/round/round.ent
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
-import { WaitListListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
-import { WaitListItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { WaitListListEntity } from "./blockchain/mechanics/wait-list/list/list.entity";
+import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { RentEntity } from "./blockchain/mechanics/rent/rent.entity";
 /* ecommerce */

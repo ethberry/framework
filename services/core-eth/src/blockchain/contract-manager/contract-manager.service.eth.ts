@@ -65,7 +65,7 @@ import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.servi
 import { decodeExternalId } from "../../common/utils";
 import { ClaimService } from "../mechanics/claim/claim.service";
 import { ChainLinkLogService } from "../integrations/chain-link/log/log.service";
-import { WaitListLogService } from "../mechanics/waitlist/log/log.service";
+import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {

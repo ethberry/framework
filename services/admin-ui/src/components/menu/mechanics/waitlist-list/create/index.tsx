@@ -6,7 +6,7 @@ import { Add } from "@mui/icons-material";
 import { useApiCall } from "@gemunion/react-hooks";
 import type { IWaitListItem, IWaitListItemCreateDto, IWaitListList } from "@framework/types";
 
-import { WaitListItemEditDialog } from "../../../../../pages/mechanics/waitlist/item/edit";
+import { WaitListItemEditDialog } from "../../../../../pages/mechanics/wait-list/item/edit";
 
 export interface IMintMenuItemProps {
   waitListList: IWaitListList;
@@ -22,7 +22,7 @@ export const CreateMenuItem: FC<IMintMenuItemProps> = props => {
   const { fn } = useApiCall((api, values: IWaitListItemCreateDto) => {
     const { account, listId } = values;
     return api.fetchJson({
-      url: "/waitlist/item",
+      url: "/wait-list/item",
       data: { account, listId },
       method: "POST",
     });

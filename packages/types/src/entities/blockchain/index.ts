@@ -36,8 +36,8 @@ export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/vesting";
-export * from "./mechanics/waitlist/list";
-export * from "./mechanics/waitlist/item";
+export * from "./mechanics/wait-list/list";
+export * from "./mechanics/wait-list/item";
 
 export * from "./mechanics/referral/leaderboard";
 export * from "./mechanics/referral/reward";

@@ -15,7 +15,7 @@ export const WaitListSection: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/waitlist/item">
+        <ListItem button component={RouterLink} to="/wait-list/item">
           <ListItemIcon>
             <TimerOutlined />
           </ListItemIcon>

@@ -23,7 +23,7 @@ export const UploadMenuItem: FC<IMintMenuItemProps> = props => {
   const { fn, isLoading } = useApiCall((api, values: IWaitListUploadDto) => {
     const { items, listId } = values;
     return api.fetchJson({
-      url: "/waitlist/list/upload",
+      url: "/wait-list/list/upload",
       data: {
         listId,
         items: items.map(({ id: _id, ...rest }) => rest),
