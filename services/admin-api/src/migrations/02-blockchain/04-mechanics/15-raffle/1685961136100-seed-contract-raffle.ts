@@ -51,10 +51,9 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
             commission: "30",
             schedule: CronExpression.EVERY_WEEKEND,
           })}',
-
           'ACTIVE',
           null,
-          '{RANDOM, ALLOWANCE}',
+          '{RANDOM,ALLOWANCE,PAUSABLE}',
           'RAFFLE',
           '${fromBlock}',
           1,

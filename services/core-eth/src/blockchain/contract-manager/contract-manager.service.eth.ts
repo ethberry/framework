@@ -611,7 +611,7 @@ export class ContractManagerServiceEth {
         commission,
       },
       imageUrl,
-      contractFeatures: [ContractFeatures.RANDOM],
+      contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.RAFFLE,
       chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),

@@ -17,6 +17,8 @@ export interface IErc721ContractDeployDialogProps {
 export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const { contractTemplate } = initialValues;
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -25,7 +27,12 @@ export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = 
       testId="Erc721ContractDeployForm"
       {...rest}
     >
-      <SelectInput name="contractTemplate" options={Erc721ContractTemplates} />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc721ContractTemplates}
+        readOnly={contractTemplate !== Erc721ContractTemplates.SIMPLE}
+        disabledOptions={[Erc721ContractTemplates.RAFFLE, Erc721ContractTemplates.LOTTERY]}
+      />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

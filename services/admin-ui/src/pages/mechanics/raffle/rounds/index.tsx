@@ -8,7 +8,6 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IRaffleRound } from "@framework/types";
 
 import { RaffleRoundViewDialog } from "./view";
-import { CronExpression } from "@framework/types";
 import { RaffleReleaseButton } from "../../../../components/buttons/mechanics/raffle/release";
 
 export const RaffleRounds: FC = () => {
@@ -43,15 +42,6 @@ export const RaffleRounds: FC = () => {
               <ListItemText sx={{ width: 0.2 }}>{round.contract?.title}</ListItemText>
               <ListItemText sx={{ width: 0.6 }}>
                 {round.roundId} - {round.number || "awaiting results"}
-              </ListItemText>
-              <ListItemText sx={{ width: 0.3 }}>
-                {round.contract?.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(
-                        round.contract?.parameters.schedule as unknown as CronExpression,
-                      )
-                    ]
-                  : ""}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>

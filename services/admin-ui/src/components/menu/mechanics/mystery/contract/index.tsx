@@ -1,5 +1,5 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
@@ -55,17 +55,19 @@ export const MysteryActionsMenu: FC<IMysteryActionsMenu> = props => {
         <ContractGrantRoleMenuItem contract={contract} />
         <ContractRevokeRoleMenuItem contract={contract} />
         <ContractRenounceRoleMenuItem contract={contract} />
-        <MintMenuItem contract={contract} />
-        <AllowanceMenuItem contract={contract} />
-        <RoyaltyMenuItem contract={contract} />
-        <TransferMenuItem contract={contract} />
-
-        <PauseMenuItem contract={contract} />
-        <UnPauseMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
         <BlacklistMenuItem contract={contract} />
         <UnBlacklistMenuItem contract={contract} />
         <WhitelistMenuItem contract={contract} />
         <UnWhitelistMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <PauseMenuItem contract={contract} />
+        <UnPauseMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <MintMenuItem contract={contract} />
+        <AllowanceMenuItem contract={contract} />
+        <RoyaltyMenuItem contract={contract} />
+        <TransferMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );
