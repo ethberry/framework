@@ -139,7 +139,7 @@
     "webpackbar": "5.0.2"
   },
   "engines": {
-    "node": ">=12.13"
+    "node": ">=18"
   },
   "license": "UNLICENSED",
   "main": "./dist/main.js",
