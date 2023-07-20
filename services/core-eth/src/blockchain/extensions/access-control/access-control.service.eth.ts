@@ -64,7 +64,7 @@ export class AccessControlServiceEth {
       ],
     });
 
-    if (role === AccessControlRoleHash.MINTER_ROLE) {
+    if (role === AccessControlRoleHash.MINTER_ROLE.toString()) {
       const systemContractEntity = await this.contractService.findOne({ address: account.toLowerCase() });
       if (!systemContractEntity) {
         throw new NotFoundException("contractNotFound");
@@ -80,7 +80,7 @@ export class AccessControlServiceEth {
         await contractEntity.save();
       }
     }
-    // TODO disable grade somehow if MinterRole revoked?
+    // TODO somehow disable grade buttons if MinterRole revoked - add checkRole endpoint
   }
 
   public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {

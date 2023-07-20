@@ -67,13 +67,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         onCancel={handleDepositCancel}
         open={isDepositDialogOpen}
         initialValues={{
-          // tokenId: 0,
           tokenIds: [0],
-          // token: {
-          //   tokenId: "0",
-          // },
-          // templateId: rule.deposit!.components[0].templateId,
-          // contractId: rule.deposit!.components[0].contractId,
           deposit: rule.deposit!.components,
         }}
       />

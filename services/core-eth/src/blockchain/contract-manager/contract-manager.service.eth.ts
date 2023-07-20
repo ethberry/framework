@@ -305,8 +305,7 @@ export class ContractManagerServiceEth {
       templateStatus: TemplateStatus.INACTIVE,
     });
 
-    // TODO add options to set naming scheme ?
-    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "");
+    const imgUrl = this.configService.get<string>("TOKEN_IMG_URL", "$url/collection");
 
     const currentDateTime = new Date().toISOString();
     const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(Number(batchSize))].map((_, i) => ({
@@ -314,7 +313,8 @@ export class ContractManagerServiceEth {
       tokenId: i.toString(),
       royalty: Number(royalty),
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      imageUrl: `${imgUrl}/collection/${account.toLowerCase()}/${i}.jpg`,
+      // $url/collection/$account/$index.jpg
+      imageUrl: `${imgUrl}/${account.toLowerCase()}/${i}.jpg`,
       template: templateEntity,
       createdAt: currentDateTime,
       updatedAt: currentDateTime,

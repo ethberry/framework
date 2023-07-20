@@ -77,7 +77,6 @@ export const PyramidRules: FC = () => {
     },
   });
 
-  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "pyramid", "pyramid.rules"]} />

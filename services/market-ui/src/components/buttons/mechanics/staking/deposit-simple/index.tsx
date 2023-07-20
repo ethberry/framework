@@ -22,7 +22,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
 
   const metaDeposit = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     const contract = new Contract(rule.contract!.address, StakingDepositABI, web3Context.provider?.getSigner());
-    // TODO pass real tokenId of selected ERC721 or ERC998
+
     const params = {
       externalId: rule.externalId,
       expiresAt: 0,
@@ -31,7 +31,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
       receiver: constants.AddressZero,
       referrer: constants.AddressZero,
     };
-    const tokenId = rule.deposit!.components[0].templateId; // for 1155
+    const tokenId = rule.deposit!.components[0].templateId;
     return contract.deposit(params, [tokenId], {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;

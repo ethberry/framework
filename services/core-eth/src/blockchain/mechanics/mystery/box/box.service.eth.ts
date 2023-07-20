@@ -49,7 +49,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const metadata = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider, this.loggerService);
       const templateId = ~~metadata[TokenMetadata.TEMPLATE_ID];
       const mysteryBoxEntity = await this.mysteryBoxService.findOne({ templateId });
 

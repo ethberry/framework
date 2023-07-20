@@ -94,7 +94,6 @@ async function main() {
 
   await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
   await debug(await vrfInstance.createSubscription(), "createSubscription");
-  // TODO get subId from createSubscription event
   // emit SubscriptionCreated(currentSubId, msg.sender);
   const eventFilter = vrfInstance.filters.SubscriptionCreated();
   const events = await vrfInstance.queryFilter(eventFilter);

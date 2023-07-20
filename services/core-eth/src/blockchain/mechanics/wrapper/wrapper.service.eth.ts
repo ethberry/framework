@@ -55,7 +55,13 @@ export class WrapperServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider);
+      const metadata = await getMetadata(
+        Number(tokenId).toString(),
+        address,
+        ABI,
+        this.jsonRpcProvider,
+        this.loggerService,
+      );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {

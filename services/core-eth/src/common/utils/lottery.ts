@@ -18,7 +18,6 @@ export const getCurrentRound = async function (
   provider: ethers.JsonRpcProvider,
 ): Promise<ILotteryCurrentRound> {
   const contract = new ethers.Contract(address, abi, provider);
-  // const roundInfo = recursivelyDecodeResult((await contract.getCurrentRoundInfo()) as Result);
   const roundInfo = await contract.getCurrentRoundInfo();
   return recursivelyDecodeResult(roundInfo) as ILotteryCurrentRound;
 };

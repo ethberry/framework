@@ -149,7 +149,7 @@ async function main() {
       "ExchangeGradeFacet",
       "ExchangeLotteryFacet",
       "ExchangeRaffleFacet",
-      "ExchangeMysteryboxFacet",
+      "ExchangeMysteryBoxFacet",
       "ExchangeRentableFacet",
       "PausableFacet",
       "AccessControlFacet",
@@ -356,7 +356,7 @@ async function main() {
   contracts.vesting = await vestingFactory.deploy(wallet, timestamp, 12, 417);
   await debug(contracts);
 
-  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryBoxSimple");
   const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
   contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
   await debug(contracts);
@@ -366,7 +366,7 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryboxPausable");
+  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryBoxPausable");
   const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
   contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
   await debug(contracts);
@@ -376,7 +376,7 @@ async function main() {
     "contractManager.addFactory",
   );
 
-  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryboxBlacklist");
+  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryBoxBlacklist");
   const mysteryboxBlacklistInstance = await mysteryboxBlacklistFactory.deploy(
     "Mysterybox",
     "MB-BL721",

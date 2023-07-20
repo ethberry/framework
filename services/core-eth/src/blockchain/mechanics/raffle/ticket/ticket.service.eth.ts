@@ -89,7 +89,7 @@ export class RaffleTicketServiceEth {
       throw new NotFoundException("ticketTemplateNotFound");
     }
 
-    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider);
+    const metadata = await getMetadata(tokenId, contract, ABI, this.jsonRpcProvider, this.loggerService);
 
     const tokenEntity = await this.tokenService.create({
       tokenId,

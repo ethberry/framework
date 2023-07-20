@@ -20,7 +20,7 @@ export class AchievementRuleService {
 
   public search(
     dto: IAchievementRuleSearchDto,
-    _userEntity: UserEntity,
+    userEntity: UserEntity,
   ): Promise<[Array<AchievementRuleEntity>, number]> {
     const { query, achievementType, achievementStatus, contractIds, eventType, skip, take } = dto;
     const queryBuilder = this.achievementRuleEntityRepository.createQueryBuilder("achievement");
@@ -33,10 +33,9 @@ export class AchievementRuleService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    // TODO use merchants if contract?
-    // queryBuilder.andWhere("contract.merchantId = :merchantId", {
-    //   merchantId: userEntity.merchantId,
-    // });
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (achievementType) {
       if (achievementType.length === 1) {

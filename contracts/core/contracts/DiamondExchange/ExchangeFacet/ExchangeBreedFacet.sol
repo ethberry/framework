@@ -45,13 +45,17 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
       revert SignerMissingRole();
     }
 
-    // TODO OR approved?
+    // TODO test approve
     if (IERC721(item.token).ownerOf(item.tokenId) != _msgSender()) {
-      revert NotAnOwner();
+      if (IERC721(item.token).getApproved(item.tokenId) != _msgSender()) {
+        revert NotAnOwner();
+      }
     }
 
     if (IERC721(price.token).ownerOf(price.tokenId) != _msgSender()) {
-      revert NotAnOwner();
+      if (IERC721(price.token).getApproved(price.tokenId) != _msgSender()) {
+        revert NotAnOwner();
+      }
     }
 
     pregnancyCheckup(item, price);
@@ -78,7 +82,7 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
     // Check pregnancy time
     uint64 timeNow = block.timestamp.toUint64();
 
-    // TODO set rules?
+    // TODO set pregnancy rules?
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
       if (
         timeNow - pregnancyM.time <=

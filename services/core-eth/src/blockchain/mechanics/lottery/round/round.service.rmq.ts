@@ -18,12 +18,19 @@ export class RoundServiceRmq {
       throw new NotFoundException("contractNotFound");
     }
 
-    // TODO simplify?
-    const currentParams = lotteryEntity.parameters;
-    Object.assign(currentParams, {
-      schedule: dto.schedule,
-    });
-    Object.assign(lotteryEntity.parameters, currentParams);
+    // TODO test it?
+    // const currentParams = lotteryEntity.parameters;
+    // Object.assign(currentParams, {
+    //   schedule: dto.schedule,
+    // });
+    // Object.assign(lotteryEntity.parameters, currentParams);
+
+    Object.assign(
+      lotteryEntity.parameters,
+      Object.assign(lotteryEntity.parameters, {
+        schedule: dto.schedule,
+      }),
+    );
 
     await lotteryEntity.save();
 
