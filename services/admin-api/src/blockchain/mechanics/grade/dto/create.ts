@@ -15,7 +15,9 @@ export class GradeCreateDto implements IGradeCreateDto {
   @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    maxLength: 32,
+  })
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
   @Matches(/^[0-9A-Z]+$/, { message: "patternMismatch" })

@@ -28,8 +28,8 @@ export class CraftController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: CraftSearchDto): Promise<[Array<CraftEntity>, number]> {
-    return this.craftService.search(dto);
+  public search(@Query() dto: CraftSearchDto, @User() userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
+    return this.craftService.search(dto, userEntity);
   }
 
   @Get("/:id")

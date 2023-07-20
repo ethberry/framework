@@ -21,7 +21,7 @@ import type { ICraft, ICraftSearchDto } from "@framework/types";
 import { CraftStatus, TokenType } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
-import { ExchangeSearchForm } from "./form";
+import { CraftSearchForm } from "./form";
 import { cleanUpAsset } from "../../../../utils/money";
 
 export const Craft: FC = () => {
@@ -72,12 +72,12 @@ export const Craft: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ExchangeCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="CraftCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
-      <ExchangeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CraftSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -1,8 +1,9 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IGradeSearchDto } from "@framework/types";
+import { GradeStatus } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
@@ -22,8 +23,8 @@ export class GradeService {
     protected readonly tokenService: TokenService,
   ) {}
 
-  public async search(dto: IPaginationDto, userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(dto: IGradeSearchDto, userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
+    const { query, gradeStatus, skip, take } = dto;
 
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
@@ -32,6 +33,31 @@ export class GradeService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId: userEntity.merchantId,
     });
+
+    if (gradeStatus) {
+      if (gradeStatus.length === 1) {
+        queryBuilder.andWhere("grade.gradeStatus = :gradeStatus", { gradeStatus: gradeStatus[0] });
+      } else {
+        queryBuilder.andWhere("grade.gradeStatus IN(:...gradeStatus)", { gradeStatus });
+      }
+    }
+
+    if (query) {
+      queryBuilder.leftJoin(
+        qb => {
+          qb.getQuery = () => `LATERAL json_array_elements(contract.description->'blocks')`;
+          return qb;
+        },
+        `blocks`,
+        `TRUE`,
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
 
     queryBuilder.select();
 
@@ -129,5 +155,9 @@ export class GradeService {
         },
       },
     });
+  }
+
+  public delete(where: FindOptionsWhere<GradeEntity>, userEntity: UserEntity): Promise<GradeEntity> {
+    return this.update(where, { gradeStatus: GradeStatus.INACTIVE }, userEntity);
   }
 }

@@ -19,7 +19,7 @@ export class CraftService {
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public search(dto: ICraftSearchDto): Promise<[Array<CraftEntity>, number]> {
+  public search(dto: ICraftSearchDto, userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
     const { query, craftStatus, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
@@ -30,6 +30,10 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.andWhere("craft.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(

@@ -3,19 +3,19 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { CraftStatus, ICraftSearchDto } from "@framework/types";
+import { GradeStatus, IGradeSearchDto } from "@framework/types";
 
-interface ICraftSearchFormProps {
-  onSubmit: (values: ICraftSearchDto) => Promise<void>;
-  initialValues: ICraftSearchDto;
+interface IGradeSearchFormProps {
+  onSubmit: (values: IGradeSearchDto) => Promise<void>;
+  initialValues: IGradeSearchDto;
   open: boolean;
 }
 
-export const CraftSearchForm: FC<ICraftSearchFormProps> = props => {
+export const GradeSearchForm: FC<IGradeSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const { query, craftStatus } = initialValues;
-  const fixedValues = { query, craftStatus };
+  const { query, gradeStatus } = initialValues;
+  const fixedValues = { query, gradeStatus };
 
   return (
     <FormWrapper
@@ -33,7 +33,7 @@ export const CraftSearchForm: FC<ICraftSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <SelectInput multiple name="craftStatus" options={CraftStatus} />
+            <SelectInput multiple name="gradeStatus" options={GradeStatus} />
           </Grid>
         </Grid>
       </Collapse>

@@ -1,13 +1,25 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { GradeService } from "./grade.service";
 import { GradeEntity } from "./grade.entity";
-import { GradeCreateDto, GradeUpdateDto } from "./dto";
+import { GradeCreateDto, GradeSearchDto, GradeUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/grades")
@@ -16,7 +28,7 @@ export class GradeController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PaginationDto, @User() userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
+  public search(@Query() dto: GradeSearchDto, @User() userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
     return this.gradeService.search(dto, userEntity);
   }
 
@@ -38,5 +50,11 @@ export class GradeController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
     return this.gradeService.findOneWithRelations({ id });
+  }
+
+  @Delete("/:id")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
+    await this.gradeService.delete({ id }, userEntity);
   }
 }

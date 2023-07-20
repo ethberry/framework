@@ -760,7 +760,7 @@
       "addressLine1": "Melburb st. 24",
       "addressLine2": "Additional info about address",
       "amount": "10",
-      "attribute": "...",
+      "attribute": "LEVEL",
       "baseTokenURI": "https://gemunion.io/",
       "batchSize": "1000",
       "beneficiary": "0x...",
@@ -880,6 +880,7 @@
     }
   },
   "messages": {
+    "uncaughtError": "Uncaught error happened",
     "empty-list": "Nothing to display",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"

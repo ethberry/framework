@@ -514,6 +514,7 @@
     }
   },
   "messages": {
+    "uncaughtError": "Uncaught error happened",
     "empty-list": "Nothing to display",
     "noAddress": "No address",
     "page-not-found": "Page Not Found"
