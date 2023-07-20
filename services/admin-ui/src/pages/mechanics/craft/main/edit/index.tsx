@@ -26,11 +26,13 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
     price,
   };
 
+  const message = id ? "dialogs.edit" : "dialogs.create";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message="dialogs.edit"
+      message={message}
       testId="CraftEditForm"
       {...rest}
     >

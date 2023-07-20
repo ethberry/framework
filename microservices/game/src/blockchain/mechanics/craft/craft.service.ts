@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
@@ -11,6 +11,7 @@ import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 import type { ISignCraftDto } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 import { sorter } from "../../../common/utils/sorter";
 import { CraftEntity } from "./craft.entity";
 
@@ -23,7 +24,7 @@ export class CraftService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<CraftEntity>, number]> {
+  public search(dto: ISearchDto, merchantEntity: MerchantEntity): Promise<[Array<CraftEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
@@ -46,6 +47,10 @@ export class CraftService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
+    queryBuilder.andWhere("craft.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
 
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
@@ -81,7 +86,10 @@ export class CraftService {
     return this.craftEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
+  public findOneWithRelations(
+    where: FindOptionsWhere<CraftEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<CraftEntity | null> {
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
     queryBuilder.leftJoinAndSelect("craft.merchant", "merchant");
@@ -112,15 +120,24 @@ export class CraftService {
     queryBuilder.andWhere("craft.id = :id", {
       id: where.id,
     });
+
+    queryBuilder.andWhere("craft.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
     return queryBuilder.getOne();
   }
 
-  public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
+  public async sign(dto: ISignCraftDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, craftId } = dto;
-    const craftEntity = await this.findOneWithRelations({ id: craftId });
+    const craftEntity = await this.findOneWithRelations({ id: craftId }, merchantEntity);
 
     if (!craftEntity) {
       throw new NotFoundException("craftNotFound");
+    }
+
+    if (craftEntity.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
     }
 
     const ttl = await this.settingsService.retrieveByKey<number>(SettingsKeys.SIGNATURE_TTL);

@@ -25,6 +25,7 @@ export * from "./mechanics/claim/upload";
 
 export * from "./mechanics/grade/search";
 export * from "./mechanics/craft/search";
+export * from "./mechanics/craft/sign";
 export * from "./mechanics/rent/search";
 export * from "./mechanics/drop/search";
 
