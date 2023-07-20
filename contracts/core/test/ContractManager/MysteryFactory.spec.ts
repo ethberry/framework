@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ZeroAddress } from "ethers";
+import { ZeroAddress, getAddress } from "ethers";
 
 import {
   amount,
@@ -14,6 +14,7 @@ import {
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, externalId, templateId, tokenId } from "../constants";
+import { buildBytecode, buildCreate2Address } from "../utils";
 
 describe("MysteryBoxFactory", function () {
   const factory = () => deployContract(this.title);
@@ -87,10 +88,15 @@ describe("MysteryBoxFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allMysteryboxes();
+      const buildByteCode = buildBytecode(
+        ["string", "string", "uint256", "string"],
+        [tokenName, tokenSymbol, royalty, baseTokenURI],
+        bytecode,
+      );
+      const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
 
       await expect(tx)
-        .to.emit(contractInstance, "MysteryBoxDeployed")
+        .to.emit(contractInstance, "MysteryboxDeployed")
         .withArgs(address, externalId, [tokenName, tokenSymbol, royalty, baseTokenURI, contractTemplate]);
 
       const erc721Instance = await ethers.getContractAt("ERC721MysteryBoxSimple", address);

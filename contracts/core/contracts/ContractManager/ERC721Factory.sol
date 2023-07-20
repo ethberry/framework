@@ -17,8 +17,6 @@ contract ERC721Factory is AbstractFactory {
   bytes32 private immutable ERC721_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc721Args args)", ERC721_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
-  address[] private _erc721_tokens;
-
   struct Erc721Args {
     string name;
     string symbol;
@@ -47,7 +45,6 @@ contract ERC721Factory is AbstractFactory {
       abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
       params.nonce
     );
-    _erc721_tokens.push(account);
 
     emit ERC721TokenDeployed(account, params.externalId, args);
 
@@ -79,9 +76,5 @@ contract ERC721Factory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allERC721Tokens() external view returns (address[] memory) {
-    return _erc721_tokens;
   }
 }

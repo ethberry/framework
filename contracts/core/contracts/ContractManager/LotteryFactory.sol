@@ -30,8 +30,6 @@ contract LotteryFactory is AbstractFactory {
       )
     );
 
-  address[] private _lotterys;
-
   struct LotteryArgs {
     LotteryConfig config;
   }
@@ -57,8 +55,6 @@ contract LotteryFactory is AbstractFactory {
       params.nonce
     );
 
-    _lotterys.push(account);
-
     emit LotteryDeployed(account, params.externalId, args);
 
     bytes32[] memory roles = new bytes32[](2);
@@ -82,9 +78,5 @@ contract LotteryFactory is AbstractFactory {
 
   function _hashLotteryConfigStruct(LotteryConfig calldata config) private pure returns (bytes32) {
     return keccak256(abi.encode(LOTTERY_CONFIG_TYPEHASH, config.timeLagBeforeRelease, config.commission));
-  }
-
-  function allLotterys() external view returns (address[] memory) {
-    return _lotterys;
   }
 }

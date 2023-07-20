@@ -22,7 +22,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
   const user = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IRaffleContractDeployDto, web3Context, sign) => {
+    (_values: IRaffleContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
@@ -36,23 +36,16 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
           bytecode: sign.bytecode,
           externalId: user.profile.id,
         },
-        {
-          config: {
-            timeLagBeforeRelease: values.config.timeLagBeforeRelease,
-            commission: values.config.commission,
-          },
-        },
         sign.signature,
       ) as Promise<void>;
     },
   );
 
-  const onDeployConfirm = (values: Record<string, any>, form: any) => {
+  const onDeployConfirm = (form: any) => {
     return handleDeployConfirm(
       {
         url: "/contract-manager/raffle",
         method: "POST",
-        data: { config: values },
       },
       form,
     );

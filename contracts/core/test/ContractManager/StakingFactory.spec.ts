@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { keccak256, getCreate2Address } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
@@ -64,7 +65,8 @@ describe("StakingFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allStaking();
+      const initCodeHash = keccak256(bytecode);
+      const address = getCreate2Address(await contractInstance.getAddress(), nonce, initCodeHash);
 
       await expect(tx).to.emit(contractInstance, "StakingDeployed").withArgs(address, externalId, [contractTemplate]);
     });

@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ZeroAddress } from "ethers";
+import { ZeroAddress, getAddress } from "ethers";
 
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, externalId, tokenId } from "../constants";
+import { buildBytecode, buildCreate2Address } from "../utils";
 
 describe("ERC1155Factory", function () {
   const factory = () => deployContract(this.title);
@@ -73,8 +74,8 @@ describe("ERC1155Factory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allERC1155Tokens();
-
+      const buildByteCode = buildBytecode(["uint256", "string"], [royalty, baseTokenURI], bytecode);
+      const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
       await expect(tx)
         .to.emit(contractInstance, "ERC1155TokenDeployed")
         .withArgs(address, externalId, [royalty, baseTokenURI, contractTemplate]);

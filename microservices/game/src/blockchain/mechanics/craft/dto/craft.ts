@@ -3,7 +3,7 @@ import { IsInt, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
-import type { ISignCraftDto } from "@framework/types";
+import { ISignCraftDto } from "@framework/types";
 
 export class SignCraftDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignCraftDto {
   @ApiProperty({

@@ -17,8 +17,6 @@ contract ERC20Factory is AbstractFactory {
   bytes32 private immutable ERC20_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc20Args args)", ERC20_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
-  address[] private _erc20_tokens;
-
   struct Erc20Args {
     string name;
     string symbol;
@@ -42,7 +40,6 @@ contract ERC20Factory is AbstractFactory {
     }
 
     account = deploy2(params.bytecode, abi.encode(args.name, args.symbol, args.cap), params.nonce);
-    _erc20_tokens.push(account);
 
     emit ERC20TokenDeployed(account, params.externalId, args);
 
@@ -73,9 +70,5 @@ contract ERC20Factory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allERC20Tokens() external view returns (address[] memory) {
-    return _erc20_tokens;
   }
 }

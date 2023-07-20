@@ -1,5 +1,5 @@
 import { snakeToCamelCase } from "@gemunion/utils";
-import { concat, Result, toBeHex, toBeArray, zeroPadValue } from "ethers";
+import { concat, id, Provider, AbiCoder, Result, toBeHex, toBeArray, zeroPadValue, keccak256 } from "ethers";
 
 // Patch BigNumber
 // https://github.com/GoogleChromeLabs/jsbi/issues/30
@@ -102,4 +102,38 @@ export const recursivelyDecodeResult = (result: Result): Record<string, any> => 
     // Result is array.
     return result.toArray().map(item => recursivelyDecodeResult(item as Result));
   }
+};
+
+// solidity-create2-deployer/src/utils
+// const encoded = AbiCoder.defaultAbiCoder().encode(abi, input);
+
+export const encodeParam = (dataType: any, data: any) => {
+  const abiCoder = AbiCoder.defaultAbiCoder();
+  return data && dataType ? abiCoder.encode([dataType], [data]) : "";
+};
+
+export const encodeParams = (dataTypes: any[], data: any[]) => {
+  const abiCoder = AbiCoder.defaultAbiCoder();
+  return dataTypes.length > 0 && data.length > 0 ? abiCoder.encode(dataTypes, data) : "";
+};
+
+export const buildBytecode = (constructorTypes: any[], constructorArgs: any[], contractBytecode: string) =>
+  `${contractBytecode}${encodeParams(constructorTypes, constructorArgs).slice(2)}`;
+
+export const buildCreate2Address = (factory: string, saltHex: string, byteCode: string) => {
+  return `0x${keccak256(
+    `0x${["ff", factory, saltHex, keccak256(byteCode)].map(x => x.replace(/0x/, "")).join("")}`,
+  ).slice(-40)}`.toLowerCase();
+};
+
+export const numberToUint256 = (value: number) => {
+  const hex = value.toString(16);
+  return `0x${"0".repeat(64 - hex.length)}${hex}`;
+};
+
+export const saltToHex = (salt: string | number) => id(salt.toString());
+
+export const isContract = async (address: string, provider: Provider) => {
+  const code = await provider.getCode(address);
+  return code.slice(2).length > 0;
 };

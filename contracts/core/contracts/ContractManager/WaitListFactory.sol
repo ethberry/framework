@@ -13,8 +13,6 @@ contract WaitListFactory is AbstractFactory {
   bytes32 private immutable WAIT_LIST_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params)", PARAMS_SIGNATURE));
 
-  address[] private _waitLists;
-
   event WaitListDeployed(address account, uint256 externalId);
 
   function deployWaitList(Params calldata params, bytes calldata signature) external returns (address account) {
@@ -27,7 +25,6 @@ contract WaitListFactory is AbstractFactory {
     }
 
     account = deploy2(params.bytecode, abi.encode(), params.nonce);
-    _waitLists.push(account);
 
     emit WaitListDeployed(account, params.externalId);
 
@@ -40,9 +37,5 @@ contract WaitListFactory is AbstractFactory {
 
   function _hashWaitList(Params calldata params) internal view returns (bytes32) {
     return _hashTypedDataV4(keccak256(abi.encodePacked(WAIT_LIST_PERMIT_SIGNATURE, _hashParamsStruct(params))));
-  }
-
-  function allWaitLists() external view returns (address[] memory) {
-    return _waitLists;
   }
 }

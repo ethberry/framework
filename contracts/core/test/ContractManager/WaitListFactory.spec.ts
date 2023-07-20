@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { getCreate2Address, keccak256 } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
@@ -53,7 +54,8 @@ describe("WaitListFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allWaitLists();
+      const initCodeHash = keccak256(bytecode);
+      const address = getCreate2Address(await contractInstance.getAddress(), nonce, initCodeHash);
 
       await expect(tx).to.emit(contractInstance, "WaitListDeployed").withArgs(address, externalId);
     });

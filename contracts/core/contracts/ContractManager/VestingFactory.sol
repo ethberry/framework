@@ -33,9 +33,6 @@ contract VestingFactory is AbstractFactory {
       )
     );
 
-  // Array of all deployed vesting contracts.
-  address[] private _vesting;
-
   // Structure representing Vesting template and arguments
   struct VestingArgs {
     address beneficiary;
@@ -78,9 +75,6 @@ contract VestingFactory is AbstractFactory {
     );
 
     ExchangeUtils.spendFrom(items, signer, _msgSender(), DisabledTokenTypes(true, false, true, true, true));
-
-    // add deployed address to the list of vesting contracts
-    _vesting.push(account);
 
     // Notify our server about successful deployment
     emit VestingDeployed(account, params.externalId, args, items);
@@ -145,12 +139,5 @@ contract VestingFactory is AbstractFactory {
       }
     }
     return keccak256(abi.encodePacked(padded));
-  }
-
-  /**
-   * @dev Returns an array of all deployed vesting contract addresses.
-   */
-  function allVesting() external view returns (address[] memory) {
-    return _vesting;
   }
 }

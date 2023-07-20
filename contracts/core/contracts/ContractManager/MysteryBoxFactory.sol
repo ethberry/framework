@@ -17,8 +17,6 @@ contract MysteryBoxFactory is AbstractFactory {
   bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,MysteryArgs args)", MYSTERYBOX_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
-  address[] private _mysterybox_tokens;
-
   struct MysteryArgs {
     string name;
     string symbol;
@@ -47,7 +45,6 @@ contract MysteryBoxFactory is AbstractFactory {
       abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
       params.nonce
     );
-    _mysterybox_tokens.push(account);
 
     emit MysteryboxDeployed(account, params.externalId, args);
 
@@ -80,9 +77,5 @@ contract MysteryBoxFactory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allMysteryboxes() external view returns (address[] memory) {
-    return _mysterybox_tokens;
   }
 }

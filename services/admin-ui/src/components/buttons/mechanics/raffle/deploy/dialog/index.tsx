@@ -1,10 +1,9 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput } from "@gemunion/mui-inputs-core";
 import { IContract, IRaffleConfigDto } from "@framework/types";
 
-import { validationSchema } from "./validation";
+// import { validationSchema } from "./validation";
 
 export interface IRaffleContractDeployDialogProps {
   open: boolean;
@@ -18,11 +17,8 @@ export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = 
     <FormDialog
       message="dialogs.deploy"
       testId="RaffleContractDeployForm"
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       {...props}
-    >
-      <NumberInput name="timeLagBeforeRelease" />
-      <NumberInput name="commission" />
-    </FormDialog>
+    ></FormDialog>
   );
 };

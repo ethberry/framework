@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { getCreate2Address, keccak256 } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { getContractName, isEqualArray, recursivelyDecodeResult } from "../utils";
+import { getContractName, isContract } from "../utils";
 import { externalId } from "../constants";
 
 describe("RaffleFactory", function () {
@@ -29,19 +30,11 @@ describe("RaffleFactory", function () {
         },
         // Types
         {
-          EIP712: [
-            { name: "params", type: "Params" },
-            { name: "args", type: "RaffleArgs" },
-          ],
+          EIP712: [{ name: "params", type: "Params" }],
           Params: [
             { name: "nonce", type: "bytes32" },
             { name: "bytecode", type: "bytes" },
             { name: "externalId", type: "uint256" },
-          ],
-          RaffleArgs: [{ name: "config", type: "RaffleConfig" }],
-          RaffleConfig: [
-            { name: "timeLagBeforeRelease", type: "uint256" },
-            { name: "commission", type: "uint256" },
           ],
         },
         // Values
@@ -50,12 +43,6 @@ describe("RaffleFactory", function () {
             nonce,
             bytecode,
             externalId,
-          },
-          args: {
-            config: {
-              timeLagBeforeRelease: 100,
-              commission: 30,
-            },
           },
         },
       );
@@ -66,28 +53,16 @@ describe("RaffleFactory", function () {
           bytecode,
           externalId,
         },
-        {
-          config: {
-            timeLagBeforeRelease: 100,
-            commission: 30,
-          },
-        },
         signature,
       );
 
-      const [address] = await contractInstance.allRaffles();
+      const initCodeHash = keccak256(bytecode);
+      const address = getCreate2Address(await contractInstance.getAddress(), nonce, initCodeHash);
 
-      await expect(tx)
-        .to.emit(contractInstance, "RaffleDeployed")
-        .withArgs(address, externalId, isEqualArray(["100", "30"]));
+      await expect(tx).to.emit(contractInstance, "RaffleDeployed").withArgs(address, externalId);
 
-      const raffleInstance = await ethers.getContractAt(getContractName("RaffleRandom", network.name), address);
-
-      const raffleConfig = await raffleInstance.getLotteryInfo();
-      expect(recursivelyDecodeResult(raffleConfig)).deep.include({
-        timeLagBeforeRelease: 100n,
-        commission: 30n,
-      });
+      const isContractCheck = await isContract(address, ethers.provider);
+      expect(isContractCheck).to.equal(true);
     });
 
     it("should fail: SignerMissingRole", async function () {

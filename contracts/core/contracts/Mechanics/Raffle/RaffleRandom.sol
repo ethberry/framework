@@ -30,9 +30,6 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
   using SafeERC20 for IERC20;
   using Counters for Counters.Counter;
 
-  uint256 internal immutable _timeLag; // TODO change in production: release after 2592000 seconds = 30 days (dev: 2592)
-  uint256 internal immutable comm; // commission 30%
-
   event RoundStarted(uint256 roundId, uint256 startTimestamp, uint256 maxTicket, Asset ticket, Asset price);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint256 prizeIndex, uint256 prizeNumber);
@@ -59,15 +56,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
   Round[] internal _rounds;
 
-  constructor(RaffleConfig memory config) {
+  constructor() {
     address account = _msgSender();
     _grantRole(DEFAULT_ADMIN_ROLE, account);
     _grantRole(PAUSER_ROLE, account);
     _grantRole(MINTER_ROLE, account);
-
-    // SET Raffle Config
-    _timeLag = config.timeLagBeforeRelease;
-    comm = config.commission;
 
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
@@ -148,9 +141,9 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
       );
   }
 
-  function getLotteryInfo() public view returns (RaffleConfig memory) {
-    return RaffleConfig(_timeLag, comm);
-  }
+//  function getLotteryInfo() public view returns (RaffleConfig memory) {
+//    return RaffleConfig(_timeLag, comm);
+//  }
 
   // RANDOM
   function getRandomNumber() internal virtual returns (uint256 requestId);
@@ -171,15 +164,11 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
     currentRound.endTimestamp = block.timestamp;
     currentRound.requestId = getRandomNumber();
 
-    uint256 commission = (currentRound.total * comm) / 100;
-    currentRound.total -= commission;
-
     emit RoundEnded(roundNumber, block.timestamp);
   }
 
   function releaseFunds(uint256 roundNumber) external onlyRole(DEFAULT_ADMIN_ROLE) {
     Round storage currentRound = _rounds[roundNumber];
-    if (block.timestamp <= currentRound.endTimestamp + _timeLag) revert NotComplete();
     if (currentRound.balance == 0) revert ZeroBalance();
 
     uint256 roundBalance = currentRound.balance;
@@ -221,10 +210,6 @@ abstract contract RaffleRandom is AccessControl, Pausable, Wallet {
 
     if (ticketRound.endTimestamp == 0) {
       revert NotComplete();
-    }
-
-    if (block.timestamp > ticketRound.endTimestamp + _timeLag) {
-      revert Expired();
     }
 
     // TODO OR approved?

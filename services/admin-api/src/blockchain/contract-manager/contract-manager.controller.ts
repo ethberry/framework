@@ -16,7 +16,7 @@ import {
   LotteryContractDeployDto,
   MysteryContractDeployDto,
   PyramidContractDeployDto,
-  RaffleContractDeployDto,
+  // RaffleContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
   WaitListContractDeployDto,
@@ -98,8 +98,8 @@ export class ContractManagerController {
 
   // MODULE:RAFFLE
   @Post("/raffle")
-  public raffle(@Body() dto: RaffleContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.raffle(dto, userEntity);
+  public raffle(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.raffle(userEntity);
   }
 
   // MODULE:LOTTERY

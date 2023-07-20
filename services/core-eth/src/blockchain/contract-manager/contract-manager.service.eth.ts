@@ -592,11 +592,8 @@ export class ContractManagerServiceEth {
 
   public async raffle(event: ILogEvent<IContractManagerRaffleDeployedEvent>, ctx: Log): Promise<void> {
     const {
-      args: { account, args, externalId },
+      args: { account, externalId },
     } = event;
-
-    const { config } = args;
-    const { timeLagBeforeRelease, commission } = config;
 
     await this.eventHistoryService.updateHistory(event, ctx);
 
@@ -606,10 +603,6 @@ export class ContractManagerServiceEth {
       address: account.toLowerCase(),
       title: `${ModuleType.RAFFLE} (new)`,
       description: emptyStateString,
-      parameters: {
-        timeLagBeforeRelease,
-        commission,
-      },
       imageUrl,
       contractFeatures: [ContractFeatures.RANDOM, ContractFeatures.PAUSABLE],
       contractModule: ModuleType.RAFFLE,

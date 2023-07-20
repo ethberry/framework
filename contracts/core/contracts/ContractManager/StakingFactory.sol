@@ -16,8 +16,6 @@ contract StakingFactory is AbstractFactory {
   bytes32 private immutable STAKING_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,StakingArgs args)", PARAMS_SIGNATURE, STAKING_ARGUMENTS_SIGNATURE));
 
-  address[] private _staking;
-
   struct StakingArgs {
     string contractTemplate;
   }
@@ -38,7 +36,6 @@ contract StakingFactory is AbstractFactory {
     }
 
     account = deploy2(params.bytecode, "", params.nonce);
-    _staking.push(account);
 
     emit StakingDeployed(account, params.externalId, args);
   }
@@ -52,9 +49,5 @@ contract StakingFactory is AbstractFactory {
 
   function _hashStakingStruct(StakingArgs calldata args) private pure returns (bytes32) {
     return keccak256(abi.encode(STAKING_ARGUMENTS_TYPEHASH, keccak256(bytes(args.contractTemplate))));
-  }
-
-  function allStaking() external view returns (address[] memory) {
-    return _staking;
   }
 }

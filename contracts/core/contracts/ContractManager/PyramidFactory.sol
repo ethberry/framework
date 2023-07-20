@@ -17,8 +17,6 @@ contract PyramidFactory is AbstractFactory {
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,PyramidArgs args)", PARAMS_SIGNATURE, PYRAMID_ARGUMENTS_SIGNATURE));
 
-  address[] private _pyramid_tokens;
-
   struct PyramidArgs {
     address[] payees;
     uint256[] shares;
@@ -41,7 +39,6 @@ contract PyramidFactory is AbstractFactory {
     }
 
     account = deploy2(params.bytecode, abi.encode(args.payees, args.shares), params.nonce);
-    _pyramid_tokens.push(account);
 
     emit PyramidDeployed(account, params.externalId, args);
 
@@ -69,9 +66,5 @@ contract PyramidFactory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allPyramids() external view returns (address[] memory) {
-    return _pyramid_tokens;
   }
 }

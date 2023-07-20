@@ -12,9 +12,7 @@ import "../../../MOCKS/ChainLinkBesu.sol";
 contract RaffleRandomBesu is RaffleRandom, ChainLinkBesu {
   using Counters for Counters.Counter;
 
-  constructor(
-    RaffleConfig memory config
-  ) RaffleRandom(config) ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
+  constructor() RaffleRandom() ChainLinkBesu(uint64(1), uint16(6), uint32(600000), uint32(1)) {}
 
   function getRandomNumber() internal override(RaffleRandom, ChainLinkBase) returns (uint256 requestId) {
     return super.getRandomNumber();
@@ -46,7 +44,6 @@ contract RaffleRandomBesu is RaffleRandom, ChainLinkBesu {
     currentRound.endTimestamp = block.timestamp + 1;
     currentRound.balance = 10000 ether;
     currentRound.total = 10000 ether;
-    currentRound.total -= (currentRound.total * comm) / 100;
     currentRound.ticketAsset = item;
     currentRound.acceptedAsset = price;
     // prize numbers

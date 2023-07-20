@@ -205,7 +205,6 @@ export interface IRaffleDeployedEventArgs {
 export interface IContractManagerRaffleDeployedEvent {
   account: string;
   externalId: number;
-  args: IRaffleDeployedEventArgs;
 }
 
 export interface IContractManagerWaitListDeployedEvent {

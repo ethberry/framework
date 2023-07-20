@@ -17,8 +17,6 @@ contract ERC998Factory is AbstractFactory {
   bytes32 private immutable ERC998_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc998Args args)", ERC998_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
-  address[] private _erc998_tokens;
-
   struct Erc998Args {
     string name;
     string symbol;
@@ -47,7 +45,6 @@ contract ERC998Factory is AbstractFactory {
       abi.encode(args.name, args.symbol, args.royalty, args.baseTokenURI),
       params.nonce
     );
-    _erc998_tokens.push(account);
 
     emit ERC998TokenDeployed(account, params.externalId, args);
 
@@ -79,9 +76,5 @@ contract ERC998Factory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allERC998Tokens() external view returns (address[] memory) {
-    return _erc998_tokens;
   }
 }

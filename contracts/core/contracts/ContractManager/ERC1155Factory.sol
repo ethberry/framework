@@ -17,8 +17,6 @@ contract ERC1155Factory is AbstractFactory {
   bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(Params params,Erc1155Args args)", ERC1155_ARGUMENTS_SIGNATURE, PARAMS_SIGNATURE));
 
-  address[] private _erc1155_tokens;
-
   struct Erc1155Args {
     uint96 royalty;
     string baseTokenURI;
@@ -41,7 +39,6 @@ contract ERC1155Factory is AbstractFactory {
     }
 
     account = deploy2(params.bytecode, abi.encode(args.royalty, args.baseTokenURI), params.nonce);
-    _erc1155_tokens.push(account);
 
     emit ERC1155TokenDeployed(account, params.externalId, args);
 
@@ -70,9 +67,5 @@ contract ERC1155Factory is AbstractFactory {
           keccak256(bytes(args.contractTemplate))
         )
       );
-  }
-
-  function allERC1155Tokens() external view returns (address[] memory) {
-    return _erc1155_tokens;
   }
 }

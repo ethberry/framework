@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { concat, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
+import { concat, getAddress, toBeHex, ZeroAddress, zeroPadValue } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
 import { amount, DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
+import { buildBytecode, buildCreate2Address, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { claimId, externalId, tokenId, userId } from "../constants";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { decodeTraits } from "@framework/traits-api";
@@ -111,7 +111,12 @@ describe("VestingFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allVesting();
+      const buildByteCode = buildBytecode(
+        ["address", "uint256", "uint256", "uint256"],
+        [owner.address, current.toNumber(), 12, 417],
+        bytecode,
+      );
+      const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
 
       await expect(tx)
         .to.emit(contractInstance, "VestingDeployed")

@@ -1,11 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { getAddress } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
 import { contractTemplate, externalId } from "../constants";
-import { isEqualArray } from "../utils";
+import { buildBytecode, buildCreate2Address, isEqualArray } from "../utils";
 
 describe("PyramidFactory", function () {
   const factory = () => deployContract(this.title);
@@ -73,7 +74,8 @@ describe("PyramidFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allPyramids();
+      const buildByteCode = buildBytecode(["address[]", "uint256[]"], [[owner.address], [1]], bytecode);
+      const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
 
       await expect(tx)
         .to.emit(contractInstance, "PyramidDeployed")

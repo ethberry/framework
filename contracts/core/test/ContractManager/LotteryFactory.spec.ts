@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { getAddress } from "ethers";
 
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 import { deployContract } from "@gemunion/contracts-mocks";
 
-import { getContractName, isEqualArray, recursivelyDecodeResult } from "../utils";
+import { buildBytecode, buildCreate2Address, getContractName, isEqualArray, recursivelyDecodeResult } from "../utils";
 import { externalId } from "../constants";
 
 describe("LotteryFactory", function () {
@@ -75,7 +76,8 @@ describe("LotteryFactory", function () {
         signature,
       );
 
-      const [address] = await contractInstance.allLotterys();
+      const buildByteCode = buildBytecode(["uint256", "uint256"], [100, 30], bytecode);
+      const address = getAddress(buildCreate2Address(await contractInstance.getAddress(), nonce, buildByteCode));
 
       await expect(tx)
         .to.emit(contractInstance, "LotteryDeployed")
