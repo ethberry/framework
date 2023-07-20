@@ -17,7 +17,7 @@ import { deployRaffle } from "./fixture";
 import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../../utils";
 import { decodeMetadata } from "../../shared/metadata";
-import { deployDiamond } from "../../DiamondExchange/fixture";
+import { deployDiamond } from "../../DiamondExchange/shared/fixture";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));

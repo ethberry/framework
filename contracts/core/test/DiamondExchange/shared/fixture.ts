@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { FacetCutAction, getSelectors } from "../shared/diamond";
+import { FacetCutAction, getSelectors } from "../../shared/diamond";
 import { BaseContract } from "ethers";
 
 export async function deployDiamond(

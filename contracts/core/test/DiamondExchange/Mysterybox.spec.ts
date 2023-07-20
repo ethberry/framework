@@ -7,7 +7,7 @@ import { externalId, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
 import { Contract, ZeroAddress } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
-import { deployDiamond } from "./fixture";
+import { deployDiamond } from "./shared/fixture";
 
 describe("Diamond Exchange Mysterybox", function () {
   const factory = async () =>
@@ -29,9 +29,9 @@ describe("Diamond Exchange Mysterybox", function () {
     const [owner] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
 
-    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, owner);
-    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, owner);
-    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, owner);
+    const generateOneToOneSignature = wrapOneToOneSignature(network, contractInstance, "Exchange", owner);
+    const generateOneToManySignature = wrapOneToManySignature(network, contractInstance, "Exchange", owner);
+    const generateManyToManySignature = wrapManyToManySignature(network, contractInstance, "Exchange", owner);
 
     return {
       generateOneToOneSignature,

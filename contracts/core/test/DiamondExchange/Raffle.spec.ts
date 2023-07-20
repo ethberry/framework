@@ -5,7 +5,7 @@ import { expiresAt, externalId, extra } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
 import { Contract, encodeBytes32String, parseEther, ZeroAddress, ZeroHash } from "ethers";
 import { getContractName, isEqualEventArgObj } from "../utils";
-import { deployDiamond } from "./fixture";
+import { deployDiamond } from "./shared/fixture";
 import { deployERC20 } from "../ERC20/shared/fixtures";
 import { deployERC721 } from "../ERC721/shared/fixtures";
 
