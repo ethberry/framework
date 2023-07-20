@@ -43,7 +43,7 @@ export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonP
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
+      <Tooltip title={formatMessage({ id: "form.tips.transferOwnership" })}>
         <IconButton onClick={handleTransferOwnership} data-testid="VestingTransferOwnershipButton">
           <Send />
         </IconButton>
@@ -52,7 +52,7 @@ export const VestingTransferOwnershipButton: FC<IVestingTransferOwnershipButtonP
         onConfirm={handleTransferOwnershipConfirm}
         onCancel={handleTransferOwnershipCancel}
         open={isTransferOwnershipDialogOpen}
-        message="dialogs.transfer"
+        message="dialogs.transferOwnership"
         testId="VestingTransferOwnershipDialogForm"
         initialValues={{
           account: "",
