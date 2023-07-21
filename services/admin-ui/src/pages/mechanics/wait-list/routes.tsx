@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/common-pages";
 
-import { WaitListSection } from "../../dashboard/mechanics/waitlist";
+import { WaitListSection } from "../../dashboard/mechanics/wait-list";
 import { IndexWrapper } from "../../index-wrapper";
 import { WaitListList } from "./list";
 import { WaitListItem } from "./item";
@@ -15,7 +15,7 @@ export const waitlistRoutes: Array<RouteObject> = [
       {
         index: true,
         element: (
-          <IndexWrapper index="waitlist">
+          <IndexWrapper index="wait-list">
             <WaitListSection />
           </IndexWrapper>
         ),

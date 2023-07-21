@@ -46,9 +46,9 @@ export const WaitListItem: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "waitlist", "waitlist.item"]} />
+      <Breadcrumbs path={["dashboard", "wait-list", "wait-list.item"]} />
 
-      <PageHeader message="pages.waitlist.item.title">
+      <PageHeader message="pages.wait-list.item.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -102,7 +102,7 @@ export const WaitListItem: FC = () => {
         open={isDeleteDialogOpen}
         initialValues={{
           ...selected,
-          title: formatMessage({ id: "pages.waitlist.item.defaultItemTitle" }, { account: selected.account }),
+          title: formatMessage({ id: "pages.wait-list.item.defaultItemTitle" }, { account: selected.account }),
         }}
       />
 

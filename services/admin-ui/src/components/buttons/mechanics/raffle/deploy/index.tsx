@@ -10,8 +10,6 @@ import type { IRaffleContractDeployDto, IUser } from "@framework/types";
 
 import DeployRaffleABI from "../../../../../abis/mechanics/raffle/contract/deployRaffle.abi.json";
 
-import { RaffleContractDeployDialog } from "./dialog";
-
 export interface IRaffleContractDeployButtonProps {
   className?: string;
 }
@@ -21,33 +19,31 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
 
   const user = useUser<IUser>();
 
-  const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (_values: IRaffleContractDeployDto, web3Context, sign) => {
-      const nonce = utils.arrayify(sign.nonce);
-      const contract = new Contract(
-        process.env.CONTRACT_MANAGER_ADDR,
-        DeployRaffleABI,
-        web3Context.provider?.getSigner(),
-      );
+  const { handleDeployConfirm } = useDeploy((_values: IRaffleContractDeployDto, web3Context, sign) => {
+    const nonce = utils.arrayify(sign.nonce);
+    const contract = new Contract(
+      process.env.CONTRACT_MANAGER_ADDR,
+      DeployRaffleABI,
+      web3Context.provider?.getSigner(),
+    );
 
-      return contract.deployRaffle(
-        {
-          nonce,
-          bytecode: sign.bytecode,
-          externalId: user.profile.id,
-        },
-        sign.signature,
-      ) as Promise<void>;
-    },
-  );
+    return contract.deployRaffle(
+      {
+        nonce,
+        bytecode: sign.bytecode,
+        externalId: user.profile.id,
+      },
+      sign.signature,
+    ) as Promise<void>;
+  });
 
-  const onDeployConfirm = (form: any) => {
+  const onDeployConfirm = () => {
     return handleDeployConfirm(
       {
         url: "/contract-manager/raffle",
-        method: "POST",
+        method: "POT",
       },
-      form,
+      {},
     );
   };
 
@@ -56,21 +52,12 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
       <Button
         variant="outlined"
         startIcon={<Add />}
-        onClick={handleDeploy}
+        onClick={onDeployConfirm}
         data-testid="RaffleDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <RaffleContractDeployDialog
-        onConfirm={onDeployConfirm}
-        onCancel={handleDeployCancel}
-        open={isDeployDialogOpen}
-        initialValues={{
-          timeLagBeforeRelease: 100,
-          commission: 30,
-        }}
-      />
     </Fragment>
   );
 };

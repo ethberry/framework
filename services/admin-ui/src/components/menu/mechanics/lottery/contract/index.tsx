@@ -1,9 +1,14 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
+import { ContractGrantRoleMenuItem } from "../../../extensions/grant-role";
+import { ContractRevokeRoleMenuItem } from "../../../extensions/revoke-role";
+import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role";
+import { PauseMenuItem } from "../../common/pause";
+import { UnPauseMenuItem } from "../../common/unpause";
 import { LotteryRoundStartMenuItem } from "./round-start";
 import { LotteryRoundEndMenuItem } from "./round-end";
 import { LotteryScheduleLightMenuItem } from "./schedule-light";
@@ -42,6 +47,13 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="lottery-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <ContractGrantRoleMenuItem contract={contract} />
+        <ContractRevokeRoleMenuItem contract={contract} />
+        <ContractRenounceRoleMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
+        <PauseMenuItem contract={contract} />
+        <UnPauseMenuItem contract={contract} />
+        <Divider sx={{ m: 2 }} />
         <LotteryRoundStartMenuItem contract={contract} />
         <LotteryRoundEndMenuItem contract={contract} />
         <LotteryScheduleLightMenuItem contract={contract} />

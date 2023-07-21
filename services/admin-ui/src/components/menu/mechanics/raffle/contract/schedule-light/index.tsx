@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { IContract } from "@framework/types";
 
-import { UpgradeRatePlanDialog } from "../../../../dialogs/rate-plan";
+import { UpgradeRatePlanDialog } from "../../../../../dialogs/rate-plan";
 
 export interface IRaffleScheduleMenuItemProps {
   contract: IContract;

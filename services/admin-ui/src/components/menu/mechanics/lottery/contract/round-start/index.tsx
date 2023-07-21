@@ -10,22 +10,22 @@ import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
 import { IContract, TokenType } from "@framework/types";
 
-import RaffleStartRoundABI from "../../../../../abis/mechanics/raffle/round/start/startRound.abi.json";
-import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
+import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
+import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
 
-export interface IRaffleRoundStartMenuItemProps {
+export interface ILotteryRoundStartMenuItemProps {
   contract: IContract;
 }
 
-export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = props => {
+export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = props => {
   const {
     contract: { address, id },
   } = props;
 
   const [isStartRoundDialogOpen, setIsStartRoundDialogOpen] = useState(false);
 
-  const metaFn = useMetamask((values: IRaffleRound, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, RaffleStartRoundABI, web3Context.provider?.getSigner());
+  const metaFn = useMetamask((values: ILotteryRound, web3Context: Web3ContextType) => {
+    const contract = new Contract(address, LotteryStartRoundABI, web3Context.provider?.getSigner());
 
     const ticket = {
       tokenType: Object.values(TokenType).indexOf(values.ticket.components[0].tokenType),
@@ -42,7 +42,7 @@ export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = prop
     return contract.startRound(ticket, price, values.maxTicket) as Promise<void>;
   });
 
-  const handleStartRoundConfirm = async (values: IRaffleRound): Promise<void> => {
+  const handleStartRoundConfirm = async (values: ILotteryRound): Promise<void> => {
     return metaFn(values).finally(() => {
       setIsStartRoundDialogOpen(false);
     });
@@ -62,15 +62,15 @@ export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = prop
 
   return (
     <Fragment>
-      <MenuItem onClick={handleStartRound} data-testid="RaffleRoundStartButton">
+      <MenuItem onClick={handleStartRound} data-testid="LotteryRoundStartButton">
         <ListItemIcon>
           <PlayCircleOutline fontSize="small" />
         </ListItemIcon>
         <Typography variant="inherit">
-          <FormattedMessage id="pages.raffle.rounds.start" />
+          <FormattedMessage id="pages.lottery.rounds.start" />
         </Typography>
       </MenuItem>
-      <RaffleStartRoundDialog
+      <LotteryStartRoundDialog
         onConfirm={handleStartRoundConfirm}
         onCancel={handleStartRoundCancel}
         open={isStartRoundDialogOpen}

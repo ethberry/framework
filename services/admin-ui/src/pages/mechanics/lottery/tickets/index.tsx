@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
 import { ContractStatus, Erc721ContractTemplates } from "@framework/types";
 
-import { DefaultContractActionsMenu } from "../../../../components/menu/mechanics/default";
+import { ContractActionsMenu } from "../../../../components/menu/hierarchy/contract";
 import { Erc721ContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 import { LotteryEditDialog } from "./edit";
@@ -99,7 +99,7 @@ export const LotteryTickets: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <DefaultContractActionsMenu
+                <ContractActionsMenu
                   contract={contract}
                   disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 />

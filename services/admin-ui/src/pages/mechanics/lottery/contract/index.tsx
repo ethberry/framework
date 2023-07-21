@@ -21,7 +21,7 @@ import { ContractStatus, CronExpression } from "@framework/types";
 
 import { LotteryContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { LotteryActionsMenu } from "../../../../components/menu/mechanics/lottery";
+import { LotteryActionsMenu } from "../../../../components/menu/mechanics/lottery/contract";
 import { LotteryEditDialog } from "./edit";
 
 export const LotteryContracts: FC = () => {

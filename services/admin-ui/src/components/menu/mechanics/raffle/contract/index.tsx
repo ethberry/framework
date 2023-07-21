@@ -4,14 +4,14 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IContract } from "@framework/types";
 
+import { ContractGrantRoleMenuItem } from "../../../extensions/grant-role";
+import { ContractRevokeRoleMenuItem } from "../../../extensions/revoke-role";
+import { ContractRenounceRoleMenuItem } from "../../../extensions/renounce-role";
+import { PauseMenuItem } from "../../common/pause";
+import { UnPauseMenuItem } from "../../common/unpause";
 import { RaffleRoundStartMenuItem } from "./round-start";
 import { RaffleRoundEndMenuItem } from "./round-end";
 import { RaffleScheduleLightMenuItem } from "./schedule-light";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { PauseMenuItem } from "../common/pause";
-import { UnPauseMenuItem } from "../common/unpause";
 
 export interface IRaffleActionsMenu {
   contract: IContract;

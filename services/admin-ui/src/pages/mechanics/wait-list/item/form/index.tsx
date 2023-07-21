@@ -34,7 +34,7 @@ export const WaitListSearchForm: FC<IWaitListSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <EntityInput name="listIds" controller="waitlist/list" multiple />
+            <EntityInput name="listIds" controller="wait-list/list" multiple />
           </Grid>
         </Grid>
       </Collapse>

@@ -7,7 +7,7 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import RaffleEndRoundABI from "../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
+import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
 import { IContract } from "@framework/types";
 
 export interface IRaffleRoundEndMenuItemProps {

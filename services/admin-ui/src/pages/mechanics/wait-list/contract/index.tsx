@@ -46,9 +46,9 @@ export const WaitListContracts: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "waitlist", "waitlist.contracts"]} />
+      <Breadcrumbs path={["dashboard", "wait-list", "wait-list.contracts"]} />
 
-      <PageHeader message="pages.waitlist.title">
+      <PageHeader message="pages.wait-list.title">
         <WaitListDeployButton />
       </PageHeader>
 

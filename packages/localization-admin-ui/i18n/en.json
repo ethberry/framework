@@ -1018,7 +1018,7 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "waitlist": "Waitlist"
+        "wait-list": "Waitlist"
       },
       "title": "Dashboard"
     },
@@ -1272,7 +1272,7 @@
       },
       "title": "Vesting"
     },
-    "waitlist": {
+    "wait-list": {
       "contracts": {
         "title": "Contracts"
       },

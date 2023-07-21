@@ -17,11 +17,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IContract, IContractSearchDto } from "@framework/types";
-import { ContractStatus, CronExpression } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { RaffleContractDeployButton } from "../../../../components/buttons";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
-import { RaffleActionsMenu } from "../../../../components/menu/mechanics/raffle";
+import { RaffleActionsMenu } from "../../../../components/menu/mechanics/raffle/contract";
 import { RaffleEditDialog } from "./edit";
 
 export const RaffleContracts: FC = () => {
@@ -89,13 +89,6 @@ export const RaffleContracts: FC = () => {
           {rows.map((contract, i) => (
             <ListItem key={i}>
               <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
-              <ListItemText sx={{ width: 0.4 }}>
-                {contract.parameters.schedule
-                  ? Object.keys(CronExpression)[
-                      Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
-                    ]
-                  : ""}
-              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />

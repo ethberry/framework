@@ -23,20 +23,20 @@ export const RaffleSection: FC = () => {
             <FormattedMessage id="pages.raffle.contracts.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/raffle/tickets">
-          <ListItemIcon>
-            <ConfirmationNumber />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.raffle.tickets.title" />
-          </ListItemText>
-        </ListItem>
         <ListItem button component={RouterLink} to="/raffle/rounds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.raffle.rounds.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/raffle/tickets">
+          <ListItemIcon>
+            <ConfirmationNumber />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.raffle.tickets.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/raffle/tokens">

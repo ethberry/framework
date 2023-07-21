@@ -32,4 +32,3 @@ export const StakingDepositDialog: FC<IStakingDepositDialogProps> = props => {
     </FormDialog>
   );
 };
-// {deposit.map((dep, i) => (dep.tokenType === TokenType.ERC721 ? <TokenDepositInput key={i} /> : null))}

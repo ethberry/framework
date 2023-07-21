@@ -37,7 +37,7 @@ import { PyramidSection } from "./mechanics/pyramid";
 import { RentSection } from "./mechanics/rent";
 import { StakingSection } from "./mechanics/staking";
 import { VestingSection } from "./mechanics/vesting";
-import { WaitListSection } from "./mechanics/waitlist";
+import { WaitListSection } from "./mechanics/wait-list";
 
 export const Dashboard: FC = () => {
   return (

@@ -5,9 +5,9 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { ITemplateAssetComponent, ITemplateAsset } from "@gemunion/mui-inputs-asset";
+import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import type { IContract } from "@framework/types";
-import { ContractFeatures, IUser, TokenType } from "@framework/types";
+import { ContractFeatures, IUser, ModuleType, TokenType } from "@framework/types";
 
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -24,7 +24,7 @@ export interface IMintMenuItemProps {
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
-    contract: { address, id: contractId, contractType, decimals, contractFeatures },
+    contract: { address, id: contractId, contractType, decimals, contractFeatures, contractModule },
   } = props;
 
   const user = useUser<IUser>();
@@ -79,7 +79,15 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     });
   };
 
-  if (contractType === TokenType.NATIVE || contractFeatures.includes(ContractFeatures.GENES)) {
+  if (contractModule !== ModuleType.HIERARCHY) {
+    return null;
+  }
+
+  if (contractType === TokenType.NATIVE) {
+    return null;
+  }
+
+  if (contractFeatures.includes(ContractFeatures.GENES)) {
     return null;
   }
 

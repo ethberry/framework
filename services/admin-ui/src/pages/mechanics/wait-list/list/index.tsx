@@ -63,9 +63,9 @@ export const WaitListList: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "waitlist", "waitlist.list"]} />
+      <Breadcrumbs path={["dashboard", "wait-list", "wait-list.list"]} />
 
-      <PageHeader message="pages.waitlist.list.title">
+      <PageHeader message="pages.wait-list.list.title">
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="WaitListListCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

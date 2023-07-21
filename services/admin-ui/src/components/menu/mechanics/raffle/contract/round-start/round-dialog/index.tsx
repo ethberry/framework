@@ -6,7 +6,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 
-import { CommonContractInput } from "../../../../../inputs/common-contract";
+import { CommonContractInput } from "../../../../../../inputs/common-contract";
 import { validationSchema } from "./validation";
 
 export interface IRaffleRound {
@@ -38,7 +38,7 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
 
   const handleContractChange =
     (form: any) =>
-    (_event: ChangeEvent<unknown>, option: any | null): void => {
+    (_event: ChangeEvent<unknown>, option: any): void => {
       form.setValue("contractId", option?.id ?? 0);
       form.setValue("address", option?.address ?? "0x");
     };
