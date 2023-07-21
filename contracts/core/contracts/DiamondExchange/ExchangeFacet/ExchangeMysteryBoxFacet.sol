@@ -15,7 +15,7 @@ import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
-import "../../Mechanics/Mysterybox/interfaces/IERC721MysteryBox.sol";
+import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 
 //import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {

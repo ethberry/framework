@@ -24,7 +24,7 @@ import "../../Exchange/referral/LinearReferral.sol";
 import "../../utils/constants.sol";
 import "../../utils/TopUp.sol";
 import "../../utils/errors.sol";
-import "../Mysterybox/interfaces/IERC721MysteryBox.sol";
+import "../MysteryBox/interfaces/IERC721MysteryBox.sol";
 import "./interfaces/IStaking.sol";
 
 /**
