@@ -76,6 +76,7 @@ describe("Diamond Exchange Rent", function () {
         },
         price: [],
       });
+
       const tx1 = exchangeInstance.connect(receiver).lend(
         {
           externalId /* lendType */,
@@ -194,8 +195,8 @@ describe("Diamond Exchange Rent", function () {
         signature,
       );
 
+      await expect(tx1).to.changeTokenBalances(erc20Instance, [receiver, stranger], [-amount, amount]);
       await expect(tx1)
-        .to.changeTokenBalances(erc20Instance, [receiver, exchangeInstance], [-amount, amount])
         .to.emit(exchangeInstance, "Lend")
         .withArgs(
           receiver.address,

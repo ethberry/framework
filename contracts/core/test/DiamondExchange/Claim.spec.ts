@@ -2,16 +2,11 @@ import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import {
-  deployErc1155Base,
-  deployErc20Base,
-  deployErc721Base,
-  deployExchangeFixture,
-} from "../Exchange/shared/fixture";
+import { deployErc1155Base, deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
 import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
-import { Contract, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
+import { Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
 import { deployDiamond } from "./shared/fixture";
 import { VRFCoordinatorMock } from "../../typechain-types";
@@ -22,17 +17,11 @@ describe("Diamond Exchange Claim", function () {
   const factory = async () =>
     deployDiamond(
       "DiamondExchange",
-      [
-        "ExchangeClaimFacet",
-        "ExchangePurchaseFacet",
-        "PausableFacet",
-        "AccessControlFacet",
-        "WalletFacet", //
-      ],
+      ["ExchangeClaimFacet", "ExchangePurchaseFacet", "PausableFacet", "AccessControlFacet", "WalletFacet"],
       "DiamondExchangeInit",
       {
-        log: true,
-        logSelectors: true, //
+        log: false,
+        logSelectors: false,
       },
     );
 
@@ -69,7 +58,7 @@ describe("Diamond Exchange Claim", function () {
   describe("claim", function () {
     describe("ERC20", function () {
       it("should claim", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
@@ -77,11 +66,19 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address, // spender
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 1,
@@ -94,7 +91,14 @@ describe("Diamond Exchange Claim", function () {
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address, // spender
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 1,
@@ -119,14 +123,16 @@ describe("Diamond Exchange Claim", function () {
             }),
           )
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(await exchangeInstance.getAddress(), receiver.address, amount);
+          .withArgs(owner.address, receiver.address, amount);
+
+        await expect(tx1).changeTokenBalances(erc20Instance, [owner, receiver], [-amount, amount]);
 
         const balance = await erc20Instance.balanceOf(receiver.address);
         expect(balance).to.equal(amount);
       });
 
       it("should claim (extra)", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
 
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
@@ -135,7 +141,8 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const extra = zeroPadValue(toBeHex(Math.ceil(new Date("2030-01-01T00:00:00.000Z").getTime() / 1000)), 32);
 
@@ -145,7 +152,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
-            receiver: ZeroAddress,
+            receiver: owner.address,
             referrer: ZeroAddress,
             extra,
           },
@@ -165,7 +172,7 @@ describe("Diamond Exchange Claim", function () {
             nonce,
             externalId,
             expiresAt,
-            receiver: ZeroAddress,
+            receiver: owner.address,
             referrer: ZeroAddress,
             extra,
           },
@@ -193,7 +200,9 @@ describe("Diamond Exchange Claim", function () {
             }),
           )
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(await exchangeInstance.getAddress(), receiver.address, amount);
+          .withArgs(owner.address, receiver.address, amount);
+
+        await expect(tx1).changeTokenBalances(erc20Instance, [owner, receiver], [-amount, amount]);
 
         const balance = await erc20Instance.balanceOf(receiver.address);
         expect(balance).to.equal(amount);
@@ -259,7 +268,11 @@ describe("Diamond Exchange Claim", function () {
 
       it("should claim (Random)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const diamondInstance = await factory();
+        const diamondAddress = await diamondInstance.getAddress();
+
+        const exchangeInstance = await ethers.getContractAt("ExchangeClaimFacet", diamondAddress);
+        const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const tx02 = await vrfInstance.addConsumer(subscriptionId, await erc721Instance.getAddress());
@@ -375,7 +388,7 @@ describe("Diamond Exchange Claim", function () {
 
     describe("ERROR", function () {
       it("should fail: Expired signature 1", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
@@ -383,7 +396,8 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -430,7 +444,7 @@ describe("Diamond Exchange Claim", function () {
       });
 
       it("should fail: Expired signature 2", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
@@ -438,11 +452,19 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address, // spender
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 1,
@@ -455,7 +477,14 @@ describe("Diamond Exchange Claim", function () {
         });
 
         const tx1 = exchangeInstance.connect(receiver).claim(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address, // spender
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 1,
@@ -486,7 +515,7 @@ describe("Diamond Exchange Claim", function () {
       });
 
       it("should fail: Expired signature 3", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const diamondInstance = await factory();
         const diamondAddress = await diamondInstance.getAddress();
 
@@ -494,7 +523,8 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const extra = zeroPadValue(toBeHex(Math.ceil(new Date("2000-01-01T00:00:00.000Z").getTime() / 1000)), 32);
 
@@ -551,7 +581,8 @@ describe("Diamond Exchange Claim", function () {
         const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-        await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -613,7 +644,7 @@ describe("Diamond Exchange Claim", function () {
   });
 
   it("should fail: paused", async function () {
-    const [_owner, receiver] = await ethers.getSigners();
+    const [owner, receiver] = await ethers.getSigners();
 
     const diamondInstance = await factory();
     const diamondAddress = await diamondInstance.getAddress();
@@ -625,7 +656,8 @@ describe("Diamond Exchange Claim", function () {
     const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
 
     const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-    await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
+    await erc20Instance.mint(owner.address, amount);
+    await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
 
     const extra = zeroPadValue(toBeHex(Math.ceil(new Date("2030-01-01T00:00:00.000Z").getTime() / 1000)), 32);
 

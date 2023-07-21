@@ -6,9 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-//import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-//import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 
@@ -18,7 +15,6 @@ import "../../Diamond/override/PausableInternal.sol";
 
 import "../../Exchange/ExchangeUtils.sol";
 
-//import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   using SafeCast for uint256;
 
@@ -45,7 +41,7 @@ contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, Pau
       revert SignerMissingRole();
     }
 
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
     emit Lend(
       _msgSender() /* from */,

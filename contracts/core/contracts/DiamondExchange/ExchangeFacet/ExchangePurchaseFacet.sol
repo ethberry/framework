@@ -38,8 +38,9 @@ contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, Pau
       DisabledTokenTypes(false, false, false, false, false)
     );
 
-    ExchangeUtils.acquire(
+    ExchangeUtils.acquireFrom(
       ExchangeUtils._toArray(item),
+      params.receiver,
       _msgSender(),
       DisabledTokenTypes(false, false, false, false, false)
     );

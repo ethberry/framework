@@ -3,9 +3,9 @@ import { ethers } from "hardhat";
 
 import { deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
 import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
-import { externalId, extra, params, templateId, tokenId } from "../constants";
+import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
-import { Contract, ZeroAddress, ZeroHash } from "ethers";
+import { Contract, ZeroAddress, ZeroHash, encodeBytes32String } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./shared/fixture";
 
@@ -37,7 +37,7 @@ describe("Diamond Exchange Grade", function () {
 
   describe("upgrade", function () {
     it("should update metadata", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+      const [owner, receiver] = await ethers.getSigners();
       const diamondInstance = await factory();
       const diamondAddress = await diamondInstance.getAddress();
 
@@ -53,7 +53,14 @@ describe("Diamond Exchange Grade", function () {
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
-        params,
+        params: {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         item: {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
@@ -74,7 +81,14 @@ describe("Diamond Exchange Grade", function () {
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
-        params,
+        {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
@@ -113,6 +127,8 @@ describe("Diamond Exchange Grade", function () {
         )
         .to.emit(erc721Instance, "LevelUp")
         .withArgs(await exchangeInstance.getAddress(), tokenId, extra, 1);
+
+      await expect(tx2).changeTokenBalances(erc20Instance, [owner, receiver], [amount, -amount]);
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -175,7 +191,7 @@ describe("Diamond Exchange Grade", function () {
     });
 
     it("should fail: transfer amount exceeds balance", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+      const [owner, receiver] = await ethers.getSigners();
       const diamondInstance = await factory();
       const diamondAddress = await diamondInstance.getAddress();
 
@@ -191,7 +207,14 @@ describe("Diamond Exchange Grade", function () {
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
-        params,
+        params: {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         item: {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
@@ -212,7 +235,14 @@ describe("Diamond Exchange Grade", function () {
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
-        params,
+        {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
@@ -235,7 +265,7 @@ describe("Diamond Exchange Grade", function () {
     });
 
     it("should fail: invalid token ID", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+      const [owner, receiver] = await ethers.getSigners();
       const diamondInstance = await factory();
       const diamondAddress = await diamondInstance.getAddress();
 
@@ -247,7 +277,14 @@ describe("Diamond Exchange Grade", function () {
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
-        params,
+        params: {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         item: {
           tokenType: 2,
           token: await erc721Instance.getAddress(),
@@ -268,7 +305,14 @@ describe("Diamond Exchange Grade", function () {
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
-        params,
+        {
+          nonce: encodeBytes32String("nonce"),
+          externalId,
+          expiresAt,
+          receiver: owner.address,
+          referrer: ZeroAddress,
+          extra,
+        },
         {
           tokenType: 2,
           token: await erc721Instance.getAddress(),

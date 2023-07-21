@@ -6,10 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-//import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-//import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
@@ -17,7 +13,6 @@ import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 
-//import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
@@ -37,7 +32,7 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
       revert WrongAmount();
     }
 
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
     emit Mysterybox(_msgSender(), params.externalId, items, price);
 

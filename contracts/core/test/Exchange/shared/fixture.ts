@@ -21,9 +21,9 @@ export async function deployExchangeFixture() {
 
   const network = await ethers.provider.getNetwork();
 
-  const generateOneToOneSignature = wrapOneToOneSignature(network, exchangeInstance, owner);
-  const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, owner);
-  const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, owner);
+  const generateOneToOneSignature = wrapOneToOneSignature(network, exchangeInstance, "Exchange", owner);
+  const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, "Exchange", owner);
+  const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, "Exchange", owner);
 
   return {
     contractInstance: exchangeInstance,

@@ -6,10 +6,6 @@
 
 pragma solidity ^0.8.13;
 
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-//import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-//import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
@@ -17,7 +13,6 @@ import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/ExchangeUtils.sol";
 import "../../Exchange/interfaces/ILottery.sol";
 
-//import "../../Exchange/interfaces/IAsset.sol";
 contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);
 
