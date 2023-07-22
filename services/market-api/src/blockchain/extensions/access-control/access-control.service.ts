@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AccessControlEntity } from "./access-control.entity";
 import { IAccessControlCheck } from "./interfaces";
 
@@ -13,7 +12,7 @@ export class AccessControlService {
     private readonly accessControlEntityRepository: Repository<AccessControlEntity>,
   ) {}
 
-  public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
+  public count(where: FindOptionsWhere<AccessControlEntity>): Promise<number> {
     return this.accessControlEntityRepository.count({ where });
   }
 
