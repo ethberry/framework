@@ -1,11 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsString, Max, MaxLength, Min } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsInt, IsString, Max, MaxLength, Min } from "class-validator";
+import { Mixin } from "ts-mixer";
 
 import { SearchableDto } from "@gemunion/collection";
 import { IErc20ContractCreateDto } from "@framework/types";
 
-export class Erc20ContractCreateDto extends SearchableDto implements IErc20ContractCreateDto {
+import { AddressDto } from "../../../../../common/dto";
+
+export class Erc20ContractCreateDto extends Mixin(AddressDto, SearchableDto) implements IErc20ContractCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
@@ -17,15 +19,5 @@ export class Erc20ContractCreateDto extends SearchableDto implements IErc20Contr
   @Max(32, { message: "rangeOverflow" })
   public decimals: number;
 
-  @ApiProperty()
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public address: string;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 }

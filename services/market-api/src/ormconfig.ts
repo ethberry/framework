@@ -18,6 +18,7 @@ import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
+import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { EventHistoryEntity } from "./blockchain/event-history/event-history.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
@@ -88,6 +89,7 @@ const config: PostgresConnectionOptions = {
     PyramidDepositEntity,
     BreedEntity,
     RentEntity,
+    AccessControlEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

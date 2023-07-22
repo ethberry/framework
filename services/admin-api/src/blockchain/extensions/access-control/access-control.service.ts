@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AccessControlEntity } from "./access-control.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { AccessControlEntity } from "./access-control.entity";
 
 @Injectable()
 export class AccessControlService {
