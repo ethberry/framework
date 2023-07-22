@@ -10,7 +10,7 @@ import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
-import "../../ERC721/interfaces/IERC721Upgradeable.sol";
+import "../../ERC721/interfaces/IERC721Discrete.sol";
 import "../../Exchange/ExchangeUtils.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {
@@ -32,6 +32,6 @@ contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, Pausab
 
     emit Upgrade(_msgSender(), params.externalId, item, price);
 
-    IERC721Upgradeable(item.token).upgrade(item.tokenId, params.extra);
+    IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
   }
 }

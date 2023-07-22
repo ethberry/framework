@@ -97,7 +97,7 @@
       "RANDOM": "عشوائي",
       "REFERRAL": "إحالة خطية",
       "SOULBOUND": "Soulbound",
-      "UPGRADEABLE": "قابل للترقية"
+      "DISCRETE": "قابل للترقية"
     },
     "contractStatus": {
       "ACTIVE": "نشيط",

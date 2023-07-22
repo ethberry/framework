@@ -8,12 +8,12 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/IERC721Random.sol";
-import "./ERC721BlacklistUpgradeable.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 import "../utils/constants.sol";
+import "./interfaces/IERC721Random.sol";
+import "./ERC721Discrete.sol";
 
-abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721BlacklistUpgradeable, Rarity {
+abstract contract ERC721DiscreteRandom is IERC721Random, ERC721Discrete, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,7 +28,7 @@ abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721Black
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721BlacklistUpgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721Discrete(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
@@ -37,9 +37,6 @@ abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721Black
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    // check if receiver is blacklisted
-    require(!_isBlacklisted(account), "Blacklist: receiver is blacklisted");
-
     if (templateId == 0) {
       revert TemplateZero();
     }
@@ -60,15 +57,17 @@ abstract contract ERC721BlacklistUpgradeableRandom is IERC721Random, ERC721Black
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
+
     _mintCommon(request.account, request.templateId);
   }
-
-  function getRandomNumber() internal virtual returns (uint256 requestId);
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }
+
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 }

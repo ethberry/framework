@@ -289,7 +289,7 @@ describe("Staking", function () {
 
     it("should edit Rule", async function () {
       const stakingInstance = await factory();
-      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistDiscreteRentableRandom");
 
       const stakeRule: IRule = {
         deposit: [
@@ -404,7 +404,7 @@ describe("Staking", function () {
       const [_owner] = await ethers.getSigners();
 
       const stakingInstance = await factory();
-      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistDiscreteRentableRandom");
 
       const stakeRule: IRule = {
         deposit: [
@@ -478,7 +478,7 @@ describe("Staking", function () {
       const [_owner, receiver] = await ethers.getSigners();
 
       const stakingInstance = await factory();
-      const erc721RandomInstance = await erc721Factory("ERC721BlacklistUpgradeableRentableRandom");
+      const erc721RandomInstance = await erc721Factory("ERC721BlacklistDiscreteRentableRandom");
 
       const stakeRule: IRule = {
         deposit: [

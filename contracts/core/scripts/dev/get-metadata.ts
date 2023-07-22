@@ -7,10 +7,10 @@ async function main() {
   const rlNum = 100; // royaltyNumerator
   const [_owner] = await ethers.getSigners();
 
-  // ERC721 contract - upgradeable
-  const itemUpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
-  const itemUpgradeableInstance = await itemUpgradeableFactory.deploy("ITEMG", "ITEMG", rlNum, baseTokenURI);
-  console.info(`ERC721_U_ADDR=${itemUpgradeableInstance.address.toLowerCase()}`);
+  // ERC721 contract - discrete
+  const itemDiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
+  const itemDiscreteInstance = await itemDiscreteFactory.deploy("ITEMG", "ITEMG", rlNum, baseTokenURI);
+  console.info(`ERC721_U_ADDR=${itemDiscreteInstance.address.toLowerCase()}`);
 
   // ERC721 contract - random
   const itemRandomFactory = await ethers.getContractFactory("ERC721Random");
@@ -26,12 +26,12 @@ async function main() {
   // await blockAwait(ethers.provider);
 
   // ERC721 getRecordField Template
-  const templateKey = await itemUpgradeableInstance.TEMPLATE_ID();
+  const templateKey = await itemDiscreteInstance.TEMPLATE_ID();
   // 0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842
   console.info("templateKey", templateKey);
 
   // ERC721 getRecordField Template
-  const gradeKey = await itemUpgradeableInstance.GRADE();
+  const gradeKey = await itemDiscreteInstance.GRADE();
   // 0x76e34cd5c7c46b6bfe6b1da94d54447ea83a4af449bc62a0ef3ecae24c08031a
   console.info("gradeKey", gradeKey);
 

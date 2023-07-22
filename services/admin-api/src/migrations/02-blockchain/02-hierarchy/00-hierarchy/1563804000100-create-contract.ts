@@ -43,7 +43,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         
         -- ERC721
         'RANDOM',
-        'UPGRADEABLE',
+        'DISCRETE',
         'GENES',
         'RENTABLE',
         'SOULBOUND',

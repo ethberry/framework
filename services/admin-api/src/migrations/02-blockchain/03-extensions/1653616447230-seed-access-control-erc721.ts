@@ -14,7 +14,7 @@ export class SeedAccessControlErc721At20At1653616447230 implements MigrationInte
     const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
     const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
     const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
-    const erc721ContractUpgradeableAddress = process.env.ERC721_UPGRADEABLE_ADDR || wallet;
+    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR || wallet;
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
@@ -99,19 +99,19 @@ export class SeedAccessControlErc721At20At1653616447230 implements MigrationInte
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc721ContractUpgradeableAddress}',
+        '${erc721ContractDiscreteAddress}',
         '${wallet}',
         'DEFAULT_ADMIN_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc721ContractUpgradeableAddress}',
+        '${erc721ContractDiscreteAddress}',
         '${wallet}',
         'MINTER_ROLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc721ContractUpgradeableAddress}',
+        '${erc721ContractDiscreteAddress}',
         '${wallet}',
         'METADATA_ROLE',
         '${currentDateTime}',

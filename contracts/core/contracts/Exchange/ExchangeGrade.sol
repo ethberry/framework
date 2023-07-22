@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
-import "../ERC721/interfaces/IERC721Upgradeable.sol";
+import "../ERC721/interfaces/IERC721Discrete.sol";
 
 abstract contract ExchangeGrade is SignatureValidator, AccessControl, Pausable {
   event Upgrade(address account, uint256 externalId, bytes32 attribute, Asset item, Asset[] price);
@@ -31,6 +31,6 @@ abstract contract ExchangeGrade is SignatureValidator, AccessControl, Pausable {
 
     emit Upgrade(_msgSender(), params.externalId, params.extra, item, price);
 
-    IERC721Upgradeable(item.token).upgrade(item.tokenId, params.extra);
+    IERC721Discrete(item.token).upgrade(item.tokenId, params.extra);
   }
 }

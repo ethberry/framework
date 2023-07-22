@@ -8,12 +8,12 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../Mechanics/Rarity/Rarity.sol";
 import "../utils/constants.sol";
-import "./interfaces/IERC721Random.sol";
-import "./ERC721Upgradeable.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
+import "../Mechanics/Rarity/Rarity.sol";
+import "./ERC998BlacklistDiscrete.sol";
 
-abstract contract ERC721UpgradeableRandom is IERC721Random, ERC721Upgradeable, Rarity {
+abstract contract ERC998BlacklistDiscreteRandom is IERC721Random, ERC998BlacklistDiscrete, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,15 +28,29 @@ abstract contract ERC721UpgradeableRandom is IERC721Random, ERC721Upgradeable, R
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC998BlacklistDiscrete(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
-    uint256 tokenId = _mintCommon(account, templateId);
+  function mintCommon(
+    address account,
+    uint256 templateId
+  ) external override(ERC998BlacklistDiscrete) onlyRole(MINTER_ROLE) {
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
 
+    uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
+
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     _upsertRecordField(tokenId, RARITY, 0);
+
+    _safeMint(account, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+    // check if receiver is blacklisted
+    require(!_isBlacklisted(account), "Blacklist: receiver is blacklisted");
+
     if (templateId == 0) {
       revert TemplateZero();
     }

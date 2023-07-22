@@ -8,16 +8,14 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/IERC721Random.sol";
-import "./ERC721BlacklistUpgradeableRentable.sol";
-import "../Mechanics/Rarity/Rarity.sol";
 import "../utils/constants.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
+import "../Mechanics/Rarity/Rarity.sol";
+import "./ERC998Discrete.sol";
 
-abstract contract ERC721BlacklistUpgradeableRentableRandom is
-  IERC721Random,
-  ERC721BlacklistUpgradeableRentable,
-  Rarity
-{
+import "hardhat/console.sol";
+
+abstract contract ERC998DiscreteRandom is IERC721Random, ERC998Discrete, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -32,23 +30,12 @@ abstract contract ERC721BlacklistUpgradeableRentableRandom is
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721BlacklistUpgradeableRentable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC998Discrete(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
     uint256 tokenId = _mintCommon(account, templateId);
 
     _upsertRecordField(tokenId, RARITY, 0);
-  }
-
-  function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    // check if receiver is blacklisted
-    require(!_isBlacklisted(account), "Blacklist: receiver is blacklisted");
-
-    if (templateId == 0) {
-      revert TemplateZero();
-    }
-
-    _queue[getRandomNumber()] = Request(account, templateId);
   }
 
   function upgrade(uint256 tokenId, bytes32 attribute) public virtual override onlyRole(METADATA_ROLE) returns (bool) {
@@ -58,9 +45,16 @@ abstract contract ERC721BlacklistUpgradeableRentableRandom is
     return _upgrade(tokenId, attribute);
   }
 
+  function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+    if (templateId == 0) {
+      revert TemplateZero();
+    }
+
+    _queue[getRandomNumber()] = Request(account, templateId);
+  }
+
   function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
     Request memory request = _queue[requestId];
-
     uint256 tokenId = _tokenIdTracker.current();
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);

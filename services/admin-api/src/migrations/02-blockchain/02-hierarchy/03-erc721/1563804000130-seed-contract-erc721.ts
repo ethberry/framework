@@ -15,7 +15,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
     const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
     const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
-    const erc721ContractUpgradeableAddress = process.env.ERC721_UPGRADEABLE_ADDR || wallet;
+    const erc721ContractDiscreteAddress = process.env.ERC721_DISCRETE_ADDR || wallet;
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const erc721ContractGenesAddress = process.env.ERC721_GENES_ADDR || wallet;
@@ -116,7 +116,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10305,
-        '${erc721ContractUpgradeableAddress}',
+        '${erc721ContractDiscreteAddress}',
         '${chainId}',
         'Armour (lvl)',
         '${simpleFormatting}',
@@ -127,7 +127,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{UPGRADEABLE}',
+        '{DISCRETE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -145,7 +145,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{UPGRADEABLE,RANDOM}',
+        '{DISCRETE,RANDOM}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -206,7 +206,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10380,
-        '${erc721ContractUpgradeableAddress}',
+        '${erc721ContractDiscreteAddress}',
         '${chainId}',
         'Under Armour (lvl)',
         '${simpleFormatting}',
@@ -217,7 +217,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{UPGRADEABLE}',
+        '{DISCRETE}',
         '${fromBlock}',
         2,
         '${currentDateTime}',

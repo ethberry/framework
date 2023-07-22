@@ -3,7 +3,8 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { ClaimStatus, IClaimSearchDto } from "@framework/types";
+import { ClaimStatus } from "@framework/types";
+import type { IClaimSearchDto } from "@framework/types";
 
 interface IClaimSearchFormProps {
   onSubmit: (values: IClaimSearchDto) => Promise<void>;

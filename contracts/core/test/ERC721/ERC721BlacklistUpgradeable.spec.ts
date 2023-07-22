@@ -3,13 +3,13 @@ import { shouldBehaveLikeBlackList } from "@gemunion/contracts-access-list";
 import { DEFAULT_ADMIN_ROLE, InterfaceId, METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { FrameworkInterfaceId } from "../constants";
-import { shouldBehaveLikeUpgradeable } from "../Mechanics/Grade/upgrade";
+import { shouldBehaveLikeDiscrete } from "../Mechanics/Grade/upgrade";
 import { deployERC721 } from "./shared/fixtures";
 import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 import { shouldBehaveLikeERC721Blacklist } from "./shared/blacklist";
 import { shouldMintCommon } from "./shared/simple/base/mintCommon";
 
-describe("ERC721BlacklistUpgradeable", function () {
+describe("ERC721BlacklistDiscrete", function () {
   const factory = () => deployERC721(this.title);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, METADATA_ROLE);
@@ -17,7 +17,7 @@ describe("ERC721BlacklistUpgradeable", function () {
   shouldBehaveLikeERC721Blacklist(factory);
   shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
-  shouldBehaveLikeUpgradeable(factory);
+  shouldBehaveLikeDiscrete(factory);
 
   shouldSupportsInterface(factory)([
     InterfaceId.IERC165,

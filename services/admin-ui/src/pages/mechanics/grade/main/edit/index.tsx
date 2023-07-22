@@ -48,7 +48,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
         dirtyAutoselect={false}
         data={{
           contractStatus: [ContractStatus.ACTIVE],
-          contractFeatures: [ContractFeatures.UPGRADEABLE],
+          contractFeatures: [ContractFeatures.DISCRETE],
         }}
       />
       <TextInput name="attribute" readOnly={!!id} />

@@ -108,7 +108,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
     setIsUpgradeDialogOpen(false);
   };
 
-  if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+  if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
     return null;
   }
 

@@ -15,7 +15,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractInactiveAddress = process.env.ERC998_INACTIVE_ADDR || wallet;
     const erc998ContractNewAddress = process.env.ERC998_NEW_ADDR || wallet;
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
     const erc998ContractRentableAddress = process.env.ERC998_RENTABLE_ADDR || wallet;
@@ -118,18 +118,18 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10405,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${chainId}',
-        'Spell books (upgradeable)',
+        'Spell books (discrete)',
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspell_books.png?alt=media&token=72784284-77e2-45d5-9b73-d44e202ee4a6',
-        'ERC998 UPGRADEABLE',
+        'ERC998 DISCRETE',
         'LVL998',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{ALLOWANCE,UPGRADEABLE}',
+        '{ALLOWANCE,DISCRETE}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -147,7 +147,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{ALLOWANCE,UPGRADEABLE,RANDOM}',
+        '{ALLOWANCE,DISCRETE,RANDOM}',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -244,7 +244,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         10480,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${chainId}',
         'Anti-Heros (lvl)',
         '${simpleFormatting}',
@@ -255,7 +255,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{UPGRADEABLE}',
+        '{DISCRETE}',
         '${fromBlock}',
         2,
         '${currentDateTime}',

@@ -45,7 +45,7 @@ describe("Diamond Exchange Grade", function () {
       const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -140,7 +140,7 @@ describe("Diamond Exchange Grade", function () {
       const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -199,7 +199,7 @@ describe("Diamond Exchange Grade", function () {
       const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -273,7 +273,7 @@ describe("Diamond Exchange Grade", function () {
       const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -343,7 +343,7 @@ describe("Diamond Exchange Grade", function () {
       const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 

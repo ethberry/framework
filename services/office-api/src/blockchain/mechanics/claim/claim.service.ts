@@ -148,13 +148,13 @@ export class ClaimService {
     const signature = await this.getSignature(
       account,
       {
-        nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referrer: ZeroAddress,
+        nonce,
         extra: zeroPadValue(toBeHex(Math.ceil(new Date(claimEntity.endTimestamp).getTime() / 1000)), 32),
+        receiver: claimEntity.merchant.wallet,
+        referrer: ZeroAddress,
       },
-
       claimEntity,
     );
 

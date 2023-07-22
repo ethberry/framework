@@ -16,7 +16,7 @@ export const TemplateInput: FC = () => {
         contractIds,
         contractType: [tokenType],
         templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
-        contractFeatures: [ContractFeatures.UPGRADEABLE],
+        contractFeatures: [ContractFeatures.DISCRETE],
       }}
       multiple
     />

@@ -46,7 +46,7 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
               name="contractIds"
               data={{
                 contractStatus: [ContractStatus.ACTIVE],
-                contractFeatures: [ContractFeatures.UPGRADEABLE],
+                contractFeatures: [ContractFeatures.DISCRETE],
               }}
               multiple
               withTokenType

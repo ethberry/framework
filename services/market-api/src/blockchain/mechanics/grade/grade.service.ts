@@ -83,7 +83,7 @@ export class GradeService {
     }
 
     const { contractFeatures } = tokenEntity.template.contract;
-    if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+    if (!contractFeatures.includes(ContractFeatures.DISCRETE)) {
       throw new BadRequestException("featureIsNotSupported");
     }
 

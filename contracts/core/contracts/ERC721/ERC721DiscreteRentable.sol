@@ -9,15 +9,15 @@ pragma solidity ^0.8.13;
 import "@gemunion/contracts-erc721/contracts/extensions/ERC4907.sol";
 
 import "../utils/constants.sol";
-import "./ERC721Upgradeable.sol";
+import "./ERC721Discrete.sol";
 
-contract ERC721UpgradeableRentable is ERC721Upgradeable, ERC4907 {
+contract ERC721DiscreteRentable is ERC721Discrete, ERC4907 {
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721Discrete(name, symbol, royalty, baseTokenURI) {}
 
   function _isApprovedOrOwner(address owner, uint256 tokenId) internal view override(ERC721, ERC4907) returns (bool) {
     return super._isApprovedOrOwner(owner, tokenId);
@@ -29,7 +29,7 @@ contract ERC721UpgradeableRentable is ERC721Upgradeable, ERC4907 {
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(ERC721Upgradeable, ERC4907) returns (bool) {
+  ) public view virtual override(ERC721Discrete, ERC4907) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

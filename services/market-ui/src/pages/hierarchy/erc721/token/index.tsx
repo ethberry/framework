@@ -77,7 +77,7 @@ export const Erc721Token: FC = () => {
               </Typography>
             </StyledPaper>
           ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.DISCRETE) ? (
             <StyledPaper>
               <Typography>
                 <FormattedMessage id="pages.erc721.token.grade" />

@@ -14,7 +14,7 @@ describe("ExchangeGrade", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -88,7 +88,7 @@ describe("ExchangeGrade", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -142,7 +142,7 @@ describe("ExchangeGrade", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -197,7 +197,7 @@ describe("ExchangeGrade", function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const signature = await generateOneToManySignature({
         account: receiver.address,
@@ -275,7 +275,7 @@ describe("ExchangeGrade", function () {
       const [owner, receiver] = await ethers.getSigners();
       const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const erc721Instance = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 

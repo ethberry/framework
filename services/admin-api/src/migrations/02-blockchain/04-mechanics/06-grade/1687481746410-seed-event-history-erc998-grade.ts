@@ -12,7 +12,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
 
     const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
     const currentDateTime = new Date().toISOString();
     const LEVEL = zeroPadValue(toUtf8Bytes("LEVEL"), 32);
 
@@ -37,7 +37,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           attribute: LEVEL,
           items: {
             tokenType: 2,
-            token: erc998ContractUpgradeableAddress,
+            token: erc998ContractDiscreteAddress,
             tokenId: "104050101",
             amount: "1",
           },
@@ -55,7 +55,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
         '${currentDateTime}'
       ), (
         10406011,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${ZeroHash}',
         'LevelUp',
         '${JSON.stringify({
@@ -91,7 +91,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           attribute: LEVEL,
           items: {
             tokenType: 2,
-            token: erc998ContractUpgradeableAddress,
+            token: erc998ContractDiscreteAddress,
             tokenId: "104050201",
             amount: "1",
           },
@@ -109,7 +109,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
         '${currentDateTime}'
       ), (
         10406021,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${ZeroHash}',
         'LevelUp',
         '${JSON.stringify({
@@ -145,7 +145,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
           attribute: LEVEL,
           items: {
             tokenType: 2,
-            token: erc998ContractUpgradeableAddress,
+            token: erc998ContractDiscreteAddress,
             tokenId: "103800101",
             amount: "1",
           },
@@ -163,7 +163,7 @@ export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInte
         '${currentDateTime}'
       ), (
         10406031,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${ZeroHash}',
         'LevelUp',
         '${JSON.stringify({

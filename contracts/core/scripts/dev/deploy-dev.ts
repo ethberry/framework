@@ -219,8 +219,8 @@ async function main() {
   contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("ERC721 BLACKLIST", "BL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const ERC721UpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
-  contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
+  const ERC721DiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
+  contracts.erc721Discrete = await ERC721DiscreteFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
   // const randomContractName =
@@ -229,7 +229,7 @@ async function main() {
   //     : network.name === "gemunion"
   //     ? "ERC721RandomGemunionV2"
   //     : "ERC721Random";
-  const randomContractName = getContractName("ERC721UpgradeableRandom", network.name);
+  const randomContractName = getContractName("ERC721DiscreteRandom", network.name);
 
   const erc721RandomFactory = await ethers.getContractFactory(randomContractName);
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
@@ -282,8 +282,8 @@ async function main() {
   contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
-  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
+  const ERC998DiscreteFactory = await ethers.getContractFactory("ERC998Discrete");
+  contracts.erc998Discrete = await ERC998DiscreteFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
   const randomContract998Name = getContractName("ERC998Random", network.name);
@@ -641,7 +641,7 @@ async function main() {
       await contracts.erc721Random.getAddress(),
       await contracts.erc721Simple.getAddress(),
       await contracts.erc721Blacklist.getAddress(),
-      await contracts.erc721Upgradeable.getAddress(),
+      await contracts.erc721Discrete.getAddress(),
       await contracts.erc721Rentable.getAddress(),
       await contracts.erc721Soulbound.getAddress(),
       await contracts.erc721Genes.getAddress(),
@@ -650,7 +650,7 @@ async function main() {
       await contracts.erc998New.getAddress(),
       await contracts.erc998Random.getAddress(),
       await contracts.erc998Simple.getAddress(),
-      await contracts.erc998Upgradeable.getAddress(),
+      await contracts.erc998Discrete.getAddress(),
       await contracts.erc998Genes.getAddress(),
       await contracts.erc998Rentable.getAddress(),
       await contracts.erc998OwnerErc1155Erc20.getAddress(),
@@ -683,8 +683,8 @@ async function main() {
   await grantRoles(
     [
       await contracts.erc721Random.getAddress(),
-      await contracts.erc721Upgradeable.getAddress(),
-      await contracts.erc998Upgradeable.getAddress(),
+      await contracts.erc721Discrete.getAddress(),
+      await contracts.erc998Discrete.getAddress(),
     ],
     [await contracts.exchange.getAddress()],
     [METADATA_ROLE],

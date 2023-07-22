@@ -9,11 +9,11 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../utils/constants.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
-import "./ERC998BlacklistUpgradeable.sol";
 import "../Mechanics/Rarity/Rarity.sol";
+import "./interfaces/IERC721Random.sol";
+import "./ERC721BlacklistDiscrete.sol";
 
-abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998BlacklistUpgradeable, Rarity {
+abstract contract ERC721BlacklistDiscreteRandom is IERC721Random, ERC721BlacklistDiscrete, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,23 +28,12 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC998BlacklistUpgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721BlacklistDiscrete(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(
-    address account,
-    uint256 templateId
-  ) external override(ERC998BlacklistUpgradeable) onlyRole(MINTER_ROLE) {
-    if (templateId == 0) {
-      revert TemplateZero();
-    }
+  function mintCommon(address account, uint256 templateId) public override onlyRole(MINTER_ROLE) {
+    uint256 tokenId = _mintCommon(account, templateId);
 
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     _upsertRecordField(tokenId, RARITY, 0);
-
-    _safeMint(account, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -71,17 +60,15 @@ abstract contract ERC998BlacklistUpgradeableRandom is IERC721Random, ERC998Black
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
 
     delete _queue[requestId];
-
     _mintCommon(request.account, request.templateId);
   }
+
+  function getRandomNumber() internal virtual returns (uint256 requestId);
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == IERC721_RANDOM_ID || super.supportsInterface(interfaceId);
   }
-
-  function getRandomNumber() internal virtual returns (uint256 requestId);
 }

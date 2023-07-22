@@ -27,7 +27,7 @@ import VestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
-import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
+import ERC721DiscreteSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Discrete.sol/ERC721Discrete.json";
 
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
@@ -340,8 +340,8 @@ export class ContractManagerSignService {
         return ERC721SimpleSol.bytecode;
       case Erc721ContractTemplates.SOULBOUND:
         return ERC721SoulboundSol.bytecode;
-      case Erc721ContractTemplates.UPGRADEABLE:
-        return ERC721UpgradeableSol.bytecode;
+      case Erc721ContractTemplates.DISCRETE:
+        return ERC721DiscreteSol.bytecode;
       default:
         throw new NotFoundException("templateNotFound");
     }

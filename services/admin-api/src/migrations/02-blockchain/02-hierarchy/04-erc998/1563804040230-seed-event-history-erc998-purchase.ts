@@ -15,7 +15,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc998ContractSimpleAddress = process.env.ERC998_SIMPLE_ADDR || wallet;
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
-    const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
+    const erc998ContractDiscreteAddress = process.env.ERC998_DISCRETE_ADDR || wallet;
 
     const now = new Date();
     const currentDateTime = now.toISOString();
@@ -456,7 +456,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           externalId: "1040501",
           item: {
             tokenType: 3,
-            token: erc998ContractUpgradeableAddress,
+            token: erc998ContractDiscreteAddress,
             tokenId: "1040501",
             amount: "1",
           },
@@ -474,7 +474,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${currentDateTime}'
       ), (
         10405011,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({
@@ -508,7 +508,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
           externalId: "1040502",
           item: {
             tokenType: 3,
-            token: erc998ContractUpgradeableAddress,
+            token: erc998ContractDiscreteAddress,
             tokenId: "1040502",
             amount: "1",
           },
@@ -526,7 +526,7 @@ export class SeedEventHistoryErc998PurchaseAt1563804040230 implements MigrationI
         '${currentDateTime}'
       ), (
         10405021,
-        '${erc998ContractUpgradeableAddress}',
+        '${erc998ContractDiscreteAddress}',
         '${ZeroHash}',
         'Transfer',
         '${JSON.stringify({

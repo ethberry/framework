@@ -20,8 +20,8 @@ export async function deployERC721(contracts: Record<string, any>) {
   contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("ERC721 BLACKLIST", "BL721", royalty, baseTokenURI);
   await blockAwait();
 
-  const ERC721UpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
-  contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
+  const ERC721DiscreteFactory = await ethers.getContractFactory("ERC721Discrete");
+  contracts.erc721Discrete = await ERC721DiscreteFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await blockAwait();
 
   const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
