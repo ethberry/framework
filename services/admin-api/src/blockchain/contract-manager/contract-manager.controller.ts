@@ -16,7 +16,6 @@ import {
   LotteryContractDeployDto,
   MysteryContractDeployDto,
   PyramidContractDeployDto,
-  // RaffleContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
   WaitListContractDeployDto,
@@ -91,7 +90,7 @@ export class ContractManagerController {
   }
 
   // MODULE:WAITLIST
-  @Post("/waitlist")
+  @Post("/wait-list")
   public waitList(@Body() dto: WaitListContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.waitList(dto, userEntity);
   }

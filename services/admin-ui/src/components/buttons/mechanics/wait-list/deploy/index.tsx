@@ -40,7 +40,7 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
   const onDeployConfirm = () => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/waitlist",
+        url: "/contract-manager/wait-list",
         method: "POST",
       },
       {},
