@@ -16,4 +16,5 @@ export interface ITokenSearchDto extends ISearchDto {
   templateIds: Array<number>;
   account: string;
   merchantId: number;
+  chainId: number;
 }

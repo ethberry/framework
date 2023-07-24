@@ -14,11 +14,6 @@ import { UserEntity } from "../../../infrastructure/user/user.entity";
 export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    return this.tokenService.autocomplete(dto, userEntity);
-  }
-
   @Get("/search")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
@@ -35,5 +30,10 @@ export class TokenController {
         ModuleType.RAFFLE,
       ],
     );
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    return this.tokenService.autocomplete(dto, userEntity);
   }
 }

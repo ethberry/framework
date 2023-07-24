@@ -7,7 +7,10 @@ import { ClaimService } from "./claim.service";
 
 @Injectable()
 export class ClaimServiceRmq {
-  constructor(private readonly claimService: ClaimService, private readonly merchantService: MerchantService) {}
+  constructor(
+    private readonly claimService: ClaimService,
+    private readonly merchantService: MerchantService,
+  ) {}
 
   public async create(dto: IClaimCreateDto): Promise<ClaimEntity> {
     const merchantEntity = await this.merchantService.findOne({

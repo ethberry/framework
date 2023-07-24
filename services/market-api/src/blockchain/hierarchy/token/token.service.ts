@@ -13,8 +13,8 @@ import {
   TokenType,
 } from "@framework/types";
 
-import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {

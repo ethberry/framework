@@ -11,13 +11,7 @@ task("flat", "Flattens and prints contracts and their dependencies (Resolves lic
     flattened = `// SPDX-License-Identifier: MIXED\n\n${flattened}`;
 
     // Remove every line started with "pragma experimental ABIEncoderV2;" except the first one
-    flattened = flattened.replace(
-      /pragma experimental ABIEncoderV2;\n/gm,
-      (
-        i => (m: string) =>
-          !i++ ? m : ""
-      )(0),
-    );
+    flattened = flattened.replace(/pragma experimental ABIEncoderV2;\n/gm, (i => (m: string) => (!i++ ? m : ""))(0));
     fs.writeFileSync("flat.sol", flattened, { encoding: "utf-8", flag: "w+" });
   });
 

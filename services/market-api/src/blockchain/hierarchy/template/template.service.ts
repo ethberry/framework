@@ -5,10 +5,10 @@ import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repositor
 
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
-
-import { TemplateEntity } from "./template.entity";
 import { testChainId } from "@framework/constants";
+
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TemplateEntity } from "./template.entity";
 
 @Injectable()
 export class TemplateService {
@@ -145,7 +145,7 @@ export class TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+  public async autocomplete(dto: ITemplateAutocompleteDto, userEntity: UserEntity): Promise<Array<TemplateEntity>> {
     const {
       contractFeatures = [],
       templateStatus = [],
@@ -155,7 +155,9 @@ export class TemplateService {
     } = dto;
 
     const where = {
-      contract: {},
+      contract: {
+        chainId: userEntity.chainId,
+      },
     };
 
     if (contractType.length) {

@@ -59,6 +59,7 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   public maxPrice: string;
 
   public merchantId: number;
+  public chainId: number;
   public contractType: Array<TokenType>;
   public contractModule: Array<ModuleType>;
 }

@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
+import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { IContractSearchDto } from "@framework/types";
@@ -46,6 +46,13 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
-  public merchantId: number;
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public chainId: number;
+
+  public merchantId: number;
 }

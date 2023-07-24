@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { hexlify, randomBytes, toBeHex, zeroPadValue, ZeroAddress } from "ethers";
+import { hexlify, randomBytes, toBeHex, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
@@ -9,8 +9,8 @@ import { SettingsKeys, TokenType } from "@framework/types";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { ISignRentTokenDto } from "./interfaces";
 import { sorter } from "../../../common/utils/sorter";
+import { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
 

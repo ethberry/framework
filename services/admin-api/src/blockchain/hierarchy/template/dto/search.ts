@@ -55,6 +55,7 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   public templateStatus: Array<TemplateStatus>;
 
   public merchantId: number;
+  public chainId: number;
   public contractType: Array<TokenType>;
   public contractModule: Array<ModuleType>;
 }

@@ -6,4 +6,5 @@ export interface IContractSearchDto extends ISearchDto {
   contractStatus: Array<ContractStatus>;
   contractFeatures: Array<ContractFeatures>;
   merchantId: number;
+  chainId: number;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
@@ -10,10 +10,9 @@ import {
   ModuleType,
   TokenType,
 } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
-import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
+import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
 @Injectable()
 export class ContractService {
@@ -25,11 +24,11 @@ export class ContractService {
 
   public async search(
     dto: IContractSearchDto,
-    userEntity: UserEntity,
+    merchantEntity: MerchantEntity,
     contractModule: Array<ModuleType>,
     contractType: Array<TokenType> | null,
   ): Promise<[Array<ContractEntity>, number]> {
-    const { query, skip, take, merchantId } = dto;
+    const { query, skip, take, merchantId, chainId } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -84,9 +83,8 @@ export class ContractService {
       contractStatus: ContractStatus.ACTIVE,
     });
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity?.chainId || chainId,
+      chainId,
     });
 
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
@@ -120,13 +118,15 @@ export class ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
+  public async autocomplete(
+    dto: IContractAutocompleteDto,
+    merchantEntity: MerchantEntity,
+  ): Promise<Array<ContractEntity>> {
     const { contractFeatures = [], contractType = [], contractModule = [], contractId } = dto;
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
     const where = {
-      chainId: userEntity?.chainId || chainId,
+      // chainId: userEntity?.chainId || chainId,
+      merchantId: merchantEntity.id,
       contractStatus: ContractStatus.ACTIVE,
     };
 
@@ -173,5 +173,22 @@ export class ContractService {
     options?: FindOneOptions<ContractEntity>,
   ): Promise<ContractEntity | null> {
     return this.contractEntityRepository.findOne({ where, ...options });
+  }
+
+  public async findOneWithRelations(
+    where: FindOptionsWhere<ContractEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<ContractEntity | null> {
+    const contractEntity = await this.findOne(where);
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (contractEntity.merchantId !== merchantEntity.id) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    return contractEntity;
   }
 }

@@ -2,20 +2,23 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
-import type { IContractSearchDto } from "@framework/types";
+import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-export class ContractSearchDto extends SearchDto implements IContractSearchDto {
+export class ContractAutocompleteDto implements IContractAutocompleteDto {
+  public contractStatus: Array<ContractStatus>;
+
   @ApiPropertyOptional({
-    enum: ContractStatus,
+    enum: TokenType,
     isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractStatus>)
-  @IsEnum(ContractStatus, { each: true, message: "badInput" })
-  public contractStatus: Array<ContractStatus>;
+  @Transform(({ value }) => value as Array<TokenType>)
+  @IsEnum(TokenType, { each: true, message: "badInput" })
+  public contractType: Array<TokenType>;
 
   @ApiPropertyOptional({
     enum: ContractFeatures,
@@ -28,15 +31,6 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   public contractFeatures: Array<ContractFeatures>;
 
   @ApiPropertyOptional({
-    enum: TokenType,
-    isArray: true,
-  })
-  @IsOptional()
-  @Transform(({ value }) => value as Array<TokenType>)
-  @IsEnum(TokenType, { each: true, message: "badInput" })
-  public contractType: Array<TokenType>;
-
-  @ApiPropertyOptional({
     enum: ModuleType,
     isArray: true,
   })
@@ -47,13 +41,21 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   public contractModule: Array<ModuleType>;
 
   @ApiPropertyOptional({
-    minimum: 0,
+    enum: ContractFeatures,
+    isArray: true,
   })
   @IsOptional()
-  @IsInt({ each: true, message: "typeMismatch" })
-  @Min(1, { each: true, message: "valueMissing" })
-  @Type(() => Number)
-  public merchantId: number;
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
+  public excludeFeatures: Array<ContractFeatures>;
 
-  public chainId: number;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+
+  public merchantId: number;
 }

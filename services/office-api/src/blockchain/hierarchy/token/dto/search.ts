@@ -92,4 +92,6 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public merchantId: number;
+
+  public chainId: number;
 }

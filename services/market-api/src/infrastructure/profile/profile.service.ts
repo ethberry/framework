@@ -10,7 +10,10 @@ import { IProfileUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly metamaskService: MetamaskService, private readonly userService: UserService) {}
+  constructor(
+    private readonly metamaskService: MetamaskService,
+    private readonly userService: UserService,
+  ) {}
 
   public update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity> {
     Object.assign(userEntity, dto);

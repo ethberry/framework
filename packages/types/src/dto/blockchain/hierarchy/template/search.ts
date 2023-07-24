@@ -8,4 +8,5 @@ export interface ITemplateSearchDto extends ISearchDto {
   maxPrice: string;
   minPrice: string;
   merchantId: number;
+  chainId: number;
 }
