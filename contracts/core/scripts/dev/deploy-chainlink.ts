@@ -92,6 +92,15 @@ async function main() {
   // SETUP CHAIN_LINK VRF-V2 TO WORK
   const linkAmount = WeiPerEther * 1000n;
 
+  /**
+   * @notice Sets the configuration of the vrfv2 coordinator
+   * @param minimumRequestConfirmations global min for request confirmations
+   * @param maxGasLimit global max for request gas limit
+   * @param stalenessSeconds if the eth/link feed is more stale then this, use the fallback price
+   * @param gasAfterPaymentCalculation gas used in doing accounting after completing the gas measurement
+   * @param fallbackWeiPerUnitLink fallback eth/link price in the case of a stale feed
+   */
+
   await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
   await debug(await vrfInstance.createSubscription(), "createSubscription");
   // emit SubscriptionCreated(currentSubId, msg.sender);

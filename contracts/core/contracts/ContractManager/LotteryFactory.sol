@@ -8,9 +8,14 @@ pragma solidity ^0.8.13;
 
 import "../utils/errors.sol";
 import "./AbstractFactory.sol";
-import "../Mechanics/Lottery/interfaces/ILottery.sol";
 
 contract LotteryFactory is AbstractFactory {
+
+  struct LotteryConfig {
+    uint256 timeLagBeforeRelease;
+    uint256 commission;
+  }
+
   bytes private constant LOTTERY_CONFIG_SIGNATURE = "LotteryConfig(uint256 timeLagBeforeRelease,uint256 commission)";
   bytes32 private constant LOTTERY_CONFIG_TYPEHASH = keccak256(LOTTERY_CONFIG_SIGNATURE);
 

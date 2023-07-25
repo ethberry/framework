@@ -140,6 +140,8 @@ describe("VestingFactory", function () {
       const decoded = decodeTraits(BigInt(encodedExternalId), ["user", "claim"]);
       expect(decoded.claim).to.equal(claimId);
       expect(decoded.user).to.equal(userId);
+
+      await expect(tx).changeTokenBalances(erc20Instance, [owner, address], [-amount, amount]);
     });
 
     it("should fail: SignerMissingRole", async function () {

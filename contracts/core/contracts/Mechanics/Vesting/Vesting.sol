@@ -12,8 +12,7 @@ import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import "../../utils/TopUp.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
 
 /**
  * @title Vesting

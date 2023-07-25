@@ -7,8 +7,7 @@
 pragma solidity ^0.8.13;
 
 import "../utils/errors.sol";
-import "../Exchange/interfaces/IAsset.sol";
-import "../Exchange/ExchangeUtils.sol";
+import "../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
 import "./AbstractFactory.sol";
 
 /**
@@ -74,7 +73,7 @@ contract VestingFactory is AbstractFactory {
       params.nonce
     );
 
-    ExchangeUtils.spendFrom(items, signer, _msgSender(), DisabledTokenTypes(true, false, true, true, true));
+    ExchangeUtils.spendFrom(items, signer, account, DisabledTokenTypes(true, false, true, true, true));
 
     // Notify our server about successful deployment
     emit VestingDeployed(account, params.externalId, args, items);

@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
-import "../Exchange/ExchangeUtils.sol";
+import "../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
 
 contract TopUp is Context, ERC165, ERC1363Receiver {
   /**

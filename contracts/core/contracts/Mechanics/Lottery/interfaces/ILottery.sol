@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../../Exchange/interfaces/IAsset.sol";
+import "../../../Exchange/DiamondExchange/lib/interfaces/IAsset.sol";
 
 struct LotteryConfig {
   uint256 timeLagBeforeRelease;

@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
+import "../../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
 import "./interfaces/IDispenser.sol";
 
 /**

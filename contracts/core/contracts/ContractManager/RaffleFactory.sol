@@ -8,7 +8,6 @@ pragma solidity ^0.8.13;
 
 import "../utils/errors.sol";
 import "./AbstractFactory.sol";
-import "../Mechanics/Raffle/interfaces/IRaffle.sol";
 
 contract RaffleFactory is AbstractFactory {
 

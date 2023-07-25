@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 /* global ethers */
 
 import { BaseContract, Contract, FunctionFragment, Interface } from "ethers";
