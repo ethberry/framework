@@ -6,11 +6,12 @@ import { ns } from "@framework/constants";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { AssetService } from "../../../exchange/asset/asset.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
-import type { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
+import { AssetService } from "../../../exchange/asset/asset.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { Erc1155TokenService } from "../token/token.service";
 
 @Injectable()
@@ -20,8 +21,9 @@ export class Erc1155TemplateService extends TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc1155TokenService,
+    protected readonly contractService: ContractService,
   ) {
-    super(templateEntityRepository, assetService, tokenService);
+    super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

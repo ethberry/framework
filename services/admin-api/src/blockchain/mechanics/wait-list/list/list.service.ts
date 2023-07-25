@@ -33,8 +33,8 @@ export class WaitListListService {
     private readonly waitListListEntityRepository: Repository<WaitListListEntity>,
     @Inject(forwardRef(() => WaitListItemService))
     private readonly waitListItemService: WaitListItemService,
-    protected readonly assetService: AssetService,
-    protected readonly contractService: ContractService,
+    private readonly assetService: AssetService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async search(dto: Partial<ISearchDto>, userEntity: UserEntity): Promise<[Array<WaitListListEntity>, number]> {

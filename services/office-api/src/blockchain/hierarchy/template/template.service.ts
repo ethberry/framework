@@ -5,11 +5,12 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
+import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { TokenService } from "../token/token.service";
+import { ContractService } from "../contract/contract.service";
 import type { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
-import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class TemplateService {
@@ -19,6 +20,7 @@ export class TemplateService {
     @Inject(forwardRef(() => AssetService))
     protected readonly assetService: AssetService,
     protected readonly tokenService: TokenService,
+    protected readonly contractService: ContractService,
   ) {}
 
   public async search(
@@ -191,6 +193,7 @@ export class TemplateService {
       join: {
         alias: "template",
         leftJoinAndSelect: {
+          contract: "template.contract",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
@@ -200,16 +203,23 @@ export class TemplateService {
   }
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+    const { price, contractId } = dto;
+
+    const contractEntity = await this.contractService.findOne({
+      id: contractId,
+    });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
     const assetEntity = await this.assetService.create();
+    await this.assetService.update(assetEntity, price);
 
-    const templateEntity = await this.templateEntityRepository
-      .create({
-        ...dto,
-        price: assetEntity,
-      })
-      .save();
-
-    return this.update({ id: templateEntity.id }, dto);
+    return this.create({
+      ...dto,
+      price: assetEntity,
+    });
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {

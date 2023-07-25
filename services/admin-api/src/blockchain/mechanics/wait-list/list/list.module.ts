@@ -10,8 +10,8 @@ import { WaitListListController } from "./list.controller";
 
 @Module({
   imports: [
-    forwardRef(() => WaitListItemModule),
     AssetModule,
+    forwardRef(() => WaitListItemModule),
     ContractModule,
     TypeOrmModule.forFeature([WaitListListEntity]),
   ],

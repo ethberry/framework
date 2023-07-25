@@ -1,6 +1,5 @@
 import {
   ForbiddenException,
-  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -16,7 +15,6 @@ import { TokenType } from "@framework/types";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
-import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
 
@@ -29,8 +27,6 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @Inject(forwardRef(() => TemplateService))
-    private readonly templateService: TemplateService,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}

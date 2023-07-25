@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";
 
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -18,8 +19,9 @@ export class Erc721TemplateService extends TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     protected readonly assetService: AssetService,
     protected readonly tokenService: Erc721TokenService,
+    protected readonly contractService: ContractService,
   ) {
-    super(templateEntityRepository, assetService, tokenService);
+    super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {

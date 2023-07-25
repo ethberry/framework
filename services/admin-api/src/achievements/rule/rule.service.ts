@@ -13,7 +13,7 @@ import { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfac
 export class AchievementRuleService {
   constructor(
     @InjectRepository(AchievementRuleEntity)
-    private readonly achievementRuleEntityRepository: Repository<AchievementRuleEntity>,
+    protected readonly achievementRuleEntityRepository: Repository<AchievementRuleEntity>,
     protected readonly assetService: AssetService,
     protected readonly contractService: ContractService,
   ) {}

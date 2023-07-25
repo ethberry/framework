@@ -34,7 +34,7 @@ export class AssetService {
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
-    protected readonly eventHistoryService: EventHistoryService,
+    private readonly eventHistoryService: EventHistoryService,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}

@@ -1,6 +1,5 @@
 import {
   ForbiddenException,
-  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -14,7 +13,6 @@ import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeor
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
-import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
@@ -29,10 +27,8 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @Inject(forwardRef(() => TemplateService))
-    private readonly templateService: TemplateService,
     @InjectDataSource()
-    private dataSource: DataSource,
+    private readonly dataSource: DataSource,
   ) {}
 
   // This method accepts no arguments because all logic is in `update`

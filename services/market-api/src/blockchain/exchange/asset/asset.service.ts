@@ -1,5 +1,4 @@
 import {
-  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -13,10 +12,9 @@ import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeor
 import type { IAssetDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
+import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
-import { TemplateService } from "../../hierarchy/template/template.service";
-import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
 @Injectable()
 export class AssetService {
@@ -27,8 +25,6 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @Inject(forwardRef(() => TemplateService))
-    private readonly templateService: TemplateService,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
