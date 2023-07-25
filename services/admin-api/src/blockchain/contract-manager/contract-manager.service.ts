@@ -1,7 +1,8 @@
-import { ForbiddenException, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
+import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import { ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -39,7 +40,7 @@ export class ContractManagerService {
     });
 
     if (count >= limit) {
-      throw new ForbiddenException("rateLimitExceeded");
+      throw new PaymentRequiredException("paymentRequired");
     }
   }
 }

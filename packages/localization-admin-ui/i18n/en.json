@@ -141,6 +141,7 @@
     "contractFeatures": {
       "ALLOWANCE": "Allowance",
       "BLACKLIST": "Blacklist",
+      "DISCRETE": "Discrete",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC20OWNER": "ERC20 Owner",
       "EXTERNAL": "External",
@@ -154,7 +155,6 @@
       "SOULBOUND": "Soulbound",
       "SPLITTER": "Payment Splitter",
       "STATEHASH": "State Hash",
-      "DISCRETE": "Discrete",
       "VOTES": "Votes",
       "WHITELIST": "Whitelist"
     },
@@ -165,13 +165,15 @@
     },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
-      "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
-      "BLACKLIST_RANDOM": "Blacklist + Random",
       "BLACKLIST_DISCRETE": "Blacklist + Discrete",
       "BLACKLIST_DISCRETE_RANDOM": "Blacklist + Discrete + Random",
       "BLACKLIST_DISCRETE_RENTABLE": "Blacklist + Discrete + Rentable",
       "BLACKLIST_DISCRETE_RENTABLE_RANDOM": "Blacklist + Discrete + Rentable + Random",
+      "BLACKLIST_PAUSABLE": "Blacklist + Pausable",
+      "BLACKLIST_RANDOM": "Blacklist + Random",
       "CLIFF": "Cliff",
+      "DISCRETE": "Discrete",
+      "DISCRETE_RANDOM": "Discrete + Random",
       "ERC1155OWNER": "ERC1155 Owner",
       "ERC1155OWNER_ERC20OWNER": "ERC1155 Owner + ERC20 Owner",
       "ERC20OWNER": "ERC20 Owner",
@@ -190,8 +192,6 @@
       "SOULBOUND_VOTES": "Soulbound + Votes",
       "SPLITTER": "Splitter",
       "STATEHASH": "State Hash",
-      "DISCRETE": "Discrete",
-      "DISCRETE_RANDOM": "Discrete + Random",
       "WHITELIST": "Whitelist"
     },
     "craftStatus": {
@@ -625,6 +625,7 @@
       "emptyReward": "Empty reward",
       "endTimestamp": "End date",
       "eventType": "Event type",
+      "facebookUrl": "Facebook",
       "files": "Files",
       "from": "From",
       "fromBlock": "Listen log from block №",
@@ -634,15 +635,16 @@
       "growthRate": "Growth rate",
       "id": "ID",
       "imageUrl": "Avatar",
+      "instagramUrl": "Instagram",
       "isDefault": "Is default",
       "isPrivate": "Private",
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "lottery": "Lottery",
       "listId": "List ID",
       "listIds": "List ID",
       "listenerType": "Listener type",
+      "lottery": "Lottery",
       "matron": "Matron",
       "maxCycles": "Max cycles count (0 - no limit)",
       "maxStake": "Max Stakes",
@@ -724,6 +726,7 @@
       "tokenStatus": "Status",
       "tokenType": "Type",
       "traits": "Traits",
+      "twitterUrl": "Twitter",
       "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
@@ -738,17 +741,10 @@
       "winNumber": "Win number",
       "winNumbers": "Win numbers",
       "year": "Year",
-      "zip": "ZIP code",
-      "facebookUrl": "Facebook",
-      "instagramUrl": "Instagram",
-      "twitterUrl": "Twitter",
-      "youtubeUrl": "Youtube"
+      "youtubeUrl": "Youtube",
+      "zip": "ZIP code"
     },
     "placeholders": {
-      "facebookUrl": "https://facebook.com/",
-      "instagramUrl": "https://instagram.com/",
-      "twitterUrl": "https://twitter.com/",
-      "youtubeUrl": "https://youtube.com/",
       "DUMMY": "Dummy",
       "SIGNATURE_TTL": "0",
       "account": "0x...",
@@ -787,8 +783,10 @@
       "durationAmount": "30",
       "durationUnit": "Day",
       "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
       "fromBlock": "1",
       "growthRate": "2",
+      "instagramUrl": "https://instagram.com/",
       "item": "Bottle of water",
       "listId": "Default list",
       "listIds": "Default list",
@@ -844,10 +842,12 @@
       "tokenId": "Token",
       "tokenIds": "Token",
       "tokenStatus": "Status",
+      "twitterUrl": "https://twitter.com/",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
       "userIds": "Gordon Freeman",
       "wallet": "Wallet",
+      "youtubeUrl": "https://youtube.com/",
       "zip": "80576"
     },
     "tips": {
@@ -880,10 +880,10 @@
     }
   },
   "messages": {
-    "uncaughtError": "Uncaught error happened",
     "empty-list": "Nothing to display",
     "noAddress": "No address",
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "uncaughtError": "Uncaught error happened"
   },
   "pages": {
     "achievements": {
@@ -993,8 +993,8 @@
       },
       "infrastructure": {
         "admin": {
-          "title": "Admin",
-          "merchant": "Merchant"
+          "merchant": "Merchant",
+          "title": "Admin"
         }
       },
       "integrations": {
@@ -1022,12 +1022,9 @@
       },
       "title": "Dashboard"
     },
-    "merchant": {
-      "title": "Merchant"
-    },
     "dispenser": {
-      "title": "Dispenser",
-      "description": "This mechanic allows to mass-transact tokens to the list of addresses"
+      "description": "This mechanic allows to mass-transact tokens to the list of addresses",
+      "title": "Dispenser"
     },
     "drop": {
       "title": "Drops"
@@ -1130,6 +1127,9 @@
         "title": "Report"
       },
       "title": "Marketplace"
+    },
+    "merchant": {
+      "title": "Merchant"
     },
     "mystery": {
       "boxContent": {
@@ -1316,6 +1316,7 @@
     "orderNotFound": "Order not found",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
+    "paymentRequired": "Payment required",
     "productNotFound": "Product not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
