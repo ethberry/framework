@@ -30,7 +30,7 @@
     "@gemunion/nest-js-module-typeorm-postgres": "1.0.10",
     "@gemunion/nest-js-module-web3-storage-firebase": "3.0.9",
     "@gemunion/nest-js-module-winston-logdna": "3.0.7",
-    "@gemunion/nest-js-utils": "4.0.9",
+    "@gemunion/nest-js-utils": "4.1.0",
     "@gemunion/nest-js-validators": "4.0.9",
     "@gemunion/nestjs-ethers": "5.0.6",
     "@gemunion/types-blockchain": "1.2.4",
