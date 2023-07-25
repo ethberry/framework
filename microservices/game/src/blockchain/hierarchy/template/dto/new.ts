@@ -3,8 +3,7 @@ import { IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { TokenType } from "@framework/types";
-
-import type { ITemplateNewDto } from "../interfaces";
+import { ITemplateNewDto } from "../interfaces";
 
 export class TemplateNewDto implements ITemplateNewDto {
   @ApiPropertyOptional({

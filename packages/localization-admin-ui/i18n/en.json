@@ -35,6 +35,7 @@
     "claim": "Claim",
     "confirmation": "Please confirm",
     "create": "Create",
+    "subBalance": "Subscription balance: {value}",
     "currentBalance": "Balance: {value}",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
