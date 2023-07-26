@@ -10,15 +10,17 @@ import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./shared/fixture";
 
 describe("Diamond Exchange Grade", function () {
-  const factory = async () =>
-    deployDiamond(
+  const factory = async (facetName = "ExchangeGradeFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
       "DiamondExchange",
-      ["ExchangeGradeFacet", "PausableFacet", "AccessControlFacet", "WalletFacet"],
+      [facetName, "AccessControlFacet", "PausableFacet", "WalletFacet"],
       "DiamondExchangeInit",
       {
         logSelectors: false,
       },
     );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   const getSignatures = async (contractInstance: Contract) => {
     const [owner] = await ethers.getSigners();
@@ -38,11 +40,8 @@ describe("Diamond Exchange Grade", function () {
   describe("upgrade", function () {
     it("should update metadata", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
@@ -133,11 +132,8 @@ describe("Diamond Exchange Grade", function () {
 
     it("should fail: insufficient allowance", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
@@ -192,11 +188,8 @@ describe("Diamond Exchange Grade", function () {
 
     it("should fail: transfer amount exceeds balance", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
@@ -266,11 +259,8 @@ describe("Diamond Exchange Grade", function () {
 
     it("should fail: invalid token ID", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
@@ -336,11 +326,8 @@ describe("Diamond Exchange Grade", function () {
 
     it("should fail: signer is missing role", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Discrete", exchangeInstance);
@@ -371,8 +358,8 @@ describe("Diamond Exchange Grade", function () {
       await erc20Instance.mint(receiver.address, amount);
       await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
-      const accessControlInstance = await ethers.getContractAt("AccessControlFacet", diamondAddress);
-      await accessControlInstance.renounceRole(METADATA_ROLE, owner.address);
+      const accessInstance = await ethers.getContractAt("AccessControlFacet", await exchangeInstance.getAddress());
+      await accessInstance.renounceRole(METADATA_ROLE, owner.address);
 
       const tx2 = exchangeInstance.connect(receiver).upgrade(
         params,
@@ -400,11 +387,8 @@ describe("Diamond Exchange Grade", function () {
   it("should fail: paused", async function () {
     const [_owner] = await ethers.getSigners();
 
-    const diamondInstance = await factory();
-    const diamondAddress = await diamondInstance.getAddress();
-
-    const exchangeInstance = await ethers.getContractAt("ExchangeGradeFacet", diamondAddress);
-    const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
+    const exchangeInstance = await factory();
+    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
     await pausableInstance.pause();
 
     const tx1 = exchangeInstance.upgrade(

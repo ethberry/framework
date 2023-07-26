@@ -11,15 +11,17 @@ import { deployDiamond } from "./shared/fixture";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
 
 describe("Diamond Exchange Rent", function () {
-  const factory = async () =>
-    deployDiamond(
+  const factory = async (facetName = "ExchangeRentableFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
       "DiamondExchange",
-      ["ExchangeRentableFacet", "PausableFacet", "AccessControlFacet", "WalletFacet"],
+      [facetName, "AccessControlFacet", "PausableFacet", "WalletFacet"],
       "DiamondExchangeInit",
       {
         logSelectors: false,
       },
     );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   const getSignatures = async (contractInstance: Contract) => {
     const [owner] = await ethers.getSigners();
@@ -39,11 +41,9 @@ describe("Diamond Exchange Rent", function () {
   describe("rent single", function () {
     it("should lend ERC721 to user for free", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
 
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
 
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
@@ -122,11 +122,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should lend ERC721 to user for ERC20", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -227,11 +224,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: Wrong signer", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -303,13 +297,73 @@ describe("Diamond Exchange Rent", function () {
       await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
     });
 
+    it("should fail: signer missing role", async function () {
+      const [owner, receiver, stranger] = await ethers.getSigners();
+
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
+
+      const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
+
+      const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
+      await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
+
+      await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
+
+      // lend TIME
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      const endTimestamp = Math.ceil(date.getTime() / 1000); // in seconds,
+      const expires = zeroPadValue(toBeHex(endTimestamp), 32);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
+        params: {
+          externalId /* lendType */,
+          expiresAt,
+          nonce,
+          extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
+        },
+        item: {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 1,
+        },
+        price: [],
+      });
+
+      const accessInstance = await ethers.getContractAt("AccessControlFacet", await exchangeInstance.getAddress());
+      await accessInstance.renounceRole(METADATA_ROLE, owner.address);
+
+      const tx1 = exchangeInstance.connect(receiver).lend(
+        {
+          externalId /* lendType */,
+          expiresAt,
+          nonce,
+          extra: expires,
+          receiver: stranger.address,
+          referrer: stranger.address,
+        },
+        {
+          tokenType: 2,
+          token: await erc721Instance.getAddress(),
+          tokenId,
+          amount: 1,
+        },
+        [],
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
+    });
+
     it("should fail: Transfer caller is not owner nor approved", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -382,11 +436,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: signer is missing role", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateOneToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateOneToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -419,7 +470,10 @@ describe("Diamond Exchange Rent", function () {
         price: [],
       });
 
-      const accessControlInstance = await ethers.getContractAt("AccessControlFacet", diamondAddress);
+      const accessControlInstance = await ethers.getContractAt(
+        "AccessControlFacet",
+        await exchangeInstance.getAddress(),
+      );
 
       await accessControlInstance.renounceRole(METADATA_ROLE, owner.address);
 
@@ -449,11 +503,8 @@ describe("Diamond Exchange Rent", function () {
   describe("lendMany", function () {
     it("should lend ERC721 to user for free", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -535,11 +586,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should lend ERC721 to user for ERC20", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -644,11 +692,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: Wrong signer", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -726,11 +771,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: Wrong items count", async function () {
       const [_owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -795,11 +837,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: Transfer caller is not owner nor approved", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -877,11 +916,8 @@ describe("Diamond Exchange Rent", function () {
 
     it("should fail: signer is missing role", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const diamondAddress = await diamondInstance.getAddress();
-
-      const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-      const { generateManyToManySignature } = await getSignatures(diamondInstance as any);
+      const exchangeInstance = await factory();
+      const { generateManyToManySignature } = await getSignatures(exchangeInstance);
       const erc721Instance = await deployErc721Base("ERC721Rentable", exchangeInstance);
 
       const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
@@ -917,7 +953,10 @@ describe("Diamond Exchange Rent", function () {
         extra: expires,
       });
 
-      const accessControlInstance = await ethers.getContractAt("AccessControlFacet", diamondAddress);
+      const accessControlInstance = await ethers.getContractAt(
+        "AccessControlFacet",
+        await exchangeInstance.getAddress(),
+      );
 
       await accessControlInstance.renounceRole(METADATA_ROLE, owner.address);
 
@@ -949,11 +988,8 @@ describe("Diamond Exchange Rent", function () {
   it("should fail: paused", async function () {
     const [_owner] = await ethers.getSigners();
 
-    const diamondInstance = await factory();
-    const diamondAddress = await diamondInstance.getAddress();
-
-    const exchangeInstance = await ethers.getContractAt("ExchangeRentableFacet", diamondAddress);
-    const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
+    const exchangeInstance = await factory();
+    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
     await pausableInstance.pause();
 
     const tx1 = exchangeInstance.lend(

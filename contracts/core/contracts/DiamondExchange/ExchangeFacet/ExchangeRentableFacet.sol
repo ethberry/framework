@@ -12,8 +12,7 @@ import "@gemunion/contracts-erc721/contracts/interfaces/IERC4907.sol";
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-
-import "../../Exchange/ExchangeUtils.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
 
 contract ExchangeRentableFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   using SafeCast for uint256;

@@ -8,7 +8,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/IAccessControl.sol";
 import "../../lib/LibDiamond.sol";
-// import "../../storage/AccessControlStorage.sol";
 
 contract AccessControlInit {
     function init() public virtual {

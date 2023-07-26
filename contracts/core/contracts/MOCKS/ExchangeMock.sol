@@ -10,8 +10,8 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 
-import "../Exchange/ExchangeUtils.sol";
-import "../Exchange/interfaces/IAsset.sol";
+import "../DiamondExchange/lib/ExchangeUtils.sol";
+import "../DiamondExchange/lib/interfaces/IAsset.sol";
 import "../utils/TopUp.sol";
 
 contract ExchangeMock is AccessControl, Wallet, TopUp {

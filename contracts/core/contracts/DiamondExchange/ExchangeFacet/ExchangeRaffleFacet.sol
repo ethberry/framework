@@ -9,9 +9,8 @@ pragma solidity ^0.8.13;
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IRaffle.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../interfaces/IRaffle.sol";
 
 contract ExchangeRaffleFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseRaffle(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, uint256 index);

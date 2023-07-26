@@ -10,8 +10,8 @@ import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/ILottery.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../interfaces/ILottery.sol";
 
 contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseLottery(address account, uint256 externalId, Asset item, Asset price, uint256 roundId, bytes32 numbers);

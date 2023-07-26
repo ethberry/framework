@@ -13,8 +13,6 @@ import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Spender.sol";
 
 import "../../lib/LibDiamond.sol";
 
-// import "../../storage/AccessControlStorage.sol";
-
 contract WalletInit {
     function init() public virtual {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();

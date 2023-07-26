@@ -13,22 +13,8 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "../../Diamond/override/EIP712Upgradable.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
-import "../../Exchange/interfaces/IAsset.sol";
-
-library SigValStorage {
-  struct Layout {
-    mapping(bytes32 => bool) _expired;
-  }
-
-  bytes32 internal constant STORAGE_SLOT = keccak256("signature-validator.contracts.storage.exchange");
-
-  function layout() internal pure returns (Layout storage l) {
-    bytes32 slot = STORAGE_SLOT;
-    assembly {
-      l.slot := slot
-    }
-  }
-}
+import "../lib/interfaces/IAsset.sol";
+import "../storage/SigValStorage.sol";
 
 contract SignatureValidator is EIP712, Context {
   using ECDSA for bytes32;

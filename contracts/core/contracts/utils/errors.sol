@@ -22,6 +22,9 @@ error WrongAmount();
 error RefProgramSet();
 error WrongArrayLength();
 
+// CM
+error WrongRole();
+
 // random
 error ProtectedAttribute(bytes32 attribute);
 

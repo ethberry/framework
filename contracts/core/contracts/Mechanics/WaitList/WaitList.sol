@@ -14,8 +14,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 
 import "../../utils/constants.sol";
-import "../../Exchange/ExchangeUtils.sol";
-import "../../Exchange/interfaces/IAsset.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
 
 contract WaitList is AccessControl, Pausable {
   using Counters for Counters.Counter;

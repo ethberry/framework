@@ -13,6 +13,7 @@ declare global {
       EXCHANGE_ADDR: string;
       LINK_ADDR: string;
       VRF_ADDR: string;
+      CHAINLINK_SUBSCRIPTION_ID: string;
       DISPENSER_ADDR: string;
     }
   }

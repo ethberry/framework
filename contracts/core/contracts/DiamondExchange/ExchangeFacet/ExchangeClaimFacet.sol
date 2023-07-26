@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-import "../../Exchange/ExchangeUtils.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
 
 contract ExchangeClaimFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Claim(address account, uint256 externalId, Asset[] items);
