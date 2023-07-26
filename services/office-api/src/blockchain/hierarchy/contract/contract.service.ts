@@ -189,4 +189,8 @@ export class ContractService {
   ): Promise<Array<ContractEntity>> {
     return this.contractEntityRepository.find({ where, ...options });
   }
+
+  public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
+    return this.contractEntityRepository.count({ where });
+  }
 }
