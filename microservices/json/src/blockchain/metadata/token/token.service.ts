@@ -6,8 +6,8 @@ import { Repository } from "typeorm";
 import { getText } from "@gemunion/draft-js-utils";
 import { TokenMetadata, TokenRarity } from "@framework/types";
 import { decodeTraits } from "@framework/traits-api";
+import type { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "@framework/types";
 
-import { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "../../../common/interfaces";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 
 @Injectable()

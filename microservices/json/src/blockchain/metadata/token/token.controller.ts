@@ -1,9 +1,9 @@
 import { Controller, Get, Param } from "@nestjs/common";
 
 import { AddressPipe, ApiAddress, ApiBigInt, BigIntPipe, Public } from "@gemunion/nest-js-utils";
+import type { IOpenSeaMetadata } from "@framework/types";
 
 import { MetadataTokenService } from "./token.service";
-import { IOpenSeaMetadata } from "../../../common/interfaces";
 
 @Public()
 @Controller("/metadata")

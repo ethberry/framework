@@ -2,9 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { getText } from "@gemunion/draft-js-utils";
 
-import { IOpenSeaMetadata } from "../../../common/interfaces";
+import { getText } from "@gemunion/draft-js-utils";
+import type { IOpenSeaMetadata } from "@framework/types";
+
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
