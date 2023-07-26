@@ -17,10 +17,17 @@ import { buildBytecode, buildCreate2Address } from "../utils";
 import { deployDiamond } from "./shared/fixture";
 
 describe("MysteryBoxFactoryDiamond", function () {
-  const factory = async () =>
-    deployDiamond("DiamondCM", ["MysteryBoxFactoryFacet", "AccessControlFacet"], "DiamondCMInit", {
-      logSelectors: false,
-    });
+  const factory = async (facetName = "MysteryBoxFactoryFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
+      "DiamondCM",
+      [facetName, "AccessControlFacet", "PausableFacet"],
+      "DiamondCMInit",
+      {
+        logSelectors: false,
+      },
+    );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   describe("deployMysteryToken", function () {
     it("should deploy contract", async function () {
@@ -28,9 +35,7 @@ describe("MysteryBoxFactoryDiamond", function () {
       const network = await ethers.provider.getNetwork();
       const { bytecode } = await ethers.getContractFactory("ERC721MysteryBoxSimple");
 
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("MysteryBoxFactoryFacet", verifyingContract);
+      const contractInstance = await factory();
 
       const signature = await owner.signTypedData(
         // Domain
@@ -38,7 +43,7 @@ describe("MysteryBoxFactoryDiamond", function () {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract,
+          verifyingContract: await contractInstance.getAddress(),
         },
         // Types
         {
@@ -136,9 +141,7 @@ describe("MysteryBoxFactoryDiamond", function () {
       const network = await ethers.provider.getNetwork();
       const { bytecode } = await ethers.getContractFactory("ERC721MysteryBoxSimple");
 
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("MysteryBoxFactoryFacet", verifyingContract);
+      const contractInstance = await factory();
 
       const signature = await owner.signTypedData(
         // Domain
@@ -146,7 +149,7 @@ describe("MysteryBoxFactoryDiamond", function () {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract,
+          verifyingContract: await contractInstance.getAddress(),
         },
         // Types
         {
@@ -184,7 +187,7 @@ describe("MysteryBoxFactoryDiamond", function () {
         },
       );
 
-      const accessInstance = await ethers.getContractAt("AccessControlFacet", verifyingContract);
+      const accessInstance = await ethers.getContractAt("AccessControlFacet", await contractInstance.getAddress());
       await accessInstance.renounceRole(DEFAULT_ADMIN_ROLE, owner.address);
 
       const tx = contractInstance.deployMysterybox(

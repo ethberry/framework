@@ -18,7 +18,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "../../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "../../utils/errors.sol";
 

@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../../Exchange/DiamondExchange/lib/interfaces/IAsset.sol";
+import "../../../DiamondExchange/lib/interfaces/IAsset.sol";
 
 interface IStaking {
   struct Rule {

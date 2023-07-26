@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Receiver.sol";
 import "@gemunion/contracts-erc1363/contracts/interfaces/IERC1363Spender.sol";
 
-import "../Exchange/DiamondExchange/lib/interfaces/IAsset.sol";
+import "../DiamondExchange/lib/interfaces/IAsset.sol";
 import "../Mechanics/Staking/interfaces/IStaking.sol";
 
 contract ReentrancyStakingReward is ERC165, ERC721Holder, ERC1155Holder {

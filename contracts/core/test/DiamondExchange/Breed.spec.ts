@@ -3,7 +3,7 @@ import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { deployErc721Base } from "../Exchange/shared/fixture";
-import { amount } from "@gemunion/contracts-constants";
+import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
 import { concat, Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
@@ -17,15 +17,17 @@ import { decodeNumber, decodeTraits } from "@framework/traits-api";
 import { TokenMetadata } from "@framework/types";
 
 describe("Diamond Exchange Breed", function () {
-  const factory = async () =>
-    deployDiamond(
+  const factory = async (facetName = "ExchangeBreedFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
       "DiamondExchange",
-      ["ExchangeBreedFacet", "PausableFacet", "AccessControlFacet", "WalletFacet"],
+      [facetName, "AccessControlFacet", "PausableFacet", "WalletFacet"],
       "DiamondExchangeInit",
       {
         logSelectors: false,
       },
     );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   const getSignatures = async (contractInstance: Contract) => {
     const [owner] = await ethers.getSigners();
@@ -61,11 +63,8 @@ describe("Diamond Exchange Breed", function () {
     describe("ERC721Genes", function () {
       it("should breed", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
         // Add Consumer to VRFV2
@@ -199,11 +198,8 @@ describe("Diamond Exchange Breed", function () {
 
       it("should fail: pregnancy count", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
@@ -377,11 +373,8 @@ describe("Diamond Exchange Breed", function () {
 
       it("should fail: pregnancy time", async function () {
         const [_owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
@@ -501,61 +494,12 @@ describe("Diamond Exchange Breed", function () {
           signature1,
         );
         await expect(tx2).to.be.revertedWithCustomError(exchangeInstance, "LimitExceed");
-
-        // await erc721Instance.mintCommon(receiver.address, 4);
-        // const signature2 = await generateOneToOneSignature({
-        //   account: receiver.address,
-        //   params: {
-        //     nonce: encodeBytes32String("nonce2"),
-        //     externalId,
-        //     expiresAt,
-        //     referrer: ZeroAddress,
-        //   },
-        //   item: {
-        //     tokenType: 2,
-        //     token: await erc721Instance.getAddress(),
-        //     tokenId: 4,
-        //     amount: 1,
-        //   },
-        //   price: {
-        //     tokenType: 2,
-        //     token: await erc721Instance.getAddress(),
-        //     tokenId: 2,
-        //     amount: 1,
-        //   },
-        // });
-        // const tx3 = exchangeInstance.connect(receiver).breed(
-        //   {
-        //     nonce: encodeBytes32String("nonce2"),
-        //     externalId,
-        //     expiresAt,
-        //     referrer: ZeroAddress,
-        //   },
-        //   {
-        //     tokenType: 2,
-        //     token: await erc721Instance.getAddress(),
-        //     tokenId: 4,
-        //     amount: 1,
-        //   },
-        //   {
-        //     tokenType: 2,
-        //     token: await erc721Instance.getAddress(),
-        //     tokenId: 2,
-        //     amount: 1,
-        //   },
-        //   owner.address,
-        //   signature2,
-        // );
-        // await expect(tx3).to.be.revertedWith("Exchange: pregnancy time limit");
       });
 
       it("should fail: Not an owner", async function () {
         const [owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Add Consumer to VRFV2
         const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
@@ -605,11 +549,8 @@ describe("Diamond Exchange Breed", function () {
 
       it("should fail: Invalid signature", async function () {
         const [owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
@@ -653,11 +594,8 @@ describe("Diamond Exchange Breed", function () {
 
       it("should fail: Wrong signer", async function () {
         const [owner, receiver] = await ethers.getSigners();
-        const diamondInstance = await factory();
-        const diamondAddress = await diamondInstance.getAddress();
-
-        const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-        const { generateOneToOneSignature } = await getSignatures(diamondInstance as any);
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
 
         const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
@@ -698,6 +636,111 @@ describe("Diamond Exchange Breed", function () {
         await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
       });
 
+      it("should fail: signer missing role", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateOneToOneSignature } = await getSignatures(exchangeInstance);
+
+        const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
+        // Add Consumer to VRFV2
+        const tx02 = vrfInstance.addConsumer(1, await erc721Instance.getAddress());
+        await expect(tx02)
+          .to.emit(vrfInstance, "SubscriptionConsumerAdded")
+          .withArgs(1, await erc721Instance.getAddress());
+
+        const genesis0 = {
+          templateId: 128,
+          matronId: 0,
+          sireId: 1,
+        };
+        const encodedExternalId0 = concat([
+          zeroPadValue(toBeHex(genesis0.sireId), 3),
+          zeroPadValue(toBeHex(genesis0.matronId), 4),
+          zeroPadValue(toBeHex(genesis0.templateId), 4),
+        ]);
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId0);
+        const genesis1 = {
+          templateId: 128,
+          matronId: 1,
+          sireId: 0,
+        };
+        const encodedExternalId1 = concat([
+          zeroPadValue(toBeHex(genesis1.sireId), 3),
+          zeroPadValue(toBeHex(genesis1.matronId), 4),
+          zeroPadValue(toBeHex(genesis1.templateId), 4),
+        ]);
+        await erc721Instance.mintRandom(receiver.address, encodedExternalId1);
+
+        await randomRequest(erc721Instance, vrfInstance);
+
+        const balance1 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance1).to.equal(2);
+
+        const genesis = {
+          templateId: 128,
+          matronId: 256,
+          sireId: 1024,
+        };
+        const encodedExternalId = concat([
+          zeroPadValue(toBeHex(genesis.sireId), 3),
+          zeroPadValue(toBeHex(genesis.matronId), 4),
+          zeroPadValue(toBeHex(genesis.templateId), 4),
+        ]);
+        // const encodedExternalId = BigNumber.from("0x0004000000010000000080");
+        const signature = await generateOneToOneSignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId: encodedExternalId,
+            expiresAt,
+            receiver: ZeroAddress,
+            referrer: ZeroAddress,
+            extra,
+          },
+          item: {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1,
+            amount: 1,
+          },
+          price: {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 2,
+            amount: 1,
+          },
+        });
+
+        const accessInstance = await ethers.getContractAt("AccessControlFacet", await exchangeInstance.getAddress());
+        await accessInstance.renounceRole(MINTER_ROLE, owner.address);
+
+        const tx1 = exchangeInstance.connect(receiver).breed(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId: encodedExternalId,
+            expiresAt,
+            receiver: ZeroAddress,
+            referrer: ZeroAddress,
+            extra,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 1,
+            amount: 1,
+          },
+          {
+            tokenType: 2,
+            token: await erc721Instance.getAddress(),
+            tokenId: 2,
+            amount: 1,
+          },
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWithCustomError(exchangeInstance, "SignerMissingRole");
+      });
+
       // TODO add tests for Breed.sol
     });
   });
@@ -705,11 +748,8 @@ describe("Diamond Exchange Breed", function () {
   it("should fail: paused", async function () {
     const [_owner] = await ethers.getSigners();
 
-    const diamondInstance = await factory();
-    const diamondAddress = await diamondInstance.getAddress();
-
-    const exchangeInstance = await ethers.getContractAt("ExchangeBreedFacet", diamondAddress);
-    const pausableInstance = await ethers.getContractAt("PausableFacet", diamondAddress);
+    const exchangeInstance = await factory();
+    const pausableInstance = await ethers.getContractAt("PausableFacet", await exchangeInstance.getAddress());
     await pausableInstance.pause();
 
     const tx1 = exchangeInstance.breed(

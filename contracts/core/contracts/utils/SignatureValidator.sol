@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "./constants.sol";
 import "./errors.sol";
 
-import "../Exchange/DiamondExchange/lib/interfaces/IAsset.sol";
+import "../DiamondExchange/lib/interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
   using ECDSA for bytes32;

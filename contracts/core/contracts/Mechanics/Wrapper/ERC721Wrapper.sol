@@ -14,7 +14,7 @@ import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363Receiver.sol";
 
 import "./interfaces/IERC721Wrapper.sol";
 import "../../ERC721/ERC721Simple.sol";
-import "../../Exchange/DiamondExchange/lib/ExchangeUtils.sol";
+import "../../DiamondExchange/lib/ExchangeUtils.sol";
 
 contract ERC721Wrapper is IERC721Wrapper, ERC721Simple, ERC1155Holder, ERC721Holder, ERC1363Receiver {
   using Counters for Counters.Counter;

@@ -31,16 +31,17 @@ const disabled = {
 };
 
 describe("Diamond Exchange Utils", function () {
-  const factory = async () =>
-    deployDiamond(
+  const factory = async (facetName = "ExchangeMockFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
       "DiamondExchange",
-      ["ExchangeMockFacet", "ExchangeClaimFacet", "PausableFacet", "AccessControlFacet", "WalletFacet"],
+      [facetName, "ExchangeClaimFacet", "AccessControlFacet", "PausableFacet", "WalletFacet"],
       "DiamondExchangeInit",
       {
-        // log: true,
         logSelectors: false,
       },
     );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   describe("ExchangeUtils", function () {
     describe("spendFrom", function () {
@@ -48,10 +49,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ETH => SELF", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpendFrom(
             [
@@ -74,10 +72,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ETH => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
           const tx = exchangeInstance.testSpendFrom(
             [
               {
@@ -99,10 +94,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ETH => EOA (wrong amount)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpendFrom(
             [
@@ -126,10 +118,7 @@ describe("Diamond Exchange Utils", function () {
           const [owner] = await ethers.getSigners();
 
           const walletInstance = await deployWallet();
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpendFrom(
             [
@@ -153,10 +142,7 @@ describe("Diamond Exchange Utils", function () {
           const [owner] = await ethers.getSigners();
 
           const jerkInstance = await deployJerk();
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpendFrom(
             [
@@ -182,10 +168,7 @@ describe("Diamond Exchange Utils", function () {
           const [owner] = await ethers.getSigners();
 
           const jerkInstance = await deployJerk();
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -215,10 +198,7 @@ describe("Diamond Exchange Utils", function () {
           const [owner] = await ethers.getSigners();
 
           const walletInstance = await deployWallet();
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -248,11 +228,8 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC20 => Self", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
-          const walletInstance = await ethers.getContractAt("WalletFacet", diamondAddress);
+          const exchangeInstance = await factory();
+          const walletInstance = await ethers.getContractAt("WalletFacet", await exchangeInstance.getAddress());
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -282,10 +259,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC20 => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -312,10 +286,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC20 => EOA (insufficient amount)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           // await erc20Instance.mint(owner.address, amount);
@@ -341,10 +312,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC20 => EOA (insufficient allowance)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -372,10 +340,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(owner.address, amount);
@@ -406,10 +371,7 @@ describe("Diamond Exchange Utils", function () {
 
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(owner.address, amount);
@@ -439,11 +401,8 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC1363 => Self", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
-          const walletInstance = await ethers.getContractAt("WalletFacet", diamondAddress);
+          const exchangeInstance = await factory();
+          const walletInstance = await ethers.getContractAt("WalletFacet", await exchangeInstance.getAddress());
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(owner.address, amount);
@@ -473,10 +432,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC1363 => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(owner.address, amount);
@@ -507,10 +463,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
@@ -538,10 +491,7 @@ describe("Diamond Exchange Utils", function () {
 
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
@@ -572,10 +522,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC721 => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
@@ -604,10 +551,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC721 => EOA (not an owner)", async function () {
           const [owner, receiver, stranger] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(stranger.address, templateId);
@@ -632,10 +576,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC721 => EOA (not approved)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
@@ -665,10 +606,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(owner.address, templateId);
@@ -696,10 +634,7 @@ describe("Diamond Exchange Utils", function () {
 
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(owner.address, templateId);
@@ -730,10 +665,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC998 => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(owner.address, templateId);
@@ -762,10 +694,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC998 => EOA (not an owner)", async function () {
           const [owner, receiver, stranger] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(stranger.address, templateId);
@@ -790,10 +719,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC998 => EOA (not approved)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(owner.address, templateId);
@@ -823,10 +749,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -854,10 +777,7 @@ describe("Diamond Exchange Utils", function () {
 
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -894,10 +814,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC1155 => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -928,10 +845,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC1155 => EOA (insufficient amount)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           // await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -957,10 +871,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spendFrom: ERC1155 => EOA (insufficient allowance)", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -988,10 +899,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail spendFrom: ETH", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpendFrom(
             [
@@ -1016,10 +924,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(owner.address, amount);
@@ -1047,10 +952,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(owner.address, templateId);
@@ -1078,10 +980,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(owner.address, templateId);
@@ -1109,10 +1008,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(owner.address, templateId, amount, "0x");
@@ -1142,10 +1038,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ETH => EOA", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx1 = await exchangeInstance.topUp(
             [
@@ -1185,10 +1078,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ETH => EOA (insufficient amount)", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpend(
             [
@@ -1211,10 +1101,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC20 => ERC1363 non Holder", async function () {
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1242,10 +1129,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC20 => ERC1363 Holder", async function () {
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1274,10 +1158,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC20 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1304,10 +1185,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC20 => EOA (insufficient amount)", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           // await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1331,10 +1209,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC1363 => ERC1363 non Holder", async function () {
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1361,10 +1236,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC1363 => ERC1363 Holder", async function () {
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1393,10 +1265,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC1363 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1423,10 +1292,7 @@ describe("Diamond Exchange Utils", function () {
 
       describe("ERC721", function () {
         it("should spend: ERC721 => non Holder", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const jerkInstance = await deployJerk();
 
@@ -1450,10 +1316,7 @@ describe("Diamond Exchange Utils", function () {
         });
 
         it("should spend: ERC721 => Holder ", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const walletInstance = await deployWallet();
 
@@ -1484,10 +1347,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC721 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(await exchangeInstance.getAddress(), templateId);
@@ -1516,10 +1376,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC721 => EOA (not an owner)", async function () {
           const [_owner, receiver, stranger] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(stranger.address, templateId);
@@ -1543,10 +1400,7 @@ describe("Diamond Exchange Utils", function () {
 
       describe("ERC998", function () {
         it("should spend: ERC998 => non Holder", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const jerkInstance = await deployJerk();
 
@@ -1570,10 +1424,7 @@ describe("Diamond Exchange Utils", function () {
         });
 
         it("should spend: ERC998 => Holder ", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
           const walletInstance = await deployWallet();
 
           const erc998Instance = await deployERC721("ERC998Simple");
@@ -1603,10 +1454,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC998 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(await exchangeInstance.getAddress(), templateId);
@@ -1635,10 +1483,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC998 => EOA (not an owner)", async function () {
           const [_owner, receiver, stranger] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(stranger.address, templateId);
@@ -1666,10 +1511,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(await exchangeInstance.getAddress(), templateId, amount, "0x");
@@ -1695,10 +1537,7 @@ describe("Diamond Exchange Utils", function () {
 
           const walletInstance = await deployWallet();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(await exchangeInstance.getAddress(), templateId, amount, "0x");
@@ -1733,10 +1572,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC1155 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(await exchangeInstance.getAddress(), templateId, amount, "0x");
@@ -1771,10 +1607,7 @@ describe("Diamond Exchange Utils", function () {
         it("should spend: ERC1155 => EOA (insufficient amount)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           // await erc1155Instance.mint(await exchangeInstance.getAddress(), templateId, amount, "0x");
@@ -1800,10 +1633,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail spend: ETH", async function () {
           const [owner] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testSpend(
             [
@@ -1824,10 +1654,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail spend: ERC20", async function () {
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Mock");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -1849,10 +1676,7 @@ describe("Diamond Exchange Utils", function () {
         });
 
         it("should fail spend: ERC721", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.mintCommon(await exchangeInstance.getAddress(), templateId);
@@ -1874,10 +1698,7 @@ describe("Diamond Exchange Utils", function () {
         });
 
         it("should fail spend: ERC998", async function () {
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.mintCommon(await exchangeInstance.getAddress(), templateId);
@@ -1903,10 +1724,7 @@ describe("Diamond Exchange Utils", function () {
 
           const jerkInstance = await deployJerk();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.mint(await exchangeInstance.getAddress(), templateId, amount, "0x");
@@ -1934,10 +1752,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ETH => EOA", async function () {
           const [owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx1 = await exchangeInstance.topUp(
             [
@@ -1979,10 +1794,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC20 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -2023,10 +1835,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC721 => EOA (Simple)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2053,10 +1862,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC721 => EOA (Random)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Random");
           await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2101,10 +1907,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC998 => EOA (Simple)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2131,10 +1934,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC998 => EOA (Random)", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Random");
           await erc998Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2168,10 +1968,7 @@ describe("Diamond Exchange Utils", function () {
         it("should mint: ERC1155 => EOA", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2202,10 +1999,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail acquire: ETH", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const tx = exchangeInstance.testAcquire(
             [
@@ -2226,10 +2020,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail acquire: ERC20", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc20Instance = await deployERC1363("ERC20Simple");
           await erc20Instance.mint(await exchangeInstance.getAddress(), amount);
@@ -2253,10 +2044,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail acquire: ERC721", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc721Instance = await deployERC721("ERC721Simple");
           await erc721Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2279,10 +2067,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail acquire: ERC998", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc998Instance = await deployERC721("ERC998Simple");
           await erc998Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());
@@ -2305,10 +2090,7 @@ describe("Diamond Exchange Utils", function () {
         it("should fail acquire: ERC1155", async function () {
           const [_owner, receiver] = await ethers.getSigners();
 
-          const diamondInstance = await factory();
-          const diamondAddress = await diamondInstance.getAddress();
-
-          const exchangeInstance = await ethers.getContractAt("ExchangeMockFacet", diamondAddress);
+          const exchangeInstance = await factory();
 
           const erc1155Instance = await deployERC1155("ERC1155Simple");
           await erc1155Instance.grantRole(MINTER_ROLE, await exchangeInstance.getAddress());

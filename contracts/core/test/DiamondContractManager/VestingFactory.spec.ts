@@ -12,10 +12,17 @@ import { decodeTraits } from "@framework/traits-api";
 import { deployDiamond } from "./shared/fixture";
 
 describe("VestingFactoryDiamond", function () {
-  const factory = async () =>
-    deployDiamond("DiamondCM", ["VestingFactoryFacet", "AccessControlFacet"], "DiamondCMInit", {
-      logSelectors: false,
-    });
+  const factory = async (facetName = "VestingFactoryFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
+      "DiamondCM",
+      [facetName, "AccessControlFacet", "PausableFacet"],
+      "DiamondCMInit",
+      {
+        logSelectors: false,
+      },
+    );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   describe("deployVesting", function () {
     it("should deploy contract", async function () {
@@ -23,9 +30,7 @@ describe("VestingFactoryDiamond", function () {
       const network = await ethers.provider.getNetwork();
       const { bytecode } = await ethers.getContractFactory("Vesting");
 
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("VestingFactoryFacet", verifyingContract);
+      const contractInstance = await factory();
 
       const erc20Instance = await deployERC20();
       await erc20Instance.mint(owner.address, amount);
@@ -41,7 +46,7 @@ describe("VestingFactoryDiamond", function () {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract,
+          verifyingContract: await contractInstance.getAddress(),
         },
         // Types
         {
@@ -153,9 +158,7 @@ describe("VestingFactoryDiamond", function () {
       const network = await ethers.provider.getNetwork();
       const { bytecode } = await ethers.getContractFactory("Vesting");
 
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("VestingFactoryFacet", verifyingContract);
+      const contractInstance = await factory();
 
       const erc20Instance = await deployERC20();
       await erc20Instance.mint(owner.address, amount);
@@ -168,7 +171,7 @@ describe("VestingFactoryDiamond", function () {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract,
+          verifyingContract: await contractInstance.getAddress(),
         },
         // Types
         {
@@ -219,7 +222,7 @@ describe("VestingFactoryDiamond", function () {
         },
       );
 
-      const accessInstance = await ethers.getContractAt("AccessControlFacet", verifyingContract);
+      const accessInstance = await ethers.getContractAt("AccessControlFacet", await contractInstance.getAddress());
       await accessInstance.renounceRole(DEFAULT_ADMIN_ROLE, owner.address);
 
       const tx = contractInstance.deployVesting(

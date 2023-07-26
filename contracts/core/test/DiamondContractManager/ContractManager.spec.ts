@@ -5,51 +5,25 @@ import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, METADATA_ROLE, MINTER_ROLE, PREDICATE_ROLE } from "@gemunion/contracts-constants";
 import { deployDiamond } from "./shared/fixture";
 
-describe.only("ContractManagerDiamond", function () {
-  const factory = async () =>
-    deployDiamond("DiamondCM", ["CollectionFactoryFacet", "PausableFacet", "AccessControlFacet"], "DiamondCMInit", {
-      logSelectors: false,
-    });
-
-  describe.only("AccessControl", function () {
-    it("should behave as access control", async function () {
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const factoryCM = async () => ethers.getContractAt("AccessControlFacet", verifyingContract);
-      shouldBehaveLikeAccessControl(factoryCM)(DEFAULT_ADMIN_ROLE);
-    });
-
-    it("Should revoke role (has no role)", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("AccessControlFacet", verifyingContract);
-
-      const tx1 = await contractInstance.revokeRole(DEFAULT_ADMIN_ROLE, receiver.address);
-      await expect(tx1).to.not.emit(contractInstance, "RoleRevoked");
-    });
-
-    it("should fail: account is missing role", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-      const diamondInstance = await factory();
-      const verifyingContract = await diamondInstance.getAddress();
-      const contractInstance = await ethers.getContractAt("AccessControlFacet", verifyingContract);
-
-      const tx = contractInstance.connect(receiver).grantRole(DEFAULT_ADMIN_ROLE, receiver.address);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
-      );
-    });
-  });
+describe("ContractManagerDiamond", function () {
+  const factory = async (facetName = "AccessControlFacet"): Promise<any> => {
+    const diamondInstance = await deployDiamond(
+      "DiamondCM",
+      ["CollectionFactoryFacet", "PausableFacet", "AccessControlFacet"],
+      "DiamondCMInit",
+      {
+        logSelectors: false,
+      },
+    );
+    return ethers.getContractAt(facetName, await diamondInstance.getAddress());
+  };
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
 
-  describe.skip("addFactory", function () {
+  describe("addFactory", function () {
     describe("MINTER_ROLE", function () {
       it("should set minters (zero)", async function () {
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const minters = await contractInstance.getMinters();
         expect(minters).to.have.lengthOf(0);
@@ -58,9 +32,7 @@ describe.only("ContractManagerDiamond", function () {
       it("factory already exists", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         await contractInstance.addFactory(receiver.address, MINTER_ROLE);
         const tx = contractInstance.addFactory(receiver.address, MINTER_ROLE);
@@ -70,9 +42,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should set minters (one)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
         await contractInstance.addFactory(receiver.address, MINTER_ROLE);
 
         const minters = await contractInstance.getMinters();
@@ -83,9 +53,7 @@ describe.only("ContractManagerDiamond", function () {
 
     describe("METADATA_ROLE", function () {
       it("should set manipulators (zero)", async function () {
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const manipulators = await contractInstance.getManipulators();
         expect(manipulators).to.have.lengthOf(0);
@@ -94,9 +62,7 @@ describe.only("ContractManagerDiamond", function () {
       it("factory already exists", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
         await contractInstance.addFactory(receiver.address, METADATA_ROLE);
         const tx = contractInstance.addFactory(receiver.address, METADATA_ROLE);
         await expect(tx).to.not.be.reverted;
@@ -105,9 +71,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should set manipulators (one)", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
         await contractInstance.addFactory(receiver.address, METADATA_ROLE);
 
         const manipulators = await contractInstance.getManipulators();
@@ -120,9 +84,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should set minters and manipulators", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         await contractInstance.addFactory(receiver.address, DEFAULT_ADMIN_ROLE);
         await contractInstance.addFactory(stranger.address, DEFAULT_ADMIN_ROLE);
@@ -143,9 +105,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should fail add: wrong role", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const tx = contractInstance.addFactory(receiver.address, PREDICATE_ROLE);
         await expect(tx).to.be.revertedWithCustomError(contractInstance, "WrongRole");
@@ -154,9 +114,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should fail: account is missing role", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const tx = contractInstance.connect(receiver).addFactory(receiver.address, PREDICATE_ROLE);
         await expect(tx).to.be.revertedWith(
@@ -171,9 +129,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should remove minters", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         await contractInstance.addFactory(receiver.address, MINTER_ROLE);
         await contractInstance.addFactory(receiver.address, METADATA_ROLE);
@@ -197,9 +153,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should remove manipulators", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         await contractInstance.addFactory(receiver.address, MINTER_ROLE);
         await contractInstance.addFactory(receiver.address, METADATA_ROLE);
@@ -223,9 +177,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should remove manipulators", async function () {
         const [_owner, receiver, stranger] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         await contractInstance.addFactory(receiver.address, MINTER_ROLE);
         await contractInstance.addFactory(receiver.address, METADATA_ROLE);
@@ -248,9 +200,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should fail add: wrong role", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const tx = contractInstance.removeFactory(receiver.address, PREDICATE_ROLE);
         await expect(tx).to.be.revertedWithCustomError(contractInstance, "WrongRole");
@@ -259,9 +209,7 @@ describe.only("ContractManagerDiamond", function () {
       it("should fail add: account is missing role", async function () {
         const [_owner, receiver] = await ethers.getSigners();
 
-        const diamondInstance = await factory();
-        const verifyingContract = await diamondInstance.getAddress();
-        const contractInstance = await ethers.getContractAt("AbstractFactoryFacet", verifyingContract);
+        const contractInstance = await factory("AbstractFactoryFacet");
 
         const tx = contractInstance.connect(receiver).removeFactory(receiver.address, PREDICATE_ROLE);
         await expect(tx).to.be.revertedWith(
