@@ -12,7 +12,7 @@
     "@framework/types": "0.0.1",
     "@gemunion/constants": "0.12.6",
     "@gemunion/contracts-access-list": "4.0.9",
-    "@gemunion/contracts-chain-link-v2": "4.0.9",
+    "@gemunion/contracts-chain-link-v2": "4.0.10",
     "@gemunion/contracts-constants": "4.0.9",
     "@gemunion/contracts-erc1155": "4.0.9",
     "@gemunion/contracts-erc20": "4.0.9",

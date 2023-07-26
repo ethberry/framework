@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkHardhat.sol";
 
-import "../../ERC721BlacklistDiscreteRandom.sol";
+import "../ERC721BlacklistDiscreteRandom.sol";
 
 contract ERC721BlacklistDiscreteRandomHardhat is ERC721BlacklistDiscreteRandom, ChainLinkHardhat {
   constructor(

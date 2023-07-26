@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkBinance.sol";
 
-import "../../ERC721BlacklistDiscreteRentableRandom.sol";
+import "../ERC721BlacklistDiscreteRentableRandom.sol";
 
 /**
  * @dev An implementation of ERC721BlacklistDiscreteRentableRandom for Binance mainnet

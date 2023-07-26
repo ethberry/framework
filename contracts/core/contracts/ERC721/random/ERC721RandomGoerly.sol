@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGoerli.sol";
 
-import "../../ERC721Random.sol";
+import "../ERC721Random.sol";
 
 contract ERC721RandomGoerli is ERC721Random, ChainLinkGoerli {
   constructor(

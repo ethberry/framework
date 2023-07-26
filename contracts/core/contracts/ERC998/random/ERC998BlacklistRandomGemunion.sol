@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@gemunion/contracts-chain-link-v2/contracts/extensions/ChainLinkGemunion.sol";
 
-import "../../ERC998BlacklistRandom.sol";
+import "../ERC998BlacklistRandom.sol";
 
 contract ERC998BlacklistRandomGemunion is ERC998BlacklistRandom, ChainLinkGemunion {
   constructor(

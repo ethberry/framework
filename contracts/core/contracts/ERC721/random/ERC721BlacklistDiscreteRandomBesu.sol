@@ -6,8 +6,8 @@
 
 pragma solidity ^0.8.13;
 
-import "../../ERC721BlacklistDiscreteRandom.sol";
-import "../../../MOCKS/ChainLinkBesu.sol";
+import "../ERC721BlacklistDiscreteRandom.sol";
+import "../../MOCKS/ChainLinkBesu.sol";
 
 contract ERC721BlacklistDiscreteRandomBesu is ERC721BlacklistDiscreteRandom, ChainLinkBesu {
   constructor(
