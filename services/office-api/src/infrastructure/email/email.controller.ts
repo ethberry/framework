@@ -24,6 +24,12 @@ export class EmailController {
     return this.emailService.feedback(userEntity);
   }
 
+  @Post(EmailType.CONTACT)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public contact(@User() userEntity: UserEntity): Promise<any> {
+    return this.emailService.contact(userEntity);
+  }
+
   @Post(EmailType.LINK_TOKEN)
   @HttpCode(HttpStatus.NO_CONTENT)
   public link(@User() userEntity: UserEntity): Promise<any> {

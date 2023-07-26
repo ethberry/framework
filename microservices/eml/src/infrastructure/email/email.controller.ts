@@ -26,7 +26,7 @@ export class EmailController {
   async feedback(@Payload() payload: IPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
       template: 4921119,
-      to: ["info@gemunion.io"],
+      to: ["trejgun@gemunion.io"],
       data: {
         displayName: payload.user.displayName,
         text: payload.feedback.text,
@@ -37,8 +37,8 @@ export class EmailController {
   @EventPattern(EmailType.CONTACT)
   async contact(@Payload() payload: IContactPayload): Promise<any> {
     return this.mailjetService.sendTemplate({
-      template: 4921119,
-      to: ["info@gemunion.io"],
+      template: 4976528,
+      to: ["trejgun@gemunion.io"],
       data: payload,
     });
   }

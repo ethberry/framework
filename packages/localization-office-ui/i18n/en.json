@@ -128,7 +128,8 @@
       "FORGOT_PASSWORD": "Forgot password",
       "LINK_TOKEN": "LINK notification",
       "RESTORE_PASSWORD": "Restore password",
-      "WELCOME": "Welcome"
+      "WELCOME": "Welcome",
+      "CONTACT": "Contact form"
     },
     "gender": {
       "FEMALE": "Female",
