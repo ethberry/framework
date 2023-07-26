@@ -25,7 +25,7 @@ export class BalanceService {
     queryBuilder.addSelect(["template.title", "template.description", "template.imageUrl"]);
 
     queryBuilder.leftJoin("template.contract", "contract");
-    queryBuilder.addSelect(["contract.address"]);
+    queryBuilder.addSelect(["contract.address", "contract.chainId"]);
 
     return queryBuilder.getMany();
   }

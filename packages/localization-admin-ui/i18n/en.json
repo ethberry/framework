@@ -210,7 +210,8 @@
     "emailType": {
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
-      "LINK_TOKEN": "LINK notification"
+      "LINK_TOKEN": "LINK notification",
+      "CONTACT": "Contact form"
     },
     "eventDataLabel": {
       "_requestID": "Request ID",

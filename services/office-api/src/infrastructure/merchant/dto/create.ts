@@ -1,9 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsInt, IsJSON, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsInt, IsJSON, IsOptional, IsString, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
 // import { rePhoneNumber } from "@framework/constants";
 import { IMerchantCreateDto } from "../interfaces";
+import { emailMaxLength } from "@gemunion/constants";
 
 export class MerchantCreateDto implements IMerchantCreateDto {
   @ApiProperty()
@@ -14,8 +15,11 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
-  @ApiProperty()
-  @IsEmail()
+  @ApiProperty({
+    maxLength: emailMaxLength,
+  })
+  @IsEmail({}, { message: "patternMismatch" })
+  @MaxLength(emailMaxLength, { message: "rangeOverflow" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
