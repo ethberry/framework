@@ -7,5 +7,7 @@
 pragma solidity ^0.8.13;
 
 interface IERC721Simple {
+  function burn(uint256 tokenId) external;
+
   function mintCommon(address to, uint256 templateId) external;
 }

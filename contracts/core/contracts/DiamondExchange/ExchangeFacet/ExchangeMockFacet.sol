@@ -25,6 +25,16 @@ contract ExchangeMockFacet is SignatureValidator, AccessControlInternal, Pausabl
     ExchangeUtils.spendFrom(price, spender, receiver, disabled);
   }
 
+  function testBurnFrom(
+    Asset[] memory price,
+    address spender,
+    address receiver,
+    DisabledTokenTypes memory disabled
+  ) external payable {
+    // Burns or transfer tokens to self or other address
+    ExchangeUtils.burnFrom(price, spender, receiver, disabled);
+  }
+
   function testSpend(Asset[] memory price, address receiver, DisabledTokenTypes memory disabled) external payable {
     // Spender is always Exchange contract
     ExchangeUtils.spend(price, receiver, disabled);

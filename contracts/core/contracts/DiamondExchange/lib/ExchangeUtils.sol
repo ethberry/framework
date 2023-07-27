@@ -104,6 +104,81 @@ library ExchangeUtils {
   }
 
   /**
+   * @dev burn or transfer `Assets`.
+   * @dev burn ERC721, ERC998, ERC1155 or transfer NATIVE, ERC20 to `receiver`.
+   *
+   * @param price An array of assets to transfer
+   * @param spender Address of spender
+   * @param receiver Address of receiver
+   * @param disabled Disabled TokenTypes for spend from spender
+   */
+  function burnFrom(
+    Asset[] memory price,
+    address spender,
+    address receiver,
+    DisabledTokenTypes memory disabled
+  ) internal {
+    // The total amount of native tokens in the transaction.
+    uint256 totalAmount;
+
+    // Loop through all assets
+    uint256 length = price.length;
+    for (uint256 i = 0; i < length; ) {
+      Asset memory item = price[i];
+      // If the `Asset` token is native.
+      if (item.tokenType == TokenType.NATIVE && !disabled.native) {
+        // increase the total amount.
+        totalAmount = totalAmount + item.amount;
+      }
+      // If the `Asset` token is an ERC20 token.
+      else if (item.tokenType == TokenType.ERC20 && !disabled.erc20) {
+        if (_isERC1363Supported(receiver, item.token)) {
+          // Transfer the ERC20 token and emit event to notify server
+          IERC1363(item.token).transferFromAndCall(spender, receiver, item.amount);
+        } else {
+          // Transfer the ERC20 token in a safe way
+          SafeERC20.safeTransferFrom(IERC20(item.token), spender, receiver, item.amount);
+        }
+      }
+      // If the `Asset` token is an ERC721/ERC998 token.
+      else if (
+        (item.tokenType == TokenType.ERC721 && !disabled.erc721) ||
+        (item.tokenType == TokenType.ERC998 && !disabled.erc998)
+      ) {
+        // BURN the ERC721/ERC998 token
+        IERC721Simple(item.token).burn(item.tokenId);
+      }
+      // If the `Asset` token is an ERC1155 token.
+      else if (item.tokenType == TokenType.ERC1155 && !disabled.erc1155) {
+        // BURN the ERC1155 token
+        IERC1155Simple(item.token).burn(spender, item.tokenId, item.amount);
+      } else {
+        // should never happen
+        revert UnsupportedTokenType();
+      }
+
+    unchecked {
+      i++;
+    }
+    }
+
+    // If there is any native token in the transaction.
+    if (totalAmount > 0) {
+      // Verify the total amount of native tokens matches the amount sent with the transaction.
+      // This basically protects against reentrancy attack.
+      if (totalAmount > msg.value) {
+        revert WrongAmount();
+      }
+      if (address(this) == receiver) {
+        emit PaymentEthReceived(receiver, msg.value);
+      } else {
+        Address.sendValue(payable(receiver), totalAmount);
+        emit PaymentEthSent(receiver, totalAmount);
+      }
+    }
+  }
+
+  /**
    * @dev transfer `Assets` from `this contract` to `receiver`.
    *
    * @param price An array of assets to transfer

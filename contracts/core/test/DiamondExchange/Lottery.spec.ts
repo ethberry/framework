@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, parseEther, ZeroAddress, ZeroHash } from "ethers";
 import { getContractName, isEqualEventArgObj } from "../utils";
 import { deployDiamond } from "./shared/fixture";

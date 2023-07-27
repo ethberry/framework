@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { deployErc1155Base, deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { externalId, params, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
 import { Contract, encodeBytes32String, ZeroAddress, ZeroHash } from "ethers";
 import { isEqualArray, isEqualEventArgArrObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
+import { wrapOneToOneSignature, wrapOneToManySignature, wrapManyToManySignature } from "./shared/utils";
 
 describe("Diamond Exchange Craft", function () {
   const factory = async (facetName = "ExchangeCraftFacet"): Promise<any> => {
@@ -164,14 +163,21 @@ describe("Diamond Exchange Craft", function () {
 
     describe("NATIVE > ERC721", function () {
       it("should purchase", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 2,
@@ -191,7 +197,14 @@ describe("Diamond Exchange Craft", function () {
         });
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 2,
@@ -215,7 +228,6 @@ describe("Diamond Exchange Craft", function () {
         );
 
         await expect(tx1)
-          // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
           .withArgs(
             receiver.address,
@@ -235,6 +247,8 @@ describe("Diamond Exchange Craft", function () {
           )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(ZeroAddress, receiver.address, tokenId);
+
+        await expect(tx1).to.changeEtherBalances([owner, receiver], [amount, -amount]);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -294,7 +308,7 @@ describe("Diamond Exchange Craft", function () {
 
     describe("ERC20 > ERC721", function () {
       it("should craft", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -302,7 +316,14 @@ describe("Diamond Exchange Craft", function () {
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 2,
@@ -325,7 +346,14 @@ describe("Diamond Exchange Craft", function () {
         await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 2,
@@ -366,7 +394,7 @@ describe("Diamond Exchange Craft", function () {
           .to.emit(erc721Instance, "Transfer")
           .withArgs(ZeroAddress, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(receiver.address, await exchangeInstance.getAddress(), amount);
+          .withArgs(receiver.address, owner.address, amount);
       });
 
       it("should fail: insufficient allowance", async function () {
@@ -425,6 +453,75 @@ describe("Diamond Exchange Craft", function () {
       });
 
       it("should fail: transfer amount exceeds balance", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          items: [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount: 1,
+            },
+          ],
+          price: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        // await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+        const tx1 = exchangeInstance.connect(receiver).craft(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId,
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+      });
+
+      it("should fail: transfer to the zero address", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -476,13 +573,13 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer to the zero address`);
       });
     });
 
     describe("ERC1155 > ERC721", function () {
       it("should craft", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
@@ -490,7 +587,14 @@ describe("Diamond Exchange Craft", function () {
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 2,
@@ -513,7 +617,14 @@ describe("Diamond Exchange Craft", function () {
         await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 2,
@@ -551,7 +662,9 @@ describe("Diamond Exchange Craft", function () {
               tokenId,
               amount,
             }),
-          );
+          )
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(await exchangeInstance.getAddress(), receiver.address, ZeroAddress, tokenId, amount);
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
@@ -609,7 +722,7 @@ describe("Diamond Exchange Craft", function () {
         await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner or approved`);
       });
 
-      it("should fail: insufficient balance for transfer", async function () {
+      it("should fail: burn amount exceeds totalSupply", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -661,20 +774,27 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: insufficient balance for transfer`);
+        await expect(tx1).to.be.revertedWith(`ERC1155: burn amount exceeds totalSupply`);
       });
     });
 
     describe("NATIVE > ERC1155", function () {
       it("should craft", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 4,
@@ -694,7 +814,14 @@ describe("Diamond Exchange Craft", function () {
         });
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 4,
@@ -718,7 +845,6 @@ describe("Diamond Exchange Craft", function () {
         );
 
         await expect(tx1)
-          // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
           .withArgs(
             receiver.address,
@@ -738,6 +864,7 @@ describe("Diamond Exchange Craft", function () {
           )
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(await exchangeInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount);
+        await expect(tx1).to.changeEtherBalances([owner, receiver], [amount, -amount]);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -797,7 +924,7 @@ describe("Diamond Exchange Craft", function () {
 
     describe("ERC20 > ERC1155", function () {
       it("should craft", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
@@ -805,7 +932,14 @@ describe("Diamond Exchange Craft", function () {
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 4,
@@ -828,7 +962,14 @@ describe("Diamond Exchange Craft", function () {
         await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 4,
@@ -869,7 +1010,7 @@ describe("Diamond Exchange Craft", function () {
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(await exchangeInstance.getAddress(), ZeroAddress, receiver.address, tokenId, amount)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(receiver.address, await exchangeInstance.getAddress(), amount);
+          .withArgs(receiver.address, owner.address, amount);
       });
 
       it("should fail: insufficient allowance", async function () {
@@ -928,6 +1069,75 @@ describe("Diamond Exchange Craft", function () {
       });
 
       it("should fail: transfer amount exceeds balance", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          items: [
+            {
+              tokenType: 4,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          price: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        // await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+        const tx1 = exchangeInstance.connect(receiver).craft(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          [
+            {
+              tokenType: 4,
+              token: await erc1155Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+      });
+
+      it("should fail: transfer to the zero address", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -979,20 +1189,27 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer to the zero address`);
       });
     });
 
     describe("ERC1155 > ERC1155", function () {
       it("should craft", async function () {
-        const [_owner, receiver] = await ethers.getSigners();
+        const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
         const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
-          params,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           items: [
             {
               tokenType: 4,
@@ -1015,7 +1232,14 @@ describe("Diamond Exchange Craft", function () {
         await erc1155Instance.connect(receiver).setApprovalForAll(await exchangeInstance.getAddress(), true);
 
         const tx1 = exchangeInstance.connect(receiver).craft(
-          params,
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
           [
             {
               tokenType: 4,
@@ -1052,7 +1276,9 @@ describe("Diamond Exchange Craft", function () {
               tokenId,
               amount,
             }),
-          );
+          )
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(await exchangeInstance.getAddress(), receiver.address, ZeroAddress, tokenId, amount);
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
@@ -1109,7 +1335,7 @@ describe("Diamond Exchange Craft", function () {
         await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner or approved`);
       });
 
-      it("should fail: insufficient balance for transfer", async function () {
+      it("should fail: burn amount exceeds totalSupply", async function () {
         const [_owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -1160,7 +1386,350 @@ describe("Diamond Exchange Craft", function () {
           signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`ERC1155: insufficient balance for transfer`);
+        await expect(tx1).to.be.revertedWith(`ERC1155: burn amount exceeds totalSupply`);
+      });
+    });
+
+    describe("ERC20 + ERC721 > ERC20 + ERC721", function () {
+      it("should craft and burn", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+        await erc20Instance.mint(owner.address, amount);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
+
+        await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+        const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
+        await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
+        await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          items: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          price: [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        const tx1 = exchangeInstance.connect(receiver).craft(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1)
+          .to.emit(exchangeInstance, "Craft")
+          .withArgs(
+            receiver.address,
+            externalId,
+            isEqualEventArgArrObj(
+              {
+                tokenType: 1n,
+                token: await erc20Instance.getAddress(),
+                tokenId,
+                amount,
+              },
+              {
+                tokenType: 2n,
+                token: await erc721Instance.getAddress(),
+                tokenId: 2n, // crafted
+                amount: 1n,
+              },
+            ),
+            isEqualEventArgArrObj(
+              {
+                tokenType: 2n,
+                token: await erc721Instance.getAddress(),
+                tokenId, // price 721 token
+                amount: 1n,
+              },
+              {
+                tokenType: 1n,
+                token: await erc20Instance.getAddress(),
+                tokenId,
+                amount,
+              },
+            ),
+          )
+          .to.emit(erc721Instance, "Transfer")
+          .withArgs(ZeroAddress, receiver.address, 2 /* crafted 721 */)
+          .to.emit(erc721Instance, "Transfer")
+          .withArgs(receiver.address, ZeroAddress, tokenId)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(receiver.address, owner.address, amount)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(owner.address, receiver.address, amount);
+      });
+
+      it("should fail: insufficient allowance", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+        await erc20Instance.mint(owner.address, amount);
+        // await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
+
+        await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+        const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
+        await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
+        await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          items: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          price: [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        const tx1 = exchangeInstance.connect(receiver).craft(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+      });
+
+      it("should fail: insufficient balance", async function () {
+        const [owner, receiver] = await ethers.getSigners();
+        const exchangeInstance = await factory();
+        const { generateManyToManySignature } = await getSignatures(exchangeInstance);
+        const erc20Instance = await deployErc20Base("ERC20Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
+
+        await erc20Instance.mint(owner.address, amount - 1n);
+        await erc20Instance.approve(await exchangeInstance.getAddress(), amount);
+
+        await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(await exchangeInstance.getAddress(), amount);
+
+        const tx0 = erc721Instance.mintCommon(receiver.address, templateId);
+        await expect(tx0).to.emit(erc721Instance, "Transfer").withArgs(ZeroAddress, receiver.address, tokenId);
+        await erc721Instance.connect(receiver).approve(await exchangeInstance.getAddress(), tokenId);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
+          params: {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          items: [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount: amount * 2n,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          price: [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        const tx1 = exchangeInstance.connect(receiver).craft(
+          {
+            nonce: encodeBytes32String("nonce"),
+            externalId,
+            expiresAt,
+            receiver: owner.address,
+            referrer: ZeroAddress,
+            extra,
+          },
+          [
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount: amount * 2n,
+            },
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId: 2, // crafted 721 token
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 2,
+              token: await erc721Instance.getAddress(),
+              tokenId, // price 721 token
+              amount: 1,
+            },
+            {
+              tokenType: 1,
+              token: await erc20Instance.getAddress(),
+              tokenId,
+              amount,
+            },
+          ],
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
       });
     });
   });

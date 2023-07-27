@@ -26,7 +26,8 @@ contract ExchangeCraftFacet is SignatureValidator, AccessControlInternal, Pausab
       revert SignerMissingRole();
     }
 
-    ExchangeUtils.spendFrom(price, _msgSender(), address(this), DisabledTokenTypes(false, false, false, false, false));
+    // burn or send price to receiver
+    ExchangeUtils.burnFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
     ExchangeUtils.acquireFrom(items, params.receiver, _msgSender(), DisabledTokenTypes(false, false, false, false, false));
 
     emit Craft(_msgSender(), params.externalId, items, price);

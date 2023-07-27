@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { deployErc1155Base, deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { amount, MINTER_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, ZeroAddress } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
 
 describe("Diamond Exchange Mysterybox", function () {
   const factory = async (facetName = "ExchangeMysteryBoxFacet"): Promise<any> => {

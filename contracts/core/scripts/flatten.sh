@@ -1,7 +1,7 @@
 mkdir -p dist
 
-mkdir -p dist/ContractManager
-hardhat flatten contracts/ContractManager/ContractManager.sol > dist/ContractManager/ContractManager.sol
+#mkdir -p dist/ContractManager
+#hardhat flatten contracts/ContractManager/ContractManager.sol > dist/ContractManager/ContractManager.sol
 
 mkdir -p dist/ERC20
 hardhat flatten contracts/ERC20/ERC20Blacklist.sol > dist/ERC20/ERC20Blacklist.sol
@@ -46,8 +46,8 @@ hardhat flatten contracts/ERC1155/ERC1155Blacklist.sol > dist/ERC1155/ERC1155Bla
 hardhat flatten contracts/ERC1155/ERC1155Simple.sol > dist/ERC1155/ERC1155Simple.sol
 hardhat flatten contracts/ERC1155/ERC1155Soulbound.sol > dist/ERC1155/ERC1155Soulbound.sol
 
-mkdir -p dist/Exchange
-hardhat flatten contracts/Exchange/Exchange.sol > dist/Exchange/Exchange.sol
+#mkdir -p dist/Exchange
+#hardhat flatten contracts/Exchange/Exchange.sol > dist/Exchange/Exchange.sol
 
 mkdir -p dist/Mechanics
 

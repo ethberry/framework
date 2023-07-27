@@ -2,13 +2,12 @@ import { expect } from "chai";
 import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { deployErc1155Base, deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
+import { deployDiamond, deployErc1155Base, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { amount, MINTER_ROLE, nonce } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, subscriptionId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, encodeBytes32String, toBeHex, ZeroAddress, ZeroHash, zeroPadValue } from "ethers";
 import { isEqualEventArgArrObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
 import { VRFCoordinatorMock } from "../../typechain-types";
 import { deployLinkVrfFixture } from "../shared/link";
 import { randomRequest } from "../shared/randomRequest";

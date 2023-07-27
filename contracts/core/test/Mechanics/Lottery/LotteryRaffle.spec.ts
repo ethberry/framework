@@ -14,7 +14,7 @@ import { deployLinkVrfFixture } from "../../shared/link";
 import { IERC721Random, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomFixRequest, randomRequest } from "../../shared/randomRequest";
 import { deployRaffle } from "./fixture";
-import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
+import { wrapOneToOneSignature } from "../../DiamondExchange/shared/utils";
 import { isEqualEventArgObj, recursivelyDecodeResult } from "../../utils";
 import { decodeMetadata } from "../../shared/metadata";
 import { deployDiamond } from "../../DiamondExchange/shared/fixture";

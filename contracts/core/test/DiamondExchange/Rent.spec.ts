@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { deployErc721Base } from "../Exchange/shared/fixture";
+import { deployDiamond, deployErc721Base } from "./shared/fixture";
 import { amount, nonce, METADATA_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, params, templateId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, toBeHex, ZeroAddress, zeroPadValue, ZeroHash } from "ethers";
 import { isEqualArray, isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
 import { deployERC1363 } from "../ERC20/shared/fixtures";
 
 describe("Diamond Exchange Rent", function () {

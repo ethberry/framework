@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { deployErc20Base, deployErc721Base } from "../Exchange/shared/fixture";
+import { deployDiamond, deployErc20Base, deployErc721Base } from "./shared/fixture";
 import { amount, METADATA_ROLE } from "@gemunion/contracts-constants";
 import { expiresAt, externalId, extra, params, templateId, tokenId } from "../constants";
-import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "../Exchange/shared/utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./shared/utils";
 import { Contract, ZeroAddress, ZeroHash, encodeBytes32String } from "ethers";
 import { isEqualEventArgArrObj, isEqualEventArgObj } from "../utils";
-import { deployDiamond } from "./shared/fixture";
 
 describe("Diamond Exchange Grade", function () {
   const factory = async (facetName = "ExchangeGradeFacet"): Promise<any> => {
