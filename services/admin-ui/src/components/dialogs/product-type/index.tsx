@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { RatePlansSelection } from "../../common/rate-plan";
 
-export interface IUpgradeRatePlanDialogProps {
+import { ProductTypeSelection } from "../../common/product-type";
+
+export interface IUpgradeProductTypeDialogProps {
   onClose: () => void;
   open: boolean;
 }
 
-export const UpgradeRatePlanDialog: FC<IUpgradeRatePlanDialogProps> = props => {
+export const UpgradeProductTypeDialog: FC<IUpgradeProductTypeDialogProps> = props => {
   const { onClose, open } = props;
 
   return (
@@ -15,9 +16,10 @@ export const UpgradeRatePlanDialog: FC<IUpgradeRatePlanDialogProps> = props => {
       <DialogTitle>Time to upgrade!</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          It looks like you have reached the limits of your current rate plan and it is time to upgrade
+          Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to
+          self-hosted version.
         </DialogContentText>
-        <RatePlansSelection />
+        <ProductTypeSelection />
       </DialogContent>
     </Dialog>
   );

@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { IContract } from "@framework/types";
 
-import { UpgradeRatePlanDialog } from "../../../../../dialogs/rate-plan";
+import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 
 export interface IRaffleScheduleMenuItemProps {
   contract: IContract;
@@ -32,7 +32,7 @@ export const RaffleScheduleLightMenuItem: FC<IRaffleScheduleMenuItemProps> = () 
           <FormattedMessage id="form.buttons.schedule" />
         </Typography>
       </MenuItem>
-      <UpgradeRatePlanDialog onClose={handleScheduleCancel} open={isScheduleDialogOpen} />
+      <UpgradeProductTypeDialog onClose={handleScheduleCancel} open={isScheduleDialogOpen} />
     </Fragment>
   );
 };

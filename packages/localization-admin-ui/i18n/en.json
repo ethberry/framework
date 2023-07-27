@@ -916,6 +916,16 @@
       "limit": "Set limits",
       "title": "Breed"
     },
+    "ratePlan": {
+      "title": "Rate plans",
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold"
+    },
+    "productType": {
+      "title": "Product types",
+      "description": "Rate plans"
+    },
     "category": {
       "title": "Categories"
     },
