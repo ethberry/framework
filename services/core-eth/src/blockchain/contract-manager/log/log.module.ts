@@ -1,16 +1,15 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
-import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractManagerEventType, ContractType } from "@framework/types";
-import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractManagerLogService } from "./log.service";
+import { ABI } from "./interfaces";
 
 @Module({
   imports: [
@@ -32,7 +31,7 @@ import { ContractManagerLogService } from "./log.service";
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
             contractAddress: [contractManagerAddr],
-            contractInterface: new Interface(ContractManagerSol.abi),
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               ContractManagerEventType.VestingDeployed,

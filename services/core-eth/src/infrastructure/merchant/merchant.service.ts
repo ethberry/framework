@@ -17,4 +17,11 @@ export class MerchantService {
   ): Promise<MerchantEntity | null> {
     return this.merchantEntityRepository.findOne({ where, ...options });
   }
+
+  public findAll(
+    where: FindOptionsWhere<MerchantEntity>,
+    options?: FindOneOptions<MerchantEntity>,
+  ): Promise<Array<MerchantEntity>> {
+    return this.merchantEntityRepository.find({ where, ...options });
+  }
 }

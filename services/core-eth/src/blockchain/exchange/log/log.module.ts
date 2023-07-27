@@ -1,7 +1,6 @@
 import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
-import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nestjs-ethers";
 import { EthersContractModule } from "@gemunion/nestjs-ethers";
@@ -14,11 +13,11 @@ import {
   ExchangeEventType,
   ReferralProgramEventType,
 } from "@framework/types";
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Exchange/Exchange.sol/Exchange.json";
 
 import { ExchangeLogService } from "./log.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ABI } from "./interfaces";
 
 @Module({
   imports: [
@@ -39,7 +38,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
           contract: {
             contractType: ContractType.EXCHANGE,
             contractAddress: [exchangeAddr],
-            contractInterface: new Interface(ExchangeSol.abi),
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               // MODULE:PAUSE
