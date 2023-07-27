@@ -13,6 +13,7 @@ import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@ge
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { FirebaseModule } from "@gemunion/nest-js-module-firebase";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
@@ -82,6 +83,15 @@ import { AchievementModule } from "./achievements/achievement.module";
         const bucket = configService.get<string>("FIREBASE_STORAGE_BUCKET", "");
         return {
           bucket,
+        };
+      },
+    }),
+    SecretManagerModule.forRootAsync(SecretManagerModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          keyFile: configService.get<string>("GCLOUD_KEYFILE_BASE64_PATH", ""),
         };
       },
     }),

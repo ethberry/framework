@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IPausedEvent } from "@framework/types";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";

@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 import { Interface } from "ethers";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 import RaffleTicketSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Raffle/ERC721RaffleTicket.sol/ERC721RaffleTicket.json";
 

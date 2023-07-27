@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { DeepPartial } from "typeorm";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl, testChainId } from "@framework/constants";

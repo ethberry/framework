@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 
 import { SettingsModule } from "../../../infrastructure/settings/settings.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";

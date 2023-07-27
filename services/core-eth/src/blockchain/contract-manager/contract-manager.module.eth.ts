@@ -1,11 +1,11 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
-import { SecretManagerModule, ethersSignerProvider } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { UserModule } from "../../infrastructure/user/user.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";

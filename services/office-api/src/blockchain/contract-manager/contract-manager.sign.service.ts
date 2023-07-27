@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, Wallet } from "ethers";
 
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type {
   ICollectionContractDeployDto,

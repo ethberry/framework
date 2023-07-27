@@ -4,8 +4,8 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { hexlify, randomBytes, toUtf8Bytes, ZeroAddress, zeroPadValue } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { ContractFeatures, GradeStatus, GradeStrategy, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../common/utils/sorter";

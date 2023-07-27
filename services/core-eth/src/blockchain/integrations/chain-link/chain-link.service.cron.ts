@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { WeiPerEther, Contract, Wallet } from "ethers";
 import { ClientProxy } from "@nestjs/microservices";
 import { IsNull, Not } from "typeorm";
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { EmailType, RmqProviderType } from "@framework/types";
 

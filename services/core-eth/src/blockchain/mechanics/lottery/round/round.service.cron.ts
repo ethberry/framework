@@ -4,7 +4,7 @@ import { CronJob } from "cron";
 import { ConfigService } from "@nestjs/config";
 import { Contract, JsonRpcProvider, Wallet } from "ethers";
 
-import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { ILotteryScheduleUpdateRmq } from "@framework/types";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/random/LotteryRandomGemunion.sol/LotteryRandomGemunion.json";
 

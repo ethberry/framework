@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IERC721TokenTransferEvent, IUnpackMysteryBoxEvent, TokenMetadata, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";

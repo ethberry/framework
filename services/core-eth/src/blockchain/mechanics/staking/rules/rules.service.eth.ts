@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "ethers";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type {
   IAssetDto,
   IErc1363TransferReceivedEvent,

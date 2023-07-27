@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";

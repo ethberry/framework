@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
-import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { callRandom } from "./utils";
 import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";

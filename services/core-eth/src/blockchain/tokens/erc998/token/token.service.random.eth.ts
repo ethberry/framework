@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ContractEventType,
   ExchangeType,
@@ -52,7 +52,13 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(
+        Number(tokenId).toString(),
+        address,
+        ABI,
+        this.jsonRpcProvider,
+        this.loggerService,
+      );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 

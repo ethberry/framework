@@ -5,8 +5,8 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 import type { ISignCraftDto } from "@framework/types";
 

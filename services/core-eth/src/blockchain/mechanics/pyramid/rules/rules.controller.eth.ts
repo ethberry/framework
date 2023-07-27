@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { ContractType, IPyramidCreateEvent, IPyramidUpdateEvent, PyramidEventType } from "@framework/types";
 
 import { PyramidRulesServiceEth } from "./rules.service.eth";

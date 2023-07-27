@@ -1,8 +1,8 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
-import { SecretManagerModule, ethersSignerProvider } from "@gemunion/nest-js-module-secret-manager-gcp";
+import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nest-js-module-ethers-gcp";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { emlServiceProvider } from "../../../common/providers";
 import { EventHistoryModule } from "../../event-history/event-history.module";
