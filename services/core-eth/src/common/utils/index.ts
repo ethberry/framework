@@ -1,4 +1,3 @@
-export * from "./abi";
 export * from "./blockAwait";
 export * from "./metaData";
 export * from "./lottery";
