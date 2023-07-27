@@ -1,10 +1,11 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { ContractManagerControllerEth } from "./contract-manager.controller.eth";
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
+import { SecretManagerModule, ethersSignerProvider } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { UserModule } from "../../infrastructure/user/user.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";
@@ -66,6 +67,7 @@ import { WaitListLogModule } from "../mechanics/wait-list/log/log.module";
     UserModule,
     ClaimModule,
     ChainLinkLogModule,
+    SecretManagerModule.deferred(),
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq, ethersSignerProvider, ethersRpcProvider],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],

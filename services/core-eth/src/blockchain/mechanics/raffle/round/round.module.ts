@@ -3,7 +3,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 // import { CronExpression } from "@nestjs/schedule";
 
-import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { SecretManagerModule, ethersSignerProvider } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import { RaffleRoundEntity } from "./round.entity";
 import { RaffleRoundService } from "./round.service";
@@ -30,6 +31,7 @@ import { UserModule } from "../../../../infrastructure/user/user.module";
     TokenModule,
     ContractModule,
     EventHistoryModule,
+    SecretManagerModule.deferred(),
     TypeOrmModule.forFeature([RaffleRoundEntity]),
   ],
   controllers: [RoundControllerRmq, RaffleRoundControllerEth],
