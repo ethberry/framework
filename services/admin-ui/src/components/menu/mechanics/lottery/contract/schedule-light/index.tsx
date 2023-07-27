@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { IContract } from "@framework/types";
 
-import { UpgradeProductTypeDialog } from "../../../../../dialogs/rate-plan";
+import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 
 export interface ILotteryScheduleMenuItemProps {
   contract: IContract;
