@@ -43,14 +43,13 @@ export class ChainLinkServiceCron {
 
     if (merchantsWithSubs.length > 0) {
       await Promise.allSettled(
-        merchantsWithSubs.map(async merchant => {
+        merchantsWithSubs.map(async merchantEntity => {
           try {
-            const { balance } = await vrfContract.getSubscription(merchant.vrfSubId);
+            const { balance } = await vrfContract.getSubscription(merchantEntity.vrfSubId);
             if (minimum >= BigInt(balance)) {
               return this.emailClientProxy
                 .emit<void>(EmailType.LINK_TOKEN, {
-                  user: { email: merchant.email },
-                  subscription: merchant.vrfSubId,
+                  merchant: merchantEntity,
                 })
                 .toPromise();
             }

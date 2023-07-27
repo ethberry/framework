@@ -54,10 +54,7 @@ export class EmailService {
   public async link(userEntity: UserEntity): Promise<any> {
     return this.emailClientProxy
       .emit(EmailType.LINK_TOKEN, {
-        user: userEntity,
-        contract: {
-          title: "TEST",
-        },
+        merchant: userEntity.merchant,
       })
       .toPromise();
   }

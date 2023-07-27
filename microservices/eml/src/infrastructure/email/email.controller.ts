@@ -4,8 +4,7 @@ import { EventPattern, Payload } from "@nestjs/microservices";
 import { EmailType } from "@framework/types";
 import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
-import { IPayload } from "./interfaces";
-import { IContactPayload } from "./interfaces/contact";
+import type { IContactPayload, IPayload, IVrfPayload } from "./interfaces";
 
 @Controller()
 export class EmailController {
@@ -39,19 +38,26 @@ export class EmailController {
     return this.mailjetService.sendTemplate({
       template: 4976528,
       to: ["trejgun@gemunion.io"],
-      data: payload,
+      data: {
+        contactType: payload.contactType,
+        displayName: payload.displayName,
+        email: payload.email,
+        companyName: payload.companyName,
+        jobTitle: payload.jobTitle,
+        text: payload.text,
+        features: payload.features,
+      },
     });
   }
 
   // INTEGRATION:CHAIN-LINK
   @EventPattern(EmailType.LINK_TOKEN)
-  async linkToken(@Payload() payload: IPayload): Promise<IEmailResult> {
+  async linkToken(@Payload() payload: IVrfPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
       template: 4921143,
-      to: [payload.user.email],
+      to: [payload.merchant.email],
       data: {
-        title: payload.contract.title,
-        address: payload.contract.address,
+        vrfSubId: payload.merchant.vrfSubId!.toString(),
       },
     });
   }

@@ -1,11 +1,11 @@
 import { ContactType } from "@framework/types";
 
-export interface IContactPayload extends Record<string, string> {
+export interface IContactPayload {
   contactType: ContactType;
   displayName: string;
   email: string;
   companyName: string;
   jobTitle: string;
-  message: string;
+  text: string;
   features: string;
 }
