@@ -46,6 +46,6 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 
-  public merchantId: number;
   public chainId: number;
+  public merchantId: number;
 }

@@ -1,11 +1,11 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { Mixin } from "ts-mixer";
 
-import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
-import { ITokenMetadataSearchDto, ITokenSearchDto, TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
-import { IsBigInt } from "@gemunion/nest-js-validators";
+import { AccountDto, SearchDto } from "@gemunion/collection";
+import type { ITokenMetadataSearchDto, ITokenSearchDto } from "@framework/types";
+import { TokenMetadata, TokenRarity, TokenStatus } from "@framework/types";
 
 export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   @ApiPropertyOptional({
@@ -33,19 +33,7 @@ export class TokenAttributesSearchDto implements ITokenMetadataSearchDto {
   public [TokenMetadata.LEVEL]: Array<number>;
 }
 
-export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements ITokenSearchDto {
-  @ApiPropertyOptional({
-    enum: TokenStatus,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<TokenStatus>)
-  @IsEnum(TokenStatus, { each: true, message: "badInput" })
-  public tokenStatus: Array<TokenStatus>;
-
+export class TokenSearchDto extends Mixin(AccountDto, SearchDto) implements ITokenSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -77,14 +65,15 @@ export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) impleme
   @Type(() => TokenAttributesSearchDto)
   public metadata: TokenAttributesSearchDto;
 
-  @ApiPropertyOptional({
-    type: Number,
+  @ApiProperty({
     minimum: 1,
   })
-  @IsOptional()
-  @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
-  public tokenId: string;
-
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public chainId: number;
+
   public merchantId: number;
+  public tokenStatus: Array<TokenStatus>;
+  public tokenId: string;
 }

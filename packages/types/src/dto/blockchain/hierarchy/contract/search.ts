@@ -5,6 +5,7 @@ import { ContractFeatures, ContractStatus } from "../../../../entities";
 export interface IContractSearchDto extends ISearchDto {
   contractStatus: Array<ContractStatus>;
   contractFeatures: Array<ContractFeatures>;
-  merchantId: number;
+
   chainId: number;
+  merchantId: number;
 }

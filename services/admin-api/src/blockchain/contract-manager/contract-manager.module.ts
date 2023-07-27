@@ -4,12 +4,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
+import { RatePlanModule } from "../../infrastructure/rate-plan/rate-plan.module";
+import { ContractModule } from "../hierarchy/contract/contract.module";
 import { ContractManagerController } from "./contract-manager.controller";
 import { ContractManagerSignService } from "./contract-manager.sign.service";
 import { ContractManagerService } from "./contract-manager.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
-import { RatePlanModule } from "../../infrastructure/rate-plan/rate-plan.module";
-import { ContractModule } from "../hierarchy/contract/contract.module";
 
 @Module({
   imports: [ConfigModule, RatePlanModule, ContractModule, TypeOrmModule.forFeature([ContractManagerEntity])],

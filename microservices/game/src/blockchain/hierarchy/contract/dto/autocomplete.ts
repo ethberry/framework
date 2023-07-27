@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
@@ -56,6 +56,14 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public contractId: number;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public chainId: number;
 
   public merchantId: number;
 }

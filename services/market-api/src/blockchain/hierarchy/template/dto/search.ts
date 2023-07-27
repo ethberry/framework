@@ -58,7 +58,15 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public merchantId: number;
+
   public chainId: number;
   public contractType: Array<TokenType>;
   public contractModule: Array<ModuleType>;

@@ -8,8 +8,9 @@ export interface IContractAutocompleteDto {
   contractFeatures: Array<ContractFeatures>;
   contractModule: Array<ModuleType>;
 
+  // I do not like this
   excludeFeatures: Array<ContractFeatures>;
 
+  chainId: number;
   merchantId: number;
-  contractId?: number;
 }

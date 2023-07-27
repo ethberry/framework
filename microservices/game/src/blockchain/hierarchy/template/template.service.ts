@@ -31,6 +31,14 @@ export class TemplateService {
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId,
+    });
+
     // get single token for ERC1155, to use in purchase
     queryBuilder.leftJoinAndSelect("template.tokens", "tokens", "contract.contractType = :tokenType", {
       tokenType: TokenType.ERC1155,
@@ -73,10 +81,6 @@ export class TemplateService {
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
-    });
-
-    queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
     });
 
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
@@ -153,10 +157,12 @@ export class TemplateService {
       contractIds = [],
       contractModule = [],
       contractType = [],
+      chainId,
     } = dto;
 
     const where = {
       contract: {
+        chainId,
         merchantId: merchantEntity.id,
       },
     };
@@ -245,7 +251,7 @@ export class TemplateService {
     const templateEntity = await queryBuilder.getOne();
 
     if (!templateEntity) {
-      throw new NotFoundException("contractNotFound");
+      throw new NotFoundException("templateNotFound");
     }
 
     if (templateEntity.contract.merchantId !== merchantEntity.id) {

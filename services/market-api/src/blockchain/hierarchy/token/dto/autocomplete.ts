@@ -28,4 +28,7 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @Min(0, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public templateIds: Array<number>;
+
+  public chainId: number;
+  public merchantId: number;
 }

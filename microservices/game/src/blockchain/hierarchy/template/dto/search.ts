@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
@@ -58,8 +58,15 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsBigInt({}, { message: "typeMismatch" })
   public maxPrice: string;
 
-  public merchantId: number;
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
   public chainId: number;
+
+  public merchantId: number;
   public contractType: Array<TokenType>;
   public contractModule: Array<ModuleType>;
 }

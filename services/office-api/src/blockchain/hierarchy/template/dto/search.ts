@@ -28,14 +28,6 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @IsBigInt({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
 
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @Type(() => Number)
-  public merchantId: number;
-
   @ApiPropertyOptional({
     type: Number,
   })
@@ -61,6 +53,14 @@ export class TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @Transform(({ value }) => value as Array<TemplateStatus>)
   @IsEnum(TemplateStatus, { each: true, message: "badInput" })
   public templateStatus: Array<TemplateStatus>;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public merchantId: number;
 
   public chainId: number;
   public contractType: Array<TokenType>;

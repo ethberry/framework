@@ -121,7 +121,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
-    const { contractFeatures = [], contractType = [], contractModule = [], contractId } = dto;
+    const { contractFeatures = [], contractType = [], contractModule = [] } = dto;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -129,12 +129,6 @@ export class ContractService {
       chainId: userEntity?.chainId || chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
-
-    if (contractId) {
-      Object.assign(where, {
-        id: contractId,
-      });
-    }
 
     if (contractType.length) {
       Object.assign(where, {

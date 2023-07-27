@@ -28,19 +28,23 @@ export class ContractService {
     contractModule: Array<ModuleType>,
     contractType: Array<TokenType> | null,
   ): Promise<[Array<ContractEntity>, number]> {
-    const { query, skip, take, merchantId, chainId } = dto;
+    const { query, skip, take, chainId } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("contract.merchantId = :merchantId", {
+      merchantId: merchantEntity.id,
+    });
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId,
+    });
 
     // get merchant wallet
     queryBuilder.leftJoin("contract.merchant", "merchant");
     queryBuilder.addSelect(["merchant.id", "merchant.wallet"]);
-
-    if (merchantId) {
-      queryBuilder.andWhere("contract.merchantId = :merchantId", {
-        merchantId,
-      });
-    }
 
     const modules = [ModuleType.HIERARCHY, ModuleType.COLLECTION, ModuleType.MYSTERY];
     if (contractModule && contractModule.filter(value => modules.includes(value)).length > 0) {
@@ -83,10 +87,6 @@ export class ContractService {
       contractStatus: ContractStatus.ACTIVE,
     });
 
-    queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId,
-    });
-
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,
     });
@@ -122,19 +122,13 @@ export class ContractService {
     dto: IContractAutocompleteDto,
     merchantEntity: MerchantEntity,
   ): Promise<Array<ContractEntity>> {
-    const { contractFeatures = [], contractType = [], contractModule = [], contractId } = dto;
+    const { contractFeatures = [], contractType = [], contractModule = [], chainId } = dto;
 
     const where = {
-      // chainId: userEntity?.chainId || chainId,
+      chainId,
       merchantId: merchantEntity.id,
       contractStatus: ContractStatus.ACTIVE,
     };
-
-    if (contractId) {
-      Object.assign(where, {
-        id: contractId,
-      });
-    }
 
     if (contractType.length) {
       Object.assign(where, {

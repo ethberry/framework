@@ -8,4 +8,7 @@ export interface ITemplateAutocompleteDto {
   contractFeatures: Array<ContractFeatures>;
   contractModule: Array<ModuleType>;
   contractIds: Array<number>;
+
+  chainId: number;
+  merchantId: number;
 }

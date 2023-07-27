@@ -60,5 +60,6 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ContractFeatures, { each: true, message: "badInput" })
   public excludeFeatures: Array<ContractFeatures>;
 
+  public chainId: number;
   public merchantId: number;
 }

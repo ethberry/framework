@@ -57,5 +57,6 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Type(() => Number)
   public contractId: number;
 
+  public chainId: number;
   public merchantId: number;
 }
