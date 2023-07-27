@@ -9,9 +9,10 @@ import { ChainLinkControllerEth } from "./chain-link.controller.eth";
 import { ChainLinkServiceEth } from "./chain-link.service.eth";
 import { ChainLinkLogModule } from "./log/log.module";
 import { ChainLinkServiceCron } from "./chain-link.service.cron";
+import { MerchantModule } from "../../../infrastructure/merchant/merchant.module";
 
 @Module({
-  imports: [ConfigModule, ContractModule, ChainLinkLogModule, EventHistoryModule],
+  imports: [ConfigModule, ContractModule, ChainLinkLogModule, EventHistoryModule, MerchantModule],
   providers: [
     Logger,
     ethersRpcProvider,

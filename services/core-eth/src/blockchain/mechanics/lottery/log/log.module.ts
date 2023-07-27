@@ -28,14 +28,15 @@ import { LotteryLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
+
         const lotteryContracts = await contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
 
-        const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        // const fromBlock = (await contractService.getLastBlock(lotteryAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.LOTTERY,
