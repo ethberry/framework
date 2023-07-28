@@ -16,7 +16,7 @@
     "@gemunion/provider-user": "6.0.37",
     "@gemunion/provider-wallet": "3.3.33",
     "@gemunion/react-hooks-eth": "1.0.117",
-    "@mui/material": "5.14.1",
+    "@mui/material": "5.14.2",
     "@mui/icons-material": "5.14.1",
     "@web3-react/core": "8.2.0",
     "cross-fetch": "4.0.0",
