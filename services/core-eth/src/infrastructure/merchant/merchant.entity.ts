@@ -6,6 +6,7 @@ import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { UserEntity } from "../user/user.entity";
+import { MerchantSubscriptionsEntity } from "./merchant-subscriptions.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends SearchableEntity implements IMerchant {
@@ -20,9 +21,6 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
 
   @Column({ type: "varchar" })
   public wallet: string;
-
-  @Column({ type: "int", nullable: true })
-  public vrfSubId: number | null;
 
   @Column({
     type: "varchar",
@@ -47,6 +45,9 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
 
   @OneToMany(_type => UserEntity, user => user.merchant)
   public users: Array<UserEntity>;
+
+  @OneToMany(_type => MerchantSubscriptionsEntity, sub => sub.merchant)
+  public subscriptions: Array<MerchantSubscriptionsEntity>;
 
   public products: Array<any>;
 
