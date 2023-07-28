@@ -1,7 +1,7 @@
 import { IAssetItem } from "./common";
 
 export interface IExchangePurchaseEvent {
-  account: string;
+  from: string;
   externalId: string;
   item: IAssetItem;
   price: Array<IAssetItem>;

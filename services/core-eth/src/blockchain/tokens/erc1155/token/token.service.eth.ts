@@ -14,6 +14,7 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { EventHistoryService } from "../../../event-history/event-history.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth extends TokenServiceEth {
@@ -23,6 +24,7 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     protected readonly eventHistoryService: EventHistoryService,
     protected readonly balanceService: BalanceService,
     protected readonly tokenService: TokenService,
+    protected readonly notificatorService: NotificatorService,
   ) {
     super(loggerService, tokenService, eventHistoryService);
   }
@@ -40,12 +42,20 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
     }
     await this.eventHistoryService.updateHistory(event, context, tokenEntity.id);
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
+
+    await this.notificatorService.tokenTransfer({
+      token: tokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: value, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatchEvent>, context: Log): Promise<void> {
     const {
-      args: { from, to, ids, values },
+      args: { from, to, ids /* 1155 db:tokenIds */, values },
     } = event;
+    const { address } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -60,6 +70,20 @@ export class Erc1155TokenServiceEth extends TokenServiceEth {
         ),
       ),
     );
+
+    // TODO simplify notification?
+    const tokensEntities = await this.tokenService.getBatch(ids, address);
+
+    if (!tokensEntities) {
+      throw new NotFoundException("tokensNotFound");
+    }
+
+    await this.notificatorService.batchTransfer({
+      tokens: tokensEntities,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amounts: values, // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async approvalForAllErc1155(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {

@@ -136,6 +136,13 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc998TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
@@ -160,7 +167,7 @@ export class Erc998TokenRandomServiceEth extends TokenServiceEth {
         { relations: { token: { template: true }, contract: true } },
       );
       await this.notificatorService.purchaseRandom({
-        account: eventData.account.toLowerCase(),
+        account: eventData.from.toLowerCase(),
         item: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.ITEM)[0],
         price: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.PRICE),
         transactionHash: exchangeEvent.transactionHash,

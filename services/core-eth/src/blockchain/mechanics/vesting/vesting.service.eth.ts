@@ -16,6 +16,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 import { EventHistoryService } from "../../event-history/event-history.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
+import { NotificatorService } from "../../../game/notificator/notificator.service";
 
 @Injectable()
 export class VestingServiceEth {
@@ -27,10 +28,33 @@ export class VestingServiceEth {
     private readonly configService: ConfigService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
+    private readonly notificatorService: NotificatorService,
   ) {}
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
+    const {
+      args: { token, amount },
+    } = event;
+    const { address } = context;
     await this.eventHistoryService.updateHistory(event, context);
+
+    const vestingEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!vestingEntity) {
+      throw new NotFoundException("vestingNotFound");
+    }
+
+    const contractEntity = await this.contractService.findOne({ address: token.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.notificatorService.vestingRelease({
+      vesting: vestingEntity,
+      token: contractEntity,
+      amount,
+    });
   }
 
   public async ethReleased(event: ILogEvent<IVestingEtherReleasedEvent>, context: Log): Promise<void> {

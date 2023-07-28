@@ -120,6 +120,12 @@ export class LotteryRoundServiceEth {
 
     Object.assign(roundEntity, { numbers: getLotteryNumbers(winValues) });
     await roundEntity.save();
+
+    // NOTIFY
+    await this.notificatorService.finalizeLottery({
+      round: roundEntity,
+      prizeNumbers: winValues,
+    });
   }
 
   public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {

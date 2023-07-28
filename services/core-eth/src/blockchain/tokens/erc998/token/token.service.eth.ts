@@ -117,6 +117,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc998TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {

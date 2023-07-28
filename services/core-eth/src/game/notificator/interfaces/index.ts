@@ -6,3 +6,6 @@ export * from "./staking";
 export * from "./waitlist";
 export * from "./raffle";
 export * from "./lottery";
+export * from "./rent";
+export * from "./vesting";
+export * from "./transfer";

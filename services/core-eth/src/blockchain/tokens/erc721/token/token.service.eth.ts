@@ -100,6 +100,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc721TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {
