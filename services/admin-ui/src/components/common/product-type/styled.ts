@@ -1,23 +1,19 @@
 import { Box, Button, Card, CardContent, Grid, SvgIcon, Typography, TypographyProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const Root = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-  overflowY: "auto",
-  marginTop: theme.spacing(5),
-  paddingBottom: theme.spacing(2),
+export const StyledCardsWrapper = styled(Grid)(({ theme }) => ({
+  marginLeft: theme.spacing(-4),
+  width: `calc(100% + ${theme.spacing(4)}px)`,
 }));
 
-export const StyledCardWrapper = styled(Grid)({
+export const StyledCardWrapper = styled(Grid)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   flex: 1,
   height: "auto",
-});
+  marginTop: theme.spacing(2),
+}));
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2),

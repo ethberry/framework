@@ -1,48 +1,21 @@
-import { Box, Button, Card, CardContent, Grid, SvgIcon, Typography, TypographyProps } from "@mui/material";
+import { Box, Grid, Card, CardContent, SvgIcon, Typography, TypographyProps, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const Root = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-  overflowY: "auto",
-  marginTop: theme.spacing(5),
-  paddingBottom: theme.spacing(2),
-}));
-
-export const StyledHeader = styled(Typography)(({ theme }) => ({
-  ...theme.typography.h4,
-  fontWeight: 500,
-  margin: theme.spacing(0, 0, 7),
+export const StyledCardWrapper = styled(Grid)(({ theme }) => ({
   width: "100%",
-  textAlign: "center",
-  [theme.breakpoints.down("md")]: {
-    fontSize: 28,
-    margin: theme.spacing(0, 0, 4),
-  },
-  [theme.breakpoints.down("sm")]: {
-    fontSize: 24,
-    margin: theme.spacing(0, 0, 3),
-  },
-}));
-
-export const StyledCardWrapper = styled(Grid)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flex: 1,
   height: "auto",
-});
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
 
 export const StyledCard = styled(Card)(({ theme }) => ({
-  margin: theme.spacing(2),
   backgroundColor: "#fff",
   borderRadius: "15px",
   boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
   padding: theme.spacing(2),
   display: "flex",
   height: "100%",
+  flex: 1,
   [theme.breakpoints.down("sm")]: {
     marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1),
@@ -50,15 +23,19 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-export const StyledCardContent = styled(CardContent)({
+export const StyledCardContent = styled(CardContent)(({ theme }) => ({
   textAlign: "center",
   display: "flex",
   flex: 1,
   height: "auto",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
-});
+  [theme.breakpoints.down("sm")]: {
+    "&.MuiCardContent-root": {
+      paddingBottom: theme.spacing(1),
+    },
+  },
+}));
 
 export const TitleTypography = styled(Typography)(({ theme }) => ({
   color: "#222529",
@@ -67,18 +44,6 @@ export const TitleTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 21,
     marginBottom: theme.spacing(2),
-  },
-}));
-
-export const StyledDescription = styled(Typography)(({ theme }) => ({
-  ...theme.typography.h5,
-  fontWeight: 500,
-  margin: theme.spacing(-4, 0, 5),
-  [theme.breakpoints.down("md")]: {
-    margin: theme.spacing(0, 0, 5),
-    fontSize: 18,
-    fontWeight: 500,
-    textAlign: "center",
   },
 }));
 
@@ -118,20 +83,24 @@ export const Divider = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const FeaturesWrapper = styled(Box)({
+export const FeaturesWrapper = styled(Box)(({ theme }) => ({
   maxWidth: "fit-content",
-  margin: "0 auto",
   textAlign: "left",
-});
+  [theme.breakpoints.up("md")]: {
+    margin: "0 auto",
+  },
+}));
 
 export const FeatureWrapper = styled(Box)(({ theme }) => ({
-  margin: theme.spacing(1),
+  margin: theme.spacing(2, 1),
   display: "flex",
   alignItems: "center",
 }));
 
 export const FeatureIconWrapper = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(2),
+  display: "flex",
+  alignItems: "center",
   [theme.breakpoints.down("sm")]: {
     marginRight: theme.spacing(1),
   },
@@ -152,21 +121,3 @@ export const FeatureTypography = styled(Typography, {
   fontFamily: "'Roboto', sans-serif",
   textDecoration: included ? "none" : "line-through",
 }));
-
-export const SubscribeButton = styled(Button)(({ theme }) => ({
-  marginTop: "auto",
-  marginBottom: theme.spacing(1),
-  fontFamily: "'Roboto', sans-serif",
-  color: "#3479F6",
-  backgroundColor: "#fff",
-  border: "1px solid #3479F6",
-  borderRadius: "32px",
-  boxShadow: "none",
-  "&:hover": {
-    color: "#FFF",
-    backgroundColor: "#3479F6",
-  },
-  [theme.breakpoints.down("sm")]: {
-    marginTop: theme.spacing(2),
-  },
-})) as typeof Button;

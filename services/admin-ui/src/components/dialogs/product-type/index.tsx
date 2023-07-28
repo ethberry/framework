@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
 
 import { ProductTypeSelection } from "../../common/product-type";
 
@@ -12,12 +12,14 @@ export const UpgradeProductTypeDialog: FC<IUpgradeProductTypeDialogProps> = prop
   const { onClose, open } = props;
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} maxWidth="lg">
       <DialogTitle>Time to upgrade!</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to
-          self-hosted version.
+          <Typography fontSize={16} fontWeight="bold" marginBottom={2}>
+            Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to
+            self-hosted version.
+          </Typography>
         </DialogContentText>
         <ProductTypeSelection />
       </DialogContent>
