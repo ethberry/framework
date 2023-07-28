@@ -1,13 +1,14 @@
-import { array, mixed, number, object } from "yup";
-import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { array, number, object } from "yup";
+
+import { tokenAssetAmountValidationSchema, tokenAssetTokenTypeValidationSchema } from "@gemunion/mui-inputs-asset";
+import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 import { TokenType } from "@framework/types";
 
 import { dbIdValidationSchema } from "../../../../validation";
 
-// TODO fix original MUI schema?
 export const tokenZeroAssetComponentValidationSchema = object().shape({
-  tokenType: mixed<TokenType>().oneOf(Object.values(TokenType)).required("form.validations.valueMissing"),
+  tokenType: tokenAssetTokenTypeValidationSchema,
   contractId: dbIdValidationSchema,
   token: object().when("tokenType", {
     is: (tokenType: TokenType) => tokenType !== TokenType.ERC20 && tokenType !== TokenType.NATIVE,
@@ -19,12 +20,7 @@ export const tokenZeroAssetComponentValidationSchema = object().shape({
           .required("form.validations.valueMissing"),
       }),
   }),
-  amount: bigNumberValidationSchema.when("tokenType", {
-    is: (tokenType: TokenType) => tokenType !== TokenType.ERC721 && tokenType !== TokenType.ERC998,
-    then: () =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      bigNumberValidationSchema.min(1, "form.validations.rangeUnderflow").required("form.validations.valueMissing"),
-  }),
+  amount: tokenAssetAmountValidationSchema,
 });
 
 export const tokenZeroAssetValidationSchema = object().shape({
