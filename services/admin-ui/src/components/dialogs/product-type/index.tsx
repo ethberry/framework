@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useIntl } from "react-intl";
 
-import { ProductTypeSelection } from "../../common/product-type";
+import { ProductTypeSelection } from "@gemunion/license-pages";
 
 export interface IUpgradeProductTypeDialogProps {
   onClose: () => void;
@@ -10,16 +11,14 @@ export interface IUpgradeProductTypeDialogProps {
 
 export const UpgradeProductTypeDialog: FC<IUpgradeProductTypeDialogProps> = props => {
   const { onClose, open } = props;
+  const { formatMessage } = useIntl();
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="lg">
-      <DialogTitle>Time to upgrade!</DialogTitle>
+      <DialogTitle>{formatMessage({ id: "pages.productType.dialog.title" })}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Typography fontSize={16} fontWeight="bold" marginBottom={2}>
-            Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to
-            self-hosted version.
-          </Typography>
+        <DialogContentText fontSize={16} fontWeight={500} marginBottom={2}>
+          {formatMessage({ id: "pages.productType.dialog.text" })}
         </DialogContentText>
         <ProductTypeSelection />
       </DialogContent>

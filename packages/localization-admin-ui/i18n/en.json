@@ -943,7 +943,11 @@
     },
     "productType": {
       "title": "Product types",
-      "description": "Rate plans"
+      "description": "Rate plans",
+      "dialog": {
+        "title": "Time to upgrade!",
+        "text": "Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to self-hosted version."
+      }
     },
     "category": {
       "title": "Categories"
