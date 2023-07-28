@@ -5,3 +5,4 @@ export * from "./purchase";
 export * from "./staking";
 export * from "./waitlist";
 export * from "./raffle";
+export * from "./lottery";
