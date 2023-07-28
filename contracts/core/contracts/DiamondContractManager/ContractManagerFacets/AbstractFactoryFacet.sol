@@ -22,9 +22,6 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
 
   using EnumerableSet for EnumerableSet.AddressSet;
 
-//  EnumerableSet.AddressSet private _minters;
-//  EnumerableSet.AddressSet private _manipulators;
-
   /**
    * @dev Deploys a contract using `create2` optcode.
    *
@@ -40,44 +37,6 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
     // Deploy the contract using `create2`
     // The deployed address will be deterministic based on `nonce` and the hash of `_bytecode`.
     return Create2.deploy(0, nonce, _bytecode);
-  }
-
-  /**
-   * @dev Set the list of allowed factories for creating and manipulating tokens
-   *
-   * @param factory address representing the allowed token factory
-   * @param role to assign
-   */
-  function addFactory(address factory, bytes32 role) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    // Add the factory address to the appropriate array
-    if (role == MINTER_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._minters, factory);
-    } else if (role == METADATA_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._manipulators, factory);
-    } else if (role == DEFAULT_ADMIN_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._minters, factory);
-      EnumerableSet.add(SigValStorage.layout()._manipulators, factory);
-    } else {
-      revert WrongRole();
-    }
-  }
-
-  /**
-   * @notice Removes a factory address from the list of minters and manipulators.
-   * @param factory The address of the factory to be removed.
-   * @param role to be removed.
-   */
-  function removeFactory(address factory, bytes32 role) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    if (role == MINTER_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._minters, factory);
-    } else if (role == METADATA_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._manipulators, factory);
-    } else if (role == DEFAULT_ADMIN_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._minters, factory);
-      EnumerableSet.remove(SigValStorage.layout()._manipulators, factory);
-    } else {
-      revert WrongRole();
-    }
   }
 
   /**
@@ -136,19 +95,5 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
         i++;
       }
     }
-  }
-
-  /**
-   * @dev Get minters array
-   */
-  function getMinters() public view returns (address[] memory minters) {
-    return EnumerableSet.values(SigValStorage.layout()._minters);
-  }
-
-  /**
-   * @dev Get manipulators array
-   */
-  function getManipulators() public view returns (address[] memory manipulators) {
-    return EnumerableSet.values(SigValStorage.layout()._manipulators);
   }
 }

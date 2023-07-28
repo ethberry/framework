@@ -20,7 +20,7 @@ describe("CollectionFactoryDiamond", function () {
   const factory = async (facetName = "CollectionFactoryFacet"): Promise<any> => {
     const diamondInstance = await deployDiamond(
       "DiamondCM",
-      [facetName, "AccessControlFacet", "PausableFacet"],
+      [facetName, "UseFactoryFacet", "AccessControlFacet", "PausableFacet"],
       "DiamondCMInit",
       {
         logSelectors: false,
