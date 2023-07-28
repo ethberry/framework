@@ -35,7 +35,7 @@
     "@nomiclabs/hardhat-ethers": "2.2.3",
     "@nomiclabs/hardhat-etherscan": "3.1.7",
     "@nomiclabs/hardhat-web3": "2.0.0",
-    "@openzeppelin/contracts": "4.9.0",
+    "@openzeppelin/contracts": "4.9.2",
     "@openzeppelin/merkle-tree": "1.0.5",
     "@openzeppelin/test-helpers": "0.5.16",
     "dotenv": "16.3.1",
