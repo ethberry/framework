@@ -6,6 +6,12 @@ export interface IRoundStartLotteryData {
   transactionHash: string;
 }
 
+export interface IRoundEndLotteryData {
+  round: ILotteryRound;
+  address: string;
+  transactionHash: string;
+}
+
 export interface IPrizeLotteryData {
   account: IUser;
   round: ILotteryRound;

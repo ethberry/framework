@@ -10,6 +10,9 @@ import type {
   IGradeData,
   IPurchaseData,
   IPurchaseRandomData,
+  IRoundEndLotteryData,
+  IRoundEndRaffleData,
+  IRoundStartRaffleData,
   IStakingDepositFinishData,
   IStakingDepositStartData,
   IStakingRuleCreatedData,
@@ -179,6 +182,18 @@ export class NotificatorService {
     });
   }
 
+  public roundStartRaffle(data: IRoundStartRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_ROUND_START, data).toPromise();
+    });
+  }
+
+  public roundEndRaffle(data: IRoundEndRaffleData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.RAFFLE_ROUND_END, data).toPromise();
+    });
+  }
+
   // MODULE:LOTTERY
   public purchaseLottery(data: IPurchaseData): Promise<any> {
     return this.sendMessage(data.items.at(0)!.contract!.merchantId, clientProxy => {
@@ -189,6 +204,12 @@ export class NotificatorService {
   public roundStartLottery(data: IRoundStartLotteryData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_START, data).toPromise();
+    });
+  }
+
+  public roundEndLottery(data: IRoundEndLotteryData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.LOTTERY_ROUND_END, data).toPromise();
     });
   }
 }

@@ -1,5 +1,17 @@
 import { IAssetComponentHistory, IRaffleRound, IToken, IUser } from "@framework/types";
 
+export interface IRoundStartRaffleData {
+  round: IRaffleRound;
+  address: string;
+  transactionHash: string;
+}
+
+export interface IRoundEndRaffleData {
+  round: IRaffleRound;
+  address: string;
+  transactionHash: string;
+}
+
 export interface IPrizeRaffleData {
   account: IUser;
   round: IRaffleRound;

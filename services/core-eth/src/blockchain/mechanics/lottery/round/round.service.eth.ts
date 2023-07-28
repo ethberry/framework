@@ -126,7 +126,7 @@ export class LotteryRoundServiceEth {
     const {
       args: { round, endTimestamp },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -141,6 +141,12 @@ export class LotteryRoundServiceEth {
     });
 
     await roundEntity.save();
+
+    await this.notificatorService.roundEndLottery({
+      round: roundEntity,
+      address,
+      transactionHash,
+    });
   }
 
   public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
