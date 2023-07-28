@@ -1,31 +1,31 @@
-import { IAssetComponentHistory, IRaffleRound, IToken, IUser } from "@framework/types";
+import { IAssetComponentHistory, ILotteryRound, IToken, IUser } from "@framework/types";
 
-export interface IRoundStartRaffleData {
-  round: IRaffleRound;
+export interface IRoundStartLotteryData {
+  round: ILotteryRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IRoundEndRaffleData {
-  round: IRaffleRound;
+export interface IRoundEndLotteryData {
+  round: ILotteryRound;
   address: string;
   transactionHash: string;
 }
 
-export interface IPrizeRaffleData {
+export interface IPrizeLotteryData {
   account: IUser;
-  round: IRaffleRound;
+  round: ILotteryRound;
   ticket: IToken;
   multiplier: string;
 }
 
-export interface IFinalizeRaffleData {
-  round: IRaffleRound;
+export interface IFinalizeLotteryData {
+  round: ILotteryRound;
   prizeIndex: string;
   prizeNumber: string;
 }
 
-export interface IPurchaseRaffleData {
+export interface IPurchaseLotteryData {
   address: string;
   items: Array<IAssetComponentHistory>;
   price: Array<IAssetComponentHistory>;

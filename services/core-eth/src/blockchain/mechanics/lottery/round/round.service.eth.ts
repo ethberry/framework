@@ -20,12 +20,14 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { testChainId } from "@framework/constants";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { NotificatorService } from "../../../../game/notificator/notificator.service";
 
 @Injectable()
 export class LotteryRoundServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly notificatorService: NotificatorService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly eventHistoryService: EventHistoryService,
     private readonly templateService: TemplateService,
@@ -41,7 +43,7 @@ export class LotteryRoundServiceEth {
     const {
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -87,13 +89,19 @@ export class LotteryRoundServiceEth {
 
     await this.lotteryRoundService.updatePrice(asset, priceAsset);
 
-    await this.lotteryRoundService.create({
+    const roundEntity = await this.lotteryRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContract.id,
       ticketContractId: ticketContract.id,
       priceId: asset.id,
       maxTickets: Number(maxTicket),
+    });
+
+    await this.notificatorService.roundStartLottery({
+      round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
+      address,
+      transactionHash,
     });
   }
 
@@ -118,7 +126,7 @@ export class LotteryRoundServiceEth {
     const {
       args: { round, endTimestamp },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     await this.eventHistoryService.updateHistory(event, context);
 
@@ -133,6 +141,12 @@ export class LotteryRoundServiceEth {
     });
 
     await roundEntity.save();
+
+    await this.notificatorService.roundEndLottery({
+      round: roundEntity,
+      address,
+      transactionHash,
+    });
   }
 
   public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {

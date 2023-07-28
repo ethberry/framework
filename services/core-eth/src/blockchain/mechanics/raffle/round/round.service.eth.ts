@@ -44,7 +44,7 @@ export class RaffleRoundServiceEth {
     const {
       args: { roundId, startTimestamp, maxTicket, ticket, price },
     } = event;
-    const { address } = context;
+    const { address, transactionHash } = context;
 
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
@@ -90,13 +90,19 @@ export class RaffleRoundServiceEth {
 
     await this.raffleRoundService.updatePrice(asset, priceAsset);
 
-    await this.raffleRoundService.create({
+    const roundEntity = await this.raffleRoundService.create({
       roundId,
       startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
       contractId: lotteryContract.id,
       ticketContractId: ticketContract.id,
       priceId: asset.id,
       maxTickets: Number(maxTicket),
+    });
+
+    await this.notificatorService.roundStartRaffle({
+      round: Object.assign(roundEntity, { contract: lotteryContract, ticketContract, price: asset }),
+      address,
+      transactionHash,
     });
   }
 
@@ -125,13 +131,15 @@ export class RaffleRoundServiceEth {
   }
 
   public async end(event: ILogEvent<IRaffleRoundEndedEvent>, context: Log): Promise<void> {
+    const { address, transactionHash } = context;
+
     await this.eventHistoryService.updateHistory(event, context);
 
     const {
       args: { round, endTimestamp },
     } = event;
 
-    const roundEntity = await this.raffleRoundService.findOne({ roundId: round });
+    const roundEntity = await this.raffleRoundService.getRound(round, address.toLowerCase());
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -142,6 +150,12 @@ export class RaffleRoundServiceEth {
     });
 
     await roundEntity.save();
+
+    await this.notificatorService.roundEndRaffle({
+      round: roundEntity,
+      address,
+      transactionHash,
+    });
   }
 
   public async prize(event: ILogEvent<IRafflePrizeEvent>, context: Log): Promise<void> {
