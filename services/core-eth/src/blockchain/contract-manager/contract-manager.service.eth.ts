@@ -59,12 +59,12 @@ import { LotteryLogService } from "../mechanics/lottery/log/log.service";
 import { RaffleLogService } from "../mechanics/raffle/log/log.service";
 import { Erc721TokenRandomLogService } from "../tokens/erc721/token/log-random/log.service";
 import { Erc998TokenRandomLogService } from "../tokens/erc998/token/log-random/log.service";
-import { addConsumer } from "../integrations/chain-link/utils";
+import { addConsumer } from "../integrations/chain-link/contract/utils";
 import { LotteryTicketLogService } from "../mechanics/lottery/ticket/log/log.service";
 import { RaffleTicketLogService } from "../mechanics/raffle/ticket/log/log.service";
 import { decodeExternalId } from "../../common/utils";
 import { ClaimService } from "../mechanics/claim/claim.service";
-import { ChainLinkLogService } from "../integrations/chain-link/log/log.service";
+import { ChainLinkLogService } from "../integrations/chain-link/contract/log/log.service";
 import { WaitListLogService } from "../mechanics/wait-list/log/log.service";
 
 @Injectable()

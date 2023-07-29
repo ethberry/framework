@@ -8,14 +8,13 @@ import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import { testChainId } from "@framework/constants";
 
 import { EmailType, RmqProviderType } from "@framework/types";
-
 import VrfSol from "@framework/core-contracts/artifacts/@gemunion/contracts-chain-link-v2/contracts/mocks/VRFCoordinator.sol/VRFCoordinatorMock.json";
 
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { MerchantService } from "../../../infrastructure/merchant/merchant.service";
+import { MerchantService } from "../../../../infrastructure/merchant/merchant.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class ChainLinkServiceCron {
+export class ChainLinkContractServiceCron {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
@@ -39,8 +38,21 @@ export class ChainLinkServiceCron {
 
     // get all subscription ids
     const merchantsWithSubs = await this.merchantService.findAll(
-      { subscriptions: { vrfSubId: Not(IsNull()), chainId } },
-      { select: { email: true, subscriptions: true }, relations: { subscriptions: true } },
+      {
+        chainLinkSubscriptions: {
+          vrfSubId: Not(IsNull()),
+          chainId,
+        },
+      },
+      {
+        select: {
+          email: true,
+          chainLinkSubscriptions: true,
+        },
+        relations: {
+          chainLinkSubscriptions: true,
+        },
+      },
     );
 
     if (merchantsWithSubs.length > 0) {
@@ -48,7 +60,7 @@ export class ChainLinkServiceCron {
         merchantsWithSubs.map(async merchantEntity => {
           try {
             // must be only one VRF subscription per one chainId
-            const { balance } = await vrfContract.getSubscription(merchantEntity.subscriptions[0].vrfSubId);
+            const { balance } = await vrfContract.getSubscription(merchantEntity.chainLinkSubscriptions[0].vrfSubId);
 
             if (minimum >= BigInt(balance)) {
               return this.emailClientProxy
@@ -58,7 +70,7 @@ export class ChainLinkServiceCron {
                 .toPromise();
             }
           } catch (e) {
-            this.loggerService.error(e, ChainLinkServiceCron.name);
+            this.loggerService.error(e, ChainLinkContractServiceCron.name);
           }
         }),
       );

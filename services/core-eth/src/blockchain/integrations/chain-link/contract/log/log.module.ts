@@ -10,8 +10,8 @@ import { ContractFeatures, ModuleType } from "@framework/types";
 
 import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";
 import { ChainLinkLogService } from "./log.service";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractModule } from "../../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { abiEncode, keccak256It } from "../utils";
 
 @Module({

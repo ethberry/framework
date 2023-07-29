@@ -35,7 +35,7 @@ import { StockEntity } from "./ecommerce/stock/stock.entity";
 import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
-import { MerchantSubscriptionsEntity } from "./infrastructure/merchant/merchant-subscriptions.entity";
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -68,7 +68,7 @@ const config: PostgresConnectionOptions = {
     RatePlanEntity,
     PageEntity,
     MerchantEntity,
-    MerchantSubscriptionsEntity,
+    ChainLinkSubscriptionEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

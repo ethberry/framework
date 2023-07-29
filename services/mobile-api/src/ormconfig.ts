@@ -5,6 +5,7 @@ import { UserEntity } from "./infrastructure/user/user.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { MerchantEntity } from "./infrastructure/merchant/merchant.entity";
 import { BalanceEntity } from "./game/balance/balance.entity";
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -15,6 +16,7 @@ const config: PostgresConnectionOptions = {
     OtpEntity,
     UserEntity,
     MerchantEntity,
+    ChainLinkSubscriptionEntity,
     /* game */
     BalanceEntity,
   ],

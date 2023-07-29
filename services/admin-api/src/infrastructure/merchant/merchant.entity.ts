@@ -8,7 +8,7 @@ import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { UserEntity } from "../user/user.entity";
 import { OrderEntity } from "../../ecommerce/order/order.entity";
 import { ProductEntity } from "../../ecommerce/product/product.entity";
-import { MerchantSubscriptionsEntity } from "./merchant-subscriptions.entity";
+import { ChainLinkSubscriptionEntity } from "../../blockchain/integrations/chain-link/subscription/subscription.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends SearchableEntity implements IMerchant {
@@ -58,6 +58,6 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   })
   public orders: Array<OrderEntity>;
 
-  @OneToMany(_type => MerchantSubscriptionsEntity, sub => sub.merchant)
-  public subscriptions: Array<MerchantSubscriptionsEntity>;
+  @OneToMany(_type => ChainLinkSubscriptionEntity, sub => sub.merchant)
+  public chainLinkSubscriptions: Array<ChainLinkSubscriptionEntity>;
 }

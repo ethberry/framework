@@ -119,7 +119,7 @@ export class ContractService {
   }
 
   public async autocomplete(
-    dto: IContractAutocompleteDto,
+    dto: Partial<IContractAutocompleteDto>,
     merchantEntity: MerchantEntity,
   ): Promise<Array<ContractEntity>> {
     const { contractFeatures = [], contractType = [], contractModule = [], chainId } = dto;

@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateMerchantSubscriptions1563803000121 implements MigrationInterface {
+export class CreateChainLinkSubscriptions1563803000121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.merchant_subscriptions`,
+      name: `${ns}.chain_link_subscriptions`,
       columns: [
         {
           name: "id",
@@ -47,6 +47,6 @@ export class CreateMerchantSubscriptions1563803000121 implements MigrationInterf
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.merchant_subscriptions`);
+    await queryRunner.dropTable(`${ns}.chain_link_subscriptions`);
   }
 }

@@ -30,6 +30,7 @@ import { WaitListItemEntity } from "./blockchain/mechanics/wait-list/item/item.e
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 /* ecommerce */
 import { OrderEntity } from "./ecommerce/order/order.entity";
 import { ProductEntity } from "./ecommerce/product/product.entity";
@@ -90,6 +91,7 @@ const config: PostgresConnectionOptions = {
     BreedEntity,
     RentEntity,
     AccessControlEntity,
+    ChainLinkSubscriptionEntity,
     /* ecommerce */
     AddressEntity,
     CategoryEntity,

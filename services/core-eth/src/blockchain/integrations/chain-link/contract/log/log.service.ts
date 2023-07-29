@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 import { ContractFeatures, ModuleType } from "@framework/types";
 import { abiEncode, keccak256It } from "../utils";
 import { ChainLinkEventSignatures } from "./interfaces";
