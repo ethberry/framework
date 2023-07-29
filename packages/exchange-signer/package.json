@@ -8,9 +8,9 @@
     "url": "https://github.com/gemunion/nestjs-packages/issues"
   },
   "dependencies": {
-    "@gemunion/contracts-constants": "4.0.9",
-    "@gemunion/nest-js-module-ethers-gcp": "1.0.3",
-    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.5"
+    "@gemunion/contracts-constants": "4.0.11",
+    "@gemunion/nest-js-module-ethers-gcp": "1.0.4",
+    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.6"
   },
   "devDependencies": {
     "@nestjs/common": "10.1.2",

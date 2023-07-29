@@ -34,7 +34,7 @@
     "@gemunion/mui-inputs-mask": "5.5.26",
     "@gemunion/mui-inputs-picker": "6.0.35",
     "@gemunion/mui-page-layout": "2.2.23",
-    "@gemunion/mui-rte": "3.0.1",
+    "@gemunion/mui-rte": "3.0.2",
     "@gemunion/mui-scanner": "1.2.26",
     "@gemunion/popup": "1.0.29",
     "@gemunion/provider-api-firebase": "2.0.33",
