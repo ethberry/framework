@@ -4,15 +4,16 @@ import { ManageHistory } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { CronExpression, IContract } from "@framework/types";
+import { BusinessType, CronExpression, IContract } from "@framework/types";
 
-import { RaffleScheduleDialog } from "./dialog";
+import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
+import { LotteryScheduleDialog } from "./dialog";
 
-export interface IRaffleScheduleFullMenuItemProps {
+export interface ILotteryScheduleFullMenuItemProps {
   contract: IContract;
 }
 
-export const RaffleScheduleFullMenuItem: FC<IRaffleScheduleFullMenuItemProps> = props => {
+export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = props => {
   const {
     contract: { id },
   } = props;
@@ -21,7 +22,7 @@ export const RaffleScheduleFullMenuItem: FC<IRaffleScheduleFullMenuItemProps> = 
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: `/raffle/contracts/${id}/schedule`,
+      url: `/lottery/rounds/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -43,7 +44,7 @@ export const RaffleScheduleFullMenuItem: FC<IRaffleScheduleFullMenuItemProps> = 
 
   return (
     <Fragment>
-      <MenuItem onClick={handleSchedule} data-testid="RaffleScheduleButton">
+      <MenuItem onClick={handleSchedule} data-testid="LotteryScheduleButton">
         <ListItemIcon>
           <ManageHistory fontSize="small" />
         </ListItemIcon>
@@ -51,14 +52,18 @@ export const RaffleScheduleFullMenuItem: FC<IRaffleScheduleFullMenuItemProps> = 
           <FormattedMessage id="form.buttons.schedule" />
         </Typography>
       </MenuItem>
-      <RaffleScheduleDialog
-        onConfirm={handleScheduleConfirm}
-        onCancel={handleScheduleCancel}
-        open={isScheduleDialogOpen}
-        initialValues={{
-          schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-        }}
-      />
+      {process.env.BUSINESS_TYPE === (BusinessType.B2B as string) ? (
+        <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
+      ) : (
+        <LotteryScheduleDialog
+          onConfirm={handleScheduleConfirm}
+          onCancel={handleScheduleCancel}
+          open={isScheduleDialogOpen}
+          initialValues={{
+            schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+          }}
+        />
+      )}
     </Fragment>
   );
 };

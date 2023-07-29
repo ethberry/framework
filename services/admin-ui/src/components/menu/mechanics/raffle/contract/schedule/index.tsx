@@ -6,14 +6,14 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 import { BusinessType, CronExpression, IContract } from "@framework/types";
 
-import { LotteryScheduleDialog } from "./dialog";
+import { RaffleScheduleDialog } from "./dialog";
 import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 
-export interface ILotteryScheduleFullMenuItemProps {
+export interface IRaffleScheduleFullMenuItemProps {
   contract: IContract;
 }
 
-export const LotteryScheduleFullMenuItem: FC<ILotteryScheduleFullMenuItemProps> = props => {
+export const RaffleScheduleMenuItem: FC<IRaffleScheduleFullMenuItemProps> = props => {
   const {
     contract: { id },
   } = props;
@@ -22,7 +22,7 @@ export const LotteryScheduleFullMenuItem: FC<ILotteryScheduleFullMenuItemProps> 
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: `/lottery/rounds/${id}/schedule`,
+      url: `/raffle/contracts/${id}/schedule`,
       method: "POST",
       data: values,
     });
@@ -44,7 +44,7 @@ export const LotteryScheduleFullMenuItem: FC<ILotteryScheduleFullMenuItemProps> 
 
   return (
     <Fragment>
-      <MenuItem onClick={handleSchedule} data-testid="LotteryScheduleButton">
+      <MenuItem onClick={handleSchedule} data-testid="RaffleScheduleButton">
         <ListItemIcon>
           <ManageHistory fontSize="small" />
         </ListItemIcon>
@@ -55,7 +55,7 @@ export const LotteryScheduleFullMenuItem: FC<ILotteryScheduleFullMenuItemProps> 
       {process.env.BUSINESS_TYPE === (BusinessType.B2B as string) ? (
         <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
       ) : (
-        <LotteryScheduleDialog
+        <RaffleScheduleDialog
           onConfirm={handleScheduleConfirm}
           onCancel={handleScheduleCancel}
           open={isScheduleDialogOpen}

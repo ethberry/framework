@@ -11,7 +11,7 @@ import { PauseMenuItem } from "../../common/pause";
 import { UnPauseMenuItem } from "../../common/unpause";
 import { LotteryRoundStartMenuItem } from "./round-start";
 import { LotteryRoundEndMenuItem } from "./round-end";
-import { LotteryScheduleLightMenuItem } from "./schedule-light";
+import { LotteryScheduleMenuItem } from "./schedule";
 
 export interface ILotteryActionsMenu {
   contract: IContract;
@@ -56,7 +56,7 @@ export const LotteryActionsMenu: FC<ILotteryActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <LotteryRoundStartMenuItem contract={contract} />
         <LotteryRoundEndMenuItem contract={contract} />
-        <LotteryScheduleLightMenuItem contract={contract} />
+        <LotteryScheduleMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

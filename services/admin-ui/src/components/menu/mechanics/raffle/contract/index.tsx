@@ -11,7 +11,7 @@ import { PauseMenuItem } from "../../common/pause";
 import { UnPauseMenuItem } from "../../common/unpause";
 import { RaffleRoundStartMenuItem } from "./round-start";
 import { RaffleRoundEndMenuItem } from "./round-end";
-import { RaffleScheduleLightMenuItem } from "./schedule-light";
+import { RaffleScheduleMenuItem } from "./schedule";
 
 export interface IRaffleActionsMenu {
   contract: IContract;
@@ -56,7 +56,7 @@ export const RaffleActionsMenu: FC<IRaffleActionsMenu> = props => {
         <Divider sx={{ m: 2 }} />
         <RaffleRoundStartMenuItem contract={contract} />
         <RaffleRoundEndMenuItem contract={contract} />
-        <RaffleScheduleLightMenuItem contract={contract} />
+        <RaffleScheduleMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );
