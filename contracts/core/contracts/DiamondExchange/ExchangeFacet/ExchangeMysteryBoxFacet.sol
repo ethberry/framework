@@ -14,7 +14,7 @@ import "../../DiamondExchange/lib/ExchangeUtils.sol";
 import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
 
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Mysterybox(address from, uint256 externalId, Asset[] items, Asset[] price);
+  event PurchaseMysteryBox(address from, uint256 externalId, Asset[] items, Asset[] price);
 
   constructor() SignatureValidator() {}
 
@@ -34,7 +34,7 @@ contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, P
 
     ExchangeUtils.spendFrom(price, _msgSender(), params.receiver, DisabledTokenTypes(false, false, false, false, false));
 
-    emit Mysterybox(_msgSender(), params.externalId, items, price);
+    emit PurchaseMysteryBox(_msgSender(), params.externalId, items, price);
 
     Asset memory box = items[items.length - 1];
 

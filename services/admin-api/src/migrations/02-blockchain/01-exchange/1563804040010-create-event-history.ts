@@ -6,141 +6,115 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.event_history_event_enum AS ENUM (
-        -- MODULE:CONTRACT-MANAGER
-        'CollectionDeployed',
-        'VestingDeployed',
-        'MysteryboxDeployed',
-        'StakingDeployed',
-        'PyramidDeployed',
-        'LotteryDeployed',
-        'RaffleDeployed',
-        'WaitListDeployed',
-        'ERC20TokenDeployed',
-        'ERC721TokenDeployed',
-        'ERC998TokenDeployed',
-        'ERC1155TokenDeployed',
-
-        -- MODULE:ERC20
-        'Snapshot',
-
-        -- MODULE:ERC1363
-        'TransferReceived',
-
-        -- MODULE:ERC4907 RENT
-        'UpdateUser',
-        'Lend',
-
-        -- MODULE:ERC721
-        'Approval',
-        'ApprovalForAll',
-        'DefaultRoyaltyInfo',
-        'MintRandom',
-        'TokenRoyaltyInfo',
-        'Transfer',
-        'ConsecutiveTransfer',
-
-        -- MODULE:ERC998
-        'BatchReceivedChild',
-        'BatchTransferChild',
-        'WhitelistedChild',
-        'UnWhitelistedChild',
-        'ReceivedChild',
-        'TransferChild',
-        'SetMaxChild',
-
-        -- MODULE:ERC1155
-        'TransferBatch',
-        'TransferSingle',
-        'URI',
-
-        -- MODULE:CLAIM
-        'RedeemClaim',
-        'UnpackClaim',
-
-        -- MODULE:WRAPPER
-        'UnpackWrapper',
-
-        -- MODULE MYSTERY
-        'UnpackMysteryBox',
-
-        -- MODULE:PAUSE
-        'Paused',
-        'Unpaused',
-
-        -- MODULE:VESTING
-        'EtherReleased',
-        'ERC20Released',
-        'EtherReceived',
-
-        -- MODULE:ACCESS_LIST
-        'Blacklisted',
-        'UnBlacklisted',
-        'Whitelisted',
-        'UnWhitelisted',
-
-        -- MODULE:ACCESS_CONTROL
-        'RoleGranted',
-        'RoleRevoked',
-        'RoleAdminChanged',
-        'OwnershipTransferred',
-
-        -- MODULE:STAKING
-        'RuleCreated',
-        'RuleUpdated',
-        'StakingStart',
-        'StakingWithdraw',
-        'StakingFinish',
-        'WithdrawBalance',
-        'ReturnDeposit',
-
-        -- MODULE:EXCHANGE
-        -- MODULE:CORE
-        'Purchase',
-        -- MODULE:CLAIM
-        'Claim',
-        -- MODULE:CRAFT
-        'Craft',
-        -- MODULE:MYSTERY
-        'PurchaseMysteryBox',
-        -- MODULE:GRADE
-        'Upgrade',
-        -- MODULE:WAITLIST
-        'WaitListRewardSet',
-        'WaitListRewardClaimed',
-        -- MODULE:BREEDING
-        'Breed',
-         -- MODULE:GRADE
-        'LevelUp',
-        'MetadataUpdate',
-        
-        'PurchaseLottery',
-        'PurchaseRaffle',
-        -- MODULE:LOTTERY
-        -- MODULE:RAFFLE
-        'RoundFinalized',
-        'RoundStarted',
-        'RoundEnded',
-        'Released',
-        'Prize',
-
-        -- MODULE:PAYMENT_SPLITTER
-        'PayeeAdded',
-        'PaymentReleased',
-        'ERC20PaymentReleased',
-        'PaymentReceived',
-        'PaymentEthReceived',
-        'PaymentEthSent',
-
-        -- MODULE:CHAINLINK
-        'RandomnessRequest',
-        'RandomnessRequestId',
-
-        -- MODULE:CHAINLINKV2
-        'RandomWordsRequested',
-        'RandomWordsFulfilled',
-
-        -- MODULE:ECOMMERCE
-        'EcommercePurchase'
+      --MODULE:ERC20
+       'Snapshot',
+       'Approval',
+       'Transfer',
+      --MODULE:ERC721
+       'ApprovalForAll',
+       'DefaultRoyaltyInfo',
+       'MintRandom',
+       'TokenRoyaltyInfo',
+       'ConsecutiveTransfer',
+      --MODULE:ERC998
+       'BatchReceivedChild',
+       'BatchTransferChild',
+       'WhitelistedChild',
+       'UnWhitelistedChild',
+       'ReceivedChild',
+       'TransferChild',
+       'SetMaxChild',
+      --MODULE:ERC1155
+       'TransferBatch',
+       'TransferSingle',
+       'URI',
+      --MODULE:LOTTERY
+       'RoundFinalized',
+       'RoundStarted',
+       'RoundEnded',
+       'PurchaseLottery',
+       'PurchaseRaffle',
+       'Released',
+       'Prize',
+      --MODULE:WRAPPER
+       'UnpackWrapper',
+      --MODULE MYSTERY
+       'UnpackMysteryBox',
+      --MODULE:PAUSE
+       'Paused',
+       'Unpaused',
+      --MODULE:VESTING
+       'EtherReleased',
+       'ERC20Released',
+       'EtherReceived',
+      --MODULE:ACCESS_LIST
+       'Blacklisted',
+       'UnBlacklisted',
+       'Whitelisted',
+       'UnWhitelisted',
+      --MODULE:ACCESS_CONTROL
+       'RoleGranted',
+       'RoleRevoked',
+       'RoleAdminChanged',
+       'OwnershipTransferred',
+      --MODULE:STAKING
+       'RuleCreated',
+       'RuleUpdated',
+       'StakingStart',
+       'StakingWithdraw',
+       'StakingFinish',
+       'BalanceWithdraw',
+       'DepositReturn',
+      --MODULE:EXCHANGE
+      --MODULE:CORE
+       'Purchase',
+      --MODULE:CLAIM
+       'Claim',
+      --MODULE:CRAFT
+       'Craft',
+      --MODULE:RENTABLE
+       'UpdateUser',
+       'Lend',
+       'LendMany',
+      --MODULE:MYSTERY
+       'PurchaseMysteryBox',
+      --MODULE:GRADE
+       'Upgrade',
+      --MODULE:WAITLIST
+       'WaitListRewardSet',
+       'WaitListRewardClaimed',
+      --MODULE:BREEDING
+       'Breed',
+      --MODULE:GRADE
+       'LevelUp',
+       'MetadataUpdate',
+       'BatchMetadataUpdate',
+      --MODULE:PAYMENT_SPLITTER
+       'PayeeAdded',
+       'PaymentReleased',
+       'ERC20PaymentReleased',
+       'PaymentReceived',
+       'PaymentEthReceived',
+       'PaymentEthSent',
+      --MODULE:CHAINLINKV2
+       'RandomWordsRequested',
+      --MODULE:ECOMMERCE
+       'EcommercePurchase',
+      --MODULE:CM
+       'VestingDeployed',
+       'ERC20TokenDeployed',
+       'ERC721TokenDeployed',
+       'ERC998TokenDeployed',
+       'ERC1155TokenDeployed',
+       'MysteryboxDeployed',
+       'CollectionDeployed',
+       'PyramidDeployed',
+       'StakingDeployed',
+       'LotteryDeployed',
+       'RaffleDeployed',
+       'WaitListDeployed',
+       -- MODULE:ERC1363
+       'TransferReceived'
       );
     `);
 

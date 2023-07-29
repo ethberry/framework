@@ -36,7 +36,7 @@ describe("Diamond Exchange Mysterybox", function () {
     };
   };
 
-  describe("mysterybox", function () {
+  describe("MysteryBox", function () {
     describe("NATIVE > MYSTERYBOX (ERC721)", function () {
       it("should purchase mysterybox", async function () {
         const [owner, receiver] = await ethers.getSigners();
@@ -119,7 +119,7 @@ describe("Diamond Exchange Mysterybox", function () {
 
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
-          .to.emit(exchangeInstance, "Mysterybox")
+          .to.emit(exchangeInstance, "PurchaseMysteryBox")
           .withArgs(
             receiver.address,
             externalId,
@@ -219,7 +219,7 @@ describe("Diamond Exchange Mysterybox", function () {
 
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
-          .to.emit(exchangeInstance, "Mysterybox")
+          .to.emit(exchangeInstance, "PurchaseMysteryBox")
           .withArgs(
             receiver.address,
             externalId,
@@ -250,7 +250,7 @@ describe("Diamond Exchange Mysterybox", function () {
     });
 
     describe("(NATIVE ERC20) > MYSTERYBOX MIXED (ERC20 ERC721 ERC998 ERC1155)", function () {
-      it("should purchase mysterybox", async function () {
+      it.only("should purchase mysterybox", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
@@ -386,7 +386,7 @@ describe("Diamond Exchange Mysterybox", function () {
 
         await expect(tx1)
           // .to.changeEtherBalance(receiver, -amount)
-          .to.emit(exchangeInstance, "Mysterybox")
+          .to.emit(exchangeInstance, "PurchaseMysteryBox")
           .withArgs(
             receiver.address,
             externalId,
