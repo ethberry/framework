@@ -32,5 +32,3 @@ export interface IMerchant extends IIdDateBase {
   orders: Array<IOrder>;
   chainLinkSubscriptions?: Array<IChainLinkSubscription>;
 }
-
-}
