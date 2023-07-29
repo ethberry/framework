@@ -57,7 +57,7 @@ export class EmailController {
       template: 4921143,
       to: [payload.merchant.email],
       data: {
-        vrfSubId: payload.merchant.chainLinkSubscriptions[0].vrfSubId.toString(),
+        vrfSubId: payload.merchant.chainLinkSubscriptions![0].vrfSubId.toString(),
       },
     });
   }

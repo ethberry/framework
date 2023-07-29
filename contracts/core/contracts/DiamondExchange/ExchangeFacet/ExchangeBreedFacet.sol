@@ -13,26 +13,18 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../ERC721/interfaces/IERC721Random.sol";
 
-import "../../utils/constants.sol";
-import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
+import "../../utils/constants.sol";
+
+import "../override/SignatureValidator.sol";
+import "../storage/ExchangeStorage.sol";
+
 
 contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  using SafeCast for uint256;
-
-  uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
-  uint64 public _pregnancyCountLimit = 0;
-  uint64 public _pregnancyMaxTime = 0;
-
-  struct Pregnancy {
-    uint64 time; // last breeding timestamp
-    uint64 count; // breeds count
-  }
-
-  mapping(address /* item's contract */ => mapping(uint256 /* item's tokenId */ => Pregnancy)) private _breeds;
-
   event Breed(address from, uint256 externalId, Asset matron, Asset sire);
+
+  using SafeCast for uint256;
 
   constructor() SignatureValidator() {}
 
@@ -67,15 +59,15 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
   }
 
   function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {
-    Pregnancy storage pregnancyM = _breeds[matron.token][matron.tokenId];
-    Pregnancy storage pregnancyS = _breeds[sire.token][sire.tokenId];
+    ExchangeStorage.Pregnancy storage pregnancyM = ExchangeStorage.layout()._breeds[matron.token][matron.tokenId];
+    ExchangeStorage.Pregnancy storage pregnancyS = ExchangeStorage.layout()._breeds[sire.token][sire.tokenId];
 
     // Check pregnancy count
-    if (_pregnancyCountLimit > 0) {
-      if (pregnancyM.count >= _pregnancyCountLimit) {
+    if (ExchangeStorage.layout()._pregnancyCountLimit > 0) {
+      if (pregnancyM.count >= ExchangeStorage.layout()._pregnancyCountLimit) {
         revert CountExceed();
       }
-      if (pregnancyS.count >= _pregnancyCountLimit) {
+      if (pregnancyS.count >= ExchangeStorage.layout()._pregnancyCountLimit) {
         revert CountExceed();
       }
     }
@@ -87,13 +79,13 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
     if (pregnancyM.count > 0 || pregnancyS.count > 0) {
       if (
         timeNow - pregnancyM.time <=
-        (pregnancyM.count > 13 ? _pregnancyMaxTime : (_pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64())
+        (pregnancyM.count > 13 ? ExchangeStorage.layout()._pregnancyMaxTime : (ExchangeStorage.layout()._pregnancyTimeLimit * (2 ** pregnancyM.count)).toUint64())
       ) {
         revert LimitExceed();
       }
       if (
         timeNow - pregnancyS.time <=
-        (pregnancyS.count > 13 ? _pregnancyMaxTime : (_pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64())
+        (pregnancyS.count > 13 ? ExchangeStorage.layout()._pregnancyMaxTime : (ExchangeStorage.layout()._pregnancyTimeLimit * (2 ** pregnancyS.count)).toUint64())
       ) {
         revert LimitExceed();
       }
@@ -107,8 +99,8 @@ contract ExchangeBreedFacet is SignatureValidator, AccessControlInternal, Pausab
   }
 
   function setPregnancyLimits(uint64 count, uint64 time, uint64 maxTime) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _pregnancyCountLimit = count;
-    _pregnancyTimeLimit = time;
-    _pregnancyMaxTime = maxTime;
+    ExchangeStorage.layout()._pregnancyCountLimit = count;
+    ExchangeStorage.layout()._pregnancyTimeLimit = time;
+    ExchangeStorage.layout()._pregnancyMaxTime = maxTime;
   }
 }

@@ -9,7 +9,23 @@ describe("ContractManagerDiamond", function () {
   const factory = async (facetName = "AccessControlFacet"): Promise<any> => {
     const diamondInstance = await deployDiamond(
       "DiamondCM",
-      ["CollectionFactoryFacet", "UseFactoryFacet", "PausableFacet", "AccessControlFacet"],
+      [
+        "CollectionFactoryFacet",
+        "ERC20FactoryFacet",
+        "ERC721FactoryFacet",
+        "ERC998FactoryFacet",
+        "ERC1155FactoryFacet",
+        "LotteryFactoryFacet",
+        "MysteryBoxFactoryFacet",
+        "PyramidFactoryFacet",
+        "RaffleFactoryFacet",
+        "StakingFactoryFacet",
+        "VestingFactoryFacet",
+        "WaitListFactoryFacet",
+        "UseFactoryFacet",
+        "AccessControlFacet",
+        "PausableFacet",
+      ],
       "DiamondCMInit",
       {
         logSelectors: false,

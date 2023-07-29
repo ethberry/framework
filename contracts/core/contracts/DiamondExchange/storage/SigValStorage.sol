@@ -12,7 +12,7 @@ library SigValStorage {
     }
 
     bytes32 internal constant STORAGE_SLOT =
-        keccak256('signature-validator.contracts.storage.exchange');
+        keccak256('signature-validator.contracts.storage');
 
     function layout() internal pure returns (Layout storage l) {
         bytes32 slot = STORAGE_SLOT;
