@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns, testChainId } from "@framework/constants";
 
-export class SeedMerchantSubscriptions1563803000122 implements MigrationInterface {
+export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = BigInt(process.env.CHAIN_ID || testChainId);
@@ -12,7 +12,7 @@ export class SeedMerchantSubscriptions1563803000122 implements MigrationInterfac
     }
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.merchant_subscriptions (
+      INSERT INTO ${ns}.chain_link_subscriptions (
         merchant_id,
         chain_id,
         vrf_sub_id,

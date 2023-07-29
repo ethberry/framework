@@ -4,12 +4,12 @@ import { Log } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { ChainLinkServiceEth } from "./chain-link.service.eth";
+import { ChainLinkContractServiceEth } from "./contract.service.eth";
 import { ChainLinkEventType, ChainLinkType, IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
 
 @Controller()
-export class ChainLinkControllerEth {
-  constructor(private readonly chainLinkServiceEth: ChainLinkServiceEth) {}
+export class ChainLinkContractControllerEth {
+  constructor(private readonly chainLinkServiceEth: ChainLinkContractServiceEth) {}
 
   @EventPattern({ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.RandomWordsRequested })
   public randomRequest(

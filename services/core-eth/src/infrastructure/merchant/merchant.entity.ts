@@ -5,8 +5,8 @@ import { MerchantStatus, RatePlanType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
+import { ChainLinkSubscriptionEntity } from "../../blockchain/integrations/chain-link/subscription/subscription.entity";
 import { UserEntity } from "../user/user.entity";
-import { MerchantSubscriptionsEntity } from "./merchant-subscriptions.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends SearchableEntity implements IMerchant {
@@ -46,8 +46,8 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   @OneToMany(_type => UserEntity, user => user.merchant)
   public users: Array<UserEntity>;
 
-  @OneToMany(_type => MerchantSubscriptionsEntity, sub => sub.merchant)
-  public subscriptions: Array<MerchantSubscriptionsEntity>;
+  @OneToMany(_type => ChainLinkSubscriptionEntity, sub => sub.merchant)
+  public chainLinkSubscriptions: Array<ChainLinkSubscriptionEntity>;
 
   public products: Array<any>;
 

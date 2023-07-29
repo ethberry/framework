@@ -3,13 +3,13 @@ import { ConfigService } from "@nestjs/config";
 import { JsonRpcProvider, Log, Wallet } from "ethers";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
-import { callRandom } from "./utils";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { EventHistoryService } from "../../../event-history/event-history.service";
 import { IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { EventHistoryService } from "../../event-history/event-history.service";
+import { callRandom } from "./utils";
 
 @Injectable()
-export class ChainLinkServiceEth {
+export class ChainLinkContractServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -49,6 +49,6 @@ export class ChainLinkServiceEth {
       },
       this.ethersSignerProviderAws,
     );
-    this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkServiceEth.name);
+    this.loggerService.log(JSON.stringify(`callRandom ${txr}`, null, "\t"), ChainLinkContractServiceEth.name);
   }
 }

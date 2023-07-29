@@ -14,7 +14,7 @@ import {
 import { testChainId } from "@framework/constants";
 
 import { AchievementsRuleService } from "../../achievements/rule/rule.service";
-import { ChainLinkEventType } from "../integrations/chain-link/log/interfaces";
+import { ChainLinkEventType } from "../integrations/chain-link/contract/log/interfaces";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { EventHistoryEntity } from "./event-history.entity";
 

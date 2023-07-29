@@ -49,7 +49,6 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         merchant_status,
         wallet,
         api_key,
-        vrf_sub_id,
         created_at,
         updated_at
       ) VALUES (

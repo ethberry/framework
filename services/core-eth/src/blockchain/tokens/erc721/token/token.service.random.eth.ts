@@ -192,7 +192,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
         { relations: { token: { template: true }, contract: true } },
       );
       await this.notificatorService.purchaseRandom({
-        account: eventData.from.toLowerCase(),
+        account: eventData.account.toLowerCase(),
         item: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.ITEM)[0],
         price: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.PRICE),
         transactionHash: exchangeEvent.transactionHash,

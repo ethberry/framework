@@ -3,12 +3,12 @@ import { Injectable } from "@nestjs/common";
 import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 
 @Injectable()
-export class ChainLinkService {
+export class ChainLinkContractService {
   constructor(private readonly contractService: ContractService) {}
 
   public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {

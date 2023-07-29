@@ -32,6 +32,8 @@ import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { PayeesEntity } from "./blockchain/exchange/payees/payees.entity";
+// integrations
+import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
 // extensions
 import { AccessControlEntity } from "./blockchain/extensions/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/extensions/access-list/access-list.entity";
@@ -103,7 +105,7 @@ import {
   CreateGrade1657846587000,
   CreateLotteryRoundAt1660436476100,
   CreateMerchant1563803000110,
-  CreateMerchantSubscriptions1563803000121,
+  CreateChainLinkSubscriptions1563803000121,
   CreateMysterybox1653616447910,
   CreateOrder1683724062000,
   CreateOrderItem1683724062100,
@@ -261,7 +263,7 @@ import {
   SeedGrade1657846587010,
   SeedLotteryRoundAt1660436476120,
   SeedMerchant1563803000120,
-  SeedMerchantSubscriptions1563803000122,
+  SeedChainLinkSubscriptions1563803000122,
   SeedMysteryBoxErc1155At1653616447950,
   SeedMysteryBoxErc721At1653616447930,
   SeedMysteryBoxErc998At1653616447940,
@@ -328,7 +330,6 @@ import {
   SeedWaitListListAt1663047650210,
   SeedWrapperAt1563804000370,
 } from "./migrations";
-import { MerchantSubscriptionsEntity } from "./infrastructure/merchant/merchant-subscriptions.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -337,7 +338,7 @@ const config: PostgresConnectionOptions = {
   entities: [
     /* infrastructure */
     MerchantEntity,
-    MerchantSubscriptionsEntity,
+    ChainLinkSubscriptionEntity,
     UserEntity,
     OtpEntity,
     SettingsEntity,
@@ -420,9 +421,9 @@ const config: PostgresConnectionOptions = {
     CreateSettings1563803000010,
     SeedSettings1563803000020,
     CreateMerchant1563803000110,
-    CreateMerchantSubscriptions1563803000121,
+    CreateChainLinkSubscriptions1563803000121,
     SeedMerchant1563803000120,
-    SeedMerchantSubscriptions1563803000122,
+    SeedChainLinkSubscriptions1563803000122,
     CreateUser1563803000130,
     SeedUser1563803000140,
     CreateAuth1563803000150,
