@@ -29,4 +29,12 @@ export interface IMerchant extends IIdDateBase {
   users: Array<IUser>;
   products: Array<IProduct>;
   orders: Array<IOrder>;
+  subscriptions: Array<IMerchantSubscriptions>;
+}
+
+export interface IMerchantSubscriptions extends IIdDateBase {
+  merchantId: number;
+  chainId: number;
+  vrfSubId: number;
+  merchant: IMerchant;
 }
