@@ -1,11 +1,11 @@
-import { Controller, Get, Param, Body } from "@nestjs/common";
+import { Body, Controller, Get, Param } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressPipe, ApiAddress } from "@gemunion/nest-js-utils";
 
 import { AccessControlService } from "./access-control.service";
 import { AccessControlEntity } from "./access-control.entity";
-import { AccessControlCheck } from "./dto";
+import { AccessControlCheckDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/access-control")
@@ -13,7 +13,7 @@ export class AccessControlController {
   constructor(private readonly accessControlService: AccessControlService) {}
 
   @Get("/check")
-  public check(@Body() dto: AccessControlCheck): Promise<{ hasRole: boolean }> {
+  public check(@Body() dto: AccessControlCheckDto): Promise<{ hasRole: boolean }> {
     return this.accessControlService.check(dto);
   }
 

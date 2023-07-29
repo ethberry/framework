@@ -328,7 +328,6 @@
   },
   "form": {
     "buttons": {
-      "join": "Join",
       "GRADE": "Grade",
       "add": "Add",
       "allowance": "Allowance",
@@ -348,6 +347,7 @@
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
+      "join": "Join",
       "lend": "Lend token",
       "login": "Login",
       "logout": "Logout",
@@ -379,7 +379,6 @@
     "labels": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
-      "claimType": "Type",
       "account": "Account",
       "achievementLevel": "Level to reach",
       "address": "Address",
@@ -393,6 +392,7 @@
       "chainId": "Chain",
       "city": "City",
       "claimStatus": "Status",
+      "claimType": "Type",
       "cliffInMonth": "Cliff in month",
       "collectionId": "Collection",
       "confirm": "Confirm",
@@ -423,11 +423,13 @@
       "eventTypes": "Event type",
       "expires": "Lend expires",
       "externalId": "External ID",
+      "facebookUrl": "Facebook",
       "from": "From",
       "gender": "Gender",
       "gradeId": "Grade",
       "id": "ID",
       "imageUrl": "Avatar",
+      "instagramUrl": "Instagram",
       "isDefault": "Make default",
       "item": "Item",
       "language": "Language",
@@ -478,11 +480,14 @@
       "tokenIds": "Tokens",
       "tokenStatus": "Token status",
       "tokenType": "Type",
+      "twitterUrl": "Twitter",
       "tx": "Tx hash",
       "type": "Type",
       "updatedAt": "Updated",
+      "wallet": "Wallet",
       "winNumbers": "Win numbers",
       "withdrawDeposit": "Withdraw deposit",
+      "youtubeUrl": "Youtube",
       "zip": "ZIP code"
     },
     "placeholders": {
@@ -501,9 +506,12 @@
       "country": "Germany",
       "createdAt": "Registered",
       "customContractId": "Allowance Contract",
+      "description": "Description",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "facebookUrl": "https://facebook.com/",
       "gradeId": "LEVEL",
+      "instagramUrl": "https://instagram.com/",
       "listId": "1",
       "mainContractId": "Contract",
       "maxPrice": "1",
@@ -519,15 +527,20 @@
       "templateId": "Template",
       "templateIds": "Templates",
       "text": "Type something",
+      "title": "Title",
       "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens",
+      "twitterUrl": "https://twitter.com/",
+      "wallet": "Wallet",
+      "youtubeUrl": "https://youtube.com/",
       "zip": "80576"
     },
     "tips": {
       "add": "Add",
       "allowance": "Allowance",
       "cancel": "Cancel",
+      "claim": "Claim",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
@@ -540,8 +553,7 @@
       "reward": "Reward",
       "transfer": "Transfer",
       "transferOwnership": "Transfer ownership",
-      "view": "View",
-      "claim": "Claim"
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -561,9 +573,9 @@
     }
   },
   "messages": {
-    "uncaughtError": "Uncaught error happened",
     "noAddress": "No address",
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "uncaughtError": "Uncaught error happened"
   },
   "pages": {
     "achievements": {
@@ -900,10 +912,10 @@
         "title": "Leaderboard"
       },
       "purchase": {
+        "count": "{current} of {max} sold",
         "price": "Ticket Price",
         "rules": "Select 6 out of 36 numbers. {commission}% gathered funds will be proportionally split among players.",
         "selected": "Selected {selected}/6.",
-        "count": "{current} of {max} sold",
         "title": "Buy a ticket"
       },
       "title": "Lottery",
@@ -915,26 +927,26 @@
       "title": "Lottery contracts"
     },
     "marketplace": {
-      "title": "Marketplace",
-      "merchants": {
-        "title": "Merchants"
-      },
-      "merchant": {
-        "title": "Merchant: {title}"
-      },
       "contract": {
         "title": "Contract: {title}"
       },
       "contracts": {
         "title": "Contract"
       },
+      "merchant": {
+        "title": "Merchant: {title}"
+      },
+      "merchants": {
+        "title": "Merchants"
+      },
+      "template": {
+        "price": "Base price: {amount}",
+        "title": "Templates: {title}"
+      },
       "templates": {
         "title": "Templates"
       },
-      "template": {
-        "title": "Templates: {title}",
-        "price": "Base price: {amount}"
-      }
+      "title": "Marketplace"
     },
     "marketplace-old": {
       "erc1155": {
@@ -958,7 +970,7 @@
       "title": "Primary market"
     },
     "merchant": {
-      "title": "Merchant: {title}"
+      "title": "Create merchant"
     },
     "merchants": {
       "title": "Merchants"
@@ -1049,11 +1061,11 @@
         "title": "Leaderboard"
       },
       "purchase": {
-        "rules": "Just buy a ticket. Random will choose a winner",
         "commission": "{commission}% commission",
-        "title": "Buy a ticket",
         "count": "{current} of {max} sold",
-        "sold": "{count} sold"
+        "rules": "Just buy a ticket. Random will choose a winner",
+        "sold": "{count} sold",
+        "title": "Buy a ticket"
       },
       "title": "Raffle",
       "tokens": {

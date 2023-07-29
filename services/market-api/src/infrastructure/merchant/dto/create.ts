@@ -1,10 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsInt, IsJSON, IsOptional, IsString, MaxLength } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsEmail, IsEthereumAddress, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { emailMaxLength } from "@gemunion/constants";
 
 import { IMerchantCreateDto } from "../interfaces";
+import { MerchantSocialDto } from "./social";
 
 export class MerchantCreateDto implements IMerchantCreateDto {
   @ApiProperty()
@@ -23,21 +24,26 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public wallet: string;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   public phoneNumber: string;
 
-  @ApiPropertyOptional({
-    type: Number,
-    isArray: true,
-  })
-  @IsOptional()
-  @IsInt({ each: true, message: "typeMismatch" })
-  public userIds: Array<number>;
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   public imageUrl = "";
+
+  @ApiPropertyOptional({
+    type: MerchantSocialDto,
+  })
+  @ValidateNested()
+  @Type(() => MerchantSocialDto)
+  public social: MerchantSocialDto;
 }

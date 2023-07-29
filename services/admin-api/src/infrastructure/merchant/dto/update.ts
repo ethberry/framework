@@ -1,24 +1,27 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsJSON, IsOptional, IsString, ValidateNested, MaxLength } from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEmail, IsEthereumAddress, IsJSON, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-// import { rePhoneNumber } from "@framework/constants";
-import { IMerchantUpdateDto } from "../interfaces";
-import { MerchantSocialDto } from "./social";
 import { emailMaxLength } from "@gemunion/constants";
 
+import { IMerchantUpdateDto } from "../interfaces";
+import { MerchantSocialDto } from "./social";
+
 export class MerchantUpdateDto implements IMerchantUpdateDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
   public title: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     maxLength: emailMaxLength,
   })
+  @IsOptional()
   @IsEmail({}, { message: "patternMismatch" })
   @MaxLength(emailMaxLength, { message: "rangeOverflow" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
@@ -27,7 +30,13 @@ export class MerchantUpdateDto implements IMerchantUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  // @Matches(rePhoneNumber, { message: "patternMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  public wallet: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
   public phoneNumber: string;
 
   @ApiPropertyOptional()
@@ -38,6 +47,7 @@ export class MerchantUpdateDto implements IMerchantUpdateDto {
   @ApiPropertyOptional({
     type: MerchantSocialDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => MerchantSocialDto)
   public social: MerchantSocialDto;

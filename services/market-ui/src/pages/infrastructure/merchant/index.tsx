@@ -11,6 +11,7 @@ import { ApiError, useApi } from "@gemunion/provider-api-firebase";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { IMerchant, IUser } from "@framework/types";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { validationSchema } from "./validation";
 import { SocialInput } from "./social-input";
@@ -27,11 +28,11 @@ export const Merchant: FC = () => {
     return api
       .fetchJson({
         url: `/merchants`,
-        method: "PUT",
+        method: "POST",
         data,
       })
       .then(async (): Promise<void> => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
+        enqueueSnackbar(formatMessage({ id: "snackbar.created" }), { variant: "success" });
         await user.getProfile();
       })
       .catch((e: ApiError) => {
@@ -50,14 +51,26 @@ export const Merchant: FC = () => {
       });
   };
 
-  const { id, title, description, email, wallet, imageUrl, social } = user.profile.merchant;
-  const fixedValues = { id, title, description, email, wallet, imageUrl, social };
+  const { email, wallet, imageUrl } = user.profile;
+  const fixedValues = {
+    title: "",
+    description: emptyStateString,
+    email,
+    wallet,
+    imageUrl,
+    social: {
+      twitterUrl: "",
+      instagramUrl: "",
+      youtubeUrl: "",
+      facebookUrl: "",
+    },
+  };
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "merchant"]} />
 
-      <PageHeader message="pages.merchant.title" data={{ title }} />
+      <PageHeader message="pages.merchant.title" />
 
       <FormWrapper initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <TextInput name="title" />

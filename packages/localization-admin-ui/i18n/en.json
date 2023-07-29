@@ -27,20 +27,20 @@
       }
     },
     "productTypes": {
+      "enterprise": {
+        "linkTitle": "Contact Us",
+        "text": "For projects with grand ambitions, our Enterprise solution is the key to unlocking your full potential. This comprehensive package includes a dedicated development team and exclusive B2B features, designed to propel your game ecosystem to new heights of success",
+        "title": "Enterprise"
+      },
       "saas": {
-        "title": "SaaS",
+        "linkTitle": "See pricing",
         "text": "Perfect for startups on a budget, this plan is your gateway to the market. With our blockchain ecosystem at your fingertips, you can affordably bring your innovative ideas to life and make your mark in the gaming industry",
-        "linkTitle": "See pricing"
+        "title": "SaaS"
       },
       "standalone": {
-        "title": "Standalone",
+        "linkTitle": "See pricing",
         "text": "Transform your proven ideas into a unique gaming brand with our Whitelabel game solution. Offering customized design and adjusted mechanics, this plan empowers you to stand out in the gaming industry with a truly bespoke experience",
-        "linkTitle": "See pricing"
-      },
-      "enterprise": {
-        "title": "Enterprise",
-        "text": "For projects with grand ambitions, our Enterprise solution is the key to unlocking your full potential. This comprehensive package includes a dedicated development team and exclusive B2B features, designed to propel your game ecosystem to new heights of success",
-        "linkTitle": "Contact Us"
+        "title": "Standalone"
       }
     }
   },
@@ -52,7 +52,6 @@
     "claim": "Claim",
     "confirmation": "Please confirm",
     "create": "Create",
-    "subBalance": "Subscription balance: {value}",
     "currentBalance": "Balance: {value}",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -71,6 +70,7 @@
     "setAmount": "Set Withdraw Amount",
     "stakingInfo": "Staking Info",
     "startRound": "Start Lottery Round",
+    "subBalance": "Subscription balance: {value}",
     "topUp": "Top up",
     "transfer": "Transfer",
     "transferOwnership": "Transfer Ownership",
@@ -226,10 +226,10 @@
       "YEAR": "Year"
     },
     "emailType": {
+      "CONTACT": "Contact form",
       "DUMMY": "Test email",
       "FEEDBACK": "Feedback",
-      "LINK_TOKEN": "LINK notification",
-      "CONTACT": "Contact form"
+      "LINK_TOKEN": "LINK notification"
     },
     "eventDataLabel": {
       "_requestID": "Request ID",
@@ -933,22 +933,6 @@
       "limit": "Set limits",
       "title": "Breed"
     },
-    "ratePlan": {
-      "title": "Rate plans",
-      "bronze": "Bronze",
-      "silver": "Silver",
-      "gold": "Gold",
-      "month": "month",
-      "alwaysIncluded": "Always included"
-    },
-    "productType": {
-      "title": "Product types",
-      "description": "Rate plans",
-      "dialog": {
-        "title": "Time to upgrade!",
-        "text": "Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to self-hosted version."
-      }
-    },
     "category": {
       "title": "Categories"
     },
@@ -1208,6 +1192,14 @@
     "photos": {
       "title": "Photos"
     },
+    "productType": {
+      "description": "Rate plans",
+      "dialog": {
+        "text": "Not all our features available for launchpad. If you see this dialog it may be the time to upgrade to self-hosted version.",
+        "title": "Time to upgrade!"
+      },
+      "title": "Product types"
+    },
     "products": {
       "title": "Products"
     },
@@ -1264,6 +1256,14 @@
       "tokens": {
         "title": "Tokens"
       }
+    },
+    "ratePlan": {
+      "alwaysIncluded": "Always included",
+      "bronze": "Bronze",
+      "gold": "Gold",
+      "month": "month",
+      "silver": "Silver",
+      "title": "Rate plans"
     },
     "rent": {
       "title": "Rent"

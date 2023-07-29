@@ -1,6 +1,6 @@
 import { IMerchantSocial } from "@framework/types";
 
-export interface IMerchantUpdateDto {
+export interface IMerchantCreateDto {
   title: string;
   description: string;
   email: string;

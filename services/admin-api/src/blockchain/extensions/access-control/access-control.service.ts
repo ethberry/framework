@@ -4,7 +4,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 import { AccessControlEntity } from "./access-control.entity";
-import { IAccessControlCheck } from "./interfaces";
+import { IAccessControlCheckDto } from "./interfaces";
 
 @Injectable()
 export class AccessControlService {
@@ -63,7 +63,7 @@ export class AccessControlService {
     return this.accessControlEntityRepository.count({ where });
   }
 
-  public async check(dto: IAccessControlCheck): Promise<{ hasRole: boolean }> {
+  public async check(dto: IAccessControlCheckDto): Promise<{ hasRole: boolean }> {
     const count = await this.count(dto);
     return { hasRole: count > 0 };
   }

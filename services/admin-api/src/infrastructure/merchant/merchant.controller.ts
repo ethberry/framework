@@ -9,7 +9,7 @@ import { MerchantEntity } from "./merchant.entity";
 import { MerchantUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/merchant")
+@Controller("/merchants")
 export class MerchantController {
   constructor(private readonly merchantService: MerchantService) {}
 

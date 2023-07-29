@@ -7,9 +7,9 @@ import { AccountDto } from "@gemunion/collection";
 import { AccessControlRoleType } from "@framework/types";
 
 import { AddressDto } from "../../../../common/dto";
-import { IAccessControlCheck } from "../interfaces";
+import { IAccessControlCheckDto } from "../interfaces";
 
-export class AccessControlCheck extends Mixin(AccountDto, AddressDto) implements IAccessControlCheck {
+export class AccessControlCheckDto extends Mixin(AccountDto, AddressDto) implements IAccessControlCheckDto {
   @ApiProperty({
     enum: AccessControlRoleType,
   })

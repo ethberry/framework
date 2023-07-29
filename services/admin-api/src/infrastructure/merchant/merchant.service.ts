@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -25,6 +25,18 @@ export class MerchantService {
   }
 
   public async update(dto: IMerchantUpdateDto, userEntity: UserEntity): Promise<MerchantEntity | null> {
+    const { wallet } = dto;
+
+    if (wallet) {
+      const count = await this.count({
+        wallet,
+      });
+
+      if (count) {
+        throw new ConflictException("duplicateAccount");
+      }
+    }
+
     Object.assign(userEntity.merchant, dto);
 
     return userEntity.merchant.save();
@@ -38,5 +50,9 @@ export class MerchantService {
     await this.authService.revokeRefreshTokens(userEntity);
 
     return userEntity.merchant;
+  }
+
+  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+    return this.merchantEntityRepository.count({ where });
   }
 }

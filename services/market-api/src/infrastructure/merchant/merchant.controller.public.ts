@@ -8,7 +8,7 @@ import { MerchantEntity } from "./merchant.entity";
 
 @Public()
 @Controller("/merchants")
-export class MerchantController {
+export class MerchantControllerPublic {
   constructor(private readonly merchantService: MerchantService) {}
 
   @Get("/")

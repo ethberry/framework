@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { Not } from "typeorm";
 
 import { IMetamaskDto, MetamaskService } from "@gemunion/nest-js-module-metamask";
@@ -38,7 +38,7 @@ export class ProfileService {
     });
 
     if (count) {
-      throw new BadRequestException("walletAlreadyInUse");
+      throw new ConflictException("duplicateAccount");
     }
 
     Object.assign(userEntity, { wallet });
