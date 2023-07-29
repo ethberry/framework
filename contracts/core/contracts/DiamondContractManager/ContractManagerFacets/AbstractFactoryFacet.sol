@@ -13,6 +13,7 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 
 import "../override/SignatureValidator.sol";
+import "../storage/CMStorage.sol";
 
 /**
  * @title AbstractFactory
@@ -48,9 +49,9 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
     // Create an instance of the contract that supports the AccessControl interface.
     IAccessControl instance = IAccessControl(addr);
     // Grant MINTER_ROLE to all _minters
-    uint256 length = EnumerableSet.length(SigValStorage.layout()._minters);
+    uint256 length = EnumerableSet.length(CMStorage.layout()._minters);
     for (uint256 i = 0; i < length; ) {
-      instance.grantRole(MINTER_ROLE, EnumerableSet.at(SigValStorage.layout()._minters, i));
+      instance.grantRole(MINTER_ROLE, EnumerableSet.at(CMStorage.layout()._minters, i));
       unchecked {
         i++;
       }
@@ -66,9 +67,9 @@ abstract contract AbstractFactoryFacet is AccessControlInternal {
     // Create an instance of the contract that supports the AccessControl interface.
     IAccessControl instance = IAccessControl(addr);
     // Grant METADATA_ROLE to all _manipulators
-    uint256 length = EnumerableSet.length(SigValStorage.layout()._manipulators);
+    uint256 length = EnumerableSet.length(CMStorage.layout()._manipulators);
     for (uint256 i = 0; i < length; ) {
-      instance.grantRole(METADATA_ROLE, EnumerableSet.at(SigValStorage.layout()._manipulators, i));
+      instance.grantRole(METADATA_ROLE, EnumerableSet.at(CMStorage.layout()._manipulators, i));
       unchecked {
         i++;
       }

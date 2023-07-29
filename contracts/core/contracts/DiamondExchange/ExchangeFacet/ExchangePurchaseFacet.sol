@@ -12,7 +12,7 @@ import "../../Diamond/override/PausableInternal.sol";
 import "../../DiamondExchange/lib/ExchangeUtils.sol";
 
 contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, PausableInternal {
-  event Purchase(address from, uint256 externalId, Asset item, Asset[] price);
+  event Purchase(address account, uint256 externalId, Asset item, Asset[] price);
 
   constructor() SignatureValidator() {}
 

@@ -5,14 +5,17 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
-library SigValStorage {
+
+library CMStorage {
     struct Layout {
-        mapping(bytes32 => bool) _expired;
+        EnumerableSet.AddressSet _minters;
+        EnumerableSet.AddressSet _manipulators;
     }
 
     bytes32 internal constant STORAGE_SLOT =
-        keccak256('signature-validator.contracts.storage');
+        keccak256('cm.contracts.storage');
 
     function layout() internal pure returns (Layout storage l) {
         bytes32 slot = STORAGE_SLOT;

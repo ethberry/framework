@@ -12,7 +12,7 @@ import "@gemunion/contracts-misc/contracts/constants.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
 
-import "../storage/SigValStorage.sol";
+import "../storage/CMStorage.sol";
 import "../../utils/errors.sol";
 
 /**
@@ -32,12 +32,12 @@ contract UseFactoryFacet is AccessControlInternal {
   function addFactory(address factory, bytes32 role) public onlyRole(DEFAULT_ADMIN_ROLE) {
     // Add the factory address to the appropriate array
     if (role == MINTER_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._minters, factory);
+      EnumerableSet.add(CMStorage.layout()._minters, factory);
     } else if (role == METADATA_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._manipulators, factory);
+      EnumerableSet.add(CMStorage.layout()._manipulators, factory);
     } else if (role == DEFAULT_ADMIN_ROLE) {
-      EnumerableSet.add(SigValStorage.layout()._minters, factory);
-      EnumerableSet.add(SigValStorage.layout()._manipulators, factory);
+      EnumerableSet.add(CMStorage.layout()._minters, factory);
+      EnumerableSet.add(CMStorage.layout()._manipulators, factory);
     } else {
       revert WrongRole();
     }
@@ -50,12 +50,12 @@ contract UseFactoryFacet is AccessControlInternal {
    */
   function removeFactory(address factory, bytes32 role) public onlyRole(DEFAULT_ADMIN_ROLE) {
     if (role == MINTER_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._minters, factory);
+      EnumerableSet.remove(CMStorage.layout()._minters, factory);
     } else if (role == METADATA_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._manipulators, factory);
+      EnumerableSet.remove(CMStorage.layout()._manipulators, factory);
     } else if (role == DEFAULT_ADMIN_ROLE) {
-      EnumerableSet.remove(SigValStorage.layout()._minters, factory);
-      EnumerableSet.remove(SigValStorage.layout()._manipulators, factory);
+      EnumerableSet.remove(CMStorage.layout()._minters, factory);
+      EnumerableSet.remove(CMStorage.layout()._manipulators, factory);
     } else {
       revert WrongRole();
     }
@@ -65,13 +65,13 @@ contract UseFactoryFacet is AccessControlInternal {
    * @dev Get minters array
    */
   function getMinters() public view returns (address[] memory minters) {
-    return EnumerableSet.values(SigValStorage.layout()._minters);
+    return EnumerableSet.values(CMStorage.layout()._minters);
   }
 
   /**
    * @dev Get manipulators array
    */
   function getManipulators() public view returns (address[] memory manipulators) {
-    return EnumerableSet.values(SigValStorage.layout()._manipulators);
+    return EnumerableSet.values(CMStorage.layout()._manipulators);
   }
 }
