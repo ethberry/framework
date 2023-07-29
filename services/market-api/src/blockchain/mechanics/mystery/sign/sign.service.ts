@@ -65,7 +65,11 @@ export class MysterySignService {
         ...mysteryBoxEntity.item.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
-          tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+          // tokenId: (component.templateId || 0).toString(), // suppression types check with 0
+          tokenId:
+            component.contract.contractType === TokenType.ERC1155
+              ? component.template.tokens[0].tokenId
+              : (component.templateId || 0).toString(),
           amount: component.amount,
         })),
         {

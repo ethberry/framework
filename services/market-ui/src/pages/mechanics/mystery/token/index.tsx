@@ -26,6 +26,9 @@ export const MysteryboxToken: FC = () => {
     },
   });
 
+  // @ts-ignore
+  const mysteryBox = selected.template.box;
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -55,11 +58,13 @@ export const MysteryboxToken: FC = () => {
             <Erc721TransferButton token={selected} />
             <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
           </Paper>
+          <Paper sx={{ p: 2, mb: 2 }}>
+            <MysteryboxContent mysterybox={mysteryBox} />
+          </Paper>
         </Grid>
       </Grid>
 
-      {/* @ts-ignore */}
-      <MysteryboxContent mysterybox={selected.template.box} />
+      <MysteryboxContent mysterybox={mysteryBox} />
 
       <TokenHistory
         token={selected}

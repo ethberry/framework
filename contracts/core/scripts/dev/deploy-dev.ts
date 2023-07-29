@@ -402,6 +402,21 @@ async function main() {
     "contractManager.addFactory",
   );
 
+  const mysteryboxBlacklistPausableFactory = await ethers.getContractFactory("ERC721MysteryBoxBlacklistPausable");
+  const mysteryboxBlacklistPausableInstance = await mysteryboxBlacklistPausableFactory.deploy(
+    "Mysterybox",
+    "MB-BL-PL721",
+    100,
+    baseTokenURI,
+  );
+  contracts.erc721MysteryboxBlacklistPausable = mysteryboxBlacklistPausableInstance;
+  await debug(contracts);
+
+  await debug(
+    await factoryInstance.addFactory(await mysteryboxBlacklistPausableInstance.getAddress(), MINTER_ROLE),
+    "contractManager.addFactory",
+  );
+
   const stakingFactory = await ethers.getContractFactory("Staking");
   const stakingInstance = await stakingFactory.deploy();
   contracts.staking = stakingInstance;
@@ -667,6 +682,7 @@ async function main() {
       await contracts.erc998OwnerErc1155Erc20.getAddress(),
       await contracts.erc998OwnerErc1155.getAddress(),
       await contracts.erc998OwnerErc20.getAddress(),
+      await contracts.erc721MysteryboxBlacklistPausable.getAddress(),
       await contracts.erc721MysteryboxBlacklist.getAddress(),
       await contracts.erc721MysteryboxPausable.getAddress(),
       await contracts.erc721MysteryboxSimple.getAddress(),

@@ -46,10 +46,11 @@ export class TokenService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
     if (balance) {
       queryBuilder.leftJoinAndSelect("token.balance", "balance");
     }
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId: Number(tokenId).toString(),

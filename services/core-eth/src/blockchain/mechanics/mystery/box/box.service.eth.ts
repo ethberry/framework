@@ -65,7 +65,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        metadata: JSON.stringify(metadata),
+        metadata,
         royalty: contractEntity.royalty,
         template: templateEntity,
       });

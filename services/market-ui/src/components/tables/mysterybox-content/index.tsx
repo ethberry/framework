@@ -19,20 +19,20 @@ export const MysteryboxContent: FC<IMysteryboxContentProps> = props => {
       <Typography variant="h5" sx={{ mt: 4, mb: 1 }}>
         <FormattedMessage id="pages.mystery.box.content" />
       </Typography>
-      <Paper elevation={1} sx={{ my: 1, p: 2 }}>
+      <Paper elevation={1} sx={{ my: 2, p: 1 }}>
         <Grid container>
           <Grid xs={4} item>
-            <Typography fontWeight={500}>
+            <Typography fontWeight={450}>
               <FormattedMessage id="form.labels.tokenType" />
             </Typography>
           </Grid>
           <Grid xs={4} item>
-            <Typography fontWeight={500}>
+            <Typography fontWeight={450}>
               <FormattedMessage id="form.labels.template" />
             </Typography>
           </Grid>
           <Grid xs={4} item>
-            <Typography fontWeight={500}>
+            <Typography fontWeight={450}>
               <FormattedMessage id="form.labels.amount" />
             </Typography>
           </Grid>
