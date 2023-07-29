@@ -37,10 +37,10 @@
         "text": "Perfect for startups on a budget, this plan is your gateway to the market. With our blockchain ecosystem at your fingertips, you can affordably bring your innovative ideas to life and make your mark in the gaming industry",
         "title": "SaaS"
       },
-      "standalone": {
+      "selfHosted": {
         "linkTitle": "See pricing",
         "text": "Transform your proven ideas into a unique gaming brand with our Whitelabel game solution. Offering customized design and adjusted mechanics, this plan empowers you to stand out in the gaming industry with a truly bespoke experience",
-        "title": "Standalone"
+        "title": "Self-hosted"
       }
     }
   },
