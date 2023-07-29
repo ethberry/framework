@@ -9,6 +9,7 @@ import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
+import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
@@ -38,6 +39,15 @@ import { GameModule } from "./game/game.module";
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
         return configService.get<string>("GEMUNION_API_KEY", "");
+      },
+    }),
+    SecretManagerModule.forRootAsync(SecretManagerModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          keyFile: configService.get<string>("GCLOUD_KEYFILE_BASE64_PATH", ""),
+        };
       },
     }),
     ScheduleModule.forRoot(),

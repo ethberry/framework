@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ChainLinkServiceEth } from "./chain-link.service.eth";
 import { ChainLinkEventType, ChainLinkType, IChainLinkRandomWordsRequestedEvent } from "./log/interfaces";

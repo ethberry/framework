@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, toUtf8String, stripZerosLeft, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { DeepPartial } from "typeorm";
 
 import {
@@ -50,7 +50,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(
+        Number(tokenId).toString(),
+        address,
+        ABI,
+        this.jsonRpcProvider,
+        this.loggerService,
+      );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
       if (!templateEntity) {
@@ -94,6 +100,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc721TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {

@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IPyramidCreateEvent, IPyramidUpdateEvent, PyramidRuleStatus } from "@framework/types";
 import { PyramidRulesService } from "./rules.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

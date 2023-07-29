@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IWaitListRewardClaimedEvent, IWaitListRewardSetEvent } from "@framework/types";
 import { ContractType, WaitListEventType } from "@framework/types";
 

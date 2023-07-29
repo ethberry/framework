@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, toUtf8String, ZeroAddress, stripZerosLeft } from "ethers";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
@@ -56,7 +56,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
     // Mint token create
     if (from === ZeroAddress) {
-      const metadata = await getMetadata(Number(tokenId).toString(), address, ABI, this.jsonRpcProvider, this.loggerService);
+      const metadata = await getMetadata(
+        Number(tokenId).toString(),
+        address,
+        ABI,
+        this.jsonRpcProvider,
+        this.loggerService,
+      );
       const templateId = Number(metadata[TokenMetadata.TEMPLATE_ID]);
       const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
@@ -111,6 +117,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc998TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {

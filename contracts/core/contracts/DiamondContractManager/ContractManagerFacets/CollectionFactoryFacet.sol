@@ -62,11 +62,11 @@ contract CollectionFactoryFacet is AbstractFactoryFacet, SignatureValidatorCM {
   function _hashCollection(Params calldata params, CollectionArgs calldata args) internal view returns (bytes32) {
     return
       _hashTypedDataV4(
-        keccak256(abi.encodePacked(ERC721C_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashErc721CStruct(args)))
+        keccak256(abi.encodePacked(ERC721C_PERMIT_SIGNATURE, _hashParamsStruct(params), _hashCollectionCStruct(args)))
       );
   }
 
-  function _hashErc721CStruct(CollectionArgs calldata args) private pure returns (bytes32) {
+  function _hashCollectionCStruct(CollectionArgs calldata args) private pure returns (bytes32) {
     return
       keccak256(
         abi.encode(

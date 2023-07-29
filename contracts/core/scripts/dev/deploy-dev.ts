@@ -117,26 +117,37 @@ async function main() {
       : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
   const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
 
-  const cmFactory = await ethers.getContractFactory("ContractManager");
-  // contracts.contractManager = cmFactory.attach("0x690579e4b583dd87db51361e30e0b3493d5c5e6c");
-
-  contracts.contractManager = await cmFactory.deploy();
+  // DIAMOND CM
+  const cmInstance = await deployDiamond(
+    "DiamondCM",
+    [
+      "CollectionFactoryFacet",
+      "ERC20FactoryFacet",
+      "ERC721FactoryFacet",
+      "ERC998FactoryFacet",
+      "ERC1155FactoryFacet",
+      "LotteryFactoryFacet",
+      "MysteryBoxFactoryFacet",
+      "PyramidFactoryFacet",
+      "RaffleFactoryFacet",
+      "StakingFactoryFacet",
+      "VestingFactoryFacet",
+      "WaitListFactoryFacet",
+      "UseFactoryFacet",
+      "AccessControlFacet",
+      "PausableFacet",
+    ],
+    "DiamondCMInit",
+    {
+      log: false,
+      logSelectors: false,
+    },
+  );
+  contracts.contractManager = cmInstance;
   await debug(contracts);
-  // console.info("contracts.contractManager.address", contracts.contractManager.address);
-  // process.exit(0);
+  const factoryInstance = await ethers.getContractAt("UseFactoryFacet", await contracts.contractManager.getAddress());
 
-  // OLD EXCHANGE
-  // const exchangeInstance = await ethers.getContractAt("ExchangeMysteryBoxFacet", diamondAddress);
-  // const exchangeFactory = await ethers.getContractFactory("Exchange");
-  // const exchangeInstance = await exchangeFactory.deploy(
-  //   "Exchange",
-  //   [
-  //     "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-  //     "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-  //     "0x61284003e50b2d7ca2b95f93857abb78a1b0f3ca",
-  //   ],
-  //   [1, 5, 95],
-  // );
+  // console.info("contracts.contractManager.address", contracts.contractManager.address);
 
   // DIAMOND EXCHANGE
   const exchangeInstance = await deployDiamond(
@@ -165,12 +176,12 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory(await exchangeInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
   await debug(
-    await contracts.contractManager.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE),
+    await factoryInstance.addFactory(await exchangeInstance.getAddress(), METADATA_ROLE),
     "contractManager.addFactory",
   );
 
@@ -362,7 +373,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(await mysteryboxSimpleInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory(await mysteryboxSimpleInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -372,7 +383,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(await mysteryboxPausableInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory(await mysteryboxPausableInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -387,7 +398,7 @@ async function main() {
   await debug(contracts);
 
   await debug(
-    await contracts.contractManager.addFactory(await mysteryboxBlacklistInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory(await mysteryboxBlacklistInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 
@@ -499,7 +510,7 @@ async function main() {
   );
 
   await debug(
-    await contracts.contractManager.addFactory(await stakingInstance.getAddress(), MINTER_ROLE),
+    await factoryInstance.addFactory(await stakingInstance.getAddress(), MINTER_ROLE),
     "contractManager.addFactory",
   );
 

@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@gemunion/nest-js-module-exchange-signer";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 import { boolArrayToByte32 } from "@framework/traits-api";
 

@@ -1,5 +1,5 @@
 import { JsonRpcProvider, Log, TransactionReceipt, Interface, LogDescription } from "ethers";
-// import { ILogEvent } from "@gemunion/nestjs-ethers";
+// import { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 export const getTransactionReceipt = async function (
   txHash: string,

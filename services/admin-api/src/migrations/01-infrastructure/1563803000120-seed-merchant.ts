@@ -19,7 +19,6 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         merchant_status,
         wallet,
         api_key,
-        vrf_sub_id,
         created_at,
         updated_at
       ) VALUES (
@@ -31,7 +30,6 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         'ACTIVE',
         '${chainId === testChainId ? wallets[0] : process.env.ACCOUNT}',
         '11111111-2222-3333-4444-555555555555',
-        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -63,7 +61,6 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         'ACTIVE',
         '${wallets[1]}',
         '00010203-0405-0607-0809-0a0b0c0d0e0f',
-        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -75,7 +72,6 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
         'INACTIVE',
         '${wallets[2]}',
         '12345678-1234-5678-1234-567812345678',
-        3,
         '${currentDateTime}',
         '${currentDateTime}'
       );

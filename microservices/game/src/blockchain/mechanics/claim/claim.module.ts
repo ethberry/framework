@@ -1,6 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 
 import { MerchantModule } from "../../../infrastructure/merchant/merchant.module";
 import { AssetModule } from "../../exchange/asset/asset.module";

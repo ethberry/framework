@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import { IReferralRewardEvent, IReferralWithdrawEvent } from "@framework/types";
 import { testChainId } from "@framework/constants";
 import { ReferralService } from "./referral.service";

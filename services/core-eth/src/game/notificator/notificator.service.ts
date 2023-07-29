@@ -6,10 +6,12 @@ import { MobileEventType } from "@framework/types";
 
 import { MerchantService } from "../../infrastructure/merchant/merchant.service";
 import type {
+  IBatchTransferData,
   IClaimData,
   IGradeData,
   IPurchaseData,
   IPurchaseRandomData,
+  IRentUserUpdateData,
   IRoundEndLotteryData,
   IRoundEndRaffleData,
   IRoundStartRaffleData,
@@ -23,18 +25,14 @@ import type {
 import { IUnpackMysteryData } from "./interfaces/mystery-box";
 import {
   ICraftData,
+  IFinalizeLotteryData,
   IFinalizeRaffleData,
   IPrizeRaffleData,
   IPurchaseRaffleData,
   IRoundStartLotteryData,
+  IVestingReleaseData,
+  ITokenTransferData,
 } from "./interfaces";
-
-export interface IRentUserUpdateData {
-  merchantId: number;
-  tokenId: string;
-  user: string;
-  expires: string;
-}
 
 @Injectable()
 export class NotificatorService {
@@ -72,6 +70,20 @@ export class NotificatorService {
       });
   }
 
+  // TRANSFER
+  public tokenTransfer(data: ITokenTransferData): Promise<any> {
+    return this.sendMessage(data.token.template!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.TOKEN_TRANSFER, data).toPromise();
+    });
+  }
+
+  public batchTransfer(data: IBatchTransferData): Promise<any> {
+    return this.sendMessage(data.tokens[0].template!.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.BATCH_TRANSFER, data).toPromise();
+    });
+  }
+
+  // MODULE:RENT
   public updateUser(data: IRentUserUpdateData): Promise<any> {
     return this.sendMessage(data.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.RENT_USER, data).toPromise();
@@ -201,6 +213,12 @@ export class NotificatorService {
     });
   }
 
+  public finalizeLottery(data: IFinalizeLotteryData): Promise<any> {
+    return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.FINALIZE_LOTTERY, data).toPromise();
+    });
+  }
+
   public roundStartLottery(data: IRoundStartLotteryData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_START, data).toPromise();
@@ -210,6 +228,13 @@ export class NotificatorService {
   public roundEndLottery(data: IRoundEndLotteryData): Promise<any> {
     return this.sendMessage(data.round.contract!.merchantId, clientProxy => {
       return clientProxy.emit(MobileEventType.LOTTERY_ROUND_END, data).toPromise();
+    });
+  }
+
+  // MODULE:VESTING
+  public vestingRelease(data: IVestingReleaseData): Promise<any> {
+    return this.sendMessage(data.vesting.merchantId, clientProxy => {
+      return clientProxy.emit(MobileEventType.VESTING_RELEASED, data).toPromise();
     });
   }
 }

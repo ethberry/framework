@@ -21,9 +21,6 @@ export class MerchantEntity extends SearchableEntity implements IMerchant {
   @Column({ type: "varchar" })
   public wallet: string;
 
-  @Column({ type: "int", nullable: true })
-  public vrfSubId: number | null;
-
   @Column({
     type: "varchar",
     select: false,

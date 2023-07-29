@@ -2,8 +2,8 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { Log, Wallet } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
+import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   ILotteryPrizeEvent,
   ILotteryReleaseEvent,
@@ -120,6 +120,12 @@ export class LotteryRoundServiceEth {
 
     Object.assign(roundEntity, { numbers: getLotteryNumbers(winValues) });
     await roundEntity.save();
+
+    // NOTIFY
+    await this.notificatorService.finalizeLottery({
+      round: roundEntity,
+      prizeNumbers: winValues,
+    });
   }
 
   public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {

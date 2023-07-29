@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { JsonRpcProvider, Log, ZeroAddress } from "ethers";
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 
 import {
   ContractEventType,
@@ -86,6 +86,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
             transactionHash,
             eventType: ContractEventType.MintRandom,
           });
+
           if (!historyEntity) {
             this.loggerService.error(
               "historyNotFound",
@@ -147,6 +148,13 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
+
+    await this.notificatorService.tokenTransfer({
+      token: erc721TokenEntity,
+      from: from.toLowerCase(),
+      to: to.toLowerCase(),
+      amount: "1", // TODO separate notifications for native\erc20\erc721\erc998\erc1155 ?
+    });
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
@@ -184,7 +192,7 @@ export class Erc721TokenRandomServiceEth extends TokenServiceEth {
         { relations: { token: { template: true }, contract: true } },
       );
       await this.notificatorService.purchaseRandom({
-        account: eventData.account.toLowerCase(),
+        account: eventData.from.toLowerCase(),
         item: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.ITEM)[0],
         price: exchangeAssetHistory.filter(history => history.exchangeType === ExchangeType.PRICE),
         transactionHash: exchangeEvent.transactionHash,

@@ -21,8 +21,7 @@ export interface IPrizeLotteryData {
 
 export interface IFinalizeLotteryData {
   round: ILotteryRound;
-  prizeIndex: string;
-  prizeNumber: string;
+  prizeNumbers: Array<number>;
 }
 
 export interface IPurchaseLotteryData {

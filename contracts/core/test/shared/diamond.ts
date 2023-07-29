@@ -10,7 +10,14 @@ export function getSelectors(contract: BaseContract | Contract, options: Record<
   const { logSelectors } = options;
   const selectors: Array<string> = [];
   contract.interface.forEachFunction((func: FunctionFragment) => {
-    if (func.name !== "init" && func.name !== "eip712Domain") {
+    if (
+      func.name !== "init" &&
+      func.name !== "eip712Domain"
+      // func.name !== "addFactory" &&
+      // func.name !== "removeFactory" &&
+      // func.name !== "getManipulators" &&
+      // func.name !== "getMinters"
+    ) {
       selectors.push(func.selector);
     }
     if (logSelectors) console.info([func.name], func.selector);

@@ -35,7 +35,7 @@ export async function deployDiamond(
   // * deploy facets
   if (log) console.info("");
   if (log) console.info("Deploying facets");
-  // const FacetNames = ["ExchangePurchaseFacet"];
+
   const cut = [];
   for (const FacetName of FacetNames) {
     const facetFactory = await ethers.getContractFactory(FacetName);

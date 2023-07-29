@@ -2,8 +2,8 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CronExpression } from "@nestjs/schedule";
 
-import { EthersContractModule } from "@gemunion/nestjs-ethers";
-import type { IModuleOptions } from "@gemunion/nestjs-ethers";
+import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
+import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import {
   AccessControlEventType,
   AccessListEventType,

@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "ethers";
 
-import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nest-js-module-ethers-gcp";
 import type { IWaitListRewardClaimedEvent, IWaitListRewardSetEvent } from "@framework/types";
 import { WaitListItemStatus } from "@framework/types";
 

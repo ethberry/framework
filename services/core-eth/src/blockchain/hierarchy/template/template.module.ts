@@ -6,7 +6,7 @@ import { TemplateService } from "./template.service";
 import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
-  imports: [forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],
+  imports: [TypeOrmModule.forFeature([TemplateEntity]), forwardRef(() => AssetModule)],
   providers: [TemplateService],
   exports: [TemplateService],
 })
