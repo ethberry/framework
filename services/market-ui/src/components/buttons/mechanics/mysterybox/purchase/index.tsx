@@ -41,18 +41,18 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           referrer: constants.AddressZero,
         },
         [
-          {
-            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: mysterybox.template!.contract!.address,
-            tokenId: mysterybox.templateId,
-            amount: "1",
-          },
           ...mysterybox.item!.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             tokenId: component.templateId || 0,
             amount: component.amount,
           })),
+          {
+            tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
+            token: mysterybox.template!.contract!.address,
+            tokenId: mysterybox.templateId,
+            amount: "1",
+          },
         ],
         mysterybox.template?.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
