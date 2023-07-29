@@ -377,8 +377,12 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "DUMMY": "Dummy",
+      "EXCHANGE": "EXCHANGE",
       "GRADE": "Grade",
+      "LEVEL": "Level",
       "RARITY": "Rarity",
+      "SIGNATURE_TTL": "Signature TTL",
       "account": "Account",
       "achievementLevel": "Level to reach",
       "address": "Address",

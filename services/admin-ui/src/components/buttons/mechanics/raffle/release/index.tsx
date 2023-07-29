@@ -12,10 +12,11 @@ import RaffleReleaseABI from "../../../../../abis/mechanics/raffle/release/relea
 
 export interface ILotteryReleaseButtonProps {
   round: IRaffleRound;
+  refreshPage?: () => Promise<void>;
 }
 
 export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
-  const { round } = props;
+  const { round, refreshPage = () => {} } = props;
 
   const { formatMessage } = useIntl();
 
@@ -26,9 +27,7 @@ export const RaffleReleaseButton: FC<ILotteryReleaseButtonProps> = props => {
 
   const handleRelease = (): (() => Promise<void>) => {
     return (): Promise<void> => {
-      return metaFn().then(() => {
-        // TODO reload page
-      });
+      return metaFn().then(refreshPage);
     };
   };
 

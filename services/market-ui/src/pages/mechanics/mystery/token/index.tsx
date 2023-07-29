@@ -15,7 +15,7 @@ import { TokenHistory } from "../../../../components/common/token-history";
 import { MysteryWrapperUnpackButton } from "../../../../components/buttons/mechanics/mysterybox/unpack";
 
 export const MysteryboxToken: FC = () => {
-  const { selected, search, handleChangePaginationModel, isLoading } = useCollection<IToken>({
+  const { selected, search, handleChangePaginationModel, handleRefreshPage, isLoading } = useCollection<IToken>({
     baseUrl: "/mystery/tokens",
     empty: {
       template: {
@@ -53,7 +53,7 @@ export const MysteryboxToken: FC = () => {
             </Typography>
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
-            <MysteryWrapperUnpackButton token={selected} />
+            <MysteryWrapperUnpackButton token={selected} refreshPage={handleRefreshPage} />
           </Paper>
         </Grid>
       </Grid>
