@@ -4,9 +4,10 @@ import { ManageHistory } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { CronExpression, IContract } from "@framework/types";
+import { BusinessType, CronExpression, IContract } from "@framework/types";
 
 import { LotteryScheduleDialog } from "./dialog";
+import { UpgradeProductTypeDialog } from "../../../../../dialogs/product-type";
 
 export interface ILotteryScheduleFullMenuItemProps {
   contract: IContract;
@@ -51,14 +52,18 @@ export const LotteryScheduleFullMenuItem: FC<ILotteryScheduleFullMenuItemProps> 
           <FormattedMessage id="form.buttons.schedule" />
         </Typography>
       </MenuItem>
-      <LotteryScheduleDialog
-        onConfirm={handleScheduleConfirm}
-        onCancel={handleScheduleCancel}
-        open={isScheduleDialogOpen}
-        initialValues={{
-          schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
-        }}
-      />
+      {process.env.BUSINESS_TYPE === (BusinessType.B2B as string) ? (
+        <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
+      ) : (
+        <LotteryScheduleDialog
+          onConfirm={handleScheduleConfirm}
+          onCancel={handleScheduleCancel}
+          open={isScheduleDialogOpen}
+          initialValues={{
+            schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+          }}
+        />
+      )}
     </Fragment>
   );
 };

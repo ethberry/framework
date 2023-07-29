@@ -8,6 +8,8 @@ declare global {
       JSON_URL: string;
       CHAIN_ID: string;
       GEMUNION_API_KEY: string;
+      GEMUNION_URL: string;
+      BUSINESS_TYPE: string;
       ACCOUNT: string;
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
