@@ -8,8 +8,11 @@ export interface IContractAutocompleteDto {
   contractFeatures: Array<ContractFeatures>;
   contractModule: Array<ModuleType>;
 
-  // I do not like this
+  // this is here to support soulbound tokens
   excludeFeatures: Array<ContractFeatures>;
+  // BUSINESS_TYPE=B2B
+  // this is here to support external tokens
+  includeExternalContracts: boolean;
 
   chainId: number;
   merchantId: number;

@@ -58,11 +58,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
         -- MODULE:MYSTERY
         'PAUSABLE',
         
-        -- MODULE:VESTING
-        'LINEAR',
-        'GRADED',
-        'CLIFF',
-        
         -- MODULE:PYRAMID
         'SPLITTER',
         'REFERRAL'

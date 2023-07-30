@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
@@ -116,6 +116,7 @@ export class ContractService {
       contractType = [],
       contractModule = [],
       excludeFeatures = [],
+      includeExternalContracts,
     } = dto;
     const where = {
       chainId: userEntity.chainId,
@@ -155,7 +156,7 @@ export class ContractService {
       });
     }
 
-    return this.contractEntityRepository.find({
+    const contractEntities = await this.contractEntityRepository.find({
       where,
       select: {
         id: true,
@@ -166,6 +167,25 @@ export class ContractService {
         symbol: true,
       },
     });
+
+    if (includeExternalContracts) {
+      const externalContractEntities = await this.autocomplete(
+        {
+          contractStatus,
+          contractFeatures: [ContractFeatures.EXTERNAL],
+          contractType,
+          contractModule,
+          excludeFeatures,
+        },
+        {
+          chainId: userEntity.chainId,
+          merchantId: 1,
+        } as UserEntity,
+      );
+      return contractEntities.concat(externalContractEntities);
+    }
+
+    return contractEntities;
   }
 
   public findOne(

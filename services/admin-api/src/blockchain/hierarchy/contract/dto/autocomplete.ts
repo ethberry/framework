@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional } from "class-validator";
+import { IsArray, IsEnum, IsOptional, IsBoolean } from "class-validator";
 import { Transform } from "class-transformer";
 
 import type { IContractAutocompleteDto } from "@framework/types";
@@ -59,6 +59,15 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @Transform(({ value }) => value as Array<ContractFeatures>)
   @IsEnum(ContractFeatures, { each: true, message: "badInput" })
   public excludeFeatures: Array<ContractFeatures>;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  // https://github.com/typestack/class-transformer/issues/626
+  @Transform(({ value }) => {
+    return [true, "true"].includes(value);
+  })
+  @IsBoolean({ message: "typeMismatch" })
+  public includeExternalContracts: boolean;
 
   public chainId: number;
   public merchantId: number;

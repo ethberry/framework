@@ -59,4 +59,5 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
 
   public chainId: number;
   public merchantId: number;
+  public includeExternalContracts: boolean;
 }

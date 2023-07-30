@@ -11,7 +11,7 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IAssetDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -61,7 +61,15 @@ export class AssetService {
         }
 
         if (templateEntity.contract.merchantId !== userEntity.merchantId) {
-          throw new ForbiddenException("insufficientPermissions");
+          if (
+            templateEntity.contract.merchantId === 1 &&
+            templateEntity.contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+          ) {
+            // BUSINESS_TYPE=B2B
+            // all good, do nothing
+          } else {
+            throw new ForbiddenException("insufficientPermissions");
+          }
         }
 
         if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {

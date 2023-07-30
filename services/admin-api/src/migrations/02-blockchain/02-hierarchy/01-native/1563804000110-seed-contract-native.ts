@@ -46,7 +46,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '',
         'ACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -64,7 +64,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '',
         'INACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -80,9 +80,9 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         18,
         0,
         '',
-        'INACTIVE',
+        'ACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -100,7 +100,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '',
         'ACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -118,7 +118,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '',
         'ACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -134,9 +134,9 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         18,
         0,
         '',
-        'INACTIVE',
+        'ACTIVE',
         'NATIVE',
-        '{}',
+        '{EXTERNAL}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

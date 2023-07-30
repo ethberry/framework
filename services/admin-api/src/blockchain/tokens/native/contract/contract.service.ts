@@ -3,7 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
+import {
+  ContractFeatures,
+  ContractStatus,
+  IContractSearchDto,
+  INativeContractCreateDto,
+  ModuleType,
+  TokenType,
+} from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -38,7 +45,7 @@ export class NativeContractService extends ContractService {
         decimals: 18,
         royalty: 0,
         contractType: TokenType.NATIVE,
-        contractFeatures: [],
+        contractFeatures: [ContractFeatures.EXTERNAL],
         contractModule: ModuleType.HIERARCHY,
         contractStatus: ContractStatus.ACTIVE,
         name: title,
