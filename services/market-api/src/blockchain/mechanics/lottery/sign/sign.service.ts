@@ -6,7 +6,7 @@ import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
-import { boolArrayToByte32 } from "@framework/traits-api";
+// import { boolArrayToByte32 } from "@framework/traits-api";
 
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
@@ -36,7 +36,7 @@ export class LotterySignService {
         externalId: lotteryRound.id,
         expiresAt,
         nonce,
-        extra: boolArrayToByte32(ticketNumbers),
+        extra: ticketNumbers, // encode from ui
         receiver: lotteryRound.contract.address,
         referrer,
       },

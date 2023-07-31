@@ -100,6 +100,32 @@ export class LotteryTokenService extends TokenService {
     return queryBuilder.getOne();
   }
 
+  public findAllWithRelations(dto: any): Promise<[Array<TokenEntity>, number]> {
+    const { take, skip } = dto;
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
+
+    queryBuilder.leftJoinAndSelect("ticket.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
+
+    queryBuilder.leftJoinAndMapOne(
+      "ticket.round",
+      LotteryRoundEntity,
+      "round",
+      `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
+    );
+
+    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "ticket.createdAt": "DESC",
+    });
+    return queryBuilder.getManyAndCount();
+  }
+
   public getTicketCount(roundId: number): Promise<number> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 

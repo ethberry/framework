@@ -3,14 +3,14 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 import type { ILotteryRound } from "@framework/types";
 import { TokenType } from "@framework/types";
-import { boolArrayToByte32 } from "@framework/traits-ui";
+// import { boolArrayToByte32 } from "@framework/traits-ui";
 
 import LotteryPurchaseABI from "../../../../../abis/mechanics/lottery/purchase/purchase.abi.json";
 import { getEthPrice } from "../../../../../utils/money";
@@ -21,6 +21,21 @@ export interface ILotteryPurchaseButtonProps {
   clearForm: () => void;
   disabled: boolean;
 }
+
+export const boolArrayToByte32 = (booleans: Array<boolean>) => {
+  if (booleans.length > 256) {
+    throw new Error("Array length cannot exceed 256");
+  }
+  const result: Array<string> = [];
+  booleans.forEach((value, index) => {
+    if (value) {
+      result.push(utils.hexZeroPad(utils.hexValue(index + 1), 1));
+    }
+  });
+  const concat = `0x${result.map(res => res.substring(2)).join("")}`;
+
+  return utils.hexZeroPad(concat, 32);
+};
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
   const { clearForm, ticketNumbers, round, disabled } = props;
@@ -72,7 +87,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
         data: {
           account,
           referrer: settings.getReferrer(),
-          ticketNumbers,
+          ticketNumbers: boolArrayToByte32(ticketNumbers),
           roundId: round.id,
         },
       },
