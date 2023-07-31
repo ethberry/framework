@@ -1,0 +1,59 @@
+#cloudbuild.yaml
+steps:
+  # Download .env file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/staging/app/.env", ".env"]
+  # Download app/.env file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/staging/app/services/*", "services/"]
+  # Download app/.env file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/staging/app/contracts/*", "contracts/"]
+
+  # Upload docker-compose script to bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["-m", "cp", "-r", "docker-compose-cloudbuild.yml", "gs://framework-env/staging/app/"]
+  # Upload instance template startup script to bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["-m", "cp", "-r", "framework-env/staging/startup/instance-template-startup.sh", "gs://framework-env/staging/startup/"]
+  # Upload nginx conf to bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["-m", "cp", "-r", "nginx/admin.prod.conf", "gs://framework-env/staging/app/nginx/admin.stage.conf"]
+
+  # Add npmrc url
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: "bash"
+    args: ['-c', 'echo @gemunion:registry=https://npm.pkg.github.com/ >> .npmrc']
+  # Add npmrc token from build env
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: "bash"
+    args: ['-c', 'echo //npm.pkg.github.com/:_authToken=$$GH_TOKEN >> .npmrc']
+    secretEnv: ['GH_TOKEN']
+  # Build image with docker-compose
+  - name: 'docker/compose:1.29.2'
+    args: ['-f', 'docker-compose.dependencies.yml', 'build']
+  # Tag push image to google registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'framework-packages:latest', 'gcr.io/$PROJECT_ID/$REPO_NAME-staging-img']
+  # Start update of autoscale group prod
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'replaceGroup'
+    waitFor:
+      - 'dockerTag'
+    args:
+      - "compute"
+      - "instance-groups"
+      - "managed"
+      - "rolling-action"
+      - "replace"
+      - "fw-group-stage"
+      - "--max-unavailable=4"
+      - "--region=us-east1"
+images: ['gcr.io/$PROJECT_ID/$REPO_NAME-staging-img']
+timeout: 3600s
+options:
+  machineType: 'E2_HIGHCPU_32'
+availableSecrets:
+  secretManager:
+    - versionName: projects/1011891726242/secrets/GITHUBTOKEN/versions/2
+      env: GH_TOKEN

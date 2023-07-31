@@ -1,0 +1,388 @@
+version: "3.3"
+
+volumes:
+  static-admin-ui:
+  static-market-ui:
+  static-office-ui:
+
+services:
+
+  admin-ui:
+    container_name: admin-ui
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-admin-ui:/home/node/framework/services/admin-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "Admin-UI"
+
+  market-ui:
+    container_name: market-ui
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-market-ui:/home/node/framework/services/market-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "market-UI"
+
+  office-ui:
+    container_name: office-ui
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-office-ui:/home/node/framework/services/office-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "office-UI"
+
+  admin-api:
+    container_name: admin-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_ADMIN_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      ADMIN_FE_URL: "${ADMIN_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      STARTING_BLOCK: "${STARTING_BLOCK}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+      ERC20_SIMPLE_ADDR: "${ERC20_SIMPLE_ADDR}"
+      ERC20_INACTIVE_ADDR: "${ERC20_INACTIVE_ADDR}"
+      ERC20_NEW_ADDR: "${ERC20_NEW_ADDR}"
+      ERC20_BLACKLIST_ADDR: "${ERC20_BLACKLIST_ADDR}"
+      ERC721_SIMPLE_ADDR: "${ERC721_SIMPLE_ADDR}"
+      ERC721_INACTIVE_ADDR: "${ERC721_INACTIVE_ADDR}"
+      ERC721_NEW_ADDR: "${ERC721_NEW_ADDR}"
+      ERC721_BLACKLIST_ADDR: "${ERC721_BLACKLIST_ADDR}"
+      ERC721_DISCRETE_ADDR: "${ERC721_DISCRETE_ADDR}"
+      ERC721_RANDOM_ADDR: "${ERC721_RANDOM_ADDR}"
+      ERC721_SOULBOUND_ADDR: "${ERC721_SOULBOUND_ADDR}"
+      ERC721_GENES_ADDR: "${ERC721_GENES_ADDR}"
+      ERC721_GENERATIVE_ADDR: "${ERC721_GENERATIVE_ADDR}"
+      ERC721_RENTABLE_ADDR: "${ERC721_RENTABLE_ADDR}"
+      ERC998_SIMPLE_ADDR: "${ERC998_SIMPLE_ADDR}"
+      ERC998_INACTIVE_ADDR: "${ERC998_INACTIVE_ADDR}"
+      ERC998_NEW_ADDR: "${ERC998_NEW_ADDR}"
+      ERC998_BLACKLIST_ADDR: "${ERC998_BLACKLIST_ADDR}"
+      ERC998_DISCRETE_ADDR: "${ERC998_DISCRETE_ADDR}"
+      ERC998_RANDOM_ADDR: "${ERC998_RANDOM_ADDR}"
+      ERC998_GENES_ADDR: "${ERC998_GENES_ADDR}"
+      ERC998_RENTABLE_ADDR: "${ERC998_RENTABLE_ADDR}"
+      ERC998_OWNER_ERC20_ADDR: "${ERC998_OWNER_ERC20_ADDR}"
+      ERC998_OWNER_ERC1155_ADDR: "${ERC998_OWNER_ERC1155_ADDR}"
+      ERC998_OWNER_ERC1155_ERC20_ADDR: "${ERC998_OWNER_ERC1155_ERC20_ADDR}"
+      ERC1155_SIMPLE_ADDR: "${ERC1155_SIMPLE_ADDR}"
+      ERC1155_INACTIVE_ADDR: "${ERC1155_INACTIVE_ADDR}"
+      ERC1155_NEW_ADDR: "${ERC1155_NEW_ADDR}"
+      ERC1155_BLACKLIST_ADDR: "${ERC1155_BLACKLIST_ADDR}"
+      VESTING_ADDR: "${VESTING_ADDR}"
+      ERC721_MYSTERYBOX_SIMPLE_ADDR: "${ERC721_MYSTERYBOX_SIMPLE_ADDR}"
+      ERC721_MYSTERYBOX_PAUSABLE_ADDR: "${ERC721_MYSTERYBOX_PAUSABLE_ADDR}"
+      ERC721_MYSTERYBOX_BLACKLIST_ADDR: "${ERC721_MYSTERYBOX_BLACKLIST_ADDR}"
+      ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR: "${ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
+      ERC721_LOTTERY_TICKET_ADDR: "${ERC721_LOTTERY_TICKET_ADDR}"
+      LOTTERY_ADDR: "${LOTTERY_ADDR}"
+      ERC721_RAFFLE_TICKET_ADDR: "${ERC721_RAFFLE_TICKET_ADDR}"
+      RAFFLE_ADDR: "${RAFFLE_ADDR}"
+      USDT_ADDR: "${USDT_ADDR}"
+      BUSD_ADDR: "${BUSD_ADDR}"
+      WETH_ADDR: "${WETH_ADDR}"
+      WAITLIST_ADDR: "${WAITLIST_ADDR}"
+      ERC721_WRAPPER_ADDR: "${ERC721_WRAPPER_ADDR}"
+      PYRAMID_ADDR: "${PYRAMID_ADDR}"
+      DISPENSER_ADDR: "${DISPENSER_ADDR}"
+      # CHAINLINK
+      LINK_ADDR: "${LINK_ADDR}"
+      VRF_ADDR: "${VRF_ADDR}"
+    ports:
+      # admin-api
+      - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
+
+  market-api:
+    container_name: market-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_MARKET_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      MARKET_FE_URL: "${MARKET_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      # Contracts
+    ports:
+      # market-api
+      - "${PORT_MARKET_API}:${PORT_MARKET_API}"
+
+  office-api:
+    container_name: office-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/office-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_OFFICE_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      OFFICE_FE_URL: "${OFFICE_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      # Contracts
+    ports:
+      # office-api
+      - "${PORT_OFFICE_API}:${PORT_OFFICE_API}"
+
+  core-eth:
+    container_name: core-eth
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      # FE
+      FE_URL: "${ADMIN_FE_URL}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      LATENCY: "${LATENCY}"
+      CRON_SCHEDULE: "${CRON_SCHEDULE}"
+      STARTING_BLOCK: "${STARTING_BLOCK}"
+      # Chain-Link
+      CHAINLINK_SUBSCRIPTION_ID: "${CHAINLINK_SUBSCRIPTION_ID}"
+      # Contracts
+    ports:
+      - "${PORT_RPC_API}:${PORT_RPC_API}"
+
+  json-api:
+    container_name: json-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./microservices/json start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_JSON_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # CACHE
+      REDIS_CACHE_URL: "${REDIS_CACHE_URL}"
+      CACHE_TTL: "${CACHE_TTL}"
+      CACHE_MAX: "${CACHE_MAX}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # FE
+      PUBLIC_FE_URL: "${JSON_FE_URL}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+    ports:
+      # admin-api
+      - "${PORT_JSON_API}:${PORT_JSON_API}"
+
+  game-api:
+    container_name: game-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./microservices/game start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_GAME_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # Contracts
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+    ports:
+      # game-api
+      - "${PORT_GAME_API}:${PORT_GAME_API}"
+
+  emailer:
+    container_name: emailer
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
+    environment:
+      # common
+      NODE_OPTIONS: --max-old-space-size=8192
+      HOST: 0.0.0.0
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: email
+      # mailjet
+      MAILJET_PUBLIC_KEY: "${MAILJET_PUBLIC_KEY}"
+      MAILJET_PRIVATE_KEY: "${MAILJET_PRIVATE_KEY}"
+      MAILJET_FROM: "${MAILJET_FROM}"
+      # logDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+    ports:
+      # emailer
+      - "${PORT_EML_API}:${PORT_EML_API}"
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx/admin.${BASE_MODE}.conf:/etc/nginx/conf.d/admin.conf
+      - ./nginx/log:/var/log/nginx/
+      - type: volume
+        source: static-admin-ui
+        target: /var/www/admin-ui/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-market-ui
+        target: /var/www/market-ui/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-office-ui
+        target: /var/www/office-ui/static
+        volume:
+          nocopy: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1337:1337"
+    depends_on:
+      - admin-api
+      - admin-ui
+      - market-ui
+      - market-api
+      - office-ui
+      - office-api
+      - json-api
+      - game-api
+      - core-eth

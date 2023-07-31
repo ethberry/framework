@@ -250,7 +250,7 @@ describe("Diamond Exchange Mysterybox", function () {
     });
 
     describe("(NATIVE ERC20) > MYSTERYBOX MIXED (ERC20 ERC721 ERC998 ERC1155)", function () {
-      it.only("should purchase mysterybox", async function () {
+      it("should purchase mysterybox", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const exchangeInstance = await factory();
         const { generateManyToManySignature } = await getSignatures(exchangeInstance);
