@@ -33,6 +33,7 @@ export const DispenserUploadButton: FC<IDispenserUploadButtonProps> = props => {
       [[], []],
     );
 
+    // TODO get from backend
     const contract = new Contract(process.env.DISPENSER_ADDR, DispenserABI, web3Context.provider?.getSigner());
     return contract.disperse(items, receivers) as Promise<any>;
   });

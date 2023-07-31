@@ -20,7 +20,12 @@ export const StakingRewardSimpleButton: FC<IStakingRewardSimpleButtonProps> = pr
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((stake: IStakingDeposit, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingReceiveRewardABI, web3Context.provider?.getSigner());
+    // const contract = new Contract(process.env.STAKING_ADDR, StakingReceiveRewardABI, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      stake.stakingRule!.contract!.address,
+      StakingReceiveRewardABI,
+      web3Context.provider?.getSigner(),
+    );
     return contract.receiveReward(stake.externalId, false, false) as Promise<void>;
   });
 

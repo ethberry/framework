@@ -34,6 +34,7 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
 
   const metaWaitList = useMetamask((web3Context: Web3ContextType) => {
     return fn(null as unknown as any, listId).then((proof: { proof: Array<string> }) => {
+      // TODO get from backend
       const contract = new Contract(process.env.WAITLIST_ADDR, ClaimABI, web3Context.provider?.getSigner());
       return contract.claim(proof.proof, listId) as Promise<void>;
     });

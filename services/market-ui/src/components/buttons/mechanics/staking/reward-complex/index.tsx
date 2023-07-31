@@ -26,7 +26,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
   const metaFn = useMetamask(
     async (stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
       const contract = new Contract(
-        process.env.STAKING_ADDR,
+        stake.stakingRule!.contract!.address,
         StakingReceiveRewardABI,
         web3Context.provider?.getSigner(),
       );

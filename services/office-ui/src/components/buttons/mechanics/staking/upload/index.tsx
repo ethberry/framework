@@ -64,7 +64,7 @@ export const StakingRuleUploadCreateButton: FC<IStakingRuleUploadCreateButtonPro
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSetRulesABI, web3Context.provider?.getSigner());
+    const contract = new Contract(rule.contract!.address, StakingSetRulesABI, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
