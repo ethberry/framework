@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -9,7 +8,6 @@ export class ContractManagerLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
@@ -23,7 +21,7 @@ export class ContractManagerLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-    return this.contractService.updateLastBlockByAddr(contractManagerAddr, lastBlock);
+    const contractManagerEntity = await this.contractService.findSystemByName("ContractManager");
+    return this.contractService.updateLastBlockByAddr(contractManagerEntity.address[0], lastBlock);
   }
 }

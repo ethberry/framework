@@ -8,7 +8,7 @@ import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 // import { abiEncode, keccak256It } from "@gemunion/contracts-utils";
 import { ContractFeatures, ModuleType } from "@framework/types";
 
-import { ABI, ChainLinkEventSignatures, ChainLinkEventType, ChainLinkType } from "./interfaces";
+import { ABI, ChainLinkEventSignatures, ChainLinkType } from "./interfaces";
 import { ChainLinkLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
@@ -22,8 +22,7 @@ import { abiEncode, keccak256It } from "../utils";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const vrfContractAddr = configService.get<string>("VRF_ADDR", "");
-        const vrfCoordinator = await contractService.findOne({ address: vrfContractAddr.toLowerCase() });
+        const vrfCoordinator = await contractService.findSystemByName("ChainLink VRF");
 
         const randomTokens = await contractService.findAllTokensByType(void 0, [
           ContractFeatures.RANDOM,
@@ -50,16 +49,12 @@ import { abiEncode, keccak256It } from "../utils";
         return {
           contract: {
             contractType: ChainLinkType.VRF,
-            contractAddress: [vrfContractAddr] || [],
+            contractAddress: vrfCoordinator.address || [],
             contractInterface: ABI,
-            // prettier-ignore
-            eventNames: [
-              ChainLinkEventType.RandomWordsRequested
-            ],
             topics,
           },
           block: {
-            fromBlock: vrfCoordinator ? vrfCoordinator.fromBlock : startingBlock,
+            fromBlock: vrfCoordinator && vrfCoordinator.fromBlock ? vrfCoordinator.fromBlock : startingBlock,
             debug: false,
             cron,
           },

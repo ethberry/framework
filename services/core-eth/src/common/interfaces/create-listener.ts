@@ -8,3 +8,8 @@ export interface IContractListenerResult {
   address: Array<string> | null;
   fromBlock?: number;
 }
+
+export interface ISystemContractListenerResult {
+  address: Array<string>;
+  fromBlock?: number;
+}

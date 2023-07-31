@@ -33,8 +33,8 @@ export class ChainLinkContractServiceCron {
     const minimum = WeiPerEther * 5n; // TODO set(get) minBalance from VRF contract parameters or settings?
     const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-    const vrfContract = new Contract(vrfAddr, VrfSol.abi, this.signer);
+    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+    const vrfContract = new Contract(vrfCoordinator.address[0], VrfSol.abi, this.signer);
 
     // get all subscription ids
     const merchantsWithSubs = await this.merchantService.findAll(

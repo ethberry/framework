@@ -20,8 +20,6 @@ import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class RaffleTicketServiceEth {
-  public raffleAddr: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -36,9 +34,7 @@ export class RaffleTicketServiceEth {
     private readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     private readonly configService: ConfigService,
-  ) {
-    this.raffleAddr = configService.get<string>("ERC721_RAFFLE_ADDR", "0x");
-  }
+  ) {}
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {

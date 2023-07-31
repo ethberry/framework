@@ -36,9 +36,9 @@ export class ChainLinkContractServiceEth {
     //   return;
     // }
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
     const txr: string = await callRandom(
-      vrfAddr,
+      vrfCoordinator.address[0],
       {
         requestId,
         sender,

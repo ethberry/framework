@@ -24,7 +24,6 @@ export class RaffleRoundServiceCron {
   ) {}
 
   public async raffleRound(address: string): Promise<void> {
-    // const raffleAddr = this.configService.get<string>("RAFFLE_ADDR", "");
     const contract = new Contract(address, RaffleSol.abi, this.signer);
     const currentRound = await getCurrentRound(address, RaffleSol.abi, this.jsonRpcProvider);
     const { roundId, endTimestamp, acceptedAsset, ticketAsset, maxTicket } = currentRound;

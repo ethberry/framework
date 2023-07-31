@@ -207,10 +207,10 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
-        vrfAddr,
+        vrfCoordinator.address[0],
         ~~subscriptionId,
         account.toLowerCase(),
         this.ethersSignerProvider,
@@ -361,10 +361,10 @@ export class ContractManagerServiceEth {
     });
 
     if (contractEntity.contractFeatures.includes(ContractFeatures.RANDOM)) {
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
       const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
       const txr: string = await addConsumer(
-        vrfAddr,
+        vrfCoordinator.address[0],
         ~~subscriptionId,
         account.toLowerCase(),
         this.ethersSignerProvider,
@@ -578,9 +578,14 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
+    const txr: string = await addConsumer(
+      vrfCoordinator.address[0],
+      ~~subscriptionId,
+      account.toLowerCase(),
+      this.ethersSignerProvider,
+    );
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
     await this.chainLinkLogService.updateListener();
@@ -611,9 +616,14 @@ export class ContractManagerServiceEth {
       merchantId: await this.getMerchantId(externalId),
     });
 
-    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
     const subscriptionId = this.configService.get<string>("CHAINLINK_SUBSCRIPTION_ID", "1");
-    const txr: string = await addConsumer(vrfAddr, ~~subscriptionId, account.toLowerCase(), this.ethersSignerProvider);
+    const txr: string = await addConsumer(
+      vrfCoordinator.address[0],
+      ~~subscriptionId,
+      account.toLowerCase(),
+      this.ethersSignerProvider,
+    );
     this.loggerService.log(JSON.stringify(`addConsumer ${txr}`, null, "\t"), ContractManagerServiceEth.name);
 
     await this.chainLinkLogService.updateListener();

@@ -8,7 +8,7 @@ import { testChainId } from "@framework/constants";
 
 import { ContractEntity } from "./contract.entity";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
-import { IContractListenerResult } from "../../../common/interfaces";
+import { IContractListenerResult, ISystemContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
 export class ContractService {
@@ -120,6 +120,22 @@ export class ContractService {
       return entity.fromBlock;
     }
     return lastBlock;
+  }
+
+  public async findSystemByName(name: string): Promise<ISystemContractListenerResult> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+
+    const contractEntity = await this.findOne(where);
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return {
+      address: contractEntity.address !== wallet ? [contractEntity.address] : [],
+      fromBlock: contractEntity.fromBlock,
+    };
   }
 
   public async findAllByType(

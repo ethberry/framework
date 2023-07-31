@@ -27,17 +27,17 @@ import { ABI } from "./interfaces";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const exchangeAddr = configService.get<string>("EXCHANGE_ADDR", "");
+        const exchangeEntity = await contractService.findSystemByName("Exchange");
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(exchangeAddr)) || startingBlock;
+        const fromBlock = exchangeEntity.fromBlock || startingBlock;
         return {
           contract: {
             contractType: ContractType.EXCHANGE,
-            contractAddress: [exchangeAddr],
+            contractAddress: exchangeEntity.address,
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [

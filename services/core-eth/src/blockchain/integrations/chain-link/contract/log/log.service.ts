@@ -1,5 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
@@ -15,7 +14,6 @@ export class ChainLinkLogService {
     protected readonly loggerService: LoggerService,
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async updateListener(): Promise<void> {
@@ -34,8 +32,13 @@ export class ChainLinkLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    const VRF = this.configService.get<string>("VRF_ADDR", "");
-    return this.contractService.updateLastBlockByAddr(VRF.toLowerCase(), lastBlock);
+    const vrfCoordinator = await this.contractService.findSystemByName("ChainLink VRF");
+
+    if (!vrfCoordinator.address) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return this.contractService.updateLastBlockByAddr(vrfCoordinator.address[0], lastBlock);
   }
 
   public async getAllRandomContracts(): Promise<string[] | undefined> {

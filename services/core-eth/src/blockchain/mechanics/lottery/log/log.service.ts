@@ -1,17 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { ICreateListenerPayload } from "../../../../common/interfaces";
+import { ContractFeatures, ModuleType } from "@framework/types";
 
 @Injectable()
 export class LotteryLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
@@ -29,7 +28,12 @@ export class LotteryLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
-    return this.contractService.updateLastBlockByAddr(lotteryAddr, lastBlock);
+    const lotteryContracts = await this.contractService.findAllByType([ModuleType.LOTTERY], [ContractFeatures.RANDOM]);
+
+    if (!lotteryContracts.address) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return this.contractService.updateLastBlockByAddr(lotteryContracts.address[0], lastBlock);
   }
 }

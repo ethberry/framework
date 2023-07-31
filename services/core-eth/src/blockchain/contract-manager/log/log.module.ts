@@ -19,18 +19,18 @@ import { ABI } from "./interfaces";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
+        const contractManagerEntity = await contractService.findSystemByName("ContractManager");
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(contractManagerAddr)) || startingBlock;
+        const fromBlock = contractManagerEntity.fromBlock || startingBlock;
 
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,
-            contractAddress: [contractManagerAddr],
+            contractAddress: contractManagerEntity.address,
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [

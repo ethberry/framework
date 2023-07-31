@@ -5,7 +5,13 @@ import { Interface } from "ethers";
 
 import type { IModuleOptions } from "@gemunion/nest-js-module-ethers-gcp";
 import { EthersContractModule } from "@gemunion/nest-js-module-ethers-gcp";
-import { AccessControlEventType, ContractEventType, ContractType, WaitListEventType } from "@framework/types";
+import {
+  AccessControlEventType,
+  ContractEventType,
+  ContractType,
+  ModuleType,
+  WaitListEventType,
+} from "@framework/types";
 import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
@@ -20,17 +26,18 @@ import { WaitListLogService } from "./log.service";
       imports: [ConfigModule, ContractModule],
       inject: [ConfigService, ContractService],
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
-        const waitlistAddr = configService.get<string>("WAITLIST_ADDR", "");
+        const waitlistContracts = await contractService.findAllByType([ModuleType.WAITLIST]);
+
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        const fromBlock = (await contractService.getLastBlock(waitlistAddr)) || startingBlock;
+        const fromBlock = waitlistContracts.fromBlock || startingBlock;
         return {
           contract: {
             contractType: ContractType.WAITLIST,
-            contractAddress: [waitlistAddr],
+            contractAddress: waitlistContracts.address || [],
             contractInterface: new Interface(WaitListSol.abi),
             // prettier-ignore
             eventNames: [
