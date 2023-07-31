@@ -1258,11 +1258,55 @@
       }
     },
     "ratePlan": {
-      "alwaysIncluded": "Always included",
-      "bronze": "Bronze",
-      "gold": "Gold",
+      "alwaysIncluded": {
+        "title": "Always included",
+        "history": "Transaction history",
+        "openSea": "OpenSea integration",
+        "insights": "Marketing insights"
+      },
+      "onDemand": {
+        "title": "On demand",
+        "raffle": "Raffle",
+        "waitList": "Wait list",
+        "staking": "Staking"
+      },
+      "bronze": {
+        "title": "Bronze",
+        "erc20": "1 ERC20 contract",
+        "erc721": "5 ERC721 contracts",
+        "erc1155": "5 ERC1155 contracts",
+        "vesting": "1000 vesting contracts",
+        "disperse": "Mass transact",
+        "claim": "Claim",
+        "grade": "Grade",
+        "craft": "Craft",
+        "mystery": "Mystery box"
+      },
+      "gold": {
+        "title": "Gold",
+        "erc20": "5 ERC20 contract",
+        "erc721": "25 ERC721 contracts",
+        "erc1155": "25 ERC1155 contracts",
+        "vesting": "5000 vesting contracts",
+        "disperse": "Mass transact",
+        "claim": "Claim",
+        "grade": "Grade",
+        "craft": "Craft",
+        "mystery": "Mystery box"
+      },
       "month": "month",
-      "silver": "Silver",
+      "silver": {
+        "title": "Silver",
+        "erc20": "1 ERC20 contract",
+        "erc721": "10 ERC721 contracts",
+        "erc1155": "10 ERC1155 contracts",
+        "vesting": "3000 vesting contracts",
+        "disperse": "Mass transact",
+        "claim": "Claim",
+        "grade": "Grade",
+        "craft": "Craft",
+        "mystery": "Mystery box"
+      },
       "title": "Rate plans"
     },
     "rent": {
