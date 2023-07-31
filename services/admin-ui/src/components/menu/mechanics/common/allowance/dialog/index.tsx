@@ -1,4 +1,6 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
+import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { TokenType } from "@framework/types";
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -27,13 +29,12 @@ export interface IAllowanceDialogProps {
 export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const handleContractChange =
     (form: any) =>
     (_event: ChangeEvent<unknown>, option: any | null): void => {
-      if (option?.title === "USDT") {
-        // TODO make it MUI\Alert?
-        alert("USDT: You must revoke existing allowance first (set to 0)");
-      }
+      setShowAlert(option?.title === "USDT");
       form.setValue("contractId", option?.id ?? 0);
       form.setValue("contract.address", option?.address ?? "0x");
       form.setValue("contract.contractType", option?.contractType ?? "0x");
@@ -49,6 +50,11 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       showDebug={true}
       {...rest}
     >
+      {showAlert ? (
+        <Alert severity="warning">
+          <FormattedMessage id="form.hints.allowanceUSDTWarning" />
+        </Alert>
+      ) : null}
       <CommonContractInput
         name="contractId"
         data={{ contractType: [TokenType.ERC20] }}

@@ -6,10 +6,11 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { ContractStatus, IContract } from "@framework/types";
+import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
 import { validationSchema } from "./validation";
+import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
 
 export interface IErc1155ContractEditDialogProps {
   open: boolean;
@@ -42,6 +43,10 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+
+  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
+    return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
+  }
 
   return (
     <FormDialog
