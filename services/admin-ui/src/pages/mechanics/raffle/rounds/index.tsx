@@ -22,7 +22,7 @@ export const RaffleRounds: FC = () => {
     handleViewConfirm,
     handleViewCancel,
     handleChangePage,
-    handleRefreshPage,
+    // handleRefreshPage,
   } = useCollection<IRaffleRound, ISearchDto>({
     baseUrl: "/raffle/rounds",
     empty: {
@@ -48,7 +48,7 @@ export const RaffleRounds: FC = () => {
                 <IconButton onClick={handleView(round)}>
                   <Visibility />
                 </IconButton>
-                <RaffleReleaseButton round={round} refreshPage={handleRefreshPage} />
+                <RaffleReleaseButton round={round} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

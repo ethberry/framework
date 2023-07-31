@@ -178,6 +178,9 @@ export class MysteryBoxService {
           price_template: "price_components.template",
         },
       },
+      order: {
+        createdAt: "DESC",
+      },
     });
   }
 
