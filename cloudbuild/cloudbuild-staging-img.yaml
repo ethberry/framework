@@ -12,13 +12,13 @@ steps:
 
   # Upload docker-compose script to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "docker-compose-cloudbuild.yml", "gs://framework-env/staging/app/"]
+    args: ["-m", "cp", "-r", "docker-compose-cloudbuild-staging.yml", "gs://framework-env/staging/app/"]
   # Upload instance template startup script to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "framework-env/staging/startup/instance-template-startup.sh", "gs://framework-env/staging/startup/"]
+    args: ["-m", "cp", "-r", "framework-staging-env/startup/instance-template-startup.sh", "gs://framework-env/staging/startup/"]
   # Upload nginx conf to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "nginx/admin.prod.conf", "gs://framework-env/staging/app/nginx/admin.stage.conf"]
+    args: ["-m", "cp", "-r", "nginx/admin.stage.conf", "gs://framework-env/staging/app/nginx/admin.stage.conf"]
 
   # Add npmrc url
   - name: 'gcr.io/cloud-builders/gsutil'
