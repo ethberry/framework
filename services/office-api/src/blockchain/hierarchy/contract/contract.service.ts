@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
+import { wallet } from "@gemunion/constants";
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -192,5 +193,17 @@ export class ContractService {
 
   public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
     return this.contractEntityRepository.count({ where });
+  }
+
+  public async findSystemByName(name: string, chainId: number): Promise<string> {
+    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+
+    const contractEntity = await this.findOne(where);
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return contractEntity.address !== wallet ? contractEntity.address : "";
   }
 }

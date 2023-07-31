@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+
 import { hexlify, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
@@ -35,14 +35,15 @@ import { UserEntity } from "../../infrastructure/user/user.entity";
 import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
 import { getContractABI } from "./utils";
+import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ContractManagerSignService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -57,7 +58,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -114,7 +115,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -166,7 +167,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -219,7 +220,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -269,7 +270,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -328,7 +329,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -396,7 +397,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -445,7 +446,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -489,7 +490,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -526,7 +527,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -563,7 +564,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
@@ -611,7 +612,7 @@ export class ContractManagerSignService {
         name: "ContractManager",
         version: "1.0.0",
         chainId: userEntity.chainId,
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+        verifyingContract: await this.contractService.findSystemByName("ContractManager", userEntity.chainId),
       },
       // Types
       {
