@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { NativeContractService } from "./contract.service";
 import { NativeTokenController } from "./contract.controller";
@@ -8,7 +9,7 @@ import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContractEntity, TemplateEntity, TokenEntity])],
+  imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity, TemplateEntity, TokenEntity])],
   providers: [NativeContractService],
   controllers: [NativeTokenController],
   exports: [NativeContractService],

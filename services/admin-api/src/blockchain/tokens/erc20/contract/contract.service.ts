@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 
+import { PaymentRequiredException } from "@gemunion/nest-js-utils";
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { BusinessType, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -20,6 +22,7 @@ export class Erc20ContractService extends ContractService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
+    protected readonly configService: ConfigService,
   ) {
     super(contractEntityRepository);
   }
@@ -30,6 +33,11 @@ export class Erc20ContractService extends ContractService {
 
   public async create(dto: IErc20ContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { address, symbol, decimals, title, description } = dto;
+
+    const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
+    if (businessType === BusinessType.B2B) {
+      throw new PaymentRequiredException("paymentRequired");
+    }
 
     const contractEntity = await this.contractEntityRepository
       .create({

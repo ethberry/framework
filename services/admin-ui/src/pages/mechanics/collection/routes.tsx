@@ -6,7 +6,7 @@ import { CollectionContract } from "./contract";
 import { CollectionTemplate } from "./template";
 import { CollectionToken } from "./token";
 import { IndexWrapper } from "../../index-wrapper";
-import { Collections } from "../../dashboard/mechanics/collection";
+import { CollectionSection } from "../../dashboard/mechanics/collection";
 
 export const collectionRoutes: Array<RouteObject> = [
   {
@@ -16,7 +16,7 @@ export const collectionRoutes: Array<RouteObject> = [
         index: true,
         element: (
           <IndexWrapper index="collection">
-            <Collections />
+            <CollectionSection />
           </IndexWrapper>
         ),
       },

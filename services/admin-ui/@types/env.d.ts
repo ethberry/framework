@@ -1,3 +1,5 @@
+import { BusinessType } from "@framework/types";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -9,7 +11,7 @@ declare global {
       CHAIN_ID: string;
       GEMUNION_API_KEY: string;
       GEMUNION_URL: string;
-      BUSINESS_TYPE: string;
+      BUSINESS_TYPE: BusinessType;
       ACCOUNT: string;
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;

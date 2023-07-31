@@ -52,7 +52,7 @@ export const LotteryScheduleMenuItem: FC<ILotteryScheduleFullMenuItemProps> = pr
           <FormattedMessage id="form.buttons.schedule" />
         </Typography>
       </MenuItem>
-      {process.env.BUSINESS_TYPE === (BusinessType.B2B as string) ? (
+      {process.env.BUSINESS_TYPE === BusinessType.B2B ? (
         <UpgradeProductTypeDialog open={isScheduleDialogOpen} onClose={handleScheduleCancel} />
       ) : (
         <LotteryScheduleDialog

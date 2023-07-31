@@ -25,7 +25,7 @@ import { Erc1155Section } from "./hierarchy/erc1155";
 
 import { BreedSection } from "./mechanics/breed";
 import { ClaimSection } from "./mechanics/claim";
-import { Collections } from "./mechanics/collection";
+import { CollectionSection } from "./mechanics/collection";
 import { CraftSection } from "./mechanics/craft";
 import { DispenserSection } from "./mechanics/dispenser";
 import { DropSection } from "./mechanics/drop";
@@ -53,7 +53,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
           <Divider sx={{ m: 2 }} />
           <MysterySection />
-          <Collections />
+          <CollectionSection />
         </Grid>
         <Grid item xs={12} md={4}>
           <DispenserSection />

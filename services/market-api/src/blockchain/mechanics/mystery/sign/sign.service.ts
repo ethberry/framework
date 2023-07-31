@@ -1,10 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { SettingsKeys, TokenType } from "@framework/types";
+import { RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
@@ -25,14 +25,18 @@ export class MysterySignService {
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
     const { account, referrer = ZeroAddress, mysteryboxId } = dto;
 
-    const mysteryboxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryboxId });
+    const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryboxId });
 
-    if (!mysteryboxEntity) {
+    if (!mysteryBoxEntity) {
       throw new NotFoundException("mysteryBoxNotFound");
     }
 
-    const cap = BigInt(mysteryboxEntity.template.cap);
-    if (cap > 0 && cap <= BigInt(mysteryboxEntity.template.amount)) {
+    if (mysteryBoxEntity.template.contract.merchant.ratePlan === RatePlanType.BRONZE) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    const cap = BigInt(mysteryBoxEntity.template.cap);
+    if (cap > 0 && cap <= BigInt(mysteryBoxEntity.template.amount)) {
       throw new BadRequestException("limitExceeded");
     }
 
@@ -44,14 +48,14 @@ export class MysterySignService {
     const signature = await this.getSignature(
       account,
       {
-        externalId: mysteryboxEntity.id,
+        externalId: mysteryBoxEntity.id,
         expiresAt,
         nonce,
         extra: encodeBytes32String("0x"),
-        receiver: mysteryboxEntity.template.contract.merchant.wallet,
+        receiver: mysteryBoxEntity.template.contract.merchant.wallet,
         referrer,
       },
-      mysteryboxEntity,
+      mysteryBoxEntity,
     );
 
     return { nonce: hexlify(nonce), signature, expiresAt };

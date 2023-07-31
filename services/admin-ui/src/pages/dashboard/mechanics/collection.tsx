@@ -4,7 +4,7 @@ import { AutoAwesomeMotion, Collections as CollectionsIcon, Storage } from "@mui
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Collections: FC = () => {
+export const CollectionSection: FC = () => {
   const disabled = process.env.NODE_ENV === "production";
 
   if (disabled) {
