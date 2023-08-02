@@ -29,7 +29,7 @@ export class Erc721ContractService extends ContractService {
     const { address, symbol, title, description, imageUrl } = dto;
 
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
-    if (businessType === BusinessType.B2B) {
+    if (businessType === BusinessType.B2B && userEntity.merchantId !== 1) {
       throw new PaymentRequiredException("paymentRequired");
     }
 
