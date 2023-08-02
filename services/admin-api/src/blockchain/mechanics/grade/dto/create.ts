@@ -20,7 +20,7 @@ export class GradeCreateDto implements IGradeCreateDto {
   })
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
-  @Matches(/^[0-9A-Z]+$/, { message: "patternMismatch" })
+  @Matches(/^[A-Z][A-Z0-9]*$/, { message: "patternMismatch" })
   public attribute: string;
 
   @ApiProperty()

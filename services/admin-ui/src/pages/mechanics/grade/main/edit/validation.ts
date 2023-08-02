@@ -9,7 +9,7 @@ export const validationSchema = object().shape({
   contractId: dbIdValidationSchema,
   attribute: string()
     .required("form.validations.valueMissing")
-    .matches(/^[0-9A-Z]+$/, "form.validations.patternMismatch")
+    .matches(/^[A-Z][A-Z0-9]*$/, "form.validations.patternMismatch")
     .max(32, "form.validations.rangeOverflow"),
   gradeStatus: mixed<GradeStatus>().oneOf(Object.values(GradeStatus)).required("form.validations.valueMissing"),
   gradeStrategy: mixed<GradeStrategy>().oneOf(Object.values(GradeStrategy)).required("form.validations.valueMissing"),

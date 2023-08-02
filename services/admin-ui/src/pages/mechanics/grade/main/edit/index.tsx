@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { FormWatcher } from "@gemunion/mui-form";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -40,6 +41,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       testId="GradeEditForm"
       {...rest}
     >
+      <FormWatcher />
       <EntityInput
         name="contractId"
         controller="contracts"

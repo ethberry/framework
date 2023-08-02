@@ -48,6 +48,7 @@ export const Grade: FC = () => {
     empty: {
       contractId: 0,
       attribute: "",
+      gradeStatus: GradeStatus.ACTIVE,
       gradeStrategy: GradeStrategy.FLAT,
       growthRate: 0,
       price: emptyPrice,
