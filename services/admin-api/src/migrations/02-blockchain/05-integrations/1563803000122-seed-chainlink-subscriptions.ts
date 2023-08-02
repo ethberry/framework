@@ -7,9 +7,9 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
     const chainId = BigInt(process.env.CHAIN_ID || testChainId);
     const subId = BigInt(process.env.CHAINLINK_SUBSCRIPTION_ID || 1n);
 
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
+    // if (process.env.NODE_ENV === "production") {
+    //   return;
+    // }
 
     await queryRunner.query(`
       INSERT INTO ${ns}.chain_link_subscriptions (
@@ -27,7 +27,7 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
       ), (
         1,
         '13377',
-        2,
+        '${subId}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
