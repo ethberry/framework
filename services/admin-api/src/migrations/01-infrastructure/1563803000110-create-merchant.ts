@@ -59,12 +59,6 @@ export class CreateMerchant1563803000110 implements MigrationInterface {
           isUnique: true,
         },
         {
-          name: "vrf_sub_id",
-          type: "varchar",
-          isNullable: true,
-          isUnique: true,
-        },
-        {
           name: "social",
           type: "json",
           default: "'{}'",
