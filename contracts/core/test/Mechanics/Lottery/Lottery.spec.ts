@@ -415,14 +415,9 @@ describe("Lottery", function () {
 
       // TEST METADATA
       const metadata = recursivelyDecodeResult(await erc721Instance.getTokenMetadata(tokenId));
-      console.log("metadata", metadata);
       const decodedMeta = decodeMetadata(metadata as any[]);
-      console.log("decodedMeta", decodedMeta);
       expect(decodedMeta.ROUND).to.equal(1n);
-      console.log("decodedMeta.NUMBERS", decodedMeta.NUMBERS);
       expect(toBeHex(decodedMeta.NUMBERS, 32)).to.equal(ticketNumbers);
-      console.log("ticketNumbers", ticketNumbers);
-      console.log("getBytesNumbersArr(decodedMeta.NUMBERS)", getBytesNumbersArr(decodedMeta.NUMBERS));
       expect(getBytesNumbersArr(decodedMeta.NUMBERS)).to.have.all.members(values);
     });
 

@@ -30,6 +30,14 @@ export const getNumbersBytes = (selected = [8, 5, 3, 2, 1, 0]) => {
   return zeroPadValue(concat(numbers), 32);
 };
 
+export const decodeNumbersBytes = (selected = "0x0000000000000000000000000000000000000000000000000000010203040506") => {
+  const numbers: Array<number> = [];
+  for (let i = 0; i < 6; i++) {
+    numbers.push(Number(selected.substring(selected.length - 12, selected.length).substring(2 * i, 2 + 2 * i)));
+  }
+  return numbers;
+};
+
 export const getBytesNumbersArr = (selected = "4328719624n"): Array<number> => {
   const arrStr = toBeArray(selected);
   const arr = [];
