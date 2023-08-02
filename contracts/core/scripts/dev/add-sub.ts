@@ -36,6 +36,7 @@ const recursivelyDecodeResult = (result: Result): Record<string, any> => {
 
 const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse, name?: string) => {
   if (obj && obj.hash) {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     console.info(`${name} tx: ${obj.hash}`);
     await blockAwaitMs(delayMs);
     const transaction: TransactionResponse = obj as TransactionResponse;
@@ -49,6 +50,7 @@ const debug = async (obj: IObj | Record<string, Contract> | TransactionResponse,
 const contracts: Record<string, any> = {};
 
 async function main() {
+  const [_owner, receiver, _stranger] = await ethers.getSigners();
   const block = await ethers.provider.getBlock("latest");
 
   // LINK & VRF
@@ -66,64 +68,37 @@ async function main() {
       ? "0x86c86939c631d53c6d812625bd6ccd5bf5beb774" // vrf besu gemunion
       : "0xa50a51c09a5c451C52BB714527E1974b686D8e77";
 
-  const linkFactory = await ethers.getContractFactory("LinkToken");
-  // const linkInstance = linkFactory.attach(linkAddr);
-  const linkInstance = await linkFactory.deploy();
-  contracts.link = linkInstance;
-  const linkAddress = await contracts.link.getAddress();
-  await debug(contracts);
-  // console.info(`LINK_ADDR=${contracts.link.address}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  const vrfInstance = await vrfFactory.deploy(linkAddress);
+  const linkInstance = await ethers.getContractAt("LinkToken", linkAddr);
+  const vrfInstance = await ethers.getContractAt("VRFCoordinatorMock", vrfAddr);
 
-  // const vrfInstance = vrfFactory.attach(vrfAddr);
-  contracts.vrf = vrfInstance;
-  const vrfAddress = await contracts.vrf.getAddress();
-  await debug(contracts);
-  // console.info(`VRF_ADDR=${contracts.vrf.address}`);
+  const linkAmount = WeiPerEther * 100n;
 
-  if (linkAddress !== linkAddr) {
-    console.info("LINK_ADDR address mismatch, clean BESU, then try again");
-  }
-  if (vrfAddress !== vrfAddr) {
-    console.info("VRF_ADDR address mismatch, clean BESU, then try again");
-  }
-  // BESU gemunion
-  // address(0x86C86939c631D53c6D812625bD6Ccd5Bf5BEb774), // vrfCoordinator
-  //   address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
-  // SETUP CHAIN_LINK VRF-V2 TO WORK
-  const linkAmount = WeiPerEther * 1000n;
+  console.info("_owner.address", _owner.address);
 
-  /**
-   * @notice Sets the configuration of the vrfv2 coordinator
-   * @param minimumRequestConfirmations global min for request confirmations
-   * @param maxGasLimit global max for request gas limit
-   * @param stalenessSeconds if the eth/link feed is more stale then this, use the fallback price
-   * @param gasAfterPaymentCalculation gas used in doing accounting after completing the gas measurement
-   * @param fallbackWeiPerUnitLink fallback eth/link price in the case of a stale feed
-   */
-
-  await debug(await vrfInstance.setConfig(3, 1000000, 1, 1, 1), "setConfig");
   await debug(await vrfInstance.createSubscription(), "createSubscription");
+  // await blockAwaitMs(5000);
   // emit SubscriptionCreated(currentSubId, msg.sender);
   const eventFilter = vrfInstance.filters.SubscriptionCreated();
   const events = await vrfInstance.queryFilter(eventFilter, block!.number);
-  const { subId } = recursivelyDecodeResult(events[0].args as unknown as Result);
+  const { subId } = recursivelyDecodeResult(events[events.length - 1].args as unknown as Result);
   console.info("SubscriptionCreated", subId);
 
   const subscriptionId = zeroPadValue(toBeHex(subId), 32);
+
+  await debug(await linkInstance.connect(receiver).transfer(_owner.address, linkAmount), "transfer to owner");
+
   await debug(
     await linkInstance.transferAndCall(await vrfInstance.getAddress(), linkAmount, subscriptionId),
     "transferAndCall",
   );
-  // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
-  const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
-  const events1 = await vrfInstance.queryFilter(eventFilter1, block!.number);
-  const { newBalance } = recursivelyDecodeResult(events1[0].args as unknown as Result);
-  console.info("SubscriptionFunded", newBalance);
 
   const subs = await vrfInstance.getSubscription(subId);
   console.info("Subscription", recursivelyDecodeResult(subs as unknown as Result));
+  // const linkInstance = link.attach("0xa50a51c09a5c451C52BB714527E1974b686D8e77"); // localhost BESU
+  // const eventFilter1 = vrfInstance.filters.SubscriptionFunded();
+  // const events1 = await vrfInstance.queryFilter(eventFilter1);
+  // const { newBalance } = recursivelyDecodeResult(events1[events1.length - 1].args as unknown as Result);
+  // console.info("SubscriptionFunded", newBalance);
 }
 
 main()

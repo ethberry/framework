@@ -22,6 +22,7 @@
     "@gemunion/nest-js-utils": "4.1.1",
     "@gemunion/nest-js-validators": "4.0.11",
     "@gemunion/nest-js-module-ethers-gcp": "1.0.4",
+    "@gemunion/nest-js-module-secret-manager-gcp": "1.1.6",
     "@gemunion/types-collection": "1.5.10",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@liaoliaots/nestjs-redis-health": "9.0.4",

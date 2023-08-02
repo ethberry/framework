@@ -2,7 +2,20 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 
 @ValidatorConstraint()
 export class LotteryTicketRule implements ValidatorConstraintInterface {
-  validate(ticketNumbers: Array<boolean>, validationArguments: ValidationArguments) {
-    return ticketNumbers.filter(e => e).length === validationArguments.constraints[0];
+  validate(ticketNumbers: string, validationArguments: ValidationArguments) {
+    const ticketNums: Array<number> = [];
+    for (let i = 0; i < 6; i++) {
+      const num = Number(
+        ticketNumbers.substring(ticketNumbers.length - 12, ticketNumbers.length).substring(2 * i, 2 + 2 * i),
+      );
+      // each must be 1 - 99
+      if (num > 0 && num <= 99) ticketNums.push(num);
+    }
+    // must be isAscending
+    ticketNums.every(function (x, i) {
+      return i === 0 || x >= ticketNums[i - 1];
+    });
+
+    return ticketNums.length === validationArguments.constraints[0];
   }
 }

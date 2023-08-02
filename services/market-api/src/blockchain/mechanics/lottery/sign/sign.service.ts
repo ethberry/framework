@@ -36,7 +36,7 @@ export class LotterySignService {
         externalId: lotteryRound.id,
         expiresAt,
         nonce,
-        extra: ticketNumbers, // encode from ui
+        extra: ticketNumbers, // encoded from ui
         receiver: lotteryRound.contract.address,
         referrer,
       },
