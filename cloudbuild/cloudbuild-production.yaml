@@ -38,7 +38,7 @@ steps:
   # Build image with docker-compose
   - name: 'docker/compose:1.29.2'
     id: 'dockerBuild'
-    args: ['-f', 'docker-compose.dependencies.yml', 'build']
+    args: ['-f', 'docker-compose.dependencies.yml', 'build', '--build-arg GEMUNION_PRIVATE_KEY_PROD=$$GEMUNION_PRIVATE_KEY_PROD']
     secretEnv: [ 'GEMUNION_PRIVATE_KEY_PROD' ]
   # Tag push image to google registry
   - name: 'gcr.io/cloud-builders/docker'
