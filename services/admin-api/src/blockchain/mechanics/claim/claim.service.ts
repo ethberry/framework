@@ -89,6 +89,7 @@ export class ClaimService {
       join: {
         alias: "claim",
         leftJoinAndSelect: {
+          merchant: "claim.merchant",
           item: "claim.item",
           item_components: "item.components",
           item_contract: "item_components.contract",
