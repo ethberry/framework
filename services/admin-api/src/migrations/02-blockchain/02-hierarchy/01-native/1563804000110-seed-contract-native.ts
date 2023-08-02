@@ -69,24 +69,6 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10108,
-        '${ZeroAddress}',
-        '${chainId}',
-        'Fake token (BESU)',
-        '${simpleFormatting}',
-        'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fbesu.png?alt=media&token=3a4e0d2c-ffdc-44a2-ac84-1921d71e0d2d',
-        'Ethereum',
-        'ETH',
-        18,
-        0,
-        '',
-        'ACTIVE',
-        'NATIVE',
-        '{EXTERNAL}',
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         20101,
         '${ZeroAddress}',
         56,
