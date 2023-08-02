@@ -6,9 +6,9 @@ import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
-      return;
-    }
+    // if (process.env.NODE_ENV === "production") {
+    //   return;
+    // }
 
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || testChainId;

@@ -50,6 +50,7 @@ services:
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
       PORT: "${PORT_ADMIN_API}"
+      BUSINESS_TYPE: "${BUSINESS_TYPE}"
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
