@@ -13,7 +13,7 @@ import "@gemunion/contracts-erc998td/contracts/extensions/ERC998ERC20.sol";
 
 import "./ERC998Simple.sol";
 
-contract ERC998ERC1155ERC20 is ERC998Simple, ERC998ERC1155, ERC998ERC20 {
+contract ERC998ERC1155ERC20Simple is ERC998Simple, ERC998ERC1155, ERC998ERC20 {
   constructor(
     string memory name,
     string memory symbol,

@@ -787,7 +787,7 @@ export class ContractManagerSignService {
         );
       case Erc998ContractTemplates.ERC1155OWNER_ERC20OWNER:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20.sol/ERC998ERC1155ERC20.json",
+          "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json",
           chainId,
         );
       case Erc998ContractTemplates.GENES:

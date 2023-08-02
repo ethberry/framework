@@ -311,7 +311,7 @@ async function main() {
   contracts.erc998OwnerErc1155 = await erc998Owner1155Factory.deploy("OWNER ERC1155", "OWN1155", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20");
+  const erc998Owner1155and20Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
   contracts.erc998OwnerErc1155Erc20 = await erc998Owner1155and20Factory.deploy(
     "OWNER FULL",
     "OWNFULL",
