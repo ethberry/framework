@@ -6,6 +6,9 @@ steps:
   # Download firebase file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/gemunion-firebase-key.json", "gemunion-firebase-key.json"]
+  # Download gcloud file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/app/halogen-framing-key.json", "halogen-framing-key.json"]
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "-r", "gs://framework-env/app/services/*", "services/"]
@@ -36,6 +39,7 @@ steps:
   - name: 'docker/compose:1.29.2'
     id: 'dockerBuild'
     args: ['-f', 'docker-compose.dependencies.yml', 'build']
+    secretEnv: [ 'GEMUNION_PRIVATE_KEY_PROD' ]
   # Tag push image to google registry
   - name: 'gcr.io/cloud-builders/docker'
     id: 'dockerTag'
@@ -64,3 +68,6 @@ availableSecrets:
   secretManager:
     - versionName: projects/1011891726242/secrets/GITHUBTOKEN/versions/2
       env: GH_TOKEN
+  privateKey:
+    - versionName: projects/1011891726242/secrets/GEMUNION_PRIVATE_KEY_PROD/versions/1
+      env: GEMUNION_PRIVATE_KEY_PROD
