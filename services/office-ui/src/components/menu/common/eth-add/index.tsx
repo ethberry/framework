@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import type { IContract } from "@framework/types";
+import { NodeEnv } from "@framework/types";
 
 import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
 import { getListenerType } from "../../../../utils/listener-type";
@@ -40,7 +41,7 @@ export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props =>
     });
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

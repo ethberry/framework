@@ -3,6 +3,8 @@ import { Alert, Box, IconButton } from "@mui/material";
 import { Refresh } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { NodeEnv } from "@framework/types";
+
 import { StyledError } from "./styled";
 
 interface IProps {
@@ -50,7 +52,7 @@ class ErrorBoundary extends Component<IProps, IState> {
           >
             <FormattedMessage id="messages.uncaughtError" />
           </Alert>
-          {process.env.NODE_ENV !== "production" ? (
+          {process.env.NODE_ENV !== NodeEnv.production ? (
             <Box>
               <Box component="pre" sx={{ mb: 0 }}>
                 {this.state.error?.toString() || ""}

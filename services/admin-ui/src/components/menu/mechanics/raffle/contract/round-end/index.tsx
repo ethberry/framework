@@ -6,9 +6,10 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { NodeEnv } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import RaffleEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
-import { IContract } from "@framework/types";
 
 export interface IRaffleRoundEndMenuItemProps {
   contract: IContract;
@@ -28,7 +29,7 @@ export const RaffleRoundEndMenuItem: FC<IRaffleRoundEndMenuItemProps> = props =>
     return metaFn();
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

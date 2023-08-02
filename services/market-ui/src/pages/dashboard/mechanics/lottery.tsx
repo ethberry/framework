@@ -4,12 +4,14 @@ import { Casino, ConfirmationNumber, EmojiEvents } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+import { NodeEnv } from "@framework/types";
+
 export const LotterySection: FC = () => {
-  // const disabled = process.env.NODE_ENV === "production";
-  //
-  // if (disabled) {
-  //   return null;
-  // }
+  const disabled = process.env.NODE_ENV !== NodeEnv.development;
+
+  if (disabled) {
+    return null;
+  }
 
   return (
     <Paper sx={{ mb: 2 }}>

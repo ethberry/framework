@@ -8,7 +8,8 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 
-import { IContract, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
 
 import RaffleStartRoundABI from "../../../../../../abis/mechanics/raffle/round/start/startRound.abi.json";
 import { IRaffleRound, RaffleStartRoundDialog } from "./round-dialog";
@@ -56,7 +57,7 @@ export const RaffleRoundStartMenuItem: FC<IRaffleRoundStartMenuItemProps> = prop
     setIsStartRoundDialogOpen(false);
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

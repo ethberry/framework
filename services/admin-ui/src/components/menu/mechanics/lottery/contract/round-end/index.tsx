@@ -6,9 +6,9 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { IContract } from "@framework/types";
 
 import LotteryEndRoundABI from "../../../../../../abis/mechanics/lottery/round/end/endRound.abi.json";
-import { IContract } from "@framework/types";
 
 export interface ILotteryRoundEndMenuItemProps {
   contract: IContract;
@@ -27,11 +27,6 @@ export const LotteryRoundEndMenuItem: FC<ILotteryRoundEndMenuItemProps> = props 
   const handleEndRound = () => {
     return metaFn();
   };
-
-  // TODO should allow manual end round?
-  // if (process.env.NODE_ENV === "production") {
-  //   return null;
-  // }
 
   return (
     <MenuItem onClick={handleEndRound} data-testid="LotteryRoundEndButton">

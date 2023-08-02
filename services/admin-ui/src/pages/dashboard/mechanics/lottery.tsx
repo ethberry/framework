@@ -4,8 +4,10 @@ import { Collections, ConfirmationNumber, Savings, Storage } from "@mui/icons-ma
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+import { NodeEnv } from "@framework/types";
+
 export const LotterySection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+  const disabled = process.env.NODE_ENV !== NodeEnv.development;
 
   if (disabled) {
     return null;

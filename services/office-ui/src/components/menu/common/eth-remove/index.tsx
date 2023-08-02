@@ -4,7 +4,7 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IContract } from "@framework/types";
+import { IContract, NodeEnv } from "@framework/types";
 
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./dialog";
 import { getListenerType } from "../../../../utils/listener-type";
@@ -40,7 +40,7 @@ export const EthListenerRemoveMenuItem: FC<IEthListenerRemoveMenuItemProps> = pr
     });
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 

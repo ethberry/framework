@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
 import { BarChart, Collections, Rule, Timeline } from "@mui/icons-material";
-
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+import { NodeEnv } from "@framework/types";
+
 export const PyramidSection: FC = () => {
-  const disabled = process.env.NODE_ENV === "production";
+  const disabled = process.env.NODE_ENV !== NodeEnv.development;
 
   if (disabled) {
     return null;

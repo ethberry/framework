@@ -7,8 +7,8 @@ import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
-
-import { IContract, TokenType } from "@framework/types";
+import { NodeEnv, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import LotteryStartRoundABI from "../../../../../../abis/mechanics/lottery/round/start/startRound.abi.json";
 import { ILotteryRound, LotteryStartRoundDialog } from "./round-dialog";
@@ -56,7 +56,7 @@ export const LotteryRoundStartMenuItem: FC<ILotteryRoundStartMenuItemProps> = pr
     setIsStartRoundDialogOpen(false);
   };
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === NodeEnv.production) {
     return null;
   }
 
