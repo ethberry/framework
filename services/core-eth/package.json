@@ -18,7 +18,7 @@
     "@gemunion/nest-js-module-request-logger": "3.0.8",
     "@gemunion/nest-js-module-secret-manager-gcp": "1.1.6",
     "@gemunion/nest-js-module-typeorm-debug": "3.0.10",
-    "@gemunion/nest-js-module-typeorm-postgres": "1.0.11",
+    "@gemunion/nest-js-module-typeorm-postgres": "1.0.13",
     "@gemunion/nest-js-module-winston": "2.0.8",
     "@gemunion/nest-js-utils": "4.1.1",
     "@gemunion/nest-js-validators": "4.0.11",
