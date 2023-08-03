@@ -55,7 +55,7 @@ export const CollectionContract: FC = () => {
     },
     search: {
       query: "",
-      contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+      contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW, ContractStatus.INACTIVE],
       contractFeatures: [],
     },
     filter: ({ title, description, imageUrl, contractStatus }) => ({
