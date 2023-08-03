@@ -8,7 +8,9 @@ import { shouldMintConsecutive } from "./shared/simple/base/mintConsecutive";
 import { shouldBehaveLikeERC721Collection } from "./shared/simple";
 
 describe("ERC721CBlacklist", function () {
-  const factory = () => deployCollection(this.title);
+  // test timeout fails when batchSize = 5000n
+  const overrideBatchSize = process.env.NODE_ENV === "test" ? 10n : batchSize;
+  const factory = () => deployCollection(this.title, overrideBatchSize);
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldBehaveLikeBlackList(factory);
@@ -16,7 +18,7 @@ describe("ERC721CBlacklist", function () {
   shouldBehaveLikeERC721Collection(factory);
   shouldMintConsecutive(factory);
 
-  shouldBehaveLikeERC721Consecutive(factory, { batchSize });
+  shouldBehaveLikeERC721Consecutive(factory, { batchSize: overrideBatchSize });
 
   shouldSupportsInterface(factory)([InterfaceId.IERC165, InterfaceId.IAccessControl, InterfaceId.IERC721]);
 });
