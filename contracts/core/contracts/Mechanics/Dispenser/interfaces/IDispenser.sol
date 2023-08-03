@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../../DiamondExchange/lib/interfaces/IAsset.sol";
+import "../../../Exchange/lib/interfaces/IAsset.sol";
 
 interface IDispenser {
   function disperse(Asset[] memory items, address[] calldata receivers) external payable;

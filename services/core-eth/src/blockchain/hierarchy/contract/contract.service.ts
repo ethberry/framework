@@ -128,6 +128,7 @@ export class ContractService {
 
     const contractEntity = await this.findOne(where);
 
+    // system must exists
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
@@ -207,7 +208,7 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 
   public async findAllRandomTokensByType(
@@ -243,7 +244,7 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 
   public async findAllCommonTokensByType(
@@ -285,6 +286,6 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return { address: [] };
   }
 }

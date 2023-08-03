@@ -12,10 +12,10 @@ import { deployLinkVrfFixture } from "../../shared/link";
 import { VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLottery } from "./fixture";
-import { wrapOneToOneSignature } from "../../DiamondExchange/shared/utils";
+import { wrapOneToOneSignature } from "../../Exchange/shared/utils";
 import { getBytesNumbersArr, getNumbersBytes, isEqualEventArgObj, recursivelyDecodeResult } from "../../utils";
 import { decodeMetadata } from "../../shared/metadata";
-import { deployDiamond } from "../../DiamondExchange/shared/fixture";
+import { deployDiamond } from "../../Exchange/shared/fixture";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));

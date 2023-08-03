@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.13;
 
-import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "./AbstractFactoryFacet.sol";
 
 /**

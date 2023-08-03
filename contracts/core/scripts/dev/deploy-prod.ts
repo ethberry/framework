@@ -3,7 +3,7 @@ import { Contract } from "ethers";
 import fs from "fs";
 import { blockAwait, blockAwaitMs, camelToSnakeCase } from "@gemunion/contracts-utils";
 import { METADATA_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
-import { deployDiamond } from "../../test/DiamondExchange/shared/fixture";
+import { deployDiamond } from "../../test/Exchange/shared/fixture";
 
 const delay = 1; // block delay
 const delayMs = 1100; // block delay ms

@@ -10,7 +10,7 @@ import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 
-import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../interfaces/ILottery.sol";
 
 contract ExchangeLotteryFacet is SignatureValidator, AccessControlInternal, PausableInternal {

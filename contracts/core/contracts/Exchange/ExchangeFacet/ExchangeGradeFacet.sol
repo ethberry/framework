@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../ERC721/interfaces/IERC721Discrete.sol";
 
 contract ExchangeGradeFacet is SignatureValidator, AccessControlInternal, PausableInternal {

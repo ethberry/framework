@@ -16,7 +16,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
 import "@gemunion/contracts-misc/contracts/constants.sol";
 
-import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";
 import "./interfaces/ILottery.sol";
 import "./interfaces/IERC721LotteryTicket.sol";

@@ -8,10 +8,10 @@ export class LotteryTicketRule implements ValidatorConstraintInterface {
       const num = Number(
         ticketNumbers.substring(ticketNumbers.length - 12, ticketNumbers.length).substring(2 * i, 2 + 2 * i),
       );
-      // each must be 1 - 99
+      // each 2 bytes must be number 1 - 99
       if (num > 0 && num <= 99) ticketNums.push(num);
     }
-    // must be isAscending
+    // numbers must be isAscending order
     ticketNums.every(function (x, i) {
       return i === 0 || x >= ticketNums[i - 1];
     });

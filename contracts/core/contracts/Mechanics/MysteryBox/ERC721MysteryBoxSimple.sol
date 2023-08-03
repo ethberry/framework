@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./interfaces/IERC721MysteryBox.sol";
-import "../../DiamondExchange/lib/ExchangeUtils.sol";
+import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../ERC721/ERC721Simple.sol";
 import "../../utils/errors.sol";
 import "../../utils/TopUp.sol";

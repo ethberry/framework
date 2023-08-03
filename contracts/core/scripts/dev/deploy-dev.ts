@@ -9,7 +9,7 @@ import { baseTokenURI, METADATA_ROLE, MINTER_ROLE, nonce, royalty } from "@gemun
 
 import { getContractName } from "../../test/utils";
 import { expiresAt, externalId } from "../../test/constants";
-import { deployDiamond } from "../../test/DiamondExchange/shared/fixture";
+import { deployDiamond } from "../../test/Exchange/shared/fixture";
 
 const delay = 1; // block delay
 const delayMs = 1100; // block delay ms

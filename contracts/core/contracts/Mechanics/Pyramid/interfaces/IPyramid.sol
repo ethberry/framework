@@ -5,7 +5,7 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.13;
-import "../../../DiamondExchange/lib/interfaces/IAsset.sol";
+import "../../../Exchange/lib/interfaces/IAsset.sol";
 
 interface IPyramid {
   struct Rule {
