@@ -36,7 +36,8 @@ export class NativeContractService extends ContractService {
     const { symbol, title, description } = dto;
 
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
-    if (businessType === BusinessType.B2B && userEntity.merchantId !== 1) {
+    // there is no exception for merchantId=1, to create token use office
+    if (businessType === BusinessType.B2B) {
       throw new PaymentRequiredException("paymentRequired");
     }
 

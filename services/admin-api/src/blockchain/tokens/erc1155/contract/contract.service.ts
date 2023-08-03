@@ -29,7 +29,8 @@ export class Erc1155ContractService extends ContractService {
     const { address, title, description, imageUrl } = dto;
 
     const businessType = this.configService.get<BusinessType>("BUSINESS_TYPE", BusinessType.B2B);
-    if (businessType === BusinessType.B2B && userEntity.merchantId !== 1) {
+    // there is no exception for merchantId=1, to create token use office
+    if (businessType === BusinessType.B2B) {
       throw new PaymentRequiredException("paymentRequired");
     }
 

@@ -50,6 +50,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
+  // there is no exception for merchantId=1, to create token use office
   if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
   }
