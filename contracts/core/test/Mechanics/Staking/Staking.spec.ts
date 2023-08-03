@@ -76,6 +76,7 @@ describe("Staking", function () {
     nonce,
     externalId: 1,
     expiresAt,
+    receiver: ZeroAddress,
     referrer: ZeroAddress,
     extra: encodeBytes32String("0x"),
   };
@@ -83,6 +84,7 @@ describe("Staking", function () {
     nonce,
     externalId: 2,
     expiresAt,
+    receiver: ZeroAddress,
     referrer: ZeroAddress,
     extra: encodeBytes32String("0x"),
   };
@@ -5510,6 +5512,7 @@ describe("Staking", function () {
           nonce,
           externalId: 2, // ruleId
           expiresAt,
+          receiver: ZeroAddress,
           referrer: ZeroAddress,
           extra: encodeBytes32String("0x"),
         },

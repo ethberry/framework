@@ -21,7 +21,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
 
   mapping(uint256 => Asset[]) internal _itemData;
 
-  event UnpackMysterybox(address account, uint256 tokenId);
+  event UnpackMysteryBox(address account, uint256 tokenId);
 
   constructor(
     string memory name,
@@ -54,7 +54,7 @@ contract ERC721MysteryBoxSimple is IERC721MysteryBox, ERC721Simple, TopUp {
   function unpack(uint256 tokenId) public {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Mysterybox: unpack caller is not owner nor approved");
 
-    emit UnpackMysterybox(_msgSender(), tokenId);
+    emit UnpackMysteryBox(_msgSender(), tokenId);
 
     _burn(tokenId);
 
