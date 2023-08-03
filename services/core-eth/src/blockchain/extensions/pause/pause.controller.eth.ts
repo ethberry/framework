@@ -13,6 +13,7 @@ export class PauseControllerEth {
 
   @EventPattern([
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.Paused },
+    { contractType: ContractType.RAFFLE, eventName: ContractEventType.Paused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Paused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Paused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Paused },
@@ -20,6 +21,7 @@ export class PauseControllerEth {
     { contractType: ContractType.WAITLIST, eventName: ContractEventType.Paused },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Unpaused },
+    { contractType: ContractType.RAFFLE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.PYRAMID, eventName: ContractEventType.Unpaused },
