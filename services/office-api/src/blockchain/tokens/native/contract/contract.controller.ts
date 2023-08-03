@@ -24,8 +24,8 @@ export class NativeTokenController {
   }
 
   @Post("/")
-  public create(@Body() dto: NativeContractCreateDto): Promise<ContractEntity> {
-    return this.nativeContractService.create(dto);
+  public create(@Body() dto: NativeContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.nativeContractService.create(dto, userEntity);
   }
 
   @Put("/:id")

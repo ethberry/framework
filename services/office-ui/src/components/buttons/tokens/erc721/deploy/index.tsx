@@ -9,7 +9,7 @@ import { Erc721ContractTemplates, IErc721ContractDeployDto } from "@framework/ty
 
 import DeployERC721TokenABI from "../../../../../abis/hierarchy/erc721/contract-deploy/deployERC721Token.abi.json";
 
-import { Erc721ContractDeployDialog } from "./deploy-dialog";
+import { Erc721ContractDeployDialog } from "./dialog";
 
 export interface IErc721ContractDeployButtonProps {
   className?: string;

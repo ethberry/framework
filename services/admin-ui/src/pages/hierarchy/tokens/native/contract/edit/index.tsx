@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -6,7 +6,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
 
 export interface INativeTokenEditDialogProps {
@@ -42,7 +42,7 @@ export const NativeTokenEditDialog: FC<INativeTokenEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId="NativeTokenEditDialog"
-      action={id ? <BlockchainInfoPopover symbol={symbol} decimals={decimals} chainId={chainId} /> : <Fragment />}
+      action={id ? <BlockchainInfoPopover symbol={symbol} decimals={decimals} chainId={chainId} /> : null}
       {...rest}
     >
       <TextInput name="symbol" />

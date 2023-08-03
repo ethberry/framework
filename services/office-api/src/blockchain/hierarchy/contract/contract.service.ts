@@ -1,15 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import { ContractEntity } from "./contract.entity";
-import { TemplateEntity } from "../template/template.entity";
-import { IContractUpdateDto } from "./interfaces";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { ContractEntity } from "./contract.entity";
+import { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -100,6 +99,7 @@ export class ContractService {
 
     queryBuilder.orderBy({
       "contract.createdAt": "DESC",
+      "contract.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -109,9 +109,17 @@ export class ContractService {
     dto: Partial<IContractAutocompleteDto>,
     userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [], merchantId } = dto;
+    const {
+      contractStatus = [],
+      contractFeatures = [],
+      contractType = [],
+      contractModule = [],
+      excludeFeatures = [],
+      merchantId,
+    } = dto;
     const where = {
       chainId: userEntity.chainId,
+      merchantId,
     };
 
     if (contractType.length) {
@@ -133,15 +141,17 @@ export class ContractService {
       });
     }
 
-    if (contractModule.length) {
+    // this is used only to filter out SOULBOUND from transfer action menu
+    if (excludeFeatures.length) {
       Object.assign(where, {
-        contractModule: In(contractModule),
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: Not(ArrayOverlap(excludeFeatures)),
       });
     }
 
-    if (merchantId) {
+    if (contractModule.length) {
       Object.assign(where, {
-        merchantId,
+        contractModule: In(contractModule),
       });
     }
 
@@ -165,6 +175,13 @@ export class ContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<Array<ContractEntity>> {
+    return this.contractEntityRepository.find({ where, ...options });
+  }
+
   public async update(
     where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IContractUpdateDto>,
@@ -180,15 +197,8 @@ export class ContractService {
     return contractEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
+  public delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     return this.update(where, { contractStatus: ContractStatus.INACTIVE });
-  }
-
-  public findAll(
-    where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
-  ): Promise<Array<ContractEntity>> {
-    return this.contractEntityRepository.find({ where, ...options });
   }
 
   public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {

@@ -8,7 +8,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
-import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
 import { validationSchema } from "./validation";
 
@@ -56,13 +56,15 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
       message={message}
       testId="Erc1155ContractEditForm"
       action={
-        <BlockchainInfoPopover
-          address={address}
-          baseTokenURI={baseTokenURI}
-          royalty={`${royalty / 100}%`}
-          chainId={chainId}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            address={address}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+          />
+        ) : null
       }
       {...rest}
     >

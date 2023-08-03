@@ -4,7 +4,14 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IToken } from "@framework/types";
+import { AddressLink } from "@gemunion/mui-scanner";
+import type { IToken } from "@framework/types";
+import { ContractFeatures, ModuleType } from "@framework/types";
+
+import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
+import { TokenTraitsView } from "../../../traits";
+import { TokenUserView } from "../../../user";
+import { MysteryboxContent } from "../../../mysterybox-content";
 
 export interface IErc721ViewDialogProps {
   open: boolean;
@@ -16,7 +23,9 @@ export interface IErc721ViewDialogProps {
 export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, balance } = initialValues;
+  const { template, tokenId, metadata, balance } = initialValues;
+
+  const showAttributes = shouldShowAttributes(metadata);
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -47,12 +56,48 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
                 <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
+            {showAttributes && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.metadata" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenAttributesView metadata={metadata} />
+                </TableCell>
+              </TableRow>
+            )}
+            {template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.traits" />
+                </TableCell>
+                <TableCell align="right">
+                  <TokenTraitsView metadata={metadata} />
+                </TableCell>
+              </TableRow>
+            ) : null}
+            {template?.contract?.contractModule === ModuleType.MYSTERY ? (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <FormattedMessage id="form.labels.content" />
+                </TableCell>
+                <TableCell align="right">
+                  {/* @ts-ignore */}
+                  <MysteryboxContent mysterybox={template.box} />
+                </TableCell>
+              </TableRow>
+            ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
-              <TableCell align="right">{balance?.slice(-1)[0]?.account}</TableCell>
+              <TableCell align="right">
+                <AddressLink address={balance?.at(0)?.account} length={42} />
+              </TableCell>
             </TableRow>
+            {template?.contract?.contractFeatures.includes(ContractFeatures.RENTABLE) ? (
+              <TokenUserView tokenId={tokenId} address={template?.contract?.address} />
+            ) : null}
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.imageUrl" />

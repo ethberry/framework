@@ -27,6 +27,7 @@ export class ContractUpdateDto extends SearchableOptionalDto implements IContrac
   @ApiPropertyOptional({
     minimum: 1,
   })
+  @IsOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;

@@ -15,8 +15,8 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { ModuleType, TokenType } from "@framework/types";
 import type { ITemplate, IToken, ITokenSearchDto, IUser } from "@framework/types";
+import { ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc721TokenViewDialog } from "./view";
@@ -45,6 +45,11 @@ export const Erc721Token: FC = () => {
       metadata: "{}",
     },
     search: {
+      tokenStatus: [TokenStatus.MINTED],
+      contractIds: [],
+      templateIds: [],
+      tokenId: "",
+      metadata: {},
       merchantId: user.profile.merchantId,
     },
   });
@@ -74,7 +79,9 @@ export const Erc721Token: FC = () => {
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.template?.title}</ListItemText>
+              <ListItemText>
+                {token.template?.title} #{token.tokenId}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />

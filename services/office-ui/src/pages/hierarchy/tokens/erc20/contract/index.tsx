@@ -18,20 +18,13 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import {
-  ContractFeatures,
-  ContractStatus,
-  Erc20ContractFeatures,
-  IContract,
-  IContractSearchDto,
-  ITemplate,
-  IUser,
-} from "@framework/types";
+import type { IContract, IContractSearchDto, ITemplate, IUser } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
-import { Erc20ContractEditDialog } from "./edit";
 import { Erc20ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { Erc20ContractEditDialog } from "./edit";
 
 export const Erc20Contract: FC = () => {
   const user = useUser<IUser>();
@@ -105,7 +98,7 @@ export const Erc20Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="NativeTokenCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc20TokenCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
         <Erc20ContractDeployButton />

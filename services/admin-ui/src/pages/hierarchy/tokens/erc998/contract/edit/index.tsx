@@ -6,7 +6,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
-import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
 import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
 import { validationSchema } from "./validation";
 
@@ -58,21 +58,25 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
       message={message}
       testId="Erc998ContractEditForm"
       action={
-        <BlockchainInfoPopover
-          name={name}
-          symbol={symbol}
-          address={address}
-          baseTokenURI={baseTokenURI}
-          royalty={`${royalty / 100}%`}
-          chainId={chainId}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            name={name}
+            symbol={symbol}
+            address={address}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+          />
+        ) : null
       }
       {...rest}
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      {id ? (
+        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      ) : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

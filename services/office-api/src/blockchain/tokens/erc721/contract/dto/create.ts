@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsUrl, MaxLength } from "class-validator";
+import { IsInt, IsString, IsUrl, MaxLength, Min } from "class-validator";
 import { Mixin } from "ts-mixer";
 
 import { SearchableDto } from "@gemunion/collection";
@@ -18,5 +18,10 @@ export class Erc721ContractCreateDto extends Mixin(AddressDto, SearchableDto) im
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 }

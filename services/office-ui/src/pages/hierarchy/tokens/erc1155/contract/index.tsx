@@ -10,18 +10,20 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, Delete, FilterList } from "@mui/icons-material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useUser } from "@gemunion/provider-user";
-import { ContractStatus, Erc1155ContractFeatures, IContract, IContractSearchDto, IUser } from "@framework/types";
+import type { IContract, IContractSearchDto, IUser } from "@framework/types";
+import { ContractFeatures, ContractStatus, Erc1155ContractFeatures } from "@framework/types";
 
-import { Erc1155ContractEditDialog } from "./edit";
 import { Erc1155ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { Erc1155ContractEditDialog } from "./edit";
 
 export const Erc1155Contract: FC = () => {
   const user = useUser<IUser>();
@@ -36,6 +38,7 @@ export const Erc1155Contract: FC = () => {
     isEditDialogOpen,
     isDeleteDialogOpen,
     handleToggleFilters,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -46,19 +49,34 @@ export const Erc1155Contract: FC = () => {
     handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc1155/contracts",
+    empty: {
+      title: "",
+      description: emptyStateString,
+      address: "",
+      imageUrl: "",
+    },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
       merchantId: user.profile.merchantId,
     },
-    filter: ({ title, description, imageUrl, merchantId, contractStatus }) => ({
-      title,
-      description,
-      imageUrl,
-      merchantId,
-      contractStatus,
-    }),
+    filter: ({ id, title, description, imageUrl, merchantId, contractStatus, address }) =>
+      id
+        ? {
+            title,
+            description,
+            imageUrl,
+            merchantId,
+            contractStatus,
+          }
+        : {
+            title,
+            description,
+            address,
+            imageUrl,
+            merchantId,
+          },
   });
 
   return (
@@ -72,6 +90,9 @@ export const Erc1155Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc1155TokenCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
         <Erc1155ContractDeployButton />
       </PageHeader>
 
@@ -83,10 +104,10 @@ export const Erc1155Contract: FC = () => {
       />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List sx={{ overflowX: "scroll" }}>
+        <List>
           {rows.map((contract, i) => (
-            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
-              <ListItemText sx={{ width: { xs: 0.5, md: 0.2 } }}>{contract.title}</ListItemText>
+            <ListItem key={i}>
+              <ListItemText>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />
@@ -99,7 +120,10 @@ export const Erc1155Contract: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={contract}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
+                  }
                 />
               </ListItemSecondaryAction>
             </ListItem>

@@ -20,10 +20,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IContract, IContractSearchDto, ITemplate } from "@framework/types";
 import { ContractFeatures, ContractStatus, Erc20ContractFeatures } from "@framework/types";
 
-import { Erc20ContractEditDialog } from "./edit";
 import { Erc20ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { Erc20ContractEditDialog } from "./edit";
 
 export const Erc20Contract: FC = () => {
   const {

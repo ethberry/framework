@@ -41,7 +41,9 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
       validationSchema={validationSchema}
       message={message}
       testId="PyramidContractEditForm"
-      action={<BlockchainInfoPopover address={address} chainId={chainId} contractFeatures={contractFeatures} />}
+      action={
+        id ? <BlockchainInfoPopover address={address} chainId={chainId} contractFeatures={contractFeatures} /> : null
+      }
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />

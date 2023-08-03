@@ -24,8 +24,8 @@ export class Erc20TokenController {
   }
 
   @Post("/")
-  public create(@Body() dto: Erc20ContractCreateDto): Promise<ContractEntity> {
-    return this.erc20ContractService.create(dto);
+  public create(@Body() dto: Erc20ContractCreateDto, @User() userEntity: UserEntity): Promise<ContractEntity> {
+    return this.erc20ContractService.create(dto, userEntity);
   }
 
   @Put("/:id")

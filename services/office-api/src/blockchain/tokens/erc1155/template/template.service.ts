@@ -30,17 +30,6 @@ export class Erc1155TemplateService extends TemplateService {
     return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 
-  public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {
-    const queryString = `
-        select coalesce(max(token_id::integer), 0) as "tokenId"
-        from ${ns}.token
-        where template_id = $1
-    `;
-
-    const result: Array<{ tokenId: number }> = await this.templateEntityRepository.query(queryString, [templateId]);
-    return result[0].tokenId;
-  }
-
   public async getMaxTokenIdForContract(contractId: number): Promise<number> {
     const queryString = `
         select coalesce(max(token_token_id::integer), 0) as "tokenId"
@@ -55,7 +44,7 @@ export class Erc1155TemplateService extends TemplateService {
     return result[0].tokenId;
   }
 
-  public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const templateEntity = await super.createTemplate(dto);
     const maxTokenId = await this.getMaxTokenIdForContract(templateEntity.contractId);
 

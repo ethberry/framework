@@ -19,5 +19,10 @@ export class Erc20ContractCreateDto extends Mixin(AddressDto, SearchableDto) imp
   @Max(32, { message: "rangeOverflow" })
   public decimals: number;
 
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 }

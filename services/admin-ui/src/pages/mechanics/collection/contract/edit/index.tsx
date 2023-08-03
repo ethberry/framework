@@ -7,7 +7,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 
 export interface IErc721CollectionEditDialogProps {
   open: boolean;
@@ -54,16 +54,18 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       message={message}
       testId="Erc721CollectionEditForm"
       action={
-        <BlockchainInfoPopover
-          name={name}
-          symbol={symbol}
-          owner={parameters.owner}
-          batchSize={parameters.batchSize}
-          baseTokenURI={baseTokenURI}
-          royalty={`${royalty / 100}%`}
-          chainId={chainId}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            name={name}
+            symbol={symbol}
+            owner={parameters.owner}
+            batchSize={parameters.batchSize}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+          />
+        ) : null
       }
       {...rest}
     >

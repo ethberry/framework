@@ -19,7 +19,7 @@ export interface INativeTokenEditDialogProps {
 export const NativeTokenEditDialog: FC<INativeTokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, contractStatus, symbol, decimals, address, chainId, merchantId } = initialValues;
+  const { id, title, description, contractStatus, symbol, decimals, chainId, merchantId } = initialValues;
 
   const fixedValues = {
     id,
@@ -38,7 +38,7 @@ export const NativeTokenEditDialog: FC<INativeTokenEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId="NativeTokenEditDialog"
-      action={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} chainId={chainId} />}
+      action={id ? <BlockchainInfoPopover symbol={symbol} decimals={decimals} chainId={chainId} /> : null}
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" />

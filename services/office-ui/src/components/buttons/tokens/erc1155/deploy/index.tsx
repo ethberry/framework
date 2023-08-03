@@ -2,32 +2,32 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc20ContractTemplates, IErc20TokenDeployDto } from "@framework/types";
+import { Erc1155ContractTemplates, IErc1155ContractDeployDto } from "@framework/types";
 
-import DeployERC20TokenABI from "../../../../../abis/hierarchy/erc20/contract-deploy/deployERC20Token.abi.json";
+import DeployERC1155TokenABI from "../../../../../abis/hierarchy/erc1155/contract-deploy/deployERC1155Token.abi.json";
 
-import { Erc20ContractDeployDialog } from "./deploy-dialog";
+import { Erc1155ContractDeployDialog } from "./dialog";
 
-export interface IErc20ContractDeployButtonProps {
+export interface IErc1155TokenDeployButtonProps {
   className?: string;
 }
 
-export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = props => {
+export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc20TokenDeployDto, web3Context, sign) => {
+    (values: IErc1155ContractDeployDto, web3Context, sign) => {
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
-        DeployERC20TokenABI,
+        DeployERC1155TokenABI,
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployERC20Token(
+      return contract.deployERC1155Token(
         {
           nonce,
           bytecode: sign.bytecode,
@@ -41,7 +41,7 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/erc20",
+        url: "/contract-manager/erc1155",
         method: "POST",
         data: values,
       },
@@ -55,20 +55,19 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="Erc20ContractDeployButton"
+        data-testid="Erc1155ContractDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc20ContractDeployDialog
+      <Erc1155ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
         initialValues={{
-          contractTemplate: Erc20ContractTemplates.SIMPLE,
-          name: "",
-          symbol: "",
-          cap: constants.WeiPerEther.mul(1e6).toString(),
+          contractTemplate: Erc1155ContractTemplates.SIMPLE,
+          baseTokenURI: `${process.env.JSON_URL}/metadata`,
+          royalty: 0,
         }}
       />
     </Fragment>

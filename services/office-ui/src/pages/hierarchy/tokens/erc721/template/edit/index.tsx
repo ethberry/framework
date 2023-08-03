@@ -6,8 +6,8 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import type { ITemplate } from "@framework/types";
+import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -47,8 +47,16 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       <RichTextEditor name="description" />
       <TemplateAssetInput
         autoSelect
+        multiple
         prefix="price"
-        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+        tokenType={{
+          disabledOptions: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+        }}
+        contract={{
+          data: {
+            contractStatus: [ContractStatus.ACTIVE],
+          },
+        }}
       />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}

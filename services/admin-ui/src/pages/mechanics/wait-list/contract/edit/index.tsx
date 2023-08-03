@@ -7,7 +7,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 
 export interface IWaitListEditDialogProps {
   open: boolean;
@@ -38,7 +38,9 @@ export const WaitListEditDialog: FC<IWaitListEditDialogProps> = props => {
       message={message}
       testId="WaitListContractEditForm"
       action={
-        <BlockchainInfoPopover name={name} address={address} chainId={chainId} contractFeatures={contractFeatures} />
+        id ? (
+          <BlockchainInfoPopover name={name} address={address} chainId={chainId} contractFeatures={contractFeatures} />
+        ) : null
       }
       {...rest}
     >

@@ -4,8 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ZeroAddress } from "ethers";
 
-import { ContractStatus, IContractSearchDto, INativeContractCreateDto, ModuleType, TokenType } from "@framework/types";
-import { testChainId } from "@framework/constants";
+import type { IContractSearchDto, INativeContractCreateDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -31,9 +31,8 @@ export class NativeContractService extends ContractService {
     return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.NATIVE]);
   }
 
-  public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
+  public async create(dto: INativeContractCreateDto, userEntity: UserEntity): Promise<ContractEntity> {
     const { symbol, title, description, merchantId } = dto;
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
 
     const contractEntity = await this.contractEntityRepository
       .create({
@@ -42,13 +41,13 @@ export class NativeContractService extends ContractService {
         decimals: 18,
         royalty: 0,
         contractType: TokenType.NATIVE,
-        contractFeatures: [],
+        contractFeatures: [ContractFeatures.EXTERNAL],
         contractModule: ModuleType.HIERARCHY,
         contractStatus: ContractStatus.ACTIVE,
         name: title,
         title,
         description,
-        chainId,
+        chainId: userEntity.chainId,
         imageUrl: "",
         merchantId,
       })

@@ -7,7 +7,7 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 
 export interface IPyramidContractEditDialogProps {
   open: boolean;
@@ -39,7 +39,7 @@ export const PyramidContractEditDialog: FC<IPyramidContractEditDialogProps> = pr
       validationSchema={validationSchema}
       message={message}
       testId="PyramidContractEditForm"
-      action={<BlockchainInfoPopover address={address} contractFeatures={contractFeatures} />}
+      action={id ? <BlockchainInfoPopover address={address} contractFeatures={contractFeatures} /> : null}
       {...rest}
     >
       <TextInput name="title" />

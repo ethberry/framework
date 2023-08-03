@@ -16,11 +16,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, IContract, IContractSearchDto, NativeContractFeatures } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, NativeContractFeatures } from "@framework/types";
 
-import { NativeTokenEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
   const {

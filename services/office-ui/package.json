@@ -13,6 +13,7 @@
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/localization-office-ui": "0.0.1",
+    "@framework/traits-ui": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "3.0.8",
     "@gemunion/common-pages": "11.0.39",

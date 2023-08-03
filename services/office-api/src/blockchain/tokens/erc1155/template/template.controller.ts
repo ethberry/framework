@@ -16,10 +16,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { Erc1155TemplateService } from "./template.service";
+import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../../hierarchy/template/dto";
-import { UserEntity } from "../../../../infrastructure/user/user.entity";
+import { Erc1155TemplateService } from "./template.service";
 
 @ApiBearerAuth()
 @Controller("/erc1155/templates")
@@ -37,7 +37,7 @@ export class Erc1155TemplateController {
 
   @Post("/")
   public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc1155TemplateService.create(dto);
+    return this.erc1155TemplateService.createTemplate(dto);
   }
 
   @Put("/:id")

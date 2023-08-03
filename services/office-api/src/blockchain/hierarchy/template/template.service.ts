@@ -27,7 +27,7 @@ export class TemplateService {
     dto: ITemplateSearchDto,
     userEntity: UserEntity,
     contractModule: Array<ModuleType>,
-    contractType: Array<TokenType> | null,
+    contractType: Array<TokenType>,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, merchantId, skip, take } = dto;
 
@@ -53,12 +53,25 @@ export class TemplateService {
     queryBuilder.andWhere("contract.merchantId = :merchantId", {
       merchantId,
     });
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
-    queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule,
-    });
+
+    if (contractType) {
+      if (contractType.length === 1) {
+        queryBuilder.andWhere("contract.contractType = :contractType", { contractType: contractType[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
+      }
+    } else if (contractType === null) {
+      queryBuilder.andWhere("contract.contractType IS NULL");
+    }
+
+    if (contractModule) {
+      if (contractModule.length === 1) {
+        queryBuilder.andWhere("contract.contractModule = :contractModule", { contractModule: contractModule[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractModule IN(:...contractModule)", { contractModule });
+      }
+    }
+
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
@@ -148,11 +161,11 @@ export class TemplateService {
 
     if (contractType) {
       if (contractType.length === 1) {
-        queryBuilder.andWhere("manager.contractType = :contractType", {
+        queryBuilder.andWhere("contract.contractType = :contractType", {
           contractType: contractType[0],
         });
       } else {
-        queryBuilder.andWhere("manager.contractType IN(:...contractType)", { contractType });
+        queryBuilder.andWhere("contract.contractType IN(:...contractType)", { contractType });
       }
     }
 
@@ -232,11 +245,10 @@ export class TemplateService {
   ): Promise<TemplateEntity> {
     const { price, ...rest } = dto;
     const templateEntity = await this.findOne(where, {
-      join: {
-        alias: "template",
-        leftJoinAndSelect: {
-          price: "template.price",
-          components: "price.components",
+      relations: {
+        contract: true,
+        price: {
+          components: true,
         },
       },
     });
@@ -245,21 +257,31 @@ export class TemplateService {
       throw new NotFoundException("templateNotFound");
     }
 
-    Object.assign(templateEntity, rest);
-
     if (price) {
       await this.assetService.update(templateEntity.price, price);
     }
 
+    Object.assign(templateEntity, rest);
     return templateEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
+    const templateEntity = await this.findOne(where, {
+      relations: {
+        contract: true,
+      },
+    });
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
     const count = await this.tokenService.count({ templateId: where.id });
-    if (!count) {
-      await this.templateEntityRepository.delete(where);
+    if (count) {
+      Object.assign(templateEntity, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.save();
     } else {
-      await this.update(where, { templateStatus: TemplateStatus.INACTIVE });
+      return templateEntity.remove();
     }
   }
 }

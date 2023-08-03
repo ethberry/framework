@@ -7,7 +7,7 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/dialogs/contract";
+import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 
 export interface IMysteryContractEditDialogProps {
   open: boolean;
@@ -51,14 +51,16 @@ export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = pr
       message={message}
       testId="MysteryContractEditForm"
       action={
-        <BlockchainInfoPopover
-          name={name}
-          symbol={symbol}
-          address={address}
-          baseTokenURI={baseTokenURI}
-          royalty={`${royalty / 100}%`}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            name={name}
+            symbol={symbol}
+            address={address}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            contractFeatures={contractFeatures}
+          />
+        ) : null
       }
       {...rest}
     >

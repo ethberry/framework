@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -7,8 +9,8 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ContractStatus, IContract } from "@framework/types";
 
-import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
+import { validationSchema } from "./validation";
 
 export interface IErc1155ContractEditDialogProps {
   open: boolean;
@@ -28,6 +30,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
     address,
     contractStatus,
     baseTokenURI,
+    royalty,
     chainId,
     contractFeatures,
     merchantId,
@@ -50,19 +53,30 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
       message={message}
       testId="Erc1155ContractEditForm"
       action={
-        <BlockchainInfoPopover
-          address={address}
-          baseTokenURI={baseTokenURI}
-          chainId={chainId}
-          contractFeatures={contractFeatures}
-        />
+        id ? (
+          <BlockchainInfoPopover
+            address={address}
+            baseTokenURI={baseTokenURI}
+            royalty={`${royalty / 100}%`}
+            chainId={chainId}
+            contractFeatures={contractFeatures}
+          />
+        ) : null
       }
       {...rest}
     >
+      {!id ? (
+        <Alert severity="warning">
+          <FormattedMessage id="form.hints.risk" />
+        </Alert>
+      ) : null}
       <EntityInput name="merchantId" controller="merchants" />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      {!id ? <TextInput name="address" /> : null}
+      {id ? (
+        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      ) : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

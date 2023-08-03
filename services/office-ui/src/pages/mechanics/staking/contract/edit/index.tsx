@@ -40,7 +40,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId="StakingContractEditForm"
-      action={<BlockchainInfoPopover address={address} chainId={chainId} contractFeatures={contractFeatures} />}
+      action={
+        id ? <BlockchainInfoPopover address={address} chainId={chainId} contractFeatures={contractFeatures} /> : null
+      }
       {...rest}
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />

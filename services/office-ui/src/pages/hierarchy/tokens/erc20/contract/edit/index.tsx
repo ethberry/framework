@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { Alert } from "@mui/material";
 
@@ -6,11 +6,12 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
-import { createValidationSchema, editValidationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/popover/contract";
 import { formatEther } from "../../../../../../utils/money";
+import { createValidationSchema, editValidationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
@@ -69,9 +70,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
             chainId={chainId}
             contractFeatures={contractFeatures}
           />
-        ) : (
-          <Fragment />
-        )
+        ) : null
       }
       {...rest}
     >

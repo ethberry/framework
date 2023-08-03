@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
+import { ModuleType, TokenMetadata, TokenRarity, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
@@ -20,7 +21,18 @@ export class TokenService {
     contractType: TokenType,
     contractModule: ModuleType,
   ): Promise<[Array<TokenEntity>, number]> {
-    const { query, tokenStatus, tokenId, contractIds, templateIds, account, merchantId, skip, take } = dto;
+    const {
+      query,
+      tokenStatus,
+      tokenId,
+      metadata = {},
+      contractIds,
+      templateIds,
+      account,
+      merchantId,
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -49,6 +61,30 @@ export class TokenService {
 
     if (tokenId) {
       queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
+    }
+
+    const rarity = metadata[TokenMetadata.RARITY];
+    if (rarity) {
+      if (rarity.length === 1) {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.RARITY}' = :rarity`, {
+          rarity: Object.values(TokenRarity).findIndex(r => r === rarity[0]),
+        });
+      } else {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.RARITY}' IN(:...rarity)`, {
+          rarity: rarity.map(e => Object.values(TokenRarity).findIndex(r => r === e)),
+        });
+      }
+    }
+
+    const level = metadata[TokenMetadata.LEVEL];
+    if (level) {
+      if (level.length === 1) {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' = :level`, {
+          level: level[0],
+        });
+      } else {
+        queryBuilder.andWhere(`token.metadata->>'${TokenMetadata.LEVEL}' IN(:...level)`, { level });
+      }
     }
 
     if (tokenStatus) {
@@ -106,12 +142,46 @@ export class TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<TokenEntity>> {
+  public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    const { contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
-    queryBuilder.select(["id", "tokenId"]);
+    queryBuilder.select(["token.id", "token.tokenId"]);
+
+    queryBuilder.leftJoin("token.balance", "balance");
+    queryBuilder.addSelect(["balance.account"]);
+
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
+
     queryBuilder.leftJoin("token.template", "template");
-    queryBuilder.addSelect(["template.title"]);
+    queryBuilder.addSelect(["template.title", "template.id"]);
+
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address", "contract.contractType"]);
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",

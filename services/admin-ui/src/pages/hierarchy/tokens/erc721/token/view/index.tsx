@@ -5,7 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { AddressLink } from "@gemunion/mui-scanner";
-import { ContractFeatures, IToken, ModuleType } from "@framework/types";
+import type { IToken } from "@framework/types";
+import { ContractFeatures, ModuleType } from "@framework/types";
 
 import { shouldShowAttributes, TokenAttributesView } from "../../../metadata";
 import { TokenTraitsView } from "../../../traits";

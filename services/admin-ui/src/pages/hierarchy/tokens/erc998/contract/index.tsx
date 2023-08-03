@@ -15,12 +15,13 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ContractStatus, Erc998ContractFeatures, IContract, IContractSearchDto } from "@framework/types";
+import type { IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, Erc998ContractFeatures } from "@framework/types";
 
-import { Erc998ContractEditDialog } from "./edit";
 import { Erc998ContractDeployButton } from "../../../../../components/buttons";
 import { ContractActionsMenu } from "../../../../../components/menu/hierarchy/contract";
 import { ContractSearchForm } from "../../../../../components/forms/contract-search";
+import { Erc998ContractEditDialog } from "./edit";
 
 export const Erc998Contract: FC = () => {
   const {
