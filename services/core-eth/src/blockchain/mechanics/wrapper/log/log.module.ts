@@ -31,7 +31,7 @@ import { WrapperLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.WRAPPER,
-            contractAddress: wrapperContracts.address || [],
+            contractAddress: wrapperContracts.address,
             contractInterface: new Interface(WrapperSol.abi),
             // prettier-ignore
             eventNames: [
@@ -62,7 +62,7 @@ export class WrapperLogModule implements OnModuleDestroy {
   constructor(private readonly wrapperLogService: WrapperLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.wrapperLogService.updateBlock();
   }
 }

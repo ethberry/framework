@@ -19,9 +19,9 @@ export class ContractManagerLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
+  public async updateBlock(): Promise<void> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
     const contractManagerEntity = await this.contractService.findSystemByName("ContractManager");
-    return this.contractService.updateLastBlockByAddr(contractManagerEntity.address[0], lastBlock);
+    await this.contractService.updateLastBlockByAddr(contractManagerEntity.address[0], lastBlock);
   }
 }

@@ -17,8 +17,10 @@ export class Erc998LogService {
     this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByTokenType(TokenType.ERC998, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByTokenType(
+      TokenType.ERC998,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

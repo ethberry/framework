@@ -31,7 +31,7 @@ import { RaffleTicketLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.RAFFLE,
-            contractAddress: raffleTicketAddr.address || [],
+            contractAddress: raffleTicketAddr.address,
             contractInterface: new Interface(RaffleTicketSol.abi),
             // prettier-ignore
             eventNames: [
@@ -61,7 +61,7 @@ export class RaffleTicketLogModule implements OnModuleDestroy {
   constructor(private readonly raffleTicketLogService: RaffleTicketLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.raffleTicketLogService.updateBlock();
   }
 }

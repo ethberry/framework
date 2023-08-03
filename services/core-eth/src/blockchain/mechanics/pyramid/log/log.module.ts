@@ -37,7 +37,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
         return {
           contract: {
             contractType: ContractType.PYRAMID,
-            contractAddress: pyramidContracts.address || [],
+            contractAddress: pyramidContracts.address,
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [
@@ -83,7 +83,7 @@ export class PyramidLogModule implements OnModuleDestroy {
   constructor(private readonly pyramidLogService: PyramidLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.pyramidLogService.updateBlock();
   }
 }

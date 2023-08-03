@@ -36,7 +36,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
         return {
           contract: {
             contractType: ContractType.ERC20_TOKEN,
-            contractAddress: erc20Contracts.address || [],
+            contractAddress: erc20Contracts.address,
             contractInterface: ABI,
             // prettier-ignore
             eventNames: [
@@ -68,7 +68,7 @@ export class Erc20TokenLogModule implements OnModuleDestroy {
   constructor(private readonly erc20LogService: Erc20LogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.erc20LogService.updateBlock();
   }
 }

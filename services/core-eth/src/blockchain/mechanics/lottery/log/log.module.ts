@@ -40,7 +40,7 @@ import { LotteryLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: lotteryContracts.address || [],
+            contractAddress: lotteryContracts ? lotteryContracts.address : [],
             contractInterface: new Interface(LotterySol.abi),
             // prettier-ignore
             eventNames: [
@@ -74,7 +74,7 @@ export class LotteryLogModule implements OnModuleDestroy {
   constructor(private readonly lotteryLogService: LotteryLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.lotteryLogService.updateBlock();
   }
 }

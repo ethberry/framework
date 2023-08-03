@@ -35,11 +35,11 @@ import { RaffleLogService } from "./log.service";
           Object.values(CronExpression)[
             Object.keys(CronExpression).indexOf(configService.get<string>("CRON_SCHEDULE", "EVERY_30_SECONDS"))
           ];
-        // const fromBlock = (await contractService.getLastBlock(raffleAddr)) || startingBlock;
+
         return {
           contract: {
             contractType: ContractType.RAFFLE,
-            contractAddress: raffleContracts.address || [],
+            contractAddress: raffleContracts.address,
             contractInterface: new Interface(RaffleSol.abi),
             // prettier-ignore
             eventNames: [
@@ -73,7 +73,7 @@ export class RaffleLogModule implements OnModuleDestroy {
   constructor(private readonly raffleLogService: RaffleLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.raffleLogService.updateBlock();
   }
 }

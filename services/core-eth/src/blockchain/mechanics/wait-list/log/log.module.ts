@@ -37,7 +37,7 @@ import { WaitListLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.WAITLIST,
-            contractAddress: waitlistContracts.address || [],
+            contractAddress: waitlistContracts.address,
             contractInterface: new Interface(WaitListSol.abi),
             // prettier-ignore
             eventNames: [
@@ -66,7 +66,7 @@ export class WaitListLogModule implements OnModuleDestroy {
   constructor(private readonly waitListLogService: WaitListLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.waitListLogService.updateBlock();
   }
 }

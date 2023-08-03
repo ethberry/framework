@@ -20,9 +20,9 @@ export class ExchangeLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
+  public async updateBlock(): Promise<void> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
     const exchangeEntity = await this.contractService.findSystemByName("Exchange");
-    return this.contractService.updateLastBlockByAddr(exchangeEntity.address[0], lastBlock);
+    await this.contractService.updateLastBlockByAddr(exchangeEntity.address[0], lastBlock);
   }
 }

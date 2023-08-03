@@ -17,8 +17,10 @@ export class VestingLogService {
     this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByType(ModuleType.VESTING, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByType(
+      ModuleType.VESTING,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

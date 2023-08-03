@@ -165,7 +165,9 @@ export class ContractService {
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
-    return { address: [], fromBlock: undefined };
+    return {
+      address: [],
+    };
   }
 
   public async findAllTokensByType(

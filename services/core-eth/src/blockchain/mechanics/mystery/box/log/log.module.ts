@@ -31,7 +31,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
         return {
           contract: {
             contractType: ContractType.MYSTERY,
-            contractAddress: mysteryContracts.address || [],
+            contractAddress: mysteryContracts ? mysteryContracts.address : [],
             contractInterface: new Interface(ERC721MysteryBoxBlacklistPausableSol.abi),
             // prettier-ignore
             eventNames: [
@@ -64,7 +64,7 @@ export class MysteryLogModule implements OnModuleDestroy {
   constructor(private readonly mysteryLogService: MysteryLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.mysteryLogService.updateBlock();
   }
 }

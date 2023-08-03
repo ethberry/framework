@@ -37,7 +37,7 @@ import { StakingLogService } from "./log.service";
         return {
           contract: {
             contractType: ContractType.STAKING,
-            contractAddress: stakingContracts.address || [],
+            contractAddress: stakingContracts.address,
             contractInterface: new Interface(StakingSol.abi),
             // prettier-ignore
             eventNames: [
@@ -74,7 +74,7 @@ export class StakingLogModule implements OnModuleDestroy {
   constructor(private readonly stakingLogService: StakingLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.stakingLogService.updateBlock();
   }
 }

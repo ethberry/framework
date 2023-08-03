@@ -33,7 +33,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
         return {
           contract: {
             contractType: ContractType.ERC998_TOKEN_RANDOM,
-            contractAddress: erc998RandomContracts.address || [],
+            contractAddress: erc998RandomContracts.address,
             contractInterface: ABIRandom,
             // prettier-ignore
             eventNames: [
@@ -77,7 +77,7 @@ export class Erc998TokenRandomLogModule implements OnModuleDestroy {
   constructor(private readonly erc998TokenRandomLogService: Erc998TokenRandomLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.erc998TokenRandomLogService.updateBlock();
   }
 }

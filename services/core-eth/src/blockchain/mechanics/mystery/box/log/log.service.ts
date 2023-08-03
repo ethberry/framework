@@ -26,8 +26,10 @@ export class MysteryLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByType(ModuleType.MYSTERY, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByType(
+      ModuleType.MYSTERY,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

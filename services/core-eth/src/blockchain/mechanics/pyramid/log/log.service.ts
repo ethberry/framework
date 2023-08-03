@@ -17,8 +17,10 @@ export class PyramidLogService {
     this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractService.updateLastBlockByType(ModuleType.PYRAMID, lastBlock);
+  public async updateBlock(): Promise<void> {
+    await this.contractService.updateLastBlockByType(
+      ModuleType.PYRAMID,
+      this.ethersContractService.getLastBlockOption(),
+    );
   }
 }

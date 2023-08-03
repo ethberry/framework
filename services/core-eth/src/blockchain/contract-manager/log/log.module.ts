@@ -68,7 +68,7 @@ export class ContractManagerLogModule implements OnModuleDestroy {
   constructor(private readonly contractManagerLogService: ContractManagerLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.contractManagerLogService.updateBlock();
   }
 }

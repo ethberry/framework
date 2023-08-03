@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
@@ -24,14 +24,15 @@ export class WaitListLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
+  public async updateBlock(): Promise<void> {
     const waitlistContracts = await this.contractService.findAllByType([ModuleType.WAITLIST]);
 
-    if (!waitlistContracts.address) {
-      throw new NotFoundException("contractNotFound");
+    if (waitlistContracts.fromBlock) {
+      await this.contractService.updateLastBlockByAddr(
+        waitlistContracts.address[0],
+        this.ethersContractService.getLastBlockOption(),
+      );
     }
-    return this.contractService.updateLastBlockByAddr(waitlistContracts.address[0], lastBlock);
   }
 
   public addListener(dto: ICreateListenerPayload): void {

@@ -32,7 +32,7 @@ import { abiEncode, keccak256It } from "../utils";
           [ModuleType.LOTTERY, ModuleType.RAFFLE],
           [ContractFeatures.RANDOM],
         );
-        const allRandomAddresses = randomTokens.address?.concat(lotteryContracts.address || []);
+        const allRandomAddresses = randomTokens.address?.concat(lotteryContracts ? lotteryContracts.address : []);
 
         const startingBlock = ~~configService.get<string>("STARTING_BLOCK", "1");
         const cron =
@@ -49,7 +49,7 @@ import { abiEncode, keccak256It } from "../utils";
         return {
           contract: {
             contractType: ChainLinkType.VRF,
-            contractAddress: vrfCoordinator.address || [],
+            contractAddress: vrfCoordinator.address,
             contractInterface: ABI,
             topics,
           },
@@ -69,7 +69,7 @@ export class ChainLinkLogModule implements OnModuleDestroy {
   constructor(private readonly chainLinkLogService: ChainLinkLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.chainLinkLogService.updateBlock();
   }
 }

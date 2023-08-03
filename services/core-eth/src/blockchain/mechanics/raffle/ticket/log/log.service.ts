@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nest-js-module-ethers-gcp";
 
@@ -22,14 +22,15 @@ export class RaffleTicketLogService {
     return 0;
   }
 
-  public async updateBlock(): Promise<number> {
-    const lastBlock = this.ethersContractService.getLastBlockOption();
+  public async updateBlock(): Promise<void> {
     const raffleContracts = await this.contractService.findAllByType([ModuleType.RAFFLE], [ContractFeatures.RANDOM]);
 
-    if (!raffleContracts.address) {
-      throw new NotFoundException("contractNotFound");
+    if (raffleContracts.fromBlock) {
+      await this.contractService.updateLastBlockByAddr(
+        raffleContracts.address[0],
+        this.ethersContractService.getLastBlockOption(),
+      );
     }
-    return this.contractService.updateLastBlockByAddr(raffleContracts.address[0], lastBlock);
   }
 
   public addListener(dto: ICreateListenerPayload): void {

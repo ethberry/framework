@@ -33,7 +33,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
         return {
           contract: {
             contractType: ContractType.VESTING,
-            contractAddress: vestingContracts.address || [],
+            contractAddress: vestingContracts.address,
             contractInterface: VestingInterface,
             // prettier-ignore
             eventNames: [
@@ -63,7 +63,7 @@ export class VestingLogModule implements OnModuleDestroy {
   constructor(private readonly vestingLogService: VestingLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public async onModuleDestroy(): Promise<void> {
     return this.vestingLogService.updateBlock();
   }
 }
