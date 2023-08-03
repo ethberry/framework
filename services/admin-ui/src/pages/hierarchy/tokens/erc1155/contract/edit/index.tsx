@@ -9,8 +9,8 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
 import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
-import { validationSchema } from "./validation";
 import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
+import { validationSchema } from "./validation";
 
 export interface IErc1155ContractEditDialogProps {
   open: boolean;
@@ -45,7 +45,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
   const message = id ? "dialogs.edit" : "dialogs.create";
 
   // there is no exception for merchantId=1, to create token use office
-  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
+  if (!id && process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
   }
 

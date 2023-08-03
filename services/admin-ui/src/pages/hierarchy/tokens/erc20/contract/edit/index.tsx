@@ -7,10 +7,10 @@ import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
-import { createValidationSchema, editValidationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
 import { formatEther } from "../../../../../../utils/money";
 import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
+import { createValidationSchema, editValidationSchema } from "./validation";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
@@ -51,7 +51,7 @@ export const Erc20ContractEditDialog: FC<IErc20TokenEditDialogProps> = props => 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
   // there is no exception for merchantId=1, to create token use office
-  if (process.env.BUSINESS_TYPE === BusinessType.B2B) {
+  if (!id && process.env.BUSINESS_TYPE === BusinessType.B2B) {
     return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
   }
 

@@ -4,10 +4,11 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { ContractStatus, IContract } from "@framework/types";
+import { BusinessType, ContractStatus, IContract } from "@framework/types";
 
-import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../../components/dialogs/contract";
+import { UpgradeProductTypeDialog } from "../../../../../../components/dialogs/product-type";
+import { validationSchema } from "./validation";
 
 export interface IErc998ContractEditDialogProps {
   open: boolean;
@@ -44,6 +45,11 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+
+  // there is no exception for merchantId=1, to create token use office
+  if (!id && process.env.BUSINESS_TYPE === BusinessType.B2B) {
+    return <UpgradeProductTypeDialog open={rest.open} onClose={rest.onCancel} />;
+  }
 
   return (
     <FormDialog
