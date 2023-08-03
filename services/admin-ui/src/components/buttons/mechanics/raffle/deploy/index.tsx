@@ -41,7 +41,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
     return handleDeployConfirm(
       {
         url: "/contract-manager/raffle",
-        method: "POT",
+        method: "POST",
       },
       {},
     );
