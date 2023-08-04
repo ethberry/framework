@@ -1,4 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { CollectionContractService } from "./contract.service";
@@ -8,7 +9,7 @@ import { CollectionTemplateModule } from "../template/template.module";
 import { CollectionTokenModule } from "../token/token.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContractEntity]), CollectionTemplateModule, CollectionTokenModule],
+  imports: [ConfigModule, TypeOrmModule.forFeature([ContractEntity]), CollectionTemplateModule, CollectionTokenModule],
   providers: [Logger, CollectionContractService],
   controllers: [CollectionContractController],
   exports: [CollectionContractService],

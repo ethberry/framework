@@ -1,4 +1,6 @@
 import { ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 import { ClientProxy } from "@nestjs/microservices";
@@ -17,8 +19,9 @@ export class RaffleContractService extends ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     @Inject(RmqProviderType.SCHEDULE_SERVICE_RAFFLE)
     private readonly scheduleProxy: ClientProxy,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {

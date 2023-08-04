@@ -1,7 +1,10 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
 
+import { testChainId } from "@framework/constants";
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -14,6 +17,7 @@ export class ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
+    protected readonly configService: ConfigService,
   ) {}
 
   public async search(
@@ -227,5 +231,19 @@ export class ContractService {
 
   public count(where: FindOptionsWhere<ContractEntity>): Promise<number> {
     return this.contractEntityRepository.count({ where });
+  }
+
+  public async findSystemContractByName(name: string): Promise<ContractEntity> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+
+    const contractEntity = await this.findOne(where);
+
+    // system must exists
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return contractEntity;
   }
 }

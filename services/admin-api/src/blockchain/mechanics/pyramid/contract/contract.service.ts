@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -13,8 +15,9 @@ export class PyramidContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
+    protected readonly configService: ConfigService,
   ) {
-    super(contractEntityRepository);
+    super(contractEntityRepository, configService);
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
