@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
 
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -22,6 +23,7 @@ export const Merchant: FC = () => {
 
   const api = useApi();
   const user = useUser<IUser>();
+  const navigate = useNavigate();
 
   const handleSubmit = (values: Partial<IMerchant>): Promise<void> => {
     const { id: _id, ...data } = values;
@@ -32,8 +34,7 @@ export const Merchant: FC = () => {
         data,
       })
       .then(async (): Promise<void> => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.created" }), { variant: "success" });
-        await user.getProfile();
+        navigate("/message/merchant-created", { replace: true });
       })
       .catch((e: ApiError) => {
         if (e.status === 400) {
@@ -72,7 +73,12 @@ export const Merchant: FC = () => {
 
       <PageHeader message="pages.merchant.title" />
 
-      <FormWrapper initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      <FormWrapper
+        initialValues={fixedValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        showPrompt={false}
+      >
         <TextInput name="title" />
         <RichTextEditor name="description" />
         <TextInput name="email" autoComplete="username" />

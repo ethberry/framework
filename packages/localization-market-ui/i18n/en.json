@@ -580,6 +580,7 @@
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",
+    "merchant-created": "Congratulations on creating your merchant account! It's currently undergoing the validation process. We appreciate your patience during this time.",
     "uncaughtError": "Uncaught error happened"
   },
   "pages": {
