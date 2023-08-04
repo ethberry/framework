@@ -15,6 +15,8 @@ import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../common/utils/sorter";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class DropService {
@@ -23,6 +25,7 @@ export class DropService {
     private readonly dropEntityRepository: Repository<DropEntity>,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -131,6 +134,7 @@ export class DropService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: dropEntity.id,
@@ -146,8 +150,14 @@ export class DropService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, dropEntity: DropEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    dropEntity: DropEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       dropEntity.item.components.sort(sorter("id")).map(component => ({

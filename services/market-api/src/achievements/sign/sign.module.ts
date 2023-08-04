@@ -9,6 +9,7 @@ import { AchievementSignService } from "./sign.service";
 import { AchievementSignController } from "./sign.controller";
 import { ClaimModule } from "../../blockchain/mechanics/claim/claim.module";
 import { AchievementRedemptionModule } from "../redemption/redemption.module";
+import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AchievementRedemptionModule } from "../redemption/redemption.module";
     AchievementRedemptionModule,
     AchievementItemModule,
     ClaimModule,
+    ContractModule,
   ],
   providers: [Logger, AchievementSignService],
   controllers: [AchievementSignController],

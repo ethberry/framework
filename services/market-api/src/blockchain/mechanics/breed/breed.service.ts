@@ -14,6 +14,8 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { BreedEntity } from "./breed.entity";
 import { ISignBreedDto } from "./interfaces";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class BreedService {
@@ -24,6 +26,7 @@ export class BreedService {
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
+    private readonly contractService: ContractService,
   ) {}
 
   public findAll(
@@ -100,6 +103,7 @@ export class BreedService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: encodedExternalId.toString(),
@@ -117,12 +121,14 @@ export class BreedService {
   }
 
   public async getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     momTokenEntity: TokenEntity,
     dadTokenEntity: TokenEntity,
   ): Promise<string> {
     return this.signerService.getOneToOneSignature(
+      verifyingContract,
       account,
       params,
       {

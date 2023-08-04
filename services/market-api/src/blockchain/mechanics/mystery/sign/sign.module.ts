@@ -7,9 +7,10 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { MysterySignService } from "./sign.service";
 import { MysterySignController } from "./sign.controller";
 import { MysteryBoxModule } from "../box/box.module";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [SettingsModule, SignerModule, TemplateModule, MysteryBoxModule],
+  imports: [SettingsModule, SignerModule, ContractModule, TemplateModule, MysteryBoxModule],
   providers: [Logger, MysterySignService],
   controllers: [MysterySignController],
   exports: [MysterySignService],

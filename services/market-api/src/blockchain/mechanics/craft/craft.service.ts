@@ -13,6 +13,8 @@ import type { ISignCraftDto } from "@framework/types";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../common/utils/sorter";
 import { CraftEntity } from "./craft.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class CraftService {
@@ -20,6 +22,7 @@ export class CraftService {
     @InjectRepository(CraftEntity)
     private readonly craftEntityRepository: Repository<CraftEntity>,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -128,6 +131,7 @@ export class CraftService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: craftEntity.id,
@@ -143,8 +147,14 @@ export class CraftService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, craftEntity: CraftEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    craftEntity: CraftEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       craftEntity.item.components.sort(sorter("id")).map(component => ({

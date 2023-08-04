@@ -14,6 +14,7 @@ import { AchievementLevelService } from "../level/level.service";
 import { AchievementItemService } from "../item/item.service";
 import { AchievementLevelEntity } from "../level/level.entity";
 import type { ISignAchievementsDto } from "./interfaces";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
 export class AchievementSignService {
@@ -24,6 +25,7 @@ export class AchievementSignService {
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
     private readonly claimService: ClaimService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -71,24 +73,26 @@ export class AchievementSignService {
     };
   }
 
-  public async getSignature(
-    account: string,
-    params: IParams,
-    achievementLevelEntity: AchievementLevelEntity,
-  ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      account,
-      params,
-      achievementLevelEntity.item.components.map(component => ({
-        tokenType: Object.values(TokenType).indexOf(component.tokenType),
-        token: component.contract.address,
-        tokenId:
-          component.contract.contractType === TokenType.ERC1155
-            ? component.template.tokens[0].tokenId
-            : (component.templateId || 0).toString(), // suppression types check with 0
-        amount: component.amount,
-      })),
-      [],
-    );
-  }
+  // public async getSignature(
+  //   verifyingContract: string,
+  //   account: string,
+  //   params: IParams,
+  //   achievementLevelEntity: AchievementLevelEntity,
+  // ): Promise<string> {
+  //   return this.signerService.getManyToManySignature(
+  //     verifyingContract,
+  //     account,
+  //     params,
+  //     achievementLevelEntity.item.components.map(component => ({
+  //       tokenType: Object.values(TokenType).indexOf(component.tokenType),
+  //       token: component.contract.address,
+  //       tokenId:
+  //         component.contract.contractType === TokenType.ERC1155
+  //           ? component.template.tokens[0].tokenId
+  //           : (component.templateId || 0).toString(), // suppression types check with 0
+  //       amount: component.amount,
+  //     })),
+  //     [],
+  //   );
+  // }
 }

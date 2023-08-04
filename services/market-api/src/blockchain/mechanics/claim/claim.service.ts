@@ -11,6 +11,8 @@ import { ClaimStatus, TokenType } from "@framework/types";
 import { ClaimEntity } from "./claim.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { AssetService } from "../../exchange/asset/asset.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class ClaimService {
@@ -18,6 +20,7 @@ export class ClaimService {
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
+    protected readonly contractService: ContractService,
     private readonly signerService: SignerService,
   ) {}
 
@@ -142,6 +145,7 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: claimEntity.id,
@@ -160,8 +164,14 @@ export class ClaimService {
     return claimEntity.save();
   }
 
-  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    claimEntity: ClaimEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       claimEntity.item.components.map(component => ({

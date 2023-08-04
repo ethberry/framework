@@ -14,6 +14,8 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import type { IAutocompleteGradeDto, ISearchGradeDto, ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class GradeService {
@@ -22,6 +24,7 @@ export class GradeService {
     private readonly gradeEntityRepository: Repository<GradeEntity>,
     private readonly tokenService: TokenService,
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -104,6 +107,7 @@ export class GradeService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: gradeEntity.id,
@@ -122,6 +126,7 @@ export class GradeService {
   }
 
   public async getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     attribute: string,
@@ -131,6 +136,7 @@ export class GradeService {
     const level = tokenEntity.metadata[attribute] || 0;
 
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

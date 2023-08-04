@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
@@ -167,5 +167,19 @@ export class ContractService {
     options?: FindOneOptions<ContractEntity>,
   ): Promise<ContractEntity | null> {
     return this.contractEntityRepository.findOne({ where, ...options });
+  }
+
+  public async findSystemContractByName(name: string): Promise<ContractEntity> {
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
+    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+
+    const contractEntity = await this.findOne(where);
+
+    // system must exists
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    return contractEntity;
   }
 }

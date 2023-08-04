@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
-import { testChainId } from "@gemunion/contracts-constants";
+
+import type { IContract } from "@framework/types";
 
 import { IAsset, IParams } from "./interfaces";
 
@@ -12,17 +12,22 @@ export class SignerService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    private readonly configService: ConfigService,
   ) {}
 
-  public async getOneToOneSignature(account: string, params: IParams, item: IAsset, price: IAsset): Promise<string> {
+  public async getOneToOneSignature(
+    verifyingContract: IContract,
+    account: string,
+    params: IParams,
+    item: IAsset,
+    price: IAsset,
+  ): Promise<string> {
     return this.signer.signTypedData(
       // Domain
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
-        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
+        chainId: verifyingContract.chainId,
+        verifyingContract: verifyingContract.address,
       },
       // Types
       {
@@ -58,6 +63,7 @@ export class SignerService {
   }
 
   public async getOneToManySignature(
+    verifyingContract: IContract,
     account: string,
     params: IParams,
     item: IAsset,
@@ -68,8 +74,8 @@ export class SignerService {
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
-        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
+        chainId: verifyingContract.chainId,
+        verifyingContract: verifyingContract.address,
       },
       // Types
       {
@@ -105,6 +111,7 @@ export class SignerService {
   }
 
   public async getManyToManySignature(
+    verifyingContract: IContract,
     account: string,
     params: IParams,
     items: Array<IAsset>,
@@ -115,8 +122,8 @@ export class SignerService {
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
-        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
+        chainId: verifyingContract.chainId,
+        verifyingContract: verifyingContract.address,
       },
       // Types
       {

@@ -8,9 +8,10 @@ import { TokenModule } from "../../hierarchy/token/token.module";
 import { GradeService } from "./grade.service";
 import { GradeController } from "./grade.controller";
 import { GradeEntity } from "./grade.entity";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [SettingsModule, SignerModule, TokenModule, TypeOrmModule.forFeature([GradeEntity])],
+  imports: [SettingsModule, SignerModule, ContractModule, TokenModule, TypeOrmModule.forFeature([GradeEntity])],
   providers: [Logger, GradeService],
   controllers: [GradeController],
   exports: [GradeService],

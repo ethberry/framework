@@ -8,9 +8,11 @@ import { SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import type { ISignTemplateDto } from "./interfaces";
 import { sorter } from "../../../common/utils/sorter";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -18,6 +20,7 @@ export class MarketplaceService {
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
@@ -40,6 +43,7 @@ export class MarketplaceService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       amount,
       {
@@ -57,12 +61,14 @@ export class MarketplaceService {
   }
 
   public async getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     amount: string,
     params: IParams,
     templateEntity: TemplateEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

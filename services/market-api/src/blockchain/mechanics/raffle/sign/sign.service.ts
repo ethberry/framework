@@ -11,11 +11,14 @@ import { TokenType } from "@framework/types";
 import { ISignRaffleDto } from "./interfaces";
 import { RaffleRoundService } from "../round/round.service";
 import { RaffleRoundEntity } from "../round/round.entity";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class RaffleSignService {
   constructor(
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     private readonly roundService: RaffleRoundService,
   ) {}
@@ -32,6 +35,7 @@ export class RaffleSignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: raffleRound.id,
@@ -47,8 +51,14 @@ export class RaffleSignService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, roundEntity: RaffleRoundEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    roundEntity: RaffleRoundEntity,
+  ): Promise<string> {
     return this.signerService.getOneToOneSignature(
+      verifyingContract,
       account,
       params,
       {

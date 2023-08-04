@@ -9,9 +9,17 @@ import { TokenModule } from "../../hierarchy/token/token.module";
 import { BreedService } from "./breed.service";
 import { BreedController } from "./breed.controller";
 import { BreedEntity } from "./breed.entity";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [SettingsModule, SignerModule, TokenModule, TemplateModule, TypeOrmModule.forFeature([BreedEntity])],
+  imports: [
+    SettingsModule,
+    SignerModule,
+    ContractModule,
+    TokenModule,
+    TemplateModule,
+    TypeOrmModule.forFeature([BreedEntity]),
+  ],
   providers: [Logger, BreedService],
   controllers: [BreedController],
   exports: [BreedService],

@@ -11,11 +11,14 @@ import { TokenType } from "@framework/types";
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
 import { ISignLotteryDto } from "./interfaces";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class LotterySignService {
   constructor(
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     private readonly roundService: LotteryRoundService,
   ) {}
@@ -31,6 +34,7 @@ export class LotterySignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: lotteryRound.id,
@@ -46,8 +50,14 @@ export class LotterySignService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, roundEntity: LotteryRoundEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    roundEntity: LotteryRoundEntity,
+  ): Promise<string> {
     return this.signerService.getOneToOneSignature(
+      verifyingContract,
       account,
       params,
       {

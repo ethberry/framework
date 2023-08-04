@@ -8,16 +8,19 @@ import { SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { sorter } from "../../../common/utils/sorter";
 import { ISignRentTokenDto } from "./interfaces";
 import { RentService } from "./rent.service";
 import { RentEntity } from "./rent.entity";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class RentSignService {
   constructor(
     private readonly signerService: SignerService,
+    private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly rentService: RentService,
     private readonly settingsService: SettingsService,
@@ -43,6 +46,7 @@ export class RentSignService {
     const lendExpires = zeroPadValue(toBeHex(expires), 32);
 
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account, // from
       {
         externalId, // rent.id
@@ -60,12 +64,14 @@ export class RentSignService {
   }
 
   public getSignature(
+    verifyingContract: ContractEntity,
     account: string,
     params: IParams,
     tokenEntity: TokenEntity,
     rentEntity: RentEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

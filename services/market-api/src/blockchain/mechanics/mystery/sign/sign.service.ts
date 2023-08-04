@@ -8,15 +8,18 @@ import { RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
 import { ISignMysteryboxDto } from "./interfaces";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class MysterySignService {
   constructor(
     private readonly mysteryBoxService: MysteryBoxService,
+    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
@@ -46,6 +49,7 @@ export class MysterySignService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: mysteryBoxEntity.id,
@@ -61,8 +65,14 @@ export class MysterySignService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, mysteryBoxEntity: MysteryBoxEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    mysteryBoxEntity: MysteryBoxEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       [
