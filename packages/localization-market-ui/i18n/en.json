@@ -577,6 +577,7 @@
     }
   },
   "messages": {
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",
     "uncaughtError": "Uncaught error happened"
@@ -1163,7 +1164,9 @@
     "gradeNotActive": "Attribute is not active",
     "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
+    "merchantAlreadyExist": "Merchant already exist",
     "pageNotFound": "Page not found",
+    "paymentRequired": "Payment required",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "removedFromCart": "Removed from cart",

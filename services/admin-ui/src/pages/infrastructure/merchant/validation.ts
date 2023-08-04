@@ -9,9 +9,9 @@ export const validationSchema = object().shape({
   description: draftValidationSchema,
   imageUrl: urlValidationSchema,
   social: object().shape({
-    facebookUrl: urlValidationSchema.optional(),
-    instagramUrl: urlValidationSchema.optional(),
-    youtubeUrl: urlValidationSchema.optional(),
-    twitterUrl: urlValidationSchema.optional(),
+    facebookUrl: string(),
+    instagramUrl: string(),
+    youtubeUrl: string(),
+    twitterUrl: string(),
   }),
 });

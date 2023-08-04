@@ -9,4 +9,10 @@ export const validationSchema = object().shape({
   title: string().required("form.validations.valueMissing"),
   description: draftValidationSchema,
   imageUrl: urlValidationSchema,
+  social: object().shape({
+    facebookUrl: string(),
+    instagramUrl: string(),
+    youtubeUrl: string(),
+    twitterUrl: string(),
+  }),
 });

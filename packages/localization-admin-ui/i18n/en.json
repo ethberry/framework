@@ -901,6 +901,7 @@
   },
   "messages": {
     "empty-list": "Nothing to display",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",
     "uncaughtError": "Uncaught error happened"
@@ -1393,6 +1394,7 @@
     "invite": "Successfully invited",
     "listNotFound": "Waitlist not found",
     "loaded": "Successfully loaded",
+    "merchantAlreadyExist": "Merchant already exist",
     "merchantNotFound": "Merchant not found",
     "orderNotFound": "Order not found",
     "pageNotFound": "API error",

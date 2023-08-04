@@ -9,7 +9,6 @@ import { Theme } from "@gemunion/provider-theme";
 import { WalletButton } from "../../buttons";
 import { NetworkButton } from "./network";
 import { Referrer } from "./referrer";
-import { Cart } from "./cart";
 import { Sections } from "./sections";
 import { StyledGrow, StyledLink, StyledToolbar } from "./styled";
 
@@ -24,7 +23,6 @@ export const Header: FC = () => {
         <Referrer />
         <NetworkButton />
         <WalletButton />
-        <Cart />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />
         <Sections />

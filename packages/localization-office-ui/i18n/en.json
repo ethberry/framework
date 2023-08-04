@@ -515,6 +515,7 @@
     }
   },
   "messages": {
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "uncaughtError": "Uncaught error happened",
     "empty-list": "Nothing to display",
     "noAddress": "No address",
