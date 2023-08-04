@@ -22,6 +22,7 @@ import { AssetService } from "../../exchange/asset/asset.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import type { IClaimRow, IClaimUploadDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class ClaimService {
@@ -146,6 +147,7 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: claimEntity.id,
@@ -180,8 +182,14 @@ export class ClaimService {
     return this.claimEntityRepository.delete(where);
   }
 
-  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    claimEntity: ClaimEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
+      verifyingContract,
       account,
       params,
       claimEntity.item.components.map(component => ({
