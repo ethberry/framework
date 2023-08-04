@@ -31,7 +31,7 @@ export class ClaimService {
     private readonly loggerService: LoggerService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
-    protected readonly assetService: AssetService,
+    private readonly assetService: AssetService,
     private readonly signerService: SignerService,
     private readonly contractService: ContractService,
   ) {}

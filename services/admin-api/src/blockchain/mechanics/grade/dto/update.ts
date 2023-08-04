@@ -21,6 +21,7 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({
     maxLength: 32,
   })
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
   @Matches(/^[A-Z][A-Z0-9]*$/, { message: "patternMismatch" })
