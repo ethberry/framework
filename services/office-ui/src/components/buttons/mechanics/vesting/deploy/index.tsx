@@ -6,8 +6,7 @@ import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
-
-import { IVestingContractDeployDto, IUser } from "@framework/types";
+import type { IUser, IVestingContractDeployDto } from "@framework/types";
 
 import DeployVestingABI from "../../../../../abis/mechanics/vesting/deploy/deployVesting.abi.json";
 
@@ -45,6 +44,7 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
           cliffInMonth,
           monthlyRelease,
         },
+        [],
         sign.signature,
       ) as Promise<void>;
     },
@@ -72,7 +72,17 @@ export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <VestingDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <VestingDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+        initialValues={{
+          beneficiary: "",
+          startTimestamp: new Date().toISOString(),
+          cliffInMonth: 12,
+          monthlyRelease: 1000,
+        }}
+      />
     </Fragment>
   );
 };

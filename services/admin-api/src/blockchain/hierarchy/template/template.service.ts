@@ -24,7 +24,7 @@ export class TemplateService {
   ) {}
 
   public async search(
-    dto: ITemplateSearchDto,
+    dto: Partial<ITemplateSearchDto>,
     userEntity: UserEntity,
     contractModule: Array<ModuleType>,
     contractType: Array<TokenType>,

@@ -5,7 +5,8 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
-import { IClaim } from "@framework/types";
+import type { IClaim } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -40,7 +41,12 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
     >
       <EntityInput name="merchantId" controller="merchants" disableClear />
       <TextInput name="account" />
-      <TemplateAssetInput autoSelect multiple prefix="item" />
+      <TemplateAssetInput
+        autoSelect
+        multiple
+        prefix="item"
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
+      />
       <DateTimeInput name="endTimestamp" />
     </FormDialog>
   );

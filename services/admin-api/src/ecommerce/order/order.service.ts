@@ -17,7 +17,7 @@ export class OrderService {
     private readonly orderItemService: OrderItemService,
   ) {}
 
-  public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
+  public async search(dto: Partial<IOrderSearchDto>, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
     const { orderStatus, dateRange, isArchived } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 

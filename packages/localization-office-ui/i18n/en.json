@@ -577,7 +577,8 @@
         "drop": "Drop",
         "pyramid": "Pyramid",
         "staking": "Staking",
-        "title": "Mechanics"
+        "title": "Mechanics",
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
@@ -719,6 +720,28 @@
     },
     "users": {
       "title": "Users"
+    },
+    "vesting": {
+      "claims": {
+        "title": "Vesting Claims"
+      },
+      "contracts": {
+        "title": "Vesting Contracts"
+      },
+      "title": "Vesting"
+    },
+    "wait-list": {
+      "contracts": {
+        "title": "Contracts"
+      },
+      "item": {
+        "defaultItemTitle": "{account}",
+        "title": "Accounts"
+      },
+      "list": {
+        "title": "Lists"
+      },
+      "title": "Waitlist"
     }
   },
   "snackbar": {

@@ -2,14 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ProductStatus, UserRole } from "@framework/types";
+import { ProductStatus } from "@framework/types";
 
-import { ProductItemEntity } from "./product-item.entity";
-import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDto } from "./interfaces";
+import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { PhotoService } from "../photo/photo.service";
 import { PhotoEntity } from "../photo/photo.entity";
-import { AssetService } from "../../blockchain/exchange/asset/asset.service";
+import { ProductItemEntity } from "./product-item.entity";
+import type { IProductItemCreateDto, IProductItemSearchDto, IProductItemUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ProductItemService {
@@ -102,7 +102,7 @@ export class ProductItemService {
     return this.productItemEntityRepository.find({ where, ...options });
   }
 
-  public async create(dto: IProductItemCreateDto): Promise<ProductItemEntity> {
+  public async create(dto: IProductItemCreateDto, userEntity: UserEntity): Promise<ProductItemEntity> {
     const { photo, price, ...rest } = dto;
 
     const assetEntity = await this.assetService.create();
@@ -113,7 +113,7 @@ export class ProductItemService {
       })
       .save();
 
-    await this.assetService.update(productItemEntity.price, price);
+    await this.assetService.update(productItemEntity.price, price, userEntity);
 
     // add new
     await Promise.allSettled([this.photoService.create({ ...photo, priority: 0 }, null, productItemEntity)]).then(
@@ -130,6 +130,7 @@ export class ProductItemService {
   public async update(
     where: FindOptionsWhere<ProductItemEntity>,
     dto: IProductItemUpdateDto,
+    userEntity: UserEntity,
   ): Promise<ProductItemEntity> {
     const { photo, price, ...rest } = dto;
 
@@ -163,46 +164,38 @@ export class ProductItemService {
     });
 
     if (price) {
-      await this.assetService.update(productItemEntity.price, price);
+      await this.assetService.update(productItemEntity.price, price, userEntity);
     }
 
     return productItemEntity.save();
   }
 
   public async autocomplete(userEntity: UserEntity): Promise<Array<ProductItemEntity>> {
-    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product");
+    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("productItem");
 
-    queryBuilder.select(["product.id", "product.title"]);
+    queryBuilder.leftJoinAndSelect("productItem.product", "product");
+    queryBuilder.leftJoinAndSelect("productItem.parameters", "parameters");
+    queryBuilder.select(["productItem.id", "product.title", "parameters"]);
 
-    queryBuilder.where("product.productStatus = :productStatus", { productStatus: ProductStatus.ACTIVE });
-
-    if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {
-        merchantId: userEntity.merchantId,
-      });
-    }
+    queryBuilder.andWhere("product.merchantId = :merchantId", {
+      merchantId: userEntity.merchantId,
+    });
 
     return queryBuilder.getMany();
   }
 
-  public async delete(where: FindOptionsWhere<ProductItemEntity>): Promise<void> {
-    const queryBuilder = this.productItemEntityRepository.createQueryBuilder("product_item");
-    queryBuilder.select();
-    queryBuilder.where(where);
-
-    const productItemEntity = await queryBuilder.getOne();
+  public async delete(where: FindOptionsWhere<ProductItemEntity>): Promise<ProductItemEntity> {
+    const productItemEntity = await this.findOne(where);
 
     if (!productItemEntity) {
       throw new NotFoundException("productItemNotFound");
     }
 
-    if (productItemEntity) {
-      if (productItemEntity.orderItems) {
-        Object.assign(productItemEntity, { productStatus: ProductStatus.INACTIVE });
-        await productItemEntity.save();
-      } else {
-        await productItemEntity.remove();
-      }
+    if (productItemEntity.orderItems) {
+      Object.assign(productItemEntity, { productStatus: ProductStatus.INACTIVE });
+      return productItemEntity.save();
+    } else {
+      return productItemEntity.remove();
     }
   }
 }

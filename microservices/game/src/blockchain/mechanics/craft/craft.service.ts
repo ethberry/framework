@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
@@ -7,8 +7,8 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 import type { ISignCraftDto } from "@framework/types";
+import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
@@ -27,7 +27,7 @@ export class CraftService {
     private readonly settingsService: SettingsService,
   ) {}
 
-  public search(dto: ISearchDto, merchantEntity: MerchantEntity): Promise<[Array<CraftEntity>, number]> {
+  public search(dto: Partial<ISearchDto>, merchantEntity: MerchantEntity): Promise<[Array<CraftEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");

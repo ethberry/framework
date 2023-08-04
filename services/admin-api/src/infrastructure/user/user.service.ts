@@ -3,7 +3,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
-import { IUserImportDto } from "./interfaces";
+import type { IUserImportDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
 
 @Injectable()

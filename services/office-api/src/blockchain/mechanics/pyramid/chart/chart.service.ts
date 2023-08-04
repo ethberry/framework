@@ -6,12 +6,10 @@ import { ns } from "@framework/constants";
 import type { IPyramidChartSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { PyramidDepositService } from "../deposit/deposit.service";
 
 @Injectable()
 export class PyramidChartService {
   constructor(
-    private readonly pyramidDepositService: PyramidDepositService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
@@ -78,8 +76,8 @@ export class PyramidChartService {
               userEntity.chainId,
               deposit.tokenType,
               deposit.contractId,
-              reward.tokenType,
-              reward.contractId,
+              reward!.tokenType,
+              reward!.contractId,
             ],
       ),
       0,

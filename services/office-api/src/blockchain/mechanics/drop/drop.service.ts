@@ -1,14 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IDropSearchDto } from "@framework/types";
 
-import { DropEntity } from "./drop.entity";
-import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
-import { AssetService } from "../../exchange/asset/asset.service";
-import { PageEntity } from "../../../infrastructure/page/page.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { AssetService } from "../../exchange/asset/asset.service";
+import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
+import { DropEntity } from "./drop.entity";
 
 @Injectable()
 export class DropService {
@@ -84,10 +83,10 @@ export class DropService {
     const { price, item, ...rest } = dto;
 
     const priceEntity = await this.assetService.create();
-    await this.assetService.update(priceEntity, price);
+    await this.assetService.update(priceEntity, price, userEntity);
 
     const itemEntity = await this.assetService.create();
-    await this.assetService.update(itemEntity, item);
+    await this.assetService.update(itemEntity, item, userEntity);
 
     return this.dropEntityRepository
       .create({
@@ -117,7 +116,13 @@ export class DropService {
     });
   }
 
-  public delete(where: FindOptionsWhere<PageEntity>): Promise<DeleteResult> {
-    return this.dropEntityRepository.delete(where);
+  public async delete(where: FindOptionsWhere<DropEntity>): Promise<DropEntity> {
+    const dropEntity = await this.findOne(where);
+
+    if (!dropEntity) {
+      throw new NotFoundException("dropNotFound");
+    }
+
+    return dropEntity.remove();
   }
 }

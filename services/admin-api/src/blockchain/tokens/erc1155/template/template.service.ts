@@ -26,7 +26,10 @@ export class Erc1155TemplateService extends TemplateService {
     super(templateEntityRepository, assetService, tokenService, contractService);
   }
 
-  public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
+  public async search(
+    dto: Partial<ITemplateSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<TemplateEntity>, number]> {
     return super.search(dto, userEntity, [ModuleType.HIERARCHY], [TokenType.ERC1155]);
   }
 

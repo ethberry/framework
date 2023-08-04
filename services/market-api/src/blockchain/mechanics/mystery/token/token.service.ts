@@ -18,7 +18,7 @@ export class MysteryTokenService extends TokenService {
     super(tokenEntityRepository);
   }
 
-  public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+  public async search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return super.search(dto, userEntity, [TokenType.ERC721], [ModuleType.MYSTERY]);
   }
 

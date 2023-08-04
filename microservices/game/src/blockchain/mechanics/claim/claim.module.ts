@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { SecretManagerModule } from "@gemunion/nest-js-module-secret-manager-gcp";
 
@@ -20,7 +20,7 @@ import { ContractModule } from "../../hierarchy/contract/contract.module";
     SecretManagerModule.deferred(),
     TypeOrmModule.forFeature([ClaimEntity]),
   ],
-  providers: [Logger, ClaimService, ClaimServiceRmq],
+  providers: [ClaimService, ClaimServiceRmq],
   controllers: [ClaimController],
   exports: [ClaimService, ClaimServiceRmq],
 })

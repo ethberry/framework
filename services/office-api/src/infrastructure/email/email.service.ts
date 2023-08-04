@@ -1,5 +1,4 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { companyName, loremIpsum } from "@gemunion/constants";
@@ -10,7 +9,6 @@ import { UserEntity } from "../user/user.entity";
 @Injectable()
 export class EmailService {
   constructor(
-    private readonly configService: ConfigService,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}

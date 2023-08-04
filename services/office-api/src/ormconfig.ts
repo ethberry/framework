@@ -36,6 +36,12 @@ import { ParameterEntity } from "./ecommerce/parameter/parameter.entity";
 import { OtpEntity } from "./infrastructure/otp/otp.entity";
 import { RatePlanEntity } from "./infrastructure/rate-plan/rate-plan.entity";
 import { ChainLinkSubscriptionEntity } from "./blockchain/integrations/chain-link/subscription/subscription.entity";
+/* achievements */
+import { AchievementItemEntity } from "./achievements/item/item.entity";
+import { AchievementLevelEntity } from "./achievements/level/level.entity";
+import { AchievementRuleEntity } from "./achievements/rule/rule.entity";
+import { AchievementRedemptionEntity } from "./achievements/redemption/redemption.entity";
+import { NodeEnv } from "@framework/types";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -81,11 +87,16 @@ const config: PostgresConnectionOptions = {
     ProductItemEntity,
     ProductItemParameterEntity,
     StockEntity,
+    /* achievements */
+    AchievementItemEntity,
+    AchievementLevelEntity,
+    AchievementRuleEntity,
+    AchievementRedemptionEntity,
   ],
   // We are using migrations, synchronize should market-api set to false.
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  logging: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === NodeEnv.development,
 };
 
 export default config;

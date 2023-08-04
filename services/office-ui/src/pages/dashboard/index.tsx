@@ -15,6 +15,7 @@ import { MarketplaceSection } from "./exchange/marketplace";
 import { PyramidSection } from "./mechanics/pyramid";
 import { StakingSection } from "./mechanics/staking";
 import { DispenserSection } from "./mechanics/dispenser";
+import { VestingSection } from "./mechanics/vesting";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -33,6 +34,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={12} md={4}>
           <DispenserSection />
           <ClaimSection />
+          <VestingSection />
           <DropSection />
           <StakingSection />
           <PyramidSection />

@@ -24,7 +24,7 @@ export class CollectionTemplateService extends TemplateService {
     super(templateEntityRepository, assetService, collectionTokenService, contractService);
   }
 
-  public search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
+  public search(dto: Partial<ITemplateSearchDto>, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
     return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 }

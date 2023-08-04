@@ -11,6 +11,9 @@ export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
 
 export * from "./mechanics/vesting/deploy";
+export * from "./mechanics/vesting/release";
+export * from "./mechanics/vesting/releasable";
+export * from "./mechanics/vesting/upload";
 
 export * from "./exchange/releasable";
 export * from "./exchange/release";

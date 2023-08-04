@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -22,7 +22,7 @@ import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus, TokenType } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
-import { VestingClaimUploadButton } from "../../../../components/buttons/mechanics/vesting/upload";
+import { VestingClaimUploadButton } from "../../../../components/buttons";
 import { ClaimSearchForm } from "../../claim/main/form";
 import { VestingClaimEditDialog } from "./edit";
 // import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";

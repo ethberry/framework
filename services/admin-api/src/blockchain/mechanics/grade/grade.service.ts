@@ -23,7 +23,7 @@ export class GradeService {
     protected readonly tokenService: TokenService,
   ) {}
 
-  public async search(dto: IGradeSearchDto, userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
+  public async search(dto: Partial<IGradeSearchDto>, userEntity: UserEntity): Promise<[Array<GradeEntity>, number]> {
     const { query, gradeStatus, skip, take } = dto;
 
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");

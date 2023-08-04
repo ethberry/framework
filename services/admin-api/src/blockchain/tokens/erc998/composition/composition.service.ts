@@ -14,7 +14,10 @@ export class Erc998CompositionService {
     protected readonly compositionEntityRepository: Repository<CompositionEntity>,
   ) {}
 
-  public async search(dto: ICompositionSearchDto, userEntity: UserEntity): Promise<[Array<CompositionEntity>, number]> {
+  public async search(
+    dto: Partial<ICompositionSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<CompositionEntity>, number]> {
     const { parentIds, childIds, query, skip, take } = dto;
 
     const queryBuilder = this.compositionEntityRepository.createQueryBuilder("composition");

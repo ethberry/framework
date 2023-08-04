@@ -1,10 +1,11 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IMerchantSearchDto } from "@framework/types";
-import { MerchantStatus, UserRole } from "@framework/types";
+import { MerchantStatus } from "@framework/types";
 
+import { AuthService } from "../auth/auth.service";
 import { MerchantEntity } from "./merchant.entity";
 import type { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
 import { UserEntity } from "../user/user.entity";
@@ -14,6 +15,7 @@ export class MerchantService {
   constructor(
     @InjectRepository(MerchantEntity)
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
+    private readonly authService: AuthService,
   ) {}
 
   public search(dto: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
@@ -80,9 +82,8 @@ export class MerchantService {
   public async update(
     where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
-    userEntity: UserEntity,
   ): Promise<MerchantEntity | null> {
-    const { userIds, ...rest } = dto;
+    const { userIds, wallet, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
@@ -90,9 +91,19 @@ export class MerchantService {
       throw new NotFoundException("merchantNotFound");
     }
 
+    if (wallet) {
+      const count = await this.count({
+        wallet,
+      });
+
+      if (count) {
+        throw new ConflictException("duplicateAccount");
+      }
+    }
+
     Object.assign(merchantEntity, rest);
 
-    if (userEntity.userRoles.includes(UserRole.ADMIN)) {
+    if (userIds.length) {
       Object.assign(merchantEntity, {
         users: userIds.map(id => ({ id })),
       });
@@ -101,14 +112,14 @@ export class MerchantService {
     return merchantEntity.save();
   }
 
-  public async create(dto: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
+  public async create(dto: IMerchantCreateDto): Promise<MerchantEntity> {
     const { userIds, ...rest } = dto;
 
     return this.merchantEntityRepository
       .create({
         ...rest,
-        merchantStatus: userEntity.userRoles.includes(UserRole.ADMIN) ? MerchantStatus.ACTIVE : MerchantStatus.PENDING,
-        users: userEntity.userRoles.includes(UserRole.ADMIN) ? userIds.map(id => ({ id })) : [userEntity],
+        merchantStatus: MerchantStatus.ACTIVE,
+        users: userIds.map(id => ({ id })),
       })
       .save();
   }
@@ -120,15 +131,18 @@ export class MerchantService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    const isAdmin = userEntity.userRoles.includes(UserRole.ADMIN);
-    const isSelf = userEntity.userRoles.includes(UserRole.OWNER) && userEntity.merchantId === merchantEntity.id;
-
-    if (!(isAdmin || isSelf)) {
-      throw new ForbiddenException("insufficientPermissions");
-    }
-
     Object.assign(merchantEntity, { merchantStatus: MerchantStatus.INACTIVE });
 
-    return merchantEntity.save();
+    await merchantEntity.save();
+
+    if (merchantEntity.id === userEntity.merchantId) {
+      await this.authService.revokeRefreshTokens(userEntity);
+    }
+
+    return merchantEntity;
+  }
+
+  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+    return this.merchantEntityRepository.count({ where });
   }
 }

@@ -19,7 +19,7 @@ export class CraftService {
     private readonly eventHistoryService: EventHistoryService,
   ) {}
 
-  public search(dto: ICraftSearchDto, userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
+  public search(dto: Partial<ICraftSearchDto>, userEntity: UserEntity): Promise<[Array<CraftEntity>, number]> {
     const { query, craftStatus, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");

@@ -66,9 +66,9 @@ export class PageService {
   public async create(dto: IPageCreateDto): Promise<PageEntity> {
     const { slug } = dto;
 
-    const productEntity = await this.pageEntityRepository.findOne({ where: { slug } });
+    const pageEntity = await this.pageEntityRepository.findOne({ where: { slug } });
 
-    if (productEntity) {
+    if (pageEntity) {
       throw new ConflictException("duplicateSlug");
     }
 

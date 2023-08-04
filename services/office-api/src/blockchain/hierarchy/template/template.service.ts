@@ -24,7 +24,7 @@ export class TemplateService {
   ) {}
 
   public async search(
-    dto: ITemplateSearchDto,
+    dto: Partial<ITemplateSearchDto>,
     userEntity: UserEntity,
     contractModule: Array<ModuleType>,
     contractType: Array<TokenType>,
@@ -215,7 +215,7 @@ export class TemplateService {
     });
   }
 
-  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+  public async createTemplate(dto: ITemplateCreateDto, userEntity: UserEntity): Promise<TemplateEntity> {
     const { price, contractId } = dto;
 
     const contractEntity = await this.contractService.findOne({
@@ -227,7 +227,7 @@ export class TemplateService {
     }
 
     const assetEntity = await this.assetService.create();
-    await this.assetService.update(assetEntity, price);
+    await this.assetService.update(assetEntity, price, userEntity);
 
     return this.create({
       ...dto,
@@ -242,6 +242,7 @@ export class TemplateService {
   public async update(
     where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<ITemplateUpdateDto>,
+    userEntity: UserEntity,
   ): Promise<TemplateEntity> {
     const { price, ...rest } = dto;
     const templateEntity = await this.findOne(where, {
@@ -258,7 +259,7 @@ export class TemplateService {
     }
 
     if (price) {
-      await this.assetService.update(templateEntity.price, price);
+      await this.assetService.update(templateEntity.price, price, userEntity);
     }
 
     Object.assign(templateEntity, rest);

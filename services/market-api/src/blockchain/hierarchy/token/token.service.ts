@@ -24,7 +24,7 @@ export class TokenService {
   ) {}
 
   public async search(
-    dto: ITokenSearchDto,
+    dto: Partial<ITokenSearchDto>,
     userEntity: UserEntity,
     contractType: Array<TokenType>,
     contractModule: Array<ModuleType>,

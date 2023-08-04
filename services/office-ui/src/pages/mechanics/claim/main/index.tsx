@@ -8,7 +8,8 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
 import { emptyItem } from "@gemunion/mui-inputs-asset";
-import { ClaimStatus, IClaim, IClaimSearchDto, IUser } from "@framework/types";
+import type { IClaim, IClaimSearchDto, IUser } from "@framework/types";
+import { ClaimStatus } from "@framework/types";
 
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons";

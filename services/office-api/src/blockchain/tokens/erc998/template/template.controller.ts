@@ -36,8 +36,12 @@ export class Erc998TemplateController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
-    return this.erc998TemplateService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: TemplateUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<TemplateEntity> {
+    return this.erc998TemplateService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
@@ -47,8 +51,8 @@ export class Erc998TemplateController {
   }
 
   @Post("/")
-  public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc998TemplateService.createTemplate(dto);
+  public create(@Body() dto: TemplateCreateDto, @User() userEntity: UserEntity): Promise<TemplateEntity> {
+    return this.erc998TemplateService.createTemplate(dto, userEntity);
   }
 
   @Delete("/:id")

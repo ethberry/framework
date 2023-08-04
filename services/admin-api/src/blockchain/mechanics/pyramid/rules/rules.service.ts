@@ -6,7 +6,6 @@ import type { ISearchableDto } from "@gemunion/types-collection";
 import type { IPyramidRuleSearchDto } from "@framework/types";
 import { PyramidRuleStatus } from "@framework/types";
 
-import { AssetService } from "../../../exchange/asset/asset.service";
 import { PyramidRulesEntity } from "./rules.entity";
 import { IPyramidRuleAutocompleteDto } from "./interfaces";
 
@@ -15,7 +14,6 @@ export class PyramidRulesService {
   constructor(
     @InjectRepository(PyramidRulesEntity)
     private readonly pyramidRuleEntityRepository: Repository<PyramidRulesEntity>,
-    protected readonly assetService: AssetService,
   ) {}
 
   public search(dto: IPyramidRuleSearchDto): Promise<[Array<PyramidRulesEntity>, number]> {

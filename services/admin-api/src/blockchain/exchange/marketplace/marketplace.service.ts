@@ -134,7 +134,7 @@ export class MarketplaceService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async export(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<string> {
+  public async export(dto: Partial<IMarketplaceReportSearchDto>, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
     const [list] = await this.search(rest, userEntity);
@@ -154,7 +154,7 @@ export class MarketplaceService {
     );
   }
 
-  public async supply(dto: IMarketplaceSupplySearchDto, userEntity: UserEntity): Promise<any> {
+  public async supply(dto: Partial<IMarketplaceSupplySearchDto>, userEntity: UserEntity): Promise<any> {
     const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [] } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
@@ -204,7 +204,7 @@ export class MarketplaceService {
     ]);
   }
 
-  public async chart(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<any> {
+  public async chart(dto: Partial<IMarketplaceReportSearchDto>, userEntity: UserEntity): Promise<any> {
     const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {

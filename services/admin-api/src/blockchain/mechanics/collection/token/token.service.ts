@@ -8,7 +8,7 @@ import { UserEntity } from "../../../../infrastructure/user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ITokenUploadDto } from "../contract/interfaces";
-import { compare, sorter } from "../../../../common/utils/sorter";
+import { compare } from "../../../../common/utils/sorter";
 
 @Injectable()
 export class CollectionTokenService extends TokenService {
@@ -28,7 +28,7 @@ export class CollectionTokenService extends TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+  public search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return super.search(dto, userEntity, TokenType.ERC721, ModuleType.COLLECTION);
   }
 

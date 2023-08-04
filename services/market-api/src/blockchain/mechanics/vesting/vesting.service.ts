@@ -22,7 +22,10 @@ export class VestingService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async search(dto: IVestingSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+  public async search(
+    dto: Partial<IVestingSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
     const { skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("vesting");

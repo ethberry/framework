@@ -24,7 +24,7 @@ export class ContractService {
   ) {}
 
   public async search(
-    dto: IContractSearchDto,
+    dto: Partial<IContractSearchDto>,
     userEntity: UserEntity,
     contractModule: Array<ModuleType>,
     contractType: Array<TokenType> | null,

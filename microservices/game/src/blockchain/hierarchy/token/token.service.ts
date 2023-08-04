@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -24,7 +24,7 @@ export class TokenService {
   ) {}
 
   public async search(
-    dto: ITokenSearchDto,
+    dto: Partial<ITokenSearchDto>,
     merchantEntity: MerchantEntity,
     contractType: Array<TokenType>,
     contractModule: Array<ModuleType>,

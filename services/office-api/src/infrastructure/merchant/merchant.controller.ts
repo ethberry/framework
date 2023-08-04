@@ -38,17 +38,13 @@ export class MerchantController {
   }
 
   @Post("/")
-  public create(@Body() dto: MerchantCreateDto, @User() userEntity: UserEntity): Promise<MerchantEntity> {
-    return this.merchantService.create(dto, userEntity);
+  public create(@Body() dto: MerchantCreateDto): Promise<MerchantEntity> {
+    return this.merchantService.create(dto);
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: MerchantUpdateDto,
-    @User() userEntity: UserEntity,
-  ): Promise<MerchantEntity | null> {
-    return this.merchantService.update({ id }, dto, userEntity);
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MerchantUpdateDto): Promise<MerchantEntity | null> {
+    return this.merchantService.update({ id }, dto);
   }
 
   @Get("/:id")

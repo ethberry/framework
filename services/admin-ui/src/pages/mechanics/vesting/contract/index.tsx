@@ -1,6 +1,5 @@
 import { FC } from "react";
 import {
-  Button,
   Grid,
   IconButton,
   List,
@@ -10,18 +9,18 @@ import {
   Pagination,
   Tooltip,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Visibility } from "@mui/icons-material";
+import { useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { AddressLink } from "@gemunion/mui-scanner";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { IContract, IVestingSearchDto } from "@framework/types";
 
 import { emptyVestingContract } from "../../../../components/common/interfaces";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
-import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
@@ -31,8 +30,6 @@ export const VestingContracts: FC = () => {
     search,
     selected,
     isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
     isViewDialogOpen,
     handleView,
     handleViewConfirm,
@@ -54,13 +51,10 @@ export const VestingContracts: FC = () => {
       <Breadcrumbs path={["dashboard", "vesting", "vesting.contracts"]} />
 
       <PageHeader message="pages.vesting.contracts.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
         <VestingDeployButton />
       </PageHeader>
 
-      <VestingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List sx={{ overflowX: "scroll" }}>

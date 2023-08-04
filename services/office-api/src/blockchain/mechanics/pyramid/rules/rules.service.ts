@@ -1,19 +1,19 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { IPyramidRuleSearchDto, PyramidRuleStatus } from "@framework/types";
+import type { ISearchableDto } from "@gemunion/types-collection";
+import type { IPyramidRuleSearchDto } from "@framework/types";
+import { PyramidRuleStatus } from "@framework/types";
 
 import { PyramidRulesEntity } from "./rules.entity";
-import { IPyramidCreateDto, IPyramidUpdateDto } from "./interfaces";
-import { AssetService } from "../../../exchange/asset/asset.service";
+import { IPyramidRuleAutocompleteDto } from "./interfaces";
 
 @Injectable()
 export class PyramidRulesService {
   constructor(
     @InjectRepository(PyramidRulesEntity)
     private readonly pyramidRuleEntityRepository: Repository<PyramidRulesEntity>,
-    protected readonly assetService: AssetService,
   ) {}
 
   public search(dto: IPyramidRuleSearchDto): Promise<[Array<PyramidRulesEntity>, number]> {
@@ -119,51 +119,45 @@ export class PyramidRulesService {
     });
   }
 
-  public async create(dto: IPyramidCreateDto): Promise<PyramidRulesEntity> {
-    const { deposit, reward } = dto;
+  public async autocomplete(dto: Partial<IPyramidRuleAutocompleteDto>): Promise<Array<PyramidRulesEntity>> {
+    const { pyramidRuleStatus = [], pyramidId } = dto;
+    const where = {};
 
-    const depositEntity = await this.assetService.create();
-    await this.assetService.update(depositEntity, deposit);
-
-    const rewardEntity = await this.assetService.create();
-    await this.assetService.update(rewardEntity, reward);
-
-    Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
-
-    return this.pyramidRuleEntityRepository.create(dto).save();
-  }
-
-  public async update(
-    where: FindOptionsWhere<PyramidRulesEntity>,
-    dto: IPyramidUpdateDto,
-  ): Promise<PyramidRulesEntity> {
-    const { reward, deposit, ...rest } = dto;
-    const pyramidEntity = await this.findOne(where, { relations: { deposit: true, reward: true } });
-
-    if (!pyramidEntity) {
-      throw new NotFoundException("tokenNotFound");
+    if (pyramidId) {
+      Object.assign(where, {
+        contractId: pyramidId,
+      });
     }
 
-    Object.assign(pyramidEntity.deposit, deposit);
-    Object.assign(pyramidEntity.reward, reward);
+    if (pyramidRuleStatus.length) {
+      Object.assign(where, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        pyramidRuleStatus: In(pyramidRuleStatus),
+      });
+    }
 
-    Object.assign(pyramidEntity, rest);
-
-    return pyramidEntity.save();
+    return this.pyramidRuleEntityRepository.find({
+      where,
+      select: {
+        id: true,
+        title: true,
+        externalId: true,
+      },
+    });
   }
 
-  public async delete(where: FindOptionsWhere<PyramidRulesEntity>): Promise<PyramidRulesEntity> {
+  public async update(where: FindOptionsWhere<PyramidRulesEntity>, dto: ISearchableDto): Promise<PyramidRulesEntity> {
     const pyramidEntity = await this.findOne(where);
 
     if (!pyramidEntity) {
       throw new NotFoundException("pyramidRuleNotFound");
     }
 
-    if (pyramidEntity.pyramidRuleStatus === PyramidRuleStatus.NEW) {
-      return pyramidEntity.remove();
-    } else {
-      Object.assign(pyramidEntity, { pyramidRuleStatus: PyramidRuleStatus.INACTIVE });
-      return pyramidEntity.save();
-    }
+    Object.assign(pyramidEntity, {
+      pyramidRuleStatus: PyramidRuleStatus.ACTIVE,
+      ...dto,
+    });
+
+    return pyramidEntity.save();
   }
 }

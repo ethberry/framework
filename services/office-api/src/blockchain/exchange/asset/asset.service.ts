@@ -15,6 +15,7 @@ import { TokenType } from "@framework/types";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { AssetEntity } from "./asset.entity";
+import { UserEntity } from "../../../infrastructure/user/user.entity";
 
 @Injectable()
 export class AssetService {
@@ -38,7 +39,7 @@ export class AssetService {
       .save();
   }
 
-  public async update(asset: AssetEntity, dto: IAssetDto): Promise<void> {
+  public async update(asset: AssetEntity, dto: IAssetDto, _userEntity: UserEntity): Promise<void> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();

@@ -22,7 +22,7 @@ import { ProductItemCreateDto, ProductItemSearchDto, ProductItemUpdateDto } from
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/product-item")
+@Controller("/ecommerce/product-item")
 export class ProductItemController {
   constructor(private readonly productItemService: ProductItemService) {}
 
@@ -38,13 +38,17 @@ export class ProductItemController {
   }
 
   @Post("/")
-  public create(@Body() dto: ProductItemCreateDto): Promise<ProductItemEntity> {
-    return this.productItemService.create(dto);
+  public create(@Body() dto: ProductItemCreateDto, @User() userEntity: UserEntity): Promise<ProductItemEntity> {
+    return this.productItemService.create(dto, userEntity);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ProductItemUpdateDto): Promise<ProductItemEntity> {
-    return this.productItemService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: ProductItemUpdateDto,
+    @User() userEntity: UserEntity,
+  ): Promise<ProductItemEntity> {
+    return this.productItemService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

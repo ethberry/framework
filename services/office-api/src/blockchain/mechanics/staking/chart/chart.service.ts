@@ -6,12 +6,10 @@ import { ns } from "@framework/constants";
 import type { IStakingChartSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
-import { StakingDepositService } from "../deposit/deposit.service";
 
 @Injectable()
 export class StakingChartService {
   constructor(
-    private readonly stakingDepositService: StakingDepositService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
@@ -78,8 +76,8 @@ export class StakingChartService {
               userEntity.chainId,
               deposit.tokenType,
               deposit.contractId,
-              reward.tokenType,
-              reward.contractId,
+              reward!.tokenType,
+              reward!.contractId,
             ],
       ),
       0,

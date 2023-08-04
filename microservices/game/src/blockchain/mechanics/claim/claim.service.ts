@@ -1,12 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Inject,
-  Injectable,
-  Logger,
-  LoggerService,
-  NotFoundException,
-} from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
@@ -25,8 +17,6 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 @Injectable()
 export class ClaimService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
     protected readonly assetService: AssetService,
@@ -34,7 +24,10 @@ export class ClaimService {
     private readonly signerService: SignerService,
   ) {}
 
-  public async search(dto: IClaimSearchDto, merchantEntity: MerchantEntity): Promise<[Array<ClaimEntity>, number]> {
+  public async search(
+    dto: Partial<IClaimSearchDto>,
+    merchantEntity: MerchantEntity,
+  ): Promise<[Array<ClaimEntity>, number]> {
     const { account, claimStatus, claimType, skip, take } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");

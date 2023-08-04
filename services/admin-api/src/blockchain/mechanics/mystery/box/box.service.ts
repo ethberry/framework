@@ -25,7 +25,10 @@ export class MysteryBoxService {
     private readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IMysteryBoxSearchDto, userEntity: UserEntity): Promise<[Array<MysteryBoxEntity>, number]> {
+  public async search(
+    dto: Partial<IMysteryBoxSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<MysteryBoxEntity>, number]> {
     const { query, mysteryBoxStatus, contractIds, templateIds, minPrice, maxPrice, skip, take } = dto;
 
     const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
