@@ -1,15 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsEnum,
-  IsInt,
-  IsOptional,
-  IsString,
-  Matches,
-  MaxLength,
-  Min,
-  ValidateIf,
-  ValidateNested,
-} from "class-validator";
+import { IsEnum, IsInt, IsOptional, Min, ValidateIf, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { GradeStatus, GradeStrategy } from "@framework/types";
@@ -18,15 +8,6 @@ import { PriceDto } from "../../../exchange/asset/dto";
 import { IGradeUpdateDto } from "../interfaces";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
-  @ApiPropertyOptional({
-    maxLength: 32,
-  })
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
-  @Matches(/^[A-Z][A-Z0-9]*$/, { message: "patternMismatch" })
-  public attribute: string;
-
   @ApiPropertyOptional({
     enum: GradeStatus,
   })
