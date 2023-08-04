@@ -36,7 +36,7 @@ export const WaitListJoinDialog: FC<IWaitListClaimDialogProps> = props => {
       {...rest}
     >
       <TextInput name="account" readOnly />
-      <EntityInput name="listId" controller="waitlist/list" />
+      <EntityInput name="listId" controller="wait-list/list" />
     </FormDialog>
   );
 };

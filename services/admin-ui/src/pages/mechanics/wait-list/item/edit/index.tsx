@@ -30,7 +30,7 @@ export const WaitListItemEditDialog: FC<IWaitListDialogProps> = props => {
   return (
     <FormDialog initialValues={fixedValues} message={message} validationSchema={validationSchema} {...rest}>
       <TextInput name="account" />
-      <EntityInput name="listId" controller="waitlist/list" />
+      <EntityInput name="listId" controller="wait-list/list" />
     </FormDialog>
   );
 };
