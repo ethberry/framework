@@ -10,10 +10,13 @@ import { SettingsService } from "../../../infrastructure/settings/settings.servi
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import type { ISignTemplateDto } from "./interfaces";
+import { ContractEntity } from "../../hierarchy/contract/contract.entity";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class MarketplaceService {
   constructor(
+    private readonly contractService: ContractService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
@@ -53,6 +56,7 @@ export class MarketplaceService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
+      await this.contractService.findSystemContractByName("Exchange"),
       account,
       {
         externalId: templateEntity.id,
@@ -68,8 +72,14 @@ export class MarketplaceService {
     return { nonce: hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, templateEntity: TemplateEntity): Promise<string> {
+  public async getSignature(
+    verifyingContract: ContractEntity,
+    account: string,
+    params: IParams,
+    templateEntity: TemplateEntity,
+  ): Promise<string> {
     return this.signerService.getOneToManySignature(
+      verifyingContract,
       account,
       params,
       {

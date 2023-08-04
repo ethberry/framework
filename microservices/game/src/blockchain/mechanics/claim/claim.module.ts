@@ -9,10 +9,12 @@ import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
 import { ClaimController } from "./claim.controller";
 import { ClaimServiceRmq } from "./claim.service.rmq";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
   imports: [
     SignerModule,
+    ContractModule,
     AssetModule,
     MerchantModule,
     SecretManagerModule.deferred(),

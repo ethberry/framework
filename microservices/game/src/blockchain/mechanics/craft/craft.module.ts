@@ -7,9 +7,10 @@ import { SettingsModule } from "../../../infrastructure/settings/settings.module
 import { CraftService } from "./craft.service";
 import { CraftController } from "./craft.controller";
 import { CraftEntity } from "./craft.entity";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [SettingsModule, SignerModule, TypeOrmModule.forFeature([CraftEntity])],
+  imports: [SettingsModule, SignerModule, ContractModule, TypeOrmModule.forFeature([CraftEntity])],
   providers: [Logger, CraftService],
   controllers: [CraftController],
   exports: [CraftService],
