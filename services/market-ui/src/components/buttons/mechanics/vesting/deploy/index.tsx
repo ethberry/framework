@@ -64,8 +64,8 @@ export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
   };
 
   return (
-    <Tooltip title={formatMessage({ id: "form.tips.release" })}>
-      <IconButton onClick={handleClick} disabled={disabled} data-testid="VestingReleaseButton">
+    <Tooltip title={formatMessage({ id: "form.tips.deploy" })}>
+      <IconButton onClick={handleClick} disabled={disabled} data-testid="VestingDeployButton">
         <Inventory />
       </IconButton>
     </Tooltip>

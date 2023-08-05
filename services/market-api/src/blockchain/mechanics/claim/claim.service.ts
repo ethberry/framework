@@ -33,6 +33,8 @@ export class ClaimService {
 
     queryBuilder.andWhere("claim.account = :account", { account });
 
+    queryBuilder.leftJoinAndSelect("claim.merchant", "merchant");
+
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");

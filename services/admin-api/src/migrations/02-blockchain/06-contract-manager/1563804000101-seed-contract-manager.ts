@@ -3,6 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -30,7 +31,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 101},
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 101},
         '${contractManagerAddress}',
         '${chainId}',
         'CONTRACT MANAGER',
@@ -40,7 +41,7 @@ export class SeedContractManagerAt1563804000101 implements MigrationInterface {
         '',
         '',
         'ACTIVE',
-        '{}',
+        '{ALLOWANCE}',
         'SYSTEM',
         '${fromBlock}',
         1,

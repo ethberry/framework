@@ -3,10 +3,13 @@ import { WeiPerEther, ZeroHash } from "ethers";
 
 import { wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
+
+import vestingJSON from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/Vesting.sol/Vesting.json";
 
 export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -89,6 +92,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         102130001,
         '${JSON.stringify({
           beneficiary: wallets[0],
+          bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
           monthlyRelease: 1000,
@@ -107,6 +111,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         102130002,
         '${JSON.stringify({
           beneficiary: wallets[0],
+          bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
           monthlyRelease: 1000,
@@ -125,6 +130,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         102130003,
         '${JSON.stringify({
           beneficiary: wallets[0],
+          bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
           monthlyRelease: 1000,
@@ -143,6 +149,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         102130004,
         '${JSON.stringify({
           beneficiary: wallets[1],
+          bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
           monthlyRelease: 1000,
@@ -161,6 +168,7 @@ export class SeedClaimVestingAt1687835680100 implements MigrationInterface {
         102130005,
         '${JSON.stringify({
           beneficiary: wallets[2],
+          bytecode: vestingJSON.bytecode,
           startTimestamp: currentDateTime,
           cliffInMonth: 12,
           monthlyRelease: 1000,

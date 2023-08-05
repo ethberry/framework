@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import { Grid } from "@mui/material";
 
 import { ContractFeatures, IAsset, ModuleType, TokenType } from "@framework/types";
@@ -43,6 +43,13 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
       form.setValue("address", option?.address ?? "0x");
     };
 
+  const formatValue = useCallback(
+    (maxTicket: number | null): number => {
+      return maxTicket || 0;
+    },
+    [maxTicket],
+  );
+
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -79,7 +86,7 @@ export const RaffleStartRoundDialog: FC<IRaffleStartRoundDialogProps> = props =>
           />
         </Grid>
       </Grid>
-      <NumberInput name="maxTicket" />
+      <NumberInput name="maxTicket" inputProps={{ min: 0 }} formatValue={formatValue} />
     </FormDialog>
   );
 };

@@ -186,7 +186,7 @@ task("topics", "Generate topics", async (_, hre) => {
   // const topicSigs: Array<string> = [];
   const topicS: Array<any> = [];
   const topicSEnum: Array<any> = [];
-  console.log("ContractEventSignature len:", Object.values(ContractEventSignature).length);
+  console.info("ContractEventSignature len:", Object.values(ContractEventSignature).length);
   Object.values(ContractEventSignature).map((value, index) => {
     // const eventSig = value.split("(");
     // console.log("eventSig", eventSig);

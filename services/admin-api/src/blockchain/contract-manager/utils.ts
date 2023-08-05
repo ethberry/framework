@@ -15,9 +15,9 @@ export const chainIdToSuffix = (chainId: bigint | number) => {
     case 42161:
       return "Arbitrum";
     case 13377:
-      return "Besu";
-    case 13378:
       return "Gemunion";
+    case 13378:
+      return "Besu";
     default:
       return "";
   }

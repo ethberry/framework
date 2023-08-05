@@ -55,8 +55,8 @@ import { abiEncode, keccak256It } from "../utils";
           },
           block: {
             fromBlock: vrfCoordinator && vrfCoordinator.fromBlock ? vrfCoordinator.fromBlock : startingBlock,
-            debug: false,
             cron,
+            debug: true,
           },
         };
       },

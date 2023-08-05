@@ -11,7 +11,7 @@ import { ChainLinkEventType, ChainLinkType, IChainLinkRandomWordsRequestedEvent 
 export class ChainLinkContractControllerEth {
   constructor(private readonly chainLinkServiceEth: ChainLinkContractServiceEth) {}
 
-  @EventPattern({ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.RandomWordsRequested })
+  @EventPattern([{ contractType: ChainLinkType.VRF, eventName: ChainLinkEventType.RandomWordsRequested }])
   public randomRequest(
     @Payload() event: ILogEvent<IChainLinkRandomWordsRequestedEvent>,
     @Ctx() context: Log,

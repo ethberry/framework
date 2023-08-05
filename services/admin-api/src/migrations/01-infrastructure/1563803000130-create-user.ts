@@ -105,7 +105,7 @@ export class CreateUser1563803000130 implements MigrationInterface {
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
-          onDelete: "CASCADE",
+          onDelete: "SET NULL",
         },
       ],
     });

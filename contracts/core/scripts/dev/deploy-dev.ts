@@ -42,6 +42,7 @@ const recursivelyDecodeResult = (result: Result): Record<string, any> => {
 
 const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   if (obj && obj.hash) {
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     console.info(`${name} tx: ${obj.hash}`);
     await blockAwaitMs(delayMs);
   } else {
@@ -568,10 +569,7 @@ async function main() {
 
   const randomContractRaffleName = getContractName("RaffleRandom", network.name);
   const raffleFactory = await ethers.getContractFactory(randomContractRaffleName);
-  contracts.raffle = await raffleFactory.deploy({
-    timeLagBeforeRelease: 3600,
-    commission: 30,
-  });
+  contracts.raffle = await raffleFactory.deploy();
   await debug(contracts);
   await debug(
     await vrfInstance.addConsumer(network.name === "besu" ? 1n : 2n, await contracts.raffle.getAddress()),

@@ -549,6 +549,7 @@
       "create": "Create",
       "delete": "Delete",
       "deposit": "Deposit",
+      "deploy": "Deploy",
       "edit": "Edit",
       "lend": "Lend",
       "redeem": "Redeem",
