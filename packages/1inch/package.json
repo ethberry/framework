@@ -15,7 +15,7 @@
     "@gemunion/provider-license": "3.0.27",
     "@gemunion/provider-user": "6.0.41",
     "@gemunion/provider-wallet": "3.3.38",
-    "@gemunion/react-hooks-eth": "1.0.122",
+    "@gemunion/react-hooks-eth": "1.1.0",
     "@mui/material": "5.14.3",
     "@mui/icons-material": "5.14.3",
     "@web3-react/core": "8.2.0",
