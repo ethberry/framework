@@ -45,7 +45,7 @@ export const Photo: FC = () => {
   );
 
   const handleChangeStatus = (photo: IPhoto, newStatus: PhotoStatus) => () =>
-    handleChangeStatusApi(undefined, { photo, newStatus });
+    handleChangeStatusApi(void 0, { photo, newStatus });
 
   return (
     <Grid>

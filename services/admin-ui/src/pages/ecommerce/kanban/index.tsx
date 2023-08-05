@@ -59,7 +59,7 @@ export const Kanban: FC = () => {
   );
 
   const updateOrderStatus = (id: string, orderStatus: OrderStatus) => {
-    return updateOrderStatusApi(undefined, { id, orderStatus });
+    return updateOrderStatusApi(void 0, { id, orderStatus });
   };
 
   const handleEdit = (order: IOrder) => {

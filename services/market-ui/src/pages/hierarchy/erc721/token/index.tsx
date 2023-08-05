@@ -38,7 +38,7 @@ export const Erc721Token: FC = () => {
 
   useEffect(() => {
     if (selected.template?.contract?.address && user?.profile?.wallet) {
-      void checkAccessMetadata(undefined, {
+      void checkAccessMetadata(void 0, {
         account: user.profile.wallet,
         address: selected.template.contract.address,
       })

@@ -44,7 +44,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
 
   useEffect(() => {
     if (user?.profile?.wallet) {
-      void checkAccessMint(undefined, {
+      void checkAccessMint(void 0, {
         account: user.profile.wallet,
         address: contract.address,
       })
