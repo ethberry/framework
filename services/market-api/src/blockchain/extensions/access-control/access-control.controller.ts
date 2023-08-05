@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AccessControlService } from "./access-control.service";
@@ -10,7 +10,7 @@ export class AccessControlController {
   constructor(private readonly accessControlService: AccessControlService) {}
 
   @Get("/check")
-  public check(@Body() dto: AccessControlCheckDto): Promise<{ hasRole: boolean }> {
+  public check(@Query() dto: AccessControlCheckDto): Promise<{ hasRole: boolean }> {
     return this.accessControlService.check(dto);
   }
 }

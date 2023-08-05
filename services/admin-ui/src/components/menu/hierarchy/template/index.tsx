@@ -33,7 +33,7 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
   };
 
   useEffect(() => {
-    if (!disabled) {
+    if (!disabled && user?.profile?.wallet) {
       void checkAccessMint(undefined, {
         account: user.profile.wallet,
         address: template.contract!.address,
@@ -43,7 +43,7 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
         })
         .catch(console.error);
     }
-  }, [user.profile.wallet, disabled]);
+  }, [user?.profile?.wallet, disabled]);
 
   return (
     <Fragment>

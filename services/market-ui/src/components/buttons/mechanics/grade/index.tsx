@@ -15,11 +15,12 @@ import { getEthPrice, getMultiplier } from "./utils";
 import { IUpgradeDto, UpgradeDialog } from "./dialog";
 
 interface IUpgradeButtonProps {
+  disabled?: boolean;
   token: IToken;
 }
 
 export const GradeButton: FC<IUpgradeButtonProps> = props => {
-  const { token } = props;
+  const { disabled = false, token } = props;
 
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false);
 
@@ -114,7 +115,7 @@ export const GradeButton: FC<IUpgradeButtonProps> = props => {
 
   return (
     <Fragment>
-      <Button onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
+      <Button disabled={disabled} onClick={handleUpgrade} data-testid="ExchangeUpgradeButton">
         <FormattedMessage id={`form.buttons.upgrade`} />
       </Button>
       <UpgradeDialog

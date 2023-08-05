@@ -43,15 +43,17 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
   };
 
   useEffect(() => {
-    void checkAccessMint(undefined, {
-      account: user.profile.wallet,
-      address: contract.address,
-    })
-      .then((json: { hasRole: boolean }) => {
-        setHasAccess(json?.hasRole);
+    if (user?.profile?.wallet) {
+      void checkAccessMint(undefined, {
+        account: user.profile.wallet,
+        address: contract.address,
       })
-      .catch(console.error);
-  }, [user.profile.wallet]);
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [user?.profile?.wallet]);
 
   return (
     <Fragment>

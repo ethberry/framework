@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Box, Grid, Typography } from "@mui/material";
@@ -7,11 +7,13 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ITemplate } from "@framework/types";
+import type { ITemplate, IUser } from "@framework/types";
 import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
 
 import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
+import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
@@ -29,6 +31,23 @@ export const Erc721Token: FC = () => {
       } as ITemplate,
     },
   });
+
+  const user = useUser<IUser>();
+  const { checkAccessMetadata } = useCheckAccessMetadata();
+  const [hasAccess, setHasAccess] = useState(false);
+
+  useEffect(() => {
+    if (selected.template?.contract?.address && user?.profile?.wallet) {
+      void checkAccessMetadata(undefined, {
+        account: user.profile.wallet,
+        address: selected.template.contract.address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [user?.profile?.wallet, selected]);
 
   if (isLoading) {
     return <Spinner />;
@@ -83,7 +102,7 @@ export const Erc721Token: FC = () => {
                 <FormattedMessage id="pages.erc721.token.grade" />
               </Typography>
               <TokenGradeView metadata={selected.metadata} />
-              <GradeButton token={selected} />
+              <GradeButton token={selected} disabled={!hasAccess} />
             </StyledPaper>
           ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
