@@ -1,10 +1,12 @@
-import { FC, Fragment, MouseEvent, useState } from "react";
+import { FC, Fragment, MouseEvent, useEffect, useState } from "react";
 
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { ITemplate } from "@framework/types";
+import { ITemplate, IUser } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
 
+import { useCheckAccessMint } from "../../../../utils/use-check-access-mint";
 import { MintMenuItem } from "./mint";
 
 export interface ITemplateActionsMenu {
@@ -18,6 +20,10 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const { checkAccessMint } = useCheckAccessMint();
+  const user = useUser<IUser>();
+  const [hasAccess, setHasAccess] = useState(false);
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,6 +31,19 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (!disabled) {
+      void checkAccessMint(undefined, {
+        account: user.profile.wallet,
+        address: template.contract!.address,
+      })
+        .then((json: { hasRole: boolean }) => {
+          setHasAccess(json?.hasRole);
+        })
+        .catch(console.error);
+    }
+  }, [user.profile.wallet, disabled]);
 
   return (
     <Fragment>
@@ -35,7 +54,7 @@ export const TemplateActionsMenu: FC<ITemplateActionsMenu> = props => {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
-        disabled={disabled}
+        disabled={disabled || !hasAccess}
         data-testid="TemplateActionsMenuButton"
       >
         <MoreVert />

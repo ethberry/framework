@@ -33,7 +33,7 @@ export const Merchant: FC = () => {
         method: "POST",
         data,
       })
-      .then(async (): Promise<void> => {
+      .then(() => {
         navigate("/message/merchant-created", { replace: true });
       })
       .catch((e: ApiError) => {

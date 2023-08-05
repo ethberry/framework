@@ -1,9 +1,11 @@
-import { FC, Fragment, MouseEvent, useState } from "react";
+import { FC, Fragment, MouseEvent, useEffect, useState } from "react";
 import { IconButton, Menu, Divider } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IContract } from "@framework/types";
+import { IContract, IUser } from "@framework/types";
+import { useUser } from "@gemunion/provider-user";
 
+import { useCheckAccessMint } from "../../../../utils/use-check-access-mint";
 import { RoyaltyMenuItem } from "../../common/royalty";
 import { TransferMenuItem } from "../../common/transfer";
 import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
@@ -28,6 +30,10 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const user = useUser<IUser>();
+  const { checkAccessMint } = useCheckAccessMint();
+  const [hasAccess, setHasAccess] = useState(false);
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -35,6 +41,17 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    void checkAccessMint(undefined, {
+      account: user.profile.wallet,
+      address: contract.address,
+    })
+      .then((json: { hasRole: boolean }) => {
+        setHasAccess(json?.hasRole);
+      })
+      .catch(console.error);
+  }, [user.profile.wallet]);
 
   return (
     <Fragment>
@@ -60,7 +77,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <WhitelistMenuItem contract={contract} />
         <UnWhitelistMenuItem contract={contract} />
         <Divider sx={{ m: 2 }} />
-        <MintMenuItem contract={contract} />
+        {hasAccess ? <MintMenuItem contract={contract} /> : null}
         <AllowanceMenuItem contract={contract} />
         <TransferMenuItem contract={contract} />
         <SnapshotMenuItem contract={contract} />
