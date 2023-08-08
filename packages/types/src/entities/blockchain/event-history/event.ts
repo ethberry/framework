@@ -99,6 +99,10 @@ export enum ContractEventType {
   RoleGranted = "RoleGranted",
   RoleRevoked = "RoleRevoked",
   RoleAdminChanged = "RoleAdminChanged",
+  DefaultAdminTransferScheduled = "DefaultAdminTransferScheduled",
+  DefaultAdminTransferCanceled = "DefaultAdminTransferCanceled",
+  DefaultAdminDelayChangeScheduled = "DefaultAdminDelayChangeScheduled",
+  DefaultAdminDelayChangeCanceled = "DefaultAdminDelayChangeCanceled",
   OwnershipTransferred = "OwnershipTransferred",
 
   // MODULE:STAKING

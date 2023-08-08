@@ -56,6 +56,10 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'RoleGranted',
        'RoleRevoked',
        'RoleAdminChanged',
+       'DefaultAdminTransferScheduled',
+       'DefaultAdminTransferCanceled',
+       'DefaultAdminDelayChangeScheduled',
+       'DefaultAdminDelayChangeCanceled',
        'OwnershipTransferred',
       --MODULE:STAKING
        'RuleCreated',
