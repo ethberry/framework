@@ -61,6 +61,7 @@ export class CreateEventHistory1563804040010 implements MigrationInterface {
        'DefaultAdminDelayChangeScheduled',
        'DefaultAdminDelayChangeCanceled',
        'OwnershipTransferred',
+       'OwnershipTransferStarted',
       --MODULE:STAKING
        'RuleCreated',
        'RuleUpdated',

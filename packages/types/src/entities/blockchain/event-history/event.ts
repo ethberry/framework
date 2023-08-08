@@ -104,6 +104,7 @@ export enum ContractEventType {
   DefaultAdminDelayChangeScheduled = "DefaultAdminDelayChangeScheduled",
   DefaultAdminDelayChangeCanceled = "DefaultAdminDelayChangeCanceled",
   OwnershipTransferred = "OwnershipTransferred",
+  OwnershipTransferStarted = "OwnershipTransferStarted",
 
   // MODULE:STAKING
   RuleCreated = "RuleCreated",
@@ -229,7 +230,12 @@ export enum ContractEventSignature {
   RoleGranted = "RoleGranted(bytes32,address,address)",
   RoleRevoked = "RoleRevoked(bytes32,address,address)",
   RoleAdminChanged = "RoleAdminChanged(bytes32,bytes32,bytes32)",
+  DefaultAdminTransferScheduled = "DefaultAdminTransferScheduled(address,uint48)",
+  DefaultAdminTransferCanceled = "DefaultAdminTransferCanceled()",
+  DefaultAdminDelayChangeScheduled = "DefaultAdminDelayChangeScheduled(uint48,uint48)",
+  DefaultAdminDelayChangeCanceled = "DefaultAdminDelayChangeCanceled()",
   OwnershipTransferred = "OwnershipTransferred(address,address)",
+  OwnershipTransferStarted = "OwnershipTransferStarted(address,address)",
 
   // MODULE:STAKING
   // event RuleCreated(uint256 ruleId, Rule rule, uint256 externalId);

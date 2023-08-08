@@ -7,6 +7,7 @@ export enum AccessControlEventType {
   DefaultAdminDelayChangeScheduled = "DefaultAdminDelayChangeScheduled",
   DefaultAdminDelayChangeCanceled = "DefaultAdminDelayChangeCanceled",
   OwnershipTransferred = "OwnershipTransferred",
+  OwnershipTransferStarted = "OwnershipTransferStarted",
 }
 
 // event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
@@ -54,6 +55,12 @@ export interface IOwnershipTransferredEvent {
   newOwner: string;
 }
 
+// event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner);
+export interface IOwnershipTransferStartedEvent {
+  previousOwner: string;
+  newOwner: string;
+}
+
 export type TAccessControlEvents =
   | IAccessControlRoleGrantedEvent
   | IAccessControlRoleRevokedEvent
@@ -62,4 +69,5 @@ export type TAccessControlEvents =
   | IAccessControlDefaultAdminTransferCanceledEvent
   | IAccessControlDefaultAdminDelayChangeScheduledEvent
   | IAccessControlDefaultAdminDelayChangeCanceledEvent
-  | IOwnershipTransferredEvent;
+  | IOwnershipTransferredEvent
+  | IOwnershipTransferStartedEvent;
