@@ -1,6 +1,4 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
-import { Typography } from "@mui/material";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { DateInput } from "@gemunion/mui-inputs-picker";
@@ -60,26 +58,16 @@ export const AchievementLevelEditDialog: FC<IAchievementLevelEditDialogProps> = 
       <EntityInput name="achievementRuleId" controller="achievements/rules" autoselect readOnly={!!id} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <Typography sx={{ mt: 2 }} variant="inherit">
-        <FormattedMessage id="form.labels.achievementLevelItem" />
-      </Typography>
       <TemplateAssetInput
         allowEmpty
         autoSelect
         multiple
         prefix="item"
-        showLabel={false}
         // tokenType={{ disabledOptions: [TokenType.NATIVE] }}
       />
       <JsonInput name="metadata" />
-      <Typography variant="inherit">
-        <FormattedMessage id="form.labels.amount" />
-      </Typography>
-      <NumberInput name="amount" showLabel={false} />
-      <Typography variant="inherit">
-        <FormattedMessage id="form.labels.achievementLevel" />
-      </Typography>
-      <NumberInput name="achievementLevel" showLabel={false} />
+      <NumberInput name="amount" />
+      <NumberInput name="achievementLevel" />
       <DateInput name="startTimestamp" />
       <DateInput name="endTimestamp" />
     </FormDialog>
