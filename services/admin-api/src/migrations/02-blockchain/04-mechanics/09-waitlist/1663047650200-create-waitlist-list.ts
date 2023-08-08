@@ -64,6 +64,8 @@ export class CreateWaitListList1663047650200 implements MigrationInterface {
     });
 
     await queryRunner.createTable(table, true);
+
+    await queryRunner.query(`SELECT setval('${ns}.wait_list_list_id_seq', 10000, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

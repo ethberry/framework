@@ -27,7 +27,7 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
       web3Context.provider?.getSigner(),
     );
 
-    return contract.deployWaitlist(
+    return contract.deployWaitList(
       {
         nonce,
         bytecode: sign.bytecode,
@@ -42,6 +42,7 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
       {
         url: "/contract-manager/wait-list",
         method: "POST",
+        data: {},
       },
       {},
     );

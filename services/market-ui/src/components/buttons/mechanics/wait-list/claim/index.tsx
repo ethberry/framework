@@ -9,13 +9,15 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ClaimABI from "../../../../../abis/mechanics/wait-list/claim/claim.abi.json";
+import { IWaitListItem } from "@framework/types";
 
 export interface IWaitListClaimButtonProps {
-  listId: number;
+  listItem: Partial<IWaitListItem>;
 }
 
 export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
-  const { listId } = props;
+  const { listItem } = props;
+  const { listId, list } = listItem;
 
   const { formatMessage } = useIntl();
 
@@ -34,8 +36,7 @@ export const WaitListClaimButton: FC<IWaitListClaimButtonProps> = props => {
 
   const metaWaitList = useMetamask((web3Context: Web3ContextType) => {
     return fn(null as unknown as any, listId).then((proof: { proof: Array<string> }) => {
-      // TODO get from backend
-      const contract = new Contract(process.env.WAITLIST_ADDR, ClaimABI, web3Context.provider?.getSigner());
+      const contract = new Contract(list!.contract.address, ClaimABI, web3Context.provider?.getSigner());
       return contract.claim(proof.proof, listId) as Promise<void>;
     });
   });

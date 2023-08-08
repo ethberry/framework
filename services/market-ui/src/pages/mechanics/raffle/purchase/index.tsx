@@ -54,31 +54,33 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.raffle.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
-            {raffle.round ? (
+            {raffle && raffle.round ? (
               <RafflePurchaseButton
                 round={raffle.round}
                 disabled={raffle.round.maxTickets > 0 && raffle.round.maxTickets <= raffle.count}
               />
             ) : null}
-            {raffle.round ? formatPrice(raffle.round.price) : "Round not Active!"}
+            {raffle && raffle.round ? formatPrice(raffle.round.price) : "Round not Active!"}
           </StyledPaper>
           <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
-            {raffle.round && raffle.round.maxTickets > 0 ? (
+            {raffle && raffle.round && raffle.round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.raffle.purchase.count"
                 values={{ current: raffle.count, max: raffle.round?.maxTickets }}
               />
             ) : (
-              <FormattedMessage id="pages.raffle.purchase.sold" values={{ count: raffle.count }} />
+              <FormattedMessage id="pages.raffle.purchase.sold" values={{ count: raffle ? raffle.count : 0 }} />
             )}
           </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">
-        {raffle.parameters.schedule
-          ? Object.keys(CronExpression)[
-              Object.values(CronExpression).indexOf(raffle.parameters.schedule as unknown as CronExpression)
-            ]
+        {raffle
+          ? raffle.parameters.schedule
+            ? Object.keys(CronExpression)[
+                Object.values(CronExpression).indexOf(raffle.parameters.schedule as unknown as CronExpression)
+              ]
+            : "not yet scheduled"
           : "not yet scheduled"}
       </StyledTypography>
       <StyledTypography variant="h6">

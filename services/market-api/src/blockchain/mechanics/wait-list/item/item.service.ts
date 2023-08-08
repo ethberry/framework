@@ -23,7 +23,8 @@ export class WaitListItemService {
     queryBuilder.select(["wait_list_item.account", "wait_list_item.listId"]);
 
     queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
-    queryBuilder.addSelect(["wait_list_list.title"]);
+    queryBuilder.leftJoin("wait_list_list.contract", "wait_list_list_contract");
+    queryBuilder.addSelect(["wait_list_list.title", "wait_list_list_contract.address"]);
 
     queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
 

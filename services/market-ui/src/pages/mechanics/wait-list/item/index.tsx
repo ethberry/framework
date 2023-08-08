@@ -54,7 +54,7 @@ export const WaitListItem: FC = () => {
                   transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
                 }}
               >
-                <WaitListClaimButton listId={waitlist.listId} />
+                <WaitListClaimButton listItem={waitlist} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

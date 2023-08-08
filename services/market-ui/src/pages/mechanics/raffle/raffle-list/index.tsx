@@ -4,7 +4,6 @@ import { Grid, Pagination } from "@mui/material";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IContract } from "@framework/types";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 import { RaffleListItem } from "./item";
 
@@ -13,15 +12,15 @@ export const RaffleList: FC = () => {
     rows,
     count,
     search,
-    selected,
     isLoading,
-    isFiltersOpen,
-    handleToggleFilters,
-    isViewDialogOpen,
-    handleView,
-    handleViewConfirm,
-    handleViewCancel,
-    handleSearch,
+    // selected,
+    // isFiltersOpen,
+    // handleToggleFilters,
+    // isViewDialogOpen,
+    // handleView,
+    // handleViewConfirm,
+    // handleViewCancel,
+    // handleSearch,
     handleChangePage,
   } = useCollection<IContract, ISearchDto>({
     baseUrl: "/raffle/contracts",
@@ -29,13 +28,14 @@ export const RaffleList: FC = () => {
       query: "",
     },
   });
+  // TODO add search filters
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "raffle", "raffle-list"]} />
 
       <PageHeader message="pages.raffle-list.title" />
 
-      {/*<CommonSearchForm initialValues={search} onSubmit={handleSearch} />*/}
+      {/* <CommonSearchForm initialValues={search} onSubmit={handleSearch} /> */}
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

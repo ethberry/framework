@@ -18,7 +18,7 @@ import {
   PyramidContractDeployDto,
   StakingContractDeployDto,
   VestingContractDeployDto,
-  WaitListContractDeployDto,
+  // WaitListContractDeployDto,
 } from "./dto";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 
@@ -91,8 +91,8 @@ export class ContractManagerController {
 
   // MODULE:WAITLIST
   @Post("/wait-list")
-  public waitList(@Body() dto: WaitListContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.contractManagerSignService.waitList(dto, userEntity);
+  public waitList(@User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.waitList(userEntity);
   }
 
   // MODULE:RAFFLE

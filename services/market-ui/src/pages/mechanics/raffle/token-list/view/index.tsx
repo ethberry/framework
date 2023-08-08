@@ -35,7 +35,7 @@ export const RaffleTokenViewDialog: FC<IRaffleTokenViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.roundId" />
+                <FormattedMessage id="form.labels.raffle" />
               </TableCell>
               <TableCell align="right">{round.contract?.title}</TableCell>
             </TableRow>

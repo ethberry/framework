@@ -495,9 +495,9 @@ export class ContractManagerSignService {
   }
 
   // MODULE:WAITLIST
-  public async waitList(dto: IWaitListContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async waitList(userEntity: UserEntity): Promise<IServerSignature> {
     const nonce = randomBytes(32);
-    const { bytecode } = await this.getBytecodeByWaitListContractTemplate(dto, userEntity.chainId);
+    const { bytecode } = await this.getBytecodeByWaitListContractTemplate({}, userEntity.chainId);
 
     await this.contractManagerService.validateDeployment(userEntity, ModuleType.WAITLIST, null);
 
