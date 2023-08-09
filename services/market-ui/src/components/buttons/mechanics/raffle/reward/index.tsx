@@ -33,7 +33,7 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
     };
   };
 
-  if (token.metadata.PRIZE === "1") {
+  if (token.metadata.PRIZE) {
     return null;
   }
 
@@ -42,9 +42,7 @@ export const RaffleRewardButton: FC<IRaffleRewardButtonProps> = props => {
       <IconButton
         onClick={handleReward(token)}
         disabled={
-          token.tokenStatus !== TokenStatus.MINTED ||
-          token.metadata.PRIZE === "1" ||
-          token.tokenId !== token.round.number
+          token.tokenStatus !== TokenStatus.MINTED || token.metadata.PRIZE || token.tokenId !== token.round.number
         }
         data-testid="RaffleRewardButton"
       >

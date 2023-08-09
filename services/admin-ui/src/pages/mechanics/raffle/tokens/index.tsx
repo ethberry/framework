@@ -69,6 +69,9 @@ export const RaffleTokens: FC = () => {
               <ListItemText sx={{ width: 0.2 }}>
                 {"Round #"}
                 {token.round.roundId}
+                {" ("}
+                {token.round.id}
+                {")"}
               </ListItemText>
               <ListItemText sx={{ width: 0.2 }}>
                 {token.metadata.PRIZE ? "Prize " : ""}
