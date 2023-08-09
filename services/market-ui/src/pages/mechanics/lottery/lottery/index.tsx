@@ -57,7 +57,7 @@ export const LotteryContract: FC = () => {
         </Box>
       </Box>
 
-      <LotteryPurchase contract={selected} />
+      <LotteryPurchase contract={selected} embedded />
     </Fragment>
   );
 };

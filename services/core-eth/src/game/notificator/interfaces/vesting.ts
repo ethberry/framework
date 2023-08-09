@@ -1,4 +1,4 @@
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 export interface IVestingReleaseData {
   vesting: IContract;

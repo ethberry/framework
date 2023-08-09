@@ -3,7 +3,7 @@ import { Grid, Pagination } from "@mui/material";
 
 import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998ContractListItem } from "./item";

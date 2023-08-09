@@ -4,7 +4,7 @@ import { PaidOutlined } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import { CollectionUploadDialog, ICollectionUploadDto } from "./dialog";
 

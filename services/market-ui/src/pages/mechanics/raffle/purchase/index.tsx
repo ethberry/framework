@@ -12,10 +12,11 @@ import { emptyRaffle } from "../../../../components/common/interfaces";
 
 interface IRafflePurchaseProps {
   contract: IContract;
+  embedded?: boolean;
 }
 
 export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
-  const { contract } = props;
+  const { contract, embedded } = props;
 
   const [raffle, setRaffle] = useState<IRaffleContractRound>(emptyRaffle);
 
@@ -49,7 +50,7 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "raffle", "raffle.purchase"]} />
+      <Breadcrumbs path={["dashboard", "raffle", "raffle.purchase"]} isHidden={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.raffle.purchase.title">

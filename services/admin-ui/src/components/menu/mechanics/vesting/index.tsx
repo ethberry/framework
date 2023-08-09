@@ -2,7 +2,7 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import { AllowanceMenuItem } from "../common/allowance";
 import { TopUpMenuItem } from "../common/top-up";

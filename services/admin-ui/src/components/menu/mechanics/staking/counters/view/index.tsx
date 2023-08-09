@@ -7,7 +7,7 @@ import { BigNumber, constants, Contract } from "ethers";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import StakingCountersABI from "../../../../../../abis/mechanics/staking/stakingCounters.abi.json";
 import { StakesInfoDialog } from "../dialog";

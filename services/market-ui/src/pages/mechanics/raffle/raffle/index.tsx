@@ -56,7 +56,7 @@ export const RaffleContract: FC = () => {
         </Box>
       </Box>
 
-      <RafflePurchase contract={selected} />
+      <RafflePurchase contract={selected} embedded />
     </Fragment>
   );
 };

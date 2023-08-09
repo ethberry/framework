@@ -18,10 +18,11 @@ const maxNumbers = 6;
 
 interface ILotteryPurchaseProps {
   contract: IContract;
+  embedded?: boolean;
 }
 
 export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
-  const { contract } = props;
+  const { contract, embedded } = props;
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
@@ -72,7 +73,8 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} isHidden={embedded} />
+
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>

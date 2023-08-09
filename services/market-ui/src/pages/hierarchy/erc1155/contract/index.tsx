@@ -6,7 +6,7 @@ import { Skeleton } from "@mui/lab";
 import { Link as RouterLink } from "react-router-dom";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
