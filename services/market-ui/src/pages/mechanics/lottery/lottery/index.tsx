@@ -32,7 +32,7 @@ export const LotteryContract: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.lottery.title" data={selected} />
+      <PageHeader message="pages.lottery.contract.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

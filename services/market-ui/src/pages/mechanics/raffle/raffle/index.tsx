@@ -31,7 +31,7 @@ export const RaffleContract: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "raffle", "raffle.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.raffle.title" data={selected} />
+      <PageHeader message="pages.raffle.contract.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

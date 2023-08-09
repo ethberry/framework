@@ -914,7 +914,7 @@
     },
     "lottery": {
       "contract": {
-        "title": "Contracts"
+        "title": "Contract: {title}"
       },
       "leaderboard": {
         "title": "Leaderboard"
@@ -1063,7 +1063,7 @@
     },
     "raffle": {
       "contract": {
-        "title": "Contracts"
+        "title": "Contract: {title}"
       },
       "leaderboard": {
         "title": "Leaderboard"
