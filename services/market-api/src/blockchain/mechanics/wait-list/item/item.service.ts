@@ -24,9 +24,9 @@ export class WaitListItemService {
 
     queryBuilder.leftJoin("wait_list_item.list", "wait_list_list");
     queryBuilder.leftJoin("wait_list_list.contract", "wait_list_list_contract");
-    queryBuilder.addSelect(["wait_list_list.title", "wait_list_list_contract.address", "wait_list_list.root"]);
+    queryBuilder.addSelect(["wait_list_list.title", "wait_list_list_contract.address"]);
 
-    // queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
+    queryBuilder.andWhere("wait_list_list.root IS NOT NULL");
 
     queryBuilder.andWhere("wait_list_item.account = :account", { account: userEntity.wallet });
     queryBuilder.andWhere("wait_list_item.waitListItemStatus = :waitListItemStatus", {
