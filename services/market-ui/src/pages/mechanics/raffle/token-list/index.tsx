@@ -41,6 +41,9 @@ export const RaffleTokenList: FC = () => {
       round: {
         number: "0",
       } as unknown as IRaffleRound,
+      metadata: {
+        PRIZE: 0,
+      },
     },
     search: {
       roundIds: [],

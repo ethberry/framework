@@ -42,6 +42,10 @@ export const LotteryTokenList: FC = () => {
       round: {
         numbers: [],
       },
+      metadata: {
+        PRIZE: 0,
+        NUMBERS: 0,
+      },
     },
     search: {
       roundIds: [],
