@@ -6,6 +6,7 @@ import { NoAccounts } from "@mui/icons-material";
 import type { IContract } from "@framework/types";
 
 import { AccessControlRevokeRoleDialog } from "./dialog";
+import { ContractSecurity } from "@framework/types";
 
 export interface IContractRevokeRoleMenuItemProps {
   contract: IContract;
@@ -13,7 +14,7 @@ export interface IContractRevokeRoleMenuItemProps {
 
 export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractSecurity },
   } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
@@ -29,6 +30,10 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
   const handleRevokeRoleConfirm = () => {
     setIsRevokeRoleDialogOpen(false);
   };
+
+  if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
+    return null;
+  }
 
   return (
     <Fragment>

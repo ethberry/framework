@@ -4,10 +4,11 @@ import { CronExpression } from "@nestjs/schedule";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
 import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractLotteryAt1660436476100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateToken1563804000300 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -73,7 +74,7 @@ export class CreateToken1563804000300 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

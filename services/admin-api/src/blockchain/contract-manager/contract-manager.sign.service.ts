@@ -1,5 +1,4 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nest-js-module-ethers-gcp";
@@ -13,7 +12,6 @@ import type {
   ILotteryContractDeployDto,
   IMysteryContractDeployDto,
   IPyramidContractDeployDto,
-  // IRaffleContractDeployDto,
   IStakingContractDeployDto,
   IVestingContractDeployDto,
   IWaitListContractDeployDto,
@@ -32,17 +30,16 @@ import {
 } from "@framework/types";
 
 import { UserEntity } from "../../infrastructure/user/user.entity";
+import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractManagerService } from "./contract-manager.service";
 import { AssetEntity } from "../exchange/asset/asset.entity";
 import { getContractABI } from "./utils";
-import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ContractManagerSignService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    private readonly configService: ConfigService,
     private readonly contractService: ContractService,
     private readonly contractManagerService: ContractManagerService,
   ) {}

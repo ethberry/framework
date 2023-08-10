@@ -6,6 +6,7 @@ import type { IContract } from "@framework/types";
 
 import { AllowanceMenuItem } from "../common/allowance";
 import { TopUpMenuItem } from "../common/top-up";
+import { TransferOwnershipMenuItem } from "../../extensions/transfer-ownership";
 
 export interface IVestingActionsMenu {
   vesting: IContract;
@@ -43,6 +44,7 @@ export const VestingActionsMenu: FC<IVestingActionsMenu> = props => {
       <Menu id="vesting-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <AllowanceMenuItem contract={vesting} />
         <TopUpMenuItem contract={vesting} />
+        <TransferOwnershipMenuItem contract={vesting} />
       </Menu>
     </Fragment>
   );

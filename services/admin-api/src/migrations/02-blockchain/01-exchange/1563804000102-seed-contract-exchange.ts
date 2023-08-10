@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -32,7 +33,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 102},
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 102},
         '${exchangeAddress}',
         '${chainId}',
         'EXCHANGE (BESU)',
@@ -50,7 +51,7 @@ export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        ${process.env.NODE_ENV === "production" ? "DEFAULT" : 202},
+        ${process.env.NODE_ENV === NodeEnv.production ? "DEFAULT" : 202},
         '${exchangeAddressBinance}',
         56,
         'EXCHANGE (BNB)',

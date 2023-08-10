@@ -2,10 +2,11 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { rawStateString } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedProduct1683724061410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

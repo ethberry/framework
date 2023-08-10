@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateContract1563804000100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -61,6 +62,17 @@ export class CreateContract1563804000100 implements MigrationInterface {
         -- MODULE:PYRAMID
         'SPLITTER',
         'REFERRAL'
+      );
+    `);
+
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.contract_security_enum AS ENUM (
+        'OWNABLE',
+        'OWNABLE_2_STEP',
+        'ACCESS_CONTROL',
+        'ACCESS_CONTROL_ENUMERABLE',
+        'ACCESS_CONTROL_DEFAULT_ADMIN_RULES',
+        'ACCESS_CONTROL_CROSS_CHAIN'
       );
     `);
 
@@ -159,6 +171,12 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: "'HIERARCHY'",
         },
         {
+          name: "contract_security",
+          type: `${ns}.contract_security_enum`,
+          default: "'ACCESS_CONTROL'",
+          isNullable: true,
+        },
+        {
           name: "is_paused",
           type: "boolean",
           default: false,
@@ -193,7 +211,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

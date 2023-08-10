@@ -7,22 +7,25 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
+import { ContractSecurity } from "@framework/types";
 
-import VestingTransferOwnershipABI from "../../../../../abis/extensions/transfer-ownership/transferOwnership.abi.json";
+import TransferOwnershipABI from "../../../../abis/extensions/transfer-ownership/transferOwnership.abi.json";
 
-import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
+import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface ITransferOwnershipMenuItemProps {
-  vesting: IContract;
+  contract: IContract;
 }
 
 export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = props => {
-  const { vesting } = props;
+  const {
+    contract: { address, contractSecurity },
+  } = props;
 
   const [isOwnershipDialogOpen, setIsOwnershipDialogOpen] = useState(false);
 
   const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.address, VestingTransferOwnershipABI, web3Context.provider?.getSigner());
+    const contract = new Contract(address, TransferOwnershipABI, web3Context.provider?.getSigner());
     return contract.transferOwnership(values.account) as Promise<any>;
   });
 
@@ -38,6 +41,10 @@ export const TransferOwnershipMenuItem: FC<ITransferOwnershipMenuItemProps> = pr
   const handleTransferOwnershipCancel = () => {
     setIsOwnershipDialogOpen(false);
   };
+
+  if (contractSecurity !== ContractSecurity.OWNABLE) {
+    return null;
+  }
 
   return (
     <Fragment>

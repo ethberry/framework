@@ -2,6 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
 import { avatarUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedUser1563803000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -44,7 +45,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
       );
     `);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

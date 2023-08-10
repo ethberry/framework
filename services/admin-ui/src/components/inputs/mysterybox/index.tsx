@@ -8,7 +8,7 @@ export const MysteryboxInput: FC = () => {
   const mysteryId = useWatch({ name: "mysteryId" });
   const form = useFormContext();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue("mysterybox", option);
     form.setValue("mysteryId", option?.id ?? 0);
   };

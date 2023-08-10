@@ -3,10 +3,11 @@ import { WeiPerEther } from "ethers";
 import { addMonths, subMonths } from "date-fns";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedDropErcMysteryboxAt1658980521050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

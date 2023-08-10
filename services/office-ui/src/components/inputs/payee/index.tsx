@@ -18,7 +18,7 @@ export const PayeeInput: FC<IPayeeInputProps> = props => {
   const data = {};
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue(name, option?.account ? option?.account : option?.wallet ? option?.wallet : "0x");
     form.setValue(`shares`, option?.shares ?? 0);
   };

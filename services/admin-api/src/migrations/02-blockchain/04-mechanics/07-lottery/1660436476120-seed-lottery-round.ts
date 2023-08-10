@@ -3,6 +3,7 @@ import { WeiPerEther } from "ethers";
 import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   const numbers: Array<boolean> = new Array(36).fill(false);
@@ -14,7 +15,7 @@ const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 
 export class SeedLotteryRoundAt1660436476120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

@@ -8,9 +8,9 @@ import { useUser } from "@gemunion/provider-user";
 import { useCheckAccessMint } from "../../../../utils/use-check-access-mint";
 import { RoyaltyMenuItem } from "../../common/royalty";
 import { TransferMenuItem } from "../../common/transfer";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { BlacklistMenuItem } from "../../extensions/blacklist-add";
 import { UnBlacklistMenuItem } from "../../extensions/blacklist-remove";
 import { WhitelistMenuItem } from "../../extensions/whitelist-add";
@@ -70,9 +70,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
         <Divider sx={{ m: 2 }} />
         <BlacklistMenuItem contract={contract} />
         <UnBlacklistMenuItem contract={contract} />

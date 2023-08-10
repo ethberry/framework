@@ -8,7 +8,7 @@ export const ContractInput: FC = () => {
   const contractId = useWatch({ name: "contract.contractId" });
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue("contractId", option?.id ?? 0);
     form.setValue("contract.contractId", option?.id ?? 0);
     form.setValue("contract.address", option?.address ?? "0x");

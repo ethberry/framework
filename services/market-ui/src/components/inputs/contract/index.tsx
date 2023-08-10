@@ -22,7 +22,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
 
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue(name, option?.id ?? 0);
     form.setValue(`contract.${related}`, option?.address ?? "0x");
     form.setValue(`${related}.decimals`, option?.decimals ?? 0);

@@ -3,10 +3,11 @@ import { WeiPerEther } from "ethers";
 import { addDays, subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedRaffleRoundAt1685961136120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

@@ -17,7 +17,7 @@ export interface ICommonContractInputProps {
     contractModule?: Array<ModuleType>;
     contractFeatures?: Array<ContractFeatures>;
   };
-  onChange?: (form: any) => (_event: ChangeEvent<unknown>, option: any | null) => void;
+  onChange?: (form: any) => (_event: ChangeEvent<unknown>, option: any) => void;
 }
 
 export const CommonContractInput: FC<ICommonContractInputProps> = props => {

@@ -1,9 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedGameBalance1686896594710 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

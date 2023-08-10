@@ -4,9 +4,9 @@ import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 import { AllowanceMenuItem } from "../common/allowance";
 import { PyramidBalanceMenuItem } from "./pyramid-balances";
 import { TopUpMenuItem } from "../common/top-up";
@@ -45,9 +45,9 @@ export const PyramidActionsMenu: FC<IPyramidActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="pyramid-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <TopUpMenuItem contract={contract} />
         <PyramidBalanceMenuItem contract={contract} />

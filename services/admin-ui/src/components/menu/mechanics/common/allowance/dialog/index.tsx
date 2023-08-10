@@ -33,7 +33,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
 
   const handleContractChange =
     (form: any) =>
-    (_event: ChangeEvent<unknown>, option: any | null): void => {
+    (_event: ChangeEvent<unknown>, option: any): void => {
       setShowAlert(option?.title === "USDT");
       form.setValue("contractId", option?.id ?? 0);
       form.setValue("contract.address", option?.address ?? "0x");

@@ -174,6 +174,15 @@ export enum ContractFeatures {
   "SPLITTER" = "SPLITTER",
 }
 
+export enum ContractSecurity {
+  "OWNABLE" = "OWNABLE",
+  "OWNABLE_2_STEP" = "OWNABLE_2_STEP",
+  "ACCESS_CONTROL" = "ACCESS_CONTROL",
+  "ACCESS_CONTROL_ENUMERABLE" = "ACCESS_CONTROL_ENUMERABLE",
+  "ACCESS_CONTROL_DEFAULT_ADMIN_RULES" = "ACCESS_CONTROL_DEFAULT_ADMIN_RULES",
+  "ACCESS_CONTROL_CROSS_CHAIN" = "ACCESS_CONTROL_CROSS_CHAIN",
+}
+
 export interface IContract extends IDeployable, ISearchable {
   imageUrl: string;
   name: string;
@@ -188,6 +197,7 @@ export interface IContract extends IDeployable, ISearchable {
   contractType: TokenType | null;
   contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
+  contractSecurity: ContractSecurity;
   templates: Array<ITemplate>;
   history?: Array<IEventHistory>;
   parent?: Array<IComposition>;

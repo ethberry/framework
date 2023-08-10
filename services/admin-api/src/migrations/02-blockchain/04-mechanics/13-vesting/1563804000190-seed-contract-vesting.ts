@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, testChainId } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
@@ -30,6 +31,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         contract_status,
         contract_features,
         contract_module,
+        contract_security,
         from_block,
         merchant_id,
         created_at,
@@ -53,6 +55,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'ACTIVE',
         '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -76,6 +79,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'ACTIVE',
         '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',
@@ -99,6 +103,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
         'ACTIVE',
         '{}',
         'VESTING',
+        'OWNABLE',
         '${fromBlock}',
         1,
         '${currentDateTime}',

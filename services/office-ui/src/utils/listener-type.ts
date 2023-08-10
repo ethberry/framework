@@ -9,9 +9,13 @@ export const getListenerType = (contract: IContract) => {
       switch (contractModule) {
         case ModuleType.HIERARCHY:
           return ListenerType.ERC721;
+        case ModuleType.MYSTERY:
+          return ListenerType.MYSTERYBOX;
         default:
           return ListenerType.ERC721;
       }
+    case TokenType.ERC998:
+      return ListenerType.ERC998;
     case TokenType.ERC1155:
       return ListenerType.ERC1155;
     default:

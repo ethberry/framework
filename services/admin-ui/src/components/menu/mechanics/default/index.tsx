@@ -4,9 +4,9 @@ import { MoreVert } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
 
 export interface IDefaultContractActionsMenu {
   contract: IContract;
@@ -42,9 +42,9 @@ export const DefaultContractActionsMenu: FC<IDefaultContractActionsMenu> = props
         <MoreVert />
       </IconButton>
       <Menu id="default-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
       </Menu>
     </Fragment>
   );

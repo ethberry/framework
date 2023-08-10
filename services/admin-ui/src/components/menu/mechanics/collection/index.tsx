@@ -6,9 +6,9 @@ import type { IContract } from "@framework/types";
 
 import { TransferMenuItem } from "../../common/transfer";
 import { RoyaltyMenuItem } from "../../common/royalty";
-import { ContractRenounceRoleMenuItem } from "../../extensions/renounce-role";
-import { ContractRevokeRoleMenuItem } from "../../extensions/revoke-role";
-import { ContractGrantRoleMenuItem } from "../../extensions/grant-role";
+import { RenounceRoleMenuItem } from "../../extensions/renounce-role";
+import { RevokeRoleMenuItem } from "../../extensions/revoke-role";
+import { GrantRoleMenuItem } from "../../extensions/grant-role";
 import { AllowanceMenuItem } from "../../hierarchy/contract/allowance";
 import { CollectionUploadMenuItem } from "./upload";
 import { BlacklistMenuItem } from "../../extensions/blacklist-add";
@@ -48,9 +48,9 @@ export const CollectionActionsMenu: FC<ICollectionActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="collection-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <ContractGrantRoleMenuItem contract={contract} />
-        <ContractRevokeRoleMenuItem contract={contract} />
-        <ContractRenounceRoleMenuItem contract={contract} />
+        <GrantRoleMenuItem contract={contract} />
+        <RevokeRoleMenuItem contract={contract} />
+        <RenounceRoleMenuItem contract={contract} />
         <AllowanceMenuItem contract={contract} />
         <RoyaltyMenuItem contract={contract} />
         <Divider sx={{ m: 2 }} />

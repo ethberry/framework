@@ -1,5 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+
 import { ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -7,9 +9,10 @@ export class SeedChainLinkSubscriptions1563803000122 implements MigrationInterfa
     const chainId = BigInt(process.env.CHAIN_ID || testChainId);
     const subId = BigInt(process.env.CHAINLINK_SUBSCRIPTION_ID || 1n);
 
-    // if (process.env.NODE_ENV === "production") {
-    //   return;
-    // }
+    if (process.env.NODE_ENV === NodeEnv.production) {
+      // this is commented out while we are on test network
+      // return;
+    }
 
     await queryRunner.query(`
       INSERT INTO ${ns}.chain_link_subscriptions (

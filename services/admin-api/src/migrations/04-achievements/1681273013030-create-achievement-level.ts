@@ -1,5 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class CreateAchievementLevel1681273013030 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -75,7 +77,7 @@ export class CreateAchievementLevel1681273013030 implements MigrationInterface {
 
     await queryRunner.createTable(table, true);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

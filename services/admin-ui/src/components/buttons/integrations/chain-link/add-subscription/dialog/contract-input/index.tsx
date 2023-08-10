@@ -7,7 +7,7 @@ import { ContractFeatures } from "@framework/types";
 export const VrfConsumerInput: FC = () => {
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue("contractId", option?.id ?? 0);
     form.setValue("address", option?.address ?? "0x");
   };

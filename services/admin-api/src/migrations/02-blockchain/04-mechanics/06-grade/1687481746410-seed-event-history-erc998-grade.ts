@@ -3,10 +3,11 @@ import { toUtf8Bytes, WeiPerEther, ZeroHash, zeroPadValue } from "ethers";
 
 import { wallet, wallets } from "@gemunion/constants";
 import { ns } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedEventHistoryErc998GradeAt1687481746410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 

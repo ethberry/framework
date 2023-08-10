@@ -7,19 +7,19 @@ import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
-import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType, ContractSecurity } from "@framework/types";
 
 import GrantRoleABI from "../../../../abis/extensions/grant-role/grantRole.abi.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
-export interface IContractGrantRoleMenuItemProps {
+export interface IGrantRoleMenuItemProps {
   contract: IContract;
 }
 
-export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = props => {
+export const GrantRoleMenuItem: FC<IGrantRoleMenuItemProps> = props => {
   const {
-    contract: { address },
+    contract: { address, contractSecurity },
   } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
@@ -42,6 +42,10 @@ export const ContractGrantRoleMenuItem: FC<IContractGrantRoleMenuItemProps> = pr
       setIsGrantRoleDialogOpen(false);
     });
   };
+
+  if (contractSecurity !== ContractSecurity.ACCESS_CONTROL) {
+    return null;
+  }
 
   return (
     <Fragment>

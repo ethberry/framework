@@ -12,7 +12,7 @@ export const StakingRuleInput: FC<IStakingRuleInputProps> = props => {
   const { contractId } = props;
   const form = useFormContext<any>();
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+  const handleChange = (_event: ChangeEvent<unknown>, option: any): void => {
     form.setValue("stakingRule", option?.id ?? 0);
     form.setValue("stakingRule.externalId", option?.externalId ?? "0");
     form.setValue("stakingRule.title", option?.title ?? "0x");

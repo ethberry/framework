@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
@@ -13,8 +13,6 @@ import { ContractManagerEntity } from "./contract-manager.entity";
 @Injectable()
 export class ContractManagerService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(ContractManagerEntity)
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
     private readonly planService: RatePlanService,

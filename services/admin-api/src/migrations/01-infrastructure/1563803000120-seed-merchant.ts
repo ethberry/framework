@@ -3,6 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallets } from "@gemunion/constants";
 import { imageUrl, ns, testChainId } from "@framework/constants";
+import { NodeEnv } from "@framework/types";
 
 export class SeedMerchant1563803000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -35,7 +36,7 @@ export class SeedMerchant1563803000120 implements MigrationInterface {
       );
     `);
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === NodeEnv.production) {
       return;
     }
 
