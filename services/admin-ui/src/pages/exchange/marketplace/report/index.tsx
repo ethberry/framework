@@ -158,6 +158,8 @@ export const MarketplaceReport: FC = () => {
           },
         }}
         autoHeight
+        disableAggregation
+        disableRowGrouping
       />
     </Fragment>
   );

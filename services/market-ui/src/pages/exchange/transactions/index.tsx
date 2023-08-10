@@ -139,6 +139,8 @@ export const MyTransactions: FC = () => {
           },
         }}
         autoHeight
+        disableAggregation
+        disableRowGrouping
       />
     </Grid>
   );

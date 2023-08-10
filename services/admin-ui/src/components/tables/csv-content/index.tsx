@@ -48,6 +48,8 @@ export const CsvContentView: FC<ICsvContentViewProps> = props => {
         slots={{
           toolbar: ResetButton,
         }}
+        disableAggregation
+        disableRowGrouping
       />
     </Box>
   );
