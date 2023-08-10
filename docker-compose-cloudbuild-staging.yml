@@ -1,22 +1,34 @@
 version: "3.3"
 
 volumes:
-  static-admin-ui:
+  static-admin-ui-b2b:
+  static-admin-ui-b2c:
   static-market-ui:
   static-office-ui:
 
 services:
 
-  admin-ui:
-    container_name: admin-ui
+  adminb2b-ui:
+    container_name: adminb2b-ui
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
     command: "sh /home/node/framework/scripts/logDna.sh"
     volumes:
-      - static-admin-ui:/home/node/framework/services/admin-ui/dist/
+      - static-admin-ui-b2b:/home/node/framework/services/admin-ui-b2b/dist/
     environment:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       BASE_MODE: "${BASE_MODE}"
-      BASE_APP: "Admin-UI"
+      BASE_APP: "Admin-UI-B2B"
+
+  adminb2c-ui:
+    container_name: adminb2c-ui
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-admin-ui-b2c:/home/node/framework/services/admin-ui-b2c/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "Admin-UI-B2C"
 
   market-ui:
     container_name: market-ui
@@ -40,8 +52,8 @@ services:
       BASE_MODE: "${BASE_MODE}"
       BASE_APP: "office-UI"
 
-  admin-api:
-    container_name: admin-api
+  adminb2b-api:
+    container_name: adminb2b-api
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
@@ -49,8 +61,8 @@ services:
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
-      PORT: "${PORT_ADMIN_API}"
-      BUSINESS_TYPE: "${BUSINESS_TYPE}"
+      PORT: "${PORT_ADMIN_API_B2B}"
+      BUSINESS_TYPE: B2B
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
       # REDIS
@@ -62,7 +74,7 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
-      ADMIN_FE_URL: "${ADMIN_FE_URL}"
+      ADMIN_FE_URL: "${ADMIN_FE_URL_B2B}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
       # GEMUNION
@@ -138,7 +150,107 @@ services:
       VRF_ADDR: "${VRF_ADDR}"
     ports:
       # admin-api
-      - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
+      - "${PORT_ADMIN_API_B2B}:${PORT_ADMIN_API_B2B}"
+
+  adminb2c-api:
+    container_name: adminb2c-api
+    image: gcr.io/halogen-framing-335807/framework-staging-img:latest
+    command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_ADMIN_API_B2C}"
+      BUSINESS_TYPE: B2C
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      ADMIN_FE_URL: "${ADMIN_FE_URL_B2C}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GCLOUD_KEYFILE_BASE64_PATH: "${GCLOUD_KEYFILE_BASE64_PATH}"
+      PRIVATE_KEY_SECRET_NAME: "${PRIVATE_KEY_SECRET_NAME}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      JSON_RPC_ADDR_ETHEREUM: "${JSON_RPC_ADDR_ETHEREUM}"
+      JSON_RPC_ADDR_GOERLY: "${JSON_RPC_ADDR_GOERLY}"
+      JSON_RPC_ADDR_BINANCE: "${JSON_RPC_ADDR_BINANCE}"
+      JSON_RPC_ADDR_BINANCE_TEST: "${JSON_RPC_ADDR_BINANCE_TEST}"
+      JSON_RPC_ADDR_POLYGON: "${JSON_RPC_ADDR_POLYGON}"
+      JSON_RPC_ADDR_MUMBAI: "${JSON_RPC_ADDR_MUMBAI}"
+      JSON_RPC_ADDR_BESU: "${JSON_RPC_ADDR_BESU}"
+      JSON_RPC_ADDR_GEMUNION: "${JSON_RPC_ADDR_GEMUNION}"
+      STARTING_BLOCK: "${STARTING_BLOCK}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      EXCHANGE_BINANCE_ADDR: "${EXCHANGE_BINANCE_ADDR}"
+      ERC20_SIMPLE_ADDR: "${ERC20_SIMPLE_ADDR}"
+      ERC20_INACTIVE_ADDR: "${ERC20_INACTIVE_ADDR}"
+      ERC20_NEW_ADDR: "${ERC20_NEW_ADDR}"
+      ERC20_BLACKLIST_ADDR: "${ERC20_BLACKLIST_ADDR}"
+      ERC721_SIMPLE_ADDR: "${ERC721_SIMPLE_ADDR}"
+      ERC721_INACTIVE_ADDR: "${ERC721_INACTIVE_ADDR}"
+      ERC721_NEW_ADDR: "${ERC721_NEW_ADDR}"
+      ERC721_BLACKLIST_ADDR: "${ERC721_BLACKLIST_ADDR}"
+      ERC721_DISCRETE_ADDR: "${ERC721_DISCRETE_ADDR}"
+      ERC721_RANDOM_ADDR: "${ERC721_RANDOM_ADDR}"
+      ERC721_SOULBOUND_ADDR: "${ERC721_SOULBOUND_ADDR}"
+      ERC721_GENES_ADDR: "${ERC721_GENES_ADDR}"
+      ERC721_GENERATIVE_ADDR: "${ERC721_GENERATIVE_ADDR}"
+      ERC721_RENTABLE_ADDR: "${ERC721_RENTABLE_ADDR}"
+      ERC998_SIMPLE_ADDR: "${ERC998_SIMPLE_ADDR}"
+      ERC998_INACTIVE_ADDR: "${ERC998_INACTIVE_ADDR}"
+      ERC998_NEW_ADDR: "${ERC998_NEW_ADDR}"
+      ERC998_BLACKLIST_ADDR: "${ERC998_BLACKLIST_ADDR}"
+      ERC998_DISCRETE_ADDR: "${ERC998_DISCRETE_ADDR}"
+      ERC998_RANDOM_ADDR: "${ERC998_RANDOM_ADDR}"
+      ERC998_GENES_ADDR: "${ERC998_GENES_ADDR}"
+      ERC998_RENTABLE_ADDR: "${ERC998_RENTABLE_ADDR}"
+      ERC998_OWNER_ERC20_ADDR: "${ERC998_OWNER_ERC20_ADDR}"
+      ERC998_OWNER_ERC1155_ADDR: "${ERC998_OWNER_ERC1155_ADDR}"
+      ERC998_OWNER_ERC1155_ERC20_ADDR: "${ERC998_OWNER_ERC1155_ERC20_ADDR}"
+      ERC1155_SIMPLE_ADDR: "${ERC1155_SIMPLE_ADDR}"
+      ERC1155_INACTIVE_ADDR: "${ERC1155_INACTIVE_ADDR}"
+      ERC1155_NEW_ADDR: "${ERC1155_NEW_ADDR}"
+      ERC1155_BLACKLIST_ADDR: "${ERC1155_BLACKLIST_ADDR}"
+      VESTING_ADDR: "${VESTING_ADDR}"
+      ERC721_MYSTERYBOX_SIMPLE_ADDR: "${ERC721_MYSTERYBOX_SIMPLE_ADDR}"
+      ERC721_MYSTERYBOX_PAUSABLE_ADDR: "${ERC721_MYSTERYBOX_PAUSABLE_ADDR}"
+      ERC721_MYSTERYBOX_BLACKLIST_ADDR: "${ERC721_MYSTERYBOX_BLACKLIST_ADDR}"
+      ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR: "${ERC721_MYSTERYBOX_BLACKLIST_PAUSABLE_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
+      ERC721_LOTTERY_TICKET_ADDR: "${ERC721_LOTTERY_TICKET_ADDR}"
+      LOTTERY_ADDR: "${LOTTERY_ADDR}"
+      ERC721_RAFFLE_TICKET_ADDR: "${ERC721_RAFFLE_TICKET_ADDR}"
+      RAFFLE_ADDR: "${RAFFLE_ADDR}"
+      USDT_ADDR: "${USDT_ADDR}"
+      BUSD_ADDR: "${BUSD_ADDR}"
+      WETH_ADDR: "${WETH_ADDR}"
+      WAITLIST_ADDR: "${WAITLIST_ADDR}"
+      ERC721_WRAPPER_ADDR: "${ERC721_WRAPPER_ADDR}"
+      PYRAMID_ADDR: "${PYRAMID_ADDR}"
+      DISPENSER_ADDR: "${DISPENSER_ADDR}"
+      # CHAINLINK
+      LINK_ADDR: "${LINK_ADDR}"
+      VRF_ADDR: "${VRF_ADDR}"
+    ports:
+      # admin-api
+      - "${PORT_ADMIN_API_B2C}:${PORT_ADMIN_API_B2C}"
 
   market-api:
     container_name: market-api
@@ -359,8 +471,13 @@ services:
       - ./nginx/admin.${BASE_MODE}.conf:/etc/nginx/conf.d/admin.conf
       - ./nginx/log:/var/log/nginx/
       - type: volume
-        source: static-admin-ui
-        target: /var/www/admin-ui/static
+        source: static-admin-ui-b2b
+        target: /var/www/admin-ui-b2b/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-admin-ui-b2c
+        target: /var/www/admin-ui-b2c/static
         volume:
           nocopy: true
       - type: volume
@@ -378,8 +495,10 @@ services:
       - "443:443"
       - "1337:1337"
     depends_on:
-      - admin-api
-      - admin-ui
+      - adminb2b-api
+      - adminb2c-api
+      - adminb2b-ui
+      - adminb2c-ui
       - market-ui
       - market-api
       - office-ui
