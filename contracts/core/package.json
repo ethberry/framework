@@ -20,7 +20,7 @@
     "@gemunion/contracts-erc721c": "4.0.14",
     "@gemunion/contracts-erc721e": "4.0.14",
     "@gemunion/contracts-erc721ec": "4.0.14",
-    "@gemunion/contracts-erc998td": "5.0.8",
+    "@gemunion/contracts-erc998td": "5.0.9",
     "@gemunion/contracts-misc": "4.0.14",
     "@gemunion/contracts-mocha": "4.0.14",
     "@gemunion/contracts-mocks": "4.0.14",
