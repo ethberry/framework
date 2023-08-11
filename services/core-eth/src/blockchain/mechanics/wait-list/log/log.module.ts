@@ -12,7 +12,7 @@ import {
   ModuleType,
   WaitListEventType,
 } from "@framework/types";
-import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/WaitList.sol/WaitList.json";
+import WaitListSol from "@framework/core-contracts/artifacts/contracts/Mechanics/WaitList/WaitList.sol/WaitList.json";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
