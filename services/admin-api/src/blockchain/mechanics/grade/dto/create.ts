@@ -1,8 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsString, Matches, MaxLength, Min, ValidateIf, ValidateNested } from "class-validator";
+import {
+  IsEnum,
+  IsInt,
+  IsString,
+  Matches,
+  MaxLength,
+  Min,
+  ValidateIf,
+  ValidateNested,
+  Validate,
+} from "class-validator";
 import { Type } from "class-transformer";
 
-import { GradeStrategy } from "@framework/types";
+import { ForbidEnumValues } from "@gemunion/nest-js-validators";
+import { GradeStrategy, ProtectedAttribute } from "@framework/types";
 
 import { PriceDto } from "../../../exchange/asset/dto";
 import { IGradeCreateDto } from "../interfaces";
@@ -20,6 +31,7 @@ export class GradeCreateDto implements IGradeCreateDto {
   })
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
+  @Validate(ForbidEnumValues, Object.values(ProtectedAttribute))
   @Matches(/^[A-Z][A-Z0-9]*$/, { message: "patternMismatch" })
   public attribute: string;
 

@@ -1,6 +1,10 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
 
+import { ProtectedAttribute } from "@framework/types";
+
+import { omit } from "../../utils/lodash";
+
 export interface ITokenMetadataView {
   metadata: Record<string, any>;
 }
@@ -13,8 +17,7 @@ export const TokenGradeView: FC<ITokenMetadataView> = props => {
     {} as Record<string, any>,
   );
 
-  // TODO filter common TEMPLATE_ID metadata
-  const { TEMPLATE_ID: _, RARITY: __, ...filteredResult } = result;
+  const filteredResult = omit(result, Object.values(ProtectedAttribute));
 
   return (
     <Grid container>

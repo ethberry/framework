@@ -13,7 +13,6 @@ export enum TokenStatus {
 export enum TokenMetadata {
   TEMPLATE_ID = "TEMPLATE_ID",
   LEVEL = "LEVEL",
-  GRADE = "GRADE",
   RARITY = "RARITY",
   TRAITS = "TRAITS",
   GENES = "GENES",
@@ -35,6 +34,13 @@ export enum TokenTraits {
   CLOTHES = "CLOTHES",
   EYES = "EYES",
   MOUTH = "MOUTH",
+}
+
+export enum ProtectedAttribute {
+  TEMPLATE_ID = "TEMPLATE_ID",
+  RARITY = "RARITY",
+  TRAITS = "TRAITS",
+  GENES = "GENES",
 }
 
 export interface IToken extends IIdDateBase {
