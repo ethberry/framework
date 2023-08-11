@@ -12,11 +12,8 @@ export const RaffleContractDeployDialog: FC<IRaffleContractDeployDialogProps> = 
   const fixedValues: Record<string, any> = {};
 
   return (
-    <FormDialog
-      initialValues={fixedValues}
-      message="dialogs.deploy"
-      testId="RaffleContractDeployForm"
-      {...props}
-    ></FormDialog>
+    <FormDialog initialValues={fixedValues} message="dialogs.deploy" testId="RaffleContractDeployForm" {...props}>
+      This contract has no options, you can click `OK` to continue
+    </FormDialog>
   );
 };
