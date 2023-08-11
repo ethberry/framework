@@ -9,14 +9,13 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../ERC721/interfaces/IERC721Random.sol";
-
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 import "../../utils/constants.sol";
-
 import "../override/SignatureValidator.sol";
 import "../storage/ExchangeStorage.sol";
 

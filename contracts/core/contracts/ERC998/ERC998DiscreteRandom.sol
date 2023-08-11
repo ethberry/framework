@@ -13,8 +13,6 @@ import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
 import "./ERC998Discrete.sol";
 
-import "hardhat/console.sol";
-
 abstract contract ERC998DiscreteRandom is IERC721Random, ERC998Discrete, Rarity {
   using Counters for Counters.Counter;
 

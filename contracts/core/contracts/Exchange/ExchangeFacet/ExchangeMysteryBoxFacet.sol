@@ -6,12 +6,13 @@
 
 pragma solidity ^0.8.13;
 
-import "../override/SignatureValidator.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
+
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
-
 import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../Mechanics/MysteryBox/interfaces/IERC721MysteryBox.sol";
+import "../override/SignatureValidator.sol";
 
 contract ExchangeMysteryBoxFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event PurchaseMysteryBox(address from, uint256 externalId, Asset[] items, Asset[] price);

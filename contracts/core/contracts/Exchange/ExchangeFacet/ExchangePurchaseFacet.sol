@@ -6,10 +6,12 @@
 
 pragma solidity ^0.8.13;
 
-import "../override/SignatureValidator.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
+
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";
+import "../override/SignatureValidator.sol";
 
 contract ExchangePurchaseFacet is SignatureValidator, AccessControlInternal, PausableInternal {
   event Purchase(address account, uint256 externalId, Asset item, Asset[] price);

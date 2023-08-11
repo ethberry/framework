@@ -16,7 +16,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "./LinearReferralPyramid.sol";
 import "./interfaces/IPyramid.sol";

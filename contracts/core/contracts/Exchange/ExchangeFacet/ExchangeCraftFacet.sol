@@ -6,6 +6,8 @@
 
 pragma solidity ^0.8.13;
 
+import "@gemunion/contracts-misc/contracts/roles.sol";
+
 import "../override/SignatureValidator.sol";
 import "../../Diamond/override/AccessControlInternal.sol";
 import "../../Diamond/override/PausableInternal.sol";

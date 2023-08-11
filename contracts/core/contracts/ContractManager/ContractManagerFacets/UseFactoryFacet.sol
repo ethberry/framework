@@ -8,10 +8,9 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../Diamond/override/AccessControlInternal.sol";
-
 import "../storage/CMStorage.sol";
 import "../../utils/errors.sol";
 

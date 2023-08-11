@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../Exchange/lib/ExchangeUtils.sol";
 import "../../utils/constants.sol";

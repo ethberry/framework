@@ -7,7 +7,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
 
 import "./interfaces/IERC721Random.sol";
 import "./ERC721Simple.sol";

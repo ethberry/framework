@@ -6,6 +6,8 @@
 
 pragma solidity ^0.8.13;
 
+import "@gemunion/contracts-misc/contracts/interfaces.sol";
+
 import "../utils/constants.sol";
 import "../ERC721/interfaces/IERC721Discrete.sol";
 import "./ERC998Simple.sol";

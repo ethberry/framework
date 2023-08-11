@@ -14,6 +14,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 import "@gemunion/contracts-mocks/contracts/Wallet.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
 
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";

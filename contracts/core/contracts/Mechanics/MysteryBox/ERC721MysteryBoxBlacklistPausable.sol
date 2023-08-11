@@ -8,7 +8,7 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/attributes.sol";
 
 import "./ERC721MysteryBoxBlacklist.sol";
 

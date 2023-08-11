@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "hardhat/console.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../../utils/constants.sol";
 import "../../Exchange/lib/ExchangeUtils.sol";

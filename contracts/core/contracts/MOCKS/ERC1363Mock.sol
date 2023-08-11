@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "@gemunion/contracts-erc1363/contracts/extensions/ERC1363.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 contract ERC1363Mock is AccessControl, ERC1363, ERC20Capped {
   constructor(string memory name, string memory symbol, uint256 cap) ERC20(name, symbol) ERC20Capped(cap) {

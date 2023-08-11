@@ -9,9 +9,9 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
-import "@gemunion/contracts-misc/contracts/constants.sol";
-import "../../Diamond/override/AccessControlInternal.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
+import "../../Diamond/override/AccessControlInternal.sol";
 import "../override/SignatureValidator.sol";
 import "../storage/CMStorage.sol";
 

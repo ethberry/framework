@@ -7,7 +7,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/Context.sol";
-import "@gemunion/contracts-misc/contracts/constants.sol";
+import "@gemunion/contracts-misc/contracts/roles.sol";
 
 import "../Diamond/lib/LibDiamond.sol";
 import "../Diamond/override/AccessControlInternal.sol";
@@ -15,7 +15,7 @@ import "../Diamond/override/AccessControlInternal.sol";
 import { AccessControlInit, DiamondInit, PausableInit, WalletInit } from "../Diamond/facets/init/index.sol";
 
 contract DiamondExchangeInit is Context, DiamondInit, AccessControlInit, PausableInit, WalletInit, AccessControlInternal {
-    
+
     function init() public override(DiamondInit, AccessControlInit, PausableInit, WalletInit) {
         super.init();
 
