@@ -12,7 +12,7 @@ export interface IAttributeInputProps {
 }
 
 export const AttributeInput: FC<IAttributeInputProps> = props => {
-  const { name, data = {} } = props;
+  const { name = "gradeId", data = {} } = props;
 
   const form = useFormContext<any>();
 

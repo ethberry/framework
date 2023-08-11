@@ -143,7 +143,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${simpleFormatting}',
         'https://firebasestorage.googleapis.com/v0/b/gemunion-firebase.appspot.com/o/DO_NOT_REMOVE%2Fspace_credit.png?alt=media&token=b940fa35-78bd-4534-b015-6ee8e290506e',
         'Warp Credits',
-        'GEM20',
+        'WARP20',
         18,
         0,
         '',

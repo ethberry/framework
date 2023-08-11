@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useWallet } from "@gemunion/provider-wallet";
 
-import { CloseButton } from "../../buttons/close-button";
+import { CloseButton } from "../../buttons";
 
 export interface IWalletDialogProps {
   open: boolean;

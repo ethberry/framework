@@ -18,6 +18,11 @@ export class WaitListListService {
 
     queryBuilder.select(["list.id", "list.title"]);
 
+    queryBuilder.leftJoinAndSelect("list.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "components");
+    queryBuilder.leftJoinAndSelect("components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("components.template", "item_template");
+
     queryBuilder.leftJoin("list.contract", "contract", "contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });

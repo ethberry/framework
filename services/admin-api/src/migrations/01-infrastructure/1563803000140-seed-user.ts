@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
-import { avatarWhiteUrl, avatarBlueUrl, ns, testChainId } from "@framework/constants";
+import { avatarWhiteUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedUser1563803000140 implements MigrationInterface {
@@ -70,7 +70,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'trejgun@gemunion.io',
         'SbE0QAb34lhB1bBwoa62MpZW1qn1',
         'CTAPbIu_MABP',
-        '${avatarBlueUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
@@ -86,7 +86,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'meowdao@gmail.com',
         's1dBg1j0WtOyRutwwJfCSBLurqi2',
         'Meow Dao',
-        '${avatarBlueUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
@@ -102,7 +102,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test1@gemunion.io',
         'qwerty',
         'Yuri',
-        '${avatarBlueUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
@@ -118,7 +118,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test2@gemunion.io',
         'qwerty',
         'Arthur',
-        '${avatarBlueUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',
@@ -134,7 +134,7 @@ export class SeedUser1563803000140 implements MigrationInterface {
         'test3@gemunion.io',
         'qwerty',
         'Jenya',
-        '${avatarBlueUrl}',
+        '${avatarWhiteUrl}',
         'EN',
         'US',
         'MALE',

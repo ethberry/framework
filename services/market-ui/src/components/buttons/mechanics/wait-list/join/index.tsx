@@ -2,9 +2,10 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema } from "./validation";
+import { WaitListItem } from "./wait-list-item";
+import { WaitListListInput } from "./wait-list-list-input";
 
 export interface IWaitListClaimDto {
   account: string;
@@ -35,8 +36,9 @@ export const WaitListJoinDialog: FC<IWaitListClaimDialogProps> = props => {
       testId="WaitListJoinDialog"
       {...rest}
     >
+      <WaitListItem />
       <TextInput name="account" readOnly />
-      <EntityInput name="listId" controller="wait-list/list" />
+      <WaitListListInput name="listId" />
     </FormDialog>
   );
 };
