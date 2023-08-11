@@ -13,7 +13,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
     command: "sh /home/node/framework/scripts/logDna.sh"
     volumes:
-      - static-admin-ui-b2b:/home/node/framework/services/admin-ui-b2b/dist/
+      - static-admin-ui-b2b:/home/node/framework/services/adminb2b-ui/dist/
     environment:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       BASE_MODE: "${BASE_MODE}"
@@ -24,7 +24,7 @@ services:
     image: gcr.io/halogen-framing-335807/framework-staging-img:latest
     command: "sh /home/node/framework/scripts/logDna.sh"
     volumes:
-      - static-admin-ui-b2c:/home/node/framework/services/admin-ui-b2c/dist/
+      - static-admin-ui-b2c:/home/node/framework/services/adminb2c-ui/dist/
     environment:
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       BASE_MODE: "${BASE_MODE}"
