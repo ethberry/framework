@@ -8,17 +8,17 @@ declare global {
       HOST: string;
       BE_URL: string;
       JSON_URL: string;
-      CHAIN_ID: string;
       GEMUNION_API_KEY: string;
       GEMUNION_URL: string;
       BUSINESS_TYPE: BusinessType;
       ACCOUNT: string;
+      // these addresses should be related to chainId
       CONTRACT_MANAGER_ADDR: string;
       EXCHANGE_ADDR: string;
+      DISPENSER_ADDR: string;
       LINK_ADDR: string;
       VRF_ADDR: string;
       CHAINLINK_SUBSCRIPTION_ID: string;
-      DISPENSER_ADDR: string;
     }
   }
 }
