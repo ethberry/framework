@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallets } from "@gemunion/constants";
-import { avatarWhiteUrl, ns, testChainId } from "@framework/constants";
+import { avatarWhiteUrl, avatarBlueUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedUser1563803000140 implements MigrationInterface {
