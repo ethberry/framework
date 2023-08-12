@@ -58,6 +58,7 @@ export class CreateAchievementRule1681273013010 implements MigrationInterface {
         {
           name: "achievement_status",
           type: `${ns}.achievement_status_enum`,
+          default: "'ACTIVE'",
         },
         {
           name: "created_at",

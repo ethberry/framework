@@ -5,8 +5,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import type { ITokenAutocompleteDto, ITokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata, TokenRarity, TokenType } from "@framework/types";
 
-import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../infrastructure/user/user.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
 export class TokenService {

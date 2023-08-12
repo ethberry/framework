@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   Query,
   UseInterceptors,
@@ -18,7 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
-import { MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto } from "./dto";
+import { MerchantSearchDto, MerchantUpdateDto } from "./dto";
 import { UserEntity } from "../user/user.entity";
 
 @ApiBearerAuth()
@@ -37,11 +36,6 @@ export class MerchantController {
     return this.merchantService.autocomplete();
   }
 
-  @Post("/")
-  public create(@Body() dto: MerchantCreateDto): Promise<MerchantEntity> {
-    return this.merchantService.create(dto);
-  }
-
   @Put("/:id")
   public update(@Param("id", ParseIntPipe) id: number, @Body() dto: MerchantUpdateDto): Promise<MerchantEntity | null> {
     return this.merchantService.update({ id }, dto);
@@ -50,14 +44,7 @@ export class MerchantController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<MerchantEntity | null> {
-    return this.merchantService.findOne(
-      { id },
-      {
-        relations: {
-          users: true,
-        },
-      },
-    );
+    return this.merchantService.findOne({ id });
   }
 
   @Delete("/:id")

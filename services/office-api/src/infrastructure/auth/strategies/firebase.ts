@@ -6,7 +6,7 @@ import { Strategy } from "passport-firebase-jwt";
 import { app } from "firebase-admin";
 
 import { EnabledLanguages, testChainId } from "@framework/constants";
-import { UserRole, UserStatus } from "@framework/types";
+import { MerchantStatus, UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../../user/user.service";
 import { UserEntity } from "../../user/user.entity";
@@ -64,6 +64,14 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
     const roles = [UserRole.SUPER];
     if (!userEntity.userRoles.some(role => roles.includes(role))) {
       throw new UnauthorizedException("userHasWrongRole");
+    }
+
+    if (userEntity.userStatus !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException("userIsNotActive");
+    }
+
+    if (userEntity.merchant.merchantStatus !== MerchantStatus.ACTIVE) {
+      throw new UnauthorizedException("merchantIsNotActive");
     }
 
     // if (data.email && !data.email_verified) {

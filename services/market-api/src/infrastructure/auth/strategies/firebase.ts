@@ -66,6 +66,10 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
       throw new UnauthorizedException("userHasWrongRole");
     }
 
+    if (userEntity.userStatus !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException("userIsNotActive");
+    }
+
     // if (data.email && !data.email_verified) {
     //   throw new UnauthorizedException("emailIsNotVerified");
     // }

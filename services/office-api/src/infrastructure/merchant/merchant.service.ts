@@ -3,12 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IMerchantSearchDto } from "@framework/types";
-import { MerchantStatus } from "@framework/types";
+import { MerchantStatus, UserRole } from "@framework/types";
 
 import { AuthService } from "../auth/auth.service";
-import { MerchantEntity } from "./merchant.entity";
-import type { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
 import { UserEntity } from "../user/user.entity";
+import { UserService } from "../user/user.service";
+import { MerchantEntity } from "./merchant.entity";
+import type { IMerchantUpdateDto } from "./interfaces";
 
 @Injectable()
 export class MerchantService {
@@ -16,6 +17,7 @@ export class MerchantService {
     @InjectRepository(MerchantEntity)
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   public search(dto: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
@@ -83,7 +85,7 @@ export class MerchantService {
     where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
   ): Promise<MerchantEntity | null> {
-    const { userIds, wallet, ...rest } = dto;
+    const { wallet, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
@@ -101,31 +103,18 @@ export class MerchantService {
       }
     }
 
-    Object.assign(merchantEntity, rest);
+    if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {
+      merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
 
-    if (userIds.length) {
-      Object.assign(merchantEntity, {
-        users: userIds.map(id => ({ id })),
-      });
+      await this.userService.addRoles({ merchantId: merchantEntity.id }, UserRole.ADMIN);
     }
 
+    Object.assign(merchantEntity, rest);
     return merchantEntity.save();
   }
 
-  public async create(dto: IMerchantCreateDto): Promise<MerchantEntity> {
-    const { userIds, ...rest } = dto;
-
-    return this.merchantEntityRepository
-      .create({
-        ...rest,
-        merchantStatus: MerchantStatus.ACTIVE,
-        users: userIds.map(id => ({ id })),
-      })
-      .save();
-  }
-
-  public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity | null> {
-    const merchantEntity = await this.merchantEntityRepository.findOne({ where });
+  public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity> {
+    const merchantEntity = await this.findOne(where);
 
     if (!merchantEntity) {
       throw new NotFoundException("merchantNotFound");

@@ -782,6 +782,7 @@
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
+    "merchantIsNotActive": "Merchant is not active",
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"

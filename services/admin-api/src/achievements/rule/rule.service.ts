@@ -2,12 +2,13 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindManyOptions, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
+import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto, IAssetDto } from "@framework/types";
+
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { AssetService } from "../../blockchain/exchange/asset/asset.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
 import { AchievementRuleEntity } from "./rule.entity";
-import { IAchievementRuleAutocompleteDto, IAchievementRuleSearchDto, IAssetDto } from "@framework/types";
-import { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
+import type { IAchievementRuleCreateDto, IAchievementRuleUpdateDto } from "./interfaces";
 
 @Injectable()
 export class AchievementRuleService {
@@ -179,7 +180,13 @@ export class AchievementRuleService {
     const itemEntity = await this.assetService.create();
     await this.assetService.update(itemEntity, item, userEntity);
 
-    return this.achievementRuleEntityRepository.create({ ...rest, contractId, item: itemEntity }).save();
+    return this.achievementRuleEntityRepository
+      .create({
+        ...rest,
+        contractId,
+        item: itemEntity,
+      })
+      .save();
   }
 
   public async update(

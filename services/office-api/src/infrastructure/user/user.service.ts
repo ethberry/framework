@@ -1,8 +1,9 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ArrayOverlap, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import type { IUserSearchDto } from "@framework/types";
+import { UserRole } from "@framework/types";
 
 import { UserEntity } from "./user.entity";
 import type { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
@@ -88,6 +89,16 @@ export class UserService {
 
     Object.assign(userEntity, rest);
     return userEntity.save();
+  }
+
+  public async addRoles(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_append("userRoles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
   }
 
   public async import(dto: IUserImportDto): Promise<UserEntity> {

@@ -1,7 +1,6 @@
 import { object, string } from "yup";
 
-import { draftValidationSchema, emailValidationSchema } from "@gemunion/yup-rules";
-import { urlValidationSchema } from "../../../components/validation";
+import { draftValidationSchema, emailValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
   email: emailValidationSchema,

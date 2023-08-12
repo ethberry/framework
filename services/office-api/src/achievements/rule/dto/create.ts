@@ -4,8 +4,8 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
 
-import { IAchievementRuleCreateDto } from "../interfaces";
-import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
+import type { IAchievementRuleCreateDto } from "../interfaces";
+import { AchievementType, ContractEventType } from "@framework/types";
 import { ItemDto } from "../../../blockchain/exchange/asset/dto";
 
 export class AchievementRuleCreateDto extends SearchableDto implements IAchievementRuleCreateDto {
@@ -28,10 +28,6 @@ export class AchievementRuleCreateDto extends SearchableDto implements IAchievem
   @Transform(({ value }) => value as AchievementType)
   @IsEnum(AchievementType, { message: "badInput" })
   public achievementType: AchievementType;
-
-  @ApiProperty()
-  @IsEnum(AchievementRuleStatus, { message: "badInput" })
-  public achievementStatus: AchievementRuleStatus;
 
   @ApiPropertyOptional()
   @IsOptional()

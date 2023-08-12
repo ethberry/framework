@@ -1,10 +1,8 @@
 import { object, string } from "yup";
 
 import { EnabledCountries, EnabledGenders } from "@gemunion/constants";
-import { displayNameValidationSchema, emailValidationSchema } from "@gemunion/yup-rules";
+import { displayNameValidationSchema, emailValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 import { EnabledLanguages } from "@framework/constants";
-
-import { urlValidationSchema } from "../../../../components/validation";
 
 export const validationSchema = object().shape({
   email: emailValidationSchema,

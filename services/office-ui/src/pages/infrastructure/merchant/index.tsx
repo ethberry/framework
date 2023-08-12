@@ -10,7 +10,7 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -31,7 +31,6 @@ export const Merchant: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -46,7 +45,6 @@ export const Merchant: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      users: [],
     },
     search: {
       query: "",
@@ -61,9 +59,6 @@ export const Merchant: FC = () => {
       <PageHeader message="pages.merchants.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
-        </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
-          <FormattedMessage id="form.buttons.add" />
         </Button>
       </PageHeader>
 

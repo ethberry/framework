@@ -5,8 +5,8 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 import { AchievementRuleStatus, AchievementType, ContractEventType } from "@framework/types";
 
-import { IAchievementRuleUpdateDto } from "../interfaces";
 import { ItemDto } from "../../../blockchain/exchange/asset/dto";
+import type { IAchievementRuleUpdateDto } from "../interfaces";
 
 export class AchievementRuleUpdateDto extends SearchableDto implements IAchievementRuleUpdateDto {
   @ApiPropertyOptional()

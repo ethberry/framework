@@ -1,4 +1,4 @@
-import { IMerchantSocial } from "@framework/types";
+import type { IMerchantSocial } from "@framework/types";
 
 export interface IMerchantCreateDto {
   title: string;
@@ -7,6 +7,5 @@ export interface IMerchantCreateDto {
   wallet: string;
   phoneNumber: string;
   imageUrl: string;
-  userIds: Array<number>;
   social: IMerchantSocial;
 }

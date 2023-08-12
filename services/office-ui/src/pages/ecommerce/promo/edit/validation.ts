@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-import { dbIdValidationSchema, urlValidationSchema } from "../../../../components/validation";
+import { dbIdValidationSchema, urlValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = object().shape({
   title: string().required("form.validations.valueMissing"),

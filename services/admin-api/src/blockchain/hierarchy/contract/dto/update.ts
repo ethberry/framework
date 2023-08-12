@@ -20,8 +20,8 @@ export class ContractUpdateDto extends SearchableDto implements IContractUpdateD
   })
   @IsOptional()
   @Transform(({ value }) => value as ContractStatus)
-  @IsEnum(ContractStatus, { message: "badInput" })
   @Validate(ForbidEnumValues, [ContractStatus.NEW])
+  @IsEnum(ContractStatus, { message: "badInput" })
   public contractStatus: ContractStatus;
 
   @ApiPropertyOptional()

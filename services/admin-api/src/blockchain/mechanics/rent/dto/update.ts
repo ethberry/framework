@@ -1,10 +1,12 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString, Min, Validate, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IRentUpdateDto } from "../interfaces";
-import { PriceDto } from "../../../exchange/asset/dto";
+import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { RentRuleStatus } from "@framework/types";
+
+import { PriceDto } from "../../../exchange/asset/dto";
+import { IRentUpdateDto } from "../interfaces";
 
 export class RentUpdateDto implements IRentUpdateDto {
   @ApiPropertyOptional()
@@ -30,6 +32,7 @@ export class RentUpdateDto implements IRentUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Validate(ForbidEnumValues, [RentRuleStatus.NEW])
   @IsEnum(RentRuleStatus, { message: "badInput" })
   public rentStatus: RentRuleStatus;
 }

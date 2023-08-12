@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -43,13 +43,23 @@ export class MerchantService {
   }
 
   public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity> {
-    Object.assign(userEntity.merchant, { merchantStatus: MerchantStatus.INACTIVE });
+    const merchantEntity = await this.findOne(where);
 
-    await userEntity.merchant.save();
+    if (!merchantEntity) {
+      throw new NotFoundException("merchantNotFound");
+    }
+
+    if (merchantEntity.id !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    Object.assign(merchantEntity, { merchantStatus: MerchantStatus.INACTIVE });
+
+    await merchantEntity.save();
 
     await this.authService.revokeRefreshTokens(userEntity);
 
-    return userEntity.merchant;
+    return merchantEntity;
   }
 
   public count(where: FindOptionsWhere<UserEntity>): Promise<number> {

@@ -4,8 +4,8 @@ import { Transform } from "class-transformer";
 
 import { UserRole, UserStatus } from "@framework/types";
 
-import type { IUserUpdateDto } from "../interfaces";
 import { ProfileUpdateDto } from "../../profile/dto";
+import type { IUserUpdateDto } from "../interfaces";
 
 export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {
   @ApiPropertyOptional({
