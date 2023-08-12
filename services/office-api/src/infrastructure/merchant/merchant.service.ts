@@ -1,6 +1,6 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 
 import type { IMerchantSearchDto } from "@framework/types";
 import { MerchantStatus, UserRole } from "@framework/types";
@@ -106,7 +106,7 @@ export class MerchantService {
     if (merchantEntity.merchantStatus === MerchantStatus.PENDING) {
       merchantEntity.merchantStatus = MerchantStatus.ACTIVE;
 
-      await this.userService.addRoles({ merchantId: merchantEntity.id }, UserRole.ADMIN);
+      await this.userService.addRole({ merchantId: merchantEntity.id }, UserRole.ADMIN);
     }
 
     Object.assign(merchantEntity, rest);
@@ -131,7 +131,26 @@ export class MerchantService {
     return merchantEntity;
   }
 
-  public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+  public count(where: FindOptionsWhere<MerchantEntity>): Promise<number> {
     return this.merchantEntityRepository.count({ where });
+  }
+
+  public searchUsers(userEntity: UserEntity): Promise<Array<UserEntity>> {
+    return this.userService.findAll({ merchantId: userEntity.merchantId });
+  }
+
+  public async removeUser(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<UpdateResult> {
+    const userEntity2 = await this.userService.findOne(where);
+
+    if (!userEntity2) {
+      throw new NotFoundException("userNotFound");
+    }
+
+    if (userEntity2.merchantId !== userEntity.merchantId) {
+      throw new ForbiddenException("insufficientPermissions");
+    }
+
+    // TODO multiple admins
+    return this.userService.removeRole(where, UserRole.MANAGER);
   }
 }

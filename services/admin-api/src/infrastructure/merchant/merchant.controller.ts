@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Put } from "@nestjs/common";
+import { Body, Controller, Delete, HttpCode, HttpStatus, Put } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { User } from "@gemunion/nest-js-utils";
@@ -20,7 +20,7 @@ export class MerchantController {
 
   @Delete("/")
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number, @User() userEntity: UserEntity): Promise<void> {
-    await this.merchantService.delete({ id }, userEntity);
+  public async delete(@User() userEntity: UserEntity): Promise<void> {
+    await this.merchantService.delete(userEntity);
   }
 }

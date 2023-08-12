@@ -5,9 +5,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import type { IUserSearchDto } from "@framework/types";
 import { UserRole } from "@framework/types";
 
+import { AuthService } from "../auth/auth.service";
 import { UserEntity } from "./user.entity";
 import type { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
-import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class UserService {
@@ -91,7 +91,7 @@ export class UserService {
     return userEntity.save();
   }
 
-  public async addRoles(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+  public async addRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
     const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
     queryBuilder.set({
       userRoles: () => `array_append("userRoles", '${role}')`,
@@ -101,8 +101,25 @@ export class UserService {
     return queryBuilder.execute();
   }
 
+  public findAll(
+    where: FindOptionsWhere<UserEntity>,
+    options?: FindOneOptions<UserEntity>,
+  ): Promise<Array<UserEntity>> {
+    return this.userEntityRepository.find({ where, ...options });
+  }
+
   public async import(dto: IUserImportDto): Promise<UserEntity> {
     return this.userEntityRepository.create(dto).save();
+  }
+
+  public async removeRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_remove("userRoles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
   }
 
   public async delete(where: FindOptionsWhere<UserEntity>): Promise<UserEntity> {

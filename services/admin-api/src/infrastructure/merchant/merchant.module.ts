@@ -6,11 +6,12 @@ import { UserModule } from "../user/user.module";
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
 import { MerchantController } from "./merchant.controller";
+import { MerchantUserController } from "./merchant.user.controller";
 
 @Module({
   imports: [AuthModule, UserModule, TypeOrmModule.forFeature([MerchantEntity])],
   providers: [MerchantService],
-  controllers: [MerchantController],
+  controllers: [MerchantController, MerchantUserController],
   exports: [MerchantService],
 })
 export class MerchantModule {}

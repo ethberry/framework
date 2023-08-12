@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+
+import { UserRole } from "@framework/types";
 
 import { UserEntity } from "./user.entity";
 import type { IUserImportDto } from "./interfaces";
@@ -19,7 +21,24 @@ export class UserService {
     return this.userEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<UserEntity>,
+    options?: FindOneOptions<UserEntity>,
+  ): Promise<Array<UserEntity>> {
+    return this.userEntityRepository.find({ where, ...options });
+  }
+
   public async import(dto: IUserImportDto): Promise<UserEntity> {
     return this.userEntityRepository.create(dto).save();
+  }
+
+  public async removeRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_remove("userRoles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
   }
 }
