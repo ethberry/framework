@@ -1,9 +1,8 @@
 import { mixed, number, object, string } from "yup";
 
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { GradeStatus, GradeStrategy } from "@framework/types";
-
-import { dbIdValidationSchema } from "../../../../../components/validation";
 
 export const validationSchema = object().shape({
   contractId: dbIdValidationSchema,

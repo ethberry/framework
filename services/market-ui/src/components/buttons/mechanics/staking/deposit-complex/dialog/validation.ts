@@ -1,6 +1,6 @@
 import { object } from "yup";
 
-import { dbIdValidationSchema } from "../../../../../validation";
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 
 // TODO validate array tokenIds
 export const validationSchema = object().shape({

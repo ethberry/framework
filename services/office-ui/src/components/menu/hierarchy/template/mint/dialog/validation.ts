@@ -2,9 +2,8 @@ import { array, mixed, number, object } from "yup";
 
 import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { TokenType } from "@framework/types";
-
-import { dbIdValidationSchema } from "../../../../../validation";
 
 // TODO better TOKEN validation
 

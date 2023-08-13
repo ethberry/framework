@@ -2,10 +2,8 @@ import { array, number, object } from "yup";
 
 import { tokenAssetAmountValidationSchema, tokenAssetTokenTypeValidationSchema } from "@gemunion/mui-inputs-asset";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { TokenType } from "@framework/types";
-
-import { dbIdValidationSchema } from "../../../../validation";
 
 export const tokenZeroAssetComponentValidationSchema = object().shape({
   tokenType: tokenAssetTokenTypeValidationSchema,

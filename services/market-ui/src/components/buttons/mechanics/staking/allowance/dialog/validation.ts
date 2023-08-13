@@ -1,9 +1,8 @@
 import { mixed, number, object } from "yup";
 
 import { addressValidationSchema, bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
+import { dbIdValidationSchema } from "@gemunion/yup-rules";
 import { TokenType } from "@framework/types";
-
-import { dbIdValidationSchema } from "../../../../../validation";
 
 export const validationSchema = object().shape({
   amount: bigNumberValidationSchema.required("form.validations.valueMissing").min(0, "form.validations.rangeUnderflow"),

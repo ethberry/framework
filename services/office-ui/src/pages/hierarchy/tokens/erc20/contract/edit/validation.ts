@@ -1,8 +1,7 @@
 import { number, object, string } from "yup";
 
-import { draftValidationSchema } from "@gemunion/yup-rules";
+import { dbIdValidationSchema, draftValidationSchema } from "@gemunion/yup-rules";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { dbIdValidationSchema } from "../../../../../../components/validation";
 
 export const editValidationSchema = object().shape({
   title: string().required("form.validations.valueMissing"),
