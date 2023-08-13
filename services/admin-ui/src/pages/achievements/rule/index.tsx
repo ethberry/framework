@@ -47,7 +47,7 @@ export const AchievementRules: FC = () => {
       title: "",
       description: emptyStateString,
       achievementType: AchievementType.MARKETPLACE,
-      achievementStatus: AchievementRuleStatus.NEW,
+      achievementStatus: AchievementRuleStatus.ACTIVE,
       // eventType: """,
       contractId: 0,
       item: getEmptyTemplate(TokenType.ERC20),

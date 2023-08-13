@@ -48,11 +48,7 @@ export const AchievementRuleEditDialog: FC<IErc20TokenEditDialogProps> = props =
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="achievementType" options={AchievementType} />
-      <SelectInput
-        name="achievementStatus"
-        options={AchievementRuleStatus}
-        disabledOptions={[AchievementRuleStatus.NEW]}
-      />
+      <SelectInput name="achievementStatus" options={AchievementRuleStatus} />
       <ContractInput name="contractId" related="address" controller="contracts" />
       <SelectInput name="eventType" options={ContractEventType} />
       <Typography sx={{ mt: 2 }} variant="inherit">
