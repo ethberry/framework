@@ -48,7 +48,7 @@
     "web3": "1.10.0"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "4.0.4",
+    "@gemunion/eslint-config": "4.0.5",
     "@typechain/ethers-v6": "0.4.3",
     "@typechain/hardhat": "8.0.3",
     "@types/chai": "4.3.5",

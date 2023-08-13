@@ -87,7 +87,7 @@
   "description": "app",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
-    "@gemunion/eslint-config": "4.0.4",
+    "@gemunion/eslint-config": "4.0.5",
     "@gemunion/types-coin-market-cap": "0.1.8",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@types/copy-webpack-plugin": "8.0.1",
