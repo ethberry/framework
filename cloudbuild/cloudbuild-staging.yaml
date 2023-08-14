@@ -56,9 +56,9 @@ steps:
       - "managed"
       - "rolling-action"
       - "replace"
-      - "fw-group-stage"
+      - "group-fw-staging-us-east4-b"
       - "--max-unavailable=4"
-      - "--region=us-east4"
+      - "--zone=us-east4-b"
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME-staging-img']
 timeout: 3600s
 options:
