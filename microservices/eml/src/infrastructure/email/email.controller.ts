@@ -33,6 +33,19 @@ export class EmailController {
     });
   }
 
+  @EventPattern(EmailType.INVITE)
+  async invite(@Payload() payload: IPayload): Promise<any> {
+    return this.mailjetService.sendTemplate({
+      template: 0,
+      to: [payload.user.email],
+      data: {
+        displayName: payload.user.displayName,
+        code: payload.otp.uuid,
+        link: `${payload.baseUrl}/invitations/accept/${payload.otp.uuid}`,
+      },
+    });
+  }
+
   @EventPattern(EmailType.CONTACT)
   async contact(@Payload() payload: IContactPayload): Promise<any> {
     return this.mailjetService.sendTemplate({

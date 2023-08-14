@@ -1,20 +1,16 @@
-import { forwardRef, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { FindOneOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { UserEntity } from "./user.entity";
-import { AuthService } from "../auth/auth.service";
 import type { IUserImportDto } from "./interfaces";
+import { UserRole } from "@framework/types";
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     @InjectRepository(UserEntity)
     private readonly userEntityRepository: Repository<UserEntity>,
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
   ) {}
 
   public findOne(
@@ -30,5 +26,27 @@ export class UserService {
 
   public count(where: FindOptionsWhere<UserEntity>): Promise<number> {
     return this.userEntityRepository.count({ where });
+  }
+
+  public async update(where: FindOptionsWhere<UserEntity>, dto: any): Promise<UserEntity> {
+    const userEntity = await this.findOne(where);
+
+    if (!userEntity) {
+      throw new NotFoundException("userNotFound");
+    }
+
+    Object.assign(userEntity, dto);
+
+    return userEntity.save();
+  }
+
+  public async addRole(where: FindOptionsWhere<UserEntity>, role: UserRole): Promise<UpdateResult> {
+    const queryBuilder = this.userEntityRepository.createQueryBuilder("contract").update();
+    queryBuilder.set({
+      userRoles: () => `array_append("userRoles", '${role}')`,
+    });
+    queryBuilder.where(where);
+
+    return queryBuilder.execute();
   }
 }

@@ -7,7 +7,8 @@ export class CreateOtp1563803000160 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.otp_type_enum AS ENUM (
         'EMAIL',
-        'PASSWORD'
+        'PASSWORD',
+        'INVITE'
       );
     `);
 

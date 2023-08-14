@@ -1,14 +1,18 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import { companyName, loremIpsum } from "@gemunion/constants";
-import { ContactType, EmailType, RmqProviderType } from "@framework/types";
+import { ContactType, EmailType, OtpType, RmqProviderType } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
+import { OtpService } from "../otp/otp.service";
 
 @Injectable()
 export class EmailService {
   constructor(
+    private readonly otpService: OtpService,
+    private readonly configService: ConfigService,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
@@ -53,6 +57,18 @@ export class EmailService {
     return this.emailClientProxy
       .emit(EmailType.LINK_TOKEN, {
         merchant: userEntity.merchant,
+      })
+      .toPromise();
+  }
+
+  public async invite(userEntity: UserEntity): Promise<any> {
+    const otpEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity);
+
+    return this.emailClientProxy
+      .emit(EmailType.INVITE, {
+        user: userEntity,
+        otp: otpEntity,
+        baseUrl: this.configService.get<string>("MARKET_FE_URL", "http://localhost:3006"),
       })
       .toPromise();
   }

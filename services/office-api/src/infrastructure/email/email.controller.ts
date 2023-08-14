@@ -35,4 +35,10 @@ export class EmailController {
   public link(@User() userEntity: UserEntity): Promise<any> {
     return this.emailService.link(userEntity);
   }
+
+  @Post(EmailType.INVITE)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public invite(@User() userEntity: UserEntity): Promise<any> {
+    return this.emailService.invite(userEntity);
+  }
 }

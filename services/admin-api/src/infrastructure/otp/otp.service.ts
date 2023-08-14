@@ -18,7 +18,7 @@ export class OtpService {
     return this.otpEntityRepository.findOne({ where, ...options });
   }
 
-  public async getOtp(otpType: OtpType, userEntity: UserEntity): Promise<OtpEntity> {
+  public async getOtp(otpType: OtpType, userEntity: UserEntity, data?: Record<string, any>): Promise<OtpEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
     const otpEntity = await this.findOne({
       otpType,
@@ -33,8 +33,21 @@ export class OtpService {
         .create({
           otpType,
           user: userEntity,
+          data,
         })
         .save();
     }
+  }
+
+  public async findAllInvitations(userEntity: UserEntity): Promise<Array<OtpEntity>> {
+    const queryBuilder = this.otpEntityRepository.createQueryBuilder("otp");
+
+    queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("otp.user", "user");
+
+    queryBuilder.andWhere("otp.otpType = :otpType", { otpType: OtpType.INVITE });
+    queryBuilder.andWhere("otp.data->>'merchantId' = :merchantId", { merchantId: userEntity.merchantId });
+
+    return queryBuilder.getMany();
   }
 }

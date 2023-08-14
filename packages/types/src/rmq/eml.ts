@@ -3,6 +3,7 @@ export enum EmailType {
   FEEDBACK = "FEEDBACK",
   LINK_TOKEN = "LINK_TOKEN",
   CONTACT = "CONTACT",
+  INVITE = "INVITE",
 }
 
 export enum ContactType {
