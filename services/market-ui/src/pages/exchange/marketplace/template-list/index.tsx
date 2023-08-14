@@ -53,7 +53,7 @@ export const TemplateList: FC<ITemplateListProps> = props => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractType={[TokenType.ERC721]}
+        contractType={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]}
         contractModule={[ModuleType.HIERARCHY]}
         embedded={embedded}
       />
