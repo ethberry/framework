@@ -50,7 +50,7 @@
     "withdraw": "Withdraw balance"
   },
   "enums": {
-    "GRADE": {
+    "LEVEL": {
       "1": "1",
       "10": "10",
       "2": "2",
@@ -456,6 +456,7 @@
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "quantity": "Quantity",
+      "raffle": "Raffle",
       "rank": "Rank",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
@@ -463,7 +464,6 @@
       "rentRule": "Rent Rule",
       "reward": "Reward",
       "roles": "Roles",
-      "raffle": "Raffle",
       "roundId": "Round",
       "roundIds": "Round",
       "score": "Score",
@@ -549,8 +549,8 @@
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
-      "deposit": "Deposit",
       "deploy": "Deploy",
+      "deposit": "Deposit",
       "edit": "Edit",
       "lend": "Lend",
       "redeem": "Redeem",
@@ -580,9 +580,9 @@
   },
   "messages": {
     "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
+    "merchant-created": "Congratulations on creating your merchant account! It's currently undergoing the validation process. We appreciate your patience during this time.",
     "noAddress": "No address",
     "page-not-found": "Page Not Found",
-    "merchant-created": "Congratulations on creating your merchant account! It's currently undergoing the validation process. We appreciate your patience during this time.",
     "uncaughtError": "Uncaught error happened"
   },
   "pages": {

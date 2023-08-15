@@ -570,8 +570,8 @@
       "withdraw": "Withdraw"
     },
     "hints": {
-      "allowanceWarning": "You are going to allow all tokens of the contract",
       "allowanceUSDTWarning": "USDT: You must revoke existing allowance first (set to 0)",
+      "allowanceWarning": "You are going to allow all tokens of the contract",
       "editNotAllowed": "Editing of this rule is not allowed",
       "emailWarning": "Warning! This user won't be able to use this site until he confirms his new email address.",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
@@ -1261,54 +1261,54 @@
     },
     "ratePlan": {
       "alwaysIncluded": {
-        "title": "Always included",
         "history": "Transaction history",
+        "insights": "Marketing insights",
         "openSea": "OpenSea integration",
-        "insights": "Marketing insights"
-      },
-      "onDemand": {
-        "title": "On demand",
-        "raffle": "Raffle",
-        "waitList": "Wait list",
-        "staking": "Staking"
+        "title": "Always included"
       },
       "bronze": {
-        "title": "Bronze",
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "5 ERC1155 \n contracts",
         "erc20": "1 ERC20 contract",
         "erc721": "5 ERC721 contracts",
-        "erc1155": "5 ERC1155 \n contracts",
-        "vesting": "1000 vesting contracts",
-        "disperse": "Mass transact",
-        "claim": "Claim",
         "grade": "Grade",
-        "craft": "Craft",
-        "mystery": "Mystery box"
+        "mystery": "Mystery box",
+        "title": "Bronze",
+        "vesting": "1000 vesting contracts"
       },
       "contactViaTelegram": "Contact via Telegram",
       "gold": {
-        "title": "Gold",
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "25 ERC1155 \n contracts",
         "erc20": "5 ERC20 contract",
         "erc721": "25 ERC721 contracts",
-        "erc1155": "25 ERC1155 \n contracts",
-        "vesting": "5000 vesting contracts",
-        "disperse": "Mass transact",
-        "claim": "Claim",
         "grade": "Grade",
-        "craft": "Craft",
-        "mystery": "Mystery box"
+        "mystery": "Mystery box",
+        "title": "Gold",
+        "vesting": "5000 vesting contracts"
       },
       "month": "month",
+      "onDemand": {
+        "raffle": "Raffle",
+        "staking": "Staking",
+        "title": "On demand",
+        "waitList": "Wait list"
+      },
       "silver": {
-        "title": "Silver",
+        "claim": "Claim",
+        "craft": "Craft",
+        "disperse": "Mass transact",
+        "erc1155": "10 ERC1155 \n contracts",
         "erc20": "1 ERC20 contract",
         "erc721": "10 ERC721 contracts",
-        "erc1155": "10 ERC1155 \n contracts",
-        "vesting": "3000 vesting contracts",
-        "disperse": "Mass transact",
-        "claim": "Claim",
         "grade": "Grade",
-        "craft": "Craft",
-        "mystery": "Mystery box"
+        "mystery": "Mystery box",
+        "title": "Silver",
+        "vesting": "3000 vesting contracts"
       },
       "title": "Rate plans"
     },
@@ -1395,6 +1395,7 @@
     "listNotFound": "Waitlist not found",
     "loaded": "Successfully loaded",
     "merchantAlreadyExist": "Merchant already exist",
+    "merchantIsNotActive": "Merchant is not active",
     "merchantNotFound": "Merchant not found",
     "orderNotFound": "Order not found",
     "pageNotFound": "API error",
@@ -1413,7 +1414,6 @@
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
-    "merchantIsNotActive": "Merchant is not active",
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"

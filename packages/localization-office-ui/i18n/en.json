@@ -122,14 +122,14 @@
       "YEAR": "Year"
     },
     "emailType": {
+      "CONTACT": "Contact form",
       "DUMMY": "Test email",
       "EMAIL_VERIFICATION": "Email verification",
       "FEEDBACK": "Feedback",
       "FORGOT_PASSWORD": "Forgot password",
       "LINK_TOKEN": "LINK notification",
       "RESTORE_PASSWORD": "Restore password",
-      "WELCOME": "Welcome",
-      "CONTACT": "Contact form"
+      "WELCOME": "Welcome"
     },
     "gender": {
       "FEMALE": "Female",
@@ -515,11 +515,11 @@
     }
   },
   "messages": {
-    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
-    "uncaughtError": "Uncaught error happened",
     "empty-list": "Nothing to display",
+    "knownError": "Oops! We're aware of this issue and actively fixing it. Thanks for your patience!",
     "noAddress": "No address",
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "uncaughtError": "Uncaught error happened"
   },
   "pages": {
     "blockchain": {
@@ -762,6 +762,7 @@
     "internalServerError": "Internal Server Error",
     "invite": "Successfully invited",
     "loaded": "Successfully loaded",
+    "merchantIsNotActive": "Merchant is not active",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
     "recaptchaBadRequest": "The request is invalid or malformed.",
@@ -782,7 +783,6 @@
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
-    "merchantIsNotActive": "Merchant is not active",
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected",
     "web3NotDetected": "Web3 not detected"
