@@ -55,8 +55,7 @@ abstract contract ERC721Genes is IERC721Random, ERC721Simple, TraitsDnD, Rarity 
 
     emit MintRandom(requestId, request.account, randomWords[0], request.templateId, tokenId);
 
-    _upsertRecordField(tokenId, RARITY, _getDispersion(randomWords[0]));
-    _upsertRecordField(tokenId, TRAITS, encodeData(request, randomWords[0]));
+    _upsertRecordField(tokenId, GENES, encodeData(request, randomWords[0]));
 
     delete _queue[requestId];
 

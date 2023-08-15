@@ -7,16 +7,17 @@ import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import type { ITemplate } from "@framework/types";
-import { ContractFeatures, IUser, TokenMetadata, TokenRarity } from "@framework/types";
+import type { ITemplate, IUser } from "@framework/types";
+import { ContractFeatures, TokenMetadata, TokenRarity } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 
-import { Erc721TransferButton, GradeButton, TokenSellButton } from "../../../../components/buttons";
+import { Erc721TransferButton, GradeButton, TokenLendButton, TokenSellButton } from "../../../../components/buttons";
 import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
 import { useCheckAccessMetadata } from "../../../../utils/use-check-access-metadata";
 import { formatPrice } from "../../../../utils/money";
 import { TokenTraitsView } from "../../traits";
 import { TokenGenesisView } from "../../genesis";
+import { TokenGradeView } from "../../grade";
 import { Erc998Composition } from "./composition";
 import { StyledPaper } from "./styled";
 
@@ -85,6 +86,7 @@ export const Erc998Token: FC = () => {
             </Box>
             <TokenSellButton token={selected} />
             <Erc721TransferButton token={selected} />
+            <TokenLendButton token={selected} />
           </StyledPaper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.RANDOM) ? (
@@ -100,11 +102,9 @@ export const Erc998Token: FC = () => {
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.DISCRETE) ? (
             <StyledPaper>
               <Typography>
-                <FormattedMessage
-                  id="pages.erc998.token.level"
-                  values={{ level: selected.metadata[TokenMetadata.LEVEL] }}
-                />
+                <FormattedMessage id="pages.erc998.token.grade" />
               </Typography>
+              <TokenGradeView metadata={selected.metadata} />
               <GradeButton token={selected} disabled={!hasAccess} />
             </StyledPaper>
           ) : null}
@@ -117,7 +117,7 @@ export const Erc998Token: FC = () => {
               <TokenGenesisView metadata={selected.metadata} />
             </StyledPaper>
           ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
             <StyledPaper>
               <Typography>
                 <FormattedMessage id="pages.erc998.token.traits" />

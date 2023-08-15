@@ -688,7 +688,7 @@ export class ContractManagerSignService {
         );
       case Erc721ContractTemplates.GENES:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC721/traits/ERC721Genes.sol/ERC721Genes.json",
+          "@framework/core-contracts/artifacts/contracts/ERC721/genes/ERC721Genes.sol/ERC721Genes.json",
           chainId,
         );
       case Erc721ContractTemplates.RANDOM:
@@ -792,7 +792,7 @@ export class ContractManagerSignService {
         );
       case Erc998ContractTemplates.GENES:
         return getContractABI(
-          "@framework/core-contracts/artifacts/contracts/ERC998/traits/ERC998Genes.sol/ERC998Genes.json",
+          "@framework/core-contracts/artifacts/contracts/ERC998/genes/ERC998Genes.sol/ERC998Genes.json",
           chainId,
         );
       case Erc998ContractTemplates.RANDOM:

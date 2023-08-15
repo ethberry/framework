@@ -9,25 +9,28 @@ export interface ITokenMetadataView {
 }
 
 export const getFilteredAttributes = (metadata: Record<string, any>) =>
-  Object.entries(metadata).reduce((memo, [key, value]) => {
-    switch (key) {
-      // MODULE:GRADE
-      case TokenMetadata.LEVEL:
-        Object.assign(memo, { [key]: value });
-        break;
-      // MODULE:RANDOM
-      case TokenMetadata.RARITY:
-        Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
-        break;
-      // case TokenAttributes.TEMPLATE_ID:
-      //   Object.assign(memo, { [key]: ~~value });
-      //   break;
-      default:
-        break;
-    }
+  Object.entries(metadata).reduce(
+    (memo, [key, value]) => {
+      switch (key) {
+        // MODULE:GRADE
+        case TokenMetadata.LEVEL:
+          Object.assign(memo, { [key]: value });
+          break;
+        // MODULE:RANDOM
+        case TokenMetadata.RARITY:
+          Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
+          break;
+        // case TokenAttributes.TEMPLATE_ID:
+        //   Object.assign(memo, { [key]: ~~value });
+        //   break;
+        default:
+          break;
+      }
 
-    return memo;
-  }, {} as Record<string, any>);
+      return memo;
+    },
+    {} as Record<string, any>,
+  );
 
 export const shouldShowAttributes = (metadata: Record<string, any>) => {
   return Object.entries(getFilteredAttributes(metadata)).length > 0;

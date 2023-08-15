@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { TokenMetadata } from "@framework/types";
-import { decodeTraits } from "@framework/traits-ui";
+import { decodeTraits, DND } from "@framework/traits-ui";
 
 export interface ITokenGenesisView {
   metadata: Record<string, any>;
@@ -10,8 +10,6 @@ export interface ITokenGenesisView {
 
 export const TokenGenesisView: FC<ITokenGenesisView> = props => {
   const { metadata } = props;
-
-  const DND = ["Matron", "Sire"];
 
   const result = Object.entries(decodeTraits(BigInt(metadata[TokenMetadata.TRAITS]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
@@ -21,7 +19,7 @@ export const TokenGenesisView: FC<ITokenGenesisView> = props => {
   return (
     <Grid container>
       {Object.entries(result)
-        .reverse()
+        .slice(0, 6)
         .map(([key, value], i) => (
           <Grid key={i} container>
             <Grid item xs={6}>

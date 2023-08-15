@@ -28,9 +28,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         16110101,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "161101",
-          CLOTHES: "1",
-          EYES: "1",
-          MOUTH: "1",
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -43,9 +41,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         16110102,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "161101",
-          CLOTHES: "1",
-          EYES: "2",
-          MOUTH: "1",
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -58,9 +54,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         16110103,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "161101",
-          CLOTHES: "1",
-          EYES: "1",
-          MOUTH: "2",
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -73,9 +67,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         16110104,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "161101",
-          CLOTHES: "1",
-          EYES: "3",
-          MOUTH: "3",
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
@@ -88,9 +80,7 @@ export class SeedTokenCollectionAt1679894500330 implements MigrationInterface {
         16110105,
         '${JSON.stringify({
           [TokenMetadata.TEMPLATE_ID]: "161101",
-          CLOTHES: "2",
-          EYES: "2",
-          MOUTH: "2",
+          [TokenMetadata.TRAITS]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,

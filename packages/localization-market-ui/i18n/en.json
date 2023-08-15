@@ -863,6 +863,7 @@
       "title": "ERC998",
       "token": {
         "genesis": "Genesis",
+        "grade": "Grade",
         "level": "Level: {level}",
         "price": "Base price: {amount}",
         "rarity": "Rarity: {rarity}",

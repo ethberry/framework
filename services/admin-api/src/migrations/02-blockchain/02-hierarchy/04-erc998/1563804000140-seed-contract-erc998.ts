@@ -157,7 +157,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         10407,
         '${erc998ContractGenesAddress}',
         '${chainId}',
-        'AXIE (traits)',
+        'AXIE (genes)',
         '${simpleFormatting}',
         '${imageUrl}',
         'GENES',

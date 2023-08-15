@@ -12,24 +12,27 @@ export interface ITokenMetadataView {
 export const TokenTraitsView: FC<ITokenMetadataView> = props => {
   const { metadata } = props;
 
-  const result = Object.entries(metadata).reduce((memo, [key, value]) => {
-    switch (key) {
-      // MODULE:DND
-      // MODULE:BREEDING
-      // MODULE:COLLECTION
-      case TokenMetadata.TRAITS:
-        Object.entries(decodeTraits(BigInt(value), DND))
-          .slice(2) // delete sire & matron info from traits
-          .forEach(([key, value]) => {
-            Object.assign(memo, { [key.toUpperCase()]: value });
-          });
-        break;
-      default:
-        break;
-    }
+  const result = Object.entries(metadata).reduce(
+    (memo, [key, value]) => {
+      switch (key) {
+        // MODULE:DND
+        // MODULE:BREEDING
+        // MODULE:COLLECTION
+        case TokenMetadata.TRAITS:
+          Object.entries(decodeTraits(BigInt(value), DND))
+            .slice(2) // delete sire & matron info from traits
+            .forEach(([key, value]) => {
+              Object.assign(memo, { [key.toUpperCase()]: value });
+            });
+          break;
+        default:
+          break;
+      }
 
-    return memo;
-  }, {} as Record<string, any>);
+      return memo;
+    },
+    {} as Record<string, any>,
+  );
 
   return (
     <Grid container>

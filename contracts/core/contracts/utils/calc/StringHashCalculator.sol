@@ -13,7 +13,6 @@ contract StringHashCalculator {
     console.logBytes32(keccak256("TEMPLATE_ID"));
     console.logBytes32(keccak256("GRADE"));
     console.logBytes32(keccak256("RARITY"));
-    console.logBytes32(keccak256("TRAITS"));
     console.logBytes32(keccak256("GENES"));
   }
 }

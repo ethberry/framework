@@ -113,7 +113,7 @@ export const Erc721Token: FC = () => {
               <TokenGenesisView metadata={selected.metadata} />
             </StyledPaper>
           ) : null}
-          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.TRAITS) ? (
             <StyledPaper>
               <Typography>
                 <FormattedMessage id="pages.erc721.token.traits" />

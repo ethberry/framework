@@ -155,7 +155,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         10307,
         '${erc721ContractGenesAddress}',
         '${chainId}',
-        'DNA (traits)',
+        'DNA (genes)',
         '${simpleFormatting}',
         '${imageUrl}',
         'GENES',
