@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { ListenerType, ModuleType, TokenType } from "@framework/types";
 
@@ -17,7 +16,6 @@ import { IEthLoggerInOutDto } from "./interfaces";
 export class ContractManagerServiceRmq {
   constructor(
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721LogService,
     private readonly erc998LogService: Erc998LogService,

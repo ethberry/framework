@@ -492,7 +492,7 @@ export class ContractManagerServiceEth {
       description: emptyStateString,
       imageUrl,
       parameters: {
-        beneficiary: beneficiary.toLowerCase(),
+        account: beneficiary.toLowerCase(),
         startTimestamp: new Date(Number(startTimestamp) * 1000).toISOString(),
         cliffInMonth,
         monthlyRelease,

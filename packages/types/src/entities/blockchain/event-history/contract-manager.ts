@@ -1,3 +1,5 @@
+import { IBCAssetDto } from "../../../dto";
+
 export enum ContractManagerEventType {
   VestingDeployed = "VestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
@@ -54,6 +56,7 @@ export interface IContractManagerVestingDeployedEvent {
   account: string;
   externalId: number;
   args: IVestingDeployedEventArgs;
+  items: Array<IBCAssetDto>;
 }
 
 // struct MysteryArgs {
