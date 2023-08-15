@@ -26,8 +26,8 @@ export class TokenService {
   public async search(
     dto: Partial<ITokenSearchDto>,
     userEntity: UserEntity,
-    contractType: Array<TokenType>,
     contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
     contractFeatures?: Array<ContractFeatures>,
   ): Promise<[Array<TokenEntity>, number]> {
     const {

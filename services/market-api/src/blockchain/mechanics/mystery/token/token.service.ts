@@ -19,7 +19,7 @@ export class MysteryTokenService extends TokenService {
   }
 
   public async search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, [TokenType.ERC721], [ModuleType.MYSTERY]);
+    return super.search(dto, userEntity, [ModuleType.MYSTERY], [TokenType.ERC721]);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {

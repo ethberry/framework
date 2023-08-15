@@ -18,8 +18,8 @@ export class TokenService {
   public async search(
     dto: Partial<ITokenSearchDto>,
     userEntity: UserEntity,
-    contractType: TokenType,
-    contractModule: ModuleType,
+    contractModule: Array<ModuleType>,
+    contractType: Array<TokenType>,
   ): Promise<[Array<TokenEntity>, number]> {
     const {
       query,

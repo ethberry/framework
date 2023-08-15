@@ -20,8 +20,8 @@ export class RentTokenService extends TokenService {
     return super.search(
       dto,
       userEntity,
-      [TokenType.ERC721, TokenType.ERC998],
       [ModuleType.HIERARCHY],
+      [TokenType.ERC721, TokenType.ERC998],
       [ContractFeatures.RENTABLE],
     );
   }

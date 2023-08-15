@@ -29,7 +29,7 @@ export class CollectionTokenService extends TokenService {
   }
 
   public search(dto: Partial<ITokenSearchDto>, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC721, ModuleType.COLLECTION);
+    return super.search(dto, userEntity, [ModuleType.COLLECTION], [TokenType.ERC721]);
   }
 
   public getAllTokens(templateId: number): Promise<Array<TokenEntity>> {

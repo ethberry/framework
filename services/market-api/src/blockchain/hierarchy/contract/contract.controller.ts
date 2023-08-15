@@ -22,7 +22,7 @@ export class ContractController {
     return this.contractService.search(
       dto,
       userEntity,
-      [ModuleType.HIERARCHY],
+      [ModuleType.HIERARCHY, ModuleType.MYSTERY, ModuleType.COLLECTION],
       [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     );
   }

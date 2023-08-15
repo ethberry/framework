@@ -20,7 +20,6 @@ export class TokenController {
     return this.tokenService.search(
       dto,
       userEntity,
-      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
       [
         ModuleType.HIERARCHY,
         ModuleType.COLLECTION,
@@ -29,6 +28,7 @@ export class TokenController {
         ModuleType.LOTTERY,
         ModuleType.RAFFLE,
       ],
+      [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
     );
   }
 
