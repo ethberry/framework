@@ -42,7 +42,12 @@ export const Parameter: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "parameters"]} />
 
       <PageHeader message="pages.parameters.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceParameterCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

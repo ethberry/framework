@@ -55,7 +55,7 @@ export const Page: FC = () => {
       <Breadcrumbs path={["dashboard", "pages"]} />
 
       <PageHeader message="pages.pages.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommercePageCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

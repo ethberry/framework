@@ -64,7 +64,12 @@ export const ProfileAddresses: FC<ITabPanelProps> = props => {
   return (
     <Fragment>
       <PageHeader message="pages.profile.tabs.addresses">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceAddressCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

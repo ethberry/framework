@@ -49,7 +49,12 @@ export const Category: FC = () => {
       <Breadcrumbs path={["dashboard", "ecommerce", "category"]} />
 
       <PageHeader message="pages.category.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceCategoryCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

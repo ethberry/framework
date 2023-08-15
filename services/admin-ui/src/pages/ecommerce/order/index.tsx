@@ -92,7 +92,7 @@ export const Order: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommerceOrderCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

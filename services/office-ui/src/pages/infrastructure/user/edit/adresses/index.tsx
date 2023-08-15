@@ -76,7 +76,12 @@ export const UserAddresses: FC<IUserAddressesProps> = props => {
   return (
     <Fragment>
       <Box sx={{ position: "absolute", top: 0, right: 0 }}>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceAddressCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </Box>

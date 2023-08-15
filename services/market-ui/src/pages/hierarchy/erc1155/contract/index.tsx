@@ -31,7 +31,13 @@ export const Erc1155Contract: FC = () => {
       <Breadcrumbs path={["dashboard", "erc1155", "erc1155.contract"]} data={[{}, {}, { title: selected.title }]} />
 
       <PageHeader message="pages.erc1155.contract.title" data={selected}>
-        <Button variant="outlined" startIcon={<Hardware />} component={RouterLink} to="/craft">
+        <Button
+          variant="outlined"
+          startIcon={<Hardware />}
+          component={RouterLink}
+          to="/craft"
+          data-testid="CraftButton"
+        >
           <FormattedMessage id="form.buttons.craft" />
         </Button>
       </PageHeader>

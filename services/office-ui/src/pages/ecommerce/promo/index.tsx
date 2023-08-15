@@ -50,7 +50,7 @@ export const Promo: FC = () => {
       <Breadcrumbs path={["dashboard", "promos"]} />
 
       <PageHeader message="pages.promos.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="EcommercePromoCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

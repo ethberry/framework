@@ -85,7 +85,7 @@ export const Grade: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="GradeCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

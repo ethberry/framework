@@ -71,7 +71,12 @@ export const Product: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={handleCreate}
+          data-testid="EcommerceProductCreateButton"
+        >
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
