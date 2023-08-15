@@ -157,7 +157,7 @@ export class ClaimService {
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
 
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", userEntity.chainId),
       account,
       {
         externalId: claimEntity.id,
@@ -230,6 +230,7 @@ export class ClaimService {
 
           return this.create(
             {
+              chainId: userEntity.chainId,
               account,
               endTimestamp,
               item: {

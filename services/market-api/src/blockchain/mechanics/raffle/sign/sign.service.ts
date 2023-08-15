@@ -22,7 +22,7 @@ export class RaffleSignService {
   ) {}
 
   public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, contractId } = dto;
+    const { account, referrer = ZeroAddress, contractId, chainId } = dto;
 
     const raffleRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 
@@ -33,7 +33,7 @@ export class RaffleSignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: raffleRound.id,

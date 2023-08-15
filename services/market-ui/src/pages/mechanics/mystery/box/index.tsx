@@ -50,7 +50,7 @@ export const MysteryBox: FC = () => {
                 values={{ amount: formatPrice(selected.template?.price) }}
               />
             </Typography>
-            <MysteryboxPurchaseButton mysterybox={selected} />
+            <MysteryboxPurchaseButton mysteryBox={selected} />
           </Paper>
         </Grid>
       </Grid>

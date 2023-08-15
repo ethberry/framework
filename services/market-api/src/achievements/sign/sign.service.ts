@@ -2,9 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { hexlify } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import type { IParams } from "@framework/nest-js-module-exchange-signer";
-import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { SettingsKeys, TokenType } from "@framework/types";
+import { SettingsKeys } from "@framework/types";
 
 import { SettingsService } from "../../infrastructure/settings/settings.service";
 import { UserEntity } from "../../infrastructure/user/user.entity";
@@ -12,9 +10,7 @@ import { ClaimService } from "../../blockchain/mechanics/claim/claim.service";
 import { AchievementRedemptionService } from "../redemption/redemption.service";
 import { AchievementLevelService } from "../level/level.service";
 import { AchievementItemService } from "../item/item.service";
-import { AchievementLevelEntity } from "../level/level.entity";
 import type { ISignAchievementsDto } from "./interfaces";
-import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
 export class AchievementSignService {
@@ -22,10 +18,8 @@ export class AchievementSignService {
     private readonly achievementItemService: AchievementItemService,
     private readonly achievementLevelService: AchievementLevelService,
     private readonly achievementRedemptionService: AchievementRedemptionService,
-    private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
     private readonly claimService: ClaimService,
-    private readonly contractService: ContractService,
   ) {}
 
   public async sign(dto: ISignAchievementsDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -55,6 +49,7 @@ export class AchievementSignService {
         account: account.toLowerCase(),
         item: achievementLevelEntity.item,
         endTimestamp: new Date(0).toISOString(),
+        chainId: userEntity.chainId,
       },
       userEntity,
     );

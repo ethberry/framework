@@ -3,9 +3,9 @@ import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/com
 import { NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 
-import { AutocompleteGradeDto, SearchGradeDto, SignGradeDto } from "./dto";
 import { GradeService } from "./grade.service";
 import { GradeEntity } from "./grade.entity";
+import { AutocompleteGradeDto, SearchGradeDto, SignGradeDto } from "./dto";
 
 @Public()
 @Controller("/grade")

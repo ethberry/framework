@@ -9,26 +9,24 @@ import { RatePlanType, SettingsKeys, TokenType } from "@framework/types";
 import { sorter } from "../../../../common/utils/sorter";
 import { SettingsService } from "../../../../infrastructure/settings/settings.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { TemplateService } from "../../../hierarchy/template/template.service";
+import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { MysteryBoxService } from "../box/box.service";
 import { MysteryBoxEntity } from "../box/box.entity";
 import { ISignMysteryboxDto } from "./interfaces";
-import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Injectable()
 export class MysterySignService {
   constructor(
     private readonly mysteryBoxService: MysteryBoxService,
     private readonly contractService: ContractService,
-    private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
     private readonly settingsService: SettingsService,
   ) {}
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, mysteryboxId } = dto;
+    const { account, referrer = ZeroAddress, mysteryBoxId, chainId } = dto;
 
-    const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryboxId });
+    const mysteryBoxEntity = await this.mysteryBoxService.findOneWithRelations({ id: mysteryBoxId });
 
     if (!mysteryBoxEntity) {
       throw new NotFoundException("mysteryBoxNotFound");
@@ -49,7 +47,7 @@ export class MysterySignService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: mysteryBoxEntity.id,

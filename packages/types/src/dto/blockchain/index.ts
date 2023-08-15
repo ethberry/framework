@@ -14,6 +14,7 @@ export * from "./hierarchy/contract-history/search";
 export * from "./exchange/asset/asset";
 export * from "./exchange/asset/components";
 export * from "./exchange/asset/bc-asset";
+export * from "./exchange/marketplace/sign";
 
 export * from "./mechanics/breed/leaderboard";
 export * from "./mechanics/breed/search";

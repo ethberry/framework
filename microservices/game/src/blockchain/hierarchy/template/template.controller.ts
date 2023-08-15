@@ -41,6 +41,6 @@ export class TemplateController {
     @Param("id", ParseIntPipe) id: number,
     @User() merchantEntity: MerchantEntity,
   ): Promise<TemplateEntity | null> {
-    return this.templateService.findOneWithRelations({ id }, merchantEntity);
+    return this.templateService.findOneAndCheckMerchant({ id }, merchantEntity);
   }
 }

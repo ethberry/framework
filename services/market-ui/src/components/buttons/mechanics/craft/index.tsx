@@ -61,13 +61,14 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
 
     return metaFnWithSign(
       {
         url: "/craft/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
           craftId: craft.id,

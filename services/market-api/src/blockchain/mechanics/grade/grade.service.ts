@@ -78,7 +78,7 @@ export class GradeService {
   }
 
   public async sign(dto: ISignGradeDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, tokenId, attribute } = dto;
+    const { account, referrer = ZeroAddress, tokenId, attribute, chainId } = dto;
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
 
     if (!tokenEntity) {
@@ -107,7 +107,7 @@ export class GradeService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: gradeEntity.id,

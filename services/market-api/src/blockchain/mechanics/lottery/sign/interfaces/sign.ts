@@ -1,6 +1,7 @@
 export interface ISignLotteryDto {
-  contractId: number;
+  chainId: number;
   account: string;
+  contractId: number;
   referrer: string;
   ticketNumbers: string;
 }

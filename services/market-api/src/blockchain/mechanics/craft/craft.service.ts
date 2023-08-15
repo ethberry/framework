@@ -7,8 +7,8 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
-import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 import type { ISignCraftDto } from "@framework/types";
+import { CraftStatus, SettingsKeys, TokenType } from "@framework/types";
 
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { sorter } from "../../../common/utils/sorter";
@@ -119,7 +119,7 @@ export class CraftService {
   }
 
   public async sign(dto: ISignCraftDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, craftId } = dto;
+    const { account, referrer = ZeroAddress, craftId, chainId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
@@ -131,7 +131,7 @@ export class CraftService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: craftEntity.id,

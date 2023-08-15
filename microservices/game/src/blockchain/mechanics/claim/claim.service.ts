@@ -121,7 +121,7 @@ export class ClaimService {
     dto: IClaimUpdateDto,
     merchantEntity: MerchantEntity,
   ): Promise<ClaimEntity> {
-    const { account, item, endTimestamp } = dto;
+    const { account, item, endTimestamp, chainId } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);
 
@@ -149,7 +149,7 @@ export class ClaimService {
     const nonce = randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: claimEntity.id,

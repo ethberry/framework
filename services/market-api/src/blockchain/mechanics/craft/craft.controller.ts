@@ -3,10 +3,9 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptor
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { SearchDto } from "@gemunion/collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-
-import { SignCraftDto } from "./dto";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
+import { SignCraftDto } from "./dto";
 
 @Public()
 @Controller("/craft")

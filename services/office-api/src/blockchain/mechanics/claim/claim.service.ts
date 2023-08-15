@@ -230,6 +230,7 @@ export class ClaimService {
 
           return this.create(
             {
+              chainId: userEntity.chainId,
               account,
               endTimestamp,
               item: {

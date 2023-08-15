@@ -10,7 +10,6 @@ import {
   ModuleType,
   TokenType,
 } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
 import { UserEntity } from "../../../infrastructure/user/user.entity";
 import { ContractEntity } from "./contract.entity";
@@ -84,9 +83,8 @@ export class ContractService {
       contractStatus: ContractStatus.ACTIVE,
     });
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity?.chainId || chainId,
+      chainId: userEntity.chainId,
     });
 
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
@@ -123,10 +121,8 @@ export class ContractService {
   public async autocomplete(dto: IContractAutocompleteDto, userEntity: UserEntity): Promise<Array<ContractEntity>> {
     const { contractFeatures = [], contractType = [], contractModule = [] } = dto;
 
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-
     const where = {
-      chainId: userEntity?.chainId || chainId,
+      chainId: userEntity.chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
 
@@ -169,13 +165,12 @@ export class ContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async findSystemContractByName(name: string): Promise<ContractEntity> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+  public async findSystemContractByName(name: string, chainId: number): Promise<ContractEntity> {
+    const where = { contractModule: ModuleType.SYSTEM, name, chainId };
 
     const contractEntity = await this.findOne(where);
 
-    // system must exists
+    // system must exist
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }

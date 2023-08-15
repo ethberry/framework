@@ -132,7 +132,7 @@ export class CraftService {
   }
 
   public async sign(dto: ISignCraftDto, merchantEntity: MerchantEntity): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, craftId } = dto;
+    const { account, referrer = ZeroAddress, craftId, chainId } = dto;
     const craftEntity = await this.findOneWithRelations({ id: craftId }, merchantEntity);
 
     if (!craftEntity) {
@@ -148,7 +148,7 @@ export class CraftService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: craftEntity.id,

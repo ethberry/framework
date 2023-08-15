@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -57,13 +57,14 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
 
     return metaFnWithSign(
       {
         url: "/drops/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
           dropId: drop.id,

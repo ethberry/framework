@@ -10,7 +10,6 @@ import {
   ModuleType,
   TokenType,
 } from "@framework/types";
-import { testChainId } from "@framework/constants";
 
 import { ContractEntity } from "./contract.entity";
 import { MerchantEntity } from "../../../infrastructure/merchant/merchant.entity";
@@ -187,9 +186,8 @@ export class ContractService {
     return contractEntity;
   }
 
-  public async findSystemContractByName(name: string): Promise<ContractEntity> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+  public async findSystemContractByName(name: string, chainId: number): Promise<ContractEntity> {
+    const where = { contractModule: ModuleType.SYSTEM, name, chainId };
 
     const contractEntity = await this.findOne(where);
 

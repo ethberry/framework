@@ -21,4 +21,6 @@ export class ClaimUpdateDto extends AccountOptionalDto implements IClaimUpdateDt
   @IsString({ message: "typeMismatch" })
   @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
+
+  public chainId: number;
 }

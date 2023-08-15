@@ -74,7 +74,7 @@ export class BreedService {
   }
 
   public async sign(dto: ISignBreedDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, momId, dadId } = dto;
+    const { account, referrer = ZeroAddress, momId, dadId, chainId } = dto;
     const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
     const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
@@ -103,7 +103,7 @@ export class BreedService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: encodedExternalId.toString(),

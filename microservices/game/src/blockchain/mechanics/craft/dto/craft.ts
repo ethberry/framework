@@ -5,7 +5,9 @@ import { Mixin } from "ts-mixer";
 import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 import { ISignCraftDto } from "@framework/types";
 
-export class SignCraftDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignCraftDto {
+import { ChainIdDto } from "../../../../common/common/dto";
+
+export class SignCraftDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignCraftDto {
   @ApiProperty({
     minimum: 1,
   })

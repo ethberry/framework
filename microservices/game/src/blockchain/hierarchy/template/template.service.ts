@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
@@ -220,10 +220,7 @@ export class TemplateService {
     return this.templateEntityRepository.findOne({ where, ...options });
   }
 
-  public async findOneWithRelations(
-    where: FindOptionsWhere<TemplateEntity>,
-    merchantEntity: MerchantEntity,
-  ): Promise<TemplateEntity | null> {
+  public async findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.leftJoinAndSelect("contract.merchant", "merchant");
@@ -244,12 +241,19 @@ export class TemplateService {
       "price_contract.contractType IN(:...tokenTypes)",
       { tokenTypes: [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155] },
     );
+
     queryBuilder.andWhere("template.id = :id", {
       id: where.id,
     });
 
-    const templateEntity = await queryBuilder.getOne();
+    return queryBuilder.getOne();
+  }
 
+  public async findOneAndCheckMerchant(
+    where: FindOptionsWhere<TemplateEntity>,
+    merchantEntity: MerchantEntity,
+  ): Promise<TemplateEntity> {
+    const templateEntity = await this.findOneWithRelations(where);
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }

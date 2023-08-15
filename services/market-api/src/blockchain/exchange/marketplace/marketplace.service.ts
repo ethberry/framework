@@ -4,14 +4,14 @@ import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
+import type { ISignTemplateDto } from "@framework/types";
 import { SettingsKeys, TokenType } from "@framework/types";
 
+import { sorter } from "../../../common/utils/sorter";
 import { SettingsService } from "../../../infrastructure/settings/settings.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
-import type { ISignTemplateDto } from "./interfaces";
-import { sorter } from "../../../common/utils/sorter";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Injectable()
@@ -24,7 +24,7 @@ export class MarketplaceService {
   ) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, templateId, amount } = dto;
+    const { account, referrer = ZeroAddress, templateId, amount, chainId } = dto;
 
     const templateEntity = await this.templateService.findOneWithRelations({ id: templateId });
 
@@ -43,7 +43,7 @@ export class MarketplaceService {
     const expiresAt = ttl && ttl + Date.now() / 1000;
 
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       amount,
       {

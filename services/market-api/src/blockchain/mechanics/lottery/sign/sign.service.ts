@@ -21,7 +21,7 @@ export class LotterySignService {
   ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, ticketNumbers, contractId } = dto;
+    const { account, referrer = ZeroAddress, ticketNumbers, contractId, chainId } = dto;
     const lotteryRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 
     if (!lotteryRound) {
@@ -31,7 +31,7 @@ export class LotterySignService {
     const nonce = randomBytes(32);
     const expiresAt = 0;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: lotteryRound.id,

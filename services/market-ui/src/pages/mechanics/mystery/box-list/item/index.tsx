@@ -30,7 +30,7 @@ export const MysteryboxListItem: FC<IMysteryboxListItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <MysteryboxPurchaseButton mysterybox={mysterybox} />
+          <MysteryboxPurchaseButton mysteryBox={mysterybox} />
         </Grid>
       </CardActions>
     </Card>

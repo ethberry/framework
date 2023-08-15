@@ -58,13 +58,14 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
 
     return metaFnWithSign(
       {
         url: "/raffle/ticket/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
           contractId: round.contractId,

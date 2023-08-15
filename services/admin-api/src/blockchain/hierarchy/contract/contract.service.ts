@@ -3,8 +3,6 @@ import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Not, Repository } from "typeorm";
-
-import { testChainId } from "@framework/constants";
 import type { IContractAutocompleteDto, IContractSearchDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
@@ -233,9 +231,8 @@ export class ContractService {
     return this.contractEntityRepository.count({ where });
   }
 
-  public async findSystemContractByName(name: string): Promise<ContractEntity> {
-    const chainId = ~~this.configService.get<number>("CHAIN_ID", Number(testChainId));
-    const where = { name, contractModule: ModuleType.SYSTEM, chainId };
+  public async findSystemContractByName(name: string, chainId: number): Promise<ContractEntity> {
+    const where = { contractModule: ModuleType.SYSTEM, name, chainId };
 
     const contractEntity = await this.findOne(where);
 

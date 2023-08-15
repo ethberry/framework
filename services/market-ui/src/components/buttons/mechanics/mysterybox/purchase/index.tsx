@@ -14,12 +14,12 @@ import MysteryboxPurchaseABI from "../../../../../abis/mechanics/mysterybox/purc
 import { getEthPrice } from "../../../../../utils/money";
 import { sorter } from "../../../../../utils/sorter";
 
-interface IMysteryboxBuyButtonProps {
-  mysterybox: IMysterybox;
+interface IMysteryBoxBuyButtonProps {
+  mysteryBox: IMysterybox;
 }
 
-export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
-  const { mysterybox } = props;
+export const MysteryboxPurchaseButton: FC<IMysteryBoxBuyButtonProps> = props => {
+  const { mysteryBox } = props;
 
   const settings = useSettings();
 
@@ -33,15 +33,15 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
 
       return contract.purchaseMystery(
         {
-          externalId: mysterybox.id,
+          externalId: mysteryBox.id,
           expiresAt: sign.expiresAt,
           nonce: utils.arrayify(sign.nonce),
           extra: utils.formatBytes32String("0x"),
-          receiver: mysterybox.template!.contract!.merchant!.wallet,
+          receiver: mysteryBox.template!.contract!.merchant!.wallet,
           referrer: constants.AddressZero,
         },
         [
-          ...mysterybox.item!.components.sort(sorter("id")).map(component => ({
+          ...mysteryBox.item!.components.sort(sorter("id")).map(component => ({
             tokenType: Object.values(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
             // tokenId: component.templateId || 0,
@@ -53,12 +53,12 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           })),
           {
             tokenType: Object.values(TokenType).indexOf(TokenType.ERC721),
-            token: mysterybox.template!.contract!.address,
-            tokenId: mysterybox.templateId,
+            token: mysteryBox.template!.contract!.address,
+            tokenId: mysteryBox.templateId,
             amount: "1",
           },
         ],
-        mysterybox.template?.price?.components.sort(sorter("id")).map(component => ({
+        mysteryBox.template?.price?.components.sort(sorter("id")).map(component => ({
           tokenType: Object.values(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -66,7 +66,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         })),
         sign.signature,
         {
-          value: getEthPrice(mysterybox.template?.price),
+          value: getEthPrice(mysteryBox.template?.price),
         },
       ) as Promise<void>;
     },
@@ -74,15 +74,16 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
     return metaFnWithSign(
       {
         url: "/mysteryboxes/sign",
         method: "POST",
         data: {
+          chainId,
           account,
           referrer: settings.getReferrer(),
-          mysteryboxId: mysterybox.id,
+          mysteryBoxId: mysteryBox.id,
         },
       },
       null,

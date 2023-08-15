@@ -101,7 +101,7 @@ export class DropService {
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, dropId } = dto;
+    const { account, referrer = ZeroAddress, dropId, chainId } = dto;
 
     const dropEntity = await this.findOneWithRelations({ id: dropId });
 
@@ -134,7 +134,7 @@ export class DropService {
     const nonce = randomBytes(32);
     const expiresAt = ttl && ttl + Date.now() / 1000;
     const signature = await this.getSignature(
-      await this.contractService.findSystemContractByName("Exchange"),
+      await this.contractService.findSystemContractByName("Exchange", chainId),
       account,
       {
         externalId: dropEntity.id,

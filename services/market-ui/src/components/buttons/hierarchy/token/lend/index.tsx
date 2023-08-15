@@ -70,7 +70,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
   );
 
   const metaFn = useMetamask((dto: ILendDto, web3Context: Web3ContextType) => {
-    const { account } = web3Context;
+    const { chainId, account } = web3Context;
     const expires = Math.ceil(new Date(dto.expires).getTime() / 1000); // in seconds,
 
     return metaFnWithSign(
@@ -78,6 +78,7 @@ export const TokenLendButton: FC<ITokenLendButtonProps> = props => {
         url: "/rent/tokens/sign",
         method: "POST",
         data: {
+          chainId,
           account, // user token owner
           referrer: dto.account, // borrower
           tokenId: token.id, // token.id to lend

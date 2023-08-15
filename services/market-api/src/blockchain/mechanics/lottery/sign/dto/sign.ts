@@ -7,8 +7,9 @@ import { AccountDto, ReferrerOptionalDto } from "@gemunion/collection";
 import { ISignLotteryDto } from "../interfaces";
 
 import { LotteryTicketRule } from "./rule";
+import { ChainIdDto } from "../../../../../common/dto";
 
-export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignLotteryDto {
+export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto, ChainIdDto) implements ISignLotteryDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MinLength(66, { message: "rangeUnderflow" })

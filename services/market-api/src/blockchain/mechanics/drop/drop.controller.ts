@@ -3,7 +3,6 @@ import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/com
 import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-
 import { DropService } from "./drop.service";
 import { DropEntity } from "./drop.entity";
 import { SignDropDto } from "./dto";

@@ -1,13 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@gemunion/collection";
 import type { IClaimCreateDto } from "@framework/types";
 
 import { ItemDto } from "../../../exchange/asset/dto";
+import { ChainIdDto } from "../../../../common/common/dto";
 
-export class ClaimItemCreateDto extends AccountDto implements IClaimCreateDto {
+export class ClaimItemCreateDto extends Mixin(AccountDto, ChainIdDto) implements IClaimCreateDto {
   @ApiProperty({
     type: ItemDto,
   })

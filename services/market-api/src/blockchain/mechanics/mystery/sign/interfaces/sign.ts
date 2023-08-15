@@ -1,5 +1,6 @@
 export interface ISignMysteryboxDto {
-  mysteryboxId: number;
+  chainId: number;
   account: string;
+  mysteryBoxId: number;
   referrer: string;
 }
