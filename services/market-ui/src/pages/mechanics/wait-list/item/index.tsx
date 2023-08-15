@@ -30,6 +30,8 @@ export const WaitListItem: FC = () => {
     empty: {
       account,
     },
+    // @ts-ignore
+    filter: ({ item: _item, ...rest }: Partial<IWaitListItem>) => rest,
   });
 
   return (
