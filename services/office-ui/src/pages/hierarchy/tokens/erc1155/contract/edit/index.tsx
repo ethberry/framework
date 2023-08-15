@@ -39,6 +39,7 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
     id,
     title,
     description,
+    address,
     imageUrl,
     contractStatus,
     merchantId,
