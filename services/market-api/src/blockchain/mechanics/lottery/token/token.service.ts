@@ -1,9 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
-import { ns } from "@framework/constants";
-import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTokenSearchDto } from "@framework/types";
+import type { ILotteryTokenSearchDto } from "@framework/types";
 import { ModuleType, TokenMetadata } from "@framework/types";
 
 import { UserEntity } from "../../../../infrastructure/user/user.entity";
@@ -129,9 +127,8 @@ export class LotteryTokenService extends TokenService {
   public getTicketCount(roundId: number): Promise<number> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("ticket");
 
-    queryBuilder.leftJoinAndSelect("ticket.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.leftJoinAndSelect("ticket.balance", "balance");
+    queryBuilder.leftJoin("ticket.template", "template");
+    queryBuilder.leftJoin("template.contract", "contract");
 
     queryBuilder.leftJoinAndMapOne(
       "ticket.round",
@@ -140,32 +137,12 @@ export class LotteryTokenService extends TokenService {
       `(ticket.metadata->>'${TokenMetadata.ROUND}')::numeric = round.id AND template.contract_id = round.ticket_contract_id`,
     );
 
-    queryBuilder.leftJoinAndSelect("round.contract", "lottery_contract");
+    queryBuilder.leftJoin("round.contract", "lottery_contract");
 
     queryBuilder.andWhere("round.id = :id", {
       id: roundId,
     });
 
     return queryBuilder.getCount();
-  }
-
-  // TODO rework query
-  public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {
-    const { skip, take } = dto;
-
-    const queryString = `
-        SELECT row_number() OVER (ORDER BY account)::INTEGER id,
-               SUM(amount)   AS                              amount,
-               COUNT(amount) AS                              count,
-               account
-        FROM ${ns}.lottery_ticket
-        GROUP BY account
-    `;
-
-    return Promise.all([
-      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $1 LIMIT $2`, [skip, take]),
-      this.entityManager.query(`SELECT COUNT(DISTINCT (id))::INTEGER as count
-                                FROM (${queryString}) as l`),
-    ]).then(([list, [{ count }]]) => [list, count]);
   }
 }

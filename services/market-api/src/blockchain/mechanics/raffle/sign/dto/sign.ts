@@ -9,5 +9,5 @@ import { ISignRaffleDto } from "../interfaces";
 export class SignRaffleDto extends Mixin(AccountDto, ReferrerOptionalDto) implements ISignRaffleDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  public roundId: number;
+  public contractId: number;
 }

@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
@@ -7,7 +6,6 @@ import type { IParams } from "@framework/nest-js-module-exchange-signer";
 import { SignerService } from "@framework/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 // import { boolArrayToByte32 } from "@framework/traits-api";
-
 import { LotteryRoundService } from "../round/round.service";
 import { LotteryRoundEntity } from "../round/round.entity";
 import { ISignLotteryDto } from "./interfaces";
@@ -19,13 +17,12 @@ export class LotterySignService {
   constructor(
     private readonly signerService: SignerService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
     private readonly roundService: LotteryRoundService,
   ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, ticketNumbers, roundId } = dto;
-    const lotteryRound = await this.roundService.findCurrentRoundWithRelations({ id: roundId });
+    const { account, referrer = ZeroAddress, ticketNumbers, contractId } = dto;
+    const lotteryRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 
     if (!lotteryRound) {
       throw new NotFoundException("roundNotFound");

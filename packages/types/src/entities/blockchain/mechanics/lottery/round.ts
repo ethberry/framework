@@ -30,11 +30,6 @@ export interface ILotteryScheduleUpdateRmq {
   schedule: CronExpression;
 }
 
-export interface ILotteryContractRound extends IContract {
-  round?: ILotteryRound | null;
-  count: number;
-}
-
 export interface ILotteryCurrentRound {
   roundId: string;
   startTimestamp: string;

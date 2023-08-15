@@ -1,5 +1,5 @@
 export interface ISignLotteryDto {
-  roundId: number;
+  contractId: number;
   account: string;
   referrer: string;
   ticketNumbers: string;

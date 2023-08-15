@@ -9,7 +9,8 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { IContract, IContractSearchDto } from "@framework/types";
 
-import { LotteryPurchase } from "../purchase";
+import { LotteryPurchase } from "./purchase";
+import { LotteryStatistic } from "./statistics";
 
 export const LotteryContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -57,7 +58,8 @@ export const LotteryContract: FC = () => {
         </Box>
       </Box>
 
-      <LotteryPurchase contract={selected} embedded />
+      <LotteryPurchase contract={selected} />
+      <LotteryStatistic contract={selected} />
     </Fragment>
   );
 };

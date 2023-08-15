@@ -3,7 +3,7 @@ import { CronExpression } from "@nestjs/schedule";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { wallet } from "@gemunion/constants";
-import { ns, testChainId } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 import { NodeEnv } from "@framework/types";
 
 export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
@@ -43,7 +43,7 @@ export class SeedContractRaffleAt1685961136100 implements MigrationInterface {
           '${chainId}',
           'RAFFLE',
           '${simpleFormatting}',
-          '',
+          '${imageUrl}',
           'Raffle',
           '',
           '',

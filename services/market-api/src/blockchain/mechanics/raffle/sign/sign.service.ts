@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { encodeBytes32String, hexlify, randomBytes, ZeroAddress } from "ethers";
 
 import type { IParams } from "@framework/nest-js-module-exchange-signer";
@@ -19,14 +18,13 @@ export class RaffleSignService {
   constructor(
     private readonly signerService: SignerService,
     private readonly contractService: ContractService,
-    private readonly configService: ConfigService,
     private readonly roundService: RaffleRoundService,
   ) {}
 
   public async sign(dto: ISignRaffleDto): Promise<IServerSignature> {
-    const { account, referrer = ZeroAddress, roundId } = dto;
+    const { account, referrer = ZeroAddress, contractId } = dto;
 
-    const raffleRound = await this.roundService.findCurrentRoundWithRelations({ id: roundId });
+    const raffleRound = await this.roundService.findCurrentRoundWithRelations(contractId);
 
     if (!raffleRound) {
       throw new NotFoundException("roundNotFound");

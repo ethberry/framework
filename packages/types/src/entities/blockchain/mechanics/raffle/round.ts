@@ -28,8 +28,3 @@ export interface IRaffleScheduleUpdateRmq {
   address: string;
   schedule: CronExpression;
 }
-
-export interface IRaffleContractRound extends IContract {
-  round?: IRaffleRound | null;
-  count: number;
-}

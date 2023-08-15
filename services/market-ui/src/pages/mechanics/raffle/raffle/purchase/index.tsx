@@ -2,29 +2,28 @@ import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { CronExpression, IContract, IRaffleContractRound } from "@framework/types";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { CronExpression, IContract, IRaffleRound } from "@framework/types";
 
-import { RafflePurchaseButton } from "../../../../components/buttons";
-import { formatPrice } from "../../../../utils/money";
+import { formatPrice } from "../../../../../utils/money";
+import { RafflePurchaseButton } from "../../../../../components/buttons";
+import { emptyRaffleRound } from "../../../../../components/common/interfaces";
 import { StyledPaper, StyledTypography } from "./styled";
-import { emptyRaffle } from "../../../../components/common/interfaces";
 
 interface IRafflePurchaseProps {
   contract: IContract;
-  embedded?: boolean;
 }
 
 export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
-  const { contract, embedded } = props;
+  const { contract } = props;
 
-  const [raffle, setRaffle] = useState<IRaffleContractRound>(emptyRaffle);
+  const [round, setRound] = useState<IRaffleRound>(emptyRaffleRound);
 
   const { fn, isLoading } = useApiCall(
     async api => {
       return contract.id
         ? api.fetchJson({
-            url: "/raffle/rounds/options",
+            url: "/raffle/rounds/current",
             data: {
               contractId: contract.id,
             },
@@ -36,8 +35,8 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
 
   const fetchRaffle = async (): Promise<any> => {
     return fn()
-      .then((json: IRaffleContractRound) => {
-        setRaffle(json);
+      .then((json: IRaffleRound) => {
+        setRound(json);
       })
       .catch(e => {
         console.error(e);
@@ -50,38 +49,40 @@ export const RafflePurchase: FC<IRafflePurchaseProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "raffle", "raffle.purchase"]} isHidden={embedded} />
-
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.raffle.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
-            {raffle && raffle.round ? (
+            {round ? (
               <RafflePurchaseButton
-                round={raffle.round}
-                disabled={raffle.round.maxTickets > 0 && raffle.round.maxTickets <= raffle.count}
+                round={round}
+                // @ts-ignore
+                disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
               />
             ) : null}
-            {raffle && raffle.round ? formatPrice(raffle.round.price) : "Round not Active!"}
+            {round && round ? formatPrice(round.price) : "Round not Active!"}
           </StyledPaper>
           <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
-            {raffle && raffle.round && raffle.round.maxTickets > 0 ? (
+            {round && round && round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.raffle.purchase.count"
-                values={{ current: raffle.count, max: raffle.round?.maxTickets }}
+                // @ts-ignore
+                values={{ current: round.ticketCount, max: round?.maxTickets }}
               />
             ) : (
-              <FormattedMessage id="pages.raffle.purchase.sold" values={{ count: raffle ? raffle.count : 0 }} />
+              <FormattedMessage
+                id="pages.raffle.purchase.sold"
+                // @ts-ignore
+                values={{ count: round ? round.ticketCount : 0 }}
+              />
             )}
           </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">
-        {raffle
-          ? raffle.parameters.schedule
-            ? Object.keys(CronExpression)[
-                Object.values(CronExpression).indexOf(raffle.parameters.schedule as unknown as CronExpression)
-              ]
-            : "not yet scheduled"
+        {contract.parameters.schedule
+          ? Object.keys(CronExpression)[
+              Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
+            ]
           : "not yet scheduled"}
       </StyledTypography>
       <StyledTypography variant="h6">

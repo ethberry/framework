@@ -1,11 +1,12 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Public } from "@gemunion/nest-js-utils";
+
 import { RaffleRoundService } from "./round.service";
 import { RaffleRoundEntity } from "./round.entity";
-import { RaffleOptionsDto } from "./dto";
-import { IRaffleContractRound } from "@framework/types";
+import { RaffleCurrentDto } from "./dto";
+import { IRaffleRoundStatistic } from "./interfaces";
 
 @Public()
 @ApiBearerAuth()
@@ -18,8 +19,18 @@ export class RaffleRoundController {
     return this.raffleRoundService.autocomplete();
   }
 
-  @Get("/options")
-  public options(@Query() dto: RaffleOptionsDto): Promise<IRaffleContractRound> {
-    return this.raffleRoundService.options(dto);
+  @Get("/current")
+  public current(@Query() dto: RaffleCurrentDto): Promise<RaffleRoundEntity> {
+    return this.raffleRoundService.current(dto);
+  }
+
+  @Get("/latest")
+  public last(@Query() dto: RaffleCurrentDto): Promise<IRaffleRoundStatistic> {
+    return this.raffleRoundService.latest(dto);
+  }
+
+  @Get("/:id")
+  public statistic(@Param("id", ParseIntPipe) id: number): Promise<IRaffleRoundStatistic> {
+    return this.raffleRoundService.statistic(id);
   }
 }

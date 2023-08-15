@@ -73,7 +73,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
           account,
           referrer: settings.getReferrer(),
           ticketNumbers: boolArrayToByte32(ticketNumbers),
-          roundId: round.id,
+          contractId: round.contractId,
         },
       },
       null,

@@ -916,9 +916,6 @@
       "contract": {
         "title": "Contract: {title}"
       },
-      "leaderboard": {
-        "title": "Leaderboard"
-      },
       "purchase": {
         "count": "{current} of {max} sold",
         "price": "Ticket Price",
@@ -1064,9 +1061,6 @@
     "raffle": {
       "contract": {
         "title": "Contract: {title}"
-      },
-      "leaderboard": {
-        "title": "Leaderboard"
       },
       "purchase": {
         "commission": "{commission}% commission",

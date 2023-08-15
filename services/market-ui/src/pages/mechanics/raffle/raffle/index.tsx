@@ -8,7 +8,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { IContract, IContractSearchDto } from "@framework/types";
-import { RafflePurchase } from "../purchase";
+import { RafflePurchase } from "./purchase";
+import { RaffleStatistic } from "./statistics";
 
 export const RaffleContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
@@ -56,7 +57,8 @@ export const RaffleContract: FC = () => {
         </Box>
       </Box>
 
-      <RafflePurchase contract={selected} embedded />
+      <RafflePurchase contract={selected} />
+      <RaffleStatistic contract={selected} />
     </Fragment>
   );
 };

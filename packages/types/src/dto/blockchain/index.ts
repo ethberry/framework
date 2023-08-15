@@ -31,11 +31,9 @@ export * from "./mechanics/drop/search";
 
 export * from "./mechanics/lottery/deploy";
 export * from "./mechanics/lottery/search";
-export * from "./mechanics/lottery/leaderboard";
 
 export * from "./mechanics/raffle/deploy";
 export * from "./mechanics/raffle/search";
-export * from "./mechanics/raffle/leaderboard";
 
 export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/mysterybox/deploy";

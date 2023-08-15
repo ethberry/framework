@@ -1,5 +1,4 @@
 import { Logger, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 
 import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 
@@ -9,7 +8,7 @@ import { RaffleRoundModule } from "../round/round.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ConfigModule, RaffleRoundModule, ContractModule, SignerModule],
+  imports: [RaffleRoundModule, ContractModule, SignerModule],
   providers: [Logger, RaffleSignService],
   controllers: [RaffleSignController],
   exports: [RaffleSignService],

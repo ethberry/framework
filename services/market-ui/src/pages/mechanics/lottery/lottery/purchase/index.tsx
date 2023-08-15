@@ -2,50 +2,45 @@ import { FC, Fragment, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 // import { RichTextDisplay } from "@gemunion/mui-rte";
+import { CronExpression, IContract, ILotteryRound } from "@framework/types";
 
-import { CronExpression, IContract, ILotteryContractRound } from "@framework/types";
-
-import { LotteryPurchaseButton } from "../../../../components/buttons";
-import { getDefaultNumbers, getSelectedNumbers } from "../token-list/utils";
-
+import { formatPrice } from "../../../../../utils/money";
+import { LotteryPurchaseButton } from "../../../../../components/buttons";
+import { emptyLotteryRound } from "../../../../../components/common/interfaces";
+import { getDefaultNumbers, getSelectedNumbers } from "../../token-list/utils";
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
-import { formatPrice } from "../../../../utils/money";
-import { emptyLottery } from "../../../../components/common/interfaces";
 
 const maxNumbers = 6;
 
 interface ILotteryPurchaseProps {
   contract: IContract;
-  embedded?: boolean;
 }
 
 export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
-  const { contract, embedded } = props;
+  const { contract } = props;
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultNumbers());
   const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
-  const [lottery, setLottery] = useState<ILotteryContractRound>(emptyLottery);
+  const [round, setRound] = useState<ILotteryRound>(emptyLotteryRound);
 
   const { fn, isLoading } = useApiCall(
     async api => {
-      return contract.id
-        ? api.fetchJson({
-            url: "/lottery/rounds/options",
-            data: {
-              contractId: contract.id,
-            },
-          })
-        : null;
+      return api.fetchJson({
+        url: "/lottery/rounds/current",
+        data: {
+          contractId: contract.id,
+        },
+      });
     },
     { success: false, error: false },
   );
 
-  const fetchLottery = async (): Promise<any> => {
+  const fetchRound = async (): Promise<any> => {
     return fn()
-      .then((json: ILotteryContractRound) => {
-        setLottery(json);
+      .then((json: ILotteryRound) => {
+        setRound(json);
       })
       .catch(e => {
         console.error(e);
@@ -53,7 +48,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
   };
 
   useEffect(() => {
-    void fetchLottery();
+    void fetchRound();
   }, []);
 
   const handleClick = (i: number) => {
@@ -73,35 +68,41 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} isHidden={embedded} />
-
       <ProgressOverlay isLoading={isLoading}>
         <PageHeader message="pages.lottery.purchase.title">
           <StyledPaper sx={{ maxWidth: "12em", flexDirection: "column" }}>
-            {lottery.round ? (
+            {round ? (
               <LotteryPurchaseButton
-                round={lottery.round}
+                round={round}
                 clearForm={clearForm}
                 ticketNumbers={ticketNumbers}
-                disabled={lottery.round.maxTickets > 0 && lottery.round.maxTickets <= lottery.count}
+                // @ts-ignore
+                disabled={round.maxTickets > 0 && round.maxTickets <= round.ticketCount}
               />
             ) : null}
-            {lottery.round ? formatPrice(lottery.round.price) : "Round not Active!"}
+            {round ? formatPrice(round.price) : "Round not Active!"}
           </StyledPaper>
           <StyledPaper sx={{ maxWidth: "6em", flexDirection: "row" }}>
-            {lottery.round && lottery.round.maxTickets > 0 ? (
+            {round.maxTickets > 0 ? (
               <FormattedMessage
                 id="pages.lottery.purchase.count"
-                values={{ current: lottery.count, max: lottery.round?.maxTickets }}
+                // @ts-ignore
+                values={{ current: round.ticketCount, max: round?.maxTickets }}
               />
-            ) : null}
+            ) : (
+              <FormattedMessage
+                id="pages.raffle.purchase.sold"
+                // @ts-ignore
+                values={{ count: round ? round.ticketCount : 0 }}
+              />
+            )}
           </StyledPaper>
         </PageHeader>
       </ProgressOverlay>
       <StyledTypography variant="body1">
-        {lottery.parameters.schedule
+        {contract.parameters.schedule
           ? Object.keys(CronExpression)[
-              Object.values(CronExpression).indexOf(lottery.parameters.schedule as unknown as CronExpression)
+              Object.values(CronExpression).indexOf(contract.parameters.schedule as unknown as CronExpression)
             ]
           : "not yet scheduled"}
       </StyledTypography>
@@ -140,7 +141,7 @@ export const LotteryPurchase: FC<ILotteryPurchaseProps> = props => {
         <FormattedMessage
           id="pages.lottery.purchase.rules"
           values={{
-            commission: contract.parameters.commission || 0,
+            commission: 100 - ~~contract.parameters.commission,
           }}
         />
       </StyledTypography>

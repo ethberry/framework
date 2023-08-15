@@ -20,5 +20,5 @@ export class SignLotteryDto extends Mixin(AccountDto, ReferrerOptionalDto) imple
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  public roundId: number;
+  public contractId: number;
 }

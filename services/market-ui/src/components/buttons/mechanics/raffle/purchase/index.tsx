@@ -3,7 +3,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -67,7 +67,7 @@ export const RafflePurchaseButton: FC<IRafflePurchaseButtonProps> = props => {
         data: {
           account,
           referrer: settings.getReferrer(),
-          roundId: round.id,
+          contractId: round.contractId,
         },
       },
       null,
