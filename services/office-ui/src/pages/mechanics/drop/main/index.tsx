@@ -26,7 +26,7 @@ import { DropSearchForm } from "./form";
 
 export const Drop: FC = () => {
   const now = new Date();
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -52,12 +52,12 @@ export const Drop: FC = () => {
     empty: {
       item: emptyItem,
       price: emptyPrice,
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),
     },
     search: {
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ item, price, merchantId, startTimestamp, endTimestamp }) => ({
       item: cleanUpAsset(item),

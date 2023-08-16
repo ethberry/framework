@@ -9,7 +9,7 @@ import type { ITemplate } from "@framework/types";
 import { ContractFeatures, IUser, TokenType } from "@framework/types";
 import { useUser } from "@gemunion/provider-user";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import type { ITemplateAssetComponent, ITemplateAsset } from "@gemunion/mui-inputs-asset";
+import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 
 import ERC20MintABI from "../../../../../abis/hierarchy/erc20/mint/erc20.mint.abi.json";
 import ERC721MintCommonABI from "../../../../../abis/hierarchy/erc721/mint/erc721.mintCommon.abi.json";
@@ -26,7 +26,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     template: { contract, id: templateId, tokens },
   } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { address, contractType, id: contractId, decimals, contractFeatures } = contract!;
 
@@ -124,7 +124,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
               } as unknown as ITemplateAssetComponent,
             ],
           } as ITemplateAsset,
-          account: user.profile.wallet,
+          account: profile.wallet,
         }}
       />
     </Fragment>

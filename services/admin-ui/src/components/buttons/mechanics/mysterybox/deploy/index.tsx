@@ -20,7 +20,7 @@ export interface IMysteryContractDeployButtonProps {
 export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IMysteryContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

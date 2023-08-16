@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { useUser } from "@gemunion/provider-user";
@@ -19,14 +19,11 @@ export interface IVestingDeployButtonProps {
 export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
   // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
   const encodedExternalId = BigNumber.from(
     utils.hexlify(
-      utils.concat([
-        utils.zeroPad(utils.hexlify(user.profile.id), 3),
-        utils.zeroPad(utils.hexlify(0 /* claim.id */), 4),
-      ]),
+      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(0 /* claim.id */), 4)]),
     ),
   );
 

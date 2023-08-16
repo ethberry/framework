@@ -17,7 +17,7 @@ export interface IWaitListDeployButtonProps {
 export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { handleDeployConfirm } = useDeploy((_values: IWaitListContractDeployDto, web3Context, sign) => {
     const nonce = utils.arrayify(sign.nonce);
@@ -31,7 +31,7 @@ export const WaitListDeployButton: FC<IWaitListDeployButtonProps> = props => {
       {
         nonce,
         bytecode: sign.bytecode,
-        externalId: user.profile.id,
+        externalId: profile.id,
       },
       sign.signature,
     ) as Promise<void>;

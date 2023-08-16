@@ -25,7 +25,7 @@ import { ContractSearchForm } from "../../../../components/forms/contract-search
 import { PyramidDeployButton } from "../../../../components/buttons";
 
 export const PyramidContract: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -50,13 +50,13 @@ export const PyramidContract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ title, description, imageUrl, merchantId, contractStatus }) => ({
       title,

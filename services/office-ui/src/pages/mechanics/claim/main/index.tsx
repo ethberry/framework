@@ -17,7 +17,7 @@ import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
 
 export const Claim: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -43,13 +43,13 @@ export const Claim: FC = () => {
     empty: {
       account: "",
       item: emptyItem,
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ item, account, endTimestamp, merchantId }) => ({
       item: cleanUpAsset(item),

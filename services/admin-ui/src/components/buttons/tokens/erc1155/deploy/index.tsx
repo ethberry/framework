@@ -20,7 +20,7 @@ export interface IErc1155TokenDeployButtonProps {
 export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc1155ContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

@@ -20,7 +20,7 @@ export interface IPyramidContractDeployButtonProps {
 export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IPyramidContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const PyramidDeployButton: FC<IPyramidContractDeployButtonProps> = props 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

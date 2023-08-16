@@ -27,7 +27,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -56,7 +56,7 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   useEffect(() => {
     void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.account === user.profile.wallet));
+      setRows(rows.filter(row => row.account === profile.wallet));
     });
   }, []);
 

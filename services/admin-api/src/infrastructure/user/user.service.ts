@@ -28,6 +28,13 @@ export class UserService {
     return this.userEntityRepository.find({ where, ...options });
   }
 
+  public findAndCount(
+    where: FindOptionsWhere<UserEntity>,
+    options?: FindOneOptions<UserEntity>,
+  ): Promise<[Array<UserEntity>, number]> {
+    return this.userEntityRepository.findAndCount({ where, ...options });
+  }
+
   public async import(dto: IUserImportDto): Promise<UserEntity> {
     return this.userEntityRepository.create(dto).save();
   }

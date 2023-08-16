@@ -27,7 +27,7 @@ import { ContractSearchForm } from "../../../../../components/forms/contract-sea
 import { Erc20ContractEditDialog } from "./edit";
 
 export const Erc20Contract: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -61,13 +61,13 @@ export const Erc20Contract: FC = () => {
           cap: constants.WeiPerEther.toString(),
         } as ITemplate,
       ],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ id, title, description, merchantId, contractStatus, symbol, address, decimals }) =>
       id

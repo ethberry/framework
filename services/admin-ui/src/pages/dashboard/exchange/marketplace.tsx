@@ -8,9 +8,9 @@ import { useUser } from "@gemunion/provider-user";
 import { IUser, UserRole } from "@framework/types";
 
 export const MarketplaceSection: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
-  if (!user.profile.userRoles.includes(UserRole.ADMIN)) {
+  if (!profile.userRoles.includes(UserRole.ADMIN)) {
     return null;
   }
 

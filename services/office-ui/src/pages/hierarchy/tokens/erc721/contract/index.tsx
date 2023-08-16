@@ -26,7 +26,7 @@ import { ContractSearchForm } from "../../../../../components/forms/contract-sea
 import { Erc721ContractEditDialog } from "./edit";
 
 export const Erc721Contract: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -60,7 +60,7 @@ export const Erc721Contract: FC = () => {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ id, title, description, imageUrl, merchantId, contractStatus, symbol, address }) =>
       id

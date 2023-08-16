@@ -25,7 +25,7 @@ import { ContractSearchForm } from "../../../../../components/forms/contract-sea
 import { NativeTokenEditDialog } from "./edit";
 
 export const NativeContract: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -52,13 +52,13 @@ export const NativeContract: FC = () => {
       title: "",
       description: emptyStateString,
       symbol: "",
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ title, description, contractStatus, symbol, merchantId }) => ({
       title,

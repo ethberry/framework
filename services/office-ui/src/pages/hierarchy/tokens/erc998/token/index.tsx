@@ -23,7 +23,7 @@ import { Erc998TokenViewDialog } from "./view";
 import { BalanceWithdrawDialog } from "./withdraw-dialog";
 
 export const Erc998Token: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -51,7 +51,7 @@ export const Erc998Token: FC = () => {
       templateIds: [],
       tokenId: "",
       metadata: {},
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
   });
 

@@ -1152,6 +1152,9 @@
     },
     "merchant": {
       "title": "Merchant",
+      "managers": {
+        "empty": "You don't have any managers yet"
+      },
       "tabs": {
         "general": "General",
         "managers": "Managers"

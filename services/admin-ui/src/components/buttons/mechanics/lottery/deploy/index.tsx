@@ -19,7 +19,7 @@ export interface ILotteryContractDeployButtonProps {
 export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ILotteryContractDeployDto, web3Context, sign) => {
@@ -34,7 +34,7 @@ export const LotteryContractDeployButton: FC<ILotteryContractDeployButtonProps> 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         {
           config: {

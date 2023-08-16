@@ -18,7 +18,7 @@ export interface IRaffleContractDeployButtonProps {
 export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm } = useDeploy(
     (_values: IRaffleContractDeployDto, web3Context, sign) => {
@@ -33,7 +33,7 @@ export const RaffleContractDeployButton: FC<IRaffleContractDeployButtonProps> = 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         sign.signature,
       ) as Promise<void>;

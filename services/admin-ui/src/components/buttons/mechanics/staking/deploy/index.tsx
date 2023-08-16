@@ -20,7 +20,7 @@ export interface IStakingDeployButtonProps {
 export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IStakingContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

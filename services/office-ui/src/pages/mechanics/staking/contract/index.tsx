@@ -26,7 +26,7 @@ import { StakingActionsMenu } from "../../../../components/menu/mechanics/stakin
 import { StakingEditDialog } from "./edit";
 
 export const StakingContracts: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -51,13 +51,13 @@ export const StakingContracts: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     search: {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ title, description, imageUrl, merchantId, contractStatus }) => ({
       title,

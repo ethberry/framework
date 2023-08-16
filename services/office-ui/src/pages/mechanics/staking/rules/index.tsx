@@ -27,7 +27,7 @@ import { StakingRuleEditDialog } from "./edit";
 import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -64,7 +64,7 @@ export const StakingRules: FC = () => {
     }),
     search: {
       query: "",
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
       contractIds: [],
       stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {

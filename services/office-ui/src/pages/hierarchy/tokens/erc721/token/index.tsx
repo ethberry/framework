@@ -22,7 +22,7 @@ import { TokenSearchForm } from "../../../../../components/forms/token-search";
 import { Erc721TokenViewDialog } from "./view";
 
 export const Erc721Token: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -50,7 +50,7 @@ export const Erc721Token: FC = () => {
       templateIds: [],
       tokenId: "",
       metadata: {},
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
   });
 

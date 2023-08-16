@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { Grid } from "@mui/material";
+import { FC, Fragment } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
@@ -10,6 +9,7 @@ import { ApiError, useApi } from "@gemunion/provider-api-firebase";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { IMerchant, IUser } from "@framework/types";
+import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { ITabPanelProps } from "../tabs";
 import { validationSchema } from "./validation";
@@ -60,7 +60,9 @@ export const MerchantGeneral: FC<ITabPanelProps> = props => {
   }
 
   return (
-    <Grid>
+    <Fragment>
+      <PageHeader message="pages.merchant.tabs.general" />
+
       <FormWrapper initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <TextInput name="title" />
         <RichTextEditor name="description" />
@@ -69,6 +71,6 @@ export const MerchantGeneral: FC<ITabPanelProps> = props => {
         <AvatarInput name="imageUrl" />
         <SocialInput name="social" />
       </FormWrapper>
-    </Grid>
+    </Fragment>
   );
 };

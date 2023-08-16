@@ -22,7 +22,7 @@ export const Merchant: FC = () => {
   const { formatMessage } = useIntl();
 
   const api = useApi();
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
   const navigate = useNavigate();
 
   const handleSubmit = (values: Partial<IMerchant>): Promise<void> => {
@@ -52,7 +52,7 @@ export const Merchant: FC = () => {
       });
   };
 
-  const { email, wallet, imageUrl } = user.profile;
+  const { email, wallet, imageUrl } = profile;
   const fixedValues = {
     title: "",
     description: emptyStateString,

@@ -5,7 +5,7 @@ import { AddCircleOutline } from "@mui/icons-material";
 import { constants, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { ITemplateAssetComponent, ITemplateAsset } from "@gemunion/mui-inputs-asset";
+import type { ITemplateAsset, ITemplateAssetComponent } from "@gemunion/mui-inputs-asset";
 import type { IContract } from "@framework/types";
 import { ContractFeatures, IUser, TokenType } from "@framework/types";
 
@@ -27,7 +27,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     contract: { address, id: contractId, contractType, decimals, contractFeatures },
   } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -118,7 +118,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
               } as unknown as ITemplateAssetComponent,
             ],
           } as ITemplateAsset,
-          account: user.profile.wallet,
+          account: profile.wallet,
         }}
       />
     </Fragment>

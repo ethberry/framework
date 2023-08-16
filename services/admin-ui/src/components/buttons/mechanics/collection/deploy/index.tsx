@@ -20,7 +20,7 @@ export interface ICollectionContractDeployButtonProps {
 export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: ICollectionContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const CollectionContractDeployButton: FC<ICollectionContractDeployButtonP
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

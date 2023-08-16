@@ -10,7 +10,7 @@ import { AttachWalletButton } from "./attach-wallet";
 import { AllowanceButton } from "./allowance";
 
 export const MyWallet: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   return (
     <Grid>
@@ -19,7 +19,7 @@ export const MyWallet: FC = () => {
       <PageHeader message="pages.wallet.title" />
 
       <Typography sx={{ mb: 2 }}>
-        <FormattedMessage id="pages.wallet.connectedWallet" />: {user.profile.wallet || "N/A"}
+        <FormattedMessage id="pages.wallet.connectedWallet" />: {profile.wallet || "N/A"}
       </Typography>
 
       <AttachWalletButton />

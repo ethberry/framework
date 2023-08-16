@@ -8,9 +8,9 @@ import { useUser } from "@gemunion/provider-user";
 import { IUser, RatePlanType } from "@framework/types";
 
 export const MysterySection: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
-  if (user.profile.merchant.ratePlan === RatePlanType.BRONZE) {
+  if (profile.merchant.ratePlan === RatePlanType.BRONZE) {
     return null;
   }
 

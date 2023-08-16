@@ -32,7 +32,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const [rows, setRows] = useState<Array<IAccessControlWithRelations>>([]);
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -61,7 +61,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   useEffect(() => {
     void fn().then((rows: Array<IAccessControlWithRelations>) => {
-      setRows(rows.filter(row => row.account !== user.profile.wallet));
+      setRows(rows.filter(row => row.account !== profile.wallet));
     });
   }, []);
 

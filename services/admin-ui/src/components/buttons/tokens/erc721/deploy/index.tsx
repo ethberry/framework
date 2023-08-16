@@ -21,7 +21,7 @@ export interface IErc721ContractDeployButtonProps {
 export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = props => {
   const { className, contractTemplate = Erc721ContractTemplates.SIMPLE } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721ContractDeployDto, web3Context, sign) => {
@@ -36,7 +36,7 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

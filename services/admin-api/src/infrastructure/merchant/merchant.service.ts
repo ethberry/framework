@@ -60,8 +60,8 @@ export class MerchantService {
     return this.merchantEntityRepository.count({ where });
   }
 
-  public searchUsers(userEntity: UserEntity): Promise<Array<UserEntity>> {
-    return this.userService.findAll({ merchantId: userEntity.merchantId });
+  public searchUsers(userEntity: UserEntity): Promise<[Array<UserEntity>, number]> {
+    return this.userService.findAndCount({ merchantId: userEntity.merchantId });
   }
 
   public async removeUser(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<UpdateResult> {

@@ -22,7 +22,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   const {
     contract: { address, id: contractId },
   } = props;
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -69,7 +69,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
         initialValues={{
           contractId,
           mysteryId: 0,
-          account: user.profile.wallet,
+          account: profile.wallet,
         }}
       />
     </Fragment>

@@ -27,7 +27,7 @@ import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 
 export const VestingContracts: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -47,7 +47,7 @@ export const VestingContracts: FC = () => {
     baseUrl: "/vesting/contracts",
     search: {
       account: "",
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     empty: emptyVestingContract,
   });

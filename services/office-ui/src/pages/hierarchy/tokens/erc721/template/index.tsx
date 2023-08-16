@@ -27,7 +27,7 @@ import { cleanUpAsset } from "../../../../../utils/money";
 import { Erc721TemplateEditDialog } from "./edit";
 
 export const Erc721Template: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -61,7 +61,7 @@ export const Erc721Template: FC = () => {
       query: "",
       templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
       id

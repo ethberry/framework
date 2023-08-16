@@ -2,7 +2,7 @@ import { FC } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { Inventory } from "@mui/icons-material";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -22,12 +22,13 @@ export interface IVestingReleaseButtonProps {
 export const VestingDeployButton: FC<IVestingReleaseButtonProps> = props => {
   const { claim, disabled } = props;
   const { formatMessage } = useIntl();
-  const user = useUser<IUser>();
-  const { id } = user.profile;
+  const { profile } = useUser<IUser>();
 
   // ethersV6 : concat([zeroPadValue(toBeHex(userEntity.id), 3), zeroPadValue(toBeHex(claimEntity.id), 4)]);
   const encodedExternalId = BigNumber.from(
-    utils.hexlify(utils.concat([utils.zeroPad(utils.hexlify(id), 3), utils.zeroPad(utils.hexlify(claim.id), 4)])),
+    utils.hexlify(
+      utils.concat([utils.zeroPad(utils.hexlify(profile.id), 3), utils.zeroPad(utils.hexlify(claim.id), 4)]),
+    ),
   );
 
   const metaRelease = useMetamask(async (claim: IClaim, web3Context: Web3ContextType) => {

@@ -20,7 +20,7 @@ export interface IErc998ContractDeployButtonProps {
 export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = props => {
   const { className } = props;
 
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc998ContractDeployDto, web3Context, sign) => {
@@ -35,7 +35,7 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
         {
           nonce,
           bytecode: sign.bytecode,
-          externalId: user.profile.id,
+          externalId: profile.id,
         },
         // values,
         {

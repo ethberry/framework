@@ -29,7 +29,7 @@ import { VestingClaimEditDialog } from "./edit";
 // import { VestingActionsMenu } from "../../../../components/menu/mechanics/vesting";
 
 export const VestingClaim: FC = () => {
-  const user = useUser<IUser>();
+  const { profile } = useUser<IUser>();
 
   const {
     rows,
@@ -64,7 +64,7 @@ export const VestingClaim: FC = () => {
     search: {
       account: "",
       claimStatus: [ClaimStatus.NEW],
-      merchantId: user.profile.merchantId,
+      merchantId: profile.merchantId,
     },
     filter: ({ item, parameters }) => ({
       parameters: {
