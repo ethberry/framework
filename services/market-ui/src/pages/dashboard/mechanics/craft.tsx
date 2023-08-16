@@ -4,15 +4,7 @@ import { Construction } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { NodeEnv } from "@framework/types";
-
 export const CraftSection: FC = () => {
-  const isDevelopment = process.env.NODE_ENV === NodeEnv.development;
-
-  if (!isDevelopment) {
-    return null;
-  }
-
   return (
     <Paper sx={{ mb: 2 }}>
       <List
