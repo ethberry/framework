@@ -82,18 +82,18 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // 01   - CM
     // 02   - exchange
     // 07   - VRF
-    // 010x - native
-    // 020x - erc20
-    // 030x - erc721
-    // 040x - erc998
-    // 050x - erc1155
-    // 011x - mystery
-    // 012x - mystery
-    // 013x - wrapper
-    // 021x - raffle
-    // 022x - raffle
-    // 023x - lottery
-    // 024x - lottery
+    // 08   - dispenser
+    // 01x - native
+    // 02x - erc20
+    // 03x - erc721
+    // 04x - erc998
+    // 05x - erc1155
+    // 11x - mystery
+    // 13x - wrapper
+    // 21x - raffle
+    // 22x - raffle
+    // 23x - lottery
+    // 24x - lottery
 
     const table = new Table({
       name: `${ns}.contract`,

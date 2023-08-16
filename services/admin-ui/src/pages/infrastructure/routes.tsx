@@ -18,7 +18,10 @@ export const infrastructureRoutes: Array<RouteObject> = [
   {
     path: "/merchant",
     element: <Protected />,
-    children: [{ index: true, element: <Merchant /> }],
+    children: [
+      { index: true, element: <Merchant /> },
+      { path: "/merchant/:tab", element: <Merchant /> },
+    ],
   },
   {
     path: "/rate-plans",

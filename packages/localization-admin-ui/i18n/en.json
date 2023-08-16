@@ -14,7 +14,8 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "profile": "Profile"
+        "profile": "Profile",
+        "merchant": "Merchant"
       },
       "theme": {
         "switch": "Switch theme"
@@ -1150,7 +1151,11 @@
       "title": "Marketplace"
     },
     "merchant": {
-      "title": "Merchant"
+      "title": "Merchant",
+      "tabs": {
+        "general": "General",
+        "managers": "Managers"
+      }
     },
     "mystery": {
       "boxContent": {

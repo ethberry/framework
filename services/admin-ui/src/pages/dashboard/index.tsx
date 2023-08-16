@@ -11,8 +11,6 @@ import { EcommerceSection } from "./ecommerce";
 
 import { MarketplaceSection } from "./exchange/marketplace";
 
-import { AdminSection } from "./infrastructure";
-
 import { ChainLinkSection } from "./integrations/chain-link";
 import { CoinGeckoSection } from "./integrations/coin-gecko";
 import { CoinMarketCapSection } from "./integrations/coin-market-cap";
@@ -78,7 +76,6 @@ export const Dashboard: FC = () => {
           <MarketplaceSection />
           <EcommerceSection />
           <AchievementsSection />
-          <AdminSection />
         </Grid>
       </Grid>
     </Root>
